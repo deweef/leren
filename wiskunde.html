@@ -1,0 +1,687 @@
+<!doctype html>
+<html lang="nl">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<meta name="robots" content="noindex">
+<script>(function(){try{if(localStorage.getItem('leren-ok')!=='53a39a231246354922d1b5f7242c1639ebdc75da84bde2e766eed704f5a89cf8'){location.replace('index.html')}}catch(e){location.replace('index.html')}})();</script>
+<title>Wiskunde Statistiek H2</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,500..800&family=JetBrains+Mono:wght@500&family=Atkinson+Hyperlegible:wght@400;700&family=IBM+Plex+Mono:wght@500&display=swap">
+<style>
+/* Layout: ruitjespapier. Kaarten met een oranje kantlijn, zoals het boek. */
+:root{
+  --bg:#F6F3EE; --surface:#FFFFFF; --ink:#1E2230; --muted:#5D6375; --line:#DDD6CB; --chip:#EEE8DE; --accent:#E8742A;
+  --green:#2F7D5B; --green-soft:#DDF0E6; --pink:#E8742A; --pink-soft:#FCE8DA; --amber:#A86A12; --amber-soft:#FBEFD9;
+  --good:#2E8B4E; --good-bg:#DDF0E2; --bad:#C2413A; --bad-bg:#FADFDD;
+  --c-wall:#7BAA6A; --c-cyto:#EEF6E4; --c-vac:#E4D9F2; --c-nuc:#C9B4E0; --c-chl:#3E9B48; --c-mito:#C98A4B; --c-er:#7A93C9; --c-golgi:#D07AA0; --c-lys:#E0A93C; --c-ani:#FBE9E4;
+  --f-display:"Bricolage Grotesque",system-ui,sans-serif;
+  --f-body:"Atkinson Hyperlegible",system-ui,-apple-system,"Segoe UI",sans-serif;
+  --f-mono:"IBM Plex Mono",ui-monospace,Menlo,Consolas,monospace;
+}
+@media (prefers-color-scheme: dark){:root:not([data-theme="light"]){
+  --bg:#14161D; --surface:#1D2029; --ink:#E9EAF0; --muted:#A0A5B5; --line:#30343F; --chip:#272A35; --accent:#F08A45;
+  --green:#5CC394; --green-soft:#183025; --pink:#F08A45; --pink-soft:#3A2618; --amber:#E9B25A; --amber-soft:#33281A;
+  --good:#5CC383; --good-bg:#183020; --bad:#F07870; --bad-bg:#3A1C1B;
+  --c-wall:#5E8F4E; --c-cyto:#20321F; --c-vac:#3A3150; --c-nuc:#5E4A7E; --c-chl:#56B55F; --c-mito:#B47A40; --c-er:#6C84BE; --c-golgi:#C26E94; --c-lys:#C99230; --c-ani:#3A2622; color-scheme:dark}}
+:root[data-theme="dark"]{
+  --bg:#14161D; --surface:#1D2029; --ink:#E9EAF0; --muted:#A0A5B5; --line:#30343F; --chip:#272A35; --accent:#F08A45;
+  --green:#5CC394; --green-soft:#183025; --pink:#F08A45; --pink-soft:#3A2618; --amber:#E9B25A; --amber-soft:#33281A;
+  --good:#5CC383; --good-bg:#183020; --bad:#F07870; --bad-bg:#3A1C1B;
+  --c-wall:#5E8F4E; --c-cyto:#20321F; --c-vac:#3A3150; --c-nuc:#5E4A7E; --c-chl:#56B55F; --c-mito:#B47A40; --c-er:#6C84BE; --c-golgi:#C26E94; --c-lys:#C99230; --c-ani:#3A2622; color-scheme:dark}
+*{box-sizing:border-box}
+body{background-color:var(--bg);background-image:linear-gradient(var(--line) 1px,transparent 1px),linear-gradient(90deg,var(--line) 1px,transparent 1px);background-size:24px 24px;background-attachment:fixed;color:var(--ink);font-family:var(--f-body);font-size:16px;line-height:1.5;margin:0}
+.wrap{max-width:880px;margin:0 auto;padding-inline:16px;padding-block:20px 56px}
+button{font:inherit;color:inherit;cursor:pointer}
+button:focus-visible,input:focus-visible{outline:3px solid var(--pink);outline-offset:2px}
+h1,h2,h3{font-family:var(--f-display);margin:0;text-wrap:balance}
+.eyebrow{font-family:var(--f-mono);font-size:12px;letter-spacing:.12em;text-transform:uppercase;color:var(--muted)}
+.top{display:flex;flex-wrap:wrap;gap:16px;align-items:flex-end;justify-content:space-between;padding-bottom:16px;border-bottom:2px solid var(--ink)}
+h1{font-size:clamp(30px,6.5vw,48px);font-weight:800;line-height:1;letter-spacing:-.02em}
+h1 em{font-style:normal;color:var(--green)}
+.stats{display:flex;gap:8px;flex-wrap:wrap}
+.stat{background:var(--surface);border:1px solid var(--line);border-radius:10px;padding:6px 12px;min-width:86px}
+.stat b{display:block;font-family:var(--f-display);font-size:22px;font-weight:800;line-height:1.15;font-variant-numeric:tabular-nums}
+.stat small{font-family:var(--f-mono);font-size:10.5px;color:var(--muted);text-transform:uppercase;letter-spacing:.08em}
+.banner{margin-top:14px;display:flex;gap:8px;flex-wrap:wrap}
+.pill{font-size:13.5px;font-weight:700;padding:4px 12px;border-radius:999px;background:var(--pink-soft);color:var(--pink)}
+.pill.g{background:var(--green-soft);color:var(--green)}
+section{margin-top:26px}
+.sec-head{display:flex;flex-wrap:wrap;align-items:baseline;justify-content:space-between;gap:8px;margin-bottom:12px}
+h2{font-size:21px;font-weight:800}
+.acts{display:flex;gap:8px;flex-wrap:wrap;align-items:center}
+.btn{border:2px solid var(--ink);background:var(--surface);border-radius:10px;padding:10px 16px;font-weight:700}
+.btn.primary{background:var(--green);border-color:var(--green);color:var(--surface)}
+.btn.dark{background:var(--ink);border-color:var(--ink);color:var(--bg)}
+.btn.ghost{border-color:var(--line)}
+.btn.small{padding:6px 12px;font-size:14px}
+.btn:disabled{opacity:.4;cursor:not-allowed}
+/* paragraaf-chips */
+.pars{display:grid;grid-template-columns:repeat(auto-fill,minmax(190px,1fr));gap:10px}
+.par{position:relative;text-align:left;background:var(--surface);border:2px solid var(--line);border-radius:12px;padding:10px 12px 12px 18px;display:flex;flex-direction:column;gap:4px;min-width:0;overflow:hidden}
+.par::before{content:"";position:absolute;left:0;top:0;bottom:0;width:7px;background:var(--line)}
+.par[aria-pressed="true"]{border-color:var(--ink)}
+.par[aria-pressed="true"]::before{background:var(--pink)}
+.par .no{font-family:var(--f-mono);font-size:12px;color:var(--muted)}
+.par .no b{font-family:var(--f-display);font-size:22px;color:var(--ink);margin-right:4px}
+.par .nm{font-weight:700;font-size:14.5px;line-height:1.25}
+.bar{height:6px;border-radius:3px;background:var(--chip);overflow:hidden}
+.bar i{display:block;height:100%;background:var(--green);border-radius:3px;transition:width .4s}
+.par .src{font-size:12px}
+.src{font-size:13px;color:var(--muted)}
+/* modus-kaarten als objectglaasjes */
+.modes{display:grid;grid-template-columns:repeat(auto-fill,minmax(250px,1fr));gap:12px}
+.mode{position:relative;text-align:left;background:var(--surface);border:2px solid var(--ink);border-radius:14px;padding:14px 16px 14px 58px;min-width:0;display:flex;flex-direction:column;gap:4px}
+.mode .lab{position:absolute;left:0;top:0;bottom:0;width:44px;background:var(--chip);border-right:2px dashed var(--line);display:grid;place-items:center;font-family:var(--f-mono);font-size:12px;color:var(--muted);writing-mode:vertical-rl;transform:rotate(180deg);letter-spacing:.12em;text-transform:uppercase}
+.mode.main{background:var(--ink);color:var(--bg)}
+.mode.main .lab{background:var(--pink);color:#fff;border-color:transparent}
+.mode.main p{color:var(--bg);opacity:.8}
+.mode h3{font-size:19px;font-weight:800}
+.mode p{margin:0;font-size:14px;color:var(--muted)}
+.mode .tag{align-self:flex-start;font-family:var(--f-mono);font-size:10.5px;text-transform:uppercase;letter-spacing:.08em;background:var(--amber-soft);color:var(--amber);padding:2px 7px;border-radius:5px}
+.mode:hover{transform:translateY(-2px)}
+details.tips{background:var(--surface);border:1px solid var(--line);border-radius:12px;padding:12px 16px}
+details.tips summary{font-weight:700;cursor:pointer}
+details.tips ul{margin:10px 0 4px;padding-left:20px;display:grid;gap:6px}
+/* spel */
+.playbar{display:flex;align-items:center;gap:12px;margin-bottom:16px}
+.playbar .bar{flex:1;height:10px;border-radius:5px}
+.playbar .bar i{background:var(--pink)}
+.count{font-family:var(--f-mono);font-size:13px;color:var(--muted);font-variant-numeric:tabular-nums;white-space:nowrap}
+.slide{background:var(--surface);border:2px solid var(--ink);border-radius:18px;overflow:hidden}
+.slide-head{display:flex;justify-content:space-between;gap:8px;flex-wrap:wrap;padding:9px 18px;background:var(--pink);color:#fff;font-family:var(--f-mono);font-size:12px;letter-spacing:.1em;text-transform:uppercase}
+.slide-body{padding:20px 18px;display:flex;flex-direction:column;gap:14px}
+.q{font-size:15px;color:var(--muted);font-weight:700}
+.prompt{font-family:var(--f-display);font-weight:700;font-size:clamp(20px,4.6vw,27px);line-height:1.25;overflow-wrap:anywhere}
+.prompt.big{font-size:clamp(28px,7vw,42px);font-weight:800}
+.opts{display:grid;gap:10px}
+.opt{display:flex;align-items:center;gap:12px;text-align:left;border:2px solid var(--line);background:var(--bg);border-radius:12px;padding:12px 14px;font-size:16.5px;font-weight:700;min-width:0}
+.opt .k{flex:none;width:28px;height:28px;border-radius:8px;display:grid;place-items:center;font-family:var(--f-mono);font-size:13px;background:var(--chip);color:var(--muted)}
+.opt:hover:not(:disabled){border-color:var(--ink)}
+.opt:disabled{cursor:default}
+.opt.good{background:var(--good-bg);border-color:var(--good)}.opt.good .k{background:var(--good);color:var(--surface)}
+.opt.bad{background:var(--bad-bg);border-color:var(--bad)}.opt.bad .k{background:var(--bad);color:var(--surface)}
+.opt.dim{opacity:.5}
+.typerow{display:flex;gap:8px;flex-wrap:wrap}
+.typerow input{flex:1 1 220px;min-width:0;font:inherit;font-size:19px;font-weight:700;padding:12px 14px;border-radius:12px;border:2px solid var(--line);background:var(--bg);color:var(--ink)}
+.typerow input.okay{border-color:var(--good)}
+.pattern{font-family:var(--f-mono);font-size:17px;letter-spacing:.16em;color:var(--amber);overflow-wrap:anywhere}
+.fb{border-radius:12px;padding:12px 14px;display:flex;flex-direction:column;gap:4px}
+.fb.good{background:var(--good-bg)}.fb.bad{background:var(--bad-bg)}.fb.warn{background:var(--amber-soft)}
+.fb .t{font-weight:700}.fb.good .t{color:var(--good)}.fb.bad .t{color:var(--bad)}.fb.warn .t{color:var(--amber)}
+.fb .ans{font-family:var(--f-display);font-size:21px;font-weight:800}
+.tip{font-size:14.5px}
+.foot{display:flex;justify-content:flex-end}
+.big{font-family:var(--f-display);font-size:clamp(48px,12vw,80px);font-weight:800;line-height:1}
+.mist{display:grid;gap:6px;margin:0;padding:0;list-style:none}
+.mist li{display:flex;flex-direction:column;gap:2px;border-bottom:1px solid var(--line);padding:6px 0}
+.mist li span{color:var(--muted);font-size:14px}
+/* flip */
+.flip{perspective:1200px;cursor:pointer}
+.flip-in{position:relative;min-height:220px;transition:transform .45s;transform-style:preserve-3d}
+.flip.on .flip-in{transform:rotateY(180deg)}
+.face{position:absolute;inset:0;backface-visibility:hidden;-webkit-backface-visibility:hidden;display:flex;flex-direction:column;justify-content:center;gap:10px}
+.face.back{transform:rotateY(180deg)}
+/* volgorde */
+.seq-done{display:grid;gap:6px;counter-reset:s;margin:0;padding:0;list-style:none}
+.seq-done li{counter-increment:s;display:flex;gap:10px;align-items:center;background:var(--good-bg);border-radius:10px;padding:8px 12px;font-weight:700}
+.seq-done li::before{content:counter(s);flex:none;width:26px;height:26px;border-radius:50%;background:var(--good);color:var(--surface);display:grid;place-items:center;font-family:var(--f-mono);font-size:12px}
+.seq-pool{display:flex;flex-wrap:wrap;gap:8px}
+.seq-pool button{border:2px solid var(--line);background:var(--bg);border-radius:10px;padding:9px 12px;font-weight:700;text-align:left}
+.seq-pool button:hover{border-color:var(--ink)}
+.seq-list{display:grid;gap:8px}
+.seq-list button{text-align:left}
+/* buckets */
+.buckets{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:8px}
+.buckets button{border:2px solid var(--ink);border-radius:12px;padding:14px 6px;font-weight:800;font-size:16px;background:var(--surface)}
+.buckets button.good{background:var(--good-bg);border-color:var(--good)}
+.buckets button.bad{background:var(--bad-bg);border-color:var(--bad)}
+/* osmose */
+.osmo{display:flex;gap:14px;align-items:center;flex-wrap:wrap}
+.osmo svg{flex:none;width:120px;height:90px}
+.chipline{display:flex;gap:8px;flex-wrap:wrap}
+/* cel */
+.cellfig{background:var(--bg);border-radius:12px;padding:8px}
+.cellfig svg{display:block;width:100%;height:auto;max-height:340px}
+.marker circle{fill:var(--pink)}
+.marker text{fill:#fff;font-family:var(--f-mono);font-size:15px;font-weight:700}
+.marker line{stroke:var(--pink);stroke-width:2.5}
+.pulse{animation:pulse 1.2s ease-in-out infinite}
+@keyframes pulse{50%{opacity:.35}}
+/* samenvatting */
+.sum{background:var(--surface);border:1px solid var(--line);border-left:6px solid var(--green);border-radius:12px;padding:14px 16px}
+.sum h3{font-size:19px;margin-bottom:6px}
+.sum p{margin:0 0 8px;max-width:72ch}
+.exam{background:var(--surface);border:1px solid var(--line);border-radius:12px;padding:14px 16px;display:flex;flex-direction:column;gap:10px}
+.exam .ctx{background:var(--bg);border-radius:8px;padding:10px 12px;font-size:14.5px}
+.exq{border-top:1px dashed var(--line);padding-top:10px;display:flex;flex-direction:column;gap:8px}
+.exq .pt{font-family:var(--f-mono);font-size:12px;color:var(--pink)}
+.shake{animation:shake .35s}@keyframes shake{25%{transform:translateX(-6px)}75%{transform:translateX(6px)}}
+.pop{animation:pop .3s}@keyframes pop{50%{transform:scale(1.25)}}
+.timer{font-family:var(--f-display);font-size:32px;font-weight:800;font-variant-numeric:tabular-nums;min-width:56px;text-align:right}
+.timer.low{color:var(--bad)}
+.combo{font-family:var(--f-mono);font-size:12px;background:var(--amber);color:var(--surface);padding:2px 8px;border-radius:6px}
+canvas#conf{position:fixed;inset:0;pointer-events:none;z-index:9}
+@media (prefers-reduced-motion: reduce){*{transition:none!important;animation:none!important}}
+.nums{font-family:"JetBrains Mono",var(--f-mono);font-size:20px;font-weight:500;background:var(--bg);border-radius:10px;padding:10px 12px;margin:8px 0;overflow-wrap:anywhere;letter-spacing:.02em}
+.tw{overflow-x:auto;margin:8px 0}
+.ft{border-collapse:collapse;font-variant-numeric:tabular-nums;font-size:15.5px;background:var(--surface)}
+.ft th,.ft td{border:1px solid var(--line);padding:5px 10px;text-align:center}
+.ft th{background:var(--chip);text-align:left;font-weight:700}
+.ft.v td:first-child{font-family:var(--f-mono);font-size:14px}
+.chart{display:block;width:100%;max-width:420px;height:auto;color:var(--ink);margin:6px 0}
+.uitleg{background:var(--surface);border:1px solid var(--line);border-left:6px solid var(--pink);border-radius:12px;padding:14px 18px}
+.uitleg h3{font-size:20px;margin:16px 0 6px}.uitleg h3:first-child{margin-top:0}
+.uitleg p,.uitleg li{max-width:72ch}.uitleg ul{padding-left:20px}
+.rule{background:var(--pink-soft);border-radius:10px;padding:10px 14px;margin:8px 0;font-weight:500}
+.ex{background:var(--bg);border-left:4px solid var(--green);border-radius:6px;padding:9px 12px}
+.gt{border-collapse:collapse;font-size:15px;margin:6px 0}.gt th,.gt td{border:1px solid var(--line);padding:6px 9px;text-align:left;vertical-align:top}.gt th{background:var(--chip)}
+.cycle{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:6px;max-width:460px;margin:10px 0}
+.cycle span{border-radius:10px;padding:10px;font-weight:700;color:#1E2230;text-align:center}
+.cycle .c1{background:#F5B37A}.cycle .c2{background:#F7DB5E}.cycle .c3{background:#7FB0EA}.cycle .c4{background:#8FD18F}
+.cycle .c3{order:4}.cycle .c4{order:3}
+.flow{display:grid;grid-template-columns:minmax(0,1fr) minmax(0,1.3fr);gap:6px 10px;margin:10px 0}
+.flow .fq{background:var(--chip);border-radius:8px;padding:8px 10px;font-weight:700}.flow .fa{background:var(--bg);border-radius:8px;padding:8px 10px}
+@media (max-width:560px){.flow{grid-template-columns:1fr}}
+.distgrid{display:grid;grid-template-columns:repeat(auto-fill,minmax(150px,1fr));gap:8px}
+.distgrid figure{margin:0;background:var(--bg);border-radius:10px;padding:6px}.distgrid figcaption{text-align:center;font-weight:700;font-size:13.5px}
+.secs{display:grid;gap:10px}
+.sec{display:grid;grid-template-columns:auto minmax(0,1fr) auto;gap:6px 14px;align-items:center;background:var(--surface);border:2px solid var(--line);border-radius:14px;padding:12px 14px}
+.sec .num{font-family:var(--f-display);font-size:30px;font-weight:800;color:var(--pink);line-height:1}
+.sec h3{font-size:18px}.sec p{margin:2px 0 6px;font-size:14px;color:var(--muted)}
+.sec .acts{grid-column:3;grid-row:1}
+@media (max-width:560px){.sec{grid-template-columns:auto minmax(0,1fr)}.sec .acts{grid-column:1/-1;grid-row:auto}}
+.tools{display:flex;flex-wrap:wrap;gap:8px}
+</style>
+</head>
+<body>
+<a href="index.html" style="position:fixed;right:12px;bottom:calc(12px + env(safe-area-inset-bottom,0px));z-index:20;background:#142A3A;color:#fff;text-decoration:none;font:700 14px system-ui,sans-serif;padding:9px 14px;border-radius:999px;box-shadow:0 2px 8px rgba(0,0,0,.25)">← Alle vakken</a>
+<canvas id="conf"></canvas>
+<div class="wrap">
+<main id="home">
+  <header class="top">
+    <div>
+      <div class="eyebrow">Wiskunde · Hoofdstuk 2</div>
+      <h1>De statistische <em>cyclus</em></h1>
+    </div>
+    <div class="stats">
+      <div class="stat"><b id="stDone">0</b><small>opgaven</small></div>
+      <div class="stat"><b id="stStreak">0</b><small>dagen op rij</small></div>
+      <div class="stat"><b id="stBest">–</b><small>beste toets</small></div>
+    </div>
+  </header>
+  <div class="banner"><span class="pill">Eerst uitleg, dan oefenen</span><span class="pill g">Elke ronde nieuwe sommen</span></div>
+
+  <section>
+    <div class="sec-head"><h2>1. Per paragraaf</h2><span class="src">Begin bij 2.1 en werk naar beneden</span></div>
+    <div class="secs" id="secs"></div>
+  </section>
+
+  <section>
+    <div class="sec-head"><h2>2. Rekentrainer</h2><span class="src">Kies een soort som en oefen zo lang je wilt</span></div>
+    <div class="tools" id="tools"></div>
+  </section>
+
+  <section>
+    <div class="sec-head"><h2>3. Toets</h2></div>
+    <div class="modes">
+      <button class="mode main" id="toets"><span class="lab">Cijfer</span><h3>Proeftoets</h3><p>20 gemengde vragen over het hele hoofdstuk, met uitwerkingen aan het eind en een cijfer.</p></button>
+      <button class="mode" id="spiek"><span class="lab">Kaart</span><h3>Spiekbriefje</h3><p>Alle regels en formules op één scherm.</p></button>
+    </div>
+  </section>
+
+  <section>
+    <details class="tips">
+      <summary>Zo pak je het aan</summary>
+      <ul>
+        <li>Lees bij elke paragraaf eerst de <b>Uitleg</b>. Doe daarna <b>Oefenen</b> tot de balk groen is.</li>
+        <li>Fout? Lees de uitwerking goed en doe er meteen nog een paar uit de <b>Rekentrainer</b>.</li>
+        <li>Getallen typ je met een komma of punt, allebei goed (6,4 of 6.4).</li>
+        <li>Pak er pen en papier bij: schrijf de getallen op volgorde, teken bij de normale verdeling een schets.</li>
+        <li>Toetsen: <b>Enter</b> = controleren/verder, <b>1 2 3 4</b> = antwoord kiezen.</li>
+      </ul>
+      <div class="acts" id="resetBox" style="margin-top:10px"><button class="btn ghost small" id="resetBtn">Voortgang wissen</button></div>
+    </details>
+  </section>
+</main>
+<main id="play" hidden></main>
+</div>
+<script>
+const SECS=[
+ {id:'2.1',t:'De onderzoeksvraag',s:'Statistische cyclus, populatie, steekproef, representatief, aselect'},
+ {id:'2.2',t:'Data verzamelen',s:'Variabelen: kwalitatief (nominaal, ordinaal) of kwantitatief (discreet, continu)'},
+ {id:'2.3',t:'Data analyseren',s:'Gemiddelde, mediaan, modus, frequentietabel, klassen, histogram'},
+ {id:'2.4',t:'Kwartielen en spreiding',s:'Cumulatieve frequentie, kwartielen, spreidingsbreedte, IKA, boxplot'},
+ {id:'2.5',t:'Statistische verdelingen',s:'Scheef, symmetrisch, uniform, standaardafwijking, normale verdeling'}
+];
+const UITLEG={
+'2.1':`<h3>De statistische cyclus</h3>
+<p>Een statistisch onderzoek doorloopt vier fasen. Daarna levert het vaak nieuwe vragen op, en begint de cyclus opnieuw.</p>
+<div class="cycle"><span class="c1">1 · De onderzoeksvraag</span><span class="c2">2 · Data verzamelen</span><span class="c3">3 · Data analyseren</span><span class="c4">4 · Conclusies trekken</span></div>
+<p><b>Statistiek</b> gaat over het verzamelen, verwerken, analyseren en presenteren van gegevens. Gegevens heten ook <b>data</b>.</p>
+<h3>Een goede onderzoeksvraag</h3>
+<p>Een onderzoeksvraag moet duidelijk en uitvoerbaar zijn. Let op deze valkuilen:</p>
+<ul><li><b>Te omvangrijk</b>: "Hoe lossen we het klimaatprobleem op?"</li><li><b>Vage woorden</b> die je eerst moet definiëren: "Hebben <i>goede</i> leerlingen een betere band met docenten?"</li><li><b>Niet specifiek genoeg</b>: "Wat is het effect van social media?"</li><li><b>Een (foute) veronderstelling</b>: "Waarom zijn eigenaren van elektrische auto's minder milieubewust?"</li><li><b>Niet nieuw</b>: "Beïnvloedt alcohol de rijvaardigheid?" (dat weten we al)</li></ul>
+<h3>Populatie en steekproef</h3>
+<p>De <b>populatie</b> is de hele groep waarover je iets wilt zeggen (mensen, maar ook huishoudens, lampen of pakken melk). Vaak kun je niet de hele populatie onderzoeken. Je onderzoekt dan een deel: de <b>steekproef</b>. De mensen die meedoen heten <b>respondenten</b>.</p>
+<div class="rule">Een steekproef is <b>representatief</b> als zij een goede afspiegeling is van de populatie.</div>
+<div class="rule">Een steekproef is <b>aselect</b> als elk element van de populatie een even grote kans heeft om in de steekproef te komen.</div>
+<p>Let ook op de <b>grootte</b> van de steekproef. Onderzoek je iets zeldzaams, dan heb je een grote steekproef nodig.</p>
+<p class="ex"><b>Voorbeeld.</b> Je wilt weten hoe Nederlanders over het klimaat denken en ondervraagt mensen op zaterdagmiddag op een kruispunt in de stad. Niet aselect: mensen die werken, op het platteland wonen of slecht ter been zijn, hebben bijna geen kans om erin te komen.</p>`,
+'2.2':`<h3>Variabelen, waarden en dataset</h3>
+<p>De kenmerken die je onderzoekt heten <b>variabelen</b>, omdat ze variëren. De mogelijke uitkomsten heten <b>waarden</b>. Alle gegevens samen vormen de <b>dataset</b> (data = gegevens, set = verzameling).</p>
+<p class="ex">Variabele <i>woonplaats</i> met waarden Ruurlo, Laren, Borculo. Variabele <i>leeftijd</i> met waarden 13, 14, 15.</p>
+<h3>Het stroomschema</h3>
+<div class="flow">
+<div class="fq">Zijn de waarden getallen?</div><div class="fa">Nee → <b>kwalitatief</b></div>
+<div class="fq">Ja: zijn het hoeveelheden?</div><div class="fa">Nee (bijv. kluisnummer, postcode) → <b>kwalitatief</b><br>Ja → <b>kwantitatief</b></div>
+<div class="fq">Kwalitatief: is er een logische ordening?</div><div class="fa">Nee → <b>nominaal</b> (woonplaats, kleur, type auto)<br>Ja → <b>ordinaal</b> (nooit/soms/vaak, tevredenheid, onderwijsniveau)</div>
+<div class="fq">Kwantitatief: zijn alle tussenliggende waarden mogelijk?</div><div class="fa">Nee → <b>discreet</b> (aantal kinderen, schoenmaat, verdieping)<br>Ja → <b>continu</b> (lengte, gewicht, temperatuur, tijd)</div>
+</div>
+<p><b>Ezelsbruggetjes</b>: <i>nominaal</i> komt van het Latijnse <i>nomen</i> = naam, je geeft de categorie alleen een naam. <i>Kwantitatief</i> komt van <i>kwantiteit</i> = hoeveelheid. <i>Discreet</i>: je telt (1, 2, 3…). <i>Continu</i>: je meet.</p>
+<p class="ex">Een gemiddelde berekenen heeft alleen zin bij kwantitatieve variabelen. Het gemiddelde kluisnummer of de gemiddelde tevredenheid zegt niets.</p>`,
+'2.3':`<h3>Centrummaten</h3>
+<table class="gt"><tr><td><b>gemiddelde</b></td><td>som van de waarnemingsgetallen ÷ aantal waarnemingsgetallen</td></tr>
+<tr><td><b>mediaan</b></td><td>zet de getallen op volgorde. Oneven aantal: het middelste getal. Even aantal: het gemiddelde van de middelste twee.</td></tr>
+<tr><td><b>modus</b></td><td>het getal dat het vaakst voorkomt. Komen twee of meer getallen even vaak het meest voor, dan bestaat de modus niet.</td></tr></table>
+<p class="ex"><b>Voorbeeld.</b> 8 5 3 6 3 4 8 3. Gemiddelde = 40 ÷ 8 = 5. Op volgorde: 3 3 3 <u>4 5</u> 6 8 8, mediaan = (4 + 5) ÷ 2 = 4,5. Modus = 3.</p>
+<h3>Frequentietabel</h3>
+<p class="ex">Cijfer 4 5 6 7 8 9 met frequentie 2 6 6 8 3 2. Totaal 27 leerlingen. Som = 2·4 + 6·5 + 6·6 + 8·7 + 3·8 + 2·9 = 172. Gemiddelde = 172 ÷ 27 ≈ 6,4. Mediaan = het 14e getal: de eerste 2 + 6 = 8 zijn een 4 of 5, nummer 9 tot en met 14 zijn een 6, dus mediaan = 6. Modus = 7 (komt 8 keer voor).</p>
+<h3>Welke centrummaat?</h3>
+<table class="gt"><tr><th></th><th>voordeel</th><th>nadeel</th></tr>
+<tr><td>gemiddelde</td><td>gebruikt alle getallen</td><td>gevoelig voor <b>uitschieters</b></td></tr>
+<tr><td>mediaan</td><td>ongevoelig voor uitschieters</td><td>alleen de middelste waarde telt</td></tr>
+<tr><td>modus</td><td>kan bij elk type variabele, ook kwalitatief</td><td>kleine verandering kan een heel andere modus geven</td></tr></table>
+<p>Een <b>uitschieter</b> is een waarde die erg afwijkt van de rest (bijv. opa van 68 op een verjaardag vol tieners).</p>
+<h3>Absolute en relatieve frequentie</h3>
+<p><b>Absolute frequentie</b> = hoe vaak. <b>Relatieve frequentie</b> = in procenten van het totaal: 1339 van de 2125 mensen hebben bruine ogen, dat is 1339 ÷ 2125 × 100% ≈ 63%. Bij kwalitatieve variabelen gebruik je vaak een staaf- of cirkeldiagram.</p>
+<h3>Klassenindeling en histogram</h3>
+<p>Bij veel verschillende waarden deel je in <b>klassen</b> in, bijvoorbeeld [20, 30): 20 hoort erbij, 30 niet. <b>Klassengrenzen</b> 20 en 30, <b>klassenbreedte</b> 10, <b>klassenmidden</b> (20 + 30) ÷ 2 = 25.</p>
+<p>Een <b>histogram</b> heeft staven die tegen elkaar aan staan. Een <b>frequentiepolygoon</b> is een lijn door stippen boven de klassenmiddens.</p>
+<p>Door de indeling raak je de precieze getallen kwijt. Je kunt het gemiddelde dan <b>schatten met de klassenmiddens</b>. In plaats van de modus noem je de <b>modale klasse</b>: de klasse met de grootste frequentie. Van de mediaan kun je alleen zeggen in welke klasse hij ligt.</p>
+<p class="ex"><b>Voorbeeld.</b> Gewicht [50,55) 4 · [55,60) 7 · [60,65) 12 · [65,70) 14 · [70,75) 5 · [75,80) 8. Totaal 50. Gemiddelde ≈ (4·52,5 + 7·57,5 + 12·62,5 + 14·67,5 + 5·72,5 + 8·77,5) ÷ 50 = 65,8 kg. Mediaan: 25e en 26e getal, de eerste drie klassen hebben 23 getallen, dus [65,70). Modale klasse [65,70).</p>
+<h3>Steel-bladdiagram</h3>
+<p class="ex">1 | 2 4 6 betekent 12, 14 en 16. De steel zijn de tientallen, de bladeren de eenheden.</p>`,
+'2.4':`<h3>Cumulatieve frequentie</h3>
+<p>Bij <b>cumulatieve frequentie</b> tel je alle voorgaande frequenties erbij op.</p>
+<p class="ex">Gespreksduur (0,1] 18 · (1,2] 23 · (2,3] 14 · (3,4] 8 · (4,5] 15. Cumulatief: 18, 41, 55, 63, 78. Dus 63 gesprekken duurden 4 minuten of korter. Relatief: 63 ÷ 78 × 100% ≈ 80,8%.</p>
+<p>In een <b>cumulatieve frequentiepolygoon</b> zet je de punten boven de <b>rechtergrens</b> van elke klasse. De lijn begint op de horizontale as. De mediaan lees je af bij 50%.</p>
+<h3>Kwartielen</h3>
+<p>De mediaan (Q<sub>2</sub>) verdeelt de getallen in twee helften. De mediaan van de eerste helft is het <b>eerste kwartiel Q<sub>1</sub></b>, die van de tweede helft het <b>derde kwartiel Q<sub>3</sub></b>. Bij een oneven aantal laat je de mediaan zelf weg bij het splitsen.</p>
+<p class="ex">3 5 5 6 <b>7</b> 7 8 9 11. Mediaan 7. Eerste helft 3 5 5 6, Q<sub>1</sub> = 5. Tweede helft 7 8 9 11, Q<sub>3</sub> = 8,5.</p>
+<div class="rule"><b>Vijfgetallensamenvatting</b>: Q<sub>0</sub> (kleinste), Q<sub>1</sub>, Q<sub>2</sub> (mediaan), Q<sub>3</sub>, Q<sub>4</sub> (grootste).</div>
+<h3>Spreiding</h3>
+<div class="rule"><b>spreidingsbreedte</b> = Q<sub>4</sub> − Q<sub>0</sub> (grootste − kleinste)</div>
+<div class="rule"><b>interkwartielafstand</b> = Q<sub>3</sub> − Q<sub>1</sub></div>
+<p class="ex">Drie leerlingen hebben allemaal gemiddeld een 6,9, maar Aafke (6,1 tot 7,7) is veel stabieler dan Ben (4,5 tot 9,5). De spreiding laat dat zien.</p>
+<h3>Boxplot</h3>
+<div id="bpdemo"></div>
+<p>De boxplot loopt van Q<sub>0</sub> tot Q<sub>4</sub>. De box loopt van Q<sub>1</sub> tot Q<sub>3</sub>, met een streep bij de mediaan. Elk van de vier delen bevat ongeveer <b>25%</b> van de getallen, ook als het ene deel veel langer is dan het andere. De box zelf bevat dus 50%.</p>
+<p>Bij een relatieve cumulatieve frequentiepolygoon lees je Q<sub>0</sub> tot Q<sub>4</sub> af bij 0%, 25%, 50%, 75% en 100%.</p>`,
+'2.5':`<h3>Standaardverdelingen</h3>
+<div id="distdemo" class="distgrid"></div>
+<ul><li><b>Symmetrisch</b>: links en rechts van het midden gespiegeld. Gemiddelde en mediaan liggen in dezelfde klasse.</li>
+<li><b>Rechtsscheef</b>: de staart ligt rechts (bijv. inkomen). <b>Linksscheef</b>: de staart ligt links.</li>
+<li>Bij een scheve verdeling ligt het <b>gemiddelde meer richting de staart</b> dan de mediaan. De mediaan geeft dan een beter beeld van het centrum.</li>
+<li><b>Meertoppig</b>: meerdere toppen, vaak omdat er twee groepen in de data zitten (bijv. lengte van jongens en meisjes).</li>
+<li><b>Uniform</b>: elke klasse heeft (ongeveer) dezelfde frequentie.</li></ul>
+<h3>Verdelingskromme</h3>
+<p>Een <b>verdelingskromme</b> is een globale grafiek van de verdeling. De modus ligt bij de top, de mediaan verdeelt de oppervlakte in twee gelijke helften. Bij een rechtsscheve verdeling: modus &lt; mediaan &lt; gemiddelde. In een <b>cumulatieve</b> verdelingskromme is de lijn het steilst bij de modus. Een rechte lijn hoort bij een uniforme verdeling.</p>
+<h3>Standaardafwijking</h3>
+<p>De <b>standaardafwijking</b> (standaarddeviatie, σ) is een spreidingsmaat die alle getallen gebruikt. Hoe groter, hoe meer spreiding. Hij hoort bij het gemiddelde.</p>
+<p class="ex"><b>Met de hand</b>: 1 gemiddelde berekenen · 2 verschil van elk getal met het gemiddelde · 3 die verschillen kwadrateren en optellen · 4 delen door het aantal · 5 wortel nemen. Rij 0 2 3 4 6: gemiddelde 3, verschillen −3 −1 0 1 3, kwadraten 9+1+0+1+9 = 20, 20 ÷ 5 = 4, √4 = 2.</p>
+<table class="gt"><tr><th>spreidingsmaat</th><th>voordeel</th><th>nadeel</th></tr>
+<tr><td>standaardafwijking</td><td>gebruikt alle getallen</td><td>gevoelig voor uitschieters</td></tr>
+<tr><td>interkwartielafstand</td><td>ongevoelig voor uitschieters</td><td>gebruikt alleen Q1 en Q3</td></tr>
+<tr><td>spreidingsbreedte</td><td>eenvoudig</td><td>extreem gevoelig voor uitschieters</td></tr></table>
+<h3>De normale verdeling</h3>
+<p>Een symmetrische, klokvormige verdeling heet de <b>normale verdeling</b> (Gausskromme). Gemiddelde μ (mu), standaardafwijking σ (sigma). Komt veel voor: lengte, gewicht, IQ, brandduur van lampen.</p>
+<div id="normdemo"></div>
+<div class="rule"><b>Vuistregels</b>: ongeveer 68% ligt tussen μ − σ en μ + σ · ongeveer 95% tussen μ − 2σ en μ + 2σ · bijna 100% tussen μ − 3σ en μ + 3σ.</div>
+<p>Uit de symmetrie volgen de stukjes: <b>2,5% | 13,5% | 34% | 34% | 13,5% | 2,5%</b>. Teken altijd eerst een schets met de getallen onder de as.</p>
+<p class="ex"><b>Voorbeeld.</b> 600 baby's, μ = 3500 g, σ = 450 g. Tussen 2600 (μ−2σ) en 3950 (μ+σ): 13,5 + 34 + 34 = 81,5%, dus 0,815 · 600 ≈ 489 baby's. Meer dan 4400 (μ+2σ): 2,5%.</p>`
+};
+// MC: [sec, vraag, goed, 'fout|fout|fout', uitleg]
+const MC=[
+['2.1','Wat is de juiste volgorde van de statistische cyclus?','onderzoeksvraag → data verzamelen → data analyseren → conclusies trekken','data verzamelen → onderzoeksvraag → conclusies trekken → data analyseren|onderzoeksvraag → data analyseren → data verzamelen → conclusies trekken|data analyseren → data verzamelen → onderzoeksvraag → conclusies trekken','Eerst weet je wat je wilt weten, dan verzamel je, dan analyseer je en dan trek je conclusies.'],
+['2.1','Een kijkmeter registreert automatisch welke zender aanstaat. In welke fase zit dit?','data verzamelen','onderzoeksvraag|data analyseren|conclusies trekken','Er worden gegevens vastgelegd.'],
+['2.1','SKO publiceert elke dag de kijkcijfers en het marktaandeel op de website. Welke fase?','conclusies trekken','data verzamelen|data analyseren|onderzoeksvraag','De resultaten worden gepresenteerd en conclusies gedeeld.'],
+['2.1','De meetgegevens worden met audio matching gekoppeld aan zenders. Welke fase?','data analyseren','data verzamelen|conclusies trekken|onderzoeksvraag','De verzamelde data worden verwerkt.'],
+['2.1','Wat is er mis met: "Hoe kunnen we het klimaatprobleem oplossen?"','de vraag is te omvangrijk','de vraag is niet nieuw|de vraag bevat een foute veronderstelling|de vraag is te specifiek','Zo\'n grote vraag kun je in één onderzoek niet beantwoorden. Je moet hem afbakenen.'],
+['2.1','Wat is er mis met: "Hebben goede leerlingen een betere band met docenten?"','de vraag bevat vage woorden die je eerst moet definiëren','de vraag is te omvangrijk|de vraag is niet nieuw|de vraag gaat over de verkeerde populatie','Wat is een "goede" leerling? Wat is een "betere band"? Dat moet je eerst precies maken.'],
+['2.1','Wat is er mis met: "Waarom zijn eigenaren van elektrische auto\'s minder milieubewust?"','de vraag gaat uit van een (foute) veronderstelling','de vraag is te omvangrijk|de vraag is te vaag|de vraag is niet nieuw','De vraag neemt al aan dát ze minder milieubewust zijn.'],
+['2.1','Wat is er mis met: "Beïnvloedt alcoholconsumptie de rijvaardigheid?"','de vraag is niet nieuw, het antwoord is algemeen bekend','de vraag is te omvangrijk|de vraag bevat vage woorden|de vraag gaat uit van een veronderstelling','Daar is al veel onderzoek naar gedaan.'],
+['2.1','Wat is er mis met: "Wat is het effect van social media?"','de vraag is niet specifiek genoeg','de vraag is niet nieuw|de vraag gaat uit van een veronderstelling|er is niets mis mee','Effect op wat? Bij wie? De vraag moet specifieker.'],
+['2.1','Wat is de populatie?','de hele groep waarover je iets wilt zeggen','het deel dat je echt onderzoekt|de mensen die de enquête invullen|de onderzoekers','Het deel dat je echt onderzoekt is de steekproef.'],
+['2.1','Wat is een steekproef?','het deel van de populatie dat je echt onderzoekt','de hele groep waarover je iets wilt zeggen|een vraag in de enquête|de uitkomst van het onderzoek','Een steekproef neem je omdat de hele populatie onderzoeken vaak te veel werk is.'],
+['2.1','Wanneer is een steekproef aselect?','als elk element van de populatie een even grote kans heeft om erin te komen','als de steekproef heel groot is|als alleen vrijwilligers meedoen|als de onderzoeker zelf kiest wie meedoet','Aselect = willekeurig, zonder voorkeur.'],
+['2.1','Wanneer is een steekproef representatief?','als ze een goede afspiegeling is van de populatie','als iedereen dezelfde leeftijd heeft|als ze minstens 1000 personen bevat|als de onderzoeker de mensen kent','Bijvoorbeeld net zo veel jongeren, vrouwen en hoger opgeleiden als in de populatie.'],
+['2.1','Welke vervolgopleidingen kiezen de leerlingen van jouw school? Wat is de populatie?','leerlingen van de eindexamenklassen van jouw school','alle leerlingen van Nederland|alle docenten van jouw school|alle leerlingen van jouw school','Alleen eindexamenleerlingen kiezen een vervolgopleiding.'],
+['2.1','Hoe effectief is een nieuw geneesmiddel tegen hooikoorts? Wat is de populatie?','mensen met hooikoorts','alle Nederlanders|artsen|apothekers','Het middel is bedoeld voor mensen met hooikoorts.'],
+['2.1','Op zaterdagmiddag ondervraag je voorbijgangers op een kruispunt over het klimaat. Waarom niet representatief?','alleen mensen die toevallig daar langskomen, hebben een kans','de steekproef is te groot|mensen liegen altijd|klimaat is geen goed onderwerp','Wie werkt, op het platteland woont of niet de stad in gaat, heeft geen kans.'],
+['2.1','Je onderzoekt een zeldzame aandoening en neemt aselect 100 Nederlanders. Wat is het probleem?','de steekproef is te klein: er zit misschien niemand met de aandoening in','de steekproef is niet aselect|100 is te veel|de populatie is verkeerd','Bij zeldzame kenmerken heb je een grote steekproef nodig.'],
+['2.1','Eenzaamheid onder kinderen onderzoek je met een steekproef onder middelbare scholieren. Wat is het probleem?','basisschoolkinderen hebben geen kans om in de steekproef te komen','de steekproef is te groot|middelbare scholieren zijn geen kinderen|er is geen probleem','De steekproef is dan geen afspiegeling van alle kinderen.'],
+['2.1','"Halen luie scholieren lagere cijfers voor economie?" Er worden 300 leerlingen ondervraagd die onvoldoende staan voor economie. Waarom is deze steekproef niet aselect?','leerlingen met een voldoende hebben geen kans om erin te komen','300 is te weinig|economie is een moeilijk vak|lui is een vaag woord','"Lui" is wel een vaag woord, maar dat is het probleem met de onderzoeksvraag, niet met de steekproef.'],
+['2.1','Hoe heten de mensen die deelnemen aan een enquête?','respondenten','populatie|onderzoekers|variabelen','Respondenten vormen samen de steekproef.'],
+['2.1','Een onderzoeker deelt eerst een vragenlijst uit aan patiënten. Welke fase?','data verzamelen','onderzoeksvraag|data analyseren|conclusies trekken','Vragenlijsten invullen = gegevens verzamelen.'],
+['2.1','"Patiënten die begeleid zijn door een fysiotherapeut herstellen sneller." Welke fase?','conclusies trekken','data verzamelen|data analyseren|onderzoeksvraag','Dit is het antwoord op de onderzoeksvraag.'],
+['2.2','Wat is een variabele?','een kenmerk dat je onderzoekt en dat verschillende waarden kan aannemen','een getal dat altijd gelijk blijft|de uitkomst van een berekening|een vraag in de enquête','Bijvoorbeeld leeftijd, woonplaats of tevredenheid.'],
+['2.2','Wat is een dataset?','een verzameling van gegevens','één antwoord op een enquête|een soort diagram|een formule','data = gegevens, set = verzameling.'],
+['2.2','Een variabele heeft getallen als waarden, maar het zijn geen hoeveelheden (kluisnummer). Welk type?','kwalitatief','kwantitatief|continu|discreet','Een gemiddeld kluisnummer berekenen heeft geen zin.'],
+['2.2','Wat betekent nominaal?','de categorieën hebben alleen een naam, er is geen logische volgorde','er is een logische volgorde|het zijn hoeveelheden|alle tussenliggende waarden zijn mogelijk','Van het Latijnse nomen = naam.'],
+['2.2','Wat betekent ordinaal?','er is een logische volgorde in de waarden','er is geen volgorde|het zijn hoeveelheden|het zijn altijd getallen','Bijvoorbeeld nooit, soms, regelmatig, vaak.'],
+['2.2','Wanneer is een kwantitatieve variabele continu?','als alle tussenliggende waarden mogelijk zijn','als alleen gehele getallen mogelijk zijn|als er een logische volgorde is|als het een naam is','Lengte, gewicht, tijd en temperatuur kun je steeds nauwkeuriger meten.'],
+['2.2','Bij een enquête kies je bij koffie per dag uit 0, 1, 2, 3 of "4 of meer" koppen. Waarom kun je het gemiddelde niet berekenen?','"4 of meer" is geen precies getal','de variabele is nominaal|koffie is geen getal|er zijn te weinig respondenten','De onderzoeker had naar het precieze aantal koppen moeten vragen.'],
+['2.2','Marc wil de gemiddelde leeftijd weten. Bij welke vraag verwacht je een hogere gemiddelde leeftijd?','"Wat is uw geboortedatum?"','"Hoe oud bent u?"|bij allebei hetzelfde|dat kun je niet zeggen','Bij "Hoe oud bent u?" rondt iedereen naar beneden af. Met de geboortedatum reken je precies, dat is gemiddeld ongeveer een half jaar hoger.'],
+['2.3','Wat is de mediaan?','het middelste getal als je de getallen op volgorde zet','het getal dat het vaakst voorkomt|de som gedeeld door het aantal|het grootste min het kleinste getal','Bij een even aantal: het gemiddelde van de middelste twee.'],
+['2.3','Wat is de modus?','het getal dat het vaakst voorkomt','het middelste getal|het gemiddelde|het grootste getal','Komen twee of meer getallen even vaak het meest voor, dan bestaat de modus niet.'],
+['2.3','Welke centrummaat kun je gebruiken bij een kwalitatieve variabele zoals haarkleur?','de modus','het gemiddelde|de mediaan|de standaardafwijking','Je kunt niet rekenen met kleuren, maar je kunt wel tellen welke het vaakst voorkomt.'],
+['2.3','Leeftijden op een verjaardag: 17, 20, 22, 17, 19, 21 en 68. Welke centrummaat is het meest geschikt?','de mediaan, vanwege de uitschieter 68','het gemiddelde|de modus|de spreidingsbreedte','Het gemiddelde wordt door opa van 68 omhoog getrokken.'],
+['2.3','Volume van glazen bollen: 48, 48, 48, 48, 53, 48, 48, 48, 48, 48 cm³. Welke centrummaat?','de modus (48 cm³)','het gemiddelde|de spreidingsbreedte|geen enkele','Bijna alles is 48. De ene 53 is waarschijnlijk een meetfout.'],
+['2.3','Wat is een uitschieter?','een waarde die erg afwijkt van de andere waarden','de grootste waarde|de waarde die het vaakst voorkomt|het gemiddelde','Het gemiddelde is daar gevoelig voor, de mediaan niet.'],
+['2.3','Wat is het nadeel van het gemiddelde?','het is gevoelig voor uitschieters','het gebruikt maar één waarde|het kan alleen bij kwalitatieve data|het is altijd een geheel getal','Het voordeel: het gebruikt alle waarnemingsgetallen.'],
+['2.3','Wat is de modale klasse?','de klasse met de grootste frequentie','de middelste klasse|de eerste klasse|de klasse met het gemiddelde','Bij een klassenindeling vervangt die de modus.'],
+['2.3','Bij de klasse [20, 30), hoort 30 erbij?','nee, 30 hoort bij de volgende klasse','ja|alleen als het een geheel getal is|dat hangt af van de frequentie','Het teken [ betekent: hoort erbij. Het teken ) betekent: hoort er niet bij.'],
+['2.3','Wat is het klassenmidden van [40, 50)?','45','40|50|10','(40 + 50) ÷ 2 = 45.'],
+['2.3','Waarom kun je bij een klassenindeling het gemiddelde alleen schatten?','je weet de precieze waarnemingsgetallen niet meer','de klassen zijn te breed|je mag geen gemiddelde berekenen bij klassen|de frequenties kloppen niet','Je rekent met de klassenmiddens alsof alle getallen in het midden liggen.'],
+['2.3','Wat is het verschil tussen een histogram en een staafdiagram?','in een histogram staan de staven tegen elkaar aan (klassen van een kwantitatieve variabele)','een histogram is altijd rond|in een histogram zijn de staven horizontaal|er is geen verschil','Een staafdiagram gebruik je vaak bij kwalitatieve variabelen.'],
+['2.3','Wat is een frequentiepolygoon?','een lijndiagram met punten boven de klassenmiddens, begin en eind op de horizontale as','een cirkeldiagram|een tabel met frequenties|een boxplot','Je kunt hem tekenen in plaats van een histogram.'],
+['2.3','Steel-bladdiagram: 2 | 0 2 3 5 8. Welke getallen staan hier?','20, 22, 23, 25 en 28','2, 0, 2, 3, 5, 8|0, 2, 3, 5, 8|2,0 2,2 2,3 2,5 2,8','De steel geeft de tientallen, de bladeren de eenheden.'],
+['2.4','Wat is cumulatieve frequentie?','de frequentie opgeteld bij alle voorgaande frequenties','de frequentie in procenten|de grootste frequentie|de frequentie van de middelste klasse','Bij de laatste klasse is de cumulatieve frequentie gelijk aan het totaal.'],
+['2.4','Waar zet je de punten bij een cumulatieve frequentiepolygoon?','boven de rechtergrens van elke klasse','boven het klassenmidden|boven de linkergrens|op de horizontale as','Pas aan het eind van de klasse zijn alle getallen van die klasse meegeteld.'],
+['2.4','Bij welk percentage lees je de mediaan af in een relatieve cumulatieve frequentiepolygoon?','50%','25%|75%|100%','Q1 bij 25%, de mediaan bij 50%, Q3 bij 75%.'],
+['2.4','Wat is de interkwartielafstand?','Q3 − Q1','Q4 − Q0|Q2 − Q1|Q4 − Q2','Ook wel kwartielafstand. Ongevoelig voor uitschieters.'],
+['2.4','Wat is de spreidingsbreedte?','grootste − kleinste getal','Q3 − Q1|het gemiddelde − de mediaan|het aantal getallen','Eenvoudig, maar extreem gevoelig voor uitschieters.'],
+['2.4','Hoeveel procent van de getallen ligt in de box van een boxplot?','ongeveer 50%','ongeveer 25%|ongeveer 75%|100%','De box loopt van Q1 tot Q3.'],
+['2.4','In een boxplot is het rechterdeel van de box veel langer dan het linkerdeel. Bevat het rechterdeel meer getallen?','nee, beide delen bevatten ongeveer 25%','ja, ongeveer twee keer zoveel|ja, ongeveer 75%|nee, minder','De getallen liggen in het lange deel alleen meer verspreid.'],
+['2.4','Boxplot gewicht 2184 leerlingen: 34,7 · 46,9 · 55,9 · 60,4 · 92,8 kg. "Er zijn meer leerlingen tussen 55,9 en 60,4 kg dan tussen 60,4 en 92,8 kg." Klopt dat?','nee, beide groepen zijn ongeveer 25%','ja, want de afstand is kleiner|ja, ongeveer twee keer zoveel|dat kun je niet weten','Elk deel van de boxplot is ongeveer 25%, hoe lang het ook is.'],
+['2.4','Zelfde boxplot (2184 leerlingen). Hoeveel leerlingen zijn lichter dan 46,9 kg?','ongeveer 546 (25%)','meer dan 550|ongeveer 1092|ongeveer 1638','25% van 2184 ≈ 546.'],
+['2.4','Boxplot zittenblijvers per schoolvestiging: 0 · 9 · 25 · 66 · 251. Welke centrummaat geeft het beste beeld?','de mediaan, omdat er uitschieters zijn','het gemiddelde|de modus|de spreidingsbreedte','De verdeling is erg scheef: een paar grote vestigingen trekken het gemiddelde omhoog.'],
+['2.4','Wat is Q1?','de mediaan van de eerste helft van de getallen','het kleinste getal|het eerste getal in de lijst|het gemiddelde van de eerste helft','Ook wel het eerste kwartiel. Ongeveer 25% van de getallen is kleiner.'],
+['2.4','Wat zijn de vijf getallen van de vijfgetallensamenvatting?','Q0, Q1, Q2, Q3, Q4 (kleinste, Q1, mediaan, Q3, grootste)','gemiddelde, mediaan, modus, minimum, maximum|de eerste vijf getallen|vijf willekeurige getallen','Daarmee teken je een boxplot.'],
+['2.5','Bij een rechtsscheve verdeling ligt de staart…','rechts','links|in het midden|aan beide kanten','Het gemiddelde wordt naar de staart getrokken: gemiddelde > mediaan.'],
+['2.5','Bij een rechtsscheve verdeling geldt meestal…','modus < mediaan < gemiddelde','gemiddelde < mediaan < modus|alle drie gelijk|mediaan < modus < gemiddelde','Het gemiddelde ligt het dichtst bij de staart.'],
+['2.5','Bij een linksscheve verdeling geldt meestal…','gemiddelde < mediaan < modus','modus < mediaan < gemiddelde|alle drie gelijk|mediaan < gemiddelde < modus','Nu ligt de staart links, dus het gemiddelde ligt links.'],
+['2.5','Het persoonlijk inkomen in Nederland is rechtsscheef verdeeld. Welke centrummaat geeft een beter beeld van een gangbaar inkomen?','de mediaan','het gemiddelde|de spreidingsbreedte|de standaardafwijking','Een paar heel hoge inkomens trekken het gemiddelde omhoog.'],
+['2.5','Een histogram heeft twee toppen (lengte van 59 leerlingen). Wat is een mogelijke verklaring?','er zitten jongens en meisjes in de groep','de metingen zijn fout|de groep is te klein|lengte is een discrete variabele','Twee groepen met elk een eigen gemiddelde geven twee toppen.'],
+['2.5','Wat is een uniforme verdeling?','elke klasse heeft (vrijwel) dezelfde frequentie','iedereen heeft dezelfde waarde|er is één top in het midden|de staart ligt rechts','In een histogram zijn alle staven even hoog.'],
+['2.5','In een histogram wordt het laatste staafje naar rechts verplaatst. Wat gebeurt er met het gemiddelde en de mediaan?','het gemiddelde neemt toe, de mediaan blijft gelijk','allebei nemen toe|allebei blijven gelijk|het gemiddelde blijft gelijk, de mediaan neemt toe','De mediaan hangt alleen af van de middelste getallen.'],
+['2.5','Hoe ziet de relatieve cumulatieve verdelingskromme van een uniforme verdeling eruit?','een rechte lijn','een S-vorm|een klok|een horizontale lijn','Elke klasse voegt evenveel toe.'],
+['2.5','Waar is een cumulatieve verdelingskromme het steilst?','bij de modus','bij de mediaan|aan het begin|aan het eind','Daar komen de meeste getallen erbij.'],
+['2.5','Wat is het voordeel van de standaardafwijking als spreidingsmaat?','hij gebruikt alle waarnemingsgetallen','hij is ongevoelig voor uitschieters|hij is heel eenvoudig te berekenen|hij gebruikt alleen Q1 en Q3','Nadeel: gevoelig voor uitschieters.'],
+['2.5','Roel wil laten zien hoe stabiel zijn cijfers zijn, maar heeft één uitzonderlijk slecht cijfer. Welke spreidingsmaat?','de interkwartielafstand','de spreidingsbreedte|de standaardafwijking|het gemiddelde','De interkwartielafstand is ongevoelig voor uitschieters.'],
+['2.5','Drie symmetrische verdelingen hebben dezelfde μ, met σ = 0,5, 1 en 1,5. Welke kromme heeft σ = 0,5?','de smalste en hoogste','de breedste en laagste|de middelste|dat kun je niet zien','Kleine standaardafwijking = weinig spreiding = smalle, hoge kromme.'],
+['2.5','Rij A: 0 2 3 4 6. Rij B: 10 12 13 14 16. Wat geldt voor de standaardafwijking?','die is gelijk, want B is A + 10','B heeft een grotere standaardafwijking|A heeft een grotere standaardafwijking|dat kun je zonder rekenen niet zeggen','Alles opschuiven verandert de spreiding niet.'],
+['2.5','Wat is de standaardafwijking van 3, 3, 3, 3, 3, 3?','0','3|1|18','Er is geen spreiding.'],
+['2.5','Volgens de vuistregels ligt ongeveer 68% van de waarnemingen tussen…','μ − σ en μ + σ','μ − 2σ en μ + 2σ|μ en μ + σ|μ − 3σ en μ + 3σ','En 95% tussen μ − 2σ en μ + 2σ.'],
+['2.5','Hoeveel procent ligt boven μ + 2σ?','2,5%','5%|13,5%|16%','95% ligt binnen 2σ, de overige 5% wordt verdeeld over de twee staarten.'],
+['2.5','Hoeveel procent ligt tussen μ en μ + σ?','34%','68%|13,5%|50%','68% ligt tussen μ − σ en μ + σ, dus de helft aan elke kant.'],
+['2.5','Hoeveel procent ligt boven μ + σ?','16%','34%|2,5%|32%','13,5% + 2,5% = 16%.'],
+['2.5','IQ is normaal verdeeld met μ = 100 en σ = 15. Hoeveel procent heeft een IQ tussen 70 en 130?','95%','68%|99%|81,5%','70 = μ − 2σ en 130 = μ + 2σ.'],
+['2.5','Bij een groep 18-jarigen begint vrijwel elke reactietijd vanaf 210 ms, het gemiddelde is 420 ms. Hoe groot is σ?','70 ms','210 ms|105 ms|140 ms','Vrijwel alles ligt binnen 3σ: 420 − 3σ = 210, dus σ = 70.'],
+['2.5','Wie wordt vaak genoemd bij de normale verdeling (de "klokkromme")?','Carl Friedrich Gauss','Isaac Newton|Pythagoras|Albert Einstein','De normaalkromme heet ook Gausskromme.']
+];
+// variabelen sorteren: [beschrijving, type] type: nom, ord, dis, con
+const VARS=[
+['woonplaats','nom'],['favoriete kleur','nom'],['type auto (benzine, diesel, hybride, elektrisch)','nom'],['kluisnummer','nom'],['postcode','nom'],['migratieachtergrond (wel/geen)','nom'],['soort appel (Elstar, Jonagold…)','nom'],['sport die je doet','nom'],['geslacht','nom'],['patiëntnummer','nom'],['huishouden (alleenstaand/meer personen)','nom'],['rookt u? (ja/nee)','nom'],['reden van slechtziendheid','nom'],['slaapligging (rug/zij/buik)','nom'],
+['autogebruik (nooit/soms/regelmatig/vaak)','ord'],['tevredenheid over je rooster (1 tot 5)','ord'],['onderwijsniveau (vmbo, havo, vwo…)','ord'],['leeftijdsgroep (16-29, 30-54, 55+)','ord'],['kwaliteitsklasse van een appel (1, 2 of 3)','ord'],['rang in de top 5 best betaalde sporters','ord'],['moe overdag (nooit/soms/vaak/altijd)','ord'],['mate van eens (helemaal mee oneens … helemaal mee eens)','ord'],['schoolcijfer als beoordeling (onvoldoende/voldoende/goed)','ord'],
+['aantal appels aan een boom','dis'],['aantal leerlingen in een lokaal','dis'],['aantal dagen ziek','dis'],['aantal tussenuren per week','dis'],['schoenmaat','dis'],['verdieping waar de lift is','dis'],['gebruikte versnelling van een auto','dis'],['aantal ademstops per nacht','dis'],['aantal begeleiders','dis'],['aantal huisgenoten','dis'],['aantal keer sporten per week','dis'],
+['lengte in cm','con'],['gewicht van een appel','con'],['temperatuur in graden Celsius','con'],['reisafstand naar school','con'],['snelheid van een auto','con'],['hoogte van de lift boven de grond','con'],['voetlengte','con'],['langste ademstop in seconden','con'],['tijd op de 100 meter','con'],['aantal km per dag lopen','con']
+];
+const VTYPE={nom:['kwalitatief','nominaal','Kwalitatief en er is geen logische volgorde: je geeft de categorieën alleen een naam.'],ord:['kwalitatief','ordinaal','Kwalitatief en er is een logische volgorde.'],dis:['kwantitatief','discreet','Een hoeveelheid die je telt: niet alle tussenliggende waarden zijn mogelijk.'],con:['kwantitatief','continu','Een hoeveelheid die je meet: alle tussenliggende waarden zijn mogelijk.']};
+const R=(a,b)=>a+Math.floor(Math.random()*(b-a+1));
+const nf=(x,d=1)=>{const r=Math.round(x*Math.pow(10,d))/Math.pow(10,d);return String(r).replace('.',',')};
+const sum=a=>a.reduce((s,x)=>s+x,0);
+function median(s){const n=s.length,m=Math.floor(n/2);return n%2?s[m]:(s[m-1]+s[m])/2}
+function quart(arr){const s=[...arr].sort((a,b)=>a-b),n=s.length,h=Math.floor(n/2);const lo=s.slice(0,h),hi=s.slice(n%2?h+1:h);return {s,q0:s[0],q1:median(lo),q2:median(s),q3:median(hi),q4:s[n-1]}}
+function modeOf(arr){const c={};arr.forEach(x=>c[x]=(c[x]||0)+1);const mx=Math.max(...Object.values(c));const m=Object.keys(c).filter(k=>c[k]===mx);return m.length===1?+m[0]:null}
+const tbl=(h1,xs,h2,fs)=>`<div class="tw"><table class="ft"><tr><th>${h1}</th>${xs.map(x=>`<td>${x}</td>`).join('')}</tr><tr><th>${h2}</th>${fs.map(x=>`<td>${x}</td>`).join('')}</tr></table></div>`;
+const vtbl=(h1,xs,h2,fs)=>`<div class="tw"><table class="ft v"><tr><th>${h1}</th><th>${h2}</th></tr>${xs.map((x,i)=>`<tr><td>${x}</td><td>${fs[i]}</td></tr>`).join('')}</table></div>`;
+/* ---------- SVG ---------- */
+function svgBox(q,lo,hi,step,unit){
+  const W=340,H=96,L=18,Rr=18,X=v=>L+(v-lo)/(hi-lo)*(W-L-Rr);let t='';
+  for(let v=lo;v<=hi+1e-9;v+=step)t+=`<line x1="${X(v)}" y1="64" x2="${X(v)}" y2="69" stroke="currentColor" opacity=".5"/><text x="${X(v)}" y="82" text-anchor="middle" font-size="10" fill="currentColor" opacity=".7">${nf(v,2)}</text>`;
+  return `<svg class="chart" viewBox="0 0 ${W} ${H+8}" role="img" aria-label="boxplot"><line x1="${L}" y1="64" x2="${W-Rr}" y2="64" stroke="currentColor" opacity=".5"/>${t}
+  <line x1="${X(q[0])}" y1="32" x2="${X(q[1])}" y2="32" stroke="currentColor" stroke-width="2"/><line x1="${X(q[3])}" y1="32" x2="${X(q[4])}" y2="32" stroke="currentColor" stroke-width="2"/>
+  <line x1="${X(q[0])}" y1="24" x2="${X(q[0])}" y2="40" stroke="currentColor" stroke-width="2"/><line x1="${X(q[4])}" y1="24" x2="${X(q[4])}" y2="40" stroke="currentColor" stroke-width="2"/>
+  <rect x="${X(q[1])}" y="16" width="${X(q[3])-X(q[1])}" height="32" fill="var(--accent)" stroke="currentColor" stroke-width="2" rx="2"/><line x1="${X(q[2])}" y1="16" x2="${X(q[2])}" y2="48" stroke="currentColor" stroke-width="2.5"/>
+  ${q.map((v,i)=>`<text x="${X(v)}" y="11" text-anchor="middle" font-size="10" font-weight="700" fill="currentColor">${nf(v,2)}</text>`).join('')}
+  <text x="${W-Rr}" y="${H+4}" text-anchor="end" font-size="10" fill="currentColor" opacity=".7">${unit||''}</text></svg>`;
+}
+function svgHist(fr,labels,opts={}){
+  const W=320,H=150,L=8,B=22,mx=Math.max(...fr),bw=(W-2*L)/fr.length;
+  return `<svg class="chart" viewBox="0 0 ${W} ${H}" role="img" aria-label="histogram">${fr.map((f,i)=>`<rect x="${L+i*bw}" y="${H-B-(f/mx)*(H-B-10)}" width="${bw}" height="${(f/mx)*(H-B-10)}" fill="var(--accent)" stroke="var(--surface)" stroke-width="1"/>`).join('')}
+  <line x1="${L}" y1="${H-B}" x2="${W-L}" y2="${H-B}" stroke="currentColor" opacity=".6"/>${labels?labels.map((t,i)=>`<text x="${L+i*bw}" y="${H-6}" text-anchor="middle" font-size="10" fill="currentColor" opacity=".7">${t}</text>`).join(''):''}</svg>`;
+}
+function shapeFreqs(type){
+  const n=14,a=[];for(let i=0;i<n;i++){const x=i/(n-1);let v;
+    if(type==='sym')v=Math.exp(-Math.pow((x-.5)/.18,2));
+    else if(type==='rechts')v=Math.pow(x+.05,1.2)*Math.exp(-x*7)*12;
+    else if(type==='links')v=Math.pow(1.05-x,1.2)*Math.exp(-(1-x)*7)*12;
+    else if(type==='uni')v=.8+Math.random()*.08;
+    else v=Math.exp(-Math.pow((x-.28)/.11,2))+.85*Math.exp(-Math.pow((x-.74)/.11,2));
+    a.push(Math.max(.03,v+(type==='uni'?0:(Math.random()-.5)*.06)))}return a}
+const SHAPES={sym:'symmetrisch (één top)',rechts:'rechtsscheef',links:'linksscheef',uni:'uniform',twee:'meertoppig (twee toppen)'};
+function svgNormal(mu,sig,unit,hi){
+  const W=340,H=150,L=10,B=34,X=k=>L+(k+3.3)/(6.6)*(W-2*L),f=k=>Math.exp(-k*k/2);
+  let path='M';for(let k=-3.3;k<=3.31;k+=.05)path+=`${X(k)},${H-B-f(k)*(H-B-12)} `;
+  const seg=[-3,-2,-1,0,1,2,3],pc=['2,5%','13,5%','34%','34%','13,5%','2,5%'];
+  let fill='';if(hi){const [a,b]=hi;let p=`M${X(a)},${H-B} `;for(let k=a;k<=b+1e-9;k+=.05)p+=`L${X(k)},${H-B-f(k)*(H-B-12)} `;p+=`L${X(b)},${H-B}Z`;fill=`<path d="${p}" fill="var(--accent)" opacity=".55"/>`}
+  return `<svg class="chart" viewBox="0 0 ${W} ${H}" role="img" aria-label="normaalkromme">${fill}<path d="${path}" fill="none" stroke="currentColor" stroke-width="2"/>
+  <line x1="${L}" y1="${H-B}" x2="${W-L}" y2="${H-B}" stroke="currentColor" opacity=".6"/>
+  ${seg.map(k=>`<line x1="${X(k)}" y1="${H-B}" x2="${X(k)}" y2="${H-B-f(k)*(H-B-12)}" stroke="currentColor" opacity=".35" stroke-dasharray="3 3"/><text x="${X(k)}" y="${H-B+13}" text-anchor="middle" font-size="9.5" fill="currentColor">${mu==null?(k===0?'μ':`μ${k>0?'+':'−'}${Math.abs(k)===1?'':Math.abs(k)}σ`):nf(mu+k*sig,2)}</text>`).join('')}
+  ${pc.map((t,i)=>`<text x="${(X(seg[i])+X(seg[i+1]))/2}" y="${i===2||i===3?H-B-30:H-B-6}" text-anchor="middle" font-size="9" font-weight="700" fill="currentColor">${t}</text>`).join('')}
+  <text x="${W-L}" y="${H-4}" text-anchor="end" font-size="9.5" fill="currentColor" opacity=".7">${unit||''}</text></svg>`;
+}
+/* ---------- generatoren ---------- */
+const GENS={
+ gmm:{sec:'2.3',t:'Gemiddelde, mediaan, modus',f(){
+  const n=R(6,9);let a;do{a=Array.from({length:n},()=>R(1,20));a[R(0,n-1)]=a[R(0,n-1)]}while(false);
+  const s=[...a].sort((x,y)=>x-y),mo=modeOf(a);const kinds=['gem','med'];if(mo!=null)kinds.push('mod');const k=pick(kinds);
+  const g=sum(a)/n,me=median(s);
+  const lst=a.join('&nbsp;&nbsp;');
+  if(k==='gem')return {q:`Bereken het <b>gemiddelde</b> van<div class="nums">${lst}</div>Rond af op één decimaal.`,a:g,tol:.051,w:`Som = ${a.join(' + ')} = ${sum(a)}. Aantal = ${n}. Gemiddelde = ${sum(a)} ÷ ${n} ≈ ${nf(g)}.`};
+  if(k==='med')return {q:`Bereken de <b>mediaan</b> van<div class="nums">${lst}</div>`,a:me,tol:.001,w:`Op volgorde: ${s.join(' ')}. ${n%2?`Oneven aantal (${n}): het middelste getal is het ${(n+1)/2}e = ${nf(me,2)}.`:`Even aantal (${n}): het gemiddelde van het ${n/2}e en ${n/2+1}e getal = (${s[n/2-1]} + ${s[n/2]}) ÷ 2 = ${nf(me,2)}.`}`};
+  return {q:`Wat is de <b>modus</b> van<div class="nums">${lst}</div>`,a:mo,tol:.001,w:`${mo} komt het vaakst voor (${a.filter(x=>x===mo).length} keer).`};}},
+ freq:{sec:'2.3',t:'Frequentietabel',f(){
+  const st=R(1,10),xs=Array.from({length:6},(_,i)=>st+i);let fs;do{fs=xs.map(()=>R(1,9))}while(fs.filter(f=>f===Math.max(...fs)).length>1);
+  const N=sum(fs),S=sum(xs.map((x,i)=>x*fs[i])),g=S/N;const all=[];xs.forEach((x,i)=>{for(let j=0;j<fs[i];j++)all.push(x)});const me=median(all),mo=xs[fs.indexOf(Math.max(...fs))];
+  const k=pick(['gem','med','mod','tot']);const T=tbl('waarde',xs,'frequentie',fs);
+  const cum=[];fs.reduce((s,f)=>{cum.push(s+f);return s+f},0);
+  if(k==='gem')return {q:`Bereken het <b>gemiddelde</b> bij deze frequentietabel. Rond af op één decimaal.${T}`,a:g,tol:.051,w:`Totaal = ${fs.join(' + ')} = ${N}. Som = ${xs.map((x,i)=>`${fs[i]}·${x}`).join(' + ')} = ${S}. Gemiddelde = ${S} ÷ ${N} ≈ ${nf(g)}.`};
+  if(k==='med')return {q:`Bepaal de <b>mediaan</b> bij deze frequentietabel.${T}`,a:me,tol:.001,w:`Totaal ${N}. ${N%2?`De mediaan is het ${(N+1)/2}e getal.`:`De mediaan is het gemiddelde van het ${N/2}e en ${N/2+1}e getal.`} Tel op: ${cum.join(', ')}. Dus mediaan = ${nf(me,2)}.`};
+  if(k==='mod')return {q:`Wat is de <b>modus</b>?${T}`,a:mo,tol:.001,w:`${mo} heeft de grootste frequentie (${Math.max(...fs)}).`};
+  return {q:`Hoeveel waarnemingen zijn er in totaal?${T}`,a:N,tol:.001,w:`${fs.join(' + ')} = ${N}.`};}},
+ klas:{sec:'2.3',t:'Klassenindeling',f(){
+  const bw=pick([5,10,20]),st=pick([0,20,40,50,60]),n=R(5,6);const cl=Array.from({length:n},(_,i)=>st+i*bw);let fs;do{fs=cl.map(()=>R(2,15))}while(fs.filter(f=>f===Math.max(...fs)).length>1);
+  const lab=cl.map(c=>`[${c}, ${c+bw})`),mid=cl.map(c=>c+bw/2),N=sum(fs),S=sum(mid.map((m,i)=>m*fs[i])),g=S/N;
+  const T=vtbl('klasse',lab,'frequentie',fs);const k=pick(['gem','modaal','med','midden']);
+  if(k==='gem')return {q:`Bereken met de klassenmiddens een <b>schatting van het gemiddelde</b>. Rond af op één decimaal.${T}`,a:g,tol:.051,w:`Klassenmiddens: ${mid.map(m=>nf(m,2)).join(', ')}. Som = ${mid.map((m,i)=>`${fs[i]}·${nf(m,2)}`).join(' + ')} = ${nf(S,2)}. Totaal ${N}. Gemiddelde ≈ ${nf(S,2)} ÷ ${N} ≈ ${nf(g)}.`};
+  if(k==='modaal')return {mc:true,q:`Wat is de <b>modale klasse</b>?${T}`,opts:lab,a:lab[fs.indexOf(Math.max(...fs))],w:`De modale klasse is de klasse met de grootste frequentie (${Math.max(...fs)}).`};
+  if(k==='midden')return {q:`Wat is het <b>klassenmidden</b> van de klasse ${lab[2]}?`,a:mid[2],tol:.001,w:`(${cl[2]} + ${cl[2]+bw}) ÷ 2 = ${nf(mid[2],2)}.`};
+  const cum=[];fs.reduce((s,f)=>{cum.push(s+f);return s+f},0);const pos=N%2?(N+1)/2:N/2;const ci=cum.findIndex(c=>c>=pos);const ci2=N%2?ci:cum.findIndex(c=>c>=pos+1);
+  if(ci!==ci2)return GENS.klas.f();
+  return {mc:true,q:`In welke klasse ligt de <b>mediaan</b>?${T}`,opts:lab,a:lab[ci],w:`Totaal ${N}, dus de mediaan is ${N%2?`het ${pos}e getal`:`het gemiddelde van het ${pos}e en ${pos+1}e getal`}. Cumulatief: ${cum.join(', ')}. Dat valt in ${lab[ci]}.`};}},
+ rel:{sec:'2.3',t:'Relatieve frequentie',f(){
+  const cats=pick([['bruin','blauw','groen','anders'],['fiets','bus','auto','lopend'],['voetbal','hockey','tennis','geen']]);const fs=cats.map(()=>R(20,400));const N=sum(fs),i=R(0,3),p=fs[i]/N*100;
+  return {q:`Hoeveel procent is <b>${cats[i]}</b>? Rond af op één decimaal.${tbl('categorie',cats,'absolute frequentie',fs)}`,a:p,tol:.051,w:`Totaal = ${N}. Relatieve frequentie = ${fs[i]} ÷ ${N} × 100% ≈ ${nf(p)}%.`,u:'%'};}},
+ weeg:{sec:'2.3',t:'Gewogen gemiddelde',f(){
+  const n=R(3,5),gr=Array.from({length:n},()=>R(35,85)/10),w=gr.map(()=>pick([1,1,2])),lw=pick([1,2,3]);const tgt=pick([5.5,6,6.5]);
+  const need=(tgt*(sum(w)+lw)-sum(gr.map((g,i)=>g*w[i])))/lw;if(need<1||need>10)return GENS.weeg.f();
+  return {q:`Joris heeft deze cijfers. Voor de laatste toets (weging ${lw}) moet hij gemiddeld op een <b>${nf(tgt)}</b> uitkomen. Welk cijfer moet hij halen? Rond af op één decimaal.${tbl('cijfer',gr.map(g=>nf(g)),'weging',w)}`,a:Math.ceil(need*10-1e-9)/10,tol:.051,w:`Totaal gewicht = ${sum(w)} + ${lw} = ${sum(w)+lw}. Nodig: ${nf(tgt)} × ${sum(w)+lw} = ${nf(tgt*(sum(w)+lw),2)} punten. Al behaald: ${gr.map((g,i)=>`${w[i]}·${nf(g)}`).join(' + ')} = ${nf(sum(gr.map((g,i)=>g*w[i])),2)}. Nog nodig: ${nf(tgt*(sum(w)+lw)-sum(gr.map((g,i)=>g*w[i])),2)} ÷ ${lw} ≈ ${nf(need,2)}, dus minstens een ${nf(Math.ceil(need*10-1e-9)/10)}.`};}},
+ kw:{sec:'2.4',t:'Kwartielen en spreiding',f(){
+  const n=R(7,12),a=Array.from({length:n},()=>R(10,99));const q=quart(a);const k=pick(['q1','q3','ika','sb','q2']);
+  const lst=a.join('&nbsp;&nbsp;'),h=Math.floor(n/2),lo=q.s.slice(0,h),hi=q.s.slice(n%2?h+1:h);
+  const base=`Op volgorde: ${q.s.join(' ')}. Mediaan Q2 = ${nf(q.q2,2)}. ${n%2?'Oneven aantal: laat de mediaan weg bij het splitsen.':'Even aantal: splits in twee gelijke helften.'} Eerste helft: ${lo.join(' ')} → Q1 = ${nf(q.q1,2)}. Tweede helft: ${hi.join(' ')} → Q3 = ${nf(q.q3,2)}.`;
+  const names={q1:'het eerste kwartiel Q<sub>1</sub>',q3:'het derde kwartiel Q<sub>3</sub>',q2:'de mediaan Q<sub>2</sub>',ika:'de interkwartielafstand',sb:'de spreidingsbreedte'};
+  const ans={q1:q.q1,q3:q.q3,q2:q.q2,ika:q.q3-q.q1,sb:q.q4-q.q0}[k];
+  return {q:`Bereken ${names[k]} van<div class="nums">${lst}</div>`,a:ans,tol:.001,w:base+(k==='ika'?` Interkwartielafstand = Q3 − Q1 = ${nf(q.q3,2)} − ${nf(q.q1,2)} = ${nf(ans,2)}.`:k==='sb'?` Spreidingsbreedte = grootste − kleinste = ${q.q4} − ${q.q0} = ${ans}.`:'')};}},
+ box:{sec:'2.4',t:'Boxplot aflezen',f(){
+  const lo=pick([0,10,20,40]),st=pick([5,10,20]);const v=[lo+R(0,2)*st/2];for(let i=0;i<4;i++)v.push(v[i]+R(1,5)*st/2);const N=pick([120,200,240,400,800,1000,2000]);const hi=lo+Math.ceil((v[4]-lo)/st+.5)*st;
+  const k=pick(['boven','onder','box','ika','sb','tussen']);const B=svgBox(v,lo,hi,st);const intro=`Van ${N} leerlingen is de score in deze boxplot verwerkt.${B}`;
+  if(k==='boven')return {q:intro+`Hoeveel leerlingen hebben een score <b>hoger dan ${nf(v[3],2)}</b>?`,a:N/4,tol:.001,w:`${nf(v[3],2)} is Q3. Daarboven ligt 25%: 0,25 × ${N} = ${N/4}.`};
+  if(k==='onder')return {q:intro+`Hoeveel leerlingen hebben een score <b>lager dan ${nf(v[2],2)}</b>?`,a:N/2,tol:.001,w:`${nf(v[2],2)} is de mediaan. Daaronder ligt 50%: ${N/2}.`};
+  if(k==='box')return {q:intro+`Hoeveel leerlingen hebben een score <b>tussen ${nf(v[1],2)} en ${nf(v[3],2)}</b>?`,a:N/2,tol:.001,w:`Dat is de box (Q1 tot Q3): 50% van ${N} = ${N/2}.`};
+  if(k==='tussen')return {q:intro+`Hoeveel leerlingen hebben een score <b>tussen ${nf(v[0],2)} en ${nf(v[2],2)}</b>?`,a:N/2,tol:.001,w:`Van Q0 tot de mediaan Q2 is twee keer 25% = 50%: ${N/2}.`};
+  if(k==='ika')return {q:intro+`Bereken de <b>interkwartielafstand</b>.`,a:v[3]-v[1],tol:.001,w:`Q3 − Q1 = ${nf(v[3],2)} − ${nf(v[1],2)} = ${nf(v[3]-v[1],2)}.`};
+  return {q:intro+`Bereken de <b>spreidingsbreedte</b>.`,a:v[4]-v[0],tol:.001,w:`Q4 − Q0 = ${nf(v[4],2)} − ${nf(v[0],2)} = ${nf(v[4]-v[0],2)}.`};}},
+ cum:{sec:'2.4',t:'Cumulatieve frequentie',f(){
+  const bw=pick([1,5,10]),st=pick([0,10,20]),n=5;const cl=Array.from({length:n},(_,i)=>st+i*bw);const fs=cl.map(()=>R(3,25));const lab=cl.map(c=>`(${c}, ${c+bw}]`);const cum=[];fs.reduce((s,f)=>{cum.push(s+f);return s+f},0);const N=cum[n-1];
+  const i=R(1,3),k=pick(['abs','rel','meer']);const T=vtbl('klasse',lab,'frequentie',fs);
+  if(k==='abs')return {q:`Hoeveel waarnemingen zijn <b>${cl[i]+bw} of minder</b>?${T}`,a:cum[i],tol:.001,w:`Cumulatief: ${cum.join(', ')}. Bij ${cl[i]+bw}: ${cum[i]}.`};
+  if(k==='meer')return {q:`Hoeveel waarnemingen zijn <b>meer dan ${cl[i]+bw}</b>?${T}`,a:N-cum[i],tol:.001,w:`Totaal ${N}. ${cl[i]+bw} of minder: ${cum[i]}. Meer dan ${cl[i]+bw}: ${N} − ${cum[i]} = ${N-cum[i]}.`};
+  return {q:`Bereken de <b>relatieve cumulatieve frequentie</b> bij ${cl[i]+bw}. Rond af op één decimaal (in %).${T}`,a:cum[i]/N*100,tol:.051,u:'%',w:`Cumulatief ${cum[i]} van ${N}: ${cum[i]} ÷ ${N} × 100% ≈ ${nf(cum[i]/N*100)}%.`};}},
+ norm:{sec:'2.5',t:'Normale verdeling (vuistregels)',f(){
+  const ctx=pick([{w:'baby\'s',v:'geboortegewicht',mu:3500,s:450,u:'gram'},{w:'vrouwen',v:'lengte',mu:170,s:5,u:'cm'},{w:'konijnen',v:'gewicht',mu:2.1,s:.3,u:'kg'},{w:'appels',v:'gewicht',mu:180,s:11,u:'gram'},{w:'bananen',v:'gewicht',mu:138,s:19,u:'gram'},{w:'tennisballen',v:'stuithoogte',mu:143,s:2,u:'cm'},{w:'leerlingen',v:'IQ',mu:100,s:15,u:''}]);
+  const P={'-9':0,'-2':2.5,'-1':16,'0':50,'1':84,'2':97.5,'9':100};const ks=[-2,-1,0,1,2];
+  let a,b;do{a=pick([-9,...ks]);b=pick([...ks,9])}while(b<=a||(a===-9&&b===9));
+  const val=k=>nf(Math.round((ctx.mu+k*ctx.s)*1000)/1000,2);const p=P[b]-P[a];const N=pick([0,200,400,600,1000,4000]);
+  const desc=a===-9?`<b>minder dan ${val(b)} ${ctx.u}</b>`:b===9?`<b>meer dan ${val(a)} ${ctx.u}</b>`:`<b>tussen ${val(a)} en ${val(b)} ${ctx.u}</b>`;
+  const sk=k=>k===0?'μ':`μ ${k>0?'+':'−'} ${Math.abs(k)===1?'':Math.abs(k)}σ`;
+  const segs=[];const SG=[[-9,-2,2.5],[-2,-1,13.5],[-1,0,34],[0,1,34],[1,2,13.5],[2,9,2.5]];SG.forEach(([x,y,v])=>{if(x>=a&&y<=b)segs.push(nf(v,2))});
+  const w=`μ = ${val(0)}, σ = ${nf(ctx.s,2)}. ${a===-9?'':`${val(a)} = ${sk(a)}. `}${b===9?'':`${val(b)} = ${sk(b)}. `}Optellen: ${segs.join(' + ')} = ${nf(p,2)}%.${N?` Van ${N}: ${nf(p/100,4)} × ${N} = ${nf(p/100*N,1)}.`:''}`;
+  const sv=svgNormal(ctx.mu,ctx.s,ctx.u,[a===-9?-3.3:a,b===9?3.3:b]);
+  return {q:`Het ${ctx.v} van ${N?N+' ':''}${ctx.w} is normaal verdeeld met μ = ${val(0)} en σ = ${nf(ctx.s,2)}${ctx.u?' '+ctx.u:''}. ${N?'Hoeveel '+ctx.w:'Hoeveel procent'} ${ctx.v==='IQ'?'heeft een IQ':'heeft een '+ctx.v} ${desc}?<div class="hidechart">${sv}</div>`,a:N?p/100*N:p,tol:N?.51:.051,u:N?'':'%',w};}},
+ sd:{sec:'2.5',t:'Standaardafwijking met de hand',f(){
+  const m=R(3,12);let d;do{d=Array.from({length:4},()=>R(-4,4));d.push(-sum(d))}while(Math.abs(d[4])>5);const a=d.map(x=>m+x);const sq=sum(d.map(x=>x*x)),sd=Math.sqrt(sq/5);
+  return {q:`Bereken de <b>standaardafwijking</b> van<div class="nums">${a.join('&nbsp;&nbsp;')}</div>Rond af op één decimaal.`,a:sd,tol:.051,w:`1. Gemiddelde = ${sum(a)} ÷ 5 = ${m}. 2. Verschillen: ${d.join(', ')}. 3. Kwadraten: ${d.map(x=>x*x).join(' + ')} = ${sq}. 4. ${sq} ÷ 5 = ${nf(sq/5,2)}. 5. √${nf(sq/5,2)} ≈ ${nf(sd)}.`};}},
+ shape:{sec:'2.5',t:'Welke verdeling?',f(){
+  const t=pick(Object.keys(SHAPES));const fr=shapeFreqs(t);
+  if(Math.random()<.65||t==='uni'||t==='twee')return {mc:true,q:`Welke standaardverdeling past bij dit histogram?${svgHist(fr)}`,opts:Object.values(SHAPES),a:SHAPES[t],w:{sym:'Links en rechts gespiegeld, één top in het midden.',rechts:'De top ligt links, de staart loopt naar rechts.',links:'De top ligt rechts, de staart loopt naar links.',uni:'Alle staven zijn (ongeveer) even hoog.',twee:'Er zijn twee toppen.'}[t]};
+  const o=['het gemiddelde is groter dan de mediaan','het gemiddelde is kleiner dan de mediaan','het gemiddelde en de mediaan zijn ongeveer gelijk'];
+  const ans={sym:o[2],rechts:o[0],links:o[1]}[t];
+  return {mc:true,q:`Wat geldt voor dit histogram?${svgHist(fr)}`,opts:o,a:ans,w:t==='sym'?'Bij een symmetrische verdeling liggen gemiddelde en mediaan in het midden.':`Dit is ${SHAPES[t]}. Het gemiddelde ligt meer richting de staart (${t==='rechts'?'rechts':'links'}).`};}},
+ var:{sec:'2.2',t:'Type variabele',f(){
+  const [d,t]=pick(VARS);const opts=['kwalitatief, nominaal','kwalitatief, ordinaal','kwantitatief, discreet','kwantitatief, continu'];const ty=VTYPE[t];
+  return {mc:true,q:`Welk type variabele is <b>${esc(d)}</b>?`,opts,keep:true,a:ty[0]+', '+ty[1],w:ty[2]};}},
+ cyc:{sec:'2.1',t:'Fase van de cyclus',f(){
+  const it=pick([['Je bedenkt wat je precies wilt weten.',0],['Je stelt vast welke kenmerken je moet onderzoeken.',0],['Je neemt enquêtes af.',1],['Je zoekt informatie op over het onderwerp.',1],['Een kijkmeter registreert welke zender aanstaat.',1],['Je maakt een tabel en berekent het gemiddelde.',2],['Je maakt een overzicht van alle antwoorden.',2],['Je tekent een boxplot van de gegevens.',2],['Je beantwoordt de onderzoeksvraag.',3],['Je vraagt je af of de onderzoeksvraag is beantwoord.',3],['De resultaten worden op de website gepubliceerd.',3],['Je bedenkt nieuwe vervolgvragen.',3]]);
+  const F=['1 · De onderzoeksvraag','2 · Data verzamelen','3 · Data analyseren','4 · Conclusies trekken'];
+  return {mc:true,q:`In welke fase van de statistische cyclus past dit?<div class="nums" style="font-size:18px">${esc(it[0])}</div>`,opts:F,keep:true,a:F[it[1]],w:`Dit hoort bij fase ${F[it[1]]}.`};}}
+};
+const SECGENS={'2.1':['cyc'],'2.2':['var'],'2.3':['gmm','freq','klas','rel','weeg'],'2.4':['kw','box','cum'],'2.5':['norm','sd','shape']};
+const $=s=>document.querySelector(s);
+const esc=s=>String(s).replace(/[&<>"]/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;'}[c]));
+const shuffle=a=>{a=[...a];for(let i=a.length-1;i>0;i--){const j=Math.random()*(i+1)|0;[a[i],a[j]]=[a[j],a[i]]}return a};
+const pick=a=>a[Math.random()*a.length|0];
+const KEY='wis-h2-v1';
+let S={sec:{},mc:{},done:0,days:[],best:0};
+try{const r=localStorage.getItem(KEY);if(r)S=Object.assign(S,JSON.parse(r))}catch(e){}
+const save=()=>{try{localStorage.setItem(KEY,JSON.stringify(S))}catch(e){}};
+const today=()=>new Date().toISOString().slice(0,10);
+function markDay(){const t=today();if(!S.days.includes(t)){S.days.push(t);S.days=S.days.slice(-60)}}
+function streak(){const set=new Set(S.days);let d=new Date(),n=0;if(!set.has(d.toISOString().slice(0,10)))d.setDate(d.getDate()-1);while(set.has(d.toISOString().slice(0,10))){n++;d.setDate(d.getDate()-1)}return n}
+function rec(sec,ok){const a=S.sec[sec]||(S.sec[sec]=[]);a.push(ok?1:0);if(a.length>20)a.shift();S.done++;markDay()}
+const score=sec=>{const a=S.sec[sec]||[];return a.length?sum(a)/Math.max(a.length,10):0};
+const P=$('#play');let G=null;
+function show(v){$('#home').hidden=v!=='home';P.hidden=v!=='play';window.scrollTo(0,0)}
+function goHome(){G=null;save();renderHome();show('home')}
+function renderHome(){
+  $('#secs').innerHTML=SECS.map(s=>{const m=score(s.id);return `<div class="sec"><span class="num">${s.id}</span><div><h3>${esc(s.t)}</h3><p>${esc(s.s)}</p><span class="bar"><i style="width:${Math.round(m*100)}%"></i></span></div><div class="acts"><button class="btn small ghost" data-u="${s.id}">Uitleg</button><button class="btn small primary" data-o="${s.id}">Oefenen</button></div></div>`}).join('');
+  $('#tools').innerHTML=Object.entries(GENS).map(([k,g])=>`<button class="btn small ghost" data-g="${k}"><span class="src">${g.sec}</span> ${esc(g.t)}</button>`).join('');
+  $('#stDone').textContent=S.done;$('#stStreak').textContent=streak();$('#stBest').textContent=S.best?nf(S.best):'–';
+}
+$('#secs').addEventListener('click',e=>{const u=e.target.closest('[data-u]'),o=e.target.closest('[data-o]');if(u)uitleg(u.dataset.u);if(o)practice(o.dataset.o)});
+$('#tools').addEventListener('click',e=>{const b=e.target.closest('[data-g]');if(b)trainer(b.dataset.g)});
+$('#toets').onclick=toets;$('#spiek').onclick=spiek;
+function askReset(){$('#resetBox').innerHTML='<span>Alle voortgang wissen?</span><button class="btn small dark" id="rsY">Ja, wissen</button><button class="btn small ghost" id="rsN">Annuleer</button>';
+  $('#rsY').onclick=()=>{S={sec:{},mc:{},done:0,days:[],best:0};save();location.reload()};$('#rsN').onclick=()=>{$('#resetBox').innerHTML='<button class="btn ghost small" id="resetBtn">Voortgang wissen</button>';$('#resetBtn').onclick=askReset}}
+$('#resetBtn').onclick=askReset;
+const head=(l,r)=>`<div class="slide-head"><span>${l}</span><span>${r}</span></div>`;
+function topbar(done,total,label='Stoppen'){return `<div class="playbar"><button class="btn small ghost" id="quit">${label}</button>${total?`<span class="bar"><i style="width:${Math.round(done/total*100)}%"></i></span><span class="count">${done}/${total}</span>`:`<span class="count" style="flex:1;text-align:right">${done}</span>`}</div>`}
+function mcButtons(labels){return `<div class="opts">${labels.map((o,i)=>`<button class="opt" data-i="${i}"><span class="k">${i+1}</span><span>${o}</span></button>`).join('')}</div>`}
+function markOpts(ci,chosen){P.querySelectorAll('.opt').forEach((b,i)=>{b.disabled=true;b.classList.add(i===ci?'good':i===chosen?'bad':'dim')})}
+function parseNum(v){const t=String(v).trim().replace(/\s/g,'').replace('%','').replace(',','.');if(!/^[-+]?\d*\.?\d+$/.test(t))return NaN;return parseFloat(t)}
+/* één vraag tonen: q = {q, mc, opts, a, tol, u, w} ; cb(ok) */
+function ask(q,title,right,top,cb,opts={}){
+  const isMC=!!q.mc;let labels;if(isMC){labels=q.keep?q.opts:shuffle(q.opts)}
+  P.innerHTML=top+`<div class="slide">${head(title,right)}<div class="slide-body"><div class="prompt" style="font-size:clamp(18px,4vw,22px);font-weight:600">${q.q}</div>
+   ${isMC?mcButtons(labels):`<form class="typerow" id="nf" autocomplete="off"><input id="ni" inputmode="decimal" placeholder="antwoord${q.u?' in '+q.u:''}" aria-label="Antwoord"><button class="btn dark" type="submit" id="nb">Controleer</button></form>`}
+   <div id="fbox"></div></div></div>`;
+  const qb=$('#quit');if(qb)qb.onclick=opts.onQuit||goHome;
+  const fin=(ok,given)=>{const fb=$('#fbox');
+    if(opts.silent){cb(ok,given);return}
+    fb.innerHTML=`<div class="fb ${ok?'good':'bad'}"><div class="t">${ok?pick(['Goed!','Klopt!','Top!','Netjes!']):'Niet goed. Het antwoord is '+(isMC?q.a:nf(q.a,2)+(q.u?' '+q.u:''))+'.'}</div>${q.w?`<div class="tip"><b>Uitwerking:</b> ${q.w}</div>`:''}</div><div class="foot" style="margin-top:12px"><button class="btn primary" id="next">Verder ↵</button></div>`;
+    const n=$('#next');n.onclick=()=>cb(ok,given);n.focus()};
+  if(isMC)P.querySelectorAll('.opt').forEach((b,i)=>b.onclick=()=>{const ok=labels[i]===q.a;if(!opts.silent)markOpts(labels.indexOf(q.a),i);fin(ok,labels[i])});
+  else{const inp=$('#ni');inp.focus();$('#nf').onsubmit=e=>{e.preventDefault();const v=parseNum(inp.value);if(isNaN(v)){inp.classList.remove('shake');void inp.offsetWidth;inp.classList.add('shake');return}
+    const ok=Math.abs(v-q.a)<=(q.tol??.051);inp.readOnly=true;if(ok)inp.classList.add('okay');$('#nb').hidden=true;fin(ok,inp.value)}}
+}
+function mcItem(m){return {sec:m[0],mc:true,q:esc(m[1]),opts:[m[2],...m[3].split('|')],a:m[2],w:esc(m[4]),id:m[1]}}
+function makeSet(sec,n){
+  const mcs=MC.filter(m=>m[0]===sec).sort((a,b)=>(S.mc[a[1]]||0)-(S.mc[b[1]]||0)||Math.random()-.5);
+  const gens=SECGENS[sec];const nG=sec==='2.1'?3:sec==='2.2'?5:6;const items=[];
+  shuffle(mcs).sort((a,b)=>(S.mc[a[1]]||0)-(S.mc[b[1]]||0)).slice(0,n-nG).forEach(m=>items.push(mcItem(m)));
+  for(let i=0;i<nG;i++){const k=gens[i%gens.length];items.push(Object.assign({sec,gen:k},GENS[k].f()))}
+  return shuffle(items);
+}
+function practice(sec){
+  G={m:'prac',sec,items:makeSet(sec,10),i:0,ok:0,mist:[]};show('play');pracNext();
+}
+function pracNext(){
+  if(G.i>=G.items.length)return endScreen();
+  const q=G.items[G.i];
+  ask(q,`Paragraaf ${G.sec}`,q.gen?GENS[q.gen].t:'Begrip',topbar(G.i,G.items.length),ok=>{rec(G.sec,ok);if(q.id)S.mc[q.id]=(S.mc[q.id]||0)+(ok?1:-1);if(ok)G.ok++;else G.mist.push(q);save();G.i++;pracNext()});
+}
+function endScreen(){
+  const t=G.items.length,pct=G.ok/t;if(pct>=.8)confetti();save();const sec=G.sec;
+  P.innerHTML=`<div class="slide">${head('Paragraaf '+sec,'Klaar')}<div class="slide-body"><div><div class="q">Goed</div><div class="big">${G.ok}<span style="font-size:.45em;color:var(--muted)"> / ${t}</span></div></div>
+   <div>${pct>=.9?'Uitstekend, deze paragraaf zit erin.':pct>=.6?'Goed bezig. Nog een ronde en het zit vast.':'Lees de uitleg nog eens en probeer het dan opnieuw.'}</div>
+   ${G.mist.length?`<div><div class="q" style="margin-bottom:6px">Kijk hier nog even naar</div><ul class="mist">${G.mist.map(q=>`<li><b>${q.mc?q.q.replace(/<svg[\s\S]*?<\/svg>/g,'[figuur]').replace(/<div class="tw">[\s\S]*?<\/div>/g,'[tabel]'):q.q.replace(/<svg[\s\S]*?<\/svg>/g,'[figuur]').replace(/<div class="tw">[\s\S]*?<\/div>/g,'[tabel]')}</b><span>Antwoord: ${q.mc?q.a:nf(q.a,2)} · ${q.w||''}</span></li>`).join('')}</ul></div>`:''}
+   <div class="acts"><button class="btn primary" id="again">Nog een ronde</button><button class="btn ghost" id="uit">Uitleg</button><button class="btn ghost" id="home2">Naar start</button></div></div></div>`;
+  $('#again').onclick=()=>practice(sec);$('#uit').onclick=()=>uitleg(sec);$('#home2').onclick=goHome;$('#again').focus();
+}
+function trainer(k){
+  G={m:'tr',k,n:0,ok:0,streak:0};show('play');trNext();
+}
+function trNext(){
+  const g=GENS[G.k];const q=GENS[G.k].f();
+  ask(q,g.t,`Reeks: ${G.streak}`,topbar(`${G.ok} van ${G.n} goed`,0,'Klaar'),ok=>{G.n++;if(ok){G.ok++;G.streak++;if(G.streak%5===0)confetti()}else G.streak=0;rec(g.sec,ok);save();trNext()});
+}
+function uitleg(sec){
+  const s=SECS.find(x=>x.id===sec);show('play');
+  P.innerHTML=`<div class="playbar"><button class="btn small ghost" id="quit">Terug</button></div><div class="uitleg"><div class="eyebrow">Paragraaf ${sec}</div><h2 style="font-size:26px;margin-bottom:10px">${esc(s.t)}</h2>${UITLEG[sec]}<div class="acts" style="margin-top:16px"><button class="btn primary" id="go">Oefenen met ${sec}</button>${SECGENS[sec].map(k=>`<button class="btn ghost small" data-g="${k}">${esc(GENS[k].t)}</button>`).join('')}</div></div>`;
+  $('#quit').onclick=goHome;$('#go').onclick=()=>practice(sec);P.querySelectorAll('[data-g]').forEach(b=>b.onclick=()=>trainer(b.dataset.g));
+  const bp=$('#bpdemo');if(bp)bp.innerHTML=svgBox([10,27,38,48,70],0,70,10);
+  const dd=$('#distdemo');if(dd)dd.innerHTML=Object.entries(SHAPES).map(([k,t])=>`<figure>${svgHist(shapeFreqs(k))}<figcaption>${t}</figcaption></figure>`).join('');
+  const nd=$('#normdemo');if(nd)nd.innerHTML=svgNormal(null,1,'');
+}
+function spiek(){
+  show('play');
+  P.innerHTML=`<div class="playbar"><button class="btn small ghost" id="quit">Terug</button></div><div class="uitleg"><h2 style="font-size:26px">Spiekbriefje H2</h2>
+  <h3>Cyclus</h3><p>1 onderzoeksvraag → 2 data verzamelen → 3 data analyseren → 4 conclusies trekken.</p>
+  <h3>Steekproef</h3><p><b>Representatief</b>: goede afspiegeling van de populatie. <b>Aselect</b>: iedereen even grote kans.</p>
+  <h3>Variabelen</h3><p>Geen getallen of geen hoeveelheden → <b>kwalitatief</b>: zonder volgorde <b>nominaal</b>, met volgorde <b>ordinaal</b>. Hoeveelheden → <b>kwantitatief</b>: tellen = <b>discreet</b>, meten = <b>continu</b>.</p>
+  <h3>Centrummaten</h3><p><b>Gemiddelde</b> = som ÷ aantal. <b>Mediaan</b> = middelste (op volgorde!). <b>Modus</b> = vaakst. Uitschieters → mediaan. Kwalitatief → modus.</p>
+  <h3>Klassen</h3><p>[20, 30): 20 wel, 30 niet. Klassenmidden 25. Gemiddelde schatten met klassenmiddens. Modale klasse = hoogste frequentie.</p>
+  <h3>Spreiding</h3><p>Q1 en Q3 = mediaan van eerste en tweede helft. <b>Spreidingsbreedte</b> = Q4 − Q0. <b>Interkwartielafstand</b> = Q3 − Q1. Elk stuk van de boxplot ≈ 25%, de box = 50%.</p>
+  <h3>Verdelingen</h3><p>Rechtsscheef: staart rechts, modus &lt; mediaan &lt; gemiddelde. Linksscheef: andersom. Uniform: alles even hoog. Twee toppen: twee groepen.</p>
+  <h3>Normale verdeling</h3>${svgNormal(null,1,'')}<p>68% binnen 1σ, 95% binnen 2σ, bijna 100% binnen 3σ.</p></div>`;
+  $('#quit').onclick=goHome;
+}
+/* proeftoets */
+function toets(){
+  const items=[];SECS.forEach(s=>{const mcs=shuffle(MC.filter(m=>m[0]===s.id)).slice(0,2).map(mcItem);items.push(...mcs);const gs=SECGENS[s.id];for(let i=0;i<2;i++){const k=gs[(i+Math.random()*gs.length|0)%gs.length];items.push(Object.assign({sec:s.id,gen:k},GENS[k].f()))}});
+  G={m:'toets',items:shuffle(items),i:0,score:0,wrong:[]};show('play');toetsNext();
+}
+function toetsNext(){
+  if(G.i>=G.items.length){const n=G.items.length,c=Math.round((1+9*G.score/n)*10)/10;if(c>S.best)S.best=c;if(c>=7.5)confetti();save();
+    P.innerHTML=`<div class="slide">${head('Proeftoets','Uitslag')}<div class="slide-body"><div><div class="q">Je cijfer</div><div class="big" style="color:${c>=5.5?'var(--good)':'var(--bad)'}">${nf(c)}</div><div class="count">${G.score} van ${n} goed</div></div>
+    ${G.wrong.length?`<div><div class="q" style="margin-bottom:6px">Uitwerkingen van wat fout ging</div><div style="display:grid;gap:10px">${G.wrong.map(([q,g])=>`<div class="fb bad"><div>${q.q}</div><div class="t">Antwoord: ${q.mc?q.a:nf(q.a,2)+(q.u?' '+q.u:'')} · jij: ${esc(g)}</div><div class="tip">${q.w||''}</div></div>`).join('')}</div></div>`:''}
+    <div class="acts"><button class="btn primary" id="again">Nieuwe proeftoets</button><button class="btn ghost" id="home2">Naar start</button></div></div></div>`;
+    $('#again').onclick=toets;$('#home2').onclick=goHome;return}
+  const q=G.items[G.i];
+  ask(q,'Proeftoets','Vraag '+(G.i+1)+' · par. '+q.sec,topbar(G.i,G.items.length),(ok,given)=>{rec(q.sec,ok);if(ok)G.score++;else G.wrong.push([q,given]);G.i++;toetsNext()},{silent:true});
+}
+document.addEventListener('keydown',e=>{if(P.hidden||!G)return;if(e.target.tagName==='INPUT')return;if(/^[1-9]$/.test(e.key)){const b=P.querySelectorAll('.opt')[+e.key-1];if(b&&!b.disabled)b.click()}});
+function confetti(){
+  if(matchMedia('(prefers-reduced-motion: reduce)').matches)return;
+  const c=$('#conf'),x=c.getContext('2d');c.width=innerWidth;c.height=innerHeight;
+  const cols=['#E8742A','#2F7D5B','#7FB0EA','#F7DB5E','#1E2230'];
+  const ps=Array.from({length:110},()=>({x:c.width/2,y:c.height*.35,vx:(Math.random()-.5)*14,vy:-Math.random()*12-4,r:Math.random()*6+4,c:pick(cols),a:Math.random()*6}));
+  let f=0;(function loop(){x.clearRect(0,0,c.width,c.height);ps.forEach(p=>{p.x+=p.vx;p.y+=p.vy;p.vy+=.4;p.vx*=.99;p.a+=.2;x.save();x.translate(p.x,p.y);x.rotate(p.a);x.fillStyle=p.c;x.fillRect(-p.r/2,-p.r/4,p.r,p.r/2);x.restore()});if(++f<110)requestAnimationFrame(loop);else x.clearRect(0,0,c.width,c.height)})();
+}
+renderHome();
+</script>
+</body>
+</html>
