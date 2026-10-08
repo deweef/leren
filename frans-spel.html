@@ -1,0 +1,1505 @@
+<!doctype html>
+<html lang="nl">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<meta name="robots" content="noindex">
+<script>(function(){try{if(localStorage.getItem('leren-ok')!=='53a39a231246354922d1b5f7242c1639ebdc75da84bde2e766eed704f5a89cf8'){location.replace('index.html')}}catch(e){location.replace('index.html')}})();</script>
+<title>Frans Woordenspel</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Archivo:wdth,wght@62..125,400..900&family=Atkinson+Hyperlegible:wght@400;700&family=JetBrains+Mono:wght@500;700&display=swap">
+<style>
+/* Layout: vertrekhal. Bladzijden als gates, elke vraag als boarding pass. */
+:root{
+  --bg:#EDF0F5; --surface:#FFFFFF; --ink:#13203A; --muted:#5A6680; --line:#D3DAE5; --chip:#E2E7EF;
+  --accent:#F2B400; --accent-ink:#13203A; --accent-soft:#FDF1C7;
+  --good:#1C8A4B; --good-bg:#E1F3E8; --bad:#C43838; --bad-bg:#FBE5E5; --warn:#A86A00; --warn-bg:#FFF1D6;
+  --f-display:"Archivo","Arial Narrow",system-ui,sans-serif;
+  --f-body:"Atkinson Hyperlegible",system-ui,-apple-system,"Segoe UI",sans-serif;
+  --f-mono:"JetBrains Mono",ui-monospace,Menlo,Consolas,monospace;
+  --r:14px;
+  --p1:#2463D6; --p2:#D9591F;
+}
+@media (prefers-color-scheme: dark){:root:not([data-theme="light"]){
+  --bg:#0C1323; --surface:#162037; --ink:#E6EBF4; --muted:#96A3BB; --line:#2A3653; --chip:#1E2944;
+  --accent:#FFC72C; --accent-ink:#13203A; --accent-soft:#3A3113;
+  --good:#4CC57E; --good-bg:#11301E; --bad:#F27474; --bad-bg:#3A191D; --warn:#F2B24A; --warn-bg:#352812; --p1:#6B9BFF; --p2:#FF8A4C; color-scheme:dark}}
+:root[data-theme="dark"]{
+  --bg:#0C1323; --surface:#162037; --ink:#E6EBF4; --muted:#96A3BB; --line:#2A3653; --chip:#1E2944;
+  --accent:#FFC72C; --accent-ink:#13203A; --accent-soft:#3A3113;
+  --good:#4CC57E; --good-bg:#11301E; --bad:#F27474; --bad-bg:#3A191D; --warn:#F2B24A; --warn-bg:#352812; --p1:#6B9BFF; --p2:#FF8A4C; color-scheme:dark}
+*{box-sizing:border-box}
+body{background:var(--bg);color:var(--ink);font-family:var(--f-body);font-size:16px;line-height:1.5;margin:0}
+.wrap{max-width:860px;margin:0 auto;padding-inline:16px;padding-block:20px 48px}
+button{font:inherit;color:inherit;cursor:pointer}
+button:focus-visible,input:focus-visible{outline:3px solid var(--accent);outline-offset:2px}
+.mono{font-family:var(--f-mono);letter-spacing:.04em}
+h1,h2,h3{font-family:var(--f-display);text-wrap:balance;margin:0}
+
+/* header */
+.top{display:flex;flex-wrap:wrap;gap:16px;align-items:flex-end;justify-content:space-between;padding-bottom:18px;border-bottom:2px solid var(--ink)}
+.eyebrow{font-family:var(--f-mono);font-size:12px;letter-spacing:.14em;text-transform:uppercase;color:var(--muted)}
+h1{font-size:clamp(30px,6vw,46px);font-weight:850;font-stretch:78%;line-height:1;text-transform:uppercase;letter-spacing:-.01em}
+h1 span{background:var(--accent);color:var(--accent-ink);padding:0 .15em}
+.stats{display:flex;gap:8px;flex-wrap:wrap}
+.stat{background:var(--surface);border:1px solid var(--line);border-radius:10px;padding:6px 12px;min-width:84px}
+.stat b{display:block;font-family:var(--f-display);font-size:22px;font-stretch:85%;line-height:1.1;font-variant-numeric:tabular-nums}
+.stat small{font-family:var(--f-mono);font-size:11px;color:var(--muted);text-transform:uppercase;letter-spacing:.1em}
+
+section{margin-top:28px}
+.sec-head{display:flex;flex-wrap:wrap;align-items:baseline;justify-content:space-between;gap:8px;margin-bottom:12px}
+h2{font-size:20px;font-weight:800;font-stretch:90%;text-transform:uppercase;letter-spacing:.02em}
+.linkbtn{background:none;border:0;color:var(--muted);text-decoration:underline;padding:4px 6px;font-size:14px}
+
+/* gates */
+.gates{display:grid;grid-template-columns:repeat(auto-fill,minmax(150px,1fr));gap:10px}
+.gate{position:relative;text-align:left;background:var(--surface);border:2px solid var(--line);border-radius:12px;padding:10px 12px 12px;display:flex;flex-direction:column;gap:4px;min-width:0;transition:border-color .15s,transform .1s}
+.gate:hover{border-color:var(--muted)}
+.gate:active{transform:scale(.98)}
+.gate[aria-pressed="true"]{border-color:var(--ink);box-shadow:inset 0 0 0 1px var(--ink)}
+.gate[aria-pressed="true"]::after{content:"✓";position:absolute;top:8px;right:10px;width:22px;height:22px;border-radius:50%;background:var(--accent);color:var(--accent-ink);display:grid;place-items:center;font-weight:700;font-size:13px}
+.gate .no{font-family:var(--f-mono);font-size:12px;letter-spacing:.12em;color:var(--muted)}
+.gate .no b{font-family:var(--f-display);font-size:26px;font-stretch:80%;color:var(--ink);letter-spacing:0;margin-left:2px}
+.gate .pv{font-size:13px;color:var(--muted);white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.bar{height:6px;border-radius:3px;background:var(--chip);overflow:hidden}
+.bar i{display:block;height:100%;background:var(--good);border-radius:3px;transition:width .4s}
+.stars{font-size:13px;letter-spacing:2px;color:var(--line)}
+.stars .on{color:var(--accent)}
+.gate.hard{background:var(--accent-soft);border-color:var(--accent)}
+.gate.hard[aria-pressed="true"]{border-color:var(--ink)}
+
+/* direction */
+.seg{display:inline-flex;background:var(--chip);border-radius:10px;padding:3px;gap:2px;flex-wrap:wrap}
+.seg button{border:0;background:none;padding:7px 12px;border-radius:8px;font-weight:700;font-size:14px;color:var(--muted)}
+.seg button[aria-pressed="true"]{background:var(--surface);color:var(--ink);box-shadow:0 1px 2px rgba(0,0,0,.12)}
+
+/* modes */
+.modes{display:grid;grid-template-columns:repeat(auto-fit,minmax(230px,1fr));gap:12px}
+.mode{text-align:left;border:2px solid var(--ink);background:var(--surface);border-radius:var(--r);padding:16px;display:flex;flex-direction:column;gap:6px;min-width:0;transition:transform .1s}
+.mode:hover{transform:translateY(-2px)}
+.mode h3{font-size:24px;font-weight:850;font-stretch:80%;text-transform:uppercase}
+.mode p{margin:0;color:var(--muted);font-size:14.5px}
+.mode .tag{align-self:flex-start;font-family:var(--f-mono);font-size:11px;letter-spacing:.1em;text-transform:uppercase;background:var(--accent);color:var(--accent-ink);padding:2px 7px;border-radius:5px}
+.mode.main{background:var(--ink);color:var(--bg)}
+.mode.main p{color:var(--bg);opacity:.8}
+.board{display:grid;grid-template-columns:minmax(0,1fr) minmax(0,1.3fr);gap:12px}
+@media (max-width:640px){.board{grid-template-columns:minmax(0,1fr)}}
+.panel{background:var(--surface);border:1px solid var(--line);border-radius:12px;padding:14px 16px;min-width:0}
+.panel .q{margin-bottom:8px}
+.podium{list-style:none;margin:0;padding:0;display:grid;gap:8px}
+.podium li{display:grid;grid-template-columns:34px minmax(0,1fr) auto;align-items:center;gap:10px}
+.podium .pos{width:30px;height:30px;border-radius:50%;display:grid;place-items:center;font-family:var(--f-mono);font-weight:700;font-size:13px;background:var(--chip);color:var(--muted)}
+.podium li:first-child .pos{background:var(--accent);color:var(--accent-ink)}
+.podium .nm{font-weight:700;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+.podium .sc{font-family:var(--f-display);font-size:24px;font-weight:850;font-stretch:80%;font-variant-numeric:tabular-nums}
+.podium li.me .nm::after{content:" (jij)";color:var(--muted);font-weight:400}
+.runs{width:100%;border-collapse:collapse;font-size:14px}
+.runs td{padding:5px 4px;border-bottom:1px solid var(--line);font-variant-numeric:tabular-nums}
+.runs td:last-child{text-align:right;font-weight:700}
+.runs .sub{color:var(--muted)}
+.runs tr.new td{background:var(--accent-soft)}
+.src{font-size:12.5px;color:var(--muted)}
+.empty{color:var(--muted);font-size:14.5px}
+.names{display:flex;gap:6px;flex-wrap:wrap}
+.track{position:relative;border:2px solid var(--ink);border-radius:14px;overflow:hidden;background:var(--surface);margin-bottom:14px}
+.track canvas{display:block;width:100%;height:170px}
+.danger{position:absolute;top:8px;right:10px;background:var(--bad);color:var(--surface);font-weight:700;font-size:14px;padding:2px 10px;border-radius:6px;opacity:0;transition:opacity .2s}
+.danger.on{opacity:1;animation:blink .45s infinite alternate}
+@keyframes blink{to{opacity:.3}}
+.lvl{flex:1;font-family:var(--f-display);font-weight:850;font-stretch:80%;font-size:22px;text-transform:uppercase}
+.volt{font-size:13px;color:var(--muted);white-space:nowrap}
+.mode.volt-card{border-color:var(--ink);background:linear-gradient(135deg,var(--surface) 60%,var(--accent-soft))}
+.vhud{display:flex;flex-direction:column;gap:2px;margin-bottom:10px}
+.vhud .prompt{font-size:clamp(24px,5.5vw,36px);min-height:2.25em;display:flex;align-items:center;flex-wrap:wrap}
+.sky canvas{touch-action:manipulation;cursor:pointer;user-select:none;-webkit-user-select:none}
+.vmsg{position:absolute;left:50%;top:10px;transform:translateX(-50%);max-width:90%;padding:6px 12px;border-radius:8px;font-weight:700;font-size:15px;opacity:0;transition:opacity .2s;pointer-events:none;text-align:center;background:var(--surface);color:var(--ink)}
+.vmsg.on{opacity:1}.vmsg.bad{background:var(--bad);color:var(--surface)}.vmsg.good{background:var(--good);color:var(--surface)}
+.heart{color:var(--bad);font-size:22px;margin-right:2px}.heart.off{color:var(--line)}
+.lives{display:flex;gap:6px;flex-wrap:wrap}
+.lives button{min-width:64px}
+.lives button[aria-pressed="true"]{background:var(--ink);color:var(--bg)}
+.unitwrap{display:flex;flex-direction:column;gap:10px}
+.unit-head{display:flex;align-items:center;gap:10px;flex-wrap:wrap;margin-top:8px}
+.unit-head h3{font-size:17px;font-weight:800;font-stretch:88%;text-transform:uppercase;letter-spacing:.02em}
+.unit-head .btn{margin-left:auto}
+.duo{display:grid;grid-template-columns:repeat(auto-fit,minmax(220px,1fr));gap:12px}
+.duo-p{display:flex;flex-direction:column;gap:6px;min-width:0}
+.duo-p > input{font:inherit;font-size:18px;font-weight:700;padding:10px 12px;border-radius:10px;border:2px solid var(--line);background:var(--bg);color:var(--ink);min-width:0}
+.duo-p.p1 > input{border-color:var(--p1)}.duo-p.p2 > input{border-color:var(--p2)}
+.kbd{display:inline-grid;place-items:center;min-width:24px;height:24px;padding:0 5px;border-radius:6px;border:1.5px solid var(--ink);border-bottom-width:3px;font-family:var(--f-mono);font-size:12px;font-weight:700;margin-left:3px;background:var(--surface);color:var(--ink)}
+.rules{margin:0;padding-left:20px;display:grid;gap:4px;font-size:15px}
+.players{display:grid;grid-template-columns:1fr 1fr;gap:10px;margin-bottom:12px}
+.pl{border:2px solid var(--pc);border-radius:14px;padding:10px 12px;background:var(--surface);display:flex;flex-direction:column;gap:4px;min-width:0;transition:opacity .2s}
+.pl.p1{--pc:var(--p1)}.pl.p2{--pc:var(--p2);text-align:right}
+.pl-top{display:flex;justify-content:space-between;gap:6px;align-items:baseline}
+.pl.p2 .pl-top{flex-direction:row-reverse}
+.pl-name{font-weight:700;overflow:hidden;text-overflow:ellipsis;white-space:nowrap;color:var(--pc)}
+.pl-keys{font-family:var(--f-mono);font-size:11px;color:var(--muted);white-space:nowrap}
+.pl-score{font-family:var(--f-display);font-size:44px;font-weight:900;font-stretch:75%;line-height:1;font-variant-numeric:tabular-nums}
+.pl .bar i{background:var(--pc)}
+.pl.p2 .bar{transform:scaleX(-1)}
+.pl-st{font-size:13px;color:var(--muted);font-weight:700}
+.pl.rl{opacity:.55}.pl.rl .pl-st{color:var(--warn)}
+.pl.ms .pl-st{color:var(--bad)}
+.stall{position:relative;border:2px solid var(--ink);border-radius:16px;overflow:hidden;background:var(--surface)}
+.stall.isbonus{border-color:var(--accent);box-shadow:0 0 0 3px var(--accent-soft)}
+.awning{height:22px;background:repeating-linear-gradient(90deg,#D8343A 0 28px,#F6F1E6 28px 56px);border-bottom:2px solid var(--ink)}
+.shead{padding:12px 16px 4px;display:flex;flex-direction:column;gap:6px;text-align:center;align-items:stretch}
+.shead .prompt{font-size:clamp(26px,6vw,40px);min-height:1.2em}
+.bonus{align-self:center;background:var(--accent);color:var(--accent-ink);font-family:var(--f-mono);font-size:12px;letter-spacing:.1em;text-transform:uppercase;padding:3px 10px;border-radius:6px;animation:blink .5s infinite alternate}
+.range{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:10px;padding:14px 12px 16px}
+.slot{position:relative;display:flex;flex-direction:column;align-items:center;min-width:0}
+.balloon{width:100%;max-width:200px;aspect-ratio:5/6;border-radius:50% 50% 47% 47%/55% 55% 45% 45%;background:radial-gradient(circle at 32% 28%,rgba(255,255,255,.6),rgba(255,255,255,0) 32%),var(--bc);display:grid;place-items:center;padding:10%;color:#fff;text-align:center;animation:bob 2.6s ease-in-out infinite;transition:transform .25s,opacity .25s;box-shadow:inset -8px -10px 0 rgba(0,0,0,.12)}
+.balloon .txt{font-weight:800;font-size:clamp(13px,2.6vw,21px);line-height:1.15;overflow-wrap:anywhere;text-shadow:0 1px 2px rgba(0,0,0,.35)}
+.knot{width:0;height:0;border-left:7px solid transparent;border-right:7px solid transparent;border-bottom:9px solid var(--bc);margin-top:-2px}
+.knot::after{content:"";display:block;width:2px;height:26px;background:var(--muted);margin-left:-1px}
+.keys{display:flex;gap:4px;margin-top:4px}
+.keys .k1{border-color:var(--p1);color:var(--p1)}.keys .k2{border-color:var(--p2);color:var(--p2)}
+@keyframes bob{50%{transform:translateY(-8px) rotate(1.5deg)}}
+.balloon.popped{animation:none;transform:scale(1.35);opacity:0}
+.balloon.miss{animation:shake .35s;filter:grayscale(.6)}
+.balloon.right{animation:none;outline:5px solid var(--good);outline-offset:3px}
+.balloon.dim{opacity:.35}
+.tag-hit{position:absolute;top:-6px;z-index:2;left:50%;transform:translateX(-50%);white-space:nowrap;font-weight:800;padding:4px 10px;border-radius:8px;opacity:0;pointer-events:none;font-size:15px}
+.tag-hit.on{opacity:1;animation:pop .3s}
+.tag-hit.p1{background:var(--p1);color:#fff}.tag-hit.p2{background:var(--p2);color:#fff}
+.tag-hit.bad{outline:3px solid var(--bad)}
+.tag-hit.neutral{background:var(--good);color:#fff}
+.hc{border:1px solid var(--line);border-radius:10px;padding:6px 10px;background:var(--bg)}
+.hc summary{font-weight:700;font-size:14px}
+.hc label{display:flex;align-items:center;gap:8px;font-size:14px;margin-top:6px;flex-wrap:wrap}
+.hc input[type=checkbox]{width:18px;height:18px;accent-color:var(--ink)}
+.hc select{font:inherit;font-size:14px;padding:3px 6px;border-radius:6px;border:1.5px solid var(--line);background:var(--surface);color:var(--ink)}
+.pl-hc{font-size:11.5px;color:var(--muted);font-family:var(--f-mono)}
+.gcards{display:grid;grid-template-columns:repeat(auto-fill,minmax(220px,1fr));gap:10px}
+.gcard{text-align:left;background:var(--surface);border:2px solid var(--line);border-radius:12px;padding:12px 14px;display:flex;flex-direction:column;gap:6px;min-width:0}
+.gcard:hover{border-color:var(--ink)}
+.gcard h3{font-size:19px;font-weight:850;font-stretch:82%}
+.gcard p{margin:0;color:var(--muted);font-size:14px}
+.gcard.all{background:var(--accent-soft);border-color:var(--accent)}
+.gtitle{font-size:26px;font-weight:850;font-stretch:85%}
+.grules{border:1px solid var(--line);border-radius:12px;padding:10px 14px;background:var(--bg)}
+.grules summary{font-weight:700;cursor:pointer}
+.gbody{display:flex;flex-direction:column;gap:10px;margin-top:10px;overflow-x:auto}
+.gbody p{margin:0}.gbody h4{margin:10px 0 0;font-family:var(--f-display);font-size:17px}
+.gt{border-collapse:collapse;font-size:14.5px;min-width:480px}
+.gt th,.gt td{border:1px solid var(--line);padding:6px 8px;text-align:left;vertical-align:top}
+.gt th{background:var(--chip);font-size:13px}
+.ex{background:var(--surface);border-left:4px solid var(--accent);padding:8px 12px;border-radius:6px}
+.gsent{font-size:clamp(20px,4.5vw,28px);font-weight:700;line-height:1.35}
+.gsent.small{font-size:18px;font-weight:400}
+.gap{display:inline-block;min-width:3em;border-bottom:3px solid var(--accent);color:transparent}
+.gfill{background:var(--accent-soft);padding:0 4px;border-radius:4px}
+.gctx{align-self:flex-start;font-size:13px;font-weight:700;padding:2px 10px;border-radius:999px}
+.gctx.yes{background:var(--good-bg);color:var(--good)}.gctx.no{background:var(--bad-bg);color:var(--bad)}
+.bubble{max-width:85%;padding:10px 14px;border-radius:16px;font-size:clamp(19px,4vw,24px);font-weight:700}
+.bubble.a{background:var(--chip);border-bottom-left-radius:4px;align-self:flex-start}
+.bubble.b{background:var(--accent-soft);border-bottom-right-radius:4px;align-self:flex-end;min-width:90px;text-align:center;color:var(--muted)}
+.mist.gm li{flex-direction:column;gap:2px}.mist.gm small{color:var(--muted)}
+.pads{display:grid;grid-template-columns:1fr 1fr;gap:10px;margin-top:12px}
+.pad{border:2px solid var(--pc);border-radius:14px;padding:8px;background:var(--surface);display:flex;flex-direction:column;gap:6px;min-width:0}
+.pad.p1{--pc:var(--p1)}.pad.p2{--pc:var(--p2)}
+.pad-n{font-weight:700;font-size:13px;color:var(--pc);text-align:center;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+.pad-b{display:grid;grid-template-columns:repeat(3,1fr);gap:6px}
+.pad-b button{border:0;border-radius:12px;background:var(--bc);color:#fff;font-weight:800;font-size:18px;min-height:58px;touch-action:manipulation;-webkit-user-select:none;user-select:none;box-shadow:inset 0 -4px 0 rgba(0,0,0,.2)}
+.pad-b button:active{transform:translateY(2px);box-shadow:none}
+.hint-line{font-size:13.5px;color:var(--muted);margin-top:10px}
+
+details{background:var(--surface);border:1px solid var(--line);border-radius:12px;padding:12px 16px}
+details summary{cursor:pointer;font-weight:700}
+details ul{margin:10px 0 4px;padding-left:20px;display:grid;gap:6px}
+.reset{margin-top:12px;display:flex;gap:8px;flex-wrap:wrap;align-items:center}
+.btn{border:2px solid var(--ink);background:var(--surface);border-radius:10px;padding:10px 16px;font-weight:700}
+.btn.primary{background:var(--accent);color:var(--accent-ink);border-color:var(--accent)}
+.btn.dark{background:var(--ink);color:var(--bg);border-color:var(--ink)}
+.btn.ghost{border-color:var(--line)}
+.btn.small{padding:6px 12px;font-size:14px}
+.btn:disabled{opacity:.4;cursor:not-allowed}
+
+/* play */
+.playbar{display:flex;align-items:center;gap:12px;margin-bottom:18px}
+.playbar .bar{flex:1;height:10px;border-radius:5px}
+.playbar .bar i{background:var(--accent)}
+.count{font-family:var(--f-mono);font-size:13px;color:var(--muted);font-variant-numeric:tabular-nums;white-space:nowrap}
+.pass{background:var(--surface);border-radius:18px;border:2px solid var(--ink);overflow:hidden;position:relative}
+.pass-head{display:flex;justify-content:space-between;gap:8px;flex-wrap:wrap;padding:10px 18px;background:var(--ink);color:var(--bg);font-family:var(--f-mono);font-size:12px;letter-spacing:.12em;text-transform:uppercase}
+.pass-body{padding:22px 18px 20px;display:flex;flex-direction:column;gap:16px}
+.perf{position:relative;border-top:2px dashed var(--line);margin:0 18px}
+.perf::before,.perf::after{content:"";position:absolute;top:-12px;width:22px;height:22px;border-radius:50%;background:var(--bg);border:2px solid var(--ink)}
+.perf::before{left:-31px}.perf::after{right:-31px}
+.q{font-size:15px;color:var(--muted);font-weight:700}
+.prompt{font-family:var(--f-display);font-weight:800;font-stretch:88%;font-size:clamp(28px,7vw,44px);line-height:1.1;overflow-wrap:anywhere}
+.lang{display:inline-block;font-family:var(--f-mono);font-size:11px;letter-spacing:.1em;border:1.5px solid var(--muted);color:var(--muted);border-radius:5px;padding:1px 6px;margin-right:8px;vertical-align:middle}
+.opts{display:grid;gap:10px}
+.opt{display:flex;align-items:center;gap:12px;text-align:left;border:2px solid var(--line);background:var(--bg);border-radius:12px;padding:14px;font-size:18px;font-weight:700;min-width:0}
+.opt .k{flex:none;width:28px;height:28px;border-radius:8px;display:grid;place-items:center;font-family:var(--f-mono);font-size:13px;background:var(--chip);color:var(--muted)}
+.opt:hover:not(:disabled){border-color:var(--ink)}
+.opt:disabled{cursor:default}
+.opt.good{background:var(--good-bg);border-color:var(--good)}
+.opt.good .k{background:var(--good);color:var(--surface)}
+.opt.bad{background:var(--bad-bg);border-color:var(--bad)}
+.opt.bad .k{background:var(--bad);color:var(--surface)}
+.opt.dim{opacity:.5}
+.typerow{display:flex;gap:8px;flex-wrap:wrap}
+.typerow input{flex:1 1 220px;min-width:0;font:inherit;font-size:20px;font-weight:700;padding:12px 14px;border-radius:12px;border:2px solid var(--line);background:var(--bg);color:var(--ink)}
+.typerow input.okay{border-color:var(--good)}
+.pattern{font-family:var(--f-mono);font-size:18px;letter-spacing:.2em;color:var(--warn);white-space:pre-wrap;overflow-wrap:anywhere}
+.acts{display:flex;gap:8px;flex-wrap:wrap}
+.fb{border-radius:12px;padding:12px 14px;display:flex;flex-direction:column;gap:4px}
+.fb.good{background:var(--good-bg)}
+.fb.bad{background:var(--bad-bg)}
+.fb.warn{background:var(--warn-bg)}
+.fb .t{font-weight:700}
+.fb.good .t{color:var(--good)}.fb.bad .t{color:var(--bad)}.fb.warn .t{color:var(--warn)}
+.fb .ans{font-family:var(--f-display);font-size:22px;font-weight:800;font-stretch:90%}
+.tip{font-size:14px;color:var(--ink);opacity:.85}
+.tip b{color:var(--warn)}
+.speak{border:0;background:var(--chip);border-radius:8px;padding:2px 8px;font-size:14px;margin-left:6px;vertical-align:middle}
+.foot{display:flex;justify-content:flex-end}
+
+/* flash */
+.flip{perspective:1200px;cursor:pointer}
+.flip-in{position:relative;min-height:230px;transition:transform .45s;transform-style:preserve-3d}
+.flip.on .flip-in{transform:rotateY(180deg)}
+.face{position:absolute;inset:0;backface-visibility:hidden;-webkit-backface-visibility:hidden;display:flex;flex-direction:column;justify-content:center;gap:10px;padding:8px 2px}
+.face.back{transform:rotateY(180deg)}
+
+/* blitz */
+.timer{font-family:var(--f-display);font-size:34px;font-weight:900;font-stretch:75%;font-variant-numeric:tabular-nums;min-width:64px;text-align:right}
+.timer.low{color:var(--bad)}
+.combo{font-family:var(--f-mono);font-size:13px;background:var(--accent);color:var(--accent-ink);padding:2px 8px;border-radius:6px}
+.pop{animation:pop .3s}
+@keyframes pop{50%{transform:scale(1.25)}}
+.shake{animation:shake .35s}
+@keyframes shake{25%{transform:translateX(-6px)}75%{transform:translateX(6px)}}
+
+/* end */
+.big{font-family:var(--f-display);font-size:clamp(48px,12vw,80px);font-weight:900;font-stretch:75%;line-height:1}
+.mist{display:grid;gap:6px;margin:0;padding:0;list-style:none}
+.mist li{display:flex;justify-content:space-between;gap:12px;flex-wrap:wrap;border-bottom:1px solid var(--line);padding:6px 0}
+.mist li b{font-weight:700}
+.mist li span{color:var(--muted)}
+canvas#conf{position:fixed;inset:0;pointer-events:none;z-index:9}
+@media (prefers-reduced-motion: reduce){*{transition:none!important;animation:none!important}}
+</style>
+</head>
+<body>
+<a href="index.html" style="position:fixed;right:12px;bottom:calc(12px + env(safe-area-inset-bottom,0px));z-index:20;background:#142A3A;color:#fff;text-decoration:none;font:700 14px system-ui,sans-serif;padding:9px 14px;border-radius:999px;box-shadow:0 2px 8px rgba(0,0,0,.25)">← Alle vakken</a>
+
+<canvas id="conf"></canvas>
+<div class="wrap">
+  <main id="home">
+    <header class="top">
+      <div>
+        <div class="eyebrow">Grandes Lignes · Chapitre 1 + boek 1 ch. 5</div>
+        <h1>Woorden<span>spel</span></h1>
+      </div>
+      <div class="stats">
+        <div class="stat"><b id="stKnown">0</b><small>gekend</small></div>
+        <div class="stat"><b id="stStreak">0</b><small>dagen op rij</small></div>
+        <div class="stat"><b id="stXp">0</b><small>punten</small></div>
+      </div>
+    </header>
+
+    <section>
+      <div class="sec-head">
+        <h2>1. Kies blokken</h2>
+        <div class="acts"><button class="btn small primary" id="selAll">Alles selecteren</button><button class="btn small ghost" id="selNone">Niets</button></div>
+      </div>
+      <div class="unitwrap" id="gates"></div>
+    </section>
+
+    <section>
+      <div class="sec-head">
+        <h2>2. Richting</h2>
+        <div class="seg" id="dirSeg">
+          <button data-d="nl">NL → FR</button>
+          <button data-d="mix">Gemengd</button>
+          <button data-d="en">FR → NL</button>
+        </div>
+      </div>
+    </section>
+
+    <section>
+      <div class="sec-head"><h2>3. Kies een spel</h2></div>
+      <div class="modes">
+        <button class="mode main" data-mode="learn">
+          <span class="tag">Hiermee leer je het snelst</span>
+          <h3>Inprenten</h3>
+          <p>Eerst meerkeuze, daarna zelf het Frans typen. Fout? Dan komt het woord een paar vragen later terug tot je het kent.</p>
+        </button>
+        <button class="mode" data-mode="flash">
+          <h3>Flitskaarten</h3>
+          <p>Kijk, denk, draai om. Zeg eerlijk of je het wist. Snel even alles langs.</p>
+        </button>
+        <button class="mode" data-mode="blitz">
+          <h3>Blitz 60</h3>
+          <p>Zoveel mogelijk goed in 60 seconden. Combo's geven extra punten, fout kost 3 seconden. <span id="bestLine"></span></p>
+        </button>
+        <button class="mode volt-card" data-mode="schiet">
+          <span class="tag">2 spelers</span>
+          <h3>Schiettent</h3>
+          <p>Duel op één toetsenbord: speler 1 schiet met A S D, speler 2 met J K L. Raak de ballon met het goede woord. Eerst bij 25 wint. <span id="bestLine4"></span></p>
+        </button>
+        <button class="mode" data-mode="vlucht">
+          <span class="tag">Nieuw</span>
+          <h3>Vliegroute</h3>
+          <p>Vlieg je vliegtuig door de poort met het goede woord. Bouw een reeks op voor extra punten. Vooraf kies je hoeveel fouten je mag maken. <span id="bestLine3"></span></p>
+        </button>
+        <button class="mode volt-card" data-mode="stroom">
+          <span class="tag">Moeilijker</span>
+          <h3>Stroomdraad</h3>
+          <p>De stroom komt van links op je af, steeds sneller. Elk goed antwoord brengt je naar rechts. Kies klikken of, moeilijker, typen. Hoe lang hou jij het vol? <span id="bestLine2"></span></p>
+        </button>
+      </div>
+      <p class="hint-line" id="selLine"></p>
+    </section>
+
+    <section hidden>
+      <div class="sec-head"><h2>4. Grammatica</h2><span class="src">Uitleg en oefenzinnen per onderwerp</span></div>
+      <div class="gcards" id="gramCards"></div>
+    </section>
+
+    <section>
+      <div class="sec-head"><h2>Scorebord</h2><div class="seg" id="boardSeg"><button data-g="blitz">Blitz 60</button><button data-g="stroom">Stroom klikken</button><button data-g="stroomt">Stroom typen</button><button data-g="vlucht">Vliegroute</button><button data-g="schiet">Schiettent</button></div></div>
+      <p class="src" id="boardSrc" style="margin:0 0 10px"></p>
+      <div id="boardHome"></div>
+    </section>
+
+    <section>
+      <details>
+        <summary>Zo krijg je ze er snel in</summary>
+        <ul>
+          <li>Kort en vaak werkt beter dan lang: 10 minuten per dag, 3 à 4 dagen voor de toets.</li>
+          <li>Doe per keer 1 of 2 blokken met <b>Inprenten</b> tot de balk groen is en je 3 sterren hebt.</li>
+          <li>Zelf typen onthoud je veel beter dan aanklikken. Daarom moet je bij Inprenten elk woord ook typen.</li>
+          <li>Typ een fout antwoord meteen goed over. Dat voelt saai, maar juist dat blijft hangen.</li>
+          <li>Kies af en toe <b>Lastige woorden</b>: daar staan de woorden die je vaak fout hebt.</li>
+          <li>Eindig met een Blitz en probeer je record te breken.</li>
+          <li>Toetsen: <span class="mono">Enter</span> = controleren/verder, <span class="mono">1 2 3</span> = antwoord kiezen, <span class="mono">spatie</span> = kaart omdraaien.</li>
+        </ul>
+        <div class="reset" id="resetBox"><button class="btn ghost small" id="resetBtn">Voortgang wissen</button></div>
+      </details>
+    </section>
+  </main>
+
+  <main id="play" hidden></main>
+</div>
+
+<script>
+const RAW=`1|je suis|ik volg
+1|j'envoie|ik stuur
+1|créer|(aan)maken
+1|le compte|het account
+1|utiliser|gebruiken
+1|ajouter|toevoegen
+1|laisser|achterlaten
+1|le commentaire|het commentaar / de reactie
+1|télécharger|downloaden
+1|l'application|de app / de applicatie
+1|le message|het bericht
+1|les gens|de mensen
+1|les potes|de maten
+1|célèbre|beroemd
+1|numérique|digitaal
+1|branché(e)|hip / in de mode
+1|démodé(e)|ouderwets
+1|c'est-à-dire|dat wil zeggen
+1|ça te dit?|heb je daar zin in?
+1|il existe|er bestaat / er bestaan
+1|je deviens|ik word
+1|je viens de|ik heb zojuist
+1|fais voir!|laat zien!
+1|avant|vroeger
+1|presque|bijna
+1|tout le temps|de hele tijd
+1|souvent|vaak
+1|malheureusement|jammer genoeg
+1|c'est dommage|dat is jammer
+1|ce n'est pas grave|het is niet erg
+2|la publicité|de reclame
+2|l'entreprise|de onderneming
+2|le métier|het beroep
+2|le salaire|het salaris
+2|plus de|meer dan
+2|environ|ongeveer
+2|depuis|sinds
+2|vrai|echt / waar
+2|arrêter|stoppen
+2|hésiter|twijfelen
+2|montrer|laten zien
+2|décider|besluiten
+2|travailler|werken
+2|participer à|meedoen aan
+2|il faut|je moet
+2|le choix|de keuze
+2|enregistrer|opnemen
+2|fonctionner|functioneren
+2|également|ook
+2|actuellement|op dit moment
+2|l'inconvénient|het nadeel
+2|elle reçoit|zij ontvangt
+2|ils suivent|zij volgen
+2|s'occuper de|zich bezighouden met
+3|la meilleure amie|de beste vriendin
+3|l'amitié|de vriendschap
+3|je la connais|ik ken haar
+3|rencontrer|ontmoeten
+3|ensemble|samen
+3|marrant(e)|grappig
+3|intelligent(e)|intelligent
+3|sociable|sociaal
+3|optimiste|optimistisch
+3|faire du shopping|shoppen
+3|regarder la télé|tv kijken
+3|faire du sport|sporten
+3|écouter de la musique|muziek luisteren
+3|bavarder|kletsen
+3|à l'école|op school
+3|dans mon quartier|in mijn wijk
+3|chez des amis|bij vrienden
+3|au club de sport|op de sportclub
+4|l'arbre|de boom
+4|le verre|het glas
+4|le goûter|het vieruurtje
+4|le prénom|de voornaam
+4|selon|volgens / naargelang
+4|devant|voor (plaats)
+4|certains|sommige
+4|autrefois|vroeger
+4|le siècle|de eeuw
+4|l'invention|de uitvinding
+4|aider|helpen
+4|penser|denken
+4|la tête|het hoofd
+4|les yeux|de ogen
+4|énervé(e)|boos
+4|content(e)|tevreden
+4|les réseaux sociaux|de social media
+4|le carton|de doos
+4|la naissance|de geboorte
+4|l'expression|de uitdrukking
+4|tricher|spieken / valsspelen
+4|cacher|verstoppen
+4|transformer|veranderen
+4|car|want
+5|le mot de passe|het wachtwoord
+5|publier|posten / publiceren
+5|poster un message|een bericht posten
+5|partager|delen
+5|envoyer|(ver)sturen
+5|suivre|volgen
+5|sympa|aardig
+5|drôle|grappig / leuk
+5|honnête|eerlijk
+5|spontané(e)|spontaan
+5|sportif / sportive|sportief
+5|l'humour|de humor
+5|rigoler|lachen / grappen maken
+5|on rigole beaucoup|we lachen veel
+5|on a le même sens de l'humour|we hebben hetzelfde gevoel voor humor
+5|l'ordinateur|de computer
+5|le portable|de mobiel
+5|le clavier|het toetsenbord
+5|sauvegarder|opslaan
+5|en ligne|online
+201|être en forme|in vorm zijn
+201|malade|ziek
+201|grave|ernstig
+201|dangereux, dangereuse|gevaarlijk
+201|repose-toi bien|rust goed uit
+201|fais attention|pas op
+201|arrête!|hou op!
+201|vas-y / allez-y|ga je gang
+201|viens|kom
+201|c'est mieux|het is beter
+201|rater|missen / mislopen
+201|avoir peur|bang zijn
+201|essayer|proberen
+201|bouger|bewegen
+201|attendre|wachten
+201|apprendre à|leren om
+201|participer à|meedoen aan
+201|facile|makkelijk
+201|peut-être|misschien
+201|sûr(e)|zeker
+202|l'hôpital|het ziekenhuis
+202|chez le docteur|bij de dokter / naar de dokter
+202|le médicament|het medicijn
+202|guérir|genezen
+202|traiter|behandelen
+202|fatigué(e)|moe
+202|utiliser|gebruiken
+202|le conseil|het advies
+202|partout|overal
+202|contre|tegen
+202|le corps|het lichaam
+202|la gorge|de keel
+202|le ventre|de buik
+202|le dos|de rug
+202|la main|de hand
+202|la jambe|het been
+202|le pied|de voet
+202|le doigt|de vinger
+202|l'oreille|het oor
+202|les yeux|de ogen
+202|la tête|het hoofd
+202|le bras|de arm
+202|l'épaule|de schouder
+202|avoir mal à|pijn hebben aan
+203|les potes|de vrienden (populair)
+203|le / la meilleur(e)|de beste
+203|rentrer|naar huis gaan
+203|se relaxer|zich ontspannen
+203|téléphoner|bellen
+203|j'ai froid|ik heb het koud
+203|la grippe|de griep
+203|j'espère|ik hoop
+203|aller au lit|naar bed gaan
+203|ça va mieux|het gaat beter
+203|l'endroit|de plek
+203|gagner|winnen
+203|faire du basket|basketballen
+203|faire du foot|voetballen
+203|faire du ski|skiën
+203|faire du tennis|tennissen
+203|faire du hockey|hockeyen
+203|faire du cheval|paardrijden
+203|faire du patinage|schaatsen
+203|faire de la natation|zwemmen
+204|je me présente|ik stel me voor
+204|le championnat|het kampioenschap
+204|l'année dernière|vorig jaar
+204|depuis|sinds
+204|l'entraînement|de training
+204|il faut|je moet / het is nodig
+204|plusieurs|meerdere
+204|commencer|beginnen
+204|le soir|de avond
+204|tout le temps|de hele tijd
+204|seulement|alleen maar
+204|pendant|tijdens / gedurende
+204|entre|tussen
+204|par contre|daarentegen
+204|surtout|vooral
+204|le fruit|het fruit
+204|le légume|de groente
+204|la santé|de gezondheid
+204|la nourriture|het voedsel / het eten
+204|le sommeil|de slaap`;
+
+const WORDS=RAW.split('\n').map(l=>{const [p,en,nl]=l.split('|');return {page:+p,en,nl}});
+const PAGES=[...new Set(WORDS.map(w=>w.page))];
+const UNITS=[{id:1,label:'Chapitre 1 · vwo 3',pages:PAGES.filter(p=>p<100)},{id:5,label:'Boek 1 · chapitre 5',pages:PAGES.filter(p=>p>200)}];
+const BNAME={1:'A',2:'B',3:'E',4:'F',5:'X',201:'5A',202:'5B',203:'5E',204:'5F'};
+const pageNo=p=>p>200?p-200:p;
+const HARD=[];
+const ALT={};
+const TIPS={};
+const $=s=>document.querySelector(s);
+const esc=s=>String(s).replace(/[&<>"]/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;'}[c]));
+const shuffle=a=>{a=[...a];for(let i=a.length-1;i>0;i--){const j=Math.random()*(i+1)|0;[a[i],a[j]]=[a[j],a[i]]}return a};
+const pick=a=>a[Math.random()*a.length|0];
+
+/* ---------- opslag ---------- */
+const KEY='frans-spel-v1';
+let S={g:{},w:{},xp:0,days:[],best:0,sel:[1],dir:'nl',player:'',board:[],boards:null,boardTab:'blitz'};
+try{const r=localStorage.getItem(KEY);if(r)S=Object.assign(S,JSON.parse(r))}catch(e){}
+if(!S.g)S.g={};
+if(!S.boards)S.boards={blitz:S.board||[],stroom:[]};
+const save=()=>{try{localStorage.setItem(KEY,JSON.stringify(S))}catch(e){}};
+const ws=w=>S.w[w.en]||(S.w[w.en]={l:0,x:0});
+const today=()=>new Date().toISOString().slice(0,10);
+function markDay(){const t=today();if(!S.days.includes(t)){S.days.push(t);S.days=S.days.slice(-60)}}
+function streak(){const set=new Set(S.days);let d=new Date(),n=0;if(!set.has(d.toISOString().slice(0,10)))d.setDate(d.getDate()-1);while(set.has(d.toISOString().slice(0,10))){n++;d.setDate(d.getDate()-1)}return n}
+function up(w,ok,amount=1){const s=ws(w);if(ok)s.l=Math.min(5,s.l+amount);else{s.l=Math.max(0,s.l-1);s.x++}markDay()}
+
+/* ---------- nakijken ---------- */
+function norm(s){return s.toLowerCase().replace(/[’‘`]/g,"'").replace(/\b(somebody|someone|sb)\b\.?/g,'sb').replace(/\b(something|sth)\b\.?/g,'sth').replace(/[-–]/g,' ').replace(/[.,!?;:"]/g,'').replace(/\s+/g,' ').trim().replace(/^to /,'')}
+function variants(s){const o=[s];if(/\(/.test(s)){o.push(s.replace(/\s*\([^)]*\)\s*/g,' ').trim());o.push(s.replace(/[()]/g,''))}return o}
+function accepted(w){const n=norm(w.nl);const same=WORDS.filter(x=>norm(x.nl)===n);const out=new Set();same.forEach(x=>{[x.en,...(ALT[x.en]||[])].forEach(v=>variants(v).forEach(z=>out.add(norm(z))))});return [...out]}
+function lev(a,b){const m=a.length,n=b.length;const d=Array.from({length:m+1},(_,i)=>[i]);for(let j=1;j<=n;j++)d[0][j]=j;for(let i=1;i<=m;i++)for(let j=1;j<=n;j++)d[i][j]=Math.min(d[i-1][j]+1,d[i][j-1]+1,d[i-1][j-1]+(a[i-1]===b[j-1]?0:1));return d[m][n]}
+function check(input,w){const n=norm(input);if(!n)return 'empty';const acc=accepted(w);const sq=x=>x.replace(/ /g,'');if(acc.some(a=>a===n||sq(a)===sq(n)))return 'ok';const da=x=>sq(x).normalize('NFD').replace(/[\u0300-\u036f]/g,'');if(acc.some(a=>da(a)===da(n)))return 'near';if(acc.some(a=>a.length>=5&&lev(n,a)<=(a.length>=11?2:1)))return 'near';return 'wrong'}
+const mainAnswer=w=>(ALT[w.en]||[w.en])[0].replace(/\s*\([^)]*\)\s*/g,' ').trim();
+function pattern(w,k){return mainAnswer(w).split(' ').map(word=>[...word].map((c,i)=>/[a-zà-ÿœ]/i.test(c)?(i<k?c:'_'):c).join(' ')).join('   ')}
+
+/* ---------- uitspraak ---------- */
+const canSpeak='speechSynthesis' in window;
+function speak(t){try{const u=new SpeechSynthesisUtterance(t.replace(/\bsb\b/g,'somebody').replace(/\bsth\b/g,'something').replace(/ \/ /g,', '));u.lang='fr-FR';u.rate=.9;speechSynthesis.cancel();speechSynthesis.speak(u)}catch(e){}}
+const spk=w=>canSpeak?`<button class="speak" type="button" data-say="${esc(w.en)}" aria-label="Uitspreken">🔊</button>`:'';
+document.addEventListener('click',e=>{const b=e.target.closest('[data-say]');if(b){e.stopPropagation();speak(b.dataset.say)}});
+
+/* ---------- home ---------- */
+function mastery(list){if(!list.length)return 0;return list.reduce((a,w)=>a+Math.min(4,ws(w).l),0)/(4*list.length)}
+const starCount=m=>m>=.95?3:m>=.65?2:m>=.3?1:0;
+const starsHtml=n=>`<span class="stars" aria-label="${n} van 3 sterren">${[0,1,2].map(i=>`<span class="${i<n?'on':''}">★</span>`).join('')}</span>`;
+function hardList(){const extra=WORDS.filter(w=>(S.w[w.en]?.x||0)>0).sort((a,b)=>S.w[b.en].x-S.w[a.en].x);const base=WORDS.filter(w=>HARD.includes(w.en));return [...new Set([...base,...extra])]}
+function renderHome(){
+  const g=$('#gates');let h='';
+  UNITS.forEach(u=>{const all=u.pages.every(p=>S.sel.includes(p));const n=WORDS.filter(w=>u.pages.includes(w.page)).length;
+    h+=`<div class="unit-head"><h3>${esc(u.label)}</h3><span class="src">${n} woorden</span><button class="btn small ${all?'dark':'ghost'}" data-unit="${u.id}">${all?'✓ Alles':'Alles'}</button></div><div class="gates">`;
+    u.pages.forEach(p=>{const list=WORDS.filter(w=>w.page===p);const m=mastery(list);
+      h+=`<button class="gate" data-p="${p}" aria-pressed="${S.sel.includes(p)}"><span class="no">BLOK<b>${BNAME[p]}</b></span><span class="pv">${esc(list.slice(0,3).map(w=>w.en).join(', '))}</span><span class="bar"><i style="width:${Math.round(m*100)}%"></i></span>${starsHtml(starCount(m))}</button>`});
+    h+='</div>'});
+  const hl=hardList();
+  h+=`<div class="unit-head"><h3>Extra</h3></div><div class="gates"><button class="gate hard" data-p="hard" aria-pressed="${S.sel.includes('hard')}"><span class="no">EXTRA</span><b style="font-family:var(--f-display);font-size:19px;font-stretch:85%;line-height:1.1">Lastige woorden</b><span class="pv">${hl.length} woorden, jouw fouten erbij</span></button></div>`;
+  g.innerHTML=h;
+  $('#stKnown').textContent=`${WORDS.filter(w=>ws(w).l>=3).length}/${WORDS.length}`;
+  $('#stStreak').textContent=streak();
+  $('#stXp').textContent=S.xp;
+  {const rows=BOARD('schiet').filter(e=>typeof e.loser==='string');const w=new Map();rows.forEach(r=>{const k=r.name.toLowerCase();w.set(k,{n:r.name,c:(w.get(k)?.c||0)+1})});const top=[...w.values()].sort((a,b)=>b.c-a.c)[0];$('#bestLine4').textContent=top?`Meeste duels gewonnen: ${top.n} (${top.c}).`:''}
+  const t3=bestPerPlayer('vlucht')[0];$('#bestLine3').textContent=t3?`Record: ${t3.score} (${t3.name}, ${t3.h} ${t3.h===1?'fout':'fouten'}).`:'';
+  const top=bestPerPlayer('blitz')[0],t2a=bestPerPlayer('stroom')[0],t2b=bestPerPlayer('stroomt')[0];
+  $('#bestLine').textContent=top?`Record: ${top.score} (${top.name}).`:'';
+  $('#bestLine2').textContent=[t2a&&`Klikken: ${fmtTime(t2a.score)} (${t2a.name})`,t2b&&`Typen: ${fmtTime(t2b.score)} (${t2b.name})`].filter(Boolean).join(' · ');
+  document.querySelectorAll('#boardSeg button').forEach(b=>b.setAttribute('aria-pressed',b.dataset.g===S.boardTab));
+  renderBoard($('#boardHome'),S.boardTab);
+  renderGram();
+  document.querySelectorAll('#dirSeg button').forEach(b=>b.setAttribute('aria-pressed',b.dataset.d===S.dir));
+  const n=selWords().length;
+  $('#selLine').textContent=n?`${n} woorden geselecteerd.`:'Kies eerst minstens één blok.';
+  document.querySelectorAll('.mode').forEach(b=>b.disabled=!n);
+}
+function selWords(){const set=new Set();S.sel.forEach(p=>{(p==='hard'?hardList():WORDS.filter(w=>w.page===p)).forEach(w=>set.add(w))});return [...set]}
+$('#gates').addEventListener('click',e=>{const ub=e.target.closest('[data-unit]');if(ub){const u=UNITS.find(x=>x.id===+ub.dataset.unit);const all=u.pages.every(p=>S.sel.includes(p));S.sel=all?S.sel.filter(p=>!u.pages.includes(p)):[...new Set([...S.sel,...u.pages])];save();renderHome();return}
+  const b=e.target.closest('.gate');if(!b)return;const p=b.dataset.p==='hard'?'hard':+b.dataset.p;S.sel=S.sel.includes(p)?S.sel.filter(x=>x!==p):[...S.sel,p];save();renderHome()});
+$('#selAll').onclick=()=>{S.sel=[...PAGES];save();renderHome()};
+$('#selNone').onclick=()=>{S.sel=[];save();renderHome()};
+$('#dirSeg').addEventListener('click',e=>{const b=e.target.closest('button');if(!b)return;S.dir=b.dataset.d;save();renderHome()});
+document.querySelectorAll('.mode').forEach(b=>b.onclick=()=>start(b.dataset.mode));
+$('#boardSeg').addEventListener('click',e=>{const b=e.target.closest('button');if(!b)return;S.boardTab=b.dataset.g;save();renderHome()});
+function askReset(){$('#resetBox').innerHTML='<span>Alle voortgang, punten en record wissen?</span><button class="btn small dark" id="rsY">Ja, wissen</button><button class="btn small ghost" id="rsN">Annuleer</button>';
+  $('#rsY').onclick=()=>{S={w:{},xp:0,days:[],best:0,sel:[1],dir:S.dir};save();location.reload()};
+  $('#rsN').onclick=()=>{$('#resetBox').innerHTML='<button class="btn ghost small" id="resetBtn">Voortgang wissen</button>';$('#resetBtn').onclick=askReset}}
+$('#resetBtn').onclick=askReset;
+
+/* ---------- gedeeld ---------- */
+const P=$('#play');let G=null;
+function show(v){$('#home').hidden=v!=='home';P.hidden=v!=='play';window.scrollTo(0,0)}
+function goHome(){if(G&&G.timer)clearInterval(G.timer);if(G&&G.traf)cancelAnimationFrame(G.traf);if(G&&G.raf)cancelAnimationFrame(G.raf);G=null;save();renderHome();show('home')}
+function dirFor(){return S.dir==='mix'?pick(['nl','en']):S.dir}
+function distractors(w,n=2){let pool=WORDS.filter(x=>x.page===w.page&&x.en!==w.en&&norm(x.nl)!==norm(w.nl));if(pool.length<n)pool=pool.concat(WORDS.filter(x=>Math.abs(x.page-w.page)===1&&norm(x.nl)!==norm(w.nl)));return shuffle(pool).slice(0,n)}
+function headHtml(label,right){return `<div class="pass-head"><span>${label}</span><span>${right}</span></div>`}
+function mcHtml(w,dir,n=2){
+  const opts=shuffle([w,...distractors(w,n)]);
+  const q=dir==='nl'?'Hoe zeg je dit in het Frans?':'Wat betekent dit?';
+  return {opts,html:`<div class="q">${q}</div><div class="prompt"><span class="lang">${dir==='nl'?'NL':'FR'}</span>${esc(dir==='nl'?w.nl:w.en)}${dir==='en'?spk(w):''}</div><div class="perf"></div><div class="opts">${opts.map((o,i)=>`<button class="opt" data-i="${i}"><span class="k">${i+1}</span><span>${esc(dir==='nl'?o.en:o.nl)}</span></button>`).join('')}</div><div id="fbox"></div>`};
+}
+function tipHtml(w){return TIPS[w.en]?`<div class="tip">💡 ${TIPS[w.en]}</div>`:''}
+function markMc(opts,w,chosen){P.querySelectorAll('.opt').forEach((b,i)=>{b.disabled=true;if(opts[i]===w)b.classList.add('good');else if(i===chosen)b.classList.add('bad');else b.classList.add('dim')})}
+
+/* ---------- inprenten ---------- */
+function start(mode){
+  const pool=selWords();if(!pool.length)return;
+  if(mode==='learn'){
+    const chosen=shuffle(pool).sort((a,b)=>ws(a).l-ws(b).l).slice(0,10);
+    G={mode,pool,items:chosen,Q:chosen.map(w=>({w,stage:ws(w).l>=3?1:0,miss:false})),done:0,firstOk:0,mist:new Set()};
+    show('play');learnNext();
+  }else if(mode==='flash'){
+    const items=shuffle(pool).sort((a,b)=>ws(a).l-ws(b).l).slice(0,20);
+    G={mode,pool,items,Q:items.map(w=>({w,miss:false})),done:0,firstOk:0,mist:new Set()};
+    show('play');flashNext();
+  }else{
+    show('play');if(mode==='schiet')schietSetup(pool);else who(mode,pool);
+  }
+}
+function reinsert(item,gap){G.Q.splice(Math.min(gap,G.Q.length),0,item)}
+function progress(){const t=G.items.length;return `<div class="playbar"><button class="btn small ghost" id="quit">Stoppen</button><span class="bar"><i style="width:${Math.round(G.done/t*100)}%"></i></span><span class="count">${G.done}/${t}</span></div>`}
+function learnNext(){
+  if(!G.Q.length)return endScreen();
+  const it=G.cur=G.Q.shift(),w=it.w;
+  const label=`Blz ${w.page} · ${it.stage===0?'Meerkeuze':'Zelf typen'}`;
+  if(it.stage===0){
+    const dir=dirFor();const {opts,html}=mcHtml(w,dir);
+    P.innerHTML=progress()+`<div class="pass">${headHtml(label,'Stap 1 van 2')}<div class="pass-body">${html}</div></div>`;
+    $('#quit').onclick=goHome;
+    P.querySelectorAll('.opt').forEach((b,i)=>b.onclick=()=>{
+      const ok=opts[i]===w;markMc(opts,w,i);
+      if(ok){S.xp+=2;it.stage=1;reinsert(it,2)}else{it.miss=true;G.mist.add(w);up(w,false);reinsert(it,2)}
+      markDay();
+      $('#fbox').innerHTML=`<div class="fb ${ok?'good':'bad'}"><div class="t">${ok?'Goed! Straks moet je hem zelf typen.':'Helaas.'}</div><div class="ans">${esc(w.en)} ${spk(w)}</div><div>${esc(w.nl)}</div>${tipHtml(w)}</div><div class="foot" style="margin-top:12px"><button class="btn primary" id="next">Verder ↵</button></div>`;
+      if(ok&&canSpeak)speak(w.en);
+      $('#next').onclick=learnNext;$('#next').focus();save();
+    });
+  }else{
+    let k=0,phase='ask';
+    P.innerHTML=progress()+`<div class="pass">${headHtml(label,'Stap 2 van 2')}<div class="pass-body"><div class="q">Typ het Franse woord</div><div class="prompt"><span class="lang">NL</span>${esc(w.nl)}</div><div class="pattern" id="pat"></div><div class="perf"></div><form class="typerow" id="tf" autocomplete="off"><input id="ti" autocapitalize="off" autocorrect="off" spellcheck="false" placeholder="in het Frans…" aria-label="Antwoord in het Frans"><button class="btn dark" type="submit" id="tb">Controleer</button></form><div class="acts" id="ta"><button class="btn small ghost" id="hint" type="button">Hint</button><button class="btn small ghost" id="idk" type="button">Weet ik niet</button></div><div id="fbox"></div></div></div>`;
+    $('#quit').onclick=goHome;
+    const inp=$('#ti');inp.focus();
+    $('#hint').onclick=()=>{k++;it.hinted=true;$('#pat').textContent=pattern(w,k);inp.focus()};
+    const fail=(msg,typed)=>{phase='retype';it.miss=true;G.mist.add(w);up(w,false);it.stage=0;reinsert(it,3);
+      $('#ta').hidden=true;$('#pat').textContent='';
+      $('#fbox').innerHTML=`<div class="fb bad"><div class="t">${msg}</div>${typed?`<div>Jij typte: <s>${esc(typed)}</s></div>`:''}<div class="ans">${esc(w.en)} ${spk(w)}</div>${tipHtml(w)}<div class="tip">Typ het goede antwoord hierboven over om verder te gaan.</div></div>`;
+      inp.value='';inp.placeholder='typ het goede antwoord over…';$('#tb').textContent='Verder';inp.focus();if(canSpeak)speak(w.en)};
+    $('#idk').onclick=()=>fail('Geeft niet, zo leer je hem.');
+    $('#tf').onsubmit=e=>{e.preventDefault();const v=inp.value;
+      if(phase==='done')return learnNext();
+      if(phase==='retype'){if(check(v,w)==='ok'){phase='done';inp.classList.add('okay');learnNext()}else{inp.classList.remove('shake');void inp.offsetWidth;inp.classList.add('shake')}return}
+      const r=check(v,w);if(r==='empty')return;
+      if(r==='ok'){
+        phase='done';inp.readOnly=true;inp.classList.add('okay');$('#ta').hidden=true;
+        let t;
+        if(it.hinted){t='Goed, maar met hint. Hij komt nog één keer terug.';S.xp+=3;reinsert(it,3);it.hinted=false}
+        else{G.done++;if(!it.miss)G.firstOk++;up(w,true,it.miss?1:2);S.xp+=10;t=pick(['Top!','Perfect!','Yes!','Helemaal goed!','Lekker bezig!'])}
+        const alts=accepted(w).length>1?`<div class="tip">Ook goed: ${esc([w.en,...(ALT[w.en]||[])].filter((x,i,a)=>a.indexOf(x)===i).join(' · '))}</div>`:'';
+        $('#fbox').innerHTML=`<div class="fb good"><div class="t">${t}</div><div class="ans">${esc(w.en)} ${spk(w)}</div>${alts}${tipHtml(w)}</div>`;
+        $('#tb').textContent='Verder';$('#tb').focus();if(canSpeak)speak(w.en);save();
+      }else if(r==='near'){
+        $('#fbox').innerHTML=`<div class="fb warn"><div class="t">Bijna! Let op de spelling. Probeer het nog eens.</div></div>`;inp.select();
+      }else fail('Niet goed.',v);
+    };
+  }
+}
+function endScreen(){
+  const t=G.items.length,pct=Math.round(G.firstOk/t*100);
+  const mist=[...G.mist];
+  if(pct>=80)confetti();save();
+  P.innerHTML=`<div class="pass">${headHtml(G.mode==='flash'?'Flitskaarten':'Inprenten','Klaar')}<div class="pass-body">
+    <div><div class="q">In één keer goed</div><div class="big">${G.firstOk}<span style="font-size:.45em;color:var(--muted)"> / ${t}</span></div></div>
+    <div>${pct>=90?'Super. Deze zitten erin.':pct>=60?'Goed bezig. Nog één ronde en ze zitten vast.':'Dit waren lastige. Nog een ronde, dan gaat het al veel beter.'}</div>
+    ${mist.length?`<div><div class="q" style="margin-bottom:6px">Oefen deze nog even</div><ul class="mist">${mist.map(w=>`<li><b>${esc(w.en)} ${spk(w)}</b><span>${esc(w.nl)}</span></li>`).join('')}</ul></div>`:''}
+    <div class="acts"><button class="btn primary" id="again">Nog een ronde</button>${mist.length?'<button class="btn" id="onlyMist">Alleen mijn fouten</button>':''}<button class="btn ghost" id="home2">Naar start</button></div>
+  </div></div>`;
+  const mode=G.mode;
+  $('#again').onclick=()=>start(mode);$('#home2').onclick=goHome;
+  if(mist.length)$('#onlyMist').onclick=()=>{const items=mist;G={mode:'learn',items,Q:items.map(w=>({w,stage:0,miss:false})),done:0,firstOk:0,mist:new Set()};learnNext()};
+  $('#again').focus();
+}
+
+/* ---------- flitskaarten ---------- */
+function flashNext(){
+  if(!G.Q.length)return endScreen();
+  const it=G.cur=G.Q.shift(),w=it.w,dir=dirFor();
+  const front=dir==='nl'?w.nl:w.en,back=dir==='nl'?w.en:w.nl;
+  P.innerHTML=progress()+`<div class="pass">${headHtml(`Blz ${w.page} · Flitskaart`,'Tik om te draaien')}<div class="pass-body">
+    <div class="flip" id="card" tabindex="0" role="button" aria-label="Draai kaart om"><div class="flip-in">
+      <div class="face"><div class="q">${dir==='nl'?'Wat is het Frans?':'Wat betekent dit?'}</div><div class="prompt"><span class="lang">${dir==='nl'?'NL':'FR'}</span>${esc(front)}</div></div>
+      <div class="face back"><div class="q">${esc(front)}</div><div class="prompt"><span class="lang">${dir==='nl'?'FR':'NL'}</span>${esc(back)} ${spk(w)}</div>${tipHtml(w)}</div>
+    </div></div>
+    <div class="acts" id="rate" hidden><button class="btn" id="no">1 · Nog niet</button><button class="btn primary" id="yes">2 · Wist ik</button></div>
+  </div></div>`;
+  $('#quit').onclick=goHome;
+  const card=$('#card');
+  const flip=()=>{if(card.classList.contains('on'))return;card.classList.add('on');$('#rate').hidden=false;if(canSpeak)speak(w.en)};
+  card.onclick=flip;G.flip=flip;
+  $('#no').onclick=()=>{it.miss=true;G.mist.add(w);ws(w).x++;markDay();reinsert(it,3);save();flashNext()};
+  $('#yes').onclick=()=>{G.done++;if(!it.miss)G.firstOk++;const s=ws(w);if(s.l<2)s.l++;S.xp+=3;markDay();save();flashNext()};
+}
+
+/* ---------- blitz ---------- */
+function blitzRender(){
+  P.innerHTML=`<div class="playbar"><button class="btn small ghost" id="quit">Stoppen</button><span class="bar"><i id="tbar" style="width:100%"></i></span><span class="timer" id="clock">60</span></div>
+  <div class="pass">${headHtml('Blitz 60','<span id="combo"></span>')}<div class="pass-body"><div style="display:flex;justify-content:space-between;align-items:baseline;gap:8px"><span class="q">Score</span><span class="big" id="score" style="font-size:44px">0</span></div><div id="bq"></div></div></div>`;
+  $('#quit').onclick=goHome;
+}
+function blitzNext(){
+  const rest=G.pool.filter(x=>x!==G.last);const w=G.w=pick(rest.length?rest:G.pool);G.last=w;
+  const dir=dirFor();const {opts,html}=mcHtml(w,dir);G.opts=opts;G.lock=false;
+  $('#bq').innerHTML=html;
+  P.querySelectorAll('#bq .opt').forEach((b,i)=>b.onclick=()=>blitzAnswer(i));
+}
+function blitzAnswer(i){
+  if(G.lock)return;G.lock=true;const w=G.w,ok=G.opts[i]===w;G.n++;
+  markMc(G.opts,w,i);
+  if(ok){G.streak++;G.ok++;const mult=Math.min(3,1+Math.floor(G.streak/5));G.score+=mult;const sc=$('#score');sc.textContent=G.score;sc.classList.remove('pop');void sc.offsetWidth;sc.classList.add('pop');setTimeout(()=>G&&G.mode==='blitz'&&blitzNext(),280)}
+  else{G.streak=0;G.end-=3000;G.mist.add(w);ws(w).x++;markDay();$('#bq').classList.remove('shake');void $('#bq').offsetWidth;$('#bq').classList.add('shake');setTimeout(()=>G&&G.mode==='blitz'&&blitzNext(),1100)}
+  const m=Math.min(3,1+Math.floor(G.streak/5));$('#combo').innerHTML=m>1?`<span class="combo">combo ×${m}</span>`:(G.streak?`reeks ${G.streak}`:'');
+}
+function blitzTick(){
+  const left=Math.max(0,G.end-performance.now());
+  $('#clock').textContent=Math.ceil(left/1000);$('#clock').classList.toggle('low',left<10000);
+  $('#tbar').style.width=(left/600)+'%';
+  if(left<=0){clearInterval(G.timer);G.timer=null;blitzEnd()}
+}
+function blitzEnd(){
+  const prev=bestPerPlayer('blitz')[0];const mine=bestPerPlayer('blitz').find(x=>x.key===G.name.toLowerCase());
+  const rec=!prev||G.score>prev.score;const pb=!mine||G.score>mine.score;
+  const entry={name:G.name,score:G.score,ok:G.ok,n:G.n,pages:pagesLabel(),at:Date.now()};
+  G.entryAt=entry.at;G.game='blitz';addScore('blitz',entry);
+  if(rec||pb)confetti();S.xp+=G.score;markDay();save();
+  const lead=bestPerPlayer('blitz')[0];
+  const mist=[...G.mist];
+  P.innerHTML=`<div class="pass">${headHtml('Blitz 60','Tijd is om')}<div class="pass-body">
+   <div><div class="q">${rec?'Nieuw record! '+esc(G.name)+' staat bovenaan.':pb?'Persoonlijk record, '+esc(G.name)+'!':'Score van '+esc(G.name)}</div><div class="big">${G.score}</div><div class="count">${G.ok} van ${G.n} goed${lead&&!rec?` · te verslaan: ${lead.score} van ${esc(lead.name)}`:''}</div></div>
+   <div id="boardEnd"></div>
+   ${mist.length?`<div><div class="q" style="margin-bottom:6px">Deze gingen fout</div><ul class="mist">${mist.map(w=>`<li><b>${esc(w.en)} ${spk(w)}</b><span>${esc(w.nl)}</span></li>`).join('')}</ul></div>`:''}
+   <div class="acts"><button class="btn primary" id="again">Nog een keer</button>${mist.length?'<button class="btn" id="onlyMist">Fouten inprenten</button>':''}<button class="btn ghost" id="home2">Naar start</button></div>
+  </div></div>`;
+  renderBoard($('#boardEnd'),'blitz');
+  $('#again').onclick=()=>start('blitz');$('#home2').onclick=goHome;
+  if(mist.length)$('#onlyMist').onclick=()=>{G={mode:'learn',items:mist,Q:mist.map(w=>({w,stage:0,miss:false})),done:0,firstOk:0,mist:new Set()};learnNext()};
+  $('#again').focus();
+}
+
+/* ---------- wie speelt + scorebord ---------- */
+const GAMES={
+  blitz:{col:'blitz',label:'Blitz 60',fmt:v=>String(v)},
+  stroom:{col:'stroom',label:'Stroomdraad klikken',fmt:v=>fmtTime(v)},
+  stroomt:{col:'stroomtyp',label:'Stroomdraad typen',fmt:v=>fmtTime(v)},
+  vlucht:{col:'vlucht',label:'Vliegroute',fmt:v=>String(v)},
+  schiet:{col:'schiet',label:'Schiettent',fmt:v=>String(v)}
+};
+const fmtTime=v=>{v=Math.max(0,Number(v)||0);const m=Math.floor(v/60),r=Math.floor(v%60);return m+':'+String(r).padStart(2,'0')};
+function who(game,pool){
+  G=null;
+  const all=Object.keys(GAMES).flatMap(g=>BOARD(g));
+  const names=[...new Map(all.map(e=>[e.name.toLowerCase(),e.name])).values()].slice(0,8);
+  const isS=game==='stroom',isV=game==='vlucht';let lives=S.lastLives||3;
+  P.innerHTML=`<div class="playbar"><button class="btn small ghost" id="quit">Terug</button></div>
+  <div class="pass">${headHtml(isS?'Stroomdraad':isV?'Vliegroute':'Blitz 60','Check-in')}<div class="pass-body">
+    <div class="q">Wie speelt er?</div>
+    <form class="typerow" id="wf" autocomplete="off"><input id="wn" maxlength="20" placeholder="Je naam" aria-label="Je naam" value="${esc(S.player||'')}">${isS||isV?'':'<button class="btn primary" type="submit">Start 60 sec</button>'}</form>
+    ${names.length?`<div class="names">${names.map(n=>`<button class="btn small ghost" type="button" data-n="${esc(n)}">${esc(n)}</button>`).join('')}</div>`:''}
+    ${isS?`<div class="perf"></div><div class="q">Kies je niveau</div>
+      <div class="modes">
+        <button class="mode" type="button" data-v="stroom"><h3>Klikken</h3><p>Meerkeuze. Begint met 3 opties, later 4, en vanaf level 2 door elkaar NL en FR.</p></button>
+        <button class="mode main" type="button" data-v="stroomt"><span class="tag">Moeilijk</span><h3>Typen</h3><p>Typ elk woord in het Frans. Te traag? Dan verschijnt het woord vanzelf en typ je het over, maar dan kom je niet vooruit.</p></button>
+      </div>`:''}
+    ${isV?`<div class="perf"></div><div class="q">Handicap: hoeveel fouten mag je maken?</div>
+      <div class="lives" id="livesSel">${[1,2,3,5,8].map(n=>`<button class="btn small ghost" type="button" data-l="${n}" aria-pressed="${n===lives}">${n} ${n===1?'fout':'fouten'}</button>`).join('')}</div>
+      <div class="src">Net als bij golf: wie beter is, geeft zichzelf minder fouten. Op het scorebord staat erbij met hoeveel fouten iemand speelde.</div>
+      <div><button class="btn primary" type="button" id="vgo">Opstijgen</button></div>`:''}
+    <div class="src">Je speelt met ${pool.length} woorden (${esc(pagesLabel())}). Speel met dezelfde blokken om eerlijk te vergelijken.</div>
+  </div></div>`;
+  $('#quit').onclick=goHome;
+  const inp=$('#wn');inp.focus();inp.select();
+  const getName=()=>{const name=inp.value.trim().replace(/\s+/g,' ').slice(0,20);if(!name){inp.classList.remove('shake');void inp.offsetWidth;inp.classList.add('shake');inp.focus()}else{S.player=name;save()}return name};
+  const go=v=>{const name=getName();if(!name)return;
+    if(game==='blitz'){G={mode:'blitz',pool,name,score:0,streak:0,n:0,ok:0,mist:new Set(),end:performance.now()+60000};blitzRender();blitzNext();G.timer=setInterval(blitzTick,100)}
+    else if(isV)vluchtStart(pool,name,lives);
+    else stroomStart(pool,name,v||S.lastV||'stroom')};
+  if(isV){P.querySelectorAll('[data-l]').forEach(b=>b.onclick=()=>{lives=+b.dataset.l;S.lastLives=lives;save();P.querySelectorAll('[data-l]').forEach(x=>x.setAttribute('aria-pressed',x===b))});$('#vgo').onclick=()=>go()}
+  P.querySelectorAll('[data-n]').forEach(b=>b.onclick=()=>{inp.value=b.dataset.n;if(!isS&&!isV)go()});
+  P.querySelectorAll('[data-v]').forEach(b=>b.onclick=()=>{S.lastV=b.dataset.v;go(b.dataset.v)});
+  $('#wf').onsubmit=e=>{e.preventDefault();go()};
+}
+function pagesLabel(){const l=S.sel.filter(p=>p!=='hard').map(p=>BNAME[p]).filter(Boolean).join(', ');return S.sel.includes('hard')?(l?l+' + lastige':'lastige woorden'):l}
+let DB=null;const REMOTE={};
+const BOARD=g=>(REMOTE[g]||S.boards[g]||[]).filter(e=>e&&typeof e.name==='string'&&Number.isFinite(e.score));
+function bestPerPlayer(g){const m=new Map();BOARD(g).forEach(e=>{const k=e.name.trim().toLowerCase();const c=m.get(k);if(!c||e.score>c.score)m.set(k,{key:k,name:e.name.trim(),score:e.score,pages:e.pages,h:Number(e.h)||0})});return [...m.values()].sort((a,b)=>b.score-a.score)}
+function addLocal(g,e){S.boards[g]=[...(S.boards[g]||[]),e].slice(-200);save()}
+function addScore(g,e){
+  if(DB){DB.collection(GAMES[g].col).add(e).catch(()=>{addLocal(g,e);renderAllBoards()})}
+  else addLocal(g,e);
+}
+function renderBoard(el,g){
+  if(!el)return;const GM=GAMES[g];
+  if(g==='schiet'){const src=$('#boardSrc');if(src)src.textContent=DB?'Gedeeld: iedereen met deze pagina ziet dezelfde scores.':'Opgeslagen op dit apparaat.';renderSchietBoard(el);return}
+  const src=$('#boardSrc');if(src)src.textContent=DB?'Gedeeld: iedereen met deze pagina ziet dezelfde scores.':'Opgeslagen op dit apparaat.';
+  const best=bestPerPlayer(g);
+  if(!best.length){el.innerHTML=`<div class="panel empty">Nog geen scores voor ${GM.label}. Speel met je naam en zet de eerste score neer.</div>`;return}
+  const recent=[...BOARD(g)].sort((a,b)=>b.at-a.at).slice(0,8);
+  const me=(S.player||'').toLowerCase();
+  const t=d=>{const x=new Date(d);return isNaN(x)?'':x.toLocaleDateString('nl-NL',{day:'numeric',month:'short'})+' '+x.toLocaleTimeString('nl-NL',{hour:'2-digit',minute:'2-digit'})};
+  el.innerHTML=`<div class="board">
+    <div class="panel"><div class="q">${esc(GM.label)} · beste per speler</div><ol class="podium">${best.slice(0,6).map((b,i)=>`<li class="${b.key===me?'me':''}"><span class="pos">${i+1}</span><span class="nm">${esc(b.name)}</span><span class="sc">${GM.fmt(b.score)}${b.h?`<small class="src"> ${b.h}f</small>`:''}</span></li>`).join('')}</ol></div>
+    <div class="panel"><div class="q">Laatste potjes</div><div style="overflow-x:auto"><table class="runs"><tbody>${recent.map(r=>`<tr class="${G&&G.entryAt===r.at&&G.name===r.name?'new':''}"><td><b>${esc(r.name)}</b><br><span class="sub">${esc(r.pages||'')}</span></td><td class="sub">${t(r.at)}<br>${r.lvl?'level '+(Number(r.lvl)||0)+' · ':''}${r.h?(Number(r.h)||0)+' fouten toegestaan · reeks '+(Number(r.streak)||0)+'<br>':''}${Number(r.ok)||0} van ${Number(r.n)||0} goed</td><td>${GM.fmt(r.score)}</td></tr>`).join('')}</tbody></table></div></div>
+  </div>`;
+}
+function renderAllBoards(){if(!$('#home').hidden)renderHome();if(G&&G.game)renderBoard($('#boardEnd'),G.game)}
+(async()=>{try{
+  const db=await window.claude?.use?.('db');if(!db)return;
+  DB=db;renderAllBoards();
+  Object.keys(GAMES).forEach(g=>db.collection(GAMES[g].col).orderBy('at','desc').limit(300).onSnapshot(snap=>{REMOTE[g]=snap.docs.map(d=>d.data()).filter(Boolean);renderAllBoards()},()=>{}));
+}catch(e){}})();
+
+/* ---------- schiettent ---------- */
+const SKEYS={a:[1,0],s:[1,1],d:[1,2],j:[2,0],k:[2,1],l:[2,2]};
+const ROUND_MS=8000,HALF_MS=700;
+const HC0={noPen:false,half:false,wait:0,reloadAfter:3,head:0};
+const hcOf=p=>Object.assign({},HC0,S['hc'+p]||{});
+const fmtPts=v=>{const n=Math.abs(v),i=Math.floor(n),h=n-i>=.5;return (v<0?'−':'')+(i||!h?i:'')+(h?'½':'')};
+function hcSummary(h){const o=[];if(h.noPen)o.push('geen −1');if(h.half)o.push('½ punt');if(h.wait)o.push(String(h.wait).replace('.',',')+' s wachten');if(h.reloadAfter!==3)o.push('herladen na '+h.reloadAfter);if(h.head)o.push('+'+h.head+' start');return o.join(' · ')}
+function hcHtml(p){const h=hcOf(p);const sel=(k,vals,lab)=>`<select id="hc${p}-${k}" data-p="${p}" data-k="${k}">${vals.map(v=>`<option value="${v}" ${v===h[k]?'selected':''}>${lab(v)}</option>`).join('')}</select>`;
+  return `<details class="hc" ${hcSummary(h)?'open':''}><summary>Handicap ${hcSummary(h)?`<span class="src">(${esc(hcSummary(h))})</span>`:'<span class="src">(geen)</span>'}</summary>
+   <label><input type="checkbox" id="hc${p}-noPen" data-p="${p}" data-k="noPen" ${h.noPen?'checked':''}> Geen minpunt bij fout schieten</label>
+   <label><input type="checkbox" id="hc${p}-half" data-p="${p}" data-k="half" ${h.half?'checked':''}> ½ punt als je vlak na de ander ook goed schiet</label>
+   <label>Wachttijd per ronde ${sel('wait',[0,.3,.6,1],v=>v?String(v).replace('.',',')+' sec':'geen')}</label>
+   <label>Herladen na ${sel('reloadAfter',[2,3,4],v=>v+' keer op rij')}</label>
+   <label>Startpunten ${sel('head',[0,3,5],v=>v)}</label>
+  </details>`}
+function schietSetup(pool){
+  G=null;
+  const all=Object.keys(GAMES).flatMap(g=>BOARD(g));
+  const names=[...new Map(all.flatMap(e=>[e.name,e.loser].filter(n=>typeof n==='string'&&n)).map(n=>[n.toLowerCase(),n])).values()].slice(0,8);
+  let target=S.schietTarget||25;
+  P.innerHTML=`<div class="playbar"><button class="btn small ghost" id="quit">Terug</button></div>
+  <div class="pass">${headHtml('Schiettent','2 spelers · 1 toetsenbord')}<div class="pass-body">
+    <div class="duo">
+      <div class="duo-p p1"><div class="q">Speler 1 · toetsen <span class="kbd">A</span><span class="kbd">S</span><span class="kbd">D</span></div><input id="n1" maxlength="20" placeholder="Naam speler 1" aria-label="Naam speler 1" value="${esc(S.p1||S.player||'')}">${hcHtml(1)}</div>
+      <div class="duo-p p2"><div class="q">Speler 2 · toetsen <span class="kbd">J</span><span class="kbd">K</span><span class="kbd">L</span></div><input id="n2" maxlength="20" placeholder="Naam speler 2" aria-label="Naam speler 2" value="${esc(S.p2||'')}">${hcHtml(2)}</div>
+    </div>
+    ${names.length?`<div class="names">${names.map(n=>`<button class="btn small ghost" type="button" data-n="${esc(n)}">${esc(n)}</button>`).join('')}</div><div class="src">Tik een naam aan om hem in te vullen bij het vakje waar je het laatst was.</div>`:''}
+    <div class="perf"></div>
+    <div class="q">Spelregels</div>
+    <ul class="rules">
+      <li>Er verschijnt een woord. Schiet de ballon met de goede vertaling: links, midden of rechts.</li>
+      <li>Wie het eerst goed schiet, krijgt het punt. Fout geschoten is <b>−1</b> en dan mag je die ronde niet meer schieten.</li>
+      <li>Soms is er een <b>bonusronde</b>: dan is een goed schot 3 punten waard.</li>
+      <li>Drie keer op rij de snelste? Dan moet je één ronde <b>herladen</b> en krijgt de ander een kans.</li>
+      <li>Is de een sneller dan de ander? Geef per speler een <b>handicap</b>: geen minpunt bij fout, een half punt als je net iets later bent, wachttijd voordat je mag schieten, eerder herladen of startpunten.</li>
+    </ul>
+    <div class="q">Winnaar is wie het eerst bij</div>
+    <div class="lives" id="tSel">${[15,25,40].map(n=>`<button class="btn small ghost" type="button" data-t="${n}" aria-pressed="${n===target}">${n} punten</button>`).join('')}</div>
+    <div><button class="btn primary" id="sgo">Start het duel</button></div>
+    <div class="src">Je speelt met ${pool.length} woorden (${esc(pagesLabel())}). Speel met het toetsenbord of met de gekleurde knoppen onder de ballonnen, ook samen op één telefoon.</div>
+  </div></div>`;
+  $('#quit').onclick=goHome;
+  let lastInp=$('#n1');['#n1','#n2'].forEach(id=>$(id).addEventListener('focus',e=>lastInp=e.target));$('#n1').focus();
+  P.querySelectorAll('[data-n]').forEach(b=>b.onclick=()=>{lastInp.value=b.dataset.n;(lastInp.id==='n1'?$('#n2'):$('#n1')).focus()});
+  P.querySelectorAll('[data-t]').forEach(b=>b.onclick=()=>{target=+b.dataset.t;S.schietTarget=target;save();P.querySelectorAll('[data-t]').forEach(x=>x.setAttribute('aria-pressed',x===b))});
+  P.querySelectorAll('.hc input,.hc select').forEach(el=>el.onchange=()=>{const p=el.dataset.p,k=el.dataset.k;const h=hcOf(p);h[k]=el.type==='checkbox'?el.checked:+el.value;S['hc'+p]=h;save();const sum=el.closest('.hc').querySelector('summary .src');sum.textContent='('+(hcSummary(h)||'geen')+')'});
+  $('#sgo').onclick=()=>{
+    const clean=v=>v.trim().replace(/\s+/g,' ').slice(0,20);
+    const a=clean($('#n1').value),b=clean($('#n2').value);
+    const bad=[!a&&'#n1',!b&&'#n2'].filter(Boolean);
+    if(a&&b&&a.toLowerCase()===b.toLowerCase())bad.push('#n2');
+    if(bad.length){bad.forEach(id=>{const el=$(id);el.classList.remove('shake');void el.offsetWidth;el.classList.add('shake')});$(bad[0]).focus();return}
+    S.p1=a;S.p2=b;save();schietStart(pool,[a,b],target);
+  };
+}
+function schietStart(pool,names,target){
+  const hc=[null,hcOf(1),hcOf(2)];
+  G={mode:'schiet',game:'schiet',pool,names,target,hc,score:[0,hc[1].head,hc[2].head],streak:[0,0,0],reload:[false,false,false],reloadNext:[false,false,false],hits:[0,0,0],misses:[0,0,0],mist:new Set(),round:null,last:[],over:false,n:0};
+  P.innerHTML=`<div class="playbar"><button class="btn small ghost" id="quit">Stoppen</button><span class="lvl">Schiettent</span><span class="count">eerst tot ${target}</span></div>
+  <div class="players">
+    ${[1,2].map(p=>`<div class="pl p${p}" id="pl${p}"><div class="pl-top"><span class="pl-name">${esc(names[p-1])}</span><span class="pl-keys">${p===1?'A S D':'J K L'}</span></div><div class="pl-score" id="sc${p}">0</div>${hcSummary(G.hc[p])?`<div class="pl-hc">${esc(hcSummary(G.hc[p]))}</div>`:''}<div class="bar"><i id="pb${p}" style="width:0%"></i></div><div class="pl-st" id="st${p}">Klaar</div></div>`).join('')}
+  </div>
+  <div class="stall">
+    <div class="awning" aria-hidden="true"></div>
+    <div class="shead"><div id="sbonus" class="bonus" hidden>Bonusronde · 3 punten</div><div class="q" id="sq1">Klaar voor de start…</div><div class="prompt" id="sprompt">3</div><div class="bar" style="height:6px"><i id="stime" style="width:100%;background:var(--warn)"></i></div></div>
+    <div class="range" id="range"></div>
+  </div>
+  <div class="pads">${[1,2].map(p=>`<div class="pad p${p}"><div class="pad-n">${esc(names[p-1])}</div><div class="pad-b">${[0,1,2].map(i=>`<button type="button" data-sp="${p}" data-si="${i}" style="--bc:${['#E0413A','#2E7BE6','#24A45A'][i]}" aria-label="${esc(names[p-1])}: ${['links','midden','rechts'][i]}">${['L','M','R'][i]}</button>`).join('')}</div></div>`).join('')}</div>`;
+  $('#quit').onclick=goHome;
+  P.querySelectorAll('[data-sp]').forEach(b=>b.addEventListener('pointerdown',e=>{e.preventDefault();schietShoot(+b.dataset.sp,+b.dataset.si)}));
+  let c=3;const cd=()=>{if(!G||G.mode!=='schiet')return;if(c>0){$('#sprompt').textContent=c;c--;setTimeout(cd,650)}else schietRound()};cd();
+}
+function sPanel(){
+  [1,2].forEach(p=>{
+    $('#sc'+p).textContent=fmtPts(G.score[p]);$('#pb'+p).style.width=Math.max(0,Math.min(100,G.score[p]/G.target*100))+'%';
+    const r=G.round,st=$('#st'+p),pl=$('#pl'+p);
+    let t='Klaar';pl.classList.remove('rl','ms');
+    if(G.reload[p]){t='Herladen…';pl.classList.add('rl')}
+    else if(r&&r.wrong[p]){t=G.hc[p].noPen?'Mis (geen minpunt)':'Mis! −1';pl.classList.add('ms')}
+    else if(r&&!r.done&&r.waitUntil[p]>performance.now()){t='Even wachten…';pl.classList.add('rl')}
+    else if(G.streak[p]>=1)t=`${G.streak[p]} op rij`;
+    st.textContent=t;
+  });
+}
+function schietRound(){
+  if(!G||G.mode!=='schiet'||G.over)return;
+  const avoid=new Set(G.last);let cand=G.pool.filter(w=>!avoid.has(w));if(!cand.length)cand=G.pool;
+  const w=pick(cand);G.last=[...G.last,w].slice(-8);
+  const dir=S.dir==='mix'?pick(['nl','en']):S.dir;
+  const opts=shuffle([w,...distractors(w,2)]);
+  const bonus=G.n>2&&Math.random()<.15;G.n++;
+  const t0=performance.now();
+  G.round={w,dir,opts,bonus,wrong:[false,false,false],half:[false,false,false],done:false,t0,waitUntil:[0,t0+G.hc[1].wait*1000,t0+G.hc[2].wait*1000]};
+  [1,2].forEach(p=>{if(G.hc[p].wait)setTimeout(()=>{if(G&&G.mode==='schiet'&&G.round&&G.round.t0===t0)sPanel()},G.hc[p].wait*1000+20)});
+  $('#sbonus').hidden=!bonus;$('.stall').classList.toggle('isbonus',bonus);
+  $('#sq1').textContent=dir==='nl'?'Schiet het Franse woord':'Schiet de Nederlandse betekenis';
+  $('#sprompt').innerHTML=`<span class="lang">${dir==='nl'?'NL':'FR'}</span>${esc(dir==='nl'?w.nl:w.en)}`;
+  const cols=['#E0413A','#2E7BE6','#24A45A'];
+  $('#range').innerHTML=opts.map((o,i)=>`<div class="slot"><div class="balloon" id="b${i}" style="--bc:${cols[i]};animation-delay:${-i*.7}s"><span class="txt">${esc(dir==='nl'?o.en:o.nl)}</span></div><div class="knot" style="--bc:${cols[i]}"></div><div class="keys"><span class="kbd k1">${'ASD'[i]}</span><span class="kbd k2">${'JKL'[i]}</span></div><div class="tag-hit" id="h${i}"></div></div>`).join('');
+  sPanel();
+  cancelAnimationFrame(G.traf);
+  const tick=()=>{if(!G||G.mode!=='schiet'||!G.round||G.round.done)return;const left=1-(performance.now()-G.round.t0)/ROUND_MS;$('#stime').style.width=Math.max(0,left*100)+'%';if(left<=0){schietEnd(null)}else G.traf=requestAnimationFrame(tick)};
+  G.traf=requestAnimationFrame(tick);
+}
+function schietShoot(p,i){
+  const r=G&&G.round;if(!r||G.over)return;
+  if(G.reload[p]||r.wrong[p])return;
+  const b=$('#b'+i),h=$('#h'+i);
+  if(r.done){
+    if(r.winner&&r.winner!==p&&G.hc[p].half&&!r.half[p]&&performance.now()-r.winAt<=HALF_MS&&r.opts[i]===r.w){
+      r.half[p]=true;const pts=(r.bonus?3:1)/2;G.score[p]+=pts;
+      const h2=$('#h'+i);h2.textContent+=` · +${fmtPts(pts)} ${G.names[p-1]}`;sPanel();
+    }
+    return;
+  }
+  if(performance.now()<r.waitUntil[p])return;
+  if(r.opts[i]===r.w){
+    const pts=r.bonus?3:1;G.score[p]+=pts;G.hits[p]++;G.streak[p]++;G.streak[3-p]=0;
+    if(G.streak[p]>=G.hc[p].reloadAfter){G.reloadNext[p]=true;G.streak[p]=0}
+    r.winner=p;r.winAt=performance.now();
+    b.classList.add('popped');h.className='tag-hit on p'+p;h.textContent=`+${pts} ${G.names[p-1]}`;
+    const s=ws(r.w);if(s.l<3)s.l++;markDay();
+    schietEnd(p);
+  }else{
+    if(!G.hc[p].noPen)G.score[p]-=1;G.misses[p]++;r.wrong[p]=true;G.streak[p]=0;G.mist.add(r.w);ws(r.w).x++;markDay();
+    b.classList.remove('miss');void b.offsetWidth;b.classList.add('miss');
+    h.className='tag-hit on bad p'+p;h.textContent=G.hc[p].noPen?`mis ${G.names[p-1]}`:`−1 ${G.names[p-1]}`;
+    sPanel();
+    const other=3-p;if(G.reload[other]||r.wrong[other])schietEnd(0);
+  }
+}
+function schietEnd(winner){
+  const r=G.round;if(!r||r.done)return;r.done=true;cancelAnimationFrame(G.traf);
+  const ci=r.opts.indexOf(r.w);
+  if(!winner){$('#b'+ci).classList.add('right');const h=$('#h'+ci);if(!h.classList.contains('on')){h.className='tag-hit on neutral';h.textContent=winner===null?'Te laat!':'Dit was hem'}}
+  else{r.opts.forEach((o,i)=>{if(i!==ci)$('#b'+i).classList.add('dim')})}
+  if(winner===null||winner===0)G.mist.add(r.w);
+  $('#sq1').textContent=`${r.dir==='nl'?r.w.nl:r.w.en} = ${r.dir==='nl'?r.w.en:r.w.nl}`;
+  sPanel();
+  setTimeout(()=>{
+    if(!G||G.mode!=='schiet')return;
+    const won=[1,2].filter(p=>G.score[p]>=G.target).sort((a,b)=>G.score[b]-G.score[a])[0];
+    if(won){schietFinish(won);return}
+    G.reload=[false,G.reloadNext[1],G.reloadNext[2]];G.reloadNext=[false,false,false];
+    schietRound();
+  },winner?1100:1700);
+}
+function schietFinish(p){
+  G.over=true;const q=3-p;confetti();S.xp+=G.hits[1]*2+G.hits[2]*2;markDay();save();
+  const entry={name:G.names[p-1],score:G.score[p],loser:G.names[q-1],lscore:G.score[q],hcw:hcSummary(G.hc[p]),hcl:hcSummary(G.hc[q]),target:G.target,pages:pagesLabel(),at:Date.now()};
+  G.entryAt=entry.at;addScore('schiet',entry);
+  const mist=[...G.mist],pool=G.pool,names=G.names,target=G.target;
+  P.innerHTML=`<div class="pass">${headHtml('Schiettent','Winnaar')}<div class="pass-body">
+    <div><div class="q">${esc(names[p-1])} wint het duel!</div><div class="big">${fmtPts(G.score[p])}<span style="font-size:.45em;color:var(--muted)"> – ${fmtPts(G.score[q])}</span></div>
+    <div class="count">${esc(names[0])}: ${G.hits[1]} raak, ${G.misses[1]} mis · ${esc(names[1])}: ${G.hits[2]} raak, ${G.misses[2]} mis</div></div>
+    <div id="boardEnd"></div>
+    ${mist.length?`<div><div class="q" style="margin-bottom:6px">Deze woorden gingen mis of te laat</div><ul class="mist">${mist.map(w=>`<li><b>${esc(w.en)} ${spk(w)}</b><span>${esc(w.nl)}</span></li>`).join('')}</ul></div>`:''}
+    <div class="acts"><button class="btn primary" id="again">Revanche</button>${mist.length?'<button class="btn" id="onlyMist">Fouten inprenten</button>':''}<button class="btn ghost" id="home2">Naar start</button></div>
+  </div></div>`;
+  renderBoard($('#boardEnd'),'schiet');
+  $('#again').onclick=()=>schietStart(pool,names,target);$('#home2').onclick=goHome;
+  if(mist.length)$('#onlyMist').onclick=()=>{G={mode:'learn',items:mist,Q:mist.map(w=>({w,stage:0,miss:false})),done:0,firstOk:0,mist:new Set()};learnNext()};
+  $('#again').focus();
+}
+function renderSchietBoard(el){
+  const rows=BOARD('schiet').filter(e=>typeof e.loser==='string');
+  if(!rows.length){el.innerHTML='<div class="panel empty">Nog geen duels gespeeld. Start een Schiettent-duel met z\'n tweeën.</div>';return}
+  const m=new Map();const add=(n,wn)=>{const k=n.trim().toLowerCase();const c=m.get(k)||{name:n.trim(),w:0,l:0};wn?c.w++:c.l++;m.set(k,c)};
+  rows.forEach(r=>{add(r.name,true);add(r.loser,false)});
+  const st=[...m.values()].sort((a,b)=>b.w-a.w||a.l-b.l);
+  const recent=[...rows].sort((a,b)=>b.at-a.at).slice(0,8);const me=(S.player||'').toLowerCase();
+  const t=d=>{const x=new Date(d);return isNaN(x)?'':x.toLocaleDateString('nl-NL',{day:'numeric',month:'short'})+' '+x.toLocaleTimeString('nl-NL',{hour:'2-digit',minute:'2-digit'})};
+  el.innerHTML=`<div class="board">
+    <div class="panel"><div class="q">Schiettent · gewonnen duels</div><ol class="podium">${st.slice(0,6).map((b,i)=>`<li class="${b.name.toLowerCase()===me?'me':''}"><span class="pos">${i+1}</span><span class="nm">${esc(b.name)}</span><span class="sc">${b.w}<small class="src"> / ${b.w+b.l}</small></span></li>`).join('')}</ol></div>
+    <div class="panel"><div class="q">Laatste duels</div><div style="overflow-x:auto"><table class="runs"><tbody>${recent.map(r=>`<tr class="${G&&G.entryAt===r.at?'new':''}"><td><b>${esc(r.name)}</b> wint van ${esc(r.loser)}<br><span class="sub">${esc(r.pages||'')} · tot ${Number(r.target)||25}${typeof r.hcw==='string'&&r.hcw?` · handicap ${esc(r.name)}: ${esc(r.hcw)}`:''}${typeof r.hcl==='string'&&r.hcl?` · handicap ${esc(r.loser)}: ${esc(r.hcl)}`:''}</span></td><td class="sub">${t(r.at)}</td><td>${fmtPts(Number(r.score)||0)}–${fmtPts(Number(r.lscore)||0)}</td></tr>`).join('')}</tbody></table></div></div>
+  </div>`;
+}
+
+/* ---------- vliegroute ---------- */
+function vluchtStart(pool,name,lives){
+  G={mode:'vlucht',game:'vlucht',pool,name,lives,h:lives,started:false,alive:true,t:0,x:0,y:0,vy:0,score:0,streak:0,bestStreak:0,n:0,ok:0,mist:new Set(),gates:[],inv:0,flash:0,msg:null,last:[]};
+  P.innerHTML=`<div class="playbar"><button class="btn small ghost" id="quit">Stoppen</button><span class="lvl" id="vlives"></span><span class="count" id="vstreak"></span><span class="timer" id="vscore">0</span></div>
+  <div class="vhud"><div class="q">Vlieg door het goede woord</div><div class="prompt" id="vprompt"></div></div>
+  <div class="track sky"><canvas id="vc" role="img" aria-label="Vliegtuig dat door poorten met woorden vliegt"></canvas><div class="vmsg" id="vmsg"></div></div>
+  <p class="src">Tik op het scherm, of druk op spatie of ↑, om omhoog te vliegen.</p>`;
+  $('#quit').onclick=goHome;
+  G.cv=$('#vc');G.ctx=G.cv.getContext('2d');vSize();
+  const cs=getComputedStyle(document.documentElement),v=n=>cs.getPropertyValue(n).trim();
+  G.col={ink:v('--ink'),surface:v('--surface'),chip:v('--chip'),muted:v('--muted'),accent:v('--accent'),bad:v('--bad'),good:v('--good'),line:v('--line'),bg:v('--bg')};
+  G.font=getComputedStyle(document.body).fontFamily;
+  G.y=G.H*.45;G.clouds=Array.from({length:7},()=>({x:Math.random()*G.W*1.5,y:20+Math.random()*(G.H*.6),s:.3+Math.random()*.5,r:14+Math.random()*16}));
+  G.cv.addEventListener('pointerdown',e=>{e.preventDefault();vFlap()});
+  vAddGate(G.W*1.1);vHud();
+  G.prev=performance.now();G.raf=requestAnimationFrame(vLoop);
+}
+function vSize(){const d=window.devicePixelRatio||1,w=G.cv.clientWidth||600,h=Math.max(320,Math.min(420,Math.round(w*.75)));G.cv.style.height=h+'px';G.cv.width=w*d;G.cv.height=h*d;G.ctx.setTransform(d,0,0,d,0,0);G.W=w;G.H=h;G.ground=h-26;G.laneH=G.ground/3}
+window.addEventListener('resize',()=>{if(G&&G.mode==='vlucht'&&G.cv)vSize()});
+function vFlap(){if(!G||G.mode!=='vlucht'||!G.alive)return;G.started=true;G.vy=-310}
+function vAddGate(x){
+  const avoid=new Set(G.last);let cand=G.pool.filter(w=>!avoid.has(w));if(!cand.length)cand=G.pool;
+  const w=pick(cand);G.last=[...G.last,w].slice(-6);
+  const dir=S.dir==='mix'?pick(['nl','en']):S.dir;
+  const opts=shuffle([w,...distractors(w,2)]);
+  G.gates.push({x,w,dir,opts,done:false,res:null,lane:-1});
+}
+function vHud(){
+  const g=G.gates.find(g=>!g.done);
+  if(g)$('#vprompt').innerHTML=`<span class="lang">${g.dir==='nl'?'NL':'FR'}</span>${esc(g.dir==='nl'?g.w.nl:g.w.en)}`;
+  $('#vlives').innerHTML=Array.from({length:G.h},(_,i)=>`<span class="heart ${i<G.lives?'':'off'}">♥</span>`).join('');
+  const mult=Math.min(5,1+Math.floor(G.streak/5));
+  $('#vstreak').innerHTML=G.streak?`reeks ${G.streak}${mult>1?` <span class="combo">×${mult}</span>`:''}`:'';
+  $('#vscore').textContent=G.score;
+}
+function vMsg(html,cls){const m=$('#vmsg');m.className='vmsg on '+(cls||'');m.innerHTML=html;clearTimeout(G.msgT);G.msgT=setTimeout(()=>{if($('#vmsg'))$('#vmsg').className='vmsg'},1600)}
+function vMiss(g,why){
+  G.n++;G.streak=0;G.lives--;G.inv=1.4;G.flash=1;G.mist.add(g.w);ws(g.w).x++;markDay();
+  const ans=g.dir==='nl'?g.w.en:g.w.nl;
+  vMsg(`${why} Het was: <b>${esc(ans)}</b>`,'bad');
+  if(G.lives<=0){G.alive=false;const me=G;setTimeout(()=>{if(G===me)vEnd()},1400)}
+}
+function vLoop(now){
+  if(!G||G.mode!=='vlucht')return;
+  const dt=Math.min(.05,(now-G.prev)/1000);G.prev=now;
+  const speed=150+Math.min(160,G.t*2.2);
+  if(G.started&&G.alive){
+    G.t+=dt;G.vy+=950*dt;G.y+=G.vy*dt;
+    if(G.y<14){G.y=14;G.vy=Math.max(0,G.vy)}
+    if(G.y>G.ground-12){G.y=G.ground-12;G.vy=-260}
+    const dx=speed*dt;G.x+=dx;G.gates.forEach(g=>g.x-=dx);G.clouds.forEach(c=>{c.x-=dx*c.s;if(c.x<-60){c.x=G.W+60;c.y=20+Math.random()*G.H*.55}});
+    G.inv=Math.max(0,G.inv-dt);
+    const px=G.W*.24;
+    G.gates.forEach(g=>{
+      if(!g.done&&g.x<=px){
+        g.done=true;const lane=Math.max(0,Math.min(2,Math.floor(G.y/G.laneH)));g.lane=lane;
+        const nearBar=[1,2].some(i=>Math.abs(G.y-i*G.laneH)<15);
+        if(nearBar&&G.inv<=0){g.res='bad';vMiss(g,'Au, paal geraakt!')}
+        else if(g.opts[lane]===g.w){g.res='good';G.n++;G.ok++;G.streak++;G.bestStreak=Math.max(G.bestStreak,G.streak);const mult=Math.min(5,1+Math.floor(G.streak/5));G.score+=mult;const s=ws(g.w);if(s.l<3)s.l++;markDay();
+          if(G.streak%5===0)vMsg(`Reeks van ${G.streak}! Nu ×${Math.min(5,1+Math.floor(G.streak/5))} punten`,'good')}
+        else{g.res='bad';vMiss(g,'Verkeerde poort!')}
+        vHud();
+      }
+    });
+    const lastG=G.gates[G.gates.length-1];if(lastG.x<G.W+40)vAddGate(lastG.x+Math.max(430,G.W*.9));
+    G.gates=G.gates.filter(g=>g.x>-120);
+  }else if(!G.started){G.y=G.H*.45+Math.sin(now/300)*8}
+  vDraw(dt,now);
+  G.raf=requestAnimationFrame(vLoop);
+}
+function vDraw(dt,now){
+  const c=G.ctx,W=G.W,H=G.H,col=G.col,L=G.laneH;
+  c.clearRect(0,0,W,H);
+  const sky=c.createLinearGradient(0,0,0,H);sky.addColorStop(0,col.bg);sky.addColorStop(1,col.surface);c.fillStyle=sky;c.fillRect(0,0,W,H);
+  c.fillStyle=col.chip;G.clouds.forEach(k=>{c.beginPath();c.arc(k.x,k.y,k.r,0,7);c.arc(k.x+k.r*.9,k.y+4,k.r*.8,0,7);c.arc(k.x-k.r*.9,k.y+5,k.r*.7,0,7);c.fill()});
+  // landingsbaan
+  c.fillStyle=col.muted;c.fillRect(0,G.ground,W,H-G.ground);
+  c.fillStyle=col.surface;const off=(G.x*1)%60;for(let x=-off;x<W;x+=60)c.fillRect(x,G.ground+11,30,4);
+  // poorten
+  c.textAlign='center';c.textBaseline='middle';
+  G.gates.forEach(g=>{
+    const x=g.x;
+    c.strokeStyle=col.line;c.lineWidth=2;c.setLineDash([4,6]);c.beginPath();c.moveTo(x,0);c.lineTo(x,G.ground);c.stroke();c.setLineDash([]);
+    c.fillStyle=col.ink;[1,2].forEach(i=>{c.fillRect(x-22,i*L-7,44,14)});
+    c.fillRect(x-4,0,8,6);
+    g.opts.forEach((o,i)=>{
+      const txt=g.dir==='nl'?o.en:o.nl;const cy=i*L+L/2;
+      let fs=17;c.font=`700 ${fs}px ${G.font}`;let tw=c.measureText(txt).width;const maxW=Math.min(W*.55,260);
+      while(tw>maxW&&fs>11){fs--;c.font=`700 ${fs}px ${G.font}`;tw=c.measureText(txt).width}
+      const bw=Math.min(tw,maxW)+18,bh=fs+14;
+      let bg=col.surface,fg=col.ink,bd=col.ink;
+      if(g.done){if(o===g.w){bg=col.good;fg=col.surface;bd=col.good}else if(i===g.lane&&g.res==='bad'){bg=col.bad;fg=col.surface;bd=col.bad}}
+      c.fillStyle=bg;c.strokeStyle=bd;c.lineWidth=2;c.beginPath();
+      if(c.roundRect)c.roundRect(x-bw/2,cy-bh/2,bw,bh,8);else c.rect(x-bw/2,cy-bh/2,bw,bh);
+      c.fill();c.stroke();c.fillStyle=fg;c.fillText(txt,x,cy+1,maxW);
+    });
+  });
+  // vliegtuig
+  const px=W*.24,py=G.y,ang=Math.max(-.5,Math.min(.7,G.vy/600));
+  const blink=G.inv>0&&Math.floor(now/100)%2===0;
+  if(!blink){
+    c.save();c.translate(px,py);c.rotate(G.alive?ang:1.1);
+    c.fillStyle=col.accent;c.strokeStyle=col.ink;c.lineWidth=2;c.lineJoin='round';
+    c.beginPath();c.moveTo(-14,-10);c.lineTo(-9,-2);c.lineTo(-18,-2);c.closePath();c.fill();c.stroke();
+    c.beginPath();c.ellipse(0,0,20,6.5,0,0,Math.PI*2);c.fill();c.stroke();
+    c.beginPath();c.moveTo(-3,0);c.lineTo(5,0);c.lineTo(-6,13);c.lineTo(-11,13);c.closePath();c.fill();c.stroke();
+    c.fillStyle=col.ink;[4,8,12].forEach(x=>{c.beginPath();c.arc(x,-1.5,1.4,0,7);c.fill()});
+    c.restore();
+  }
+  if(!G.started){c.fillStyle=col.ink;c.font=`700 18px ${G.font}`;c.fillText('Tik om op te stijgen',W/2,H*.2)}
+  if(G.flash>0){c.fillStyle=col.bad;c.globalAlpha=G.flash*.25;c.fillRect(0,0,W,H);c.globalAlpha=1;G.flash=Math.max(0,G.flash-dt*2.5)}
+}
+function vEnd(){
+  if(!G||G.mode!=='vlucht')return;cancelAnimationFrame(G.raf);G.raf=null;
+  const g='vlucht',score=G.score;
+  const best=bestPerPlayer(g),prev=best[0],mine=best.find(x=>x.key===G.name.toLowerCase());
+  const rec=!prev||score>prev.score,pb=!mine||score>mine.score;
+  const entry={name:G.name,score,ok:G.ok,n:G.n,h:G.h,streak:G.bestStreak,pages:pagesLabel(),at:Date.now()};
+  G.entryAt=entry.at;addScore(g,entry);if(rec||pb)confetti();S.xp+=G.ok*2;markDay();save();
+  const lead=bestPerPlayer(g)[0],mist=[...G.mist],h=G.h,pool=G.pool,name=G.name;
+  P.innerHTML=`<div class="pass">${headHtml('Vliegroute','Geland')}<div class="pass-body">
+   <div><div class="q">${rec?'Nieuw record! '+esc(name)+' staat bovenaan.':pb?'Persoonlijk record, '+esc(name)+'!':'Score van '+esc(name)}</div><div class="big">${score}</div>
+   <div class="count">${G.ok} poorten goed · langste reeks ${G.bestStreak} · ${h} ${h===1?'fout':'fouten'} toegestaan${lead&&!rec?` · te verslaan: ${lead.score} van ${esc(lead.name)}`:''}</div></div>
+   <div id="boardEnd"></div>
+   ${mist.length?`<div><div class="q" style="margin-bottom:6px">Deze gingen fout</div><ul class="mist">${mist.map(w=>`<li><b>${esc(w.en)} ${spk(w)}</b><span>${esc(w.nl)}</span></li>`).join('')}</ul></div>`:''}
+   <div class="acts"><button class="btn primary" id="again">Nog een vlucht</button>${mist.length?'<button class="btn" id="onlyMist">Fouten inprenten</button>':''}<button class="btn ghost" id="home2">Naar start</button></div>
+  </div></div>`;
+  renderBoard($('#boardEnd'),g);
+  $('#again').onclick=()=>vluchtStart(pool,name,h);$('#home2').onclick=goHome;
+  if(mist.length)$('#onlyMist').onclick=()=>{G={mode:'learn',items:mist,Q:mist.map(w=>({w,stage:0,miss:false})),done:0,firstOk:0,mist:new Set()};learnNext()};
+  $('#again').focus();
+}
+
+/* ---------- stroomdraad ---------- */
+const SPEED0=1.5,ACCEL=0.03,HIT=12;
+function volts(t){const v=230*Math.pow(1.03,t);return v<1000?Math.round(v)+' V':(v/1000).toLocaleString('nl-NL',{maximumFractionDigits:1})+' kV'}
+function stroomStart(pool,name,variant){
+  const typ=variant==='stroomt';
+  G={mode:'stroom',game:variant,typ,pool,name,t:0,gap:typ?60:50,disp:typ?60:50,s0:typ?0.9:SPEED0,acc:typ?0.018:ACCEL,wall:0,n:0,ok:0,mist:new Set(),alive:true,last:null,shake:0,bolts:[],boltT:0,jump:0,flash:0};
+  P.innerHTML=`<div class="playbar"><button class="btn small ghost" id="quit">Stoppen</button><span class="lvl" id="lvl">Level 1</span><span class="volt mono" id="volt">230 V</span><span class="timer" id="clock">0:00</span></div>
+  <div class="track"><canvas id="cv" role="img" aria-label="De stroom komt van links op je af"></canvas><div class="danger" id="danger">Pas op!</div></div>
+  <div class="pass">${headHtml(typ?'Stroomdraad · typen':'Stroomdraad · klikken','Goed = naar rechts')}<div class="pass-body" id="sq"></div></div>`;
+  $('#quit').onclick=goHome;
+  G.cv=$('#cv');G.ctx=G.cv.getContext('2d');sizeCv();
+  const cs=getComputedStyle(document.documentElement),v=n=>cs.getPropertyValue(n).trim();
+  G.col={ink:v('--ink'),surface:v('--surface'),chip:v('--chip'),muted:v('--muted'),accent:v('--accent'),bad:v('--bad'),line:v('--line')};
+  stroomNext();G.prev=performance.now();G.raf=requestAnimationFrame(stroomLoop);
+}
+function sizeCv(){if(!G||!G.cv)return;const d=window.devicePixelRatio||1,w=G.cv.clientWidth||600;G.cv.width=w*d;G.cv.height=170*d;G.ctx.setTransform(d,0,0,d,0,0);G.W=w;G.H=170}
+window.addEventListener('resize',()=>{if(G&&G.mode==='stroom')sizeCv()});
+const level=()=>1+Math.floor(G.t/25);
+function stroomNext(){
+  if(!G||!G.alive)return;
+  const L=level();
+  const rest=G.pool.filter(x=>x!==G.last);const w=G.w=pick(rest.length?rest:G.pool);G.last=w;G.lock=false;
+  $('#lvl').textContent='Level '+L;
+  if(G.typ){
+    const reveal=Math.max(6,12-L*.6);  // seconden tot het woord verschijnt
+    G.qStart=G.t;G.reveal=reveal;G.revealed=false;
+    $('#sq').innerHTML=`<div class="q">Typ het Franse woord</div><div class="prompt"><span class="lang">NL</span>${esc(w.nl)}</div>
+      <div class="bar" style="height:8px"><i id="rbar" style="width:100%;background:var(--warn)"></i></div>
+      <form class="typerow" id="sf" autocomplete="off"><input id="si" autocapitalize="off" autocorrect="off" spellcheck="false" placeholder="in het Frans…" aria-label="Antwoord in het Frans"><button class="btn dark" type="submit">OK</button></form><div id="sfb"></div>`;
+    const inp=$('#si');inp.focus({preventScroll:true});
+    $('#sf').onsubmit=e=>{e.preventDefault();if(!G.alive||G.lock)return;const r=check(inp.value,w);
+      if(G.revealed){if(r==='ok'){G.lock=true;inp.classList.add('okay');G.n++;setTimeout(stroomNext,150)}else{inp.classList.remove('shake');void inp.offsetWidth;inp.classList.add('shake')}return}
+      if(r==='empty')return;
+      if(r==='near'){$('#sfb').innerHTML='<div class="fb warn"><div class="t">Bijna, check de spelling!</div></div>';inp.select();return}
+      if(r==='ok'){G.lock=true;inp.classList.add('okay');stroomGood(22,w);setTimeout(stroomNext,200)}
+      else{G.gap-=4;G.shake=1;stroomReveal('Niet goed. Typ het over:')}};
+  }else{
+    const dir=L===1?(S.dir==='mix'?pick(['nl','en']):S.dir):pick(['nl','en']);
+    const {opts,html}=mcHtml(w,dir,L>=3?3:2);
+    $('#sq').innerHTML=html;
+    P.querySelectorAll('#sq .opt').forEach((b,i)=>b.onclick=()=>{if(G.lock||!G.alive)return;G.lock=true;markMc(opts,w,i);
+      if(opts[i]===w){stroomGood(12,w);setTimeout(stroomNext,250)}
+      else{G.n++;G.gap-=HIT;G.shake=1;G.mist.add(w);ws(w).x++;markDay();$('#fbox').innerHTML=`<div class="fb bad"><div class="t">Zzzt! Het is:</div><div class="ans">${esc(w.en)} = ${esc(w.nl)}</div></div>`;setTimeout(stroomNext,1300)}});
+  }
+}
+function stroomGood(step,w){G.n++;G.ok++;G.gap=Math.min(100,G.gap+step);G.jump=1;markDay();const s=ws(w);if(s.l<5&&G.typ)s.l++}
+function stroomReveal(msg){
+  if(G.revealed)return;G.revealed=true;const w=G.w;G.mist.add(w);ws(w).x++;markDay();
+  $('#sfb').innerHTML=`<div class="fb bad"><div class="t">${msg}</div><div class="ans">${esc(w.en)} ${spk(w)}</div></div>`;
+  const inp=$('#si');if(inp){inp.value='';inp.placeholder='typ het over…';inp.focus({preventScroll:true})}
+  const rb=$('#rbar');if(rb)rb.style.width='0%';
+}
+function stroomLoop(now){
+  if(!G||G.mode!=='stroom')return;
+  const dt=Math.min(.1,(now-G.prev)/1000);G.prev=now;
+  if(G.alive){
+    G.t+=dt;const sp=G.s0+G.acc*G.t;G.gap-=sp*dt;G.wall+=sp*dt;
+    if(G.gap<=0){G.gap=0;stroomDie()}
+    $('#clock').textContent=fmtTime(G.t);$('#volt').textContent=volts(G.t);
+    $('#danger').classList.toggle('on',G.gap<22&&G.alive);
+    if(G.typ&&!G.revealed&&!G.lock){const left=1-(G.t-G.qStart)/G.reveal;const rb=$('#rbar');if(rb)rb.style.width=Math.max(0,left*100)+'%';if(left<=0)stroomReveal('Te laat! Het woord is:')}
+  }
+  G.disp+=(G.gap-G.disp)*Math.min(1,dt*10);
+  drawStroom(dt);
+  G.raf=requestAnimationFrame(stroomLoop);
+}
+function makeBolt(len,y){const pts=[[0,y]];let x=0,yy=y;while(x<len){x+=4+Math.random()*8;yy+=(Math.random()-.5)*16;pts.push([x,yy])}return pts}
+function drawStroom(dt){
+  const c=G.ctx,W=G.W,H=G.H,k=W/118,col=G.col;
+  let ox=0;if(G.shake>0){ox=(Math.random()-.5)*12*G.shake;G.shake=Math.max(0,G.shake-dt*3)}
+  c.save();c.clearRect(0,0,W,H);c.fillStyle=col.surface;c.fillRect(0,0,W,H);c.translate(ox,0);
+  const camL=G.wall-12,X=u=>(u-camL)*k,ground=H-24,top=34;
+  c.fillStyle=col.chip;c.fillRect(-20,ground,W+40,H-ground);
+  // palen en draad
+  const sp=30,poles=[];for(let u=Math.floor((camL-sp)/sp)*sp;u<camL+150;u+=sp)poles.push(u);
+  c.strokeStyle=col.muted;c.lineWidth=3;c.lineCap='round';
+  poles.forEach(u=>{const x=X(u);c.beginPath();c.moveTo(x,ground);c.lineTo(x,top-8);c.moveTo(x-10,top);c.lineTo(x+10,top);c.stroke()});
+  const cable=()=>{c.beginPath();for(let i=0;i<poles.length-1;i++){const a=X(poles[i]),b=X(poles[i+1]);c.moveTo(a,top);c.quadraticCurveTo((a+b)/2,top+20,b,top)}c.stroke()};
+  c.strokeStyle=col.ink;c.lineWidth=2;cable();
+  const fx=X(G.wall);
+  // stroomveld links
+  c.save();c.beginPath();c.rect(-20,0,fx+20,H);c.clip();
+  const g=c.createLinearGradient(fx-80,0,fx,0);g.addColorStop(0,'rgba(70,170,255,.08)');g.addColorStop(1,'rgba(70,170,255,.38)');c.fillStyle=g;c.fillRect(-20,0,fx+20,H);
+  c.shadowColor='#5CC8FF';c.shadowBlur=14;c.strokeStyle='#FFD83A';c.lineWidth=3.5;cable();
+  c.restore();
+  // bliksems aan het front
+  G.boltT-=dt;if(G.boltT<=0){G.boltT=.06;const L=Math.min(60,14+G.t*.25);G.bolts=[0,1,2].map(()=>makeBolt(6+Math.random()*L,top+6+Math.random()*(ground-top-12)))}
+  c.save();c.shadowColor='#5CC8FF';c.shadowBlur=12;c.strokeStyle='#DDF4FF';c.lineWidth=2;
+  G.bolts.forEach(pts=>{c.beginPath();pts.forEach(([x,y],i)=>i?c.lineTo(fx+x,y):c.moveTo(fx+x,y));c.stroke()});
+  c.beginPath();for(let y=0;y<=H;y+=9){const x=fx+(Math.random()-.5)*7;y?c.lineTo(x,y):c.moveTo(x,y)}c.strokeStyle='#8FDBFF';c.lineWidth=3;c.stroke();
+  c.restore();
+  // speler
+  const px=X(G.wall+G.disp);
+  G.jump=Math.max(0,G.jump-dt*4);const hop=G.jump>0?Math.sin(G.jump*Math.PI)*16:0;
+  const dead=!G.alive,scared=G.gap<22,step=Math.sin(G.t*11)*3;
+  if(dead){c.save();c.shadowColor='#5CC8FF';c.shadowBlur=18;c.strokeStyle='#FFFFFF';c.lineWidth=3;const b=makeBolt(px-fx,ground-30);c.beginPath();b.forEach(([x,y],i)=>i?c.lineTo(fx+x,y):c.moveTo(fx+x,y));c.stroke();c.restore()}
+  c.save();c.translate(px,ground-hop);c.strokeStyle=col.ink;c.lineWidth=2.5;c.lineJoin='round';c.lineCap='round';
+  c.beginPath();c.moveTo(-4,-14);c.lineTo(-5+(dead?0:step),0);c.moveTo(4,-14);c.lineTo(5-(dead?0:step),0);c.stroke();
+  c.fillStyle=dead?'#2A2A2A':col.muted;c.fillRect(5,-33,7,15);c.strokeRect(5,-33,7,15);
+  c.fillStyle=dead?'#2A2A2A':col.accent;c.beginPath();c.rect(-8,-36,16,23);c.fill();c.stroke();
+  c.beginPath();c.arc(0,-44,8,0,Math.PI*2);c.fillStyle=dead?'#2A2A2A':col.surface;c.fill();c.stroke();
+  c.fillStyle=dead?'#FFFFFF':col.ink;
+  if(scared||dead){c.beginPath();c.arc(-4,-46,2.4,0,7);c.arc(1,-46,2.4,0,7);c.fill();c.beginPath();c.arc(-2,-39,2,0,7);c.stroke()}
+  else{c.fillRect(-5,-47,2,2);c.fillRect(0,-47,2,2);c.beginPath();c.arc(-2,-42,2.5,.2,Math.PI-.2);c.stroke()}
+  if(dead){c.strokeStyle='#FFD83A';c.beginPath();for(let i=0;i<6;i++){c.moveTo(-6+i*2.5,-52);c.lineTo(-8+i*3,-60-Math.random()*4)}c.stroke()}
+  c.restore();
+  // afstand
+  if(!dead){c.fillStyle=scared?col.bad:col.muted;c.font='700 12px '+getComputedStyle(document.body).fontFamily;c.textAlign='center';c.fillText(Math.max(0,Math.round(G.gap))+' m',(fx+px)/2,ground+16)}
+  c.restore();
+  if(G.flash>0){c.fillStyle=`rgba(255,255,255,${G.flash*.8})`;c.fillRect(0,0,W,H);G.flash=Math.max(0,G.flash-dt*1.5)}
+}
+function stroomDie(){
+  G.alive=false;G.lock=true;G.flash=1;G.shake=1.5;$('#danger').classList.remove('on');
+  try{navigator.vibrate&&navigator.vibrate(300)}catch(e){}
+  $('#sq').innerHTML='<div class="fb bad"><div class="t">Zzzzzt! De stroom heeft je te pakken.</div></div>';
+  const me=G;setTimeout(()=>{if(G===me)stroomEnd()},1500);
+}
+function stroomEnd(){
+  if(!G||G.mode!=='stroom')return;cancelAnimationFrame(G.raf);G.raf=null;
+  const g=G.game,score=Math.round(G.t*10)/10;
+  const best=bestPerPlayer(g),prev=best[0],mine=best.find(x=>x.key===G.name.toLowerCase());
+  const rec=!prev||score>prev.score,pb=!mine||score>mine.score;
+  const entry={name:G.name,score,ok:G.ok,n:G.n,lvl:level(),pages:pagesLabel(),at:Date.now()};
+  G.entryAt=entry.at;addScore(g,entry);if(rec||pb)confetti();S.xp+=G.ok*(G.typ?4:2);markDay();save();
+  const lead=bestPerPlayer(g)[0],mist=[...G.mist],variant=g;
+  P.innerHTML=`<div class="pass">${headHtml(GAMES[g].label,'Zzzzt')}<div class="pass-body">
+   <div><div class="q">${rec?'Nieuw record! '+esc(G.name)+' staat bovenaan.':pb?'Persoonlijk record, '+esc(G.name)+'!':esc(G.name)+' hield het vol'}</div><div class="big">${fmtTime(score)}</div>
+   <div class="count">Level ${level()} · ${volts(G.t)} · ${G.ok} van ${G.n} goed${lead&&!rec?` · te verslaan: ${fmtTime(lead.score)} van ${esc(lead.name)}`:''}</div></div>
+   <div id="boardEnd"></div>
+   ${mist.length?`<div><div class="q" style="margin-bottom:6px">Deze gingen fout</div><ul class="mist">${mist.map(w=>`<li><b>${esc(w.en)} ${spk(w)}</b><span>${esc(w.nl)}</span></li>`).join('')}</ul></div>`:''}
+   <div class="acts"><button class="btn primary" id="again">Nog een keer</button>${mist.length?'<button class="btn" id="onlyMist">Fouten inprenten</button>':''}<button class="btn ghost" id="home2">Naar start</button></div>
+  </div></div>`;
+  renderBoard($('#boardEnd'),g);
+  $('#again').onclick=()=>stroomStart(G.pool,G.name,variant);$('#home2').onclick=goHome;
+  if(mist.length)$('#onlyMist').onclick=()=>{G={mode:'learn',items:mist,Q:mist.map(w=>({w,stage:0,miss:false})),done:0,firstOk:0,mist:new Set()};learnNext()};
+  $('#again').focus();
+}
+
+/* ---------- grammatica ---------- */
+const GITEMS=[{"id": "so1", "t": "so", "q": "I'm really tired.", "a": ["So am I."], "o": ["So do I.", "Neither am I."], "e": "Bevestigende zin met <b>am</b> → eens: <b>So + am + I</b>.", "ctx": "Eens", "mc": false}, {"id": "so2", "t": "so", "q": "I don't like horror films.", "a": ["Neither do I.", "Nor do I."], "o": ["So do I.", "Neither don't I."], "e": "Ontkennende zin (don't) → eens: <b>Neither/Nor + do + I</b>. Na neither geen not meer!", "ctx": "Eens", "mc": false}, {"id": "so3", "t": "so", "q": "I can play the guitar.", "a": ["So can I."], "o": ["So do I.", "So am I."], "e": "Zelfde hulpwerkwoord terug: <b>can</b> → So can I.", "ctx": "Eens", "mc": false}, {"id": "so4", "t": "so", "q": "I can't swim very well.", "a": ["Neither can I.", "Nor can I."], "o": ["So can't I.", "Neither do I."], "e": "Ontkennend met can't → <b>Neither can I</b>.", "ctx": "Eens", "mc": false}, {"id": "so5", "t": "so", "q": "I went to the cinema yesterday.", "a": ["So did I."], "o": ["So went I.", "So do I."], "e": "Past simple zonder hulpwerkwoord → gebruik <b>did</b>: So did I.", "ctx": "Eens", "mc": false}, {"id": "so6", "t": "so", "q": "I didn't do my homework.", "a": ["Neither did I.", "Nor did I."], "o": ["Neither didn't I.", "So did I."], "e": "didn't → <b>Neither did I</b> (zonder not).", "ctx": "Eens", "mc": false}, {"id": "so7", "t": "so", "q": "I've been to London.", "a": ["So have I."], "o": ["So did I.", "So am I."], "e": "Present perfect (I've = I have) → <b>So have I</b>.", "ctx": "Eens", "mc": false}, {"id": "so8", "t": "so", "q": "I haven't seen that film.", "a": ["Neither have I.", "Nor have I."], "o": ["Neither did I.", "So haven't I."], "e": "haven't → <b>Neither have I</b>.", "ctx": "Eens", "mc": false}, {"id": "so9", "t": "so", "q": "I'll be at the party.", "a": ["So will I."], "o": ["So am I.", "So do I."], "e": "I'll = I will → <b>So will I</b>.", "ctx": "Eens", "mc": false}, {"id": "so10", "t": "so", "q": "I was late for school.", "a": ["So was I."], "o": ["So did I.", "So were I."], "e": "was → <b>So was I</b>.", "ctx": "Eens", "mc": false}, {"id": "so11", "t": "so", "q": "I love football.", "a": ["Really? I don't.", "I don't."], "o": ["Really? I do.", "Neither do I."], "e": "Oneens met een bevestigende zin → <b>Really? I don't.</b>", "ctx": "Oneens", "mc": false}, {"id": "so12", "t": "so", "q": "I don't like chocolate.", "a": ["Really? I do.", "I do."], "o": ["Really? I don't.", "So do I."], "e": "Oneens met een ontkennende zin → <b>Really? I do.</b>", "ctx": "Oneens", "mc": false}, {"id": "so13", "t": "so", "q": "I'm not scared of spiders.", "a": ["Really? I am.", "I am."], "o": ["Really? I'm not.", "So am I."], "e": "Oneens met 'I'm not' → <b>Really? I am.</b> (niet samentrekken: I'm kan hier niet).", "ctx": "Oneens", "mc": false}, {"id": "so14", "t": "so", "q": "I can ski.", "a": ["Really? I can't.", "I can't."], "o": ["Neither can I.", "Really? I don't."], "e": "Oneens met can → <b>Really? I can't.</b>", "ctx": "Oneens", "mc": false}, {"id": "so15", "t": "so", "q": "I didn't enjoy the match.", "a": ["Really? I did.", "I did."], "o": ["Really? I didn't.", "So did I."], "e": "Oneens met didn't → <b>Really? I did.</b>", "ctx": "Oneens", "mc": false}, {"id": "so16", "t": "so", "q": "My brother plays tennis. (jouw zus ook)", "a": ["So does my sister."], "o": ["So plays my sister.", "So do my sister."], "e": "plays (hij/zij, present simple) → <b>So does</b> + onderwerp.", "ctx": "Eens", "mc": false}, {"id": "so17", "t": "so", "q": "Tom isn't coming to the party. (Anna ook niet)", "a": ["Neither is Anna.", "Nor is Anna."], "o": ["Neither does Anna.", "So isn't Anna."], "e": "isn't coming → hulpwerkwoord <b>is</b>: Neither is Anna.", "ctx": "Eens", "mc": false}, {"id": "so18", "t": "so", "q": "I would love to go to Japan.", "a": ["So would I."], "o": ["So will I.", "So do I."], "e": "would → <b>So would I</b>.", "ctx": "Eens", "mc": false}, {"id": "so19", "t": "so", "q": "I've got a new phone.", "a": ["So have I."], "o": ["So do I.", "So got I."], "e": "have got → <b>So have I</b>.", "ctx": "Eens", "mc": false}, {"id": "so20", "t": "so", "q": "I think football is boring.", "a": ["Really? I don't.", "I don't."], "o": ["Really? I do.", "Neither do I."], "e": "I think... → oneens: <b>Really? I don't (think so).</b>", "ctx": "Oneens", "mc": false}, {"id": "so21", "t": "so", "q": "I'm not very good at maths.", "a": ["Neither am I.", "Nor am I."], "o": ["Neither do I.", "So am I."], "e": "I'm not → <b>Neither am I</b>.", "ctx": "Eens", "mc": false}, {"id": "so22", "t": "so", "q": "We were at the stadium last night. (jij ook)", "a": ["So was I."], "o": ["So were I.", "So did I."], "e": "Let op het onderwerp: jij = I → <b>So was I</b>.", "ctx": "Eens", "mc": false}, {"id": "vp1", "t": "vp", "q": "I decided ___ the football team. (join)", "a": ["to join"], "o": ["joining", "join"], "e": "<b>decide</b> + to + infinitief.", "ctx": null, "mc": false}, {"id": "vp2", "t": "vp", "q": "She enjoys ___ in the sea. (swim)", "a": ["swimming"], "o": ["to swim", "swim"], "e": "<b>enjoy</b> + -ing.", "ctx": null, "mc": false}, {"id": "vp3", "t": "vp", "q": "My parents want me ___ harder. (study)", "a": ["to study"], "o": ["studying", "study"], "e": "<b>want</b> + object + to + infinitief.", "ctx": null, "mc": false}, {"id": "vp4", "t": "vp", "q": "The coach made us ___ ten laps. (run)", "a": ["run"], "o": ["to run", "running"], "e": "<b>make</b> + object + infinitief zonder to.", "ctx": null, "mc": false}, {"id": "vp5", "t": "vp", "q": "Would you mind ___ the window? (open)", "a": ["opening"], "o": ["to open", "open"], "e": "<b>mind</b> + -ing.", "ctx": null, "mc": false}, {"id": "vp6", "t": "vp", "q": "He refused ___ the question. (answer)", "a": ["to answer"], "o": ["answering", "answer"], "e": "<b>refuse</b> + to + infinitief.", "ctx": null, "mc": false}, {"id": "vp7", "t": "vp", "q": "My mum lets me ___ up late at weekends. (stay)", "a": ["stay"], "o": ["to stay", "staying"], "e": "<b>let</b> + object + infinitief zonder to.", "ctx": null, "mc": false}, {"id": "vp8", "t": "vp", "q": "They asked us ___ outside. (wait)", "a": ["to wait"], "o": ["waiting", "wait"], "e": "<b>ask</b> + object + to + infinitief.", "ctx": null, "mc": false}, {"id": "vp9", "t": "vp", "q": "I can't stand ___ a match. (lose)", "a": ["losing"], "o": ["to lose", "lose"], "e": "<b>can't stand</b> + -ing.", "ctx": null, "mc": false}, {"id": "vp10", "t": "vp", "q": "We managed ___ the final. (win)", "a": ["to win"], "o": ["winning", "win"], "e": "<b>manage</b> + to + infinitief.", "ctx": null, "mc": false}, {"id": "vp11", "t": "vp", "q": "The teacher reminded us ___ our trainers. (bring)", "a": ["to bring"], "o": ["bringing", "bring"], "e": "<b>remind</b> + object + to + infinitief.", "ctx": null, "mc": false}, {"id": "vp12", "t": "vp", "q": "Have you finished ___ your essay? (write)", "a": ["writing"], "o": ["to write", "write"], "e": "<b>finish</b> + -ing.", "ctx": null, "mc": false}, {"id": "vp13", "t": "vp", "q": "She persuaded her cousin ___ the sailing club. (join)", "a": ["to join"], "o": ["joining", "join"], "e": "<b>persuade</b> + object + to + infinitief.", "ctx": null, "mc": false}, {"id": "vp14", "t": "vp", "q": "You should avoid ___ just before a race. (eat)", "a": ["eating"], "o": ["to eat", "eat"], "e": "<b>avoid</b> + -ing.", "ctx": null, "mc": false}, {"id": "vp15", "t": "vp", "q": "I hope ___ a world record one day. (break)", "a": ["to break"], "o": ["breaking", "break"], "e": "<b>hope</b> + to + infinitief.", "ctx": null, "mc": false}, {"id": "vp16", "t": "vp", "q": "My coach encouraged me ___ the competition. (enter)", "a": ["to enter"], "o": ["entering", "enter"], "e": "<b>encourage</b> + object + to + infinitief.", "ctx": null, "mc": false}, {"id": "vp17", "t": "vp", "q": "He kept ___ the goal. (miss)", "a": ["missing"], "o": ["to miss", "miss"], "e": "<b>keep</b> (blijven) + -ing.", "ctx": null, "mc": false}, {"id": "vp18", "t": "vp", "q": "Our teacher made us ___ the test again. (do)", "a": ["do"], "o": ["to do", "doing"], "e": "<b>make</b> + object + infinitief zonder to.", "ctx": null, "mc": false}, {"id": "vp19", "t": "vp", "q": "I'm planning ___ a gap year. (take)", "a": ["to take"], "o": ["taking", "take"], "e": "<b>plan</b> + to + infinitief.", "ctx": null, "mc": false}, {"id": "vp20", "t": "vp", "q": "She suggested ___ to the cinema. (go)", "a": ["going"], "o": ["to go", "go"], "e": "<b>suggest</b> + -ing.", "ctx": null, "mc": false}, {"id": "vp21", "t": "vp", "q": "They can't afford ___ a new car. (buy)", "a": ["to buy"], "o": ["buying", "buy"], "e": "<b>afford</b> + to + infinitief.", "ctx": null, "mc": false}, {"id": "vp22", "t": "vp", "q": "He gave up ___ football after his injury. (play)", "a": ["playing"], "o": ["to play", "play"], "e": "<b>give up</b> + -ing.", "ctx": null, "mc": false}, {"id": "vp23", "t": "vp", "q": "The referee told him ___ the pitch. (leave)", "a": ["to leave"], "o": ["leaving", "leave"], "e": "<b>tell</b> + object + to + infinitief.", "ctx": null, "mc": false}, {"id": "vp24", "t": "vp", "q": "Let me ___ you with that. (help)", "a": ["help"], "o": ["to help", "helping"], "e": "<b>let</b> + object + infinitief zonder to.", "ctx": null, "mc": false}, {"id": "vp25", "t": "vp", "q": "I promise ___ on time. (be)", "a": ["to be"], "o": ["being", "be"], "e": "<b>promise</b> + to + infinitief.", "ctx": null, "mc": false}, {"id": "vp26", "t": "vp", "q": "My parents don't allow me ___ my phone at dinner. (use)", "a": ["to use"], "o": ["using", "use"], "e": "<b>allow</b> + object + to + infinitief.", "ctx": null, "mc": false}, {"id": "vp27", "t": "vp", "q": "Do you miss ___ in the park? (play)", "a": ["playing"], "o": ["to play", "play"], "e": "<b>miss</b> (missen) + -ing.", "ctx": null, "mc": false}, {"id": "nt1", "t": "nt", "q": "I ___ TV when the phone rang. (watch)", "a": ["was watching"], "o": ["watched", "had watched"], "e": "Ik was bezig (achtergrond) toen iets gebeurde → <b>past continuous</b>: was/were + -ing.", "ctx": null, "mc": false}, {"id": "nt2", "t": "nt", "q": "When we arrived at the station, the train ___. (already/leave)", "a": ["had already left"], "o": ["already left", "was already leaving"], "e": "De trein vertrok nog vóór wij aankwamen → <b>past perfect</b>: had + voltooid deelwoord.", "ctx": null, "mc": false}, {"id": "nt3", "t": "nt", "q": "She ___ off her bike while she was cycling to school. (fall)", "a": ["fell"], "o": ["was falling", "had fallen"], "e": "Korte, afgeronde gebeurtenis die de achtergrond onderbreekt → <b>past simple</b>.", "ctx": null, "mc": false}, {"id": "nt4", "t": "nt", "q": "While they ___ football, it started to rain. (play)", "a": ["were playing"], "o": ["played", "had played"], "e": "Na <b>while</b> meestal de achtergrond → <b>past continuous</b>.", "ctx": null, "mc": false}, {"id": "nt5", "t": "nt", "q": "He was tired because he ___ well. (not/sleep)", "a": ["hadn't slept", "had not slept"], "o": ["didn't sleep", "wasn't sleeping"], "e": "Het slechte slapen gebeurde vóór hij moe was → <b>past perfect</b>.", "ctx": null, "mc": false}, {"id": "nt6", "t": "nt", "q": "Yesterday I ___ up, had a shower and went to school. (get)", "a": ["got"], "o": ["was getting", "had got"], "e": "Handelingen na elkaar → <b>past simple</b>.", "ctx": null, "mc": false}, {"id": "nt7", "t": "nt", "q": "At eight o'clock last night I ___ my homework. (do)", "a": ["was doing"], "o": ["did", "had done"], "e": "Bezig op een bepaald moment → <b>past continuous</b>.", "ctx": null, "mc": false}, {"id": "nt8", "t": "nt", "q": "She couldn't go out because she ___ her homework yet. (not/finish)", "a": ["hadn't finished", "had not finished"], "o": ["didn't finish", "wasn't finishing"], "e": "Nog eerder dan 'couldn't go out' (en met yet) → <b>past perfect</b>.", "ctx": null, "mc": false}, {"id": "nt9", "t": "nt", "q": "I ___ snow before I went to Austria. (never/see)", "a": ["had never seen"], "o": ["never saw", "was never seeing"], "e": "Vóór een moment in het verleden → <b>past perfect</b>.", "ctx": null, "mc": false}, {"id": "nt10", "t": "nt", "q": "The goalkeeper ___ for the ball, but he couldn't stop it. (dive)", "a": ["dived", "dove"], "o": ["was diving", "had dived"], "e": "Afgeronde handeling → <b>past simple</b>.", "ctx": null, "mc": false}, {"id": "nt11", "t": "nt", "q": "The match ___ when we got to the stadium. (already/start)", "a": ["had already started"], "o": ["already started", "was already starting"], "e": "Het begon vóór wij er waren → <b>past perfect</b>.", "ctx": null, "mc": false}, {"id": "nt12", "t": "nt", "q": "Paula ___ the cycle race when she fell off her bike. (lead)", "a": ["was leading"], "o": ["led", "had led"], "e": "Ze was aan het leiden toen ze viel → <b>past continuous</b>.", "ctx": null, "mc": false}, {"id": "nt13", "t": "nt", "q": "We ___ the match 3-1 last Saturday. (win)", "a": ["won"], "o": ["were winning", "had won"], "e": "Afgeronde gebeurtenis met tijdsaanduiding (last Saturday) → <b>past simple</b>.", "ctx": null, "mc": false}, {"id": "nt14", "t": "nt", "q": "The sun ___ and the birds were singing. (shine)", "a": ["was shining"], "o": ["shone", "had shone"], "e": "Beschrijving van de achtergrond → <b>past continuous</b>.", "ctx": null, "mc": false}, {"id": "nt15", "t": "nt", "q": "I didn't recognise him because he ___ a beard. (grow)", "a": ["had grown"], "o": ["grew", "was growing"], "e": "De baard groeide vóór het moment van herkennen → <b>past perfect</b>.", "ctx": null, "mc": false}, {"id": "nt16", "t": "nt", "q": "Last summer we ___ to Spain by train. (travel)", "a": ["travelled", "traveled"], "o": ["were travelling", "had travelled"], "e": "Afgeronde gebeurtenis (last summer) → <b>past simple</b>.", "ctx": null, "mc": false}, {"id": "nt17", "t": "nt", "q": "Someone stole my phone while I ___ for the bus. (wait)", "a": ["was waiting"], "o": ["waited", "had waited"], "e": "Bezig (achtergrond) toen het gebeurde → <b>past continuous</b>.", "ctx": null, "mc": false}, {"id": "nt18", "t": "nt", "q": "When I got home, I realised I ___ my keys. (lose)", "a": ["had lost"], "o": ["lost", "was losing"], "e": "Het kwijtraken gebeurde vóór het besef → <b>past perfect</b>.", "ctx": null, "mc": false}, {"id": "nt19", "t": "nt", "q": "A local runner ___ him at high speed. (overtake)", "a": ["overtook"], "o": ["was overtaking", "had overtaken"], "e": "Afgeronde handeling → <b>past simple</b>: overtake – overtook – overtaken.", "ctx": null, "mc": false}, {"id": "nt20", "t": "nt", "q": "They ___ dinner when the lights went out. (have)", "a": ["were having"], "o": ["had", "had had"], "e": "Bezig met eten toen het licht uitging → <b>past continuous</b>.", "ctx": null, "mc": false}, {"id": "uw1", "t": "uw", "q": "When I was little, I ___ believe in Father Christmas.", "a": ["alleen used to"], "o": ["used to én would"], "e": "Toestand (be, have, live, like, know, believe) → alleen <b>used to</b>. Would kan hier niet.", "ctx": null, "mc": true}, {"id": "uw2", "t": "uw", "q": "Every summer we ___ go camping in France.", "a": ["used to én would"], "o": ["alleen used to"], "e": "Herhaalde handeling vroeger → <b>used to</b> én <b>would</b> zijn allebei goed.", "ctx": null, "mc": true}, {"id": "uw3", "t": "uw", "q": "My dad ___ be a professional footballer.", "a": ["alleen used to"], "o": ["used to én would"], "e": "Toestand (be, have, live, like, know, believe) → alleen <b>used to</b>. Would kan hier niet.", "ctx": null, "mc": true}, {"id": "uw4", "t": "uw", "q": "After school, my brother and I ___ play in the park for hours.", "a": ["used to én would"], "o": ["alleen used to"], "e": "Herhaalde handeling vroeger → <b>used to</b> én <b>would</b> zijn allebei goed.", "ctx": null, "mc": true}, {"id": "uw5", "t": "uw", "q": "We ___ have a dog called Max.", "a": ["alleen used to"], "o": ["used to én would"], "e": "Toestand (be, have, live, like, know, believe) → alleen <b>used to</b>. Would kan hier niet.", "ctx": null, "mc": true}, {"id": "uw6", "t": "uw", "q": "My grandma ___ tell us stories before bed.", "a": ["used to én would"], "o": ["alleen used to"], "e": "Herhaalde handeling vroeger → <b>used to</b> én <b>would</b> zijn allebei goed.", "ctx": null, "mc": true}, {"id": "uw7", "t": "uw", "q": "She ___ live next door to us.", "a": ["alleen used to"], "o": ["used to én would"], "e": "Toestand (be, have, live, like, know, believe) → alleen <b>used to</b>. Would kan hier niet.", "ctx": null, "mc": true}, {"id": "uw8", "t": "uw", "q": "On Saturdays, my mum ___ make pancakes.", "a": ["used to én would"], "o": ["alleen used to"], "e": "Herhaalde handeling vroeger → <b>used to</b> én <b>would</b> zijn allebei goed.", "ctx": null, "mc": true}, {"id": "uw9", "t": "uw", "q": "There ___ be a cinema in our town.", "a": ["alleen used to"], "o": ["used to én would"], "e": "Toestand (be, have, live, like, know, believe) → alleen <b>used to</b>. Would kan hier niet.", "ctx": null, "mc": true}, {"id": "uw10", "t": "uw", "q": "When it snowed, we ___ build snowmen in the garden.", "a": ["used to én would"], "o": ["alleen used to"], "e": "Herhaalde handeling vroeger → <b>used to</b> én <b>would</b> zijn allebei goed.", "ctx": null, "mc": true}, {"id": "uw11", "t": "uw", "q": "He ___ know the names of all the players.", "a": ["alleen used to"], "o": ["used to én would"], "e": "Toestand (be, have, live, like, know, believe) → alleen <b>used to</b>. Would kan hier niet.", "ctx": null, "mc": true}, {"id": "uw12", "t": "uw", "q": "Every morning my grandpa ___ walk the dog before breakfast.", "a": ["used to én would"], "o": ["alleen used to"], "e": "Herhaalde handeling vroeger → <b>used to</b> én <b>would</b> zijn allebei goed.", "ctx": null, "mc": true}, {"id": "uw13", "t": "uw", "q": "I ___ like vegetables, but now I love them.", "a": ["didn't use to", "did not use to"], "o": ["didn't used to", "wouldn't used to"], "e": "Ontkennend: <b>didn't use to</b> (zonder d, want did draagt de verleden tijd).", "ctx": null, "mc": false}, {"id": "uw14", "t": "uw", "q": "___ you use to play football when you were young?", "a": ["Did"], "o": ["Used", "Would"], "e": "Vraag: <b>Did</b> you use to ...?", "ctx": null, "mc": false}, {"id": "uw15", "t": "uw", "q": "My sister used to ___ the piano.", "a": ["play"], "o": ["playing", "played"], "e": "used to + <b>infinitief</b>.", "ctx": null, "mc": false}, {"id": "uw16", "t": "uw", "q": "We ___ go to school by bus, but now we cycle.", "a": ["used to"], "o": ["use to", "were used to"], "e": "Bevestigend verleden: <b>used to</b> (met d).", "ctx": null, "mc": false}, {"id": "uw17", "t": "uw", "q": "Did he ___ to be shy?", "a": ["use"], "o": ["used", "using"], "e": "Na did: <b>use to</b> (zonder d).", "ctx": null, "mc": false}, {"id": "uw18", "t": "uw", "q": "My granddad ___ always wear a hat when he went out.", "a": ["would", "used to"], "o": ["was used to", "uses to"], "e": "Herhaalde handeling: <b>would</b> (of used to).", "ctx": null, "mc": false}, {"id": "sp1", "t": "sp", "q": "She's wearing a gold medal. She ___ won the race.", "a": ["must have"], "o": ["must", "can't have"], "e": "Verleden + bijna zeker wel → <b>must have</b> + voltooid deelwoord.", "ctx": null, "mc": false}, {"id": "sp2", "t": "sp", "q": "The lights are off. They ___ be at home.", "a": ["can't"], "o": ["must", "must have"], "e": "Heden + bijna zeker niet → <b>can't</b> + infinitief.", "ctx": null, "mc": false}, {"id": "sp3", "t": "sp", "q": "I'm not sure where Tom is. He ___ be in the gym.", "a": ["might", "may", "could"], "o": ["must have", "can't have"], "e": "Heden + misschien → <b>might / may / could</b> + infinitief.", "ctx": null, "mc": false}, {"id": "sp4", "t": "sp", "q": "He's shivering. He ___ be cold.", "a": ["must"], "o": ["can't", "might have"], "e": "Heden + bijna zeker wel → <b>must</b> + infinitief.", "ctx": null, "mc": false}, {"id": "sp5", "t": "sp", "q": "She didn't answer the phone. She ___ been asleep.", "a": ["might have", "may have", "could have"], "o": ["must", "can't"], "e": "Verleden + misschien → <b>might have</b> + voltooid deelwoord.", "ctx": null, "mc": false}, {"id": "sp6", "t": "sp", "q": "That ___ be Ben's bag. His bag is blue and this one is red.", "a": ["can't"], "o": ["must", "might have"], "e": "Bijna zeker niet → <b>can't</b>.", "ctx": null, "mc": false}, {"id": "sp7", "t": "sp", "q": "You ran a marathon? You ___ be exhausted!", "a": ["must"], "o": ["can't", "must have"], "e": "Heden + bijna zeker wel → <b>must be</b>.", "ctx": null, "mc": false}, {"id": "sp8", "t": "sp", "q": "Nobody is here. They ___ forgotten about the training.", "a": ["must have"], "o": ["can't have", "must"], "e": "Verleden + bijna zeker wel → <b>must have forgotten</b>.", "ctx": null, "mc": false}, {"id": "sp9", "t": "sp", "q": "He ___ have seen the film. It only came out today.", "a": ["can't", "couldn't"], "o": ["must", "might"], "e": "Verleden + bijna zeker niet → <b>can't have</b> + voltooid deelwoord.", "ctx": null, "mc": false}, {"id": "sp10", "t": "sp", "q": "Listen to that music! The neighbours ___ be having a party.", "a": ["must"], "o": ["can't have", "must have"], "e": "Heden, nu bezig + zeker → <b>must be</b> + -ing.", "ctx": null, "mc": false}, {"id": "sp11", "t": "sp", "q": "Anna looks really happy. She ___ passed her exam.", "a": ["must have"], "o": ["can't", "must"], "e": "Verleden + bijna zeker wel → <b>must have passed</b>.", "ctx": null, "mc": false}, {"id": "sp12", "t": "sp", "q": "It ___ be true! I don't believe it.", "a": ["can't"], "o": ["must", "might have"], "e": "Bijna zeker niet → <b>can't be</b>.", "ctx": null, "mc": false}, {"id": "sp13", "t": "sp", "q": "Where's Jake? I don't know. He ___ be doing his homework.", "a": ["might", "may", "could"], "o": ["must have", "can't have"], "e": "Misschien, nu bezig → <b>might be</b> + -ing.", "ctx": null, "mc": false}, {"id": "sp14", "t": "sp", "q": "The streets are wet. It ___ rained last night.", "a": ["must have"], "o": ["can't have", "must"], "e": "Verleden + bijna zeker wel → <b>must have rained</b>.", "ctx": null, "mc": false}, {"id": "sp15", "t": "sp", "q": "He ___ be the referee. He's wearing a team shirt, not a black one.", "a": ["can't"], "o": ["must", "must have"], "e": "Bijna zeker niet → <b>can't be</b>.", "ctx": null, "mc": false}, {"id": "sp16", "t": "sp", "q": "I can't find my keys. I ___ left them at school.", "a": ["might have", "may have", "could have"], "o": ["must", "can't"], "e": "Verleden + misschien → <b>might have left</b>.", "ctx": null, "mc": false}];
+const GTOP=[
+ {id:'so',title:'So am I / Neither do I',sub:'Reageren op meningen: eens en oneens',rules:`
+  <p>Je reageert kort met een <b>hulpwerkwoord</b>. Kijk welk hulpwerkwoord in de zin staat (am, is, are, was, can, will, have, would). Staat er geen, gebruik dan <b>do / does / did</b>.</p>
+  <table class="gt"><tr><th></th><th>Zin</th><th>Reactie</th></tr>
+  <tr><td>Eens, positief</td><td>I'm hungry.<br>I like pizza.</td><td><b>So am I.</b><br><b>So do I.</b></td></tr>
+  <tr><td>Eens, negatief</td><td>I can't swim.<br>I didn't go.</td><td><b>Neither can I. / Nor can I.</b><br><b>Neither did I.</b></td></tr>
+  <tr><td>Oneens</td><td>I love football.<br>I don't like cats.</td><td><b>Really? I don't.</b><br><b>Really? I do.</b></td></tr></table>
+  <p class="tip">💡 Na <b>neither</b> en <b>nor</b> komt nooit meer <i>not</i>: Neither <s>don't</s> do I. En let op de volgorde: <b>So + hulpww + onderwerp</b> (So <b>am I</b>, niet So I am).</p>`},
+ {id:'vp',title:'Verb patterns',sub:'to + infinitief, -ing, object + (to) infinitief',rules:`
+  <table class="gt"><tr><th>Patroon</th><th>Werkwoorden</th><th>Voorbeeld</th></tr>
+  <tr><td><b>+ to + infinitief</b></td><td>want, decide, hope, plan, agree, refuse, manage, promise, offer, afford, learn</td><td>I decided <b>to join</b> the team.</td></tr>
+  <tr><td><b>+ object + to + infinitief</b></td><td>ask, tell, want, advise, allow, encourage, persuade, remind, invite, teach</td><td>She asked <b>me to help</b>.</td></tr>
+  <tr><td><b>+ -ing</b></td><td>enjoy, avoid, mind, finish, keep, can't stand, suggest, practise, give up, miss</td><td>I enjoy <b>swimming</b>.</td></tr>
+  <tr><td><b>+ object + infinitief</b> (zonder to)</td><td>make, let (help kan met of zonder to)</td><td>The coach made <b>us run</b>.</td></tr></table>
+  <p class="tip">💡 <b>make</b> en <b>let</b> nooit met to: My mum lets me <s>to</s> stay up.</p>`},
+ {id:'nt',title:'Past simple, continuous, perfect',sub:'Verhalen vertellen in de verleden tijd',rules:`
+  <table class="gt"><tr><th>Tijd</th><th>Vorm</th><th>Wanneer</th></tr>
+  <tr><td><b>Past simple</b></td><td>walked, went, won</td><td>Afgeronde gebeurtenis, of handelingen na elkaar.</td></tr>
+  <tr><td><b>Past continuous</b></td><td>was / were + -ing</td><td>Was bezig (achtergrond) toen er iets gebeurde. Vaak na <i>while</i>.</td></tr>
+  <tr><td><b>Past perfect</b></td><td>had + voltooid deelwoord</td><td>Gebeurde nog <b>eerder</b> dan een ander moment in het verleden.</td></tr></table>
+  <p class="ex">I <b>was cycling</b> to school when I <b>fell</b> off my bike. I <b>had forgotten</b> my helmet.</p>`},
+ {id:'uw',title:'Used to en would',sub:'Hoe het vroeger was',rules:`
+  <table class="gt"><tr><th></th><th>Handeling (vaak gedaan)</th><th>Toestand (be, have, live, like, know)</th></tr>
+  <tr><td><b>used to</b></td><td>✓ We used to go camping.</td><td>✓ I used to live in Utrecht.</td></tr>
+  <tr><td><b>would</b></td><td>✓ We would go camping.</td><td>✗ <s>I would live in Utrecht.</s></td></tr></table>
+  <p>Ontkennend: <b>didn't use to</b>. Vraag: <b>Did you use to</b> ...? (na did geen d)</p>`},
+ {id:'sp',title:'Speculeren: must, might, can\'t',sub:'Heden en verleden',rules:`
+  <table class="gt"><tr><th>Hoe zeker?</th><th>Heden</th><th>Verleden</th></tr>
+  <tr><td>Bijna zeker <b>wel</b></td><td>He <b>must be</b> tired.</td><td>He <b>must have</b> won.</td></tr>
+  <tr><td><b>Misschien</b></td><td>She <b>might / may / could be</b> ill.</td><td>She <b>might have</b> forgotten.</td></tr>
+  <tr><td>Bijna zeker <b>niet</b></td><td>It <b>can't be</b> true.</td><td>He <b>can't have</b> seen it.</td></tr></table>
+  <p class="tip">💡 Verleden = modal + <b>have</b> + voltooid deelwoord (been, gone, won, left). Nooit <s>must had</s>.</p>`}
+];
+const gs=it=>S.g[it.id]||(S.g[it.id]={l:0});
+function gMastery(t){const l=GITEMS.filter(i=>t==='all'||i.t===t);return l.reduce((a,i)=>a+Math.min(3,(S.g[i.id]||{l:0}).l),0)/(3*l.length)}
+function renderGram(){
+  const el=$('#gramCards');if(!el)return;
+  el.innerHTML=GTOP.map(t=>{const m=gMastery(t.id);return `<button class="gcard" data-g="${t.id}"><h3>${esc(t.title)}</h3><p>${esc(t.sub)}</p><span class="bar"><i style="width:${Math.round(m*100)}%"></i></span><span class="src">${GITEMS.filter(i=>i.t===t.id).length} zinnen · ${Math.round(m*100)}% onder de knie</span></button>`}).join('')+
+   `<button class="gcard all" data-g="all"><h3>Alles door elkaar</h3><p>Toetsoefening: alle onderwerpen gemengd</p><span class="bar"><i style="width:${Math.round(gMastery('all')*100)}%"></i></span><span class="src">${GITEMS.length} zinnen</span></button>`;
+}
+function gNorm(s){return String(s).toLowerCase().replace(/[’‘`]/g,"'")
+  .replace(/\bcan't\b/g,'can not').replace(/\bcannot\b/g,'can not').replace(/\bwon't\b/g,'will not').replace(/n't\b/g,' not')
+  .replace(/'m\b/g,' am').replace(/'re\b/g,' are').replace(/'ve\b/g,' have').replace(/'ll\b/g,' will').replace(/'s\b/g,' is')
+  .replace(/[.,!?;:"]/g,' ').replace(/\s+/g,' ').trim().replace(/^really /,'')}
+function gTopic(tid){
+  show('play');G=null;
+  const T=GTOP.find(t=>t.id===tid);
+  const title=T?T.title:'Alles door elkaar';
+  const rules=T?T.rules:GTOP.map(t=>`<h4>${esc(t.title)}</h4>${t.rules}`).join('');
+  P.innerHTML=`<div class="playbar"><button class="btn small ghost" id="quit">Terug</button></div>
+  <div class="pass">${headHtml('Grammatica',esc(title))}<div class="pass-body">
+    <h2 class="gtitle">${esc(title)}</h2>
+    <details class="grules" ${T?'open':''}><summary>Uitleg</summary><div class="gbody">${rules}</div></details>
+    <div class="acts"><button class="btn primary" id="gmc">Oefenen: kiezen</button><button class="btn dark" id="gty">Oefenen: zelf typen</button></div>
+    <div class="src">Een ronde is 10 zinnen. Wat je fout hebt, komt in dezelfde ronde terug.</div>
+  </div></div>`;
+  $('#quit').onclick=goHome;$('#gmc').onclick=()=>gStart(tid,false);$('#gty').onclick=()=>gStart(tid,true);
+}
+function gStart(tid,typ,items){
+  if(!items){const pool=GITEMS.filter(i=>tid==='all'||i.t===tid);items=shuffle(pool).sort((a,b)=>gs(a).l-gs(b).l).slice(0,10)}
+  G={mode:'gram',tid,typ,items,Q:items.map(i=>({i,miss:false})),done:0,firstOk:0,mist:new Set()};
+  gNext();
+}
+function gFull(it){return esc(it.q).replace('___',`<b class="gfill">${esc(it.a[0])}</b>`)}
+function gPrompt(it){
+  const T=GTOP.find(t=>t.id===it.t);
+  if(it.t==='so')return `<div class="gctx ${it.ctx==='Eens'?'yes':'no'}">Je bent het ${it.ctx==='Eens'?'<b>eens</b>':'<b>oneens</b>'}</div><div class="bubble a">${esc(it.q)}</div><div class="bubble b">___</div>`;
+  const q=esc(it.q).replace('___','<span class="gap">____</span>');
+  return `<div class="gsent">${q}</div>`;
+}
+function gNext(){
+  if(!G.Q.length)return gEnd();
+  const cur=G.cur=G.Q.shift(),it=cur.i;
+  const T=GTOP.find(t=>t.id===it.t);
+  const typ=G.typ&&!it.mc;
+  const head=progress()+`<div class="pass">${headHtml('Grammatica · '+esc(T.title),typ?'Typen':'Kiezen')}<div class="pass-body"><div class="q">${it.t==='so'?'Hoe reageer je?':it.t==='uw'&&it.mc?'Wat past op de puntjes?':'Vul in'}</div>${gPrompt(it)}<div class="perf"></div>`;
+  if(!typ){
+    const opts=shuffle([it.a[0],...it.o]);
+    P.innerHTML=head+`<div class="opts">${opts.map((o,i)=>`<button class="opt" data-i="${i}"><span class="k">${i+1}</span><span>${esc(o)}</span></button>`).join('')}</div><div id="fbox"></div></div></div>`;
+    $('#quit').onclick=goHome;
+    P.querySelectorAll('.opt').forEach((b,i)=>b.onclick=()=>{
+      const ok=opts[i]===it.a[0];
+      P.querySelectorAll('.opt').forEach((x,j)=>{x.disabled=true;x.classList.add(opts[j]===it.a[0]?'good':j===i?'bad':'dim')});
+      gAfter(cur,ok,opts[i]);
+    });
+  }else{
+    P.innerHTML=head+`<form class="typerow" id="gf" autocomplete="off"><input id="gi" autocapitalize="off" autocorrect="off" spellcheck="false" placeholder="typ je antwoord…" aria-label="Antwoord"><button class="btn dark" type="submit" id="gb">Controleer</button></form><div class="acts"><button class="btn small ghost" type="button" id="gidk">Weet ik niet</button></div><div id="fbox"></div></div></div>`;
+    $('#quit').onclick=goHome;const inp=$('#gi');inp.focus();let phase='ask';
+    $('#gidk').onclick=()=>{if(phase==='ask'){phase='retype';gAfter(cur,false,'',true)}};
+    $('#gf').onsubmit=e=>{e.preventDefault();const v=inp.value;
+      if(phase==='done')return gNext();
+      const n=gNorm(v);if(!n)return;const acc=it.a.map(gNorm);
+      if(phase==='retype'){if(acc.includes(n)){phase='done';gNext()}else{inp.classList.remove('shake');void inp.offsetWidth;inp.classList.add('shake')}return}
+      if(acc.includes(n)){phase='done';inp.readOnly=true;inp.classList.add('okay');$('#gb').textContent='Verder';gAfter(cur,true,v,true);const x=$('#gidk');if(x)x.hidden=true;$('#gb').focus()}
+      else if(acc.some(a=>a.length>=5&&lev(a,n)<=1)){$('#fbox').innerHTML='<div class="fb warn"><div class="t">Bijna! Check de spelling.</div></div>';inp.select()}
+      else{phase='retype';gAfter(cur,false,v,true)}
+    };
+  }
+}
+function gAfter(cur,ok,chosen,typed){
+  const it=cur.i,s=gs(it);markDay();
+  if(ok){G.done++;if(!cur.miss){G.firstOk++;s.l=Math.min(4,s.l+1)}S.xp+=typed?6:3}
+  else{cur.miss=true;G.mist.add(it);s.l=Math.max(0,s.l-1);reinsert(cur,3)}
+  const alts=it.a.length>1&&it.t!=='uw'?`<div class="tip">Ook goed: ${it.a.slice(1).map(esc).join(' · ')}</div>`:'';
+  const full=it.t==='so'?`<div class="ans">${esc(it.a[0])}</div>`:`<div class="gsent small">${gFull(it)}</div>`;
+  $('#fbox').innerHTML=`<div class="fb ${ok?'good':'bad'}"><div class="t">${ok?pick(['Goed!','Top!','Klopt!','Yes!']):typed&&chosen?'Niet goed. Het goede antwoord:':'Het goede antwoord:'}</div>${full}${alts}<div class="tip">${it.e}</div>${typed&&!ok?'<div class="tip">Typ het goede antwoord over om verder te gaan.</div>':''}</div>${typed?'':'<div class="foot" style="margin-top:12px"><button class="btn primary" id="next">Verder ↵</button></div>'}`;
+  if(typed&&!ok){const inp=$('#gi');inp.value='';inp.placeholder='typ het goede antwoord over…';$('#gb').textContent='Verder';inp.focus();const a=$('#gidk');if(a)a.hidden=true}
+  if(!typed){$('#next').onclick=gNext;$('#next').focus()}
+  save();
+}
+function gEnd(){
+  const t=G.items.length,mist=[...G.mist],tid=G.tid,typ=G.typ;
+  if(G.firstOk/t>=.8)confetti();save();
+  P.innerHTML=`<div class="pass">${headHtml('Grammatica','Klaar')}<div class="pass-body">
+    <div><div class="q">In één keer goed</div><div class="big">${G.firstOk}<span style="font-size:.45em;color:var(--muted)"> / ${t}</span></div></div>
+    ${mist.length?`<div><div class="q" style="margin-bottom:6px">Kijk hier nog even naar</div><ul class="mist gm">${mist.map(it=>`<li><span>${it.t==='so'?esc(it.q)+' → <b>'+esc(it.a[0])+'</b>':gFull(it)}</span><small>${it.e}</small></li>`).join('')}</ul></div>`:''}
+    <div class="acts"><button class="btn primary" id="again">Nog een ronde</button>${mist.length?'<button class="btn" id="onlyMist">Alleen mijn fouten</button>':''}<button class="btn ghost" id="uitleg">Uitleg</button><button class="btn ghost" id="home2">Naar start</button></div>
+  </div></div>`;
+  $('#again').onclick=()=>gStart(tid,typ);$('#home2').onclick=goHome;$('#uitleg').onclick=()=>gTopic(tid);
+  if(mist.length)$('#onlyMist').onclick=()=>gStart(tid,typ,mist);
+  $('#again').focus();
+}
+$('#gramCards').addEventListener('click',e=>{const b=e.target.closest('.gcard');if(b)gTopic(b.dataset.g)});
+
+/* ---------- toetsenbord ---------- */
+document.addEventListener('keydown',e=>{
+  if(P.hidden||!G)return;
+  const inInput=e.target.tagName==='INPUT';
+  if(G.mode==='schiet'&&!inInput){const k=SKEYS[e.key.toLowerCase()];if(k){e.preventDefault();if(!e.repeat)schietShoot(k[0],k[1])}return}
+  if(G.mode==='vlucht'&&!inInput&&(e.key===' '||e.key==='ArrowUp'||e.key==='w')){e.preventDefault();vFlap();return}
+  if(!inInput&&/^[1-4]$/.test(e.key)){
+    if(G.mode==='flash'){const b=e.key==='1'?$('#no'):e.key==='2'?$('#yes'):null;if(b&&!$('#rate').hidden)b.click();return}
+    const b=P.querySelectorAll('.opt')[+e.key-1];if(b&&!b.disabled)b.click();return}
+  if(G.mode==='flash'&&(e.key===' '||e.key==='Enter')&&!inInput){e.preventDefault();if($('#rate')&&$('#rate').hidden)G.flip&&G.flip()}
+});
+
+/* ---------- confetti ---------- */
+function confetti(){
+  if(matchMedia('(prefers-reduced-motion: reduce)').matches)return;
+  const c=$('#conf'),x=c.getContext('2d');c.width=innerWidth;c.height=innerHeight;
+  const cols=['#F2B400','#1C8A4B','#3B6FD8','#E0533D','#13203A'];
+  const ps=Array.from({length:110},()=>({x:c.width/2,y:c.height*.35,vx:(Math.random()-.5)*14,vy:-Math.random()*12-4,r:Math.random()*6+4,c:pick(cols),a:Math.random()*6}));
+  let f=0;(function loop(){x.clearRect(0,0,c.width,c.height);ps.forEach(p=>{p.x+=p.vx;p.y+=p.vy;p.vy+=.4;p.vx*=.99;p.a+=.2;x.save();x.translate(p.x,p.y);x.rotate(p.a);x.fillStyle=p.c;x.fillRect(-p.r/2,-p.r/4,p.r,p.r/2);x.restore()});if(++f<110)requestAnimationFrame(loop);else x.clearRect(0,0,c.width,c.height)})();
+}
+
+renderHome();
+</script>
+</body>
+</html>

@@ -192,7 +192,34 @@ canvas#conf{position:fixed;inset:0;pointer-events:none;z-index:9}
 .sec .acts{grid-column:3;grid-row:1}
 @media (max-width:560px){.sec{grid-template-columns:auto minmax(0,1fr)}.sec .acts{grid-column:1/-1;grid-row:auto}}
 .tools{display:flex;flex-wrap:wrap;gap:8px}
+.chart.big{max-width:520px}
+.gt td,.gt th{overflow-wrap:anywhere;hyphens:auto;-webkit-hyphens:auto}
+.draw{touch-action:none;cursor:crosshair;-webkit-user-select:none;user-select:none}
+.fb.warn{background:var(--pink-soft);border-color:var(--accent)}
+details.verdiep{margin-top:18px;border:2px dashed var(--accent);border-radius:12px;padding:10px 14px;background:var(--bg)}
+details.verdiep>summary{font-weight:700;font-size:17px;cursor:pointer}
+details.verdiep>summary .src{font-weight:400;margin-left:6px}
+details.vd{border-top:1px solid var(--line);padding:8px 0}
+details.vd:first-of-type{margin-top:8px}
+details.vd>summary{font-weight:600;cursor:pointer}
+details.vd>div{padding-top:6px}
+ul.fout{padding-left:0;list-style:none;display:grid;gap:6px}
+ul.fout li{padding-left:24px;position:relative}ul.fout li:before{content:"✗";position:absolute;left:4px;color:var(--bad);font-weight:700}
+ol.steps{padding-left:22px;display:grid;gap:8px;margin:8px 0}
+ol.steps li{animation:fadein .3s ease}
+@keyframes fadein{from{opacity:0;transform:translateY(4px)}to{opacity:1}}
+.nextbox{margin-top:18px;border-top:2px solid var(--line);padding-top:12px;display:grid;gap:12px}
+.nextbox h3{margin:0}
+.choice{display:grid;gap:4px}.choice>span{font-size:14px;color:var(--muted)}
+.choice>.btn{justify-self:start}
+.kcamps{display:grid;gap:8px}
+.kc{display:grid;grid-template-columns:minmax(0,1fr) auto;gap:2px 10px;text-align:left;background:var(--surface);border:2px solid var(--ink);border-radius:12px;padding:10px 12px;color:var(--ink);font:inherit;cursor:pointer}
+.kc b{grid-column:1/-1;font-size:16px}.kc span{font-size:13px;color:var(--muted)}
+.kc .bar{grid-column:1;display:block;align-self:center}.kc .count{grid-column:2;grid-row:3}
+.kc:disabled{opacity:.5;cursor:not-allowed;border-style:dashed}
+.kc.done{border-color:var(--good);background:var(--good-bg)}
 </style>
+
 </head>
 <body>
 <a href="index.html" style="position:fixed;right:12px;bottom:calc(12px + env(safe-area-inset-bottom,0px));z-index:20;background:#142A3A;color:#fff;text-decoration:none;font:700 14px system-ui,sans-serif;padding:9px 14px;border-radius:999px;box-shadow:0 2px 8px rgba(0,0,0,.25)">← Alle vakken</a>
@@ -213,6 +240,10 @@ canvas#conf{position:fixed;inset:0;pointer-events:none;z-index:9}
   <div class="banner"><span class="pill">Eerst uitleg, dan oefenen</span><span class="pill g">Elke ronde nieuwe sommen</span></div>
 
   <section>
+    <div class="modes"><button class="mode main" id="klim"><span class="lab">Spel</span><h3>Beklim de Statistiekberg</h3><p>Elke goede vraag brengt je hoger. Foute vragen komen terug tot je ze goed hebt. Haal de top: 100%.</p><span class="tag" id="klimTag" style="text-transform:none">0 m</span></button></div>
+  </section>
+
+  <section>
     <div class="sec-head"><h2>1. Per paragraaf</h2><span class="src">Begin bij 2.1 en werk naar beneden</span></div>
     <div class="secs" id="secs"></div>
   </section>
@@ -223,7 +254,12 @@ canvas#conf{position:fixed;inset:0;pointer-events:none;z-index:9}
   </section>
 
   <section>
-    <div class="sec-head"><h2>3. Toets</h2></div>
+    <div class="sec-head"><h2>3. Grafieken</h2><span class="src">Zelf punten zetten, staven tekenen en aflezen</span></div>
+    <div class="tools" id="grafs"></div>
+  </section>
+
+  <section>
+    <div class="sec-head"><h2>4. Toets</h2></div>
     <div class="modes">
       <button class="mode main" id="toets"><span class="lab">Cijfer</span><h3>Proeftoets</h3><p>20 gemengde vragen over het hele hoofdstuk, met uitwerkingen aan het eind en een cijfer.</p></button>
       <button class="mode" id="spiek"><span class="lab">Kaart</span><h3>Spiekbriefje</h3><p>Alle regels en formules op één scherm.</p></button>
@@ -234,8 +270,9 @@ canvas#conf{position:fixed;inset:0;pointer-events:none;z-index:9}
     <details class="tips">
       <summary>Zo pak je het aan</summary>
       <ul>
-        <li>Lees bij elke paragraaf eerst de <b>Uitleg</b>. Doe daarna <b>Oefenen</b> tot de balk groen is.</li>
+        <li>Lees bij elke paragraaf eerst de <b>Uitleg</b>. Wil je meer weten, klap dan <b>Dieper in de theorie</b> open. Doe daarna <b>Oefenen</b> tot de balk groen is.</li>
         <li>Fout? Lees de uitwerking goed en doe er meteen nog een paar uit de <b>Rekentrainer</b>.</li>
+        <li>Bij <b>Grafieken</b> tik je op het rooster om een punt te zetten. Tik nog eens in dezelfde kolom om een punt te verplaatsen, of gebruik ↶.</li>
         <li>Getallen typ je met een komma of punt, allebei goed (6,4 of 6.4).</li>
         <li>Pak er pen en papier bij: schrijf de getallen op volgorde, teken bij de normale verdeling een schets.</li>
         <li>Toetsen: <b>Enter</b> = controleren/verder, <b>1 2 3 4</b> = antwoord kiezen.</li>
@@ -246,6 +283,7 @@ canvas#conf{position:fixed;inset:0;pointer-events:none;z-index:9}
 </main>
 <main id="play" hidden></main>
 </div>
+
 <script>
 const SECS=[
  {id:'2.1',t:'De onderzoeksvraag',s:'Statistische cyclus, populatie, steekproef, representatief, aselect'},
@@ -429,6 +467,7 @@ const VARS=[
 ['lengte in cm','con'],['gewicht van een appel','con'],['temperatuur in graden Celsius','con'],['reisafstand naar school','con'],['snelheid van een auto','con'],['hoogte van de lift boven de grond','con'],['voetlengte','con'],['langste ademstop in seconden','con'],['tijd op de 100 meter','con'],['aantal km per dag lopen','con']
 ];
 const VTYPE={nom:['kwalitatief','nominaal','Kwalitatief en er is geen logische volgorde: je geeft de categorieën alleen een naam.'],ord:['kwalitatief','ordinaal','Kwalitatief en er is een logische volgorde.'],dis:['kwantitatief','discreet','Een hoeveelheid die je telt: niet alle tussenliggende waarden zijn mogelijk.'],con:['kwantitatief','continu','Een hoeveelheid die je meet: alle tussenliggende waarden zijn mogelijk.']};
+
 const R=(a,b)=>a+Math.floor(Math.random()*(b-a+1));
 const nf=(x,d=1)=>{const r=Math.round(x*Math.pow(10,d))/Math.pow(10,d);return String(r).replace('.',',')};
 const sum=a=>a.reduce((s,x)=>s+x,0);
@@ -560,6 +599,274 @@ const GENS={
   return {mc:true,q:`In welke fase van de statistische cyclus past dit?<div class="nums" style="font-size:18px">${esc(it[0])}</div>`,opts:F,keep:true,a:F[it[1]],w:`Dit hoort bij fase ${F[it[1]]}.`};}}
 };
 const SECGENS={'2.1':['cyc'],'2.2':['var'],'2.3':['gmm','freq','klas','rel','weeg'],'2.4':['kw','box','cum'],'2.5':['norm','sd','shape']};
+
+/* ---------- grafieken: interactief ---------- */
+const PW=340,PH=250,ML=40,MR=14,MT=14,MB=34;
+function mkScale(o){const X=v=>ML+(v-o.x0)/(o.x1-o.x0)*(PW-ML-MR),Y=v=>PH-MB-(v-o.y0)/(o.y1-o.y0)*(PH-MT-MB);
+  const iX=px=>o.x0+(px-ML)/(PW-ML-MR)*(o.x1-o.x0),iY=py=>o.y0+(PH-MB-py)/(PH-MT-MB)*(o.y1-o.y0);return {X,Y,iX,iY,o}}
+function gridSvg(sc,xt,yt,xl,yl,mn){const {X,Y,o}=sc;let g='';
+  if(mn&&(o.y1-o.y0)/mn<=60)for(let v=o.y0;v<=o.y1+1e-9;v+=mn)g+=`<line x1="${ML}" y1="${Y(v)}" x2="${PW-MR}" y2="${Y(v)}" stroke="var(--line)" stroke-width=".5" opacity=".6"/>`;
+  yt.forEach(v=>g+=`<line x1="${ML}" y1="${Y(v)}" x2="${PW-MR}" y2="${Y(v)}" stroke="var(--line)"/><text x="${ML-5}" y="${Y(v)+3.5}" text-anchor="end" font-size="10" fill="currentColor" opacity=".75">${nf(v,2)}</text>`);
+  xt.forEach(v=>g+=`<line x1="${X(v)}" y1="${MT}" x2="${X(v)}" y2="${PH-MB}" stroke="var(--line)"/><text x="${X(v)}" y="${PH-MB+14}" text-anchor="middle" font-size="10" fill="currentColor" opacity=".75">${nf(v,2)}</text>`);
+  g+=`<line x1="${ML}" y1="${PH-MB}" x2="${PW-MR}" y2="${PH-MB}" stroke="currentColor"/><line x1="${ML}" y1="${MT}" x2="${ML}" y2="${PH-MB}" stroke="currentColor"/>`;
+  g+=`<text x="${PW-MR}" y="${PH-4}" text-anchor="end" font-size="10.5" fill="currentColor">${xl}</text><text x="${ML-34}" y="${MT-2}" font-size="10.5" fill="currentColor">${yl}</text>`;return g}
+function niceStep(N){for(const s of [1,2,5,10,20,25,50,100])if(N/s<=10)return s;return 200}
+function mkData(){const w=pick([5,10,20]),x0=pick([0,10,20,40]),n=5;const ys=pick([1,2,5]);const fs=Array.from({length:n},()=>R(1,7)*ys);const cl=Array.from({length:n},(_,i)=>x0+i*w);const cum=[];fs.reduce((s,f)=>{cum.push(s+f);return s+f},0);return {w,x0,n,fs,cl,cum,N:cum[n-1],ys,lab:cl.map(c=>`[${c}, ${c+w})`)}}
+function relData(){let d;do{d=mkData()}while(false);const fs=pick([[5,15,30,30,15,5],[10,20,30,20,15,5],[5,10,20,35,20,10],[20,30,25,15,10,0].slice(0,5).concat([0]),[10,15,25,25,15,10]]);
+  const w=pick([5,10,20]),x0=pick([0,10,20,40]),n=6;const cl=Array.from({length:n},(_,i)=>x0+i*w);const cum=[];fs.reduce((s,f)=>{cum.push(s+f);return s+f},0);return {w,x0,n,fs,cl,cum}}
+function interp(d,p){const xs=[d.x0,...d.cl.map(c=>c+d.w)],ys=[0,...d.cum];for(let i=1;i<xs.length;i++)if(ys[i]>=p-1e-9){if(ys[i]===ys[i-1])return xs[i-1];return xs[i-1]+(p-ys[i-1])/(ys[i]-ys[i-1])*(xs[i]-xs[i-1])}return xs[xs.length-1]}
+/* een interactieve opdracht: {title, q, render(svgEl), check() -> {ok, html}} */
+const GTASKS={
+ cum:{t:'Cumulatieve polygoon tekenen',make(){
+  const d=mkData();const ystep=niceStep(d.N);const ymax=Math.ceil(d.N/ystep)*ystep;
+  const sc=mkScale({x0:d.x0,x1:d.x0+d.n*d.w,y0:0,y1:ymax});const pts={},hs=[];
+  return {q:`Teken de <b>cumulatieve frequentiepolygoon</b>. Tik op de plekken waar de punten moeten komen. Tik nog eens in dezelfde kolom om een punt te verplaatsen.${tbl('klasse',d.lab,'frequentie',d.fs)}`,
+   hint:'Tel steeds op. Zet het punt boven de <b>rechtergrens</b> van de klasse. De lijn begint op de horizontale as bij de eerste klassengrens.',
+   sc,draw(sel){let s=gridSvg(sc,[...d.cl,d.x0+d.n*d.w],Array.from({length:ymax/ystep+1},(_,i)=>i*ystep),'',' cum. freq.',d.ys);
+    const P=Object.entries(pts).map(([x,y])=>[+x,y]).sort((a,b)=>a[0]-b[0]);if(P.length>1)s+=`<polyline points="${P.map(([x,y])=>`${sc.X(x)},${sc.Y(y)}`).join(' ')}" fill="none" stroke="var(--accent)" stroke-width="2.5"/>`;
+    if(sel)s+=sel;P.forEach(([x,y])=>s+=`<circle cx="${sc.X(x)}" cy="${sc.Y(y)}" r="5.5" fill="var(--accent)" stroke="var(--surface)" stroke-width="2"/><text x="${sc.X(x)}" y="${sc.Y(y)-9}" text-anchor="middle" font-size="10" font-weight="700" fill="var(--accent)" paint-order="stroke" stroke="var(--surface)" stroke-width="3">${y}</text>`);return s},
+   tap(x,y){hs.push(JSON.stringify(pts));const xs=Math.round((x-d.x0)/(d.w/2))*(d.w/2)+d.x0;if(xs<d.x0||xs>d.x0+d.n*d.w)return;pts[xs]=Math.max(0,Math.min(ymax,Math.round(y/d.ys)*d.ys))},
+   undo(){if(hs.length){const o=JSON.parse(hs.pop());for(const k in pts)delete pts[k];Object.assign(pts,o)}},
+   check(){const want={[d.x0]:0};d.cl.forEach((c,i)=>want[c+d.w]=d.cum[i]);let ok=true,bad=[];
+    Object.entries(want).forEach(([x,y])=>{if(pts[x]!==y){ok=false;bad.push(`bij ${nf(+x,2)} hoort ${y}${pts[x]!=null?` (jij: ${pts[x]})`:' (geen punt)'}`)}});
+    Object.keys(pts).forEach(x=>{if(!(x in want)){ok=false;bad.push(`bij ${nf(+x,2)} hoort geen punt: dat is een klassenmidden, gebruik de rechtergrens`)}});
+    const corr=`<polyline points="${Object.entries(want).map(([x,y])=>`${sc.X(+x)},${sc.Y(y)}`).join(' ')}" fill="none" stroke="var(--good)" stroke-width="2" stroke-dasharray="5 4"/>`;
+    return {ok,corr,html:ok?'Helemaal goed! Elk punt staat boven de rechtergrens van zijn klasse.':`Nog niet goed: ${bad.slice(0,4).join('; ')}.`,w:`Cumulatief: ${d.cum.join(', ')}. Begin bij (${d.x0}, 0). Groene stippellijn = goede polygoon.`}}}}},
+ hist:{t:'Histogram tekenen',make(){
+  const d=mkData();const fmax=Math.max(...d.fs);const ystep=niceStep(fmax);const ymax=Math.ceil((fmax+1)/ystep)*ystep;
+  const sc=mkScale({x0:d.x0,x1:d.x0+d.n*d.w,y0:0,y1:ymax});const h={},hs=[];
+  return {q:`Teken het <b>histogram</b>. Tik in elke klasse op de juiste hoogte.${tbl('klasse',d.lab,'frequentie',d.fs)}`,hint:'De staven staan tegen elkaar aan. De hoogte is de frequentie.',sc,
+   draw(sel){let s=gridSvg(sc,[...d.cl,d.x0+d.n*d.w],Array.from({length:ymax/ystep+1},(_,i)=>i*ystep),'','freq.',d.ys);
+    Object.entries(h).forEach(([i,v])=>{const c=d.cl[i];s+=`<rect x="${sc.X(c)}" y="${sc.Y(v)}" width="${sc.X(c+d.w)-sc.X(c)}" height="${sc.Y(0)-sc.Y(v)}" fill="var(--accent)" opacity=".85" stroke="var(--surface)" stroke-width="1.5"/><text x="${(sc.X(c)+sc.X(c+d.w))/2}" y="${sc.Y(v)-4}" text-anchor="middle" font-size="10" font-weight="700" fill="var(--accent)">${v}</text>`});return s+(sel||'')},
+   tap(x,y){hs.push(JSON.stringify(h));const i=Math.floor((x-d.x0)/d.w);if(i<0||i>=d.n)return;h[i]=Math.max(0,Math.min(ymax,Math.round(y/d.ys)*d.ys))},undo(){if(hs.length){const o=JSON.parse(hs.pop());for(const k in h)delete h[k];Object.assign(h,o)}},
+   check(){let bad=[];d.fs.forEach((f,i)=>{if(h[i]!==f)bad.push(`${d.lab[i]} moet ${f} hoog zijn${h[i]!=null?` (jij: ${h[i]})`:''}`)});
+    const corr=d.fs.map((f,i)=>`<rect x="${sc.X(d.cl[i])}" y="${sc.Y(f)}" width="${sc.X(d.cl[i]+d.w)-sc.X(d.cl[i])}" height="${sc.Y(0)-sc.Y(f)}" fill="none" stroke="var(--good)" stroke-width="2" stroke-dasharray="5 4"/>`).join('');
+    return {ok:!bad.length,corr,html:bad.length?`Nog niet goed: ${bad.slice(0,4).join('; ')}.`:'Goed! Een histogram met staven tegen elkaar aan.',w:'Groene stippellijn = goede histogram.'}}}}},
+ poly:{t:'Frequentiepolygoon tekenen',make(){
+  const d=mkData();const fmax=Math.max(...d.fs);const ystep=niceStep(fmax);const ymax=Math.ceil((fmax+1)/ystep)*ystep;
+  const x0=d.x0-d.w,x1=d.x0+(d.n+1)*d.w;const sc=mkScale({x0,x1,y0:0,y1:ymax});const pts={},hs=[];
+  return {q:`Teken de <b>frequentiepolygoon</b>. Tik op de plekken waar de punten moeten komen, ook de begin- en eindpunten.${tbl('klasse',d.lab,'frequentie',d.fs)}`,hint:'Zet de stippen boven de <b>klassenmiddens</b>. Begin en eind liggen op de horizontale as, een halve klasse voor de eerste en na de laatste klasse.',sc,
+   draw(sel){let s=gridSvg(sc,Array.from({length:d.n+3},(_,i)=>x0+i*d.w),Array.from({length:ymax/ystep+1},(_,i)=>i*ystep),'','freq.',d.ys);
+    const P=Object.entries(pts).map(([x,y])=>[+x,y]).sort((a,b)=>a[0]-b[0]);if(P.length>1)s+=`<polyline points="${P.map(([x,y])=>`${sc.X(x)},${sc.Y(y)}`).join(' ')}" fill="none" stroke="var(--accent)" stroke-width="2.5"/>`;
+    s+=sel||'';P.forEach(([x,y])=>s+=`<circle cx="${sc.X(x)}" cy="${sc.Y(y)}" r="5.5" fill="var(--accent)" stroke="var(--surface)" stroke-width="2"/><text x="${sc.X(x)}" y="${sc.Y(y)-9}" text-anchor="middle" font-size="10" font-weight="700" fill="var(--accent)" paint-order="stroke" stroke="var(--surface)" stroke-width="3">${y}</text>`);return s},
+   tap(x,y){hs.push(JSON.stringify(pts));const xs=Math.round((x-x0)/(d.w/2))*(d.w/2)+x0;if(xs<x0||xs>x1)return;pts[xs]=Math.max(0,Math.min(ymax,Math.round(y/d.ys)*d.ys))},undo(){if(hs.length){const o=JSON.parse(hs.pop());for(const k in pts)delete pts[k];Object.assign(pts,o)}},
+   check(){const want={[d.x0-d.w/2]:0,[d.x0+d.n*d.w+d.w/2]:0};d.cl.forEach((c,i)=>want[c+d.w/2]=d.fs[i]);let bad=[];
+    Object.entries(want).forEach(([x,y])=>{if(pts[x]!==y)bad.push(`bij ${nf(+x,2)} hoort ${y}${pts[x]!=null?` (jij: ${pts[x]})`:' (geen punt)'}`)});
+    Object.keys(pts).forEach(x=>{if(!(x in want))bad.push(`bij ${nf(+x,2)} hoort geen punt: dat is een klassengrens, gebruik het klassenmidden`)});
+    const corr=`<polyline points="${Object.entries(want).map(([x,y])=>[+x,y]).sort((a,b)=>a[0]-b[0]).map(([x,y])=>`${sc.X(x)},${sc.Y(y)}`).join(' ')}" fill="none" stroke="var(--good)" stroke-width="2" stroke-dasharray="5 4"/>`;
+    return {ok:!bad.length,corr,html:bad.length?`Nog niet goed: ${bad.slice(0,4).join('; ')}.`:'Goed! Stippen boven de klassenmiddens, begin en eind op de as.',w:`Klassenmiddens: ${d.cl.map(c=>nf(c+d.w/2,2)).join(', ')}.`}}}}},
+ lees:{t:'Aflezen uit cumulatieve polygoon',num:true,make(){
+  const d=relData();const sc=mkScale({x0:d.x0,x1:d.x0+d.n*d.w,y0:0,y1:100});const k=pick(['med','q1','q3','pct','meer']);
+  const base=gridSvg(sc,[...d.cl,d.x0+d.n*d.w],[0,10,20,30,40,50,60,70,80,90,100],'','rel. cum. %')+`<polyline points="${[[d.x0,0],...d.cl.map((c,i)=>[c+d.w,d.cum[i]])].map(([x,y])=>`${sc.X(x)},${sc.Y(y)}`).join(' ')}" fill="none" stroke="var(--accent)" stroke-width="2.5"/>`;
+  const bi=R(1,4),bx=d.cl[bi];const tol=d.w/5;
+  const qs={med:['de <b>mediaan</b>',interp(d,50),'Ga bij 50% horizontaal naar de lijn en dan recht naar beneden.',50],q1:['het <b>eerste kwartiel Q<sub>1</sub></b>',interp(d,25),'Ga bij 25% naar de lijn en dan naar beneden.',25],q3:['het <b>derde kwartiel Q<sub>3</sub></b>',interp(d,75),'Ga bij 75% naar de lijn en dan naar beneden.',75]};
+  if(k==='pct')return {static:base,q:`Hoeveel procent is <b>kleiner dan ${bx}</b>?`,a:d.cum[bi-1],tol:.5,u:'%',w:`Ga bij ${bx} omhoog naar de lijn en lees links af: ${d.cum[bi-1]}%.`,guide:`<line x1="${sc.X(bx)}" y1="${sc.Y(0)}" x2="${sc.X(bx)}" y2="${sc.Y(d.cum[bi-1])}" stroke="var(--good)" stroke-dasharray="4 3" stroke-width="2"/><line x1="${ML}" y1="${sc.Y(d.cum[bi-1])}" x2="${sc.X(bx)}" y2="${sc.Y(d.cum[bi-1])}" stroke="var(--good)" stroke-dasharray="4 3" stroke-width="2"/>`};
+  if(k==='meer')return {static:base,q:`Hoeveel procent is <b>${bx} of groter</b>?`,a:100-d.cum[bi-1],tol:.5,u:'%',w:`Kleiner dan ${bx}: ${d.cum[bi-1]}%. Dus ${bx} of groter: 100 − ${d.cum[bi-1]} = ${100-d.cum[bi-1]}%.`,guide:`<line x1="${sc.X(bx)}" y1="${sc.Y(0)}" x2="${sc.X(bx)}" y2="${sc.Y(d.cum[bi-1])}" stroke="var(--good)" stroke-dasharray="4 3" stroke-width="2"/><line x1="${ML}" y1="${sc.Y(d.cum[bi-1])}" x2="${sc.X(bx)}" y2="${sc.Y(d.cum[bi-1])}" stroke="var(--good)" stroke-dasharray="4 3" stroke-width="2"/>`};
+  const [nm,val,how,p]=qs[k];
+  return {static:base,q:`Lees ${nm} af. Een schatting is goed genoeg.`,a:val,tol,w:`${how} Je komt uit op ongeveer ${nf(val,1)}.`,guide:`<line x1="${ML}" y1="${sc.Y(p)}" x2="${sc.X(val)}" y2="${sc.Y(p)}" stroke="var(--good)" stroke-dasharray="4 3" stroke-width="2"/><line x1="${sc.X(val)}" y1="${sc.Y(p)}" x2="${sc.X(val)}" y2="${sc.Y(0)}" stroke="var(--good)" stroke-dasharray="4 3" stroke-width="2"/>`}}},
+ box:{t:'Boxplot bouwen bij cumulatieve polygoon',make(){
+  const d=relData();const x1=d.x0+d.n*d.w;const sc=mkScale({x0:d.x0,x1,y0:0,y1:100});
+  const want=[d.x0,interp(d,25),interp(d,50),interp(d,75),interp(d,100)];const lastNZ=d.cum.findIndex(c=>c>=100);want[4]=d.cl[lastNZ]+d.w;
+  const got=[];const BY=PH+18;const names=['Q0 (0%)','Q1 (25%)','mediaan (50%)','Q3 (75%)','Q4 (100%)'];
+  return {tall:true,q:`Bouw de <b>boxplot</b> bij deze relatieve cumulatieve frequentiepolygoon. Tik in de grafiek ${names.map((n,i)=>`<span class="qi" data-qi="${i}">${n}</span>`).join(', ')} aan, in die volgorde. De boxplot verschijnt eronder.`,
+   hint:'Ga bij 0, 25, 50, 75 en 100% horizontaal naar de lijn en dan naar beneden. Tik op die plek.',sc,
+   draw(sel){let s=gridSvg(sc,[...d.cl,x1],[0,25,50,75,100],'','rel. cum. %')+`<polyline points="${[[d.x0,0],...d.cl.map((c,i)=>[c+d.w,d.cum[i]])].map(([x,y])=>`${sc.X(x)},${sc.Y(y)}`).join(' ')}" fill="none" stroke="currentColor" stroke-width="2"/>`;
+    got.forEach((v,i)=>s+=`<line x1="${sc.X(v)}" y1="${MT}" x2="${sc.X(v)}" y2="${PH-MB}" stroke="var(--accent)" stroke-dasharray="3 3"/><circle cx="${sc.X(v)}" cy="${PH-MB}" r="4" fill="var(--accent)"/>`);
+    if(got.length){const X=sc.X,y=BY;s+=`<line x1="${X(got[0])}" y1="${y}" x2="${X(got[got.length-1])}" y2="${y}" stroke="currentColor" stroke-width="2"/>`;
+      if(got.length>=4)s+=`<rect x="${X(got[1])}" y="${y-11}" width="${X(got[3])-X(got[1])}" height="22" fill="var(--accent)" stroke="currentColor" stroke-width="2"/>`;
+      got.forEach((v,i)=>s+=`<line x1="${X(v)}" y1="${y-(i===0||i===4?8:11)}" x2="${X(v)}" y2="${y+(i===0||i===4?8:11)}" stroke="currentColor" stroke-width="2.5"/>`)}
+    return s+(sel||'')},
+   tap(x){if(got.length>=5)return;const sn=d.w/5;got.push(Math.max(d.x0,Math.min(x1,d.x0+Math.round((x-d.x0)/sn)*sn)))},undo(){got.pop()},
+   check(){const tol=d.w/4+1e-9;let bad=[];want.forEach((v,i)=>{if(got[i]==null||Math.abs(got[i]-v)>tol)bad.push(`${names[i]} ≈ ${nf(v,1)}${got[i]!=null?` (jij: ${nf(got[i],1)})`:''}`)});
+    const X=sc.X,y=BY;const corr=`<g opacity=".9"><line x1="${X(want[0])}" y1="${y+20}" x2="${X(want[4])}" y2="${y+20}" stroke="var(--good)" stroke-width="2"/><rect x="${X(want[1])}" y="${y+12}" width="${X(want[3])-X(want[1])}" height="16" fill="none" stroke="var(--good)" stroke-width="2"/><line x1="${X(want[2])}" y1="${y+12}" x2="${X(want[2])}" y2="${y+28}" stroke="var(--good)" stroke-width="2"/></g>`;
+    return {ok:!bad.length,corr,html:bad.length?`Nog niet goed: ${bad.join('; ')}.`:'Goed afgelezen!',w:`Juiste waarden ongeveer: ${want.map(v=>nf(v,1)).join(' · ')}. Groen = goede boxplot.`}},
+   extraH:44}}},
+ kies:{t:'Kies de juiste boxplot',mc:true,make(){
+  const d=relData();const x1=d.x0+d.n*d.w;const sc=mkScale({x0:d.x0,x1,y0:0,y1:100});
+  const want=[d.x0,interp(d,25),interp(d,50),interp(d,75),d.cl[d.cum.findIndex(c=>c>=100)]+d.w];
+  const sh=(a,j,dv)=>{const b=[...a];b[j]=Math.max(d.x0,Math.min(x1,b[j]+dv));return b.sort((p,q)=>p-q)};
+  const opts=shuffle([want,sh(want,2,pick([-1,1])*d.w*.8),sh(sh(want,1,-d.w*.7),3,d.w*.7)]);const ci=opts.indexOf(want);
+  const base=gridSvg(sc,[...d.cl,x1],[0,25,50,75,100],'','rel. cum. %')+`<polyline points="${[[d.x0,0],...d.cl.map((c,i)=>[c+d.w,d.cum[i]])].map(([x,y])=>`${sc.X(x)},${sc.Y(y)}`).join(' ')}" fill="none" stroke="var(--accent)" stroke-width="2.5"/>`;
+  const step=d.w;return {static:base,q:'Welke boxplot hoort bij deze relatieve cumulatieve frequentiepolygoon?',labels:opts.map((o,i)=>`<b>${'ABC'[i]}</b>${svgBox(o.map(v=>Math.round(v*10)/10),d.x0,x1,step)}`),ci,w:`Lees af bij 0, 25, 50, 75 en 100%: ongeveer ${want.map(v=>nf(v,1)).join(' · ')}. Dat is boxplot ${'ABC'[ci]}.`}}},
+ norm:{t:'Gebied kleuren bij de normale verdeling',make(){
+  const ctx=pick([{w:'baby\'s',v:'geboortegewicht',mu:3500,s:450,u:'gram'},{w:'vrouwen',v:'lengte',mu:170,s:5,u:'cm'},{w:'appels',v:'gewicht',mu:180,s:11,u:'gram'},{w:'leerlingen',v:'IQ',mu:100,s:15,u:''}]);
+  let a,b;do{a=pick([-3,-2,-1,0,1,2]);b=pick([-2,-1,0,1,2,3])}while(b<=a||(a===-3&&b===3));
+  const val=k=>nf(ctx.mu+k*ctx.s,2);const desc=a===-3?`minder dan ${val(b)}`:b===3?`meer dan ${val(a)}`:`tussen ${val(a)} en ${val(b)}`;
+  const sel=new Set();const W=340,H=170,L=10,B=36,X=k=>L+(k+3.3)/6.6*(W-2*L),f=k=>Math.exp(-k*k/2);const PC=[2.5,13.5,34,34,13.5,2.5];
+  return {q:`Het ${ctx.v} van ${ctx.w} is normaal verdeeld (μ = ${val(0)}, σ = ${nf(ctx.s,2)}). Tik de stukken aan die horen bij <b>${desc}${ctx.u?' '+ctx.u:''}</b>. Typ daarna het percentage.`,custom:true,
+   svg(){let s='';for(let i=0;i<6;i++){const k0=i-3===-3?-3.3:i-3,k1=i-2===3?3.3:i-2;let p=`M${X(k0)},${H-B} `;for(let k=k0;k<=k1+1e-9;k+=.05)p+=`L${X(k)},${H-B-f(k)*(H-B-14)} `;p+=`L${X(k1)},${H-B}Z`;
+      s+=`<path d="${p}" data-seg="${i}" fill="${sel.has(i)?'var(--accent)':'var(--chip)'}" stroke="var(--surface)" stroke-width="1.5" style="cursor:pointer"/>`}
+     for(let i=0;i<6;i++){const k0=i===0?-3.3:i-3,k1=i===5?3.3:i-2;s+=`<rect data-seg="${i}" x="${X(k0)}" y="4" width="${X(k1)-X(k0)}" height="${H-B-4}" fill="transparent" style="cursor:pointer"/>`}
+     let path='M';for(let k=-3.3;k<=3.31;k+=.05)path+=`${X(k)},${H-B-f(k)*(H-B-14)} `;s+=`<path d="${path}" fill="none" stroke="currentColor" stroke-width="2" pointer-events="none"/><line x1="${L}" y1="${H-B}" x2="${W-L}" y2="${H-B}" stroke="currentColor"/>`;
+     [-3,-2,-1,0,1,2,3].forEach(k=>s+=`<text x="${X(k)}" y="${H-B+14}" text-anchor="middle" font-size="10" fill="currentColor">${val(k)}</text><text x="${X(k)}" y="${H-B+27}" text-anchor="middle" font-size="9" fill="currentColor" opacity=".6">${k===0?'μ':`μ${k>0?'+':'−'}${Math.abs(k)===1?'':Math.abs(k)}σ`}</text>`);
+     return `<svg class="chart" viewBox="0 0 ${W} ${H}" id="nsvg">${s}</svg>`},
+   bind(redraw){$('#nsvg').addEventListener('click',e=>{const s=e.target.closest('[data-seg]');if(!s)return;const i=+s.dataset.seg;sel.has(i)?sel.delete(i):sel.add(i);redraw()})},
+   check(v){const want=new Set();for(let i=0;i<6;i++){if(i-3>=a&&i-2<=b)want.add(i)}const p=[...want].reduce((s,i)=>s+PC[i],0);
+    const segOk=want.size===sel.size&&[...want].every(i=>sel.has(i));const numOk=Math.abs(v-p)<.06;
+    return {ok:segOk&&numOk,html:segOk?(numOk?'Goed gekleurd en goed opgeteld!':`Goed gekleurd, maar het percentage is ${nf(p,2)}%.`):'De gekleurde stukken kloppen nog niet.',w:`De stukken zijn ${[...want].map(i=>nf(PC[i],2)+'%').join(' + ')} = ${nf(p,2)}%.`,showWant:want}}}}}
+};
+function grafRun(k){G={m:'graf',k,n:0,ok:0,total:6,mix:k==='mix'};show('play');grafNext()}
+function grafNext(){
+  if(G.n>=G.total){const t=G.total;if(G.ok/t>=.8)confetti();save();const k=G.k;
+    P.innerHTML=`<div class="slide">${head('Grafieken','Klaar')}<div class="slide-body"><div class="q">Goed</div><div class="big">${G.ok}<span style="font-size:.45em;color:var(--muted)"> / ${t}</span></div><div class="acts"><button class="btn primary" id="again">Nog een ronde</button><button class="btn ghost" id="home2">Naar start</button></div></div></div>`;
+    $('#again').onclick=()=>grafRun(k);$('#home2').onclick=goHome;return}
+  const key=G.mix?pick(Object.keys(GTASKS)):G.k;const T=GTASKS[key],task=T.make();
+  const top=topbar(G.n,G.total);const done=ok=>{G.n++;if(ok)G.ok++;rec(key==='norm'?'2.5':key==='hist'||key==='poly'?'2.3':'2.4',ok);save()};
+  const next=`<div class="foot" style="margin-top:12px"><button class="btn primary" id="next">Verder ↵</button></div>`;
+  if(T.num||task.static&&!T.mc){
+    P.innerHTML=top+`<div class="slide">${head('Grafieken',T.t)}<div class="slide-body"><div class="prompt" style="font-size:19px;font-weight:600">${task.q}</div><svg class="chart big" viewBox="0 0 ${PW} ${PH}" id="gsvg">${task.static}</svg>
+     <form class="typerow" id="nf" autocomplete="off"><input id="ni" inputmode="decimal" placeholder="antwoord${task.u?' in '+task.u:''}" aria-label="Antwoord"><button class="btn dark" type="submit" id="nb">Controleer</button></form><div id="fbox"></div></div></div>`;
+    $('#quit').onclick=goHome;$('#ni').focus();
+    $('#nf').onsubmit=e=>{e.preventDefault();const v=parseNum($('#ni').value);if(isNaN(v))return;const ok=Math.abs(v-task.a)<=task.tol;$('#nb').hidden=true;$('#ni').readOnly=true;
+      $('#gsvg').insertAdjacentHTML('beforeend',task.guide||'');done(ok);
+      $('#fbox').innerHTML=`<div class="fb ${ok?'good':'bad'}"><div class="t">${ok?'Goed afgelezen!':'Niet goed. Ongeveer '+nf(task.a,1)+(task.u?' '+task.u:'')+'.'}</div><div class="tip">${task.w} Groen = zo lees je het af.</div></div>`+next;bindN()};return}
+  if(T.mc){
+    P.innerHTML=top+`<div class="slide">${head('Grafieken',T.t)}<div class="slide-body"><div class="prompt" style="font-size:19px;font-weight:600">${task.q}</div><svg class="chart big" viewBox="0 0 ${PW} ${PH}">${task.static}</svg>${mcButtons(task.labels)}<div id="fbox"></div></div></div>`;
+    $('#quit').onclick=goHome;P.querySelectorAll('.opt').forEach((b,i)=>b.onclick=()=>{markOpts(task.ci,i);const ok=i===task.ci;done(ok);$('#fbox').innerHTML=`<div class="fb ${ok?'good':'bad'}"><div class="t">${ok?'Goed!':'Niet goed.'}</div><div class="tip">${task.w}</div></div>`+next;bindN()});return}
+  if(task.custom){
+    P.innerHTML=top+`<div class="slide">${head('Grafieken',T.t)}<div class="slide-body"><div class="prompt" style="font-size:19px;font-weight:600">${task.q}</div><div id="cbox"></div>
+     <form class="typerow" id="nf" autocomplete="off"><input id="ni" inputmode="decimal" placeholder="percentage" aria-label="Percentage"><button class="btn dark" type="submit" id="nb">Controleer</button></form><div id="fbox"></div></div></div>`;
+    $('#quit').onclick=goHome;const redraw=()=>{$('#cbox').innerHTML=task.svg();task.bind(redraw)};redraw();
+    $('#nf').onsubmit=e=>{e.preventDefault();const v=parseNum($('#ni').value);if(isNaN(v))return;const r=task.check(v);done(r.ok);$('#nb').hidden=true;
+      $('#fbox').innerHTML=`<div class="fb ${r.ok?'good':'bad'}"><div class="t">${r.html}</div><div class="tip">${r.w}</div></div>`+next;bindN()};return}
+  /* teken-opdracht */
+  const H=PH+(task.extraH||0);
+  P.innerHTML=top+`<div class="slide">${head('Grafieken',T.t)}<div class="slide-body"><div class="prompt" style="font-size:19px;font-weight:600">${task.q}</div>
+   <svg class="chart big draw" viewBox="0 0 ${PW} ${H}" id="gsvg"></svg>
+   <div class="acts"><button class="btn small ghost" id="undo">↶ Ongedaan maken</button><button class="btn small ghost" id="hint">Tip</button><button class="btn dark" id="chk">Controleer</button></div><div id="fbox"></div></div></div>`;
+  $('#quit').onclick=goHome;const svg=$('#gsvg');let locked=false;const redraw=(extra)=>{svg.innerHTML=task.draw(extra)};redraw();
+  svg.addEventListener('pointerdown',e=>{if(locked)return;const p=svg.createSVGPoint();p.x=e.clientX;p.y=e.clientY;const q=p.matrixTransform(svg.getScreenCTM().inverse());if(q.x<ML-6||q.x>PW-MR+6||q.y<MT-6||q.y>PH-MB+8)return;task.tap(task.sc.iX(q.x),task.sc.iY(q.y));redraw()});
+  $('#undo').onclick=()=>{if(locked)return;task.undo();redraw()};$('#hint').onclick=()=>{$('#fbox').innerHTML=`<div class="fb warn"><div class="t">Tip</div><div class="tip">${task.hint}</div></div>`};
+  $('#chk').onclick=()=>{if(locked)return;const r=task.check();locked=true;redraw(r.corr);done(r.ok);$('#chk').hidden=true;$('#undo').hidden=true;$('#hint').hidden=true;
+    $('#fbox').innerHTML=`<div class="fb ${r.ok?'good':'bad'}"><div class="t">${r.html}</div><div class="tip">${r.w}</div></div>`+next;bindN()};
+}
+function bindN(){const n=$('#next');if(n){n.onclick=grafNext;n.focus()}}
+
+/* Verdieping per paragraaf: extra uitleg (inklapbaar), veelgemaakte fouten, stap-voor-stap voorbeeld */
+const VERDIEP={
+'2.1':{
+ extra:[
+ ['Waarom is aselect zo belangrijk?',`<p>Als niet iedereen evenveel kans heeft, krijg je <b>vertekening</b> (bias). Een enquête over sport via de sportschool-app: je bereikt vooral mensen die al sporten. Hoe groot je steekproef ook is, de uitkomst blijft scheef.</p><p class="ex">Liever 500 aselect gekozen mensen dan 5000 mensen die zichzelf hebben aangemeld.</p>`],
+ ['Hoe trek je een aselecte steekproef?',`<ul><li><b>Loting</b>: alle namen in een bak (of een computer kiest willekeurige nummers).</li><li><b>Systematisch</b>: uit een lijst elke 10e persoon, met een willekeurig startpunt.</li><li><b>Gestratificeerd</b>: eerst groepen maken (bijv. klas 1 t/m 6) en uit elke groep naar verhouding loten. Zo is elke groep goed vertegenwoordigd.</li></ul>`],
+ ['Enquête-vragen: let op sturing',`<p>Een vraag kan het antwoord al voorzeggen. "Vind je ook niet dat het schoolplein te klein is?" stuurt naar "ja". Beter: "Hoe vind je de grootte van het schoolplein? te klein / goed / te groot".</p><p>Zorg ook dat de antwoordmogelijkheden <b>elkaar niet overlappen</b> en <b>alles dekken</b>: 0–1 uur, 1–2 uur… waar hoort precies 1 uur?</p>`]],
+ fouten:['Representatief en aselect door elkaar halen. Aselect gaat over <b>hoe</b> je kiest (iedereen even grote kans), representatief over <b>het resultaat</b> (goede afspiegeling).','Denken dat een grote steekproef vanzelf goed is. Groot maar scheef blijft scheef.','Bij "populatie" alleen aan mensen denken. Het kunnen ook lampen, pakken melk of huishoudens zijn.'],
+ stap:{t:'Is deze steekproef aselect en representatief?',q:'Een school met 1200 leerlingen wil weten hoe tevreden leerlingen zijn over de kantine. Ze vragen de eerste 80 leerlingen die om 12.30 uur in de kantine zijn.',s:[
+  'Wat is de populatie? Alle 1200 leerlingen van de school.',
+  'Heeft iedereen een even grote kans? Nee. Leerlingen die nooit in de kantine komen (of later pauze hebben) hebben bijna geen kans. Dus <b>niet aselect</b>.',
+  'Is het een goede afspiegeling? Waarschijnlijk niet: wie in de kantine zit, is er vaak al tevreden mee. Dus waarschijnlijk <b>niet representatief</b>.',
+  'Beter: loot 80 leerlingen uit de leerlingenlijst (bijv. naar verhouding per leerjaar) en vraag het hen in de klas.']}},
+'2.2':{
+ extra:[
+ ['Twijfelgevallen',`<ul><li><b>Leeftijd</b>: eigenlijk continu (je wordt elke seconde ouder), maar in jaren afgerond gedraagt hij zich discreet. Kijk wat de vraag bedoelt.</li><li><b>Geld</b>: in centen is het discreet, maar bij grote bedragen behandel je het vaak als continu.</li><li><b>Rapportcijfer</b>: getallen én hoeveelheden, dus kwantitatief. Met één decimaal (6,4) discreet, want 6,45 kan niet.</li><li><b>Huisnummer, telefoonnummer, postcode</b>: getallen, maar geen hoeveelheden. Dus kwalitatief (nominaal).</li></ul>`],
+ ['De truc: kun je ermee rekenen?',`<p>Vraag je af: heeft "het gemiddelde" zin? Gemiddelde lengte: ja → kwantitatief. Gemiddelde postcode: onzin → kwalitatief.</p><p>Bij kwalitatief: kun je de waarden logisch <b>op volgorde</b> zetten? slecht &lt; matig &lt; goed: ja → ordinaal. rood, blauw, groen: nee → nominaal.</p>`],
+ ['Dataset als tabel',`<p>In een dataset is elke <b>rij</b> één persoon (of ding) en elke <b>kolom</b> één variabele. De cellen bevatten de waarden.</p><div class="tw"><table class="gt"><tr><th>naam</th><th>leeftijd</th><th>woonplaats</th><th>broers/zussen</th></tr><tr><td>Sam</td><td>13</td><td>Laren</td><td>2</td></tr><tr><td>Noor</td><td>14</td><td>Ruurlo</td><td>0</td></tr></table></div>`]],
+ fouten:['Elk getal kwantitatief noemen. Een kluisnummer is een getal maar geen hoeveelheid.','Discreet en continu omdraaien. <b>Tellen</b> = discreet, <b>meten</b> = continu.','Ordinaal vergeten: "nooit / soms / vaak" heeft wél een volgorde, dus niet nominaal.'],
+ stap:{t:'Bepaal het soort variabele: "schoenmaat"',q:'Volg het stroomschema voor de variabele schoenmaat.',s:[
+  'Zijn de waarden getallen? Ja (38, 39, 40…).',
+  'Zijn het hoeveelheden? Ja, een grotere maat is een grotere voet. Dus <b>kwantitatief</b>.',
+  'Zijn alle tussenliggende waarden mogelijk? Nee, schoenmaat 38,3 bestaat niet (hooguit halve maten).',
+  'Conclusie: <b>kwantitatief discreet</b>.']}},
+'2.3':{
+ extra:[
+ ['Het gemiddelde als "eerlijk verdelen"',`<p>Het gemiddelde is wat iedereen krijgt als je alles eerlijk verdeelt. Vier vrienden hebben 2, 5, 7 en 10 snoepjes, samen 24. Eerlijk verdeeld krijgt ieder 24 ÷ 4 = 6.</p><p class="ex">Handig: is het gemiddelde van 5 cijfers een 7, dan is de som 5 × 7 = 35. Zo kun je terugrekenen welk cijfer je nog nodig hebt.</p>`],
+ ['Gewogen gemiddelde',`<p>Tellen niet alle getallen even zwaar, dan vermenigvuldig je elk getal met zijn <b>weging</b> en deel je door de som van de wegingen.</p><p class="ex">Toets 6,0 (weging 3) en so 8,0 (weging 1): (3·6,0 + 1·8,0) ÷ (3 + 1) = 26 ÷ 4 = 6,5. Een frequentietabel werkt precies zo: de frequentie is de weging.</p>`],
+ ['Waar ligt de mediaan bij n getallen?',`<p>Bij <b>n</b> getallen op volgorde staat de mediaan op plek <b>(n + 1) ÷ 2</b>.</p><ul><li>n = 27 → plek 14.</li><li>n = 50 → plek 25,5, dus het gemiddelde van nummer 25 en 26.</li></ul><p>In een frequentietabel tel je de frequenties op tot je die plek passeert.</p>`],
+ ['Waarom schatten met klassenmiddens?',`<p>In klasse [60, 65) weet je niet of iemand 60 of 64,9 weegt. Je doet alsof iedereen in het <b>midden</b> zit (62,5). Sommigen zitten hoger, anderen lager, en dat middelt redelijk uit. Daarom is het een <b>schatting</b>.</p>`]],
+ fouten:['Mediaan zoeken zonder de getallen eerst op volgorde te zetten.','Bij een frequentietabel de waarden optellen zonder ze met de frequentie te vermenigvuldigen.','Delen door het aantal <b>klassen</b> of het aantal verschillende waarden in plaats van het totaal aantal waarnemingen.','Bij [20, 30) denken dat 30 er nog bij hoort.','Modus geven als twee waarden even vaak het meest voorkomen. Dan is er geen modus.'],
+ stap:{t:'Gemiddelde, mediaan en modus uit een frequentietabel',q:'Aantal broers/zussen: 0 → 4 keer, 1 → 9 keer, 2 → 5 keer, 3 → 2 keer.',s:[
+  'Totaal aantal waarnemingen: 4 + 9 + 5 + 2 = <b>20</b>.',
+  'Som: 0·4 + 1·9 + 2·5 + 3·2 = 0 + 9 + 10 + 6 = <b>25</b>.',
+  'Gemiddelde = 25 ÷ 20 = <b>1,25</b>.',
+  'Mediaan: plek (20 + 1) ÷ 2 = 10,5, dus nummer 10 en 11. Nummer 1–4 zijn een 0, nummer 5–13 een 1. Beide zijn 1, mediaan = <b>1</b>.',
+  'Modus: de waarde met de hoogste frequentie, 1 (9 keer). Modus = <b>1</b>.']}},
+'2.4':{
+ extra:[
+ ['Waarom bij de rechtergrens?',`<p>Cumulatief betekent "tot en met deze klasse". Pas aan het <b>eind</b> van de klasse (de rechtergrens) zijn alle waarnemingen van die klasse meegeteld. Bij de linkergrens van de eerste klasse is nog niemand meegeteld, daarom begint de lijn op 0.</p>`],
+ ['Aflezen uit de cumulatieve polygoon',`<ul><li><b>"Hoeveel % is kleiner dan 30?"</b> Ga bij 30 omhoog naar de lijn en dan naar links: lees het percentage af.</li><li><b>"Onder welke waarde zit 25%?"</b> Ga bij 25% naar rechts naar de lijn en dan naar beneden: dat is Q<sub>1</sub>.</li><li><b>"Hoeveel % is groter dan 30?"</b> Eerst kleiner dan 30 aflezen, dan 100% min dat getal.</li></ul>`],
+ ['Wat zegt de vorm van een boxplot?',`<p>Een <b>kort</b> stuk betekent dat de getallen daar dicht op elkaar zitten. Een <b>lang</b> stuk betekent dat ze daar verspreid liggen. Toch zit in elk stuk ongeveer 25% van de getallen.</p><p class="ex">Lange rechter snor en mediaan links in de box → rechtsscheef.</p>`],
+ ['Boxplots vergelijken',`<p>Vergelijk altijd een <b>centrum</b> (mediaan) en een <b>spreiding</b> (interkwartielafstand of spreidingsbreedte). Bijvoorbeeld: "Groep A scoort hoger (mediaan 7,2 tegen 6,5), maar groep B is constanter (interkwartielafstand 0,8 tegen 1,9)."</p>`]],
+ fouten:['Punten bij de klassenmiddens zetten in een cumulatieve polygoon. Dat moet bij de <b>rechtergrens</b>.','Vergeten de lijn op 0 te laten beginnen bij de linkergrens van de eerste klasse.','Bij een oneven aantal de mediaan meetellen bij de helften voor Q<sub>1</sub> en Q<sub>3</sub>.','Denken dat een langer stuk van de boxplot meer getallen bevat. Elk stuk is ongeveer 25%.','Spreidingsbreedte en interkwartielafstand verwisselen.'],
+ stap:{t:'Vijfgetallensamenvatting en boxplot',q:'Rij (al op volgorde): 2 4 4 5 7 8 9 10 12 15 (10 getallen).',s:[
+  'Q<sub>0</sub> = kleinste = <b>2</b>, Q<sub>4</sub> = grootste = <b>15</b>.',
+  'Mediaan: even aantal, dus het gemiddelde van nummer 5 en 6: (7 + 8) ÷ 2 = <b>7,5</b>.',
+  'Eerste helft: 2 4 <b>4</b> 5 7 → Q<sub>1</sub> = <b>4</b>. Tweede helft: 8 9 <b>10</b> 12 15 → Q<sub>3</sub> = <b>10</b>.',
+  'Spreidingsbreedte = 15 − 2 = <b>13</b>. Interkwartielafstand = 10 − 4 = <b>6</b>.',
+  'Boxplot: snor van 2 tot 4, box van 4 tot 10 met streep bij 7,5, snor van 10 tot 15.<div id="stapbp"></div>']}},
+'2.5':{
+ extra:[
+ ['Waarom kwadrateren bij de standaardafwijking?',`<p>De verschillen met het gemiddelde zijn deels negatief en deels positief. Opgeteld komt er altijd <b>0</b> uit. Door te kwadrateren worden ze allemaal positief. Aan het eind neem je de wortel om weer in de oorspronkelijke eenheid (cm, kg) uit te komen.</p>`],
+ ['De vuistregels van de normale verdeling',`<p>Het oppervlak onder de klokvorm is 100%. De stukken zijn steeds:</p><table class="gt"><tr><th>gebied</th><th>percentage</th></tr><tr><td>μ tot μ+σ</td><td>34%</td></tr><tr><td>μ+σ tot μ+2σ</td><td>13,5%</td></tr><tr><td>μ+2σ tot μ+3σ</td><td>2,35%</td></tr><tr><td>verder dan μ+3σ</td><td>0,15%</td></tr></table><p>Links van μ precies hetzelfde. Zo krijg je 68% (2 × 34) en 95% (2 × 34 + 2 × 13,5).</p>`],
+ ['Hoe herken je een normale verdeling?',`<ul><li>Symmetrisch, één top in het midden (klokvorm).</li><li>Gemiddelde, mediaan en modus vallen (ongeveer) samen.</li><li>Ontstaat vaak bij metingen die door veel kleine toevallige oorzaken variëren: lengte, gewicht van appels, vulgewicht van pakken.</li></ul><p>Inkomens of wachttijden zijn meestal <b>niet</b> normaal verdeeld (rechtsscheef).</p>`],
+ ['Rekenen met σ: terugrekenen',`<p class="ex">Pakken suiker: μ = 1000 g, σ = 5 g. 95% zit tussen 1000 − 2·5 = 990 en 1000 + 2·5 = 1010 gram. Lichter dan 990 g: (100 − 95) ÷ 2 = 2,5%.</p>`]],
+ fouten:['De verschillen met het gemiddelde optellen zonder te kwadrateren (dan krijg je 0).','Vergeten aan het eind de wortel te nemen.','Bij "meer dan μ+σ" 34% nemen. Het is 13,5 + 2,35 + 0,15 = 16%.','Rechtsscheef en linksscheef verwisselen. De naam gaat over waar de <b>staart</b> ligt, niet de top.'],
+ stap:{t:'Percentage bij de normale verdeling',q:'Lengte van jongens: μ = 170 cm, σ = 8 cm. Hoeveel procent is langer dan 186 cm?',s:[
+  'Hoeveel σ is 186 van μ af? 186 − 170 = 16 = <b>2σ</b>. Dus de grens is μ + 2σ.',
+  'Schets de klokvorm en kleur alles rechts van μ + 2σ.',
+  'Dat gebied is 2,35% + 0,15% = <b>2,5%</b>. (Of: 95% zit binnen 2σ, de rest is 5%, en de helft daarvan ligt rechts.)',
+  'Antwoord: ongeveer <b>2,5%</b> van de jongens is langer dan 186 cm.']}}
+};
+function verdiepHtml(sec){const v=VERDIEP[sec];if(!v)return'';
+ return `<details class="verdiep"><summary>Dieper in de theorie <span class="src">voor wie meer wil weten</span></summary>
+  ${v.extra.map(([t,h])=>`<details class="vd"><summary>${t}</summary><div>${h}</div></details>`).join('')}
+  <details class="vd"><summary>Veelgemaakte fouten</summary><div><ul class="fout">${v.fouten.map(f=>`<li>${f}</li>`).join('')}</ul></div></details>
+  <details class="vd" id="stapbox"><summary>Stap voor stap: ${v.stap.t}</summary><div><p class="ex">${v.stap.q}</p><ol class="steps" id="steps"></ol><button class="btn small primary" id="stapNext">Volgende stap</button></div></details>
+ </details>`}
+function bindVerdiep(sec){const v=VERDIEP[sec];if(!v)return;let i=0;const ol=$('#steps'),b=$('#stapNext');if(!ol)return;
+ b.onclick=()=>{if(i>=v.stap.s.length){i=0;ol.innerHTML='';b.textContent='Volgende stap';return}
+  ol.insertAdjacentHTML('beforeend',`<li>${v.stap.s[i]}</li>`);i++;const bp=$('#stapbp');if(bp&&!bp.innerHTML)bp.innerHTML=svgBox([2,4,7.5,10,15],0,16,2);
+  if(i>=v.stap.s.length)b.textContent='Opnieuw'}}
+
+/* ---------- Spel: Beklim de Statistiekberg ---------- */
+const KCAMPS=[{sec:'2.1',n:'Basiskamp',h:800},{sec:'2.2',n:'Kamp 1',h:1700},{sec:'2.3',n:'Kamp 2',h:2600},{sec:'2.4',n:'Kamp 3',h:3500},{sec:'2.5',n:'Top',h:4478}];
+const KGEN={'2.1':['cyc','cyc'],'2.2':['var','var','var','var','var','var','var','var'],'2.3':['gmm','freq','klas','rel','weeg','gmm'],'2.4':['kw','box','cum','kw','box','cum'],'2.5':['norm','sd','shape','norm','shape']};
+function klimInit(){if(!S.klim)S.klim={gen:{},m:{},best:0};const K=S.klim;
+  KCAMPS.forEach(c=>{if(!K.gen[c.sec])K.gen[c.sec]=KGEN[c.sec].map(k=>Object.assign({gen:k},GENS[k].f()))});save();return K}
+function klimItems(sec){const K=klimInit();
+  return [...MC.filter(m=>m[0]===sec).map(m=>Object.assign(mcItem(m),{kid:'m:'+m[1]})),...K.gen[sec].map((g,i)=>Object.assign({sec},g,{kid:'g:'+sec+':'+i}))]}
+function klimPct(sec){const K=klimInit();const it=klimItems(sec);return it.filter(q=>K.m[q.kid]).length/it.length}
+function klimTotal(){const K=klimInit();let a=0,b=0;KCAMPS.forEach(c=>{const it=klimItems(c.sec);a+=it.filter(q=>K.m[q.kid]).length;b+=it.length});return {a,b,p:a/b}}
+function klimOpen(i){return i===0||klimPct(KCAMPS[i-1].sec)>=1}
+function klimMtn(){const t=klimTotal();const W=340,H=230;
+  const pts=[[20,210],[80,175],[130,150],[175,112],[220,80],[262,40]];
+  const lerp=p=>{const seg=p*5,i=Math.min(4,Math.floor(seg)),f=seg-i;return [pts[i][0]+(pts[i+1][0]-pts[i][0])*f,pts[i][1]+(pts[i+1][1]-pts[i][1])*f]};
+  let s=`<path d="M0,${H} L20,212 L80,177 L130,152 L175,114 L220,82 L262,42 L300,82 L340,130 L340,${H}Z" fill="var(--green-soft)" stroke="var(--green)" stroke-width="2"/>
+   <path d="M240,63 L262,42 L283,63 L272,60 L262,68 L251,60Z" fill="var(--surface)" opacity=".9"/>
+   <polyline points="${pts.map(p=>p.join(',')).join(' ')}" fill="none" stroke="var(--muted)" stroke-width="2" stroke-dasharray="4 5"/>`;
+  KCAMPS.forEach((c,i)=>{const [x,y]=pts[i+1];const done=klimPct(c.sec)>=1;s+=`<line x1="${x}" y1="${y}" x2="${x}" y2="${y-20}" stroke="currentColor" stroke-width="1.5"/><path d="M${x},${y-20} L${x+14},${y-15} L${x},${y-10}Z" fill="${done?'var(--accent)':'var(--chip)'}" stroke="currentColor" stroke-width="1"/><text x="${x+4}" y="${y+16}" font-size="9.5" text-anchor="start" fill="currentColor">${c.sec}</text>`});
+  const [cx,cy]=lerp(t.p);s+=`<circle cx="${cx}" cy="${cy-7}" r="9" fill="var(--accent)" stroke="var(--surface)" stroke-width="2.5"/><text x="${cx}" y="${cy-3.5}" font-size="10" text-anchor="middle" fill="#fff" font-weight="700">B</text>`;
+  return `<svg class="chart" viewBox="0 0 ${W} ${H}" style="max-width:520px">${s}</svg>`}
+function klimHome(){const t=klimTotal();show('play');const h=Math.round(t.p*4478);
+  P.innerHTML=`<div class="playbar"><button class="btn small ghost" id="quit">Terug</button><span class="bar"><i style="width:${Math.round(t.p*100)}%"></i></span><span class="count">${Math.round(t.p*100)}%</span></div>
+  <div class="slide">${head('Spel','Beklim de Statistiekberg')}<div class="slide-body">
+   <div style="display:flex;gap:16px;flex-wrap:wrap;align-items:baseline"><div><div class="q">Hoogte</div><div class="big" style="font-size:44px">${h.toLocaleString('nl-NL')} m</div></div><div class="count">${t.a} van ${t.b} vragen veroverd</div></div>
+   ${klimMtn()}
+   <p style="margin:0">Elke goede vraag brengt je hoger. Fout? Dan komt die vraag terug tot je hem wel goed hebt. Pas als een kamp op 100% staat, gaat het volgende open. Haal jij de top?</p>
+   <div class="kcamps">${KCAMPS.map((c,i)=>{const p=klimPct(c.sec),o=klimOpen(i);return `<button class="kc${p>=1?' done':''}" data-k="${i}" ${o?'':'disabled'}><b>${o?(p>=1?'★':'⛺'):'🔒'} ${c.n}</b><span>${c.sec} ${esc(SECS.find(x=>x.id===c.sec).t)}</span><span class="bar"><i style="width:${Math.round(p*100)}%"></i></span><span class="count">${Math.round(p*100)}%</span></button>`}).join('')}</div>
+   <div class="acts"><button class="btn ghost small" id="kreset">Opnieuw beginnen</button></div>
+  </div></div>`;
+  $('#quit').onclick=goHome;P.querySelectorAll('[data-k]').forEach(b=>b.onclick=()=>klimPlay(+b.dataset.k));
+  $('#kreset').onclick=()=>{$('#kreset').parentNode.innerHTML='<span>Alle hoogte kwijt en nieuwe rekensommen?</span><button class="btn small dark" id="kY">Ja</button><button class="btn small ghost" id="kN">Nee</button>';
+    $('#kY').onclick=()=>{S.klim=null;klimInit();klimHome()};$('#kN').onclick=klimHome}}
+function klimPlay(ci){const c=KCAMPS[ci];const K=klimInit();
+  const open=shuffle(klimItems(c.sec).filter(q=>!K.m[q.kid]));
+  if(!open.length){klimHome();return}
+  G={m:'klim',ci,queue:open.slice(0,12),n0:Math.min(12,open.length),done:0,combo:0,maxc:0,fout:0};show('play');klimNext()}
+function klimNext(){const K=S.klim,c=KCAMPS[G.ci];
+  if(!G.queue.length){const p=klimPct(c.sec);if(p>=1)confetti();save();
+    const top=klimTotal().p>=1;
+    P.innerHTML=`<div class="slide">${head('Spel',c.n)}<div class="slide-body">
+     <div class="q">${top?'Je staat op de top!':p>=1?c.n+' veroverd!':'Rondje klaar'}</div><div class="big">${Math.round(p*100)}%</div>
+     <div>${top?'Alle vragen van het hoofdstuk goed. Dit hoofdstuk zit erin.':p>=1?(G.ci<4?'Het volgende kamp is open.':''):`Nog ${klimItems(c.sec).filter(q=>!K.m[q.kid]).length} vragen te gaan in dit kamp.`} Langste reeks: ${G.maxc}.</div>
+     ${klimMtn()}
+     <div class="acts">${p<1?'<button class="btn primary" id="kv">Verder klimmen</button>':G.ci<4?'<button class="btn primary" id="kn">Naar het volgende kamp</button>':''}<button class="btn ghost" id="kh">Bergkaart</button></div></div></div>`;
+    const kv=$('#kv'),kn=$('#kn');if(kv){kv.onclick=()=>klimPlay(G.ci);kv.focus()}if(kn){kn.onclick=()=>klimPlay(G.ci+1);kn.focus()}$('#kh').onclick=klimHome;return}
+  const q=G.queue[0];const tot=G.n0;
+  ask(q,`${c.n} · par. ${c.sec}`,G.combo>=3?`🔥 ${G.combo} op rij`:`Reeks: ${G.combo}`,topbar(G.done,tot,'Bergkaart'),ok=>{
+    G.queue.shift();rec(c.sec,ok);
+    if(ok){K.m[q.kid]=1;G.done++;G.combo++;G.maxc=Math.max(G.maxc,G.combo);if(G.combo%5===0)confetti()}
+    else{G.combo=0;G.fout++;G.queue.splice(Math.min(3,G.queue.length),0,q)}
+    save();klimNext()},{onQuit:klimHome});}
+
 const $=s=>document.querySelector(s);
 const esc=s=>String(s).replace(/[&<>"]/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;'}[c]));
 const shuffle=a=>{a=[...a];for(let i=a.length-1;i>0;i--){const j=Math.random()*(i+1)|0;[a[i],a[j]]=[a[j],a[i]]}return a};
@@ -578,12 +885,14 @@ function show(v){$('#home').hidden=v!=='home';P.hidden=v!=='play';window.scrollT
 function goHome(){G=null;save();renderHome();show('home')}
 function renderHome(){
   $('#secs').innerHTML=SECS.map(s=>{const m=score(s.id);return `<div class="sec"><span class="num">${s.id}</span><div><h3>${esc(s.t)}</h3><p>${esc(s.s)}</p><span class="bar"><i style="width:${Math.round(m*100)}%"></i></span></div><div class="acts"><button class="btn small ghost" data-u="${s.id}">Uitleg</button><button class="btn small primary" data-o="${s.id}">Oefenen</button></div></div>`}).join('');
+  $('#grafs').innerHTML=Object.entries(GTASKS).map(([k,g])=>`<button class="btn small ghost" data-gr="${k}"><span class="src">${GSEC[k]}</span> ${esc(g.t)}</button>`).join('')+`<button class="btn small primary" data-gr="mix">Gemengd</button>`;
   $('#tools').innerHTML=Object.entries(GENS).map(([k,g])=>`<button class="btn small ghost" data-g="${k}"><span class="src">${g.sec}</span> ${esc(g.t)}</button>`).join('');
-  $('#stDone').textContent=S.done;$('#stStreak').textContent=streak();$('#stBest').textContent=S.best?nf(S.best):'–';
+  $('#stDone').textContent=S.done;try{const t=klimTotal();$('#klimTag').textContent=Math.round(t.p*4478).toLocaleString('nl-NL')+' m · '+Math.round(t.p*100)+'%'}catch(e){}$('#stStreak').textContent=streak();$('#stBest').textContent=S.best?nf(S.best):'–';
 }
 $('#secs').addEventListener('click',e=>{const u=e.target.closest('[data-u]'),o=e.target.closest('[data-o]');if(u)uitleg(u.dataset.u);if(o)practice(o.dataset.o)});
 $('#tools').addEventListener('click',e=>{const b=e.target.closest('[data-g]');if(b)trainer(b.dataset.g)});
-$('#toets').onclick=toets;$('#spiek').onclick=spiek;
+$('#grafs').addEventListener('click',e=>{const b=e.target.closest('[data-gr]');if(b)grafRun(b.dataset.gr)});
+$('#toets').onclick=toets;$('#klim').onclick=klimHome;$('#spiek').onclick=spiek;
 function askReset(){$('#resetBox').innerHTML='<span>Alle voortgang wissen?</span><button class="btn small dark" id="rsY">Ja, wissen</button><button class="btn small ghost" id="rsN">Annuleer</button>';
   $('#rsY').onclick=()=>{S={sec:{},mc:{},done:0,days:[],best:0};save();location.reload()};$('#rsN').onclick=()=>{$('#resetBox').innerHTML='<button class="btn ghost small" id="resetBtn">Voortgang wissen</button>';$('#resetBtn').onclick=askReset}}
 $('#resetBtn').onclick=askReset;
@@ -638,10 +947,18 @@ function trNext(){
   const g=GENS[G.k];const q=GENS[G.k].f();
   ask(q,g.t,`Reeks: ${G.streak}`,topbar(`${G.ok} van ${G.n} goed`,0,'Klaar'),ok=>{G.n++;if(ok){G.ok++;G.streak++;if(G.streak%5===0)confetti()}else G.streak=0;rec(g.sec,ok);save();trNext()});
 }
+const GSEC={hist:'2.3',poly:'2.3',cum:'2.4',lees:'2.4',box:'2.4',kies:'2.4',norm:'2.5'};
 function uitleg(sec){
-  const s=SECS.find(x=>x.id===sec);show('play');
-  P.innerHTML=`<div class="playbar"><button class="btn small ghost" id="quit">Terug</button></div><div class="uitleg"><div class="eyebrow">Paragraaf ${sec}</div><h2 style="font-size:26px;margin-bottom:10px">${esc(s.t)}</h2>${UITLEG[sec]}<div class="acts" style="margin-top:16px"><button class="btn primary" id="go">Oefenen met ${sec}</button>${SECGENS[sec].map(k=>`<button class="btn ghost small" data-g="${k}">${esc(GENS[k].t)}</button>`).join('')}</div></div>`;
-  $('#quit').onclick=goHome;$('#go').onclick=()=>practice(sec);P.querySelectorAll('[data-g]').forEach(b=>b.onclick=()=>trainer(b.dataset.g));
+  const s=SECS.find(x=>x.id===sec);show('play');const gk=Object.keys(GSEC).filter(k=>GSEC[k]===sec);
+  P.innerHTML=`<div class="playbar"><button class="btn small ghost" id="quit">Terug</button></div><div class="uitleg"><div class="eyebrow">Paragraaf ${sec}</div><h2 style="font-size:26px;margin-bottom:10px">${esc(s.t)}</h2>${UITLEG[sec]}
+  ${verdiepHtml(sec)}
+  <div class="nextbox"><h3>Wat nu?</h3>
+   <div class="choice"><button class="btn primary" id="go">Oefenronde ${sec}</button><span>10 gemengde vragen over deze paragraaf, met een score aan het eind. Telt mee voor de groene balk.</span></div>
+   <div class="choice"><div class="acts">${SECGENS[sec].map(k=>`<button class="btn ghost small" data-g="${k}">${esc(GENS[k].t)}</button>`).join('')}</div><span>Eén soort som oefenen, zo lang als je wilt. Elke keer nieuwe getallen.</span></div>
+   ${gk.length?`<div class="choice"><div class="acts">${gk.map(k=>`<button class="btn ghost small" data-gr="${k}">✎ ${esc(GTASKS[k].t)}</button>`).join('')}</div><span>Grafiek tekenen of aflezen: tik de punten aan op het scherm.</span></div>`:''}
+  </div></div>`;
+  $('#quit').onclick=goHome;$('#go').onclick=()=>practice(sec);P.querySelectorAll('[data-g]').forEach(b=>b.onclick=()=>trainer(b.dataset.g));P.querySelectorAll('[data-gr]').forEach(b=>b.onclick=()=>grafRun(b.dataset.gr));
+  bindVerdiep(sec);
   const bp=$('#bpdemo');if(bp)bp.innerHTML=svgBox([10,27,38,48,70],0,70,10);
   const dd=$('#distdemo');if(dd)dd.innerHTML=Object.entries(SHAPES).map(([k,t])=>`<figure>${svgHist(shapeFreqs(k))}<figcaption>${t}</figcaption></figure>`).join('');
   const nd=$('#normdemo');if(nd)nd.innerHTML=svgNormal(null,1,'');
@@ -682,6 +999,8 @@ function confetti(){
   let f=0;(function loop(){x.clearRect(0,0,c.width,c.height);ps.forEach(p=>{p.x+=p.vx;p.y+=p.vy;p.vy+=.4;p.vx*=.99;p.a+=.2;x.save();x.translate(p.x,p.y);x.rotate(p.a);x.fillStyle=p.c;x.fillRect(-p.r/2,-p.r/4,p.r,p.r/2);x.restore()});if(++f<110)requestAnimationFrame(loop);else x.clearRect(0,0,c.width,c.height)})();
 }
 renderHome();
+
+
 </script>
 </body>
 </html>
