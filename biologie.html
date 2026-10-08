@@ -1,0 +1,890 @@
+<!doctype html>
+<html lang="nl">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<meta name="robots" content="noindex">
+<script>(function(){try{if(localStorage.getItem('leren-ok')!=='53a39a231246354922d1b5f7242c1639ebdc75da84bde2e766eed704f5a89cf8'){location.replace('index.html')}}catch(e){location.replace('index.html')}})();</script>
+<title>Biologie Thema 1 Trainer</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,500..800&family=Atkinson+Hyperlegible:wght@400;700&family=IBM+Plex+Mono:wght@500&display=swap">
+<style>
+/* Layout: microscopie-tafel. Elke kaart is een objectglaasje met een gekleurd etiket. */
+:root{
+  --bg:#F1F4EE; --surface:#FFFFFF; --ink:#16261D; --muted:#5C6B61; --line:#D4DDD3; --chip:#E4EAE2;
+  --green:#2E8B4E; --green-soft:#DDF0E2; --pink:#C2386A; --pink-soft:#F8E1EA; --amber:#A86A12; --amber-soft:#FBEFD9;
+  --good:#2E8B4E; --good-bg:#DDF0E2; --bad:#C2413A; --bad-bg:#FADFDD;
+  --c-wall:#7BAA6A; --c-cyto:#EEF6E4; --c-vac:#E4D9F2; --c-nuc:#C9B4E0; --c-chl:#3E9B48; --c-mito:#C98A4B; --c-er:#7A93C9; --c-golgi:#D07AA0; --c-lys:#E0A93C; --c-ani:#FBE9E4;
+  --f-display:"Bricolage Grotesque",system-ui,sans-serif;
+  --f-body:"Atkinson Hyperlegible",system-ui,-apple-system,"Segoe UI",sans-serif;
+  --f-mono:"IBM Plex Mono",ui-monospace,Menlo,Consolas,monospace;
+}
+@media (prefers-color-scheme: dark){:root:not([data-theme="light"]){
+  --bg:#0F1712; --surface:#18241C; --ink:#E4EDE6; --muted:#9AAEA0; --line:#2B3A30; --chip:#223128;
+  --green:#5CC383; --green-soft:#1A3223; --pink:#F0729E; --pink-soft:#3A1E2A; --amber:#E9B25A; --amber-soft:#33281A;
+  --good:#5CC383; --good-bg:#183020; --bad:#F07870; --bad-bg:#3A1C1B;
+  --c-wall:#5E8F4E; --c-cyto:#20321F; --c-vac:#3A3150; --c-nuc:#5E4A7E; --c-chl:#56B55F; --c-mito:#B47A40; --c-er:#6C84BE; --c-golgi:#C26E94; --c-lys:#C99230; --c-ani:#3A2622; color-scheme:dark}}
+:root[data-theme="dark"]{
+  --bg:#0F1712; --surface:#18241C; --ink:#E4EDE6; --muted:#9AAEA0; --line:#2B3A30; --chip:#223128;
+  --green:#5CC383; --green-soft:#1A3223; --pink:#F0729E; --pink-soft:#3A1E2A; --amber:#E9B25A; --amber-soft:#33281A;
+  --good:#5CC383; --good-bg:#183020; --bad:#F07870; --bad-bg:#3A1C1B;
+  --c-wall:#5E8F4E; --c-cyto:#20321F; --c-vac:#3A3150; --c-nuc:#5E4A7E; --c-chl:#56B55F; --c-mito:#B47A40; --c-er:#6C84BE; --c-golgi:#C26E94; --c-lys:#C99230; --c-ani:#3A2622; color-scheme:dark}
+*{box-sizing:border-box}
+body{background:var(--bg);color:var(--ink);font-family:var(--f-body);font-size:16px;line-height:1.5;margin:0}
+.wrap{max-width:880px;margin:0 auto;padding-inline:16px;padding-block:20px 56px}
+button{font:inherit;color:inherit;cursor:pointer}
+button:focus-visible,input:focus-visible{outline:3px solid var(--pink);outline-offset:2px}
+h1,h2,h3{font-family:var(--f-display);margin:0;text-wrap:balance}
+.eyebrow{font-family:var(--f-mono);font-size:12px;letter-spacing:.12em;text-transform:uppercase;color:var(--muted)}
+.top{display:flex;flex-wrap:wrap;gap:16px;align-items:flex-end;justify-content:space-between;padding-bottom:16px;border-bottom:2px solid var(--ink)}
+h1{font-size:clamp(30px,6.5vw,48px);font-weight:800;line-height:1;letter-spacing:-.02em}
+h1 em{font-style:normal;color:var(--green)}
+.stats{display:flex;gap:8px;flex-wrap:wrap}
+.stat{background:var(--surface);border:1px solid var(--line);border-radius:10px;padding:6px 12px;min-width:86px}
+.stat b{display:block;font-family:var(--f-display);font-size:22px;font-weight:800;line-height:1.15;font-variant-numeric:tabular-nums}
+.stat small{font-family:var(--f-mono);font-size:10.5px;color:var(--muted);text-transform:uppercase;letter-spacing:.08em}
+.banner{margin-top:14px;display:flex;gap:8px;flex-wrap:wrap}
+.pill{font-size:13.5px;font-weight:700;padding:4px 12px;border-radius:999px;background:var(--pink-soft);color:var(--pink)}
+.pill.g{background:var(--green-soft);color:var(--green)}
+section{margin-top:26px}
+.sec-head{display:flex;flex-wrap:wrap;align-items:baseline;justify-content:space-between;gap:8px;margin-bottom:12px}
+h2{font-size:21px;font-weight:800}
+.acts{display:flex;gap:8px;flex-wrap:wrap;align-items:center}
+.btn{border:2px solid var(--ink);background:var(--surface);border-radius:10px;padding:10px 16px;font-weight:700}
+.btn.primary{background:var(--green);border-color:var(--green);color:var(--surface)}
+.btn.dark{background:var(--ink);border-color:var(--ink);color:var(--bg)}
+.btn.ghost{border-color:var(--line)}
+.btn.small{padding:6px 12px;font-size:14px}
+.btn:disabled{opacity:.4;cursor:not-allowed}
+/* paragraaf-chips */
+.pars{display:grid;grid-template-columns:repeat(auto-fill,minmax(190px,1fr));gap:10px}
+.par{position:relative;text-align:left;background:var(--surface);border:2px solid var(--line);border-radius:12px;padding:10px 12px 12px 18px;display:flex;flex-direction:column;gap:4px;min-width:0;overflow:hidden}
+.par::before{content:"";position:absolute;left:0;top:0;bottom:0;width:7px;background:var(--line)}
+.par[aria-pressed="true"]{border-color:var(--ink)}
+.par[aria-pressed="true"]::before{background:var(--pink)}
+.par .no{font-family:var(--f-mono);font-size:12px;color:var(--muted)}
+.par .no b{font-family:var(--f-display);font-size:22px;color:var(--ink);margin-right:4px}
+.par .nm{font-weight:700;font-size:14.5px;line-height:1.25}
+.bar{height:6px;border-radius:3px;background:var(--chip);overflow:hidden}
+.bar i{display:block;height:100%;background:var(--green);border-radius:3px;transition:width .4s}
+.par .src{font-size:12px}
+.src{font-size:13px;color:var(--muted)}
+/* modus-kaarten als objectglaasjes */
+.modes{display:grid;grid-template-columns:repeat(auto-fill,minmax(250px,1fr));gap:12px}
+.mode{position:relative;text-align:left;background:var(--surface);border:2px solid var(--ink);border-radius:14px;padding:14px 16px 14px 58px;min-width:0;display:flex;flex-direction:column;gap:4px}
+.mode .lab{position:absolute;left:0;top:0;bottom:0;width:44px;background:var(--chip);border-right:2px dashed var(--line);display:grid;place-items:center;font-family:var(--f-mono);font-size:12px;color:var(--muted);writing-mode:vertical-rl;transform:rotate(180deg);letter-spacing:.12em;text-transform:uppercase}
+.mode.main{background:var(--ink);color:var(--bg)}
+.mode.main .lab{background:var(--pink);color:#fff;border-color:transparent}
+.mode.main p{color:var(--bg);opacity:.8}
+.mode h3{font-size:19px;font-weight:800}
+.mode p{margin:0;font-size:14px;color:var(--muted)}
+.mode .tag{align-self:flex-start;font-family:var(--f-mono);font-size:10.5px;text-transform:uppercase;letter-spacing:.08em;background:var(--amber-soft);color:var(--amber);padding:2px 7px;border-radius:5px}
+.mode:hover{transform:translateY(-2px)}
+details.tips{background:var(--surface);border:1px solid var(--line);border-radius:12px;padding:12px 16px}
+details.tips summary{font-weight:700;cursor:pointer}
+details.tips ul{margin:10px 0 4px;padding-left:20px;display:grid;gap:6px}
+/* spel */
+.playbar{display:flex;align-items:center;gap:12px;margin-bottom:16px}
+.playbar .bar{flex:1;height:10px;border-radius:5px}
+.playbar .bar i{background:var(--pink)}
+.count{font-family:var(--f-mono);font-size:13px;color:var(--muted);font-variant-numeric:tabular-nums;white-space:nowrap}
+.slide{background:var(--surface);border:2px solid var(--ink);border-radius:18px;overflow:hidden}
+.slide-head{display:flex;justify-content:space-between;gap:8px;flex-wrap:wrap;padding:9px 18px;background:var(--pink);color:#fff;font-family:var(--f-mono);font-size:12px;letter-spacing:.1em;text-transform:uppercase}
+.slide-body{padding:20px 18px;display:flex;flex-direction:column;gap:14px}
+.q{font-size:15px;color:var(--muted);font-weight:700}
+.prompt{font-family:var(--f-display);font-weight:700;font-size:clamp(20px,4.6vw,27px);line-height:1.25;overflow-wrap:anywhere}
+.prompt.big{font-size:clamp(28px,7vw,42px);font-weight:800}
+.opts{display:grid;gap:10px}
+.opt{display:flex;align-items:center;gap:12px;text-align:left;border:2px solid var(--line);background:var(--bg);border-radius:12px;padding:12px 14px;font-size:16.5px;font-weight:700;min-width:0}
+.opt .k{flex:none;width:28px;height:28px;border-radius:8px;display:grid;place-items:center;font-family:var(--f-mono);font-size:13px;background:var(--chip);color:var(--muted)}
+.opt:hover:not(:disabled){border-color:var(--ink)}
+.opt:disabled{cursor:default}
+.opt.good{background:var(--good-bg);border-color:var(--good)}.opt.good .k{background:var(--good);color:var(--surface)}
+.opt.bad{background:var(--bad-bg);border-color:var(--bad)}.opt.bad .k{background:var(--bad);color:var(--surface)}
+.opt.dim{opacity:.5}
+.typerow{display:flex;gap:8px;flex-wrap:wrap}
+.typerow input{flex:1 1 220px;min-width:0;font:inherit;font-size:19px;font-weight:700;padding:12px 14px;border-radius:12px;border:2px solid var(--line);background:var(--bg);color:var(--ink)}
+.typerow input.okay{border-color:var(--good)}
+.pattern{font-family:var(--f-mono);font-size:17px;letter-spacing:.16em;color:var(--amber);overflow-wrap:anywhere}
+.fb{border-radius:12px;padding:12px 14px;display:flex;flex-direction:column;gap:4px}
+.fb.good{background:var(--good-bg)}.fb.bad{background:var(--bad-bg)}.fb.warn{background:var(--amber-soft)}
+.fb .t{font-weight:700}.fb.good .t{color:var(--good)}.fb.bad .t{color:var(--bad)}.fb.warn .t{color:var(--amber)}
+.fb .ans{font-family:var(--f-display);font-size:21px;font-weight:800}
+.tip{font-size:14.5px}
+.foot{display:flex;justify-content:flex-end}
+.big{font-family:var(--f-display);font-size:clamp(48px,12vw,80px);font-weight:800;line-height:1}
+.mist{display:grid;gap:6px;margin:0;padding:0;list-style:none}
+.mist li{display:flex;flex-direction:column;gap:2px;border-bottom:1px solid var(--line);padding:6px 0}
+.mist li span{color:var(--muted);font-size:14px}
+/* flip */
+.flip{perspective:1200px;cursor:pointer}
+.flip-in{position:relative;min-height:220px;transition:transform .45s;transform-style:preserve-3d}
+.flip.on .flip-in{transform:rotateY(180deg)}
+.face{position:absolute;inset:0;backface-visibility:hidden;-webkit-backface-visibility:hidden;display:flex;flex-direction:column;justify-content:center;gap:10px}
+.face.back{transform:rotateY(180deg)}
+/* volgorde */
+.seq-done{display:grid;gap:6px;counter-reset:s;margin:0;padding:0;list-style:none}
+.seq-done li{counter-increment:s;display:flex;gap:10px;align-items:center;background:var(--good-bg);border-radius:10px;padding:8px 12px;font-weight:700}
+.seq-done li::before{content:counter(s);flex:none;width:26px;height:26px;border-radius:50%;background:var(--good);color:var(--surface);display:grid;place-items:center;font-family:var(--f-mono);font-size:12px}
+.seq-pool{display:flex;flex-wrap:wrap;gap:8px}
+.seq-pool button{border:2px solid var(--line);background:var(--bg);border-radius:10px;padding:9px 12px;font-weight:700;text-align:left}
+.seq-pool button:hover{border-color:var(--ink)}
+.seq-list{display:grid;gap:8px}
+.seq-list button{text-align:left}
+/* buckets */
+.buckets{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:8px}
+.buckets button{border:2px solid var(--ink);border-radius:12px;padding:14px 6px;font-weight:800;font-size:16px;background:var(--surface)}
+.buckets button.good{background:var(--good-bg);border-color:var(--good)}
+.buckets button.bad{background:var(--bad-bg);border-color:var(--bad)}
+/* osmose */
+.osmo{display:flex;gap:14px;align-items:center;flex-wrap:wrap}
+.osmo svg{flex:none;width:120px;height:90px}
+.chipline{display:flex;gap:8px;flex-wrap:wrap}
+/* cel */
+.cellfig{background:var(--bg);border-radius:12px;padding:8px}
+.cellfig svg{display:block;width:100%;height:auto;max-height:340px}
+.marker circle{fill:var(--pink)}
+.marker text{fill:#fff;font-family:var(--f-mono);font-size:15px;font-weight:700}
+.marker line{stroke:var(--pink);stroke-width:2.5}
+.pulse{animation:pulse 1.2s ease-in-out infinite}
+@keyframes pulse{50%{opacity:.35}}
+/* samenvatting */
+.sum{background:var(--surface);border:1px solid var(--line);border-left:6px solid var(--green);border-radius:12px;padding:14px 16px}
+.sum h3{font-size:19px;margin-bottom:6px}
+.sum p{margin:0 0 8px;max-width:72ch}
+.exam{background:var(--surface);border:1px solid var(--line);border-radius:12px;padding:14px 16px;display:flex;flex-direction:column;gap:10px}
+.exam .ctx{background:var(--bg);border-radius:8px;padding:10px 12px;font-size:14.5px}
+.exq{border-top:1px dashed var(--line);padding-top:10px;display:flex;flex-direction:column;gap:8px}
+.exq .pt{font-family:var(--f-mono);font-size:12px;color:var(--pink)}
+.shake{animation:shake .35s}@keyframes shake{25%{transform:translateX(-6px)}75%{transform:translateX(6px)}}
+.pop{animation:pop .3s}@keyframes pop{50%{transform:scale(1.25)}}
+.timer{font-family:var(--f-display);font-size:32px;font-weight:800;font-variant-numeric:tabular-nums;min-width:56px;text-align:right}
+.timer.low{color:var(--bad)}
+.combo{font-family:var(--f-mono);font-size:12px;background:var(--amber);color:var(--surface);padding:2px 8px;border-radius:6px}
+canvas#conf{position:fixed;inset:0;pointer-events:none;z-index:9}
+@media (prefers-reduced-motion: reduce){*{transition:none!important;animation:none!important}}
+</style>
+</head>
+<body>
+<a href="index.html" style="position:fixed;right:12px;bottom:calc(12px + env(safe-area-inset-bottom,0px));z-index:20;background:#142A3A;color:#fff;text-decoration:none;font:700 14px system-ui,sans-serif;padding:9px 14px;border-radius:999px;box-shadow:0 2px 8px rgba(0,0,0,.25)">← Alle vakken</a>
+<canvas id="conf"></canvas>
+<div class="wrap">
+<main id="home">
+  <header class="top">
+    <div>
+      <div class="eyebrow">Biologie voor jou 4A · Thema 1</div>
+      <h1>Inleiding in de <em>biologie</em></h1>
+    </div>
+    <div class="stats">
+      <div class="stat"><b id="stKnown">0</b><small>begrippen</small></div>
+      <div class="stat"><b id="stStreak">0</b><small>dagen op rij</small></div>
+      <div class="stat"><b id="stXp">0</b><small>punten</small></div>
+    </div>
+  </header>
+  <div class="banner"><span class="pill">Begrippentoets week 41</span><span class="pill g">Voortgangstoets in de toetsweek</span></div>
+
+  <section>
+    <div class="sec-head"><h2>1. Kies paragrafen</h2><div class="acts"><button class="btn small primary" id="selAll">Alles selecteren</button><button class="btn small ghost" id="selNone">Niets</button></div></div>
+    <div class="pars" id="pars"></div>
+    <p class="src" id="selLine" style="margin:8px 0 0"></p>
+  </section>
+
+  <section>
+    <div class="sec-head"><h2>2. Leren</h2></div>
+    <div class="modes">
+      <button class="mode main" data-m="learn"><span class="lab">Begrip</span><span class="tag">Voor de begrippentoets</span><h3>Begrippen inprenten</h3><p>Eerst kiezen, daarna zelf het begrip typen. Fouten komen terug tot je ze kent.</p></button>
+      <button class="mode" data-m="flash"><span class="lab">Kaart</span><h3>Flitskaarten</h3><p>Begrip zien, uitleg bedenken, omdraaien. Snel alles langs.</p></button>
+      <button class="mode" data-m="kennis"><span class="lab">Vraag</span><h3>Kennisvragen</h3><p>Meerkeuzevragen over de stof, met uitleg na elk antwoord.</p></button>
+      <button class="mode" data-m="sum"><span class="lab">Lezen</span><h3>Samenvatting</h3><p>De kern van elke paragraaf op één scherm.</p></button>
+    </div>
+  </section>
+
+  <section>
+    <div class="sec-head"><h2>3. Oefenen per onderwerp</h2></div>
+    <div class="modes">
+      <button class="mode" data-m="cel"><span class="lab">1.3 · 1.4</span><h3>Cel benoemen</h3><p>Welk organel is aangewezen? Plantencel en dierlijke cel.</p></button>
+      <button class="mode" data-m="pd"><span class="lab">1.3</span><h3>Plant, dier of beide?</h3><p>Sorteer de celonderdelen.</p></button>
+      <button class="mode" data-m="osmo"><span class="lab">1.5</span><h3>Osmose-lab</h3><p>Hypotoon, isotoon of hypertoon? En wat gebeurt er met de cel?</p></button>
+      <button class="mode" data-m="reken"><span class="lab">1.5 · V</span><h3>Rekenen</h3><p>Concentratie, ppm, verdunningsreeks en werkelijke grootte. Steeds nieuwe sommen.</p></button>
+      <button class="mode" data-m="volg"><span class="lab">Volg</span><h3>Volgordes</h3><p>Organisatieniveaus, onderzoeksfasen, eiwitroute en meer in de goede volgorde.</p></button>
+      <button class="mode" data-m="exam"><span class="lab">Examen</span><h3>Examenopgaven</h3><p>De zes havo-examenvragen uit het boek, met uitgewerkte antwoorden.</p></button>
+    </div>
+  </section>
+
+  <section>
+    <div class="sec-head"><h2>4. Toets en spel</h2></div>
+    <div class="modes">
+      <button class="mode main" data-m="toets"><span class="lab">Cijfer</span><h3>Proeftoets</h3><p>20 gemengde vragen over de gekozen paragrafen. Je krijgt een cijfer. <span id="bestToets"></span></p></button>
+      <button class="mode" data-m="blitz"><span class="lab">60 s</span><h3>Blitz 60</h3><p>Zoveel mogelijk begrippen goed in 60 seconden. Fout kost 3 seconden. <span id="bestBlitz"></span></p></button>
+    </div>
+  </section>
+
+  <section>
+    <details class="tips">
+      <summary>Zo pak je het aan</summary>
+      <ul>
+        <li>Voor de begrippentoets: per avond 2 paragrafen <b>Begrippen inprenten</b>, tot de balk bij die paragraaf vol is.</li>
+        <li>Zelf typen onthoud je beter dan aanklikken. Typ een fout antwoord meteen goed over.</li>
+        <li>Voor de voortgangstoets: <b>Kennisvragen</b>, <b>Osmose-lab</b>, <b>Rekenen</b> en <b>Cel benoemen</b>, en tot slot de <b>Proeftoets</b>.</li>
+        <li>Lees eerst de <b>Samenvatting</b> van een paragraaf als je iets niet snapt.</li>
+        <li>Toetsen: <b>Enter</b> = controleren/verder, <b>1 2 3 4</b> = antwoord kiezen, <b>spatie</b> = kaart omdraaien.</li>
+      </ul>
+      <div class="acts" id="resetBox" style="margin-top:10px"><button class="btn ghost small" id="resetBtn">Voortgang wissen</button></div>
+    </details>
+  </section>
+</main>
+<main id="play" hidden></main>
+</div>
+<script>
+const PARS=[
+ {id:'1.1',t:'Biologie is overal',s:'Levensverschijnselen, levensloop en levenscyclus, organisatieniveaus'},
+ {id:'1.2',t:'Organen, weefsels en cellen',s:'Organen in de romp, weefsels, tussencelstof, vorm en functie'},
+ {id:'1.3',t:'Plantaardige en dierlijke cellen',s:'Celonderdelen, plastiden, microscopen'},
+ {id:'1.4',t:'Organellen',s:'Kern, ER, ribosomen, golgi, lysosomen, mitochondriën, membranen'},
+ {id:'1.5',t:'Transport door membranen',s:'Concentratie, diffusie, osmose, turgor, plasmolyse, actief en passief transport'},
+ {id:'1.6',t:'Natuurwetenschappelijk onderzoek',s:'Soorten onderzoek, fasen, validiteit en betrouwbaarheid'},
+ {id:'V',t:'Vaardigheden en practica',s:'Preparaat, tekenen, verdunningsreeks, werkplan, verslag, practica 1-6'}
+];
+// begrippen: [paragraaf, begrip (alternatieven met /), uitleg]
+const BEG=`1.1|organismen|levende wezens, zoals planten, dieren, schimmels en bacteriën
+1.1|levensverschijnselen|kenmerken van leven: voortplanting, groei, ontwikkeling en stofwisseling
+1.1|stofwisseling|alle chemische reacties in een organisme
+1.1|enzymen|eiwitten die de chemische reacties van de stofwisseling versnellen
+1.1|dood|een organisme dat geen levensverschijnselen meer vertoont
+1.1|levenloos|dingen in de natuur die nooit hebben geleefd, zoals water, zuurstof en gesteenten
+1.1|individu|één afzonderlijk organisme
+1.1|levensloop|de veranderingen van één individu, van ontstaan tot dood
+1.1|ontwikkeling|het optreden van veranderingen in de bouw en het functioneren van een organisme
+1.1|soort|organismen die zich onderling kunnen voortplanten en daarbij vruchtbare nakomelingen krijgen
+1.1|levenscyclus|de stadia die alle individuen van een soort doorlopen; eindigt pas als de soort uitsterft
+1.1|molecuul / moleculen|kleinste organisatieniveau: de bouwstenen van stoffen en van cellen
+1.1|DNA|molecuul dat de erfelijke informatie van een organisme bevat
+1.1|organel|onderdeel in een cel met een eigen functie, zoals de celkern
+1.1|cel|kleinste biologische eenheid die kan leven
+1.1|weefsel|groep cellen met dezelfde vorm en functie
+1.1|orgaan|deel van een organisme uit verschillende weefsels, met een specifieke bouw en functie (bijv. hart)
+1.1|orgaanstelsel|een aantal organen die samen een bepaalde functie uitoefenen (bijv. verteringsstelsel)
+1.1|organisme|één levend wezen, eencellig of meercellig
+1.1|populatie|groep individuen van dezelfde soort in een bepaald gebied die zich onderling voortplanten
+1.1|levensgemeenschap|alle populaties van verschillende soorten die samen in een gebied leven
+1.1|ecosysteem|begrensd gebied met de levensgemeenschap én de niet-levende natuur (temperatuur, zonlicht)
+1.1|systeem aarde|het geheel van alle ecosystemen op aarde
+1.1|interactie|biologische eenheden reageren op elkaar en op invloeden uit hun omgeving
+1.1|context|een situatie waarin biologie een rol speelt
+1.2|middenrif|scheidt de romp in de borstholte en de buikholte
+1.2|dekweefsel|weefsel dat inwendige en uitwendige lichaamsoppervlakken bekleedt en beschermt
+1.2|slijmvlies|dekweefsel dat de binnenkant van holle organen bekleedt, zoals longen en darmkanaal
+1.2|zenuwweefsel|weefsel met cellen met sterk vertakte uitlopers die informatie doorgeven
+1.2|spierweefsel|weefsel met cellen die kunnen samentrekken, waardoor beweging mogelijk is
+1.2|tussencelstof|stof tussen de cellen van een weefsel; de soort hangt samen met de functie, bijv. stevigheid
+1.2|bindweefsel|weefsel met veel tussencelstof tussen de cellen, zoals beenweefsel en kraakbeenweefsel
+1.2|beenweefsel|weefsel met tussencelstof van kalkzouten (stevigheid) en collageenvezels (elastisch)
+1.2|kraakbeenweefsel|weefsel met minder kalkzouten en meer collageenvezels, daardoor buigzaam (oor, neus)
+1.2|collageenvezels|lijmvormende vezels in tussencelstof die zorgen voor samenhang en elasticiteit
+1.2|kalkzouten|stoffen in de tussencelstof van been die zorgen voor stevigheid
+1.2|beenbalkjes|balkjes in de kop van het dijbeen, in de richting van de grootste krachten: licht en stevig
+1.2|stroomlijnvorm|lichaamsvorm waarbij kop, romp en staart geleidelijk overgaan; geeft weinig weerstand
+1.2|biomimicry|voorbeelden uit de natuur bestuderen en gebruiken om producten te ontwerpen
+1.3|celmembraan|buitenste laag van de cel; scheidt het cytoplasma van het milieu buiten de cel
+1.3|cytoplasma / celplasma|water met organellen en opgeloste stoffen in de cel
+1.3|celkern / kern|organel met het erfelijk materiaal (DNA), omgeven door een kernmembraan
+1.3|kernmembraan|buitenste laag van de celkern; scheidt de kern van het cytoplasma
+1.3|vacuole|blaasje met vacuolevocht, omgeven door een vacuolemembraan; belangrijk voor stevigheid, kan kleurstoffen bevatten
+1.3|celwand|stevig laagje van cellulose om de plantencel; is tussencelstof en dus geen organel
+1.3|cellulose|stof waaruit de celwand van plantencellen bestaat
+1.3|intercellulaire ruimten|holten tussen de celwanden van plantencellen, gevuld met lucht of vocht
+1.3|plastiden|organellen die alleen in plantencellen voorkomen: bladgroenkorrels, chromoplasten en leukoplasten
+1.3|bladgroenkorrels / chloroplasten|plastiden met bladgroen, waarin fotosynthese plaatsvindt
+1.3|bladgroen / chlorofyl|groene kleurstof in de bladgroenkorrels
+1.3|chromoplasten / kleurstofkorrels|plastiden met gele, oranje of rode kleurstoffen
+1.3|leukoplasten|kleurloze plastiden die vet, zetmeel of eiwit opslaan
+1.3|zetmeelkorrels / amyloplasten|leukoplasten waarin zetmeel is opgeslagen, bijv. in aardappel
+1.3|preparaat|objectglas en dekglas met daartussen het object dat je onder de microscoop bekijkt
+1.3|object|het (deel van een) organisme dat je in een preparaat bekijkt; moet dun zijn om licht door te laten
+1.3|lichtmicroscoop|microscoop waarbij licht door het preparaat valt; vergroot tot ongeveer 1000×
+1.3|elektronenmicroscoop|microscoop die meer dan 100 000× vergroot; beeld op een computerscherm, vaak ingekleurd
+1.4|chromosomen|lange moleculen DNA in het kernplasma
+1.4|erfelijke eigenschap|eigenschap waarvan de informatie in het DNA ligt en die wordt doorgegeven
+1.4|kernporiën|openingen in het kernmembraan voor transport van stoffen in en uit de kern
+1.4|ruw ER / ruw endoplasmatisch reticulum|netwerk van membranen met ribosomen; transport van eiwitten en afsnoeren van blaasjes
+1.4|glad ER / glad endoplasmatisch reticulum|netwerk van membranen zonder ribosomen; maakt vetten en breekt gifstoffen af
+1.4|ribosomen|kleine bolvormige organellen die eiwitten maken (eiwitsynthese)
+1.4|golgisysteem|opgestapelde platte membranen; bewerkt eiwitten tot hun uiteindelijke vorm en verpakt ze in blaasjes
+1.4|exocytose|blaasje versmelt met het celmembraan, waardoor stoffen de cel uit gaan
+1.4|secretie|het afgeven van stoffen door cellen, bijv. door een speekselklier
+1.4|lysosoom / lysosomen|blaasje van het golgisysteem met enzymen die voedings- en afvalstoffen afbreken
+1.4|mitochondriën / mitochondrium|organel met dubbel membraan (binnenmembraan geplooid) waarin glucose wordt verbrand
+1.4|ATP|molecuul waarin de energie uit de verbranding wordt opgeslagen (adenosinetrifosfaat)
+1.4|glucose|suiker die bij fotosynthese ontstaat en in de mitochondriën wordt verbrand voor energie
+1.4|fotosynthese|proces in bladgroenkorrels waarbij met lichtenergie glucose wordt gemaakt
+1.4|fosfolipiden|vetachtige moleculen die in een dubbele laag het celmembraan vormen
+1.4|hydrofiel|waterminnend; de kop van een fosfolipide is naar het water gericht
+1.4|hydrofoob|waterafstotend; de staarten van fosfolipiden zitten binnen in het membraan, weg van het water
+1.4|membraaneiwitten|eiwitten in het celmembraan, onder andere voor transport
+1.4|koolhydraatketens|ketens aan eiwitten en fosfolipiden van het membraan, voor herkenning van de cel
+1.4|trilharen / cilia|haartjes aan de buitenkant van een cel voor voortbeweging of verplaatsen van stoffen
+1.4|endocytose|het celmembraan stulpt in en snoert een blaasje af om stoffen op te nemen
+1.4|endosoom|blaasje dat bij endocytose van het celmembraan afsnoert
+1.4|fagocytose|opnemen van vaste deeltjes via endocytose, bijv. door een amoebe
+1.4|cytoskelet|netwerk van eiwitdraden in de cel: stevigheid, vorm en 'wegennet' voor transport
+1.4|motoreiwitten|eiwitten die met 'voetjes' over het cytoskelet lopen en blaasjes vervoeren; kost energie
+1.5|oplossing|oplosmiddel (meestal water) met daarin opgeloste stof(fen)
+1.5|concentratie|hoeveelheid opgeloste stof in een bepaalde hoeveelheid oplosmiddel (g/L, %, ppm, mol/L)
+1.5|ppm|parts per million; 1 ppm = 0,0001%
+1.5|fysiologische zoutoplossing|keukenzoutoplossing van 0,9%, isotoon met bloed (infuus)
+1.5|diffusie|verplaatsing van een stof van een plaats met hoge naar een plaats met lage concentratie
+1.5|concentratieverval / concentratiegradiënt|verschil in concentratie tussen twee plaatsen, waarlangs stoffen bewegen
+1.5|permeabel|membraan dat zowel water als opgeloste stoffen doorlaat
+1.5|semipermeabel / selectief permeabel|membraan dat wel water doorlaat, maar niet (alle) opgeloste stoffen
+1.5|osmose|diffusie van water door een semipermeabel membraan
+1.5|osmotische waarde|maat voor het aantal opgeloste deeltjes per volume; water gaat naar de hoogste
+1.5|osmotische druk|aanzuigende kracht van een oplossing op water; groter bij hogere osmotische waarde
+1.5|aquaporines|eiwitkanaaltjes in het membraan voor snel transport van water
+1.5|isotoon|oplossing met dezelfde osmotische waarde als het cytoplasma
+1.5|hypotoon|oplossing met een lagere osmotische waarde dan het cytoplasma; water gaat de cel in
+1.5|hypertoon|oplossing met een hogere osmotische waarde dan het cytoplasma; water gaat de cel uit
+1.5|turgor|de druk van de cel op de celwand; maakt plantencellen stevig
+1.5|plasmolyse|plantencel verliest zoveel water dat het celmembraan loslaat van de celwand
+1.5|passief transport|transport met het concentratieverval mee, zonder energie
+1.5|actief transport|transport tegen het concentratieverval in via transporteiwitten; kost energie (ATP)
+1.5|transportkanaaltjes / porie-eiwitten|membraaneiwitten met een kanaaltje, bijv. voor ionen (Na⁺, K⁺, Ca²⁺) of water
+1.5|ionentransport|transport van ionen zoals Na⁺, K⁺ en Ca²⁺ door transportkanaaltjes
+1.5|transporteiwitten|membraaneiwitten die één specifieke soort molecuul binden en door het membraan brengen
+1.6|literatuuronderzoek|bestaande kennis over een onderwerp verzamelen uit betrouwbare bronnen
+1.6|beschrijvend onderzoek|observaties en metingen (data) verzamelen en daaruit een algemene regel afleiden
+1.6|hypothesetoetsend onderzoek / experimenteel onderzoek|onderzoek waarbij je een hypothese toetst, meestal met een experiment
+1.6|ontwerpend onderzoek|onderzoek waarbij je een product ontwerpt als antwoord op een onderzoeksvraag
+1.6|hypothese|mogelijke verklaring voor een waarneming of een mogelijk verband tussen verschijnselen
+1.6|verwachting|wat je op grond van de hypothese verwacht te meten of te zien als de hypothese juist is
+1.6|onderzoeksvraag|vraag die duidelijk maakt wat je precies wilt weten en gaat onderzoeken
+1.6|waarneming / observatie|iets wat je opvalt aan een natuurverschijnsel en wat aanleiding is voor onderzoek
+1.6|experimenteergroep|groep die je blootstelt aan de factor die je onderzoekt
+1.6|controlegroep / blancoproef|groep die niet aan de te onderzoeken factor wordt blootgesteld, om mee te vergelijken
+1.6|conclusie|antwoord op de onderzoeksvraag, gebaseerd op de resultaten
+1.6|steekproef|een (min of meer) willekeurig gekozen deel van de groep die je onderzoekt
+1.6|representatief|een steekproef die een goede afspiegeling is van de te onderzoeken groep
+1.6|model|vereenvoudigde weergave van de werkelijkheid, bijv. voor een virtueel experiment
+1.6|modelleren|het gebruik van modellen voor onderzoek
+1.6|prototype|testversie van een product bij ontwerpend onderzoek
+1.6|validiteit|de resultaten geven echt antwoord op de onderzoeksvraag: je meet wat je wilde meten
+1.6|betrouwbaarheid|de resultaten zijn eerlijk verkregen en bij herhaling krijg je dezelfde resultaten
+V|objectglas / voorwerpglas|glazen plaatje waarop je het object in een druppel water legt
+V|dekglas / dekglaasje|dun glaasje dat je op het object legt
+V|lengtedoorsnede|doorsnede in de lengterichting van bijv. een tak
+V|dwarsdoorsnede|doorsnede dwars op de lengterichting van bijv. een tak
+V|eosine|rode kleurstof om kleurloze cellen, zoals wangslijmvliescellen, te kleuren
+V|verdunningsreeks|reeks oplossingen waarbij de concentratie steeds wordt gehalveerd
+V|werkplan|beschrijving vooraf van experiment, materialen, handelingen en verwerking van resultaten
+V|discussie|deel van het verslag waarin je kritisch kijkt naar opzet, uitvoering en betrouwbaarheid
+V|dialysemembraan|semipermeabel membraan dat ook in kunstnieren wordt gebruikt`;
+const ALL_B=BEG.split('\n').map((l,i)=>{const [p,t,d]=l.split('|');return {id:'b'+i,p,t,d,alt:t.split(' / ').map(s=>s.trim())}});
+// kennisvragen: p, vraag, goed, [fout], uitleg
+const KEN=[
+['1.1','Wat is GEEN levensverschijnsel?','kleur','voortplanting|stofwisseling|groei','Levensverschijnselen zijn voortplanting, groei, ontwikkeling en stofwisseling.'],
+['1.1','Zuurstof, water en gesteenten zijn…','levenloos','dood|organismen|levensverschijnselen','Levenloos = heeft nooit geleefd. Dood = heeft wel geleefd, maar vertoont geen levensverschijnselen meer.'],
+['1.1','Een dode zeehond op het strand is…','dood','levenloos|een populatie|abiotisch','De zeehond heeft geleefd, maar vertoont geen levensverschijnselen meer.'],
+['1.1','Wat is het verschil tussen levensloop en levenscyclus?','levensloop hoort bij één individu, levenscyclus bij een hele soort','levensloop hoort bij een soort, levenscyclus bij één individu|een levenscyclus eindigt met de dood van het individu|er is geen verschil','De levensloop eindigt met de dood van het individu. De levenscyclus gaat door tot de soort uitsterft.'],
+['1.1','Wanneer horen twee dieren bij dezelfde soort?','als ze samen vruchtbare nakomelingen kunnen krijgen','als ze op elkaar lijken|als ze in hetzelfde gebied leven|als ze hetzelfde eten','Soort: organismen die zich onderling kunnen voortplanten met vruchtbare nakomelingen.'],
+['1.1','Veldmuizen leven aan twee kanten van een rivier die ze niet kunnen oversteken. Vormen ze één populatie?','nee, ze kunnen zich niet onderling voortplanten','ja, het is dezelfde soort|ja, ze leven in hetzelfde gebied|nee, het zijn verschillende soorten','Een populatie plant zich onderling voort. Gescheiden groepen zijn twee populaties van dezelfde soort.'],
+['1.1','Welk organisatieniveau is het hart?','orgaan','weefsel|orgaanstelsel|organel','Een orgaan bestaat uit verschillende weefsels en heeft een specifieke bouw en functie.'],
+['1.1','Longen en luchtpijp samen vormen een…','orgaanstelsel','orgaan|weefsel|populatie','Organen die samen een functie uitoefenen vormen een orgaanstelsel (ademhalingsstelsel).'],
+['1.1','Alle koolmezen in een bos samen vormen een…','populatie','levensgemeenschap|ecosysteem|soort','Groep individuen van dezelfde soort in een gebied = populatie.'],
+['1.1','Alle planten, dieren, schimmels en bacteriën in een sloot samen vormen een…','levensgemeenschap','populatie|ecosysteem|orgaanstelsel','Alle populaties in een gebied = levensgemeenschap. Met de niet-levende natuur erbij is het een ecosysteem.'],
+['1.1','Een sloot met alle organismen én het water, licht en de temperatuur is een…','ecosysteem','levensgemeenschap|populatie|systeem aarde','Ecosysteem = levensgemeenschap + niet-levende natuur in een begrensd gebied.'],
+['1.1','Op welk organisatieniveau is er voor het eerst leven?','cel','molecuul|organel|weefsel','Een molecuul leeft niet, een cel wel. Op een hoger niveau ontstaan nieuwe eigenschappen.'],
+['1.1','Wat betekent: op een hoger organisatieniveau ontstaan nieuwe eigenschappen?','een organisme kan iets (bijv. lopen) wat losse organen niet kunnen','hogere niveaus zijn altijd groter|lagere niveaus hebben geen functie|moleculen kunnen leven','Losse organen kunnen niet lopen, het organisme wel.'],
+['1.1','In welk stadium zit de oorkwal vast op de bodem?','poliep','larve (planula)|ephyra|volwassen kwal','De vrij zwemmende larve hecht zich vast en wordt een poliep, die later ephyra’s afsnoert.'],
+['1.1','Wat is het volwassen stadium van een vlinder?','imago','pop|rups|larve','Levenscyclus koolwitje: ei, rups, pop, imago.'],
+['1.2','Wat scheidt de borstholte van de buikholte?','het middenrif','het borstbeen|de lever|de maag','Het middenrif scheidt de romp in borstholte en buikholte.'],
+['1.2','Welk orgaan hoort NIET bij het verteringsstelsel?','long','maag|lever|dunne darm','De long hoort bij het ademhalingsstelsel.'],
+['1.2','Welke is GEEN functie van het skelet?','zuurstof opnemen','organen beschermen|steun en stevigheid geven|beweging mogelijk maken','Skelet: bescherming, steun, beweging (spieren hechten aan bot) en bloedcellen maken.'],
+['1.2','Welk weefsel bekleedt en beschermt de oppervlakken van het lichaam?','dekweefsel','zenuwweefsel|spierweefsel|kraakbeenweefsel','Dekweefsel ligt aan inwendige en uitwendige oppervlakken, bijv. wangslijmvlies en de huid.'],
+['1.2','Waarom hebben zenuwcellen sterk vertakte uitlopers?','zo vormen ze een netwerk om informatie door te geven','zo kunnen ze samentrekken|zo zijn ze steviger|zo slaan ze meer voedsel op','Vorm hangt samen met functie: vertakte uitlopers geven informatie door.'],
+['1.2','Waarvoor zorgen kalkzouten in beenweefsel?','stevigheid','buigzaamheid|elasticiteit|transport van stoffen','Kalkzouten maken bot hard en stevig. Collageenvezels zorgen voor elasticiteit.'],
+['1.2','Wat gebeurt er met bot zonder collageenvezels?','het wordt hard maar bros','het wordt zacht en buigzaam|het wordt sterker|er verandert niets','Collageenvezels geven samenhang en elasticiteit.'],
+['1.2','Waarom is kraakbeen buigzamer dan bot?','het bevat minder kalkzouten en meer collageenvezels','het bevat meer kalkzouten|het heeft geen tussencelstof|het bestaat uit spiercellen','Kraakbeen zit in oor, neus, tussenwervelschijven en gewrichten.'],
+['1.2','Waarom herstelt kraakbeen moeilijk na een blessure?','het heeft weinig cellen en geen bloedvaten','het heeft te veel kalkzouten|het is te dun|het groeit te snel','Zonder bloedvaten komen er weinig bouwstoffen bij.'],
+['1.2','Waarom lopen de beenbalkjes in de kop van het dijbeen in de richting van de grootste krachten?','zo is het bot licht en toch stevig','zo maakt het bot meer bloedcellen|zo kan het bot buigen|zo groeit het bot sneller','Verband tussen vorm en functie.'],
+['1.2','Waarom hebben de botten van de voet een gewelfde vorm?','om het gewicht te dragen en schokken op te vangen','om sneller te kunnen rennen|om lichter te zijn dan andere botten|om meer bloed te maken','Vorm en functie: het gewelf werkt als een vering.'],
+['1.2','Wat is het voordeel van een stroomlijnvorm bij een vis?','weinig weerstand in het water','meer stevigheid|betere camouflage|meer drijfvermogen','Kop, romp en staart gaan geleidelijk in elkaar over: weinig weerstand.'],
+['1.2','Het fastskin-zwempak is gebaseerd op haaienhuid. Hoe heet dit?','biomimicry','stroomlijnvorm|evolutie|modelleren','Bios = leven, mimesis = imiteren.'],
+['1.2','Is de celwand een organel?','nee, het is tussencelstof buiten de cel','ja, het is een organel van de plantencel|ja, maar alleen bij dieren|nee, het is een weefsel','De celwand ligt buiten het celmembraan en is tussencelstof.'],
+['1.3','Wie introduceerde het begrip cel, na het bekijken van kurk (1665)?','Robert Hooke','Antoni van Leeuwenhoek|Frans de Waal|Francesco Redi','Van Leeuwenhoek zag als eerste levende bacteriën, met een microscoop tot 266×.'],
+['1.3','Wat is het kleinste dat kan leven?','een cel','een molecuul|een organel|een weefsel','De cel is de kleinste biologische eenheid die kan leven.'],
+['1.3','Waaruit bestaat het cytoplasma?','water met organellen en opgeloste stoffen','alleen uit DNA|uit cellulose|uit vacuolevocht','Cytoplasma = celplasma.'],
+['1.3','Waaruit bestaat de celwand?','cellulose','fosfolipiden|zetmeel|eiwit','De celwand van cellulose geeft stevigheid.'],
+['1.3','Waar zit de rode kleurstof in cellen van een rode ui?','in de vacuole','in de bladgroenkorrels|in de celkern|in de celwand','Vacuoles kunnen kleurstoffen bevatten (bloemen, vruchten, rode ui).'],
+['1.3','In welk organel zit de oranje kleurstof van een wortel?','chromoplasten','leukoplasten|bladgroenkorrels|mitochondriën','Chromoplasten bevatten gele, oranje en rode kleurstoffen.'],
+['1.3','Waar wordt zetmeel opgeslagen in een aardappel?','in leukoplasten (zetmeelkorrels)','in chromoplasten|in de celwand|in de mitochondriën','Leukoplasten slaan vet, zetmeel of eiwit op.'],
+['1.3','Een tomaat wordt van groen rood. Wat gebeurt er in de cellen?','bladgroenkorrels gaan over in chromoplasten','chromoplasten gaan over in bladgroenkorrels|leukoplasten verdwijnen|de vacuole wordt groen','Sommige plastiden kunnen in andere plastiden overgaan.'],
+['1.3','Het bovenste stukje van een wortel dat boven de grond uitsteekt wordt groen. Waarom?','chromoplasten gaan door licht over in bladgroenkorrels','de vacuole vult zich met bladgroen|leukoplasten gaan over in chromoplasten|de celwand wordt groen','Bij licht vormen zich bladgroenkorrels.'],
+['1.3','Waarmee zijn intercellulaire ruimten gevuld?','lucht of vocht','cytoplasma|cellulose|DNA','Holten tussen de celwanden van plantencellen.'],
+['1.3','Welk organel heeft een dierlijke cel WEL?','celkern','celwand|grote centrale vacuole|bladgroenkorrels','Dierlijke cellen hebben geen celwand, geen grote centrale vacuole en geen plastiden.'],
+['1.3','Hoeveel vergroot een lichtmicroscoop ongeveer maximaal?','1000×','100×|100 000×|6 miljoen×','Een elektronenmicroscoop vergroot meer dan 100 000×.'],
+['1.3','Waarom zijn beelden van een elektronenmicroscoop vaak gekleurd?','ze worden ingekleurd zodat structuren beter zichtbaar zijn','de cellen zijn zo gekleurd|de microscoop gebruikt gekleurd licht|door de kleurstof eosine','Het beeld verschijnt op een computerscherm en wordt bewerkt.'],
+['1.3','Euglena is een eencellige met bladgroen en een celwand. Lijkt hij meer op een plant of een dier?','een plant','een dier|een bacterie|een schimmel','Bladgroen en een celwand komen alleen bij plantencellen voor.'],
+['1.3','Een tekening is 2 cm groot bij een vergroting van 250×. Hoe groot is de cel echt?','80 µm','0,8 µm|8 µm|500 µm','2 cm / 250 = 0,008 cm = 0,08 mm = 80 µm.'],
+['1.4','Wat bevatten de chromosomen?','DNA','enzymen|ATP|glucose','Chromosomen zijn lange moleculen DNA in het kernplasma.'],
+['1.4','Waarvoor dienen de kernporiën?','transport van stoffen in en uit de kern','het maken van eiwitten|het opslaan van DNA|het afbreken van afval','Openingen in het kernmembraan.'],
+['1.4','Wat is het verschil tussen ruw en glad ER?','ruw ER heeft ribosomen, glad ER niet','glad ER heeft ribosomen, ruw ER niet|ruw ER zit in de kern|glad ER maakt eiwitten','Ruw ER: eiwittransport. Glad ER: vetten maken en gifstoffen afbreken.'],
+['1.4','Welk organel maakt eiwitten?','ribosomen','lysosomen|mitochondriën|vacuole','Ribosomen zorgen voor de eiwitsynthese, op het ruw ER of vrij in het cytoplasma.'],
+['1.4','Wat doet het glad ER?','vetten maken en gifstoffen afbreken','eiwitten maken|glucose verbranden|DNA kopiëren','Glad ER heeft geen ribosomen.'],
+['1.4','Wat doet het golgisysteem?','eiwitten bewerken tot hun definitieve vorm en verpakken in blaasjes','eiwitten maken|glucose verbranden|fotosynthese','Het golgisysteem maakt ook de lysosomen.'],
+['1.4','Wat bevatten lysosomen?','enzymen die stoffen afbreken','DNA|bladgroen|vacuolevocht','Lysosomen versmelten met blaasjes met voedings- of afvalstoffen.'],
+['1.4','Wat gebeurt er in de mitochondriën?','glucose wordt verbrand en de energie wordt opgeslagen in ATP','glucose wordt gemaakt met licht|eiwitten worden gemaakt|DNA wordt gekopieerd','Glucose maken met licht gebeurt in de bladgroenkorrels (fotosynthese).'],
+['1.4','Waarom hebben spiercellen en zaadcellen veel mitochondriën?','ze hebben veel energie (ATP) nodig voor beweging','ze maken veel eiwitten|ze moeten veel afval afbreken|ze zijn groter dan andere cellen','Het aantal mitochondriën hangt af van de activiteit van de cel.'],
+['1.4','Welke twee organellen hebben een dubbel membraan?','mitochondriën en bladgroenkorrels','ribosomen en lysosomen|vacuole en golgisysteem|ER en ribosomen','De celkern heeft ook een membraan met poriën.'],
+['1.4','Waaruit is het celmembraan opgebouwd?','een dubbele laag fosfolipiden met eiwitten erin','een laag cellulose|alleen uit eiwitten|uit DNA en zetmeel','Het membraan is geen vaste wand maar een dun vloeibaar vliesje.'],
+['1.4','Waarom is het celmembraan vloeibaar?','de fosfolipiden en eiwitten bewegen voortdurend','het bestaat uit water|het heeft geen eiwitten|door de celwand','Daardoor kan het membraan allerlei vormen aannemen, bijv. bij endocytose.'],
+['1.4','Waarvoor dienen koolhydraatketens aan het celmembraan?','herkenning van de cel door andere cellen','transport van water|energie maken|stevigheid','Ze zitten aan membraaneiwitten en fosfolipiden.'],
+['1.4','Wat is exocytose?','een blaasje versmelt met het celmembraan en stoffen gaan de cel uit','het membraan stulpt in om stoffen op te nemen|diffusie van water|het maken van eiwitten','Afgeven van stoffen = secretie.'],
+['1.4','Wat is endocytose?','het membraan stulpt in en snoert een blaasje (endosoom) af om stoffen op te nemen','een blaasje gaat de cel uit|water gaat door aquaporines|een cel deelt zich','Bij vaste deeltjes heet dit fagocytose.'],
+['1.4','Wat gebeurt er met een endosoom in de cel?','het versmelt met een lysosoom en de stoffen worden afgebroken','het gaat naar de celkern|het wordt een mitochondrium|het versmelt met de celwand','De afbraakproducten gaan via transporteiwitten naar het cytoplasma.'],
+['1.4','Welke functie heeft het cytoskelet NIET?','fotosynthese','stevigheid geven|de vorm van de cel bepalen|wegennet voor transport','Motoreiwitten lopen over het cytoskelet.'],
+['1.4','Het antibioticum tetracycline remt de eiwitsynthese. Welk organel wordt geremd?','ribosomen','mitochondriën|vacuole|celwand','Zonder eiwitten (en enzymen) gaat de bacterie dood.'],
+['1.4','Waarom lekt bladgroen uit spinazie als je die kookt?','door de hitte gaan de membranen kapot','de celwand lost op|het bladgroen verdampt|de vacuole knapt door osmose','Membranen houden de inhoud binnen.'],
+['1.4','Welke organellen werken samen bij het maken en uitscheiden van een eiwit als speekselamylase?','celkern, ribosomen op het RER, golgisysteem en celmembraan','alleen de mitochondriën|vacuole en celwand|lysosomen en bladgroenkorrels','DNA geeft de instructie, ribosomen maken het eiwit, golgi verpakt, exocytose geeft het af.'],
+['1.5','Hoeveel gram zout zit er in 250 g fysiologische zoutoplossing (0,9%)?','2,25 g','0,9 g|22,5 g|9 g','250 × 0,9 / 100 = 2,25 g.'],
+['1.5','0,04% is hoeveel ppm?','400 ppm','4 ppm|40 ppm|4000 ppm','1% = 10 000 ppm, dus 0,04% = 400 ppm.'],
+['1.5','Wat is diffusie?','verplaatsing van een stof van hoge naar lage concentratie','verplaatsing van water door een membraan|transport met energie|verplaatsing van lage naar hoge concentratie','Moleculen bewegen ongericht tot de concentratie overal gelijk is.'],
+['1.5','Wat is osmose?','diffusie van water door een semipermeabel membraan','diffusie van zout door een permeabel membraan|actief transport van water|het knappen van een cel','Water gaat naar de kant met de hoogste osmotische waarde.'],
+['1.5','Water gaat bij osmose van…','lage naar hoge osmotische waarde','hoge naar lage osmotische waarde|hoge naar lage concentratie opgeloste stof|links naar rechts','De oplossing met de hoogste osmotische waarde ‘zuigt’ water aan.'],
+['1.5','Waardoor wordt de osmotische waarde bepaald?','het aantal opgeloste deeltjes per volume','het soort opgeloste stof|de temperatuur|de grootte van de moleculen','NaCl valt uiteen in Na⁺ en Cl⁻, dus geeft meer deeltjes dan glucose.'],
+['1.5','Welke stoffen gaan ongehinderd door het celmembraan?','zuurstof en koolstofdioxide','glucose en eiwitten|zetmeel en DNA|alle stoffen','Kleine moleculen en vetoplosbare stoffen diffunderen door de fosfolipiden.'],
+['1.5','Waarvoor zorgen aquaporines?','snel transport van water door het membraan','transport van glucose|het maken van ATP|herkenning van de cel','Water gaat maar heel langzaam door de fosfolipiden.'],
+['1.5','Een rode bloedcel komt in gedestilleerd water. Wat gebeurt er?','water gaat de cel in, de cel zwelt op en kan knappen','water gaat de cel uit en de cel krimpt|er gebeurt niets|plasmolyse','Gedestilleerd water is hypotoon ten opzichte van het cytoplasma.'],
+['1.5','Waarom moet een infuus een fysiologische zoutoplossing (0,9%) zijn?','die is isotoon, zodat bloedcellen niet krimpen of knappen','dan stroomt het sneller|zout doodt bacteriën|dan wordt het bloed dunner','Isotoon: evenveel water de cel in als uit.'],
+['1.5','Waarom barst een plantencel niet in zuiver water?','de stevige celwand houdt hem tegen','plantencellen nemen geen water op|de vacuole pompt water weg|het celmembraan is ondoorlaatbaar','De druk op de celwand heet turgor.'],
+['1.5','Wat is turgor?','de druk van de cel op de celwand','het loslaten van het celmembraan|diffusie van water|de concentratie van zout','Door turgor zijn plantencellen en weefsels stevig.'],
+['1.5','Een plantencel in een hypertone oplossing…','verliest water; het celmembraan laat los van de celwand (plasmolyse)','neemt water op en wordt stevig|knapt|blijft gelijk','De osmotische waarde van het vacuolevocht stijgt.'],
+['1.5','Is de celwand semipermeabel?','nee, de celwand is volledig permeabel','ja, net als het celmembraan|alleen voor water|alleen voor zout','De concentratie in de celwand is gelijk aan die buiten de cel.'],
+['1.5','Waarom wordt sla slap als je er slasaus met zout op doet?','de saus is hypertoon; water gaat de cellen uit (plasmolyse)','de saus is hypotoon; water gaat de cellen in|de celwand lost op|het zout breekt bladgroen af','Turgor verdwijnt, het blad wordt slap.'],
+['1.5','Wat is het verschil tussen passief en actief transport?','actief transport gaat tegen het concentratieverval in en kost energie','passief transport kost energie|actief transport gaat altijd via de fosfolipiden|er is geen verschil','Passief = met het verval mee, zonder energie (diffusie, osmose, kanaaltjes, transporteiwitten).'],
+['1.5','Wat levert meestal de energie voor actief transport?','ATP','glucose rechtstreeks|zonlicht|water','ATP → ADP + P; de fosfaatgroep bindt aan het transporteiwit.'],
+['1.5','Glucose gaat in de darm van hoge naar lage concentratie via transporteiwitten. Wat voor transport is dat?','passief transport, zonder energie','actief transport, met energie|osmose|exocytose','Met het concentratieverval mee = passief.'],
+['1.5','Een transporteiwit voor glucose vervoert geen andere stoffen. Hoe heet die eigenschap?','specifiek','permeabel|hypotoon|representatief','Transporteiwitten binden één specifieke soort molecuul.'],
+['1.5','Een zalm in zoet water maakt veel sterk verdunde urine. Waarom?','zoet water is hypotoon: er stroomt veel water zijn lichaam in','hij drinkt veel zout water|hij verliest veel water|zoet water is hypertoon','In zout water verliest de zalm water en drinkt hij zout water.'],
+['1.5','Hoe raakt een zalm in zee het teveel aan zout kwijt?','via actief transport door de kieuwen','via osmose door de huid|via diffusie in de darm|met verdunde urine','Tegen het concentratieverval in kost energie.'],
+['1.5','Bij een permeabel membraan tussen 4% en 8% suikeroplossing (gelijk volume). Wat is de eindconcentratie?','6% aan beide kanten','4% en 8%|8% aan beide kanten|0% en 12%','Bij een permeabel membraan diffundeert ook suiker tot de concentratie gelijk is.'],
+['1.5','Bij een semipermeabel membraan tussen 4% en 8% suiker: welk niveau stijgt?','de kant met 8%','de kant met 4%|geen van beide|allebei','Water gaat naar de kant met de hoogste osmotische waarde.'],
+['1.5','Bij dialyse gaat afval uit het bloed door een membraan, maar bloedcellen niet. Wat voor membraan is dit?','semipermeabel','permeabel|ondoorlaatbaar|een celwand','Een dialysemembraan wordt ook in kunstnieren gebruikt.'],
+['1.5','Bij zilte landbouw bevat bodemvocht meer opgeloste deeltjes dan de wortelcel. Het bodemvocht is…','hypertoon; de wortelcellen drogen uit','hypotoon; de wortelcellen zwellen op|isotoon|hypertoon; de wortelcellen nemen water op','Water gaat de cel uit, de osmotische waarde van de wortelcellen wordt hoger.'],
+['1.6','De microscoop van Van Leeuwenhoek is ontstaan door…','ontwerpend onderzoek','beschrijvend onderzoek|hypothesetoetsend onderzoek|literatuuronderzoek','Er werd een instrument ontwikkeld.'],
+['1.6','Johan Ham zag met een microscoop zaadcellen in sperma. Wat voor onderzoek is dat?','beschrijvend onderzoek','ontwerpend onderzoek|hypothesetoetsend onderzoek|literatuuronderzoek','Hij deed observaties, zonder hypothese of experiment.'],
+['1.6','Leerlingen vergelijken jongeren die voor het slapen op de telefoon kijken met jongeren die lezen. Wat voor onderzoek?','hypothesetoetsend onderzoek','beschrijvend onderzoek|ontwerpend onderzoek|literatuuronderzoek','Ze hebben een vermoeden (hypothese) en vergelijken twee groepen.'],
+['1.6','Hoe heet de fase waarin je informatie zoekt over een onderwerp?','literatuuronderzoek','experiment|discussie|conclusie','Doe dit eerst: misschien is je vraag al beantwoord.'],
+['1.6','Wat is de controlegroep in het experiment van Frans de Waal met kapucijnaapjes?','twee aapjes die allebei dezelfde beloning (komkommer) krijgen','het aapje dat een druif krijgt|aapjes zonder steen|aapjes in het wild','Alleen de ongelijke beloning mag verschillen.'],
+['1.6','Waarom neem je in een experiment een blancoproef op?','om te kunnen vergelijken en te weten dat het effect door de factor komt','om meer resultaten te hebben|om tijd te besparen|omdat het verplicht is','Zonder controlegroep weet je niet of de factor de oorzaak is.'],
+['1.6','Hoeveel factoren onderzoek je per experiment?','één','twee|zoveel mogelijk|geen','Alle andere omstandigheden moeten gelijk zijn.'],
+['1.6','Waarom moeten de groepen in een experiment uit grote aantallen bestaan?','om betrouwbare gegevens te krijgen','om validere vragen te stellen|omdat dat goedkoper is|om sneller klaar te zijn','Met grote aantallen is de invloed van toeval kleiner.'],
+['1.6','Wat betekent validiteit?','je meet wat je wilde meten; de resultaten beantwoorden de onderzoeksvraag','bij herhaling krijg je dezelfde resultaten|het onderzoek is goedkoop|er is een controlegroep','Betrouwbaarheid = eerlijk verkregen en herhaalbaar.'],
+['1.6','Wat betekent betrouwbaarheid?','de resultaten zijn eerlijk verkregen en herhaling geeft dezelfde resultaten','je meet wat je wilde meten|de hypothese klopt|er is literatuur gebruikt','Bij herhaling door anderen moeten dezelfde resultaten komen.'],
+['1.6','Het aantal proefpersonen is niet vermeld. Dat heeft vooral te maken met…','betrouwbaarheid','validiteit|de hypothese|de onderzoeksvraag','Examenvraag hersenscan: aantal → betrouwbaarheid, geen controleproef → validiteit.'],
+['1.6','Er is geen controleproef beschreven. Dat heeft vooral te maken met…','validiteit','betrouwbaarheid|de steekproef|de literatuur','Zonder controle weet je niet of je meet wat je wilt meten.'],
+['1.6','Wanneer is een steekproef representatief?','als hij een goede afspiegeling is van de hele groep','als hij heel klein is|als alleen vrijwilligers meedoen|als iedereen dezelfde leeftijd heeft','Je kiest (min of meer) willekeurig een deel van de groep.'],
+['1.6','Wat doe je als de hypothese verworpen wordt?','een nieuwe hypothese opstellen en die toetsen met een nieuw experiment','de resultaten aanpassen|stoppen met onderzoek|de conclusie weglaten','Zie het schema van de fasen.'],
+['1.6','Bij welk type onderzoek stel je GEEN hypothese op en doe je geen experiment?','beschrijvend onderzoek','hypothesetoetsend onderzoek|experimenteel onderzoek|alle typen','Je verzamelt alleen metingen of observaties.'],
+['1.6','Wat is een prototype?','een testversie van een product','de eerste hypothese|een controlegroep|een samenvatting','Na testen worden de eisen bijgesteld en de definitieve versie gebouwd.'],
+['1.6','Zaden in 4 schalen: 1 natte aarde 20 °C, 2 natte watten 6 °C, 3 natte watten 20 °C, 4 natte aarde 6 °C. Welke vergelijk je voor de invloed van temperatuur?','1 en 4 (of 2 en 3)','1 en 3|2 en 4|1 en 2','Alleen de temperatuur mag verschillen, de bodem moet gelijk zijn.'],
+['1.6','Zelfde vier schalen. Welke vergelijk je voor de invloed van de bodem?','1 en 3 (of 2 en 4)','1 en 4|2 en 3|3 en 4','Alleen de bodem verschilt, de temperatuur is gelijk.'],
+['1.6','Tomatenplanten krijgen water met verschillende hoeveelheden voedingsstoffen. Wat krijgt de controlegroep?','dezelfde hoeveelheid water zonder voedingsstoffen','geen water|de meeste voedingsstoffen|andere grond','Alleen de factor voedingsstoffen mag ontbreken.'],
+['1.6','Redi deed vlees in een afgesloten en een open pot. Tegenstanders zeiden: er komt geen lucht bij. Hoe kon hij dat weerleggen?','een pot met gaas afdekken: lucht kan erin, vliegen niet','het vlees koken|een grotere pot gebruiken|meer vlees gebruiken','Dan is alleen ‘vliegen kunnen erbij’ de factor.'],
+['1.6','Het kunsthart van het UMC Utrecht is ontstaan door…','ontwerpend onderzoek','beschrijvend onderzoek|literatuuronderzoek|hypothesetoetsend onderzoek','Er is een product ontwikkeld: het kunsthart moet bloed rondpompen.'],
+['1.6','Toxicologen onderzoeken giftige stoffen. Welk vakgebied combineren ze met biologie?','scheikunde','natuurkunde|aardrijkskunde|geologie','Gifstoffen zijn chemische stoffen.'],
+['V','Waarom moet het object in een preparaat erg dun zijn?','zodat er licht door kan','zodat het niet uitdroogt|zodat het snel kleurt|zodat het niet beweegt','Daarom maak je vaak een doorsnede.'],
+['V','Waarom leg je het dekglaasje er schuin en voorzichtig op?','om luchtbellen te voorkomen','om het object te kleuren|om het glaasje niet te breken|zodat het water verdampt','Overtollig water haal je weg met filtreerpapier.'],
+['V','Je ziet grote zwarte cirkels in je preparaat. Wat zijn dat?','luchtbellen','celkernen|vacuoles|bladgroenkorrels','Zoek een stukje zonder luchtbellen.'],
+['V','Welke regel hoort NIET bij een biologische tekening?','teken met pen en kleur alles in','teken met potlood|teken groot|zet namen met horizontale streepjes','Noteer ook naam, vergroting, type doorsnede en eventuele kleurstof.'],
+['V','Waarom kleur je wangslijmvliescellen met eosine?','ze zijn kleurloos en dus slecht te zien','om ze te doden|om de celwand te zien|om bladgroen zichtbaar te maken','Je kunt ook jodiumoplossing gebruiken.'],
+['V','Welke delen zie je bij een cel van een rode ui onder de lichtmicroscoop?','celwand, cytoplasma, vacuole en celkern','ribosomen en golgisysteem|mitochondriën en ER|bladgroenkorrels en chromoplasten','De rode kleur zit in de vacuole.'],
+['V','Waar liggen de bladgroenkorrels in een cel van waterpest als je goed scherpstelt?','in een laagje langs de celwand','in de celkern|precies in het midden|buiten de cel','De grote vacuole duwt het cytoplasma met bladgroenkorrels naar de rand.'],
+['V','Waarom kun je de celkern van waterpest niet zien?','hij is kleurloos','hij is er niet|hij zit in de vacuole|de vergroting is te groot','Je ziet wel de bladgroenkorrels met het cytoplasma rondstromen.'],
+['V','Je zuigt een 10% KNO₃-oplossing onder het dekglas van een rode ui. Wat zie je?','plasmolyse: de gekleurde inhoud krimpt en laat los van de celwand','de cellen knappen|de cellen worden groter|de celwand lost op','De oplossing is hypertoon.'],
+['V','Daarna zuig je gedestilleerd water onder het dekglas. Wat gebeurt er?','water gaat de cellen weer in en ze herstellen','de cellen gaan dood|er gebeurt niets meer|de cellen krimpen verder','Gedestilleerd water is hypotoon.'],
+['V','Bij een verdunningsreeks vanaf 8% halveer je de concentratie steeds. Welke reeks klopt?','8 – 4 – 2 – 1 – 0,5%','8 – 6 – 4 – 2 – 0%|8 – 7 – 6 – 5 – 4%|8 – 2 – 0,5 – 0,1%','Helft eruit, aanvullen met evenveel water.'],
+['V','Waarom maak je een verdunningsreeks in plaats van elke oplossing apart?','met één oplossing en grote hoeveelheden is de kans op meetfouten klein','dat is mooier|zo heb je geen water nodig|zo wordt de oplossing sterker','Maak het materiaal tussendoor goed schoon.'],
+['V','Aardappelstaafjes in oplossingen van 0% tot 8% zout. In welke worden ze langer en stevig?','in de lage concentraties (hypotoon): turgor','in de hoge concentraties|in alle oplossingen|in geen enkele','In hoge concentraties: korter en slap (plasmolyse).'],
+['V','Bij welke concentratie veranderen de aardappelstaafjes niet?','als de oplossing isotoon is met de aardappelcellen','bij 0%|bij 8%|nooit','Daar is de osmotische waarde van de oplossing gelijk aan die van de cellen.'],
+['V','Suikeroplossing in een dialyseslang met pipet, in een bak water. Wat gebeurt er met het niveau in de pipet?','het stijgt, want water gaat door osmose de slang in','het daalt|het blijft gelijk|de suiker stroomt eruit','Het dialysemembraan is semipermeabel.'],
+['V','Welk onderdeel staat NIET in een verslag?','reclame voor je school','inleiding|resultaten|discussie','Titel, inleiding, werkplan, resultaten, conclusie, discussie.'],
+['V','In welk deel van het verslag kijk je kritisch naar je proefopstelling?','discussie','inleiding|resultaten|titel','Hoe zeker ben ik van mijn antwoord? Ging alles volgens plan?'],
+['V','Wat beschrijf je in een werkplan?','welke factor, welk organisme, welke materialen, welke metingen en hoe je de resultaten weergeeft','alleen de conclusie|alleen de literatuur|de mening van je docent','Het werkplan maak je van tevoren.']
+];
+const ALL_K=KEN.map((r,i)=>({id:'k'+i,p:r[0],q:r[1],a:r[2],o:r[3].split('|'),e:r[4]}));
+// volgordes
+const VOLG=[
+{p:'1.1',t:'Organisatieniveaus',q:'Zet van klein naar groot',it:['molecuul','organel','cel','weefsel','orgaan','orgaanstelsel','organisme','populatie','levensgemeenschap','ecosysteem','systeem aarde']},
+{p:'1.1',t:'Levenscyclus koolwitje',q:'Zet de stadia in de goede volgorde',it:['ei','rups','pop','imago (vlinder)']},
+{p:'1.1',t:'Levenscyclus oorkwal',q:'Zet de stadia in de goede volgorde',it:['bevruchte eicel','larve (planula)','poliep op de bodem','ephyra (afgesnoerd schijfje)','volwassen kwal']},
+{p:'1.4',t:'Van DNA naar secretie',q:'Volg de route van een eiwit dat de cel uit gaat',it:['DNA in de celkern geeft de instructie','ribosomen op het ruw ER maken het eiwit','eiwit wordt verpakt in een blaasje','golgisysteem bewerkt het eiwit','nieuw blaasje naar het celmembraan','exocytose: het eiwit gaat de cel uit']},
+{p:'1.4',t:'Endocytose',q:'Zet de stappen in de goede volgorde',it:['celmembraan stulpt in rond een stof','een blaasje (endosoom) snoert af','endosoom versmelt met een lysosoom','enzymen breken de stoffen af','afbraakproducten gaan via transporteiwitten naar het cytoplasma']},
+{p:'1.5',t:'Actief transport',q:'Zet de stappen in de goede volgorde',it:['de stof bindt aan het transporteiwit','ATP wordt ADP + P; de fosfaatgroep bindt aan het eiwit','het eiwit verandert van vorm','de stof komt aan de andere kant vrij','de fosfaatgroep laat los']},
+{p:'1.6',t:'Hypothesetoetsend onderzoek',q:'Zet de fasen in de goede volgorde',it:['waarneming','onderzoeksvraag','hypothese en verwachting','experiment','resultaten','conclusie']},
+{p:'1.6',t:'Ontwerpend onderzoek',q:'Zet de fasen in de goede volgorde',it:['probleem verkennen en formuleren','ideeën verzinnen en selecteren','concepten uitwerken en selecteren','prototype maken','testen en optimaliseren','presenteren']},
+{p:'V',t:'Preparaat maken',q:'Zet de stappen in de goede volgorde',it:['druppel water op een schoon voorwerpglas','object voorzichtig in de druppel leggen','dekglaasje schuin erop laten zakken','overtollig water wegzuigen met filtreerpapier','preparaat vastzetten met de preparaatklemmen','bekijken bij de kleinste vergroting (40×)']},
+{p:'V',t:'Verdunningsreeks',q:'Zet de stappen in de goede volgorde',it:['maak 20 mL van de hoogste concentratie (8%)','haal 10 mL eruit en doe dat in een reageerbuis','vul de rest aan met 10 mL water en meng','de concentratie is nu gehalveerd (4%)','herhaal tot de laagste concentratie is bereikt']},
+{p:'V',t:'Onderdelen van een verslag',q:'Zet in de goede volgorde',it:['titel','inleiding','werkplan: materiaal en methode','resultaten','conclusie','discussie']},
+{p:'V',t:'Practicum plasmolyse',q:'Zet de stappen in de goede volgorde',it:['preparaat maken van het rode vliesje van de ui','bekijken bij 100×','druppel KNO₃-oplossing aan de rand van het dekglas','met filtreerpapier onder het dekglas door zuigen','plasmolyse tekenen','gedestilleerd water doorzuigen en opnieuw tekenen']}
+];
+const PLANTDIER=[['celmembraan','beide'],['celwand','plant'],['cytoplasma','beide'],['celkern','beide'],['kernmembraan','beide'],['grote centrale vacuole','plant'],['bladgroenkorrels','plant'],['chromoplasten','plant'],['leukoplasten','plant'],['mitochondriën','beide'],['ribosomen','beide'],['endoplasmatisch reticulum','beide'],['golgisysteem','beide'],['intercellulaire ruimten','plant'],['cellulose','plant'],['bladgroen','plant'],['DNA','beide'],['plastiden','plant']];
+// osmose-lab: cel, omgeving, toon, gevolg, uitleg
+const OSMO=[
+['rode bloedcel','gedestilleerd water','hypotoon','water gaat de cel in; de cel zwelt op en kan knappen','Er zitten geen opgeloste deeltjes in gedestilleerd water.'],
+['rode bloedcel','fysiologische zoutoplossing (0,9%)','isotoon','evenveel water in als uit; de cel blijft gelijk','Daarom wordt 0,9% gebruikt in een infuus.'],
+['rode bloedcel','geconcentreerde zoutoplossing (5%)','hypertoon','water gaat de cel uit; de cel krimpt','Langdurig kan de cel hierdoor sterven.'],
+['rode bloedcel','zeewater','hypertoon','water gaat de cel uit; de cel krimpt','Zeewater bevat veel meer zout dan bloed.'],
+['cel van een rode ui','gedestilleerd water','hypotoon','water gaat de cel in; de cel wordt stevig (turgor), de celwand voorkomt knappen','De stevige celwand houdt de cel tegen.'],
+['cel van een rode ui','10% KNO₃-oplossing','hypertoon','water gaat de cel uit; het celmembraan laat los van de celwand (plasmolyse)','De celwand is permeabel en krimpt niet mee.'],
+['cel van een aardappel','een oplossing met dezelfde osmotische waarde als de cel','isotoon','er verandert niets; de cel verliest wel zijn stevigheid (geen turgor)','Lengte en stevigheid van het staafje blijven gelijk.'],
+['slablad','slasaus met veel zout','hypertoon','water gaat de cellen uit (plasmolyse); het blad wordt slap','Turgor verdwijnt.'],
+['wortelcel van een plant','zilt bodemvocht met veel zout','hypertoon','water gaat de cel uit; de plant droogt uit','De osmotische waarde van de wortelcellen wordt hoger.'],
+['pantoffeldiertje','zoet water','hypotoon','water stroomt de cel in; de kloppende vacuole pompt het water weg','In gedestilleerd water moet de vacuole nog vaker samentrekken.'],
+['cel van een jonge zalm','zoet water','hypotoon','veel water stroomt naar binnen; de zalm maakt veel verdunde urine','Het cytoplasma is hypertoon ten opzichte van zoet water.'],
+['cel van een volwassen zalm','zeewater','hypertoon','de zalm verliest water; hij drinkt zout water en scheidt zout actief uit via de kieuwen','Het cytoplasma is hypotoon ten opzichte van zeewater.']
+];
+const EXAM=[
+{t:'Pas op voor tekenbeten (havo 2021-I)',ctx:'Teken hechten zich met hun zuigsnuit aan hun slachtoffer en drinken bloed uit de bloedvaten van de huid. Afbeelding 2 toont de zuigsnuit bij een vergroting van 100×. De opperhuid van een mens is 30 tot 2500 micrometer dik.',qs:[
+ ['1p','Noteer een kenmerk van de bouw van de zuigsnuit en geef aan waardoor dit kenmerk de zuigsnuit geschikt maakt voor zijn functie.','De zuigsnuit heeft weerhaakjes (tandjes die naar achteren wijzen). Daardoor blijft de teek goed vastzitten in de huid.'],
+ ['2p','Bepaal hoeveel micrometer de zuigsnuit kan doordringen in de huid. Noteer je berekening.','Meet de lengte van de zuigsnuit in de afbeelding (tussen de stippellijnen) in mm. Werkelijke lengte = gemeten lengte ÷ 100. Voorbeeld: 30 mm ÷ 100 = 0,30 mm = 300 µm. (1 mm = 1000 µm.)'],
+ ['1p','Licht toe dat dit voldoende is om bloedvaten van een mens te kunnen bereiken.','De zuigsnuit (enkele honderden µm) is langer dan de opperhuid op dunne plekken (30 µm). Dan komt hij door de opperhuid heen in de lederhuid, waar de bloedvaten liggen.']]},
+{t:'De ziekte van Wilson (havo 2019-II)',ctx:'Afbeelding 3 toont een kern, het ruw endoplasmatisch reticulum, blaasjes, organel P (gestapelde platte membranen) en het celmembraan met exocytose.',qs:[
+ ['1p','Noteer de naam van het organel dat is aangegeven met de letter P.','Het golgisysteem. Het ligt tussen het ruw ER en het celmembraan en bestaat uit opgestapelde platte membranen die blaasjes afsnoeren.']]},
+{t:'Insectenthermometer (havo 2010-I)',ctx:'Regel: tel het aantal kri’s dat je in 5 seconden hoort en tel er 7 bij op; de uitkomst is de temperatuur in °C. Boven 40 °C sjirpen krekels niet.',qs:[
+ ['3p','Teken een grafiek: temperatuur tegen de frequentie van het gesjirp, voor 9 °C tot 38 °C. Noteer de berekening van twee meetpunten.','Temperatuur = aantal kri’s + 7. Bij 9 °C: 9 − 7 = 2 kri’s per 5 s. Bij 38 °C: 38 − 7 = 31 kri’s per 5 s. Zet kri’s per 5 s op de x-as en temperatuur op de y-as (of andersom), en trek een rechte lijn tussen de punten. Vergeet de eenheden bij de assen niet.'],
+ ['2p','Beschrijf een onderzoek waarmee je in een laboratorium in kortere tijd het verband tussen temperatuur en sjirpen vaststelt.','Zet krekels in een klimaatkast (of meerdere ruimtes) met verschillende, constante temperaturen. Tel per temperatuur het aantal kri’s per 5 seconden. Gebruik meerdere krekels en herhaal de meting voor betrouwbaarheid.']]},
+{t:'Zilte landbouw (havo 2021-II)',ctx:'Bij zilte plaatsen bevat het bodemvocht rond een wortelcel meer opgeloste deeltjes dan het vocht in de cel. Veel zouttolerante planten slaan opgenomen ionen op in een bepaald deel van de cel.',qs:[
+ ['2p','Is het bodemvocht hypertoon of hypotoon? Wordt de osmotische waarde van de wortelcellen tijdens het uitdrogen hoger of lager? (A hypertoon/hoger, B hypertoon/lager, C hypotoon/hoger, D hypotoon/lager)','A. Het bodemvocht is hypertoon. Water gaat de cel uit, dus de opgeloste stoffen in de cel worden geconcentreerder: de osmotische waarde wordt hoger.'],
+ ['1p','In welk deel van de cel worden de zoutionen opgeslagen? (A chloroplasten, B mitochondriën, C vacuole, D ER)','C, de vacuole. Daar verstoren de ionen de enzymen in het cytoplasma niet.']]},
+{t:'Veiliger in een linksdraaiend huisje (havo 2016-II)',ctx:'Een slang met een asymmetrische kaak trekt slakken makkelijker uit een rechtsdraaiend huisje. Hypothese: predatie door de slang leidt tot positieve selectie van slakken met linksdraaiende huisjes. Slakken met beide soorten huisjes werden bij de slangen gezet. De hypothese werd bevestigd.',qs:[
+ ['1p','Welk resultaat vonden de onderzoekers?','Slakken met een linksdraaiend huisje werden minder vaak opgegeten (overleefden vaker) dan slakken met een rechtsdraaiend huisje.']]},
+{t:'Hersenscan (havo 2018-I)',ctx:'Bij 75% van de proefpersonen werd verhoogde activiteit in een hersengebied gemeten. Tekortkoming 1: het aantal proefpersonen is niet vermeld. Tekortkoming 2: de controleproef is niet beschreven.',qs:[
+ ['2p','Heeft tekortkoming 1 te maken met betrouwbaarheid of validiteit? En tekortkoming 2? (A 1 betr./2 betr., B 1 betr./2 val., C 1 val./2 betr., D 1 val./2 val.)','B. Het aantal proefpersonen bepaalt hoeveel invloed toeval heeft: betrouwbaarheid. Zonder controleproef weet je niet of je meet wat je wilt weten: validiteit.']]}
+];
+const SAMEN={
+'1.1':`<p><b>Biologie</b> is een natuurwetenschap die <b>organismen</b> (levende wezens) bestudeert. Organismen vertonen <b>levensverschijnselen</b>: voortplanting, groei, ontwikkeling en stofwisseling. <b>Stofwisseling</b> = alle chemische reacties in een organisme.</p><p><b>Dood</b>: vertoont geen levensverschijnselen meer. <b>Levenloos</b>: heeft nooit geleefd (water, zuurstof, gesteenten).</p><p>Elk <b>individu</b> heeft een <b>levensloop</b>: van ontstaan tot dood. Een <b>soort</b> (vruchtbare nakomelingen) heeft een <b>levenscyclus</b>: dezelfde stadia voor alle individuen; eindigt pas als de soort uitsterft.</p><p><b>Organisatieniveaus</b>: molecuul → organel → cel → weefsel → orgaan → orgaanstelsel → organisme → populatie → levensgemeenschap → ecosysteem → systeem aarde. Op een hoger niveau ontstaan <b>nieuwe eigenschappen</b> (een cel leeft, een molecuul niet). <b>Interactie</b>: eenheden reageren op elkaar en op de omgeving.</p>`,
+'1.2':`<p>Organen in de romp: lever, maag, strottenhoofd, long, hart, middenrif, dikke en dunne darm, wervel, rib, borstbeen, galblaas, nier en aorta. Het <b>middenrif</b> scheidt borstholte en buikholte.</p><p><b>Weefsel</b> = groep cellen met dezelfde vorm en functie: <b>dekweefsel</b> (bekleedt en beschermt), <b>zenuwweefsel</b> (informatie doorgeven), <b>spierweefsel</b> (samentrekken).</p><p><b>Tussencelstof</b> ligt tussen de cellen; de soort hangt samen met de functie. Bot: kalkzouten (stevig) + collageenvezels (elastisch). Kraakbeen: minder kalk, meer collageen → buigzaam. Ook de celwand is tussencelstof.</p><p><b>Vorm en functie</b>: holle botten licht en stevig; beenbalkjes in de kop van het dijbeen; gewelfde voet vangt schokken op; stroomlijnvorm geeft weinig weerstand. <b>Biomimicry</b>: de natuur als voorbeeld voor ontwerpen.</p>`,
+'1.3':`<p>De <b>cel</b> is de kleinste eenheid die kan leven. Robert Hooke (kurk, 1665) introduceerde het woord cel.</p><p>Plant én dier: <b>celmembraan</b> (scheidt cel van omgeving), <b>cytoplasma</b> (water met organellen en opgeloste stoffen), <b>celkern</b> met kernmembraan.</p><p>Alleen plant: <b>celwand</b> van cellulose (stevigheid, tussencelstof), grote centrale <b>vacuole</b> met vacuolevocht (stevigheid, kleurstoffen), <b>plastiden</b>: bladgroenkorrels (bladgroen, fotosynthese), chromoplasten (geel/oranje/rood), leukoplasten (opslag vet, zetmeel, eiwit). Plastiden kunnen in elkaar overgaan. <b>Intercellulaire ruimten</b> zitten tussen celwanden.</p><p><b>Lichtmicroscoop</b>: tot ±1000×. <b>Elektronenmicroscoop</b>: meer dan 100 000×, beeld op een scherm, vaak ingekleurd.</p>`,
+'1.4':`<p>In het kernplasma liggen <b>chromosomen</b> (DNA, erfelijke informatie). Kernporiën laten stoffen door.</p><p><b>Ruw ER</b>: met ribosomen, transport van eiwitten. <b>Glad ER</b>: zonder ribosomen, vetten maken en gifstoffen afbreken. <b>Ribosomen</b>: eiwitsynthese. <b>Golgisysteem</b>: eiwitten afmaken, verpakken in blaasjes, lysosomen maken. <b>Lysosomen</b>: blaasjes met enzymen die stoffen afbreken.</p><p><b>Mitochondriën</b>: dubbel membraan, binnenmembraan geplooid; verbranding van glucose, energie opslaan in <b>ATP</b>. <b>Bladgroenkorrels</b>: dubbel membraan, gestapelde blaasjes, fotosynthese.</p><p><b>Celmembraan</b>: dubbele laag <b>fosfolipiden</b> met eiwitten; vloeibaar. Koolhydraatketens voor herkenning, trilharen voor beweging. <b>Exocytose</b> (blaasje naar buiten, secretie) en <b>endocytose</b> (endosoom naar binnen). <b>Cytoskelet</b>: stevigheid, vorm, wegennet voor motoreiwitten.</p>`,
+'1.5':`<p><b>Concentratie</b> = hoeveelheid opgeloste stof per hoeveelheid oplosmiddel (g/L, %, ppm, mol/L). % = gram stof ÷ gram oplossing × 100. 1% = 10 000 ppm.</p><p><b>Diffusie</b>: van hoge naar lage concentratie. <b>Osmose</b>: diffusie van water door een <b>semipermeabel</b> membraan, van lage naar hoge <b>osmotische waarde</b> (aantal opgeloste deeltjes per volume).</p><p>Dierlijke cel: <b>isotoon</b> blijft gelijk, <b>hypotoon</b> neemt water op en kan barsten, <b>hypertoon</b> krimpt. Plantencel: celwand is permeabel; normaal water de cel in → <b>turgor</b> (stevig). Hypertoon → water eruit → <b>plasmolyse</b> (celmembraan laat los van celwand).</p><p><b>Passief transport</b> (met het concentratieverval mee, geen energie): diffusie, osmose, transportkanaaltjes (ionen, aquaporines voor water), transporteiwitten. <b>Actief transport</b>: tegen het verval in, via transporteiwitten, kost ATP.</p>`,
+'1.6':`<p><b>Literatuuronderzoek</b>: bestaande kennis verzamelen. <b>Beschrijvend</b>: observaties en metingen, geen hypothese en geen experiment. <b>Hypothesetoetsend</b>: hypothese toetsen met een experiment (of enquête met een representatieve <b>steekproef</b>, of een <b>model</b>). <b>Ontwerpend</b>: product ontwikkelen via prototype, testen en verbeteren.</p><p>Fasen: waarneming → onderzoeksvraag → hypothese en verwachting → experiment → resultaten → conclusie (hypothese bevestigd of verworpen → nieuwe hypothese). Experimenteergroep en <b>controlegroep</b> (blancoproef); één factor tegelijk; alle andere omstandigheden gelijk; grote aantallen.</p><p><b>Validiteit</b>: je meet wat je wilde meten. <b>Betrouwbaarheid</b>: eerlijk verkregen en herhaalbaar met dezelfde resultaten.</p><p>Ontwerpcyclus: probleem verkennen → ideeën → concepten → prototype → testen en optimaliseren → presenteren.</p>`,
+'V':`<p><b>Preparaat</b>: object dun tussen voorwerpglas en dekglas; druppel water, dekglas schuin (geen luchtbellen), overtollig water weg met filtreerpapier. Doorsnede: lengte- of dwarsdoorsnede.</p><p><b>Tekenen</b>: A4 in tweeën, groot, potlood, eerst omtrek, teken wat je ziet, niet te ingewikkeld; noteer naam, vergroting, type doorsnede en kleurstof; namen met horizontale streepjes.</p><p><b>Verdunningsreeks</b>: dubbele hoeveelheid hoogste concentratie; helft eruit, rest aanvullen met evenveel water → concentratie gehalveerd.</p><p><b>Werkplan</b>: factor, organisme, aantallen, omstandigheden, materialen, metingen. <b>Verslag</b>: titel, inleiding, werkplan, resultaten, conclusie, discussie.</p><p><b>Practica</b>: 1 rode ui (celwand, cytoplasma, vacuole, celkern) · 2 wangslijmvlies met eosine · 3 waterpest (bladgroenkorrels langs de celwand) · 4 plasmolyse met KNO₃ · 5 aardappelstaafjes in 0–8% zout · 6 dialyseslang: osmose zichtbaar.</p>`
+};
+const $=s=>document.querySelector(s);
+const esc=s=>String(s).replace(/[&<>"]/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;'}[c]));
+const shuffle=a=>{a=[...a];for(let i=a.length-1;i>0;i--){const j=Math.random()*(i+1)|0;[a[i],a[j]]=[a[j],a[i]]}return a};
+const pick=a=>a[Math.random()*a.length|0];
+const KEY='bio-thema1-v1';
+let S={b:{},k:{},xp:0,days:[],sel:PARS.map(p=>p.id),bestBlitz:0,bestToets:0};
+try{const r=localStorage.getItem(KEY);if(r)S=Object.assign(S,JSON.parse(r))}catch(e){}
+const save=()=>{try{localStorage.setItem(KEY,JSON.stringify(S))}catch(e){}};
+const today=()=>new Date().toISOString().slice(0,10);
+function markDay(){const t=today();if(!S.days.includes(t)){S.days.push(t);S.days=S.days.slice(-60)}}
+function streak(){const set=new Set(S.days);let d=new Date(),n=0;if(!set.has(d.toISOString().slice(0,10)))d.setDate(d.getDate()-1);while(set.has(d.toISOString().slice(0,10))){n++;d.setDate(d.getDate()-1)}return n}
+const bs=b=>S.b[b.id]||(S.b[b.id]={l:0,x:0});
+const ks=k=>S.k[k.id]||(S.k[k.id]={l:0});
+const selB=()=>ALL_B.filter(b=>S.sel.includes(b.p));
+const selK=()=>ALL_K.filter(k=>S.sel.includes(k.p));
+const fmt=n=>String(Math.round(n*1000)/1000).replace('.',',');
+function norm(s){return String(s).toLowerCase().normalize('NFD').replace(/[̀-ͯ]/g,'').replace(/[’'`]/g,'').replace(/[-–(),.!?;:"]/g,' ').replace(/\s+/g,' ').trim().replace(/^(de|het|een) /,'')}
+function lev(a,b){const m=a.length,n=b.length;const d=Array.from({length:m+1},(_,i)=>[i]);for(let j=1;j<=n;j++)d[0][j]=j;for(let i=1;i<=m;i++)for(let j=1;j<=n;j++)d[i][j]=Math.min(d[i-1][j]+1,d[i][j-1]+1,d[i-1][j-1]+(a[i-1]===b[j-1]?0:1));return d[m][n]}
+function checkB(input,b){const n=norm(input);if(!n)return 'empty';const acc=b.alt.map(norm);const sq=x=>x.replace(/ /g,'');
+  if(acc.some(a=>a===n||sq(a)===sq(n)))return 'ok';
+  if(acc.some(a=>a.length>=5&&lev(n,a)<=(a.length>=11?2:1)))return 'near';return 'wrong'}
+function pattern(b,k){return b.alt[0].split(' ').map(w=>[...w].map((c,i)=>/[a-zA-Zë]/.test(c)?(i<k?c:'_'):c).join(' ')).join('   ')}
+/* ---------- home ---------- */
+const P=$('#play');let G=null;
+function show(v){$('#home').hidden=v!=='home';P.hidden=v!=='play';window.scrollTo(0,0)}
+function goHome(){if(G&&G.timer)clearInterval(G.timer);G=null;save();renderHome();show('home')}
+function mastery(list){if(!list.length)return 0;return list.reduce((a,b)=>a+Math.min(3,bs(b).l),0)/(3*list.length)}
+function renderHome(){
+  $('#pars').innerHTML=PARS.map(p=>{const l=ALL_B.filter(b=>b.p===p.id);const m=mastery(l);
+    return `<button class="par" data-p="${p.id}" aria-pressed="${S.sel.includes(p.id)}"><span class="no"><b>${p.id==='V'?'V':p.id}</b>${p.id==='V'?'vaardigheden':'paragraaf'}</span><span class="nm">${esc(p.t)}</span><span class="bar"><i style="width:${Math.round(m*100)}%"></i></span><span class="src">${l.length} begrippen · ${Math.round(m*100)}% gekend</span></button>`}).join('');
+  $('#stKnown').textContent=`${ALL_B.filter(b=>bs(b).l>=3).length}/${ALL_B.length}`;
+  $('#stStreak').textContent=streak();$('#stXp').textContent=S.xp;
+  $('#bestBlitz').textContent=S.bestBlitz?`Record: ${S.bestBlitz}.`:'';
+  $('#bestToets').textContent=S.bestToets?`Hoogste cijfer: ${fmt(S.bestToets)}.`:'';
+  const n=S.sel.length;$('#selLine').textContent=n?`${selB().length} begrippen en ${selK().length} kennisvragen geselecteerd.`:'Kies minstens één paragraaf.';
+  document.querySelectorAll('.mode').forEach(b=>b.disabled=!n&&b.dataset.m!=='exam');
+}
+$('#pars').addEventListener('click',e=>{const b=e.target.closest('.par');if(!b)return;const p=b.dataset.p;S.sel=S.sel.includes(p)?S.sel.filter(x=>x!==p):[...S.sel,p];save();renderHome()});
+$('#selAll').onclick=()=>{S.sel=PARS.map(p=>p.id);save();renderHome()};
+$('#selNone').onclick=()=>{S.sel=[];save();renderHome()};
+function askReset(){$('#resetBox').innerHTML='<span>Alle voortgang en records wissen?</span><button class="btn small dark" id="rsY">Ja, wissen</button><button class="btn small ghost" id="rsN">Annuleer</button>';
+  $('#rsY').onclick=()=>{S={b:{},k:{},xp:0,days:[],sel:PARS.map(p=>p.id),bestBlitz:0,bestToets:0};save();location.reload()};
+  $('#rsN').onclick=()=>{$('#resetBox').innerHTML='<button class="btn ghost small" id="resetBtn">Voortgang wissen</button>';$('#resetBtn').onclick=askReset}}
+$('#resetBtn').onclick=askReset;
+document.querySelectorAll('.mode').forEach(b=>b.onclick=()=>start(b.dataset.m));
+/* ---------- gedeeld ---------- */
+const head=(l,r)=>`<div class="slide-head"><span>${l}</span><span>${r}</span></div>`;
+function bar(done,total,extra=''){return `<div class="playbar"><button class="btn small ghost" id="quit">Stoppen</button><span class="bar"><i style="width:${total?Math.round(done/total*100):0}%"></i></span><span class="count">${done}/${total}</span>${extra}</div>`}
+function bindQuit(){const q=$('#quit');if(q)q.onclick=goHome}
+function mcButtons(labels){return `<div class="opts">${labels.map((o,i)=>`<button class="opt" data-i="${i}"><span class="k">${i+1}</span><span>${esc(o)}</span></button>`).join('')}</div>`}
+function markOpts(ci,chosen){P.querySelectorAll('.opt').forEach((b,i)=>{b.disabled=true;b.classList.add(i===ci?'good':i===chosen?'bad':'dim')})}
+function nextBtn(fn,label='Verder ↵'){return `<div class="foot" style="margin-top:12px"><button class="btn primary" id="next">${label}</button></div>`}
+function bindNext(fn){const n=$('#next');n.onclick=fn;n.focus()}
+function bDistract(b,n=3){let pool=ALL_B.filter(x=>x.p===b.p&&x!==b);if(pool.length<n)pool=ALL_B.filter(x=>x!==b);return shuffle(pool).slice(0,n)}
+function reinsert(item,gap){G.Q.splice(Math.min(gap,G.Q.length),0,item)}
+function start(m){
+  const B=selB(),K=selK();
+  if(m==='learn'){const items=shuffle(B).sort((a,b)=>bs(a).l-bs(b).l).slice(0,10);if(!items.length)return;G={m,items,Q:items.map(b=>({b,stage:bs(b).l>=2?1:0,miss:false})),done:0,firstOk:0,mist:new Set()};show('play');learnNext()}
+  else if(m==='flash'){const items=shuffle(B).sort((a,b)=>bs(a).l-bs(b).l).slice(0,20);if(!items.length)return;G={m,items,Q:items.map(b=>({b,miss:false})),done:0,firstOk:0,mist:new Set()};show('play');flashNext()}
+  else if(m==='kennis'){const items=shuffle(K).sort((a,b)=>ks(a).l-ks(b).l).slice(0,10);if(!items.length)return;G={m,items,Q:items.map(k=>({k,miss:false})),done:0,firstOk:0,mist:new Set()};show('play');kenNext()}
+  else if(m==='sum'){show('play');sumView()}
+  else if(m==='volg'){show('play');volgMenu()}
+  else if(m==='pd'){G={m,items:shuffle(PLANTDIER).slice(0,12),i:0,ok:0,mist:[]};show('play');pdNext()}
+  else if(m==='osmo'){G={m,items:shuffle(OSMO).slice(0,8),i:0,ok:0,mist:[]};show('play');osmoNext()}
+  else if(m==='reken'){G={m,n:10,i:0,ok:0};show('play');rekenNext()}
+  else if(m==='cel'){G={m,n:10,i:0,ok:0,last:null};show('play');celNext()}
+  else if(m==='exam'){show('play');examView()}
+  else if(m==='toets'){toetsStart()}
+  else if(m==='blitz'){if(B.length<4)return;G={m,pool:B,score:0,streak:0,n:0,ok:0,mist:new Set(),end:performance.now()+60000};show('play');blitzRender();blitzNext();G.timer=setInterval(blitzTick,100)}
+}
+function endScreen(title,ok,total,mistHtml,again){
+  const pct=total?ok/total:0;if(pct>=.8)confetti();save();
+  P.innerHTML=`<div class="slide">${head(title,'Klaar')}<div class="slide-body">
+   <div><div class="q">In één keer goed</div><div class="big">${ok}<span style="font-size:.45em;color:var(--muted)"> / ${total}</span></div></div>
+   <div>${pct>=.9?'Super, dit zit erin.':pct>=.6?'Goed bezig. Nog een ronde en het zit vast.':'Dit was lastig. Lees de samenvatting en probeer het nog eens.'}</div>
+   ${mistHtml?`<div><div class="q" style="margin-bottom:6px">Kijk hier nog even naar</div><ul class="mist">${mistHtml}</ul></div>`:''}
+   <div class="acts"><button class="btn primary" id="again">Nog een ronde</button><button class="btn ghost" id="home2">Naar start</button></div></div></div>`;
+  $('#again').onclick=again;$('#home2').onclick=goHome;$('#again').focus();
+}
+/* ---------- begrippen inprenten ---------- */
+function learnNext(){
+  if(!G.Q.length)return endScreen('Begrippen inprenten',G.firstOk,G.items.length,[...G.mist].map(b=>`<li><b>${esc(b.alt[0])}</b><span>${esc(b.d)}</span></li>`).join(''),()=>start('learn'));
+  const it=G.cur=G.Q.shift(),b=it.b;
+  const top=bar(G.done,G.items.length);
+  if(it.stage===0){
+    const rev=Math.random()<.3;const opts=shuffle([b,...bDistract(b)]);
+    P.innerHTML=top+`<div class="slide">${head(`Paragraaf ${b.p}`,'Stap 1 van 2 · kiezen')}<div class="slide-body"><div class="q">${rev?'Wat betekent dit begrip?':'Welk begrip hoort bij deze uitleg?'}</div><div class="prompt ${rev?'big':''}">${esc(rev?b.alt[0]:b.d)}</div>${mcButtons(opts.map(o=>rev?o.d:o.alt[0]))}<div id="fbox"></div></div></div>`;
+    bindQuit();
+    P.querySelectorAll('.opt').forEach((btn,i)=>btn.onclick=()=>{const ok=opts[i]===b;markOpts(opts.indexOf(b),i);markDay();
+      if(ok){S.xp+=2;it.stage=1;reinsert(it,2)}else{it.miss=true;G.mist.add(b);const s=bs(b);s.l=Math.max(0,s.l-1);s.x++;reinsert(it,2)}
+      $('#fbox').innerHTML=`<div class="fb ${ok?'good':'bad'}"><div class="t">${ok?'Goed! Straks typ je het begrip zelf.':'Helaas.'}</div><div class="ans">${esc(b.alt[0])}</div><div>${esc(b.d)}</div></div>`+nextBtn();bindNext(learnNext);save()});
+  }else{
+    let k=0,phase='ask';
+    P.innerHTML=top+`<div class="slide">${head(`Paragraaf ${b.p}`,'Stap 2 van 2 · typen')}<div class="slide-body"><div class="q">Typ het begrip</div><div class="prompt">${esc(b.d)}</div><div class="pattern" id="pat"></div>
+     <form class="typerow" id="tf" autocomplete="off"><input id="ti" autocapitalize="off" autocorrect="off" spellcheck="false" placeholder="begrip…" aria-label="Begrip"><button class="btn dark" type="submit" id="tb">Controleer</button></form>
+     <div class="acts" id="ta"><button class="btn small ghost" type="button" id="hint">Hint</button><button class="btn small ghost" type="button" id="idk">Weet ik niet</button></div><div id="fbox"></div></div></div>`;
+    bindQuit();const inp=$('#ti');inp.focus();
+    $('#hint').onclick=()=>{k++;it.hinted=true;$('#pat').textContent=pattern(b,k);inp.focus()};
+    const fail=(msg,typed)=>{phase='retype';it.miss=true;G.mist.add(b);const s=bs(b);s.l=Math.max(0,s.l-1);s.x++;it.stage=0;reinsert(it,3);markDay();
+      $('#ta').hidden=true;$('#pat').textContent='';
+      $('#fbox').innerHTML=`<div class="fb bad"><div class="t">${msg}</div>${typed?`<div>Jij typte: <s>${esc(typed)}</s></div>`:''}<div class="ans">${esc(b.alt.join(' / '))}</div><div class="tip">Typ het goede begrip over om verder te gaan.</div></div>`;
+      inp.value='';inp.placeholder='typ het goede begrip over…';$('#tb').textContent='Verder';inp.focus()};
+    $('#idk').onclick=()=>fail('Geeft niet, zo leer je het.');
+    $('#tf').onsubmit=e=>{e.preventDefault();const v=inp.value;
+      if(phase==='done')return learnNext();
+      if(phase==='retype'){if(checkB(v,b)==='ok'){phase='done';learnNext()}else{inp.classList.remove('shake');void inp.offsetWidth;inp.classList.add('shake')}return}
+      const r=checkB(v,b);if(r==='empty')return;
+      if(r==='ok'){phase='done';inp.readOnly=true;inp.classList.add('okay');$('#ta').hidden=true;markDay();let t;
+        if(it.hinted){t='Goed, maar met hint. Hij komt nog één keer terug.';S.xp+=3;reinsert(it,3);it.hinted=false}
+        else{G.done++;if(!it.miss)G.firstOk++;const s=bs(b);s.l=Math.min(5,s.l+(it.miss?1:2));S.xp+=10;t=pick(['Top!','Perfect!','Yes!','Helemaal goed!'])}
+        $('#fbox').innerHTML=`<div class="fb good"><div class="t">${t}</div><div class="ans">${esc(b.alt.join(' / '))}</div></div>`;$('#tb').textContent='Verder';$('#tb').focus();save()}
+      else if(r==='near'){$('#fbox').innerHTML='<div class="fb warn"><div class="t">Bijna! Let op de spelling en probeer het nog eens.</div></div>';inp.select()}
+      else fail('Niet goed.',v)};
+  }
+}
+/* ---------- flitskaarten ---------- */
+function flashNext(){
+  if(!G.Q.length)return endScreen('Flitskaarten',G.firstOk,G.items.length,[...G.mist].map(b=>`<li><b>${esc(b.alt[0])}</b><span>${esc(b.d)}</span></li>`).join(''),()=>start('flash'));
+  const it=G.cur=G.Q.shift(),b=it.b;
+  P.innerHTML=bar(G.done,G.items.length)+`<div class="slide">${head(`Paragraaf ${b.p}`,'Tik om te draaien')}<div class="slide-body">
+   <div class="flip" id="card" tabindex="0" role="button" aria-label="Draai kaart om"><div class="flip-in">
+    <div class="face"><div class="q">Wat betekent…</div><div class="prompt big">${esc(b.alt.join(' / '))}</div></div>
+    <div class="face back"><div class="q">${esc(b.alt[0])}</div><div class="prompt">${esc(b.d)}</div></div>
+   </div></div>
+   <div class="acts" id="rate" hidden><button class="btn" id="no">1 · Nog niet</button><button class="btn primary" id="yes">2 · Wist ik</button></div></div></div>`;
+  bindQuit();const card=$('#card');
+  G.flip=()=>{if(card.classList.contains('on'))return;card.classList.add('on');$('#rate').hidden=false};card.onclick=G.flip;
+  $('#no').onclick=()=>{it.miss=true;G.mist.add(b);bs(b).x++;markDay();reinsert(it,3);save();flashNext()};
+  $('#yes').onclick=()=>{G.done++;if(!it.miss)G.firstOk++;const s=bs(b);if(s.l<2)s.l++;S.xp+=3;markDay();save();flashNext()};
+}
+/* ---------- kennisvragen ---------- */
+function kenNext(){
+  if(!G.Q.length)return endScreen('Kennisvragen',G.firstOk,G.items.length,[...G.mist].map(k=>`<li><b>${esc(k.q)}</b><span>${esc(k.a)} · ${esc(k.e)}</span></li>`).join(''),()=>start('kennis'));
+  const it=G.cur=G.Q.shift(),k=it.k;const opts=shuffle([k.a,...k.o]);
+  P.innerHTML=bar(G.done,G.items.length)+`<div class="slide">${head(`Paragraaf ${k.p}`,'Kennisvraag')}<div class="slide-body"><div class="prompt">${esc(k.q)}</div>${mcButtons(opts)}<div id="fbox"></div></div></div>`;
+  bindQuit();
+  P.querySelectorAll('.opt').forEach((btn,i)=>btn.onclick=()=>{const ok=opts[i]===k.a;markOpts(opts.indexOf(k.a),i);markDay();const s=ks(k);
+    if(ok){G.done++;if(!it.miss){G.firstOk++;s.l++}S.xp+=4}else{it.miss=true;G.mist.add(k);s.l=Math.max(0,s.l-1);reinsert(it,4)}
+    $('#fbox').innerHTML=`<div class="fb ${ok?'good':'bad'}"><div class="t">${ok?pick(['Goed!','Klopt!','Top!']):'Het goede antwoord: '+esc(k.a)}</div><div class="tip">${esc(k.e)}</div>${ok?'':'<div class="tip">Deze vraag komt straks nog een keer.</div>'}</div>`+nextBtn();bindNext(kenNext);save()});
+}
+/* ---------- samenvatting ---------- */
+function sumView(){
+  const ps=PARS.filter(p=>S.sel.includes(p.id));
+  P.innerHTML=`<div class="playbar"><button class="btn small ghost" id="quit">Terug</button></div><div style="display:grid;gap:12px">${ps.map(p=>`<div class="sum"><div class="eyebrow">${p.id==='V'?'Vaardigheden en practica':'Paragraaf '+p.id}</div><h3>${esc(p.t)}</h3>${SAMEN[p.id]}<div class="acts"><button class="btn small primary" data-go="${p.id}">Begrippen van ${p.id} oefenen</button></div></div>`).join('')}</div>`;
+  bindQuit();P.querySelectorAll('[data-go]').forEach(b=>b.onclick=()=>{S.sel=[b.dataset.go];save();start('learn')});
+}
+/* ---------- volgordes ---------- */
+function volgMenu(){
+  const list=VOLG.filter(v=>S.sel.includes(v.p));const use=list.length?list:VOLG;
+  P.innerHTML=`<div class="playbar"><button class="btn small ghost" id="quit">Terug</button></div><div class="slide">${head('Volgordes','Kies een reeks')}<div class="slide-body"><div class="q">Tik de onderdelen aan in de goede volgorde.</div><div class="seq-list">${use.map((v,i)=>`<button class="btn ghost" data-v="${VOLG.indexOf(v)}"><b>${esc(v.t)}</b> <span class="src">· ${v.p==='V'?'vaardigheden':v.p} · ${v.it.length} stappen</span></button>`).join('')}</div></div></div>`;
+  bindQuit();P.querySelectorAll('[data-v]').forEach(b=>b.onclick=()=>volgPlay(+b.dataset.v));
+}
+function volgPlay(vi){
+  const v=VOLG[vi];let pos=0,err=0;const pool=shuffle(v.it.map((t,i)=>({t,i})));
+  const render=()=>{
+    P.innerHTML=`<div class="playbar"><button class="btn small ghost" id="quit">Andere reeks</button><span class="bar"><i style="width:${Math.round(pos/v.it.length*100)}%"></i></span><span class="count">${pos}/${v.it.length} · ${err} fout</span></div>
+    <div class="slide">${head(esc(v.t),v.p==='V'?'Vaardigheden':'Paragraaf '+v.p)}<div class="slide-body"><div class="q">${esc(v.q)}</div>
+     <ol class="seq-done">${v.it.slice(0,pos).map(t=>`<li>${esc(t)}</li>`).join('')}</ol>
+     ${pos<v.it.length?`<div class="q">Wat komt hierna?</div><div class="seq-pool" id="pool">${pool.filter(o=>o.i>=pos).map(o=>`<button data-i="${o.i}">${esc(o.t)}</button>`).join('')}</div>`:`<div class="fb good"><div class="t">${err===0?'Foutloos!':'Klaar, met '+err+' fout'+(err===1?'':'en')+'.'}</div></div><div class="acts"><button class="btn primary" id="again">Nog een keer</button><button class="btn ghost" id="other">Andere reeks</button></div>`}
+    </div></div>`;
+    $('#quit').onclick=volgMenu;
+    if(pos<v.it.length)P.querySelectorAll('#pool button').forEach(b=>b.onclick=()=>{if(+b.dataset.i===pos){pos++;markDay();S.xp+=1;render()}else{err++;b.classList.remove('shake');void b.offsetWidth;b.classList.add('shake');$('.count').textContent=`${pos}/${v.it.length} · ${err} fout`}});
+    else{if(err===0)confetti();save();$('#again').onclick=()=>volgPlay(vi);$('#other').onclick=volgMenu}
+  };render();
+}
+/* ---------- plant dier beide ---------- */
+function pdNext(){
+  if(G.i>=G.items.length)return endScreen('Plant, dier of beide?',G.ok,G.items.length,G.mist.map(([t,a])=>`<li><b>${esc(t)}</b><span>${a==='beide'?'in plantaardige én dierlijke cellen':'alleen in plantaardige cellen'}</span></li>`).join(''),()=>start('pd'));
+  const [t,a]=G.items[G.i];
+  P.innerHTML=bar(G.i,G.items.length)+`<div class="slide">${head('Plant, dier of beide?','Paragraaf 1.3')}<div class="slide-body"><div class="q">Waar komt dit voor?</div><div class="prompt big">${esc(t)}</div>
+   <div class="buckets"><button data-a="plant">Alleen plant</button><button data-a="dier">Alleen dier</button><button data-a="beide">Beide</button></div><div id="fbox"></div></div></div>`;
+  bindQuit();
+  P.querySelectorAll('.buckets button').forEach(b=>b.onclick=()=>{if(G.lock)return;G.lock=true;const ok=b.dataset.a===a;
+    P.querySelectorAll('.buckets button').forEach(x=>{x.disabled=true;if(x.dataset.a===a)x.classList.add('good');else if(x===b)x.classList.add('bad')});
+    if(ok){G.ok++;S.xp+=2}else G.mist.push([t,a]);markDay();
+    $('#fbox').innerHTML=`<div class="fb ${ok?'good':'bad'}"><div class="t">${ok?'Goed!':'Niet goed.'}</div><div class="tip">${a==='plant'?'Alleen plantencellen hebben een celwand, een grote centrale vacuole en plastiden.':'Dit zit in plantaardige én dierlijke cellen.'}</div></div>`+nextBtn();
+    bindNext(()=>{G.lock=false;G.i++;pdNext()})});
+}
+/* ---------- osmose-lab ---------- */
+function osmoSvg(toon,plant){
+  const w=toon==='hypotoon'?1.15:toon==='hypertoon'?.78:1;
+  const arrow=toon==='hypotoon'?'→':toon==='hypertoon'?'←':'⇄';
+  if(plant)return `<svg viewBox="0 0 120 90" aria-hidden="true"><rect x="10" y="8" width="100" height="74" rx="8" fill="none" stroke="var(--c-wall)" stroke-width="5"/><rect x="${60-42*w}" y="${45-30*w}" width="${84*w}" height="${60*w}" rx="6" fill="var(--c-vac)" stroke="var(--ink)" stroke-width="1.5"/><text x="60" y="51" text-anchor="middle" font-size="16" fill="var(--ink)">${arrow}</text></svg>`;
+  return `<svg viewBox="0 0 120 90" aria-hidden="true"><ellipse cx="60" cy="45" rx="${40*w}" ry="${30*w}" fill="var(--c-ani)" stroke="var(--bad)" stroke-width="2"/><text x="60" y="51" text-anchor="middle" font-size="16" fill="var(--ink)">${arrow}</text></svg>`;
+}
+function osmoNext(){
+  if(G.i>=G.items.length)return endScreen('Osmose-lab',G.ok,G.items.length,G.mist.map(r=>`<li><b>${esc(r[0])} in ${esc(r[1])}</b><span>${esc(r[2])}: ${esc(r[3])}</span></li>`).join(''),()=>start('osmo'));
+  const r=G.items[G.i];const [cel,omg,toon,gev,uit]=r;const plant=/ui|aardappel|sla|wortel|plant/.test(cel);let step=1,okAll=true;
+  const draw=()=>{
+    let body='';
+    if(step===1)body=`<div class="q">De omgeving is ten opzichte van het cytoplasma…</div>${mcButtons(['hypotoon','isotoon','hypertoon'])}`;
+    else{const others=shuffle(OSMO.filter(o=>o[3]!==gev&&o[2]!==toon)).slice(0,2).map(o=>o[3]);G.opts=shuffle([gev,...others]);body=`<div class="fb good"><div class="t">${esc(toon)}</div></div><div class="q">Wat gebeurt er?</div>${mcButtons(G.opts)}`}
+    P.innerHTML=bar(G.i,G.items.length)+`<div class="slide">${head('Osmose-lab','Paragraaf 1.5')}<div class="slide-body"><div class="osmo">${osmoSvg(step===1?'isotoon':toon,plant)}<div><div class="q">Een ${esc(cel)} komt in</div><div class="prompt">${esc(omg)}</div></div></div>${body}<div id="fbox"></div></div></div>`;
+    bindQuit();
+    P.querySelectorAll('.opt').forEach((b,i)=>b.onclick=()=>{
+      if(step===1){const ch=['hypotoon','isotoon','hypertoon'][i];const ci=['hypotoon','isotoon','hypertoon'].indexOf(toon);markOpts(ci,i);
+        if(ch!==toon){okAll=false;$('#fbox').innerHTML=`<div class="fb bad"><div class="t">Het is ${esc(toon)}.</div><div class="tip">${toon==='hypotoon'?'De omgeving heeft een lagere osmotische waarde dan de cel.':toon==='hypertoon'?'De omgeving heeft een hogere osmotische waarde dan de cel.':'De osmotische waarde is gelijk.'}</div></div>`+nextBtn();bindNext(()=>{step=2;draw()})}
+        else{step=2;setTimeout(draw,350)}}
+      else{const ci=G.opts.indexOf(gev);markOpts(ci,i);const ok=i===ci;if(!ok)okAll=false;
+        if(okAll){G.ok++;S.xp+=4}else G.mist.push(r);markDay();
+        $('#fbox').innerHTML=`<div class="fb ${ok?'good':'bad'}"><div class="t">${ok?'Goed!':'Het goede antwoord:'}</div>${ok?'':`<div><b>${esc(gev)}</b></div>`}<div class="tip">${esc(uit)}</div></div>`+nextBtn();bindNext(()=>{G.i++;osmoNext()});save()}
+    });
+  };draw();
+}
+/* ---------- rekenen ---------- */
+function rnd(a){return a[Math.random()*a.length|0]}
+function makeSom(){
+  const t=rnd(['pct','gram','ppm','ppm2','verd','groot','mix']);
+  if(t==='pct'){const T=rnd([50,100,200,250,400,500]),p=rnd([1,2,4,5,8,10,20]);const x=T*p/100;return {q:`Je lost ${fmt(x)} g suiker op in ${fmt(T-x)} g water. Wat is de concentratie in %?`,a:p,u:'%',w:`Totaal = ${fmt(x)} + ${fmt(T-x)} = ${T} g oplossing. ${fmt(x)} / ${T} × 100 = ${fmt(p)}%.`}}
+  if(t==='gram'){const T=rnd([100,200,250,400,500,1000]),p=rnd([0.9,2,5,8,10]);const a=T*p/100;return {q:`Hoeveel gram zout zit er in ${T} g zoutoplossing van ${fmt(p)}%?`,a,u:'g',w:`${T} × ${fmt(p)} / 100 = ${fmt(a)} g.`}}
+  if(t==='ppm'){const p=rnd([0.01,0.02,0.04,0.05,0.1,0.5,1]);const a=p*10000;return {q:`${fmt(p)}% is hoeveel ppm?`,a,u:'ppm',w:`1% = 10 000 ppm, dus ${fmt(p)} × 10 000 = ${fmt(a)} ppm.`}}
+  if(t==='ppm2'){const a=rnd([0.002,0.03,0.04,0.25,0.5]);const v=a*10000;return {q:`${fmt(v)} ppm is hoeveel procent?`,a,u:'%',w:`Deel door 10 000: ${fmt(v)} / 10 000 = ${fmt(a)}%.`}}
+  if(t==='verd'){const c=rnd([8,10,16,20]),n=rnd([1,2,3,4]);const a=c/Math.pow(2,n);return {q:`Je maakt een verdunningsreeks en begint met ${c}%. Je halveert de concentratie ${n} keer. Wat is de concentratie dan?`,a,u:'%',w:`${c} → ${Array.from({length:n},(_,i)=>fmt(c/Math.pow(2,i+1))).join(' → ')}%.`}}
+  if(t==='groot'){const L=rnd([1,1.5,2,3,4,5]),V=rnd([100,200,250,400,500]);const a=L*10000/V;return {q:`Een cel is in een tekening ${fmt(L)} cm groot, bij een vergroting van ${V}×. Hoe groot is de cel in werkelijkheid in µm?`,a,u:'µm',w:`${fmt(L)} cm = ${fmt(L*10)} mm = ${fmt(L*10000)} µm. ${fmt(L*10000)} / ${V} = ${fmt(a)} µm.`}}
+  const z=rnd([2,3,4,5]),s=rnd([1,2,3,5]),wt=rnd([15,20,40,45]);const T=z+s+wt;const a=Math.round(z/T*1000)/10;
+  return {q:`Je mengt ${z} g zout, ${s} g suiker en ${wt} g water. Wat is de concentratie zout in %? (rond af op 1 decimaal)`,a,u:'%',w:`Totaal = ${z} + ${s} + ${wt} = ${T} g. ${z} / ${T} × 100 = ${fmt(a)}%.`,tol:.06};
+}
+function rekenNext(){
+  if(G.i>=G.n){return endScreen('Rekenen',G.ok,G.n,'',()=>start('reken'))}
+  const s=G.cur=makeSom();
+  P.innerHTML=bar(G.i,G.n)+`<div class="slide">${head('Rekenen','Paragraaf 1.5 · vaardigheden')}<div class="slide-body"><div class="prompt">${esc(s.q)}</div>
+   <form class="typerow" id="rf" autocomplete="off"><input id="ri" inputmode="decimal" placeholder="antwoord in ${esc(s.u)}" aria-label="Antwoord"><button class="btn dark" type="submit" id="rb">Controleer</button></form><div id="fbox"></div></div></div>`;
+  bindQuit();const inp=$('#ri');inp.focus();let done=false;
+  $('#rf').onsubmit=e=>{e.preventDefault();if(done){G.i++;return rekenNext()}
+    const v=parseFloat(inp.value.replace(',','.').replace(/[^0-9.\-]/g,''));if(isNaN(v))return;
+    const ok=Math.abs(v-s.a)<=Math.max(s.tol||0,Math.abs(s.a)*0.005+1e-9);done=true;inp.readOnly=true;markDay();
+    if(ok){G.ok++;S.xp+=5;inp.classList.add('okay')}
+    $('#fbox').innerHTML=`<div class="fb ${ok?'good':'bad'}"><div class="t">${ok?'Goed!':'Het antwoord is '+fmt(s.a)+' '+esc(s.u)}</div><div class="tip">${esc(s.w)}</div></div>`;
+    $('#rb').textContent='Verder';$('#rb').focus();save()};
+}
+/* ---------- cel benoemen ---------- */
+const CELLS={
+ plant:{t:'Plantencel',svg:`<rect x="12" y="12" width="376" height="266" rx="18" fill="var(--c-cyto)" stroke="var(--c-wall)" stroke-width="12"/><rect x="24" y="24" width="352" height="242" rx="12" fill="none" stroke="var(--ink)" stroke-width="1.5"/><ellipse cx="225" cy="150" rx="118" ry="88" fill="var(--c-vac)" stroke="var(--ink)" stroke-width="1.5"/><circle cx="78" cy="80" r="34" fill="var(--c-nuc)" stroke="var(--ink)" stroke-width="2.5"/><circle cx="84" cy="74" r="9" fill="var(--ink)" opacity=".5"/>${[[60,215],[95,245],[340,60],[365,120],[300,252],[150,40],[45,150]].map(([x,y])=>`<ellipse cx="${x}" cy="${y}" rx="14" ry="8" fill="var(--c-chl)" stroke="var(--ink)" stroke-width="1"/>`).join('')}<g><ellipse cx="355" cy="215" rx="16" ry="9" fill="var(--c-mito)" stroke="var(--ink)" stroke-width="1"/><path d="M343 215 q4 -6 8 0 t8 0 t8 0" fill="none" stroke="var(--ink)" stroke-width="1"/></g>`,
+  parts:[['celwand',[12,150]],['celmembraan',[24,110]],['cytoplasma',[110,150]],['vacuole',[225,150]],['celkern',[66,90]],['bladgroenkorrel',[340,60]],['mitochondrium',[355,215]]]},
+ dier:{t:'Dierlijke cel',svg:`<ellipse cx="200" cy="148" rx="185" ry="130" fill="var(--c-ani)" stroke="var(--ink)" stroke-width="2.5"/><circle cx="150" cy="130" r="42" fill="var(--c-nuc)" stroke="var(--ink)" stroke-width="2.5"/><circle cx="158" cy="124" r="11" fill="var(--ink)" opacity=".5"/>${[0,1,2].map(i=>`<path d="M${88-i*10} ${80+i*10} q-30 50 0 110" fill="none" stroke="var(--c-er)" stroke-width="5"/>`).join('')}${[[78,95],[66,130],[70,165],[58,110],[60,150]].map(([x,y])=>`<circle cx="${x}" cy="${y}" r="2.6" fill="var(--ink)"/>`).join('')}${[0,1,2,3].map(i=>`<path d="M${255+i*9} 72 q20 ${32} 0 ${64}" fill="none" stroke="var(--c-golgi)" stroke-width="5"/>`).join('')}<circle cx="300" cy="185" r="13" fill="var(--c-lys)" stroke="var(--ink)" stroke-width="1"/><g><ellipse cx="225" cy="225" rx="24" ry="12" fill="var(--c-mito)" stroke="var(--ink)" stroke-width="1"/><path d="M206 225 q5 -8 10 0 t10 0 t10 0" fill="none" stroke="var(--ink)" stroke-width="1"/></g>${[[220,110],[240,160],[205,185],[330,120],[120,215]].map(([x,y])=>`<circle cx="${x}" cy="${y}" r="2.6" fill="var(--ink)"/>`).join('')}`,
+  parts:[['celmembraan',[385,148]],['cytoplasma',[300,240]],['celkern',[150,140]],['ruw ER',[72,135]],['golgisysteem',[275,104]],['lysosoom',[300,185]],['mitochondrium',[225,225]],['ribosoom',[240,160]]]}
+};
+function celNext(){
+  if(G.i>=G.n)return endScreen('Cel benoemen',G.ok,G.n,'',()=>start('cel'));
+  const key=rnd(['plant','dier']);const C=CELLS[key];let part;do{part=rnd(C.parts)}while(G.last===key+part[0]);G.last=key+part[0];
+  const [nm,[x,y]]=part;const lx=x<200?Math.min(x+70,370):Math.max(x-70,30),ly=y<60?y+50:y-40;
+  const opts=shuffle([nm,...shuffle(C.parts.map(p=>p[0]).filter(n=>n!==nm)).slice(0,3)]);
+  P.innerHTML=bar(G.i,G.n)+`<div class="slide">${head('Cel benoemen',C.t)}<div class="slide-body"><div class="cellfig"><svg viewBox="0 0 400 290" role="img" aria-label="Schematische ${C.t.toLowerCase()} met een aanwijzer">${C.svg}<g class="marker"><line x1="${x}" y1="${y}" x2="${lx}" y2="${ly}"/><circle cx="${x}" cy="${y}" r="5"/><circle cx="${lx}" cy="${ly}" r="15" class="pulse"/><text x="${lx}" y="${ly+5}" text-anchor="middle">?</text></g></svg></div><div class="q">Welk deel wijst de roze stip aan?</div>${mcButtons(opts)}<div id="fbox"></div></div></div>`;
+  bindQuit();
+  P.querySelectorAll('.opt').forEach((b,i)=>b.onclick=()=>{const ci=opts.indexOf(nm);markOpts(ci,i);const ok=i===ci;if(ok){G.ok++;S.xp+=3}markDay();
+    $('#fbox').innerHTML=`<div class="fb ${ok?'good':'bad'}"><div class="t">${ok?'Goed!':'Dit is: '+esc(nm)}</div></div>`+nextBtn();bindNext(()=>{G.i++;celNext()});save()});
+}
+/* ---------- examenopgaven ---------- */
+function examView(){
+  P.innerHTML=`<div class="playbar"><button class="btn small ghost" id="quit">Terug</button></div><div style="display:grid;gap:12px">${EXAM.map((x,xi)=>`<div class="exam"><div class="eyebrow">Examenopgave</div><h3>${esc(x.t)}</h3><div class="ctx">${esc(x.ctx)}</div>${x.qs.map((q,qi)=>`<div class="exq"><span class="pt">${q[0]}</span><div><b>${esc(q[1])}</b></div><div><button class="btn small ghost" data-x="${xi}-${qi}">Toon antwoord</button></div><div class="fb good" id="ans${xi}-${qi}" hidden><div class="t">Antwoord</div><div>${esc(q[2])}</div></div></div>`).join('')}</div>`).join('')}</div>`;
+  bindQuit();P.querySelectorAll('[data-x]').forEach(b=>b.onclick=()=>{const a=$('#ans'+b.dataset.x);a.hidden=!a.hidden;b.textContent=a.hidden?'Toon antwoord':'Verberg antwoord';if(!a.hidden){markDay();save()}});
+}
+/* ---------- proeftoets ---------- */
+function toetsStart(){
+  const B=selB(),K=selK();if(B.length<4)return;
+  const qs=[];
+  shuffle(B).slice(0,Math.min(10,B.length)).forEach(b=>{const opts=shuffle([b,...bDistract(b)]);qs.push({type:'b',p:b.p,q:'Welk begrip hoort bij: '+b.d,opts:opts.map(o=>o.alt[0]),a:b.alt[0],e:b.alt[0]+': '+b.d})});
+  shuffle(K).slice(0,Math.min(8,K.length)).forEach(k=>qs.push({type:'k',p:k.p,q:k.q,opts:shuffle([k.a,...k.o]),a:k.a,e:k.e}));
+  if(S.sel.includes('1.5')||S.sel.includes('V')){for(let i=0;i<2;i++){const s=makeSom();qs.push({type:'r',p:'1.5',q:s.q,a:s.a,u:s.u,e:s.w,tol:s.tol})}}
+  G={m:'toets',qs:shuffle(qs),i:0,score:0,wrong:[]};show('play');toetsNext();
+}
+function toetsNext(){
+  if(G.i>=G.qs.length){const n=G.qs.length,c=Math.round((1+9*G.score/n)*10)/10;if(c>S.bestToets)S.bestToets=c;if(c>=7.5)confetti();S.xp+=G.score*3;markDay();save();
+    P.innerHTML=`<div class="slide">${head('Proeftoets','Uitslag')}<div class="slide-body"><div><div class="q">Je cijfer</div><div class="big" style="color:${c>=5.5?'var(--good)':'var(--bad)'}">${fmt(c)}</div><div class="count">${G.score} van ${n} goed</div></div>
+     ${G.wrong.length?`<div><div class="q" style="margin-bottom:6px">Dit ging fout</div><ul class="mist">${G.wrong.map(q=>`<li><b>${esc(q.q)}</b><span>Goed: ${esc(q.type==='r'?fmt(q.a)+' '+q.u:q.a)} · ${esc(q.e)}</span></li>`).join('')}</ul></div>`:''}
+     <div class="acts"><button class="btn primary" id="again">Nieuwe proeftoets</button><button class="btn ghost" id="home2">Naar start</button></div></div></div>`;
+    $('#again').onclick=toetsStart;$('#home2').onclick=goHome;return}
+  const q=G.qs[G.i];
+  const body=q.type==='r'?`<form class="typerow" id="rf" autocomplete="off"><input id="ri" inputmode="decimal" placeholder="antwoord in ${esc(q.u)}" aria-label="Antwoord"><button class="btn dark" type="submit">Antwoord</button></form>`:mcButtons(q.opts);
+  P.innerHTML=bar(G.i,G.qs.length)+`<div class="slide">${head('Proeftoets','Vraag '+(G.i+1)+' · '+(q.p==='V'?'vaardigheden':'par. '+q.p))}<div class="slide-body"><div class="prompt">${esc(q.q)}</div>${body}<div class="src">Je ziet de antwoorden aan het eind.</div></div></div>`;
+  bindQuit();
+  const answer=ok=>{if(ok)G.score++;else G.wrong.push(q);G.i++;toetsNext()};
+  if(q.type==='r'){$('#ri').focus();$('#rf').onsubmit=e=>{e.preventDefault();const v=parseFloat($('#ri').value.replace(',','.').replace(/[^0-9.\-]/g,''));if(isNaN(v))return;answer(Math.abs(v-q.a)<=Math.max(q.tol||0,Math.abs(q.a)*0.005+1e-9))}}
+  else P.querySelectorAll('.opt').forEach((b,i)=>b.onclick=()=>answer(q.opts[i]===q.a));
+}
+/* ---------- blitz ---------- */
+function blitzRender(){
+  P.innerHTML=`<div class="playbar"><button class="btn small ghost" id="quit">Stoppen</button><span class="bar"><i id="tbar" style="width:100%"></i></span><span class="timer" id="clock">60</span></div>
+  <div class="slide">${head('Blitz 60','<span id="combo"></span>')}<div class="slide-body"><div style="display:flex;justify-content:space-between;align-items:baseline"><span class="q">Score</span><span class="big" id="score" style="font-size:44px">0</span></div><div id="bq"></div></div></div>`;
+  bindQuit();
+}
+function blitzNext(){
+  const rest=G.pool.filter(x=>x!==G.last);const b=G.b=pick(rest.length?rest:G.pool);G.last=b;G.lock=false;
+  const rev=Math.random()<.5;const opts=G.opts=shuffle([b,...bDistract(b)]);G.rev=rev;
+  $('#bq').innerHTML=`<div class="q">${rev?'Wat betekent dit?':'Welk begrip is dit?'}</div><div class="prompt ${rev?'big':''}">${esc(rev?b.alt[0]:b.d)}</div>`+mcButtons(opts.map(o=>rev?o.d:o.alt[0]));
+  P.querySelectorAll('#bq .opt').forEach((btn,i)=>btn.onclick=()=>blitzAnswer(i));
+}
+function blitzAnswer(i){
+  if(G.lock)return;G.lock=true;const b=G.b,ok=G.opts[i]===b;G.n++;markOpts(G.opts.indexOf(b),i);
+  if(ok){G.streak++;G.ok++;const m=Math.min(3,1+Math.floor(G.streak/5));G.score+=m;const sc=$('#score');sc.textContent=G.score;sc.classList.remove('pop');void sc.offsetWidth;sc.classList.add('pop');setTimeout(()=>G&&G.m==='blitz'&&blitzNext(),280)}
+  else{G.streak=0;G.end-=3000;G.mist.add(b);bs(b).x++;markDay();setTimeout(()=>G&&G.m==='blitz'&&blitzNext(),1100)}
+  const m=Math.min(3,1+Math.floor(G.streak/5));$('#combo').innerHTML=m>1?`<span class="combo">combo ×${m}</span>`:(G.streak?`reeks ${G.streak}`:'');
+}
+function blitzTick(){const left=Math.max(0,G.end-performance.now());$('#clock').textContent=Math.ceil(left/1000);$('#clock').classList.toggle('low',left<10000);$('#tbar').style.width=(left/600)+'%';
+  if(left<=0){clearInterval(G.timer);G.timer=null;const rec=G.score>S.bestBlitz;if(rec){S.bestBlitz=G.score;confetti()}S.xp+=G.score;markDay();save();const mist=[...G.mist];
+    P.innerHTML=`<div class="slide">${head('Blitz 60','Tijd is om')}<div class="slide-body"><div><div class="q">${rec?'Nieuw record!':'Score'}</div><div class="big">${G.score}</div><div class="count">${G.ok} van ${G.n} goed · record ${S.bestBlitz}</div></div>
+    ${mist.length?`<div><div class="q" style="margin-bottom:6px">Deze gingen fout</div><ul class="mist">${mist.map(b=>`<li><b>${esc(b.alt[0])}</b><span>${esc(b.d)}</span></li>`).join('')}</ul></div>`:''}
+    <div class="acts"><button class="btn primary" id="again">Nog een keer</button><button class="btn ghost" id="home2">Naar start</button></div></div></div>`;
+    $('#again').onclick=()=>start('blitz');$('#home2').onclick=goHome;$('#again').focus()}}
+/* ---------- toetsenbord ---------- */
+document.addEventListener('keydown',e=>{
+  if(P.hidden||!G)return;const inInput=e.target.tagName==='INPUT';
+  if(!inInput&&/^[1-4]$/.test(e.key)){
+    if(G.m==='flash'){const b=e.key==='1'?$('#no'):e.key==='2'?$('#yes'):null;if(b&&!$('#rate').hidden)b.click();return}
+    const b=P.querySelectorAll('.opt')[+e.key-1];if(b&&!b.disabled)b.click();return}
+  if(G.m==='flash'&&(e.key===' '||e.key==='Enter')&&!inInput){e.preventDefault();if($('#rate')&&$('#rate').hidden)G.flip&&G.flip()}
+});
+/* ---------- confetti ---------- */
+function confetti(){
+  if(matchMedia('(prefers-reduced-motion: reduce)').matches)return;
+  const c=$('#conf'),x=c.getContext('2d');c.width=innerWidth;c.height=innerHeight;
+  const cols=['#2E8B4E','#C2386A','#E0A93C','#7A93C9','#5CC383'];
+  const ps=Array.from({length:110},()=>({x:c.width/2,y:c.height*.35,vx:(Math.random()-.5)*14,vy:-Math.random()*12-4,r:Math.random()*6+4,c:pick(cols),a:Math.random()*6}));
+  let f=0;(function loop(){x.clearRect(0,0,c.width,c.height);ps.forEach(p=>{p.x+=p.vx;p.y+=p.vy;p.vy+=.4;p.vx*=.99;p.a+=.2;x.save();x.translate(p.x,p.y);x.rotate(p.a);x.fillStyle=p.c;x.fillRect(-p.r/2,-p.r/4,p.r,p.r/2);x.restore()});if(++f<110)requestAnimationFrame(loop);else x.clearRect(0,0,c.width,c.height)})();
+}
+renderHome();
+</script>
+</body>
+</html>

@@ -1,0 +1,47 @@
+<!doctype html>
+<html lang="nl"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover"><meta name="robots" content="noindex">
+<title>Leerhoek</title>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Fredoka:wght@500..700&family=Atkinson+Hyperlegible:wght@400;700&display=swap">
+<style>
+:root{--bg:#F3F1EC;--surface:#fff;--ink:#1D2433;--muted:#5E6577;--line:#DCD8CF;--en:#F2B400;--bio:#2E8B4E;--fr:#E0483E;--accent:#2E5AAC}
+@media (prefers-color-scheme:dark){:root{--bg:#12151C;--surface:#1B2030;--ink:#E8EAF0;--muted:#9AA1B2;--line:#2C3346;color-scheme:dark}}
+*{box-sizing:border-box}body{margin:0;background:var(--bg);color:var(--ink);font-family:"Atkinson Hyperlegible",system-ui,sans-serif}
+.wrap{max-width:720px;margin:0 auto;padding:28px 16px 48px}
+h1{font-family:Fredoka,system-ui,sans-serif;font-size:clamp(34px,8vw,52px);margin:0 0 4px;line-height:1}
+.sub{color:var(--muted);margin:0 0 24px}
+h2{font-family:Fredoka,system-ui,sans-serif;font-size:22px;margin:26px 0 10px}
+.grid{display:grid;gap:12px}
+a.card{display:flex;gap:14px;align-items:center;text-decoration:none;color:inherit;background:var(--surface);border:2px solid var(--line);border-radius:16px;padding:14px 16px;border-left:10px solid var(--c)}
+a.card:hover{border-color:var(--ink);border-left-color:var(--c)}
+.card b{font-family:Fredoka,system-ui,sans-serif;font-size:20px;display:block}
+.card span{color:var(--muted);font-size:14.5px}
+.ic{flex:none;width:46px;height:46px;border-radius:12px;background:var(--c);color:#fff;display:grid;place-items:center;font:700 20px Fredoka,system-ui}
+#gate{background:var(--surface);border:2px solid var(--ink);border-radius:16px;padding:18px;display:grid;gap:10px;max-width:420px}
+#gate input{font:inherit;font-size:18px;padding:10px 12px;border-radius:10px;border:2px solid var(--line);background:var(--bg);color:var(--ink)}
+#gate button{font:700 16px system-ui;padding:11px;border-radius:10px;border:0;background:var(--ink);color:var(--bg);cursor:pointer}
+.err{color:var(--fr);font-weight:700;min-height:1.2em}
+.out{background:none;border:0;color:var(--muted);text-decoration:underline;cursor:pointer;margin-top:28px;font:inherit}
+[hidden]{display:none!important}
+</style></head><body><div class="wrap">
+<h1>Leerhoek</h1><p class="sub">Oefenen voor de toetsen. Je voortgang wordt bewaard op je eigen telefoon of laptop.</p>
+<form id="gate" hidden><label for="pw"><b>Wachtwoord</b></label><input id="pw" type="password" autocomplete="current-password"><button type="submit">Naar binnen</button><div class="err" id="err"></div></form>
+<div id="menu" hidden>
+<h2>Ben</h2><div class="grid">
+<a class="card" style="--c:var(--en)" href="engels.html"><span class="ic">EN</span><div><b>Engels · Unit 2 &amp; 3</b><span>Woordjes, grammatica, Blitz, Stroomdraad, Vliegroute, Schiettent</span></div></a>
+<a class="card" style="--c:var(--bio)" href="biologie.html"><span class="ic">BI</span><div><b>Biologie · Thema 1</b><span>Begrippen, cellen, osmose, rekenen, proeftoets</span></div></a>
+</div>
+<h2>Dana</h2><div class="grid">
+<a class="card" style="--c:var(--fr)" href="frans.html"><span class="ic">FR</span><div><b>Frans · Chapitre 1</b><span>Woordjes, luistertoets, lezen, grammatica, proeftoets</span></div></a>
+<a class="card" style="--c:#2563eb" href="frans-copilot.html"><span class="ic">FR</span><div><b>Frans · versie 2</b><span>Flashcards, woordenlijst, chattaal, luistertoets, eindtoets</span></div></a>
+</div>
+<button class="out" id="out">Uitloggen</button></div>
+</div>
+<script>
+const H='53a39a231246354922d1b5f7242c1639ebdc75da84bde2e766eed704f5a89cf8';
+async function sha(s){const b=await crypto.subtle.digest('SHA-256',new TextEncoder().encode(s));return [...new Uint8Array(b)].map(x=>x.toString(16).padStart(2,'0')).join('')}
+function ok(){try{return localStorage.getItem('leren-ok')===H}catch(e){return false}}
+function show(){const o=ok();document.getElementById('gate').hidden=o;document.getElementById('menu').hidden=!o;if(!o)document.getElementById('pw').focus()}
+document.getElementById('gate').onsubmit=async e=>{e.preventDefault();const h=await sha(document.getElementById('pw').value.trim());if(h===H){try{localStorage.setItem('leren-ok',H)}catch(e){}show()}else document.getElementById('err').textContent='Dat wachtwoord klopt niet.'};
+document.getElementById('out').onclick=()=>{try{localStorage.removeItem('leren-ok')}catch(e){}show()};
+show();
+</script></body></html>

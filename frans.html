@@ -1,0 +1,983 @@
+<!doctype html>
+<html lang="nl">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<meta name="robots" content="noindex">
+<script>(function(){try{if(localStorage.getItem('leren-ok')!=='53a39a231246354922d1b5f7242c1639ebdc75da84bde2e766eed704f5a89cf8'){location.replace('index.html')}}catch(e){location.replace('index.html')}})();</script>
+<title>Frans Chapitre 1 Trainer</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Fredoka:wght@500..700&family=Atkinson+Hyperlegible:wght@400;700&family=IBM+Plex+Mono:wght@500&display=swap">
+<style>
+/* Layout: chatscherm. Kaarten als berichten, etiketten als hashtags. */
+:root{
+  --bg:#EEF3F6; --surface:#FFFFFF; --ink:#142A3A; --muted:#566A78; --line:#D2DDE4; --chip:#E1EAF0;
+  --green:#1C7C8C; --green-soft:#DAF0F2; --pink:#E0483E; --pink-soft:#FCE3E0; --amber:#A86A12; --amber-soft:#FBEFD9;
+  --good:#2E8B4E; --good-bg:#DDF0E2; --bad:#C2413A; --bad-bg:#FADFDD;
+  --c-wall:#7BAA6A; --c-cyto:#EEF6E4; --c-vac:#E4D9F2; --c-nuc:#C9B4E0; --c-chl:#3E9B48; --c-mito:#C98A4B; --c-er:#7A93C9; --c-golgi:#D07AA0; --c-lys:#E0A93C; --c-ani:#FBE9E4;
+  --f-display:"Fredoka",system-ui,sans-serif;
+  --f-body:"Atkinson Hyperlegible",system-ui,-apple-system,"Segoe UI",sans-serif;
+  --f-mono:"IBM Plex Mono",ui-monospace,Menlo,Consolas,monospace;
+}
+@media (prefers-color-scheme: dark){:root:not([data-theme="light"]){
+  --bg:#0E1820; --surface:#16242F; --ink:#E3ECF2; --muted:#98ABB8; --line:#28394A; --chip:#1F3040;
+  --green:#4FC1CF; --green-soft:#16343A; --pink:#FF7A6E; --pink-soft:#3B1F1D; --amber:#E9B25A; --amber-soft:#33281A;
+  --good:#5CC383; --good-bg:#183020; --bad:#F07870; --bad-bg:#3A1C1B;
+  --c-wall:#5E8F4E; --c-cyto:#20321F; --c-vac:#3A3150; --c-nuc:#5E4A7E; --c-chl:#56B55F; --c-mito:#B47A40; --c-er:#6C84BE; --c-golgi:#C26E94; --c-lys:#C99230; --c-ani:#3A2622; color-scheme:dark}}
+:root[data-theme="dark"]{
+  --bg:#0E1820; --surface:#16242F; --ink:#E3ECF2; --muted:#98ABB8; --line:#28394A; --chip:#1F3040;
+  --green:#4FC1CF; --green-soft:#16343A; --pink:#FF7A6E; --pink-soft:#3B1F1D; --amber:#E9B25A; --amber-soft:#33281A;
+  --good:#5CC383; --good-bg:#183020; --bad:#F07870; --bad-bg:#3A1C1B;
+  --c-wall:#5E8F4E; --c-cyto:#20321F; --c-vac:#3A3150; --c-nuc:#5E4A7E; --c-chl:#56B55F; --c-mito:#B47A40; --c-er:#6C84BE; --c-golgi:#C26E94; --c-lys:#C99230; --c-ani:#3A2622; color-scheme:dark}
+*{box-sizing:border-box}
+body{background:var(--bg);color:var(--ink);font-family:var(--f-body);font-size:16px;line-height:1.5;margin:0}
+.wrap{max-width:880px;margin:0 auto;padding-inline:16px;padding-block:20px 56px}
+button{font:inherit;color:inherit;cursor:pointer}
+button:focus-visible,input:focus-visible{outline:3px solid var(--pink);outline-offset:2px}
+h1,h2,h3{font-family:var(--f-display);margin:0;text-wrap:balance}
+.eyebrow{font-family:var(--f-mono);font-size:12px;letter-spacing:.12em;text-transform:uppercase;color:var(--muted)}
+.top{display:flex;flex-wrap:wrap;gap:16px;align-items:flex-end;justify-content:space-between;padding-bottom:16px;border-bottom:2px solid var(--ink)}
+h1{font-size:clamp(30px,6.5vw,48px);font-weight:800;line-height:1;letter-spacing:-.02em}
+h1 em{font-style:normal;color:var(--green)}
+.stats{display:flex;gap:8px;flex-wrap:wrap}
+.stat{background:var(--surface);border:1px solid var(--line);border-radius:10px;padding:6px 12px;min-width:86px}
+.stat b{display:block;font-family:var(--f-display);font-size:22px;font-weight:800;line-height:1.15;font-variant-numeric:tabular-nums}
+.stat small{font-family:var(--f-mono);font-size:10.5px;color:var(--muted);text-transform:uppercase;letter-spacing:.08em}
+.banner{margin-top:14px;display:flex;gap:8px;flex-wrap:wrap}
+.pill{font-size:13.5px;font-weight:700;padding:4px 12px;border-radius:999px;background:var(--pink-soft);color:var(--pink)}
+.pill.g{background:var(--green-soft);color:var(--green)}
+section{margin-top:26px}
+.sec-head{display:flex;flex-wrap:wrap;align-items:baseline;justify-content:space-between;gap:8px;margin-bottom:12px}
+h2{font-size:21px;font-weight:800}
+.acts{display:flex;gap:8px;flex-wrap:wrap;align-items:center}
+.btn{border:2px solid var(--ink);background:var(--surface);border-radius:10px;padding:10px 16px;font-weight:700}
+.btn.primary{background:var(--green);border-color:var(--green);color:var(--surface)}
+.btn.dark{background:var(--ink);border-color:var(--ink);color:var(--bg)}
+.btn.ghost{border-color:var(--line)}
+.btn.small{padding:6px 12px;font-size:14px}
+.btn:disabled{opacity:.4;cursor:not-allowed}
+/* paragraaf-chips */
+.pars{display:grid;grid-template-columns:repeat(auto-fill,minmax(190px,1fr));gap:10px}
+.par{position:relative;text-align:left;background:var(--surface);border:2px solid var(--line);border-radius:12px;padding:10px 12px 12px 18px;display:flex;flex-direction:column;gap:4px;min-width:0;overflow:hidden}
+.par::before{content:"";position:absolute;left:0;top:0;bottom:0;width:7px;background:var(--line)}
+.par[aria-pressed="true"]{border-color:var(--ink)}
+.par[aria-pressed="true"]::before{background:var(--pink)}
+.par .no{font-family:var(--f-mono);font-size:12px;color:var(--muted)}
+.par .no b{font-family:var(--f-display);font-size:22px;color:var(--ink);margin-right:4px}
+.par .nm{font-weight:700;font-size:14.5px;line-height:1.25}
+.bar{height:6px;border-radius:3px;background:var(--chip);overflow:hidden}
+.bar i{display:block;height:100%;background:var(--green);border-radius:3px;transition:width .4s}
+.par .src{font-size:12px}
+.src{font-size:13px;color:var(--muted)}
+/* modus-kaarten als objectglaasjes */
+.modes{display:grid;grid-template-columns:repeat(auto-fill,minmax(250px,1fr));gap:12px}
+.mode{position:relative;text-align:left;background:var(--surface);border:2px solid var(--ink);border-radius:14px;padding:14px 16px 14px 58px;min-width:0;display:flex;flex-direction:column;gap:4px}
+.mode .lab{position:absolute;left:0;top:0;bottom:0;width:44px;background:var(--chip);border-right:2px dashed var(--line);display:grid;place-items:center;font-family:var(--f-mono);font-size:12px;color:var(--muted);writing-mode:vertical-rl;transform:rotate(180deg);letter-spacing:.12em;text-transform:uppercase}
+.mode.main{background:var(--ink);color:var(--bg)}
+.mode.main .lab{background:var(--pink);color:#fff;border-color:transparent}
+.mode.main p{color:var(--bg);opacity:.8}
+.mode h3{font-size:19px;font-weight:800}
+.mode p{margin:0;font-size:14px;color:var(--muted)}
+.mode .tag{align-self:flex-start;font-family:var(--f-mono);font-size:10.5px;text-transform:uppercase;letter-spacing:.08em;background:var(--amber-soft);color:var(--amber);padding:2px 7px;border-radius:5px}
+.mode:hover{transform:translateY(-2px)}
+details.tips{background:var(--surface);border:1px solid var(--line);border-radius:12px;padding:12px 16px}
+details.tips summary{font-weight:700;cursor:pointer}
+details.tips ul{margin:10px 0 4px;padding-left:20px;display:grid;gap:6px}
+/* spel */
+.playbar{display:flex;align-items:center;gap:12px;margin-bottom:16px}
+.playbar .bar{flex:1;height:10px;border-radius:5px}
+.playbar .bar i{background:var(--pink)}
+.count{font-family:var(--f-mono);font-size:13px;color:var(--muted);font-variant-numeric:tabular-nums;white-space:nowrap}
+.slide{background:var(--surface);border:2px solid var(--ink);border-radius:18px;overflow:hidden}
+.slide-head{display:flex;justify-content:space-between;gap:8px;flex-wrap:wrap;padding:9px 18px;background:var(--pink);color:#fff;font-family:var(--f-mono);font-size:12px;letter-spacing:.1em;text-transform:uppercase}
+.slide-body{padding:20px 18px;display:flex;flex-direction:column;gap:14px}
+.q{font-size:15px;color:var(--muted);font-weight:700}
+.prompt{font-family:var(--f-display);font-weight:700;font-size:clamp(20px,4.6vw,27px);line-height:1.25;overflow-wrap:anywhere}
+.prompt.big{font-size:clamp(28px,7vw,42px);font-weight:800}
+.opts{display:grid;gap:10px}
+.opt{display:flex;align-items:center;gap:12px;text-align:left;border:2px solid var(--line);background:var(--bg);border-radius:12px;padding:12px 14px;font-size:16.5px;font-weight:700;min-width:0}
+.opt .k{flex:none;width:28px;height:28px;border-radius:8px;display:grid;place-items:center;font-family:var(--f-mono);font-size:13px;background:var(--chip);color:var(--muted)}
+.opt:hover:not(:disabled){border-color:var(--ink)}
+.opt:disabled{cursor:default}
+.opt.good{background:var(--good-bg);border-color:var(--good)}.opt.good .k{background:var(--good);color:var(--surface)}
+.opt.bad{background:var(--bad-bg);border-color:var(--bad)}.opt.bad .k{background:var(--bad);color:var(--surface)}
+.opt.dim{opacity:.5}
+.typerow{display:flex;gap:8px;flex-wrap:wrap}
+.typerow input{flex:1 1 220px;min-width:0;font:inherit;font-size:19px;font-weight:700;padding:12px 14px;border-radius:12px;border:2px solid var(--line);background:var(--bg);color:var(--ink)}
+.typerow input.okay{border-color:var(--good)}
+.pattern{font-family:var(--f-mono);font-size:17px;letter-spacing:.16em;color:var(--amber);overflow-wrap:anywhere}
+.fb{border-radius:12px;padding:12px 14px;display:flex;flex-direction:column;gap:4px}
+.fb.good{background:var(--good-bg)}.fb.bad{background:var(--bad-bg)}.fb.warn{background:var(--amber-soft)}
+.fb .t{font-weight:700}.fb.good .t{color:var(--good)}.fb.bad .t{color:var(--bad)}.fb.warn .t{color:var(--amber)}
+.fb .ans{font-family:var(--f-display);font-size:21px;font-weight:800}
+.tip{font-size:14.5px}
+.foot{display:flex;justify-content:flex-end}
+.big{font-family:var(--f-display);font-size:clamp(48px,12vw,80px);font-weight:800;line-height:1}
+.mist{display:grid;gap:6px;margin:0;padding:0;list-style:none}
+.mist li{display:flex;flex-direction:column;gap:2px;border-bottom:1px solid var(--line);padding:6px 0}
+.mist li span{color:var(--muted);font-size:14px}
+/* flip */
+.flip{perspective:1200px;cursor:pointer}
+.flip-in{position:relative;min-height:220px;transition:transform .45s;transform-style:preserve-3d}
+.flip.on .flip-in{transform:rotateY(180deg)}
+.face{position:absolute;inset:0;backface-visibility:hidden;-webkit-backface-visibility:hidden;display:flex;flex-direction:column;justify-content:center;gap:10px}
+.face.back{transform:rotateY(180deg)}
+/* volgorde */
+.seq-done{display:grid;gap:6px;counter-reset:s;margin:0;padding:0;list-style:none}
+.seq-done li{counter-increment:s;display:flex;gap:10px;align-items:center;background:var(--good-bg);border-radius:10px;padding:8px 12px;font-weight:700}
+.seq-done li::before{content:counter(s);flex:none;width:26px;height:26px;border-radius:50%;background:var(--good);color:var(--surface);display:grid;place-items:center;font-family:var(--f-mono);font-size:12px}
+.seq-pool{display:flex;flex-wrap:wrap;gap:8px}
+.seq-pool button{border:2px solid var(--line);background:var(--bg);border-radius:10px;padding:9px 12px;font-weight:700;text-align:left}
+.seq-pool button:hover{border-color:var(--ink)}
+.seq-list{display:grid;gap:8px}
+.seq-list button{text-align:left}
+/* buckets */
+.buckets{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:8px}
+.buckets button{border:2px solid var(--ink);border-radius:12px;padding:14px 6px;font-weight:800;font-size:16px;background:var(--surface)}
+.buckets button.good{background:var(--good-bg);border-color:var(--good)}
+.buckets button.bad{background:var(--bad-bg);border-color:var(--bad)}
+/* osmose */
+.osmo{display:flex;gap:14px;align-items:center;flex-wrap:wrap}
+.osmo svg{flex:none;width:120px;height:90px}
+.chipline{display:flex;gap:8px;flex-wrap:wrap}
+/* cel */
+.cellfig{background:var(--bg);border-radius:12px;padding:8px}
+.cellfig svg{display:block;width:100%;height:auto;max-height:340px}
+.marker circle{fill:var(--pink)}
+.marker text{fill:#fff;font-family:var(--f-mono);font-size:15px;font-weight:700}
+.marker line{stroke:var(--pink);stroke-width:2.5}
+.pulse{animation:pulse 1.2s ease-in-out infinite}
+@keyframes pulse{50%{opacity:.35}}
+/* samenvatting */
+.sum{background:var(--surface);border:1px solid var(--line);border-left:6px solid var(--green);border-radius:12px;padding:14px 16px}
+.sum h3{font-size:19px;margin-bottom:6px}
+.sum p{margin:0 0 8px;max-width:72ch}
+.exam{background:var(--surface);border:1px solid var(--line);border-radius:12px;padding:14px 16px;display:flex;flex-direction:column;gap:10px}
+.exam .ctx{background:var(--bg);border-radius:8px;padding:10px 12px;font-size:14.5px}
+.exq{border-top:1px dashed var(--line);padding-top:10px;display:flex;flex-direction:column;gap:8px}
+.exq .pt{font-family:var(--f-mono);font-size:12px;color:var(--pink)}
+.shake{animation:shake .35s}@keyframes shake{25%{transform:translateX(-6px)}75%{transform:translateX(6px)}}
+.pop{animation:pop .3s}@keyframes pop{50%{transform:scale(1.25)}}
+.timer{font-family:var(--f-display);font-size:32px;font-weight:800;font-variant-numeric:tabular-nums;min-width:56px;text-align:right}
+.timer.low{color:var(--bad)}
+.combo{font-family:var(--f-mono);font-size:12px;background:var(--amber);color:var(--surface);padding:2px 8px;border-radius:6px}
+canvas#conf{position:fixed;inset:0;pointer-events:none;z-index:9}
+@media (prefers-reduced-motion: reduce){*{transition:none!important;animation:none!important}}
+.tagR{display:inline-block;font-family:var(--f-mono);font-size:10.5px;background:var(--chip);color:var(--muted);padding:1px 6px;border-radius:5px;vertical-align:middle}
+.acc{display:flex;gap:6px;flex-wrap:wrap}
+.acc button{border:1.5px solid var(--line);background:var(--surface);border-radius:8px;min-width:38px;padding:6px 8px;font-size:17px;font-weight:700}
+.dir{display:inline-flex;background:var(--chip);border-radius:10px;padding:3px;gap:2px;flex-wrap:wrap}
+.dir button{border:0;background:none;padding:7px 12px;border-radius:8px;font-weight:700;font-size:14px;color:var(--muted)}
+.dir button[aria-pressed="true"]{background:var(--surface);color:var(--ink);box-shadow:0 1px 2px rgba(0,0,0,.12)}
+.tiles{display:flex;flex-wrap:wrap;gap:8px}
+.tiles button{border:2px solid var(--line);background:var(--bg);border-radius:10px;padding:8px 12px;font-weight:700;font-size:17px}
+.tiles button:hover{border-color:var(--ink)}
+.built{min-height:52px;border:2px dashed var(--line);border-radius:12px;padding:8px;display:flex;flex-wrap:wrap;gap:6px;align-items:center}
+.built span{background:var(--green-soft);color:var(--ink);border-radius:8px;padding:6px 10px;font-weight:700;font-size:17px;cursor:pointer}
+.player{display:flex;flex-wrap:wrap;gap:10px;align-items:center;background:var(--bg);border-radius:12px;padding:12px}
+.player .big-play{width:64px;height:64px;border-radius:50%;border:0;background:var(--pink);color:#fff;font-size:26px;display:grid;place-items:center}
+.player .big-play:disabled{background:var(--line)}
+.plays{font-family:var(--f-mono);font-size:13px;color:var(--muted)}
+.qblock{display:grid;gap:14px}
+.qitem{display:flex;flex-direction:column;gap:6px}
+.qitem .opts{gap:6px}
+.qitem .opt{padding:9px 12px;font-size:15.5px}
+.opt.sel{border-color:var(--ink);background:var(--green-soft)}
+.trans{display:grid;gap:8px}
+.tline{border-radius:10px;padding:8px 12px;background:var(--bg)}
+.tline.now{outline:3px solid var(--pink)}
+.tline b{color:var(--green)}
+.tline .nl{color:var(--muted);font-size:14px;margin-top:2px}
+.reading{background:var(--bg);border-radius:12px;padding:12px 14px;max-height:none}
+.reading p{margin:0 0 10px;max-width:70ch}
+.gt{border-collapse:collapse;font-size:14.5px}
+.gt th,.gt td{border:1px solid var(--line);padding:5px 9px;text-align:left}
+.gt th{background:var(--chip)}
+.spk{border:0;background:var(--chip);border-radius:8px;padding:2px 8px;font-size:14px;margin-left:6px;vertical-align:middle}
+</style>
+</head>
+<body>
+<a href="index.html" style="position:fixed;right:12px;bottom:calc(12px + env(safe-area-inset-bottom,0px));z-index:20;background:#142A3A;color:#fff;text-decoration:none;font:700 14px system-ui,sans-serif;padding:9px 14px;border-radius:999px;box-shadow:0 2px 8px rgba(0,0,0,.25)">← Alle vakken</a>
+<canvas id="conf"></canvas>
+<div class="wrap">
+<main id="home">
+  <header class="top">
+    <div>
+      <div class="eyebrow">Grandes Lignes · vwo 3 · Chapitre 1</div>
+      <h1>Génération <em>like!</em></h1>
+    </div>
+    <div class="stats">
+      <div class="stat"><b id="stKnown">0</b><small>woorden</small></div>
+      <div class="stat"><b id="stStreak">0</b><small>dagen op rij</small></div>
+      <div class="stat"><b id="stXp">0</b><small>punten</small></div>
+    </div>
+  </header>
+  <div class="banner"><span class="pill">#jepartage</span><span class="pill g">Mon BFF et moi</span></div>
+
+  <section>
+    <div class="sec-head"><h2>1. Woordjes</h2><div class="acts"><button class="btn small primary" id="selAll">Alles selecteren</button><button class="btn small ghost" id="selNone">Niets</button></div></div>
+    <div class="pars" id="pars"></div>
+    <div class="sec-head" style="margin-top:12px"><span class="src" id="selLine"></span>
+      <div class="dir" id="dirSeg"><button data-d="nlfr">NL → FR</button><button data-d="mix">Gemengd</button><button data-d="frnl">FR → NL</button></div></div>
+    <div class="modes">
+      <button class="mode main" data-m="learn"><span class="lab">Leren</span><span class="tag">Hiermee leer je het snelst</span><h3>Woorden inprenten</h3><p>Eerst kiezen, daarna zelf typen, met accenten. Fouten komen terug tot je ze kent.</p></button>
+      <button class="mode" data-m="flash"><span class="lab">Kaart</span><h3>Flitskaarten</h3><p>Woord zien, bedenken, omdraaien en horen hoe je het uitspreekt.</p></button>
+      <button class="mode" data-m="blitz"><span class="lab">60 s</span><h3>Blitz 60</h3><p>Zoveel mogelijk woorden goed in 60 seconden. Fout kost 3 seconden. <span id="bestBlitz"></span></p></button>
+    </div>
+  </section>
+
+  <section>
+    <div class="sec-head"><h2>2. Luisteren</h2><span class="src">Zet je geluid aan</span></div>
+    <div class="modes">
+      <button class="mode main" data-m="listen"><span class="lab">Écouter</span><span class="tag">Luistertoets</span><h3>Luistertoets</h3><p>Vier fragmenten met vragen. Maximaal twee keer luisteren, daarna nakijken met tekst en vertaling.</p></button>
+      <button class="mode" data-m="dict"><span class="lab">Dictee</span><h3>Verstaan en schrijven</h3><p>Je hoort een woord of zin in het Frans. Typ wat je hoort.</p></button>
+    </div>
+  </section>
+
+  <section>
+    <div class="sec-head"><h2>3. Lezen, zinnen en grammatica</h2></div>
+    <div class="modes">
+      <button class="mode" data-m="read"><span class="lab">Lire</span><h3>Leesteksten</h3><p>Drie nieuwe teksten in de stijl van het boek, met vragen.</p></button>
+      <button class="mode" data-m="phr"><span class="lab">Phrases</span><h3>Phrases-clés</h3><p>De vaste zinnen uit C en G: zinnen bouwen of zelf typen.</p></button>
+      <button class="mode" data-m="adj"><span class="lab">Gram D</span><h3>Bijvoeglijk naamwoord</h3><p>Bonne, belle, sportive, italienne… en staat het voor of achter?</p></button>
+      <button class="mode" data-m="re"><span class="lab">Gram H</span><h3>Werkwoorden op -re</h3><p>Répondre, attendre, entendre, vendre, perdre: présent en passé composé.</p></button>
+      <button class="mode" data-m="cult"><span class="lab">Culture</span><h3>SMS-taal en cultuur</h3><p>MDR, bcp, 2ri… en Jeanne d'Arc, de broers Lumière en de lavendel.</p></button>
+      <button class="mode" data-m="sum"><span class="lab">Uitleg</span><h3>Samenvatting</h3><p>Alle regels en vaste zinnen op één scherm.</p></button>
+    </div>
+  </section>
+
+  <section>
+    <div class="sec-head"><h2>4. Toets</h2></div>
+    <div class="modes">
+      <button class="mode main" data-m="toets"><span class="lab">Cijfer</span><h3>Proeftoets</h3><p>25 gemengde vragen: woorden, zinnen, grammatica en cultuur. Je krijgt een cijfer. <span id="bestToets"></span></p></button>
+    </div>
+  </section>
+
+  <section>
+    <details class="tips">
+      <summary>Zo pak je het aan</summary>
+      <ul>
+        <li>Per avond één woordblok (A, B, E of F) met <b>Woorden inprenten</b>, tot de balk vol is. Kies NL → FR: dat is het moeilijkst.</li>
+        <li>Typ de accenten mee met de knoppen onder het invulvak (é è ê à ç…). Zonder accent telt het nog niet als goed.</li>
+        <li>Leer zelfstandige naamwoorden met lidwoord: <b>le</b> compte, <b>la</b> publicité.</li>
+        <li>Doe de <b>Luistertoets</b> eerst echt als toets: lees de vragen, luister twee keer en kijk dan pas na.</li>
+        <li>Toetsen: <b>Enter</b> = controleren/verder, <b>1 2 3 4</b> = antwoord kiezen, <b>spatie</b> = kaart omdraaien.</li>
+      </ul>
+      <div class="acts" id="resetBox" style="margin-top:10px"><button class="btn ghost small" id="resetBtn">Voortgang wissen</button></div>
+    </details>
+  </section>
+</main>
+<main id="play" hidden></main>
+</div>
+<script>
+const SETS=[
+ {id:'A',t:'A · Social media',s:'je suis, j\'envoie, le compte, télécharger…'},
+ {id:'B',t:'B · Un vrai métier',s:'la publicité, le métier, hésiter, environ…'},
+ {id:'E',t:'E · Mon BFF',s:'l\'amitié, rencontrer, marrant, bavarder…'},
+ {id:'F',t:'F · Le Coin Presse',s:'l\'arbre, le siècle, autrefois, tricher…'}
+];
+// set|frans|nederlands|r (r = alleen herkennen FR→NL, blauwe blok)
+const VOC=`A|je suis|ik volg
+A|j'envoie|ik stuur
+A|créer|(aan)maken
+A|le compte|het account
+A|utiliser|gebruiken
+A|ajouter|toevoegen
+A|laisser|achterlaten
+A|le commentaire|het commentaar / de reactie
+A|télécharger|downloaden
+A|l'application|de app / de applicatie
+A|le message|het bericht
+A|les gens|de mensen
+A|les potes|de maten
+A|célèbre|beroemd
+A|numérique|digitaal
+A|branché(e)|hip / in de mode
+A|démodé(e)|ouderwets
+A|c'est-à-dire|dat wil zeggen
+A|ça te dit?|heb je daar zin in?
+A|il existe|er bestaat / er bestaan
+A|je deviens|ik word
+A|je viens de|ik heb zojuist
+A|fais voir!|laat zien!
+A|avant|vroeger
+A|presque|bijna
+A|tout le temps|de hele tijd
+A|souvent|vaak
+A|malheureusement|jammer genoeg
+A|c'est dommage|dat is jammer
+A|ce n'est pas grave|het is niet erg
+B|la publicité|de reclame
+B|l'entreprise|de onderneming
+B|le métier|het beroep
+B|le salaire|het salaris
+B|plus de|meer dan
+B|environ|ongeveer
+B|depuis|sinds
+B|vrai|echt / waar
+B|arrêter|stoppen
+B|hésiter|twijfelen
+B|montrer|laten zien
+B|décider|besluiten
+B|travailler|werken
+B|participer à|meedoen aan
+B|il faut|je moet
+B|le choix|de keuze
+B|enregistrer|opnemen|r
+B|fonctionner|functioneren|r
+B|également|ook|r
+B|actuellement|op dit moment|r
+B|l'inconvénient|het nadeel|r
+B|elle reçoit|zij ontvangt|r
+B|ils suivent|zij volgen|r
+B|s'occuper de|zich bezighouden met|r
+E|la meilleure amie|de beste vriendin
+E|l'amitié|de vriendschap
+E|je la connais|ik ken haar
+E|rencontrer|ontmoeten
+E|ensemble|samen
+E|marrant(e)|grappig
+E|intelligent(e)|intelligent
+E|sociable|sociaal
+E|optimiste|optimistisch
+E|faire du shopping|shoppen
+E|regarder la télé|tv kijken
+E|faire du sport|sporten
+E|écouter de la musique|muziek luisteren
+E|bavarder|kletsen
+E|à l'école|op school
+E|dans mon quartier|in mijn wijk
+E|chez des amis|bij vrienden
+E|au club de sport|op de sportclub
+F|l'arbre|de boom
+F|le verre|het glas
+F|le goûter|het vieruurtje
+F|le prénom|de voornaam
+F|selon|volgens / naargelang
+F|devant|voor (plaats)
+F|certains|sommige
+F|autrefois|vroeger
+F|le siècle|de eeuw
+F|l'invention|de uitvinding
+F|aider|helpen
+F|penser|denken
+F|la tête|het hoofd
+F|les yeux|de ogen
+F|énervé(e)|boos
+F|content(e)|tevreden
+F|les réseaux sociaux|de social media|r
+F|le carton|de doos|r
+F|la naissance|de geboorte|r
+F|l'expression|de uitdrukking|r
+F|tricher|spieken / valsspelen|r
+F|cacher|verstoppen|r
+F|transformer|veranderen|r
+F|car|want|r`;
+const WORDS=VOC.split('\n').map((l,i)=>{const [s,fr,nl,r]=l.split('|');return {id:'w'+i,s,fr,nl,r:r==='r'}});
+const PHR=[
+ ['C','Wat is de wifi-code?','Quel est le code WiFi?'],
+ ['C','Het is … en het wachtwoord is …','C\'est … et le mot de passe, c\'est …'],
+ ['C','Heb je Insta?','Tu as Insta?'],
+ ['C','Natuurlijk, mijn account is … Voeg je me toe?','Bien sûr, mon compte, c\'est … Tu m\'ajoutes?'],
+ ['C','Post je veel foto\'s?','Tu publies beaucoup de photos?'],
+ ['C','Ja, en ik post ook stories.','Oui, et je publie aussi des stories.'],
+ ['C','Hoeveel volgers heb je?','Tu as combien de followers?'],
+ ['C','Ik heb ongeveer 200 volgers.','J\'ai environ 200 followers.'],
+ ['C','Volg jij ook EnjoyPhoenix?','Tu suis aussi EnjoyPhoenix?'],
+ ['C','Nee, ik volg geen sterren.','Non, je ne suis pas les stars.'],
+ ['G','Wie is je beste vriend?','Qui est ton meilleur ami?'],
+ ['G','Mijn beste vriend is Sam.','Mon meilleur ami, c\'est Sam.'],
+ ['G','Ik ken hem sinds tien jaar.','Je le connais depuis dix ans.'],
+ ['G','Ik heb Sam op de tennisclub ontmoet.','J\'ai rencontré Sam au club de tennis.'],
+ ['G','Waarom is het je beste vriend?','Pourquoi c\'est ton meilleur ami?'],
+ ['G','Hij is aardig en we kunnen over alles praten.','Il est sympa et on peut parler de tout.'],
+ ['G','We spelen graag samen online.','On aime jouer en ligne ensemble.'],
+ ['G','We zien elkaar bijna elke dag.','On se voit presque tous les jours.']
+].map((r,i)=>({id:'p'+i,s:r[0],nl:r[1],fr:r[2]}));
+// grammatica: bijvoeglijk naamwoord vorm
+const ADJ=[
+ ['Ma sœur est une ___ blogueuse.','bon','bonne','vrouwelijk: bon → bonne'],
+ ['Elle fait de très ___ photos.','beau','belles','vrouwelijk meervoud: beau → belles'],
+ ['C\'est une ___ appli.','nouveau','nouvelle','vrouwelijk: nouveau → nouvelle'],
+ ['Cette maison est ___ .','vieux','vieille','vrouwelijk: vieux → vieille'],
+ ['Laura est ___ .','brésilien','brésilienne','-ien → -ienne'],
+ ['Elle est très ___ .','sportif','sportive','-if → -ive'],
+ ['C\'est une route ___ .','dangereux','dangereuse','-eux → -euse'],
+ ['Inès est très ___ .','curieux','curieuse','-eux → -euse'],
+ ['Ma copine est ___ .','italien','italienne','-ien → -ienne'],
+ ['Mes amies sont ___ .','actif','actives','-if → -ive, meervoud + s'],
+ ['Ces filles sont ___ .','canadien','canadiennes','-ien → -ienne, meervoud + s'],
+ ['Ma tante est ___ .','heureux','heureuse','-eux → -euse'],
+ ['J\'ai deux ___ jeux vidéo.','nouveau','nouveaux','mannelijk meervoud: nouveau → nouveaux'],
+ ['Ce sont de ___ garçons.','beau','beaux','mannelijk meervoud: beau → beaux'],
+ ['Notre prof est très ___ . (een vrouw)','attentif','attentive','-if → -ive'],
+ ['Ses vidéos sont ___ .','ennuyeux','ennuyeuses','-eux → -euse, meervoud + s'],
+ ['C\'est une ___ histoire.','long','longue','vrouwelijk: long → longue'],
+ ['Elle est un peu ___ .','naïf','naïve','-if → -ive'],
+ ['Julie est ___ de Noah.','amoureux','amoureuse','-eux → -euse'],
+ ['Mes grands-parents sont ___ .','vieux','vieux','mannelijk meervoud blijft vieux'],
+ ['C\'est une ___ actrice.','bon','bonne','vrouwelijk: bon → bonne'],
+ ['Ma meilleure amie est ___ .','australien','australienne','-ien → -ienne'],
+ ['La fin du film est ___ .','mystérieux','mystérieuse','-eux → -euse'],
+ ['Mes copines sont ___ .','furieux','furieuses','-eux → -euse, meervoud + s']
+];
+// plaats: [goed, fout1, fout2?, uitleg]
+const PLACE=[
+ ['C\'est un YouTubeur français.','C\'est un français YouTubeur.','nationaliteit staat achter het zelfstandig naamwoord'],
+ ['Elle a posté une belle photo.','Elle a posté une photo belle.','beau/belle staat ervoor (rijtje)'],
+ ['C\'est une vidéo marrante.','C\'est une marrante vidéo.','de meeste bijvoeglijke naamwoorden staan achter'],
+ ['C\'est un bon acteur.','C\'est un acteur bon.','bon staat ervoor (rijtje)'],
+ ['J\'ai une nouvelle appli.','J\'ai une appli nouvelle.','nouveau/nouvelle staat ervoor (rijtje)'],
+ ['C\'est un vieux sac gris.','C\'est un sac vieux gris.','vieux ervoor, kleur erachter'],
+ ['C\'est une jeune chanteuse française.','C\'est une chanteuse jeune française.','jeune ervoor, nationaliteit erachter'],
+ ['C\'est une belle voiture italienne.','C\'est une voiture belle italienne.','belle ervoor, nationaliteit erachter'],
+ ['C\'est un musée français intéressant.','C\'est un intéressant musée français.','français en intéressant staan allebei achter'],
+ ['C\'est une nouvelle chaîne américaine.','C\'est une chaîne nouvelle américaine.','nouvelle ervoor, nationaliteit erachter'],
+ ['Tu as vu sa dernière vidéo?','Tu as vu sa vidéo dernière?','dernier/dernière staat ervoor (rijtje)'],
+ ['C\'est un petit chien noir.','C\'est un chien petit noir.','petit ervoor, kleur erachter'],
+ ['Il a une longue carrière.','Il a une carrière longue.','long/longue staat ervoor (rijtje)'],
+ ['C\'est une fille sportive.','C\'est une sportive fille.','sportif/sportive staat achter'],
+ ['C\'est le premier film de Lumière.','C\'est le film premier de Lumière.','premier staat ervoor (rijtje)'],
+ ['Ce jeune vlogueur génial habite à Nice.','Ce vlogueur jeune génial habite à Nice.','jeune ervoor, génial erachter'],
+ ['C\'est un mauvais film.','C\'est un film mauvais.','mauvais staat ervoor (rijtje)'],
+ ['Il habite dans une grande maison.','Il habite dans une maison grande.','grand/grande staat ervoor (rijtje)'],
+ ['C\'est une histoire mystérieuse.','C\'est une mystérieuse histoire.','de meeste bijvoeglijke naamwoorden staan achter'],
+ ['Il y a un joli parc dans mon quartier.','Il y a un parc joli dans mon quartier.','joli staat ervoor (rijtje)']
+];
+const REV=[['répondre','répond','antwoord geven'],['attendre','attend','wachten'],['entendre','entend','horen'],['vendre','vend','verkopen'],['perdre','perd','verliezen']];
+const PERS=[['je','s','j\'ai','ik'],['tu','s','tu as','jij'],['il','','il a','hij'],['elle','','elle a','zij'],['on','','on a','men/wij'],['nous','ons','nous avons','wij'],['vous','ez','vous avez','jullie/u'],['ils','ent','ils ont','zij (mv)'],['elles','ent','elles ont','zij (mv, vr)']];
+const CULT=[
+ ['Wat betekent MDR?','mort de rire (dood van het lachen)','mon dernier rendez-vous|merci de répondre|mes deux répliques'],
+ ['Wat betekent bcp?','beaucoup','bonjour|bisous|bon courage'],
+ ['Wat betekent 2ri?','de rien','deux rires|demain|deux heures'],
+ ['Wat betekent JTM?','je t\'aime','jusqu\'à demain|je te mange|j\'ai tout mangé'],
+ ['Wat betekent bjr?','bonjour','bisous|bientôt|bon retour'],
+ ['Wat betekent msg?','message','magasin|mes amis|musique'],
+ ['Wat betekent “on va au 6né?”','on va au cinéma?','on va à six heures?|on va au sénat?|on va à Nice?'],
+ ['Wat betekent “G bcp de devoirs”?','j\'ai beaucoup de devoirs','je gagne beaucoup de devoirs|j\'aime beaucoup les devoirs|je n\'ai pas de devoirs'],
+ ['Wat betekent RdV?','rendez-vous','réveil|radio et vidéo|rien de vrai'],
+ ['Wat betekent Dmi?','demain','demi|des amis|dimanche'],
+ ['Hoe heet het Franse toetsenbord?','AZERTY','QWERTY|QWERTZ|ABCDEF'],
+ ['In welk jaar was er oorlog tussen Frankrijk en Engeland toen Jeanne d\'Arc stemmen hoorde?','1429','1789|1534|1895'],
+ ['Welke stad bevrijdde Jeanne d\'Arc van de Engelsen?','Orléans','Paris|Lyon|Rouen'],
+ ['Wat dachten de Engelsen dat Jeanne d\'Arc was?','une sorcière (een heks)','une reine (een koningin)|une espionne (een spionne)|une sainte (een heilige)'],
+ ['Hoe oud was Jeanne d\'Arc toen ze ter dood werd veroordeeld?','19 jaar','16 jaar|25 jaar|30 jaar'],
+ ['Hoe testte de koning Jeanne d\'Arc?','hij vermomde zich, maar ze herkende hem','hij liet haar vechten|hij stelde haar een raadsel|hij sloot haar op'],
+ ['Wie maakten in 1895 de eerste film, in Lyon?','de broers Lumière','de broers Grimm|Louis XIV|Napoléon'],
+ ['Hoeveel Franse films worden er ongeveer per jaar gemaakt?','ongeveer 300','ongeveer 30|ongeveer 3000|ongeveer 50'],
+ ['Wat is “l\'or bleu de la Provence”?','de lavendel','de zee|het blauwe goud van de wijn|de blauwe druiven'],
+ ['Hoeveel kilo lavendel is nodig voor 1 liter etherische olie?','200 kilo','2 kilo|20 kilo|2000 kilo'],
+ ['Welke eindletters spreek je in het Frans meestal NIET uit?','e, d, t, s en x','a, o en u|r en l|alleen de e'],
+ ['Wat betekent “je suis” in “je suis des stars sur Instagram”?','ik volg (van suivre)','ik ben (van être)|ik zoek|ik deel'],
+ ['Wat betekent #jepartage?','ik deel','ik praat|ik vertrek|ik post'],
+ ['Is het in Frankrijk toegestaan een foto van de verlichte Eiffeltoren ’s avonds online te zetten (volgens het boek)?','nee, de lichtshow is beschermd (auteursrecht)','ja, altijd|alleen met een filter|alleen op Insta']
+].map((r,i)=>({id:'c'+i,q:r[0],a:r[1],o:r[2].split('|')}));
+// LUISTEREN: sprekers krijgen een stem (a = stem 1, b = stem 2)
+const LIST=[
+{id:'L1',t:'Le compte de Mamie',sit:'Léo helpt zijn oma met haar mobiel.',sp:{'Mamie':'b','Léo':'a'},lines:[
+ ['Mamie','Léo, tu as deux minutes? J\'ai besoin d\'aide avec mon portable.','Léo, heb je twee minuutjes? Ik heb hulp nodig met mijn mobiel.'],
+ ['Léo','Bien sûr, Mamie. Qu\'est-ce qu\'il y a?','Natuurlijk, oma. Wat is er?'],
+ ['Mamie','Ta cousine Emma publie des photos sur Instagram. Moi aussi, je veux voir ses photos.','Je nicht Emma post foto\'s op Instagram. Ik wil haar foto\'s ook zien.'],
+ ['Léo','D\'accord. D\'abord, tu télécharges l\'appli. Ensuite, tu crées un compte.','Oké. Eerst download je de app. Daarna maak je een account aan.'],
+ ['Mamie','Un compte? C\'est compliqué, ça?','Een account? Is dat ingewikkeld?'],
+ ['Léo','Non, c\'est facile. Tu choisis un nom et un mot de passe. Voilà, c\'est fait!','Nee, dat is makkelijk. Je kiest een naam en een wachtwoord. Zo, klaar!'],
+ ['Mamie','Super! Et maintenant, comment je fais pour suivre Emma?','Super! En hoe volg ik Emma nu?'],
+ ['Léo','Tu cherches son nom et tu cliques sur «suivre». Regarde, elle a déjà trois cents followers.','Je zoekt haar naam en klikt op «volgen». Kijk, ze heeft al driehonderd volgers.'],
+ ['Mamie','Trois cents? Mais elle ne connaît pas trois cents personnes!','Driehonderd? Maar ze kent helemaal geen driehonderd mensen!'],
+ ['Léo','Sur Insta, c\'est normal, Mamie. Tu peux aussi laisser un commentaire sous ses photos.','Op Insta is dat normaal, oma. Je kunt ook een reactie onder haar foto\'s achterlaten.'],
+ ['Mamie','Oh, quelle belle photo de la plage! Je laisse un commentaire tout de suite: «Bisous, ta mamie!»','O, wat een mooie foto van het strand! Ik laat meteen een reactie achter: «Kusjes, je oma!»'],
+ ['Léo','Euh… Mamie, tout le monde peut lire ça, tu sais!','Eh… oma, iedereen kan dat lezen, hoor!']],
+ qs:[['Waarom wil oma een account?','om de foto\'s van Emma te zien','om zelf foto\'s te posten|om met Léo te chatten|omdat Emma het vroeg'],
+  ['Wat moet oma eerst doen?','de app downloaden','een wachtwoord kiezen|Emma bellen|een foto maken'],
+  ['Wat vindt Léo van een account aanmaken?','makkelijk','moeilijk|duur|gevaarlijk'],
+  ['Hoeveel volgers heeft Emma?','300','30|3000|13'],
+  ['Onder welke foto laat oma een reactie achter?','een foto van het strand','een foto van haar verjaardag|een foto van een hond|een selfie van Léo'],
+  ['Waarom schrikt Léo aan het eind?','iedereen kan de reactie van oma lezen','oma heeft de foto gewist|oma volgt de verkeerde persoon|oma heeft zijn wachtwoord']]},
+{id:'L2',t:'Ma meilleure amie',sit:'Tom interviewt Nora voor de schoolkrant.',sp:{'Tom':'a','Nora':'b'},lines:[
+ ['Tom','Salut Nora! Pour le journal de l\'école, je fais une interview sur l\'amitié. Qui est ta meilleure amie?','Hoi Nora! Voor de schoolkrant doe ik een interview over vriendschap. Wie is je beste vriendin?'],
+ ['Nora','Ma meilleure amie, c\'est Inès. Elle est dans ma classe.','Mijn beste vriendin is Inès. Ze zit in mijn klas.'],
+ ['Tom','Tu la connais depuis longtemps?','Ken je haar al lang?'],
+ ['Nora','Oui, je la connais depuis six ans. J\'ai rencontré Inès au club de natation.','Ja, ik ken haar al zes jaar. Ik heb Inès op de zwemclub ontmoet.'],
+ ['Tom','Elle est comment?','Hoe is ze?'],
+ ['Nora','Elle est très marrante et un peu timide. Mais avec moi, elle parle beaucoup!','Ze is heel grappig en een beetje verlegen. Maar met mij praat ze veel!'],
+ ['Tom','Qu\'est-ce que vous faites ensemble?','Wat doen jullie samen?'],
+ ['Nora','Le mercredi après-midi, on fait du shopping ou on écoute de la musique chez elle. Et le samedi, on fait du sport.','Op woensdagmiddag gaan we shoppen of luisteren we muziek bij haar thuis. En op zaterdag sporten we.'],
+ ['Tom','Pourquoi c\'est ta meilleure amie?','Waarom is zij je beste vriendin?'],
+ ['Nora','Parce qu\'on peut parler de tout. Et elle ne raconte jamais mes secrets!','Omdat we over alles kunnen praten. En ze vertelt mijn geheimen nooit door!'],
+ ['Tom','Vous vous disputez parfois?','Hebben jullie weleens ruzie?'],
+ ['Nora','Rarement. Une fois, elle a perdu mon livre préféré. J\'étais énervée… mais seulement une heure!','Zelden. Eén keer is ze mijn lievelingsboek kwijtgeraakt. Ik was boos… maar maar een uur!']],
+ qs:[['Hoe lang kent Nora Inès al?','zes jaar','tien jaar|twee jaar|zestien jaar'],
+  ['Waar hebben ze elkaar ontmoet?','op de zwemclub','op de tennisclub|in de klas|bij een vriendin'],
+  ['Hoe is Inès volgens Nora?','grappig en een beetje verlegen','sportief en serieus|slim en druk|aardig en ouderwets'],
+  ['Wat doen ze op woensdagmiddag?','shoppen of muziek luisteren','sporten|online gamen|tv kijken'],
+  ['Waarom is Inès haar beste vriendin?','ze kunnen over alles praten en Inès vertelt geen geheimen door','Inès helpt haar met huiswerk|ze wonen naast elkaar|Inès is heel beroemd'],
+  ['Wat is Inès een keer kwijtgeraakt?','het lievelingsboek van Nora','de telefoon van Nora|haar sleutels|de kaartjes voor een concert'],
+  ['Hoe lang was Nora boos?','een uur','een dag|een week|ze was niet boos']]},
+{id:'L3',t:'Un drôle de métier',sit:'Een journalist interviewt Hugo op de radio.',sp:{'La journaliste':'b','Hugo':'a'},lines:[
+ ['La journaliste','Bonjour Hugo. Tu as dix-neuf ans et tu es streameur. C\'est un vrai métier?','Hallo Hugo. Je bent negentien en je bent streamer. Is dat een echt beroep?'],
+ ['Hugo','Oui! Avant, j\'étais étudiant, mais j\'ai arrêté l\'université il y a deux ans. Maintenant, je joue aux jeux vidéo en direct et environ cinquante mille personnes me suivent.','Ja! Vroeger was ik student, maar ik ben twee jaar geleden met de universiteit gestopt. Nu speel ik live videogames en ongeveer vijftigduizend mensen volgen mij.'],
+ ['La journaliste','Tu travailles combien d\'heures par jour?','Hoeveel uur per dag werk je?'],
+ ['Hugo','Beaucoup! Je joue de quatorze heures à vingt heures, cinq jours par semaine. Le matin, je réponds aux messages de mes fans.','Veel! Ik speel van twee uur tot acht uur, vijf dagen per week. \'s Ochtends beantwoord ik de berichten van mijn fans.'],
+ ['La journaliste','Et tu gagnes de l\'argent comment?','En hoe verdien je geld?'],
+ ['Hugo','Avec la publicité et les abonnements. Des marques de jeux vidéo me paient aussi. Ce n\'est pas un salaire énorme, mais ça va.','Met reclame en abonnementen. Merken van videogames betalen me ook. Het is geen enorm salaris, maar het gaat.'],
+ ['La journaliste','Il y a des inconvénients?','Zijn er nadelen?'],
+ ['Hugo','Oui. Je suis tout le temps devant l\'écran et je ne vois pas souvent mes amis. Et au début, mes parents ont hésité. Ils pensaient que ce n\'était pas un vrai travail.','Ja. Ik zit de hele tijd voor het scherm en ik zie mijn vrienden niet vaak. En in het begin twijfelden mijn ouders. Ze dachten dat het geen echt werk was.'],
+ ['La journaliste','Un conseil pour les jeunes?','Een tip voor jongeren?'],
+ ['Hugo','Reste naturel et choisis un jeu que tu adores. Et n\'oublie pas l\'école!','Blijf natuurlijk en kies een game waar je dol op bent. En vergeet school niet!']],
+ qs:[['Wat deed Hugo voordat hij streamer werd?','hij was student','hij werkte in een winkel|hij was profvoetballer|hij zat nog op de middelbare school'],
+  ['Hoeveel mensen volgen Hugo?','ongeveer 50.000','ongeveer 15.000|ongeveer 500.000|ongeveer 5.000'],
+  ['Wanneer speelt hij live?','van 14 tot 20 uur, vijf dagen per week','van 9 tot 17 uur, elke dag|alleen in het weekend|\'s nachts'],
+  ['Wat doet hij \'s ochtends?','berichten van fans beantwoorden','video\'s monteren|uitslapen|naar de universiteit gaan'],
+  ['Waarmee verdient hij geld?','reclame, abonnementen en merken','alleen met prijzen van toernooien|zijn ouders betalen hem|met een baan in een winkel'],
+  ['Welk nadeel noemt Hugo?','hij ziet zijn vrienden niet vaak','hij verdient te weinig|hij heeft te weinig volgers|hij mag niet op vakantie'],
+  ['Wat vonden zijn ouders in het begin?','ze twijfelden: ze dachten dat het geen echt werk was','ze waren meteen enthousiast|ze wilden ook streamen|ze vonden het te gevaarlijk']]},
+{id:'L4',t:'Messages vocaux',sit:'Je hoort vier ingesproken berichten.',sp:{'Manon':'b','Monsieur Martin':'a','Lucas':'a','Jade':'b'},lines:[
+ ['Manon','Salut Chloé, c\'est Manon. Ça te dit, le cinéma ce soir? Le film commence à vingt heures. Rendez-vous devant le cinéma à dix-neuf heures trente. Bisous!','Hoi Chloé, met Manon. Heb je zin in de bioscoop vanavond? De film begint om acht uur. We spreken af voor de bioscoop om half acht. Kusjes!'],
+ ['Monsieur Martin','Bonjour Sarah, c\'est Monsieur Martin, ton prof de français. Tu as oublié ton cahier dans la classe. Tu peux venir le chercher demain matin, avant les cours.','Hallo Sarah, met meneer Martin, je leraar Frans. Je hebt je schrift in de klas laten liggen. Je kunt het morgenochtend voor de lessen komen halen.'],
+ ['Lucas','Coucou Noah! Je ne peux pas venir au club de foot samedi. J\'ai perdu mes chaussures de sport et ma mère n\'est pas contente! Tu peux m\'attendre dimanche au parc?','Hoi Noah! Ik kan zaterdag niet naar de voetbalclub komen. Ik ben mijn sportschoenen kwijt en mijn moeder is niet blij! Kun je zondag op me wachten in het park?'],
+ ['Jade','Salut, c\'est Jade. J\'ai vendu mon vieux portable sur Internet! Avec l\'argent, je vais acheter des écouteurs. Tu viens avec moi au centre commercial mercredi?','Hoi, met Jade. Ik heb mijn oude mobiel op internet verkocht! Van het geld ga ik oortjes kopen. Ga je woensdag met me mee naar het winkelcentrum?']],
+ qs:[['Bericht 1: hoe laat spreken Manon en Chloé af?','om half acht (19.30 uur)','om acht uur (20.00 uur)|om zes uur (18.00 uur)|om half negen (20.30 uur)'],
+  ['Bericht 2: wat moet Sarah doen?','morgenochtend voor de lessen haar schrift ophalen','haar huiswerk opsturen|de leraar terugbellen|vanavond naar school komen'],
+  ['Bericht 3: waarom kan Lucas zaterdag niet?','hij is zijn sportschoenen kwijt','hij is ziek|hij moet naar zijn oma|hij heeft te veel huiswerk'],
+  ['Bericht 3: waar wil Lucas zondag afspreken?','in het park','bij de voetbalclub|bij Noah thuis|in het winkelcentrum'],
+  ['Bericht 4: wat heeft Jade verkocht?','haar oude mobiel','haar spelcomputer|haar oude fiets|haar oortjes'],
+  ['Bericht 4: wat wil Jade kopen?','oortjes','een nieuwe mobiel|kleren|een spel']]}
+];
+// LEZEN: eigen teksten in de stijl van het boek
+const LEES=[
+{id:'R1',t:'Zoé, cheffe sur YouTube',txt:`<p><b>Zoé a 22 ans. Depuis trois ans, elle publie des vidéos de cuisine sur sa chaîne «Zoé en cuisine». Elle a environ 800 000 abonnés.</b></p>
+<p>«Avant, je travaillais dans un restaurant à Lyon. J'adorais mon métier, mais le salaire n'était pas très bon. Un jour, j'ai filmé une recette de crêpes avec mon portable et je l'ai mise sur YouTube. Le lendemain, la vidéo avait déjà 10 000 vues! J'ai hésité longtemps, mais après un an, j'ai décidé d'arrêter le restaurant.»</p>
+<p>Aujourd'hui, Zoé enregistre trois vidéos par semaine. «Le lundi, je cherche des recettes. Le mardi et le mercredi, je filme. Le jeudi, je fais le montage.» Elle gagne de l'argent avec la publicité et elle participe à des campagnes pour des marques de cuisine.</p>
+<p>Il y a aussi des inconvénients. «Je travaille presque tout le temps, même le week-end. Et certains commentaires sont méchants. Mais ce n'est pas grave: la plupart des gens sont très gentils!»</p>
+<p>Son conseil? «Montre ta personnalité et reste naturel. Il faut aimer ce que tu fais!»</p>`,
+ qs:[['Wat deed Zoé vroeger?','ze werkte in een restaurant in Lyon','ze was student|ze werkte in een winkel|ze was lerares'],
+  ['Wat vond ze niet goed aan haar oude baan?','het salaris','de collega\'s|de werktijden|het eten'],
+  ['Hoe begon haar YouTube-kanaal?','ze filmde een recept voor crêpes met haar mobiel','een vriendin vroeg haar om video\'s te maken|ze won een wedstrijd|een merk betaalde haar'],
+  ['Wanneer stopte ze met het restaurant?','na een jaar twijfelen','meteen de volgende dag|na drie jaar|toen ze 800.000 abonnees had'],
+  ['Wat doet Zoé op donderdag?','ze monteert de video\'s','ze zoekt recepten|ze filmt|ze is vrij'],
+  ['Welk nadeel noemt Zoé?','ze werkt bijna altijd, ook in het weekend','ze verdient te weinig|ze heeft geen ideeën meer|ze krijgt geen reacties'],
+  ['Wat betekent «ce n\'est pas grave»?','het is niet erg','het is heel ernstig|dat is jammer|dat wil zeggen']]},
+{id:'R2',t:'Le Coin Presse',txt:`<p><b>UN CHIEN STAR SUR TIKTOK</b><br>Biscuit est un petit chien de Marseille. Sa maîtresse, Lina (15 ans), filme Biscuit quand il «chante» avec la radio. Aujourd'hui, Biscuit a plus de deux millions de followers! Des marques de nourriture pour chiens veulent travailler avec lui. «Biscuit reçoit plus de messages que moi», rigole Lina.</p>
+<p><b>UNE SEMAINE SANS PORTABLE</b><br>Au collège Jean Moulin, à Nantes, les élèves ont participé à une expérience: une semaine sans portable. Résultat? Au début, beaucoup d'élèves étaient énervés. Mais après trois jours, ils bavardaient plus ensemble pendant la pause. «Je pensais que c'était impossible», dit Malik (14 ans). «Mais finalement, j'étais content. J'ai même lu un livre!»</p>
+<p><b>LE PLUS VIEUX GAMER?</b><br>Robert a 84 ans et il joue tous les jours aux jeux vidéo. Il a découvert la console chez son petit-fils il y a cinq ans. «Autrefois, on jouait aux cartes. Maintenant, je joue en ligne avec des jeunes du monde entier. Ils sont très sympas, mais ils ne savent pas que j'ai 84 ans!»</p>`,
+ qs:[['Waarom is Biscuit beroemd?','hij «zingt» mee met de radio','hij kan dansen|hij kan skateboarden|hij heeft een eigen kookprogramma'],
+  ['Wie willen met Biscuit samenwerken?','merken van hondenvoer','een tv-zender|een dierenarts|een zanger'],
+  ['Wat deden de leerlingen in Nantes?','een week zonder mobiel','een week zonder school|een week alleen online les|een week vakantie'],
+  ['Hoe reageerden veel leerlingen in het begin?','ze waren boos','ze waren blij|ze vonden het grappig|ze merkten niets'],
+  ['Wat veranderde er na drie dagen?','ze kletsten meer met elkaar in de pauze','ze gingen meer sporten|ze haalden betere cijfers|ze gingen eerder naar huis'],
+  ['Hoe ontdekte Robert de spelcomputer?','bij zijn kleinzoon','in een winkel|via een tv-reclame|op zijn werk'],
+  ['Wat weten Roberts medespelers niet?','dat hij 84 jaar is','dat hij in Frankrijk woont|dat hij een kleinzoon heeft|dat hij altijd wint']]},
+{id:'R3',t:'Ma BFF a déménagé',txt:`<p><i>Un message sur un forum pour les jeunes.</i></p>
+<p>Salut tout le monde! Je m'appelle Camille, j'ai 14 ans et j'habite à Bordeaux. J'ai un problème: ma meilleure amie, Léa, a déménagé au Canada avec ses parents. Je la connais depuis l'école primaire. On faisait tout ensemble: le mercredi, on faisait du sport, le samedi, on regardait des séries chez elle. On pouvait parler de tout!</p>
+<p>Maintenant, il y a six heures de différence entre la France et le Canada. Quand je rentre de l'école, Léa est encore en classe. Le soir, quand elle est libre, moi, je dors. On s'envoie des messages et des Snaps, mais ce n'est pas la même chose…</p>
+<p>Malheureusement, je n'ai pas d'autres très bons amis dans mon quartier. Je suis plutôt timide. Vous avez des conseils pour garder une amitié à distance? Et pour rencontrer de nouveaux amis? Merci! Camille</p>`,
+ qs:[['Wat is het probleem van Camille?','haar beste vriendin is naar Canada verhuisd','ze heeft ruzie met Léa|ze moet verhuizen naar Canada|ze is haar telefoon kwijt'],
+  ['Sinds wanneer kent ze Léa?','sinds de basisschool','sinds vorig jaar|sinds de sportclub|sinds ze in Bordeaux woont'],
+  ['Wat deden ze op zaterdag?','series kijken bij Léa thuis','sporten|shoppen|naar de bioscoop'],
+  ['Waarom is contact moeilijk?','er zijn zes uur tijdsverschil','Léa heeft geen mobiel|Léa wil geen contact meer|bellen is te duur'],
+  ['Hoe houden ze nu contact?','met berichtjes en Snaps','met brieven|ze bellen elke dag|helemaal niet'],
+  ['Hoe beschrijft Camille zichzelf?','een beetje verlegen','heel sociaal|grappig|sportief'],
+  ['Wat vraagt Camille aan de lezers?','tips om de vriendschap te houden en nieuwe vrienden te maken','tips voor een reis naar Canada|hoe ze Snapchat moet gebruiken|of iemand Léa kent']]}
+];
+// DICTEE: korte zinnen om te verstaan en te schrijven
+const DICT=['le compte','télécharger','la publicité','le métier','environ','l\'amitié','rencontrer','ensemble','marrant','bavarder','autrefois','le siècle','les yeux','énervé','content','le prénom','souvent','presque','c\'est dommage','tout le temps','J\'ai environ deux cents followers.','Tu as Insta?','Je le connais depuis dix ans.','On peut parler de tout.','Il est sympa.','On se voit presque tous les jours.','Tu publies beaucoup de photos?','Je ne suis pas les stars.','Nous attendons le bus.','Vous vendez la voiture?','Elle répond tout de suite.','J\'ai perdu mon portable.'];
+const SAM={
+'woord':`<p>Leer de <b>witte</b> woorden in beide richtingen (Frans → Nederlands én Nederlands → Frans). De woorden met een <span class="tagR">alleen FR→NL</span> label (blauw in het boek) hoef je alleen te herkennen.</p><p>Leer zelfstandige naamwoorden altijd mét lidwoord: <b>le</b> compte, <b>la</b> publicité, <b>l'</b>amitié. Let op de accenten: é, è, ê, à, ç.</p>`,
+'phr':`<p><b>Parler des réseaux sociaux</b>: Tu as Insta? · Tu publies beaucoup de photos? · Tu as combien de followers? · J'ai environ 200 followers. · Tu suis aussi …? · Non, je ne suis pas les stars.</p><p><b>Parler de ses amis</b>: Qui est ton meilleur ami? · Mon meilleur ami, c'est … · Je le connais depuis dix ans. · J'ai rencontré … au club de tennis. · Il est sympa et on peut parler de tout. · On se voit presque tous les jours.</p><p><b>Let op</b>: <i>je suis</i> = ik ben (être) óf ik volg (suivre).</p>`,
+'adj':`<p><b>Onregelmatige vormen</b>: bon → bonne · beau → belle · nouveau → nouvelle · vieux → vieille · long → longue.</p><p><b>-ien → -ienne</b> (italien/italienne) · <b>-eux → -euse</b> (dangereux/dangereuse) · <b>-if → -ive</b> (sportif/sportive). Meervoud: + s (beau → beaux, nouveau → nouveaux, vieux blijft vieux).</p><p><b>Plaats</b>: meestal <b>achter</b> het zelfstandig naamwoord: un YouTubeur <b>français</b>. Deze staan <b>ervoor</b>: bon, grand, petit, premier, dernier, joli, jeune, vieux, nouveau, mauvais, long, beau. Tip: leer ze als rijtje!</p>`,
+'re':`<p><b>Werkwoorden op -re</b> (répondre, attendre, entendre, vendre, perdre): haal -re weg en zet de uitgang achter de stam.</p><table class="gt"><tr><th></th><th>uitgang</th><th>répondre</th></tr><tr><td>je</td><td>-s</td><td>je réponds</td></tr><tr><td>tu</td><td>-s</td><td>tu réponds</td></tr><tr><td>il/elle/on</td><td>—</td><td>il répond</td></tr><tr><td>nous</td><td>-ons</td><td>nous répondons</td></tr><tr><td>vous</td><td>-ez</td><td>vous répondez</td></tr><tr><td>ils/elles</td><td>-ent</td><td>ils répondent</td></tr></table><p><b>Passé composé</b>: avoir + voltooid deelwoord op <b>-u</b>: j'ai vendu, tu as répondu, nous avons attendu, ils ont perdu.</p>`,
+'uit':`<p><b>Uitspraak</b>: de letters <b>e, d, t, s en x</b> aan het eind van een woord spreek je meestal niet uit: salair<s>e</s>, gran<s>d</s>, souven<s>t</s>, vien<s>s</s>, choi<s>x</s>.</p>`
+};
+const $=s=>document.querySelector(s);
+const esc=s=>String(s).replace(/[&<>"]/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;'}[c]));
+const shuffle=a=>{a=[...a];for(let i=a.length-1;i>0;i--){const j=Math.random()*(i+1)|0;[a[i],a[j]]=[a[j],a[i]]}return a};
+const pick=a=>a[Math.random()*a.length|0];
+const KEY='frans-ch1-v1';
+let S={w:{},xp:0,days:[],sel:SETS.map(s=>s.id),dir:'nlfr',bestBlitz:0,bestToets:0,lis:{}};
+try{const r=localStorage.getItem(KEY);if(r)S=Object.assign(S,JSON.parse(r))}catch(e){}
+const save=()=>{try{localStorage.setItem(KEY,JSON.stringify(S))}catch(e){}};
+const today=()=>new Date().toISOString().slice(0,10);
+function markDay(){const t=today();if(!S.days.includes(t)){S.days.push(t);S.days=S.days.slice(-60)}}
+function streak(){const set=new Set(S.days);let d=new Date(),n=0;if(!set.has(d.toISOString().slice(0,10)))d.setDate(d.getDate()-1);while(set.has(d.toISOString().slice(0,10))){n++;d.setDate(d.getDate()-1)}return n}
+const ws=w=>S.w[w.id]||(S.w[w.id]={l:0,x:0});
+const selW=()=>WORDS.filter(w=>S.sel.includes(w.s));
+const fmt=n=>String(Math.round(n*10)/10).replace('.',',');
+/* ---------- nakijken ---------- */
+const deacc=s=>s.normalize('NFD').replace(/[̀-ͯ]/g,'');
+function nf(s){return String(s).toLowerCase().replace(/[’‘`´]/g,"'").replace(/…|\.\.\./g,' ').replace(/[.,!?;:«»"()]/g,' ').replace(/\s*'\s*/g,"'").replace(/\s+/g,' ').trim()}
+function lev(a,b){const m=a.length,n=b.length;const d=Array.from({length:m+1},(_,i)=>[i]);for(let j=1;j<=n;j++)d[0][j]=j;for(let i=1;i<=m;i++)for(let j=1;j<=n;j++)d[i][j]=Math.min(d[i-1][j]+1,d[i][j-1]+1,d[i-1][j-1]+(a[i-1]===b[j-1]?0:1));return d[m][n]}
+function frVariants(fr){const out=new Set([fr]);if(/\(e\)/.test(fr)){out.add(fr.replace('(e)',''));out.add(fr.replace('(e)','e'))}return [...out].map(nf)}
+const ART=/^(le |la |les |l')/;
+function checkFRlist(input,list){
+  const n=nf(input);if(!n)return 'empty';
+  const acc=list.flatMap(frVariants);
+  if(acc.includes(n))return 'ok';
+  if(acc.some(a=>deacc(a)===deacc(n)))return 'acc';
+  if(acc.some(a=>ART.test(a)&&a.replace(ART,'')===n))return 'art';
+  if(acc.some(a=>a.length>=5&&lev(deacc(a),deacc(n))<=1))return 'near';
+  return 'wrong'}
+function nlVariants(nl){return nl.split(' / ').flatMap(p=>{p=p.trim();const o=[p];if(/\(/.test(p)){o.push(p.replace(/\s*\([^)]*\)\s*/g,' ').trim());o.push(p.replace(/[()]/g,''))}return o}).map(x=>nf(x).replace(/^(de|het|een) /,''))}
+function checkNL(input,w){const n=nf(input).replace(/^(de|het|een) /,'');if(!n)return 'empty';
+  const acc=WORDS.filter(x=>x.fr===w.fr).flatMap(x=>nlVariants(x.nl));
+  if(acc.includes(n)||acc.some(a=>a.replace(/ /g,'')===n.replace(/ /g,'')))return 'ok';
+  if(acc.some(a=>a.length>=5&&lev(a,n)<=1))return 'near';return 'wrong'}
+const sameNL=w=>WORDS.filter(x=>nf(x.nl)===nf(w.nl)).map(x=>x.fr);
+/* ---------- spraak ---------- */
+const canSpeak='speechSynthesis' in window;let FRV=[];
+function loadVoices(){try{const v=speechSynthesis.getVoices();const fr=v.filter(x=>/^fr/i.test(x.lang));const pref=fr.filter(x=>/fr[-_]FR/i.test(x.lang));FRV=[...pref,...fr.filter(x=>!pref.includes(x))]}catch(e){}}
+if(canSpeak){loadVoices();try{speechSynthesis.onvoiceschanged=loadVoices}catch(e){}}
+function utter(text,who='a',rate=0.95){const u=new SpeechSynthesisUtterance(text.replace(/…/g,', ').replace(/«|»/g,''));u.lang='fr-FR';const two=FRV.length>1;
+  const v=who==='b'?(FRV[1]||FRV[0]):FRV[0];if(v)u.voice=v;u.rate=rate;u.pitch=two?1:(who==='b'?1.25:0.85);return u}
+function say(text,who,rate){if(!canSpeak)return;try{speechSynthesis.cancel();speechSynthesis.speak(utter(text,who,rate))}catch(e){}}
+const spk=t=>canSpeak?`<button class="spk" type="button" data-say="${esc(t)}" aria-label="Uitspreken">🔊</button>`:'';
+document.addEventListener('click',e=>{const b=e.target.closest('[data-say]');if(b){e.stopPropagation();say(b.dataset.say)}});
+/* ---------- home ---------- */
+const P=$('#play');let G=null;
+function show(v){$('#home').hidden=v!=='home';P.hidden=v!=='play';window.scrollTo(0,0)}
+function stopAll(){if(G&&G.timer)clearInterval(G.timer);if(canSpeak)try{speechSynthesis.cancel()}catch(e){}}
+function goHome(){stopAll();G=null;save();renderHome();show('home')}
+function mastery(list){if(!list.length)return 0;return list.reduce((a,w)=>a+Math.min(3,ws(w).l),0)/(3*list.length)}
+function renderHome(){
+  $('#pars').innerHTML=SETS.map(s=>{const l=WORDS.filter(w=>w.s===s.id);const m=mastery(l);
+    return `<button class="par" data-p="${s.id}" aria-pressed="${S.sel.includes(s.id)}"><span class="no"><b>${s.id}</b>vocabulaire</span><span class="nm">${esc(s.t.slice(4))}</span><span class="src">${esc(s.s)}</span><span class="bar"><i style="width:${Math.round(m*100)}%"></i></span><span class="src">${l.length} woorden · ${Math.round(m*100)}% gekend</span></button>`}).join('');
+  $('#stKnown').textContent=`${WORDS.filter(w=>ws(w).l>=3).length}/${WORDS.length}`;
+  $('#stStreak').textContent=streak();$('#stXp').textContent=S.xp;
+  $('#bestBlitz').textContent=S.bestBlitz?`Record: ${S.bestBlitz}.`:'';
+  $('#bestToets').textContent=S.bestToets?`Hoogste cijfer: ${fmt(S.bestToets)}.`:'';
+  document.querySelectorAll('#dirSeg button').forEach(b=>b.setAttribute('aria-pressed',b.dataset.d===S.dir));
+  const n=selW().length;$('#selLine').textContent=n?`${n} woorden geselecteerd.`:'Kies minstens één woordblok.';
+  ['learn','flash','blitz'].forEach(m=>{const b=document.querySelector(`[data-m="${m}"]`);if(b)b.disabled=!n});
+}
+$('#pars').addEventListener('click',e=>{const b=e.target.closest('.par');if(!b)return;const p=b.dataset.p;S.sel=S.sel.includes(p)?S.sel.filter(x=>x!==p):[...S.sel,p];save();renderHome()});
+$('#selAll').onclick=()=>{S.sel=SETS.map(s=>s.id);save();renderHome()};
+$('#selNone').onclick=()=>{S.sel=[];save();renderHome()};
+$('#dirSeg').addEventListener('click',e=>{const b=e.target.closest('button');if(!b)return;S.dir=b.dataset.d;save();renderHome()});
+function askReset(){$('#resetBox').innerHTML='<span>Alle voortgang en records wissen?</span><button class="btn small dark" id="rsY">Ja, wissen</button><button class="btn small ghost" id="rsN">Annuleer</button>';
+  $('#rsY').onclick=()=>{S={w:{},xp:0,days:[],sel:SETS.map(s=>s.id),dir:'nlfr',bestBlitz:0,bestToets:0,lis:{}};save();location.reload()};
+  $('#rsN').onclick=()=>{$('#resetBox').innerHTML='<button class="btn ghost small" id="resetBtn">Voortgang wissen</button>';$('#resetBtn').onclick=askReset}}
+$('#resetBtn').onclick=askReset;
+document.querySelectorAll('.mode').forEach(b=>b.onclick=()=>start(b.dataset.m));
+/* ---------- gedeeld ---------- */
+const head=(l,r)=>`<div class="slide-head"><span>${l}</span><span>${r}</span></div>`;
+function bar(done,total){return `<div class="playbar"><button class="btn small ghost" id="quit">Stoppen</button><span class="bar"><i style="width:${total?Math.round(done/total*100):0}%"></i></span><span class="count">${done}/${total}</span></div>`}
+function bindQuit(){const q=$('#quit');if(q)q.onclick=goHome}
+function mcButtons(labels){return `<div class="opts">${labels.map((o,i)=>`<button class="opt" data-i="${i}"><span class="k">${i+1}</span><span>${esc(o)}</span></button>`).join('')}</div>`}
+function markOpts(ci,chosen){P.querySelectorAll('.opt').forEach((b,i)=>{b.disabled=true;b.classList.add(i===ci?'good':i===chosen?'bad':'dim')})}
+const nextBtn=()=>`<div class="foot" style="margin-top:12px"><button class="btn primary" id="next">Verder ↵</button></div>`;
+function bindNext(fn){const n=$('#next');n.onclick=fn;n.focus()}
+const ACC=['é','è','ê','à','â','ç','ù','î','ô','ë','ï','œ'];
+function accBar(){return `<div class="acc" id="accbar">${ACC.map(c=>`<button type="button" data-c="${c}">${c}</button>`).join('')}</div>`}
+function bindAcc(inp){const b=$('#accbar');if(!b)return;b.querySelectorAll('button').forEach(x=>{x.onmousedown=e=>e.preventDefault();x.onclick=()=>{const s=inp.selectionStart??inp.value.length,e=inp.selectionEnd??s;inp.value=inp.value.slice(0,s)+x.dataset.c+inp.value.slice(e);inp.focus();inp.setSelectionRange(s+1,s+1)}})}
+function reinsert(item,gap){G.Q.splice(Math.min(gap,G.Q.length),0,item)}
+function wDistract(w,n=3){let pool=WORDS.filter(x=>x.s===w.s&&x!==w&&nf(x.nl)!==nf(w.nl));if(pool.length<n)pool=WORDS.filter(x=>x!==w);return shuffle(pool).slice(0,n)}
+const dirFor=w=>w.r?'frnl':(S.dir==='mix'?pick(['nlfr','frnl']):S.dir);
+const msgFor=r=>r==='acc'?'Bijna! Let op de accenten.':r==='art'?'Bijna! Vergeet het lidwoord niet (le, la, l\', les).':'Bijna! Let op de spelling.';
+function start(m){
+  const W=selW();
+  if(m==='learn'){const items=shuffle(W).sort((a,b)=>ws(a).l-ws(b).l).slice(0,10);if(!items.length)return;G={m,items,Q:items.map(w=>({w,stage:ws(w).l>=2?1:0,miss:false,dir:dirFor(w)})),done:0,firstOk:0,mist:new Set()};show('play');learnNext()}
+  else if(m==='flash'){const items=shuffle(W).sort((a,b)=>ws(a).l-ws(b).l).slice(0,20);if(!items.length)return;G={m,items,Q:items.map(w=>({w,miss:false})),done:0,firstOk:0,mist:new Set()};show('play');flashNext()}
+  else if(m==='blitz'){if(W.length<4)return;G={m,pool:W,score:0,streak:0,n:0,ok:0,mist:new Set(),end:performance.now()+60000};show('play');blitzRender();blitzNext();G.timer=setInterval(blitzTick,100)}
+  else if(m==='listen'){show('play');listenMenu()}
+  else if(m==='dict'){G={m,items:shuffle(DICT).slice(0,10),i:0,ok:0,mist:[]};show('play');dictNext()}
+  else if(m==='read'){show('play');readMenu()}
+  else if(m==='phr'){show('play');phrMenu()}
+  else if(m==='adj'){const it=[...shuffle(ADJ).slice(0,8).map(a=>({t:'f',a})),...shuffle(PLACE).slice(0,4).map(a=>({t:'p',a}))];G={m,items:shuffle(it),i:0,ok:0,mist:[]};show('play');adjNext()}
+  else if(m==='re'){G={m,items:Array.from({length:12},makeRe),i:0,ok:0,mist:[]};show('play');reNext()}
+  else if(m==='cult'){G={m,items:shuffle(CULT).slice(0,10),i:0,ok:0,mist:[]};show('play');cultNext()}
+  else if(m==='sum'){show('play');sumView()}
+  else if(m==='toets'){toetsStart()}
+}
+function endScreen(title,ok,total,mistHtml,again){
+  const pct=total?ok/total:0;if(pct>=.8)confetti();save();
+  P.innerHTML=`<div class="slide">${head(title,'Klaar')}<div class="slide-body">
+   <div><div class="q">In één keer goed</div><div class="big">${ok}<span style="font-size:.45em;color:var(--muted)"> / ${total}</span></div></div>
+   <div>${pct>=.9?'Super, très bien!':pct>=.6?'Goed bezig. Nog een ronde en het zit vast.':'Dit was lastig. Bekijk de samenvatting en probeer het nog eens.'}</div>
+   ${mistHtml?`<div><div class="q" style="margin-bottom:6px">Kijk hier nog even naar</div><ul class="mist">${mistHtml}</ul></div>`:''}
+   <div class="acts"><button class="btn primary" id="again">Nog een ronde</button><button class="btn ghost" id="home2">Naar start</button></div></div></div>`;
+  $('#again').onclick=again;$('#home2').onclick=goHome;$('#again').focus();
+}
+const wLi=w=>`<li><b>${esc(w.fr)} ${spk(w.fr)}</b><span>${esc(w.nl)}</span></li>`;
+/* ---------- woorden inprenten ---------- */
+function learnNext(){
+  if(!G.Q.length)return endScreen('Woorden inprenten',G.firstOk,G.items.length,[...G.mist].map(wLi).join(''),()=>start('learn'));
+  const it=G.cur=G.Q.shift(),w=it.w,d=it.dir;const tofr=d==='nlfr';
+  const top=bar(G.done,G.items.length);
+  if(it.stage===0){
+    const opts=shuffle([w,...wDistract(w)]);
+    P.innerHTML=top+`<div class="slide">${head(`Vocabulaire ${w.s}${w.r?' · alleen FR→NL':''}`,'Stap 1 van 2 · kiezen')}<div class="slide-body"><div class="q">${tofr?'Hoe zeg je dit in het Frans?':'Wat betekent dit?'}</div><div class="prompt big">${esc(tofr?w.nl:w.fr)}${tofr?'':spk(w.fr)}</div>${mcButtons(opts.map(o=>tofr?o.fr:o.nl))}<div id="fbox"></div></div></div>`;
+    bindQuit();
+    P.querySelectorAll('.opt').forEach((btn,i)=>btn.onclick=()=>{const ok=opts[i]===w;markOpts(opts.indexOf(w),i);markDay();
+      if(ok){S.xp+=2;it.stage=1;reinsert(it,2)}else{it.miss=true;G.mist.add(w);const s=ws(w);s.l=Math.max(0,s.l-1);s.x++;reinsert(it,2)}
+      $('#fbox').innerHTML=`<div class="fb ${ok?'good':'bad'}"><div class="t">${ok?'Goed! Straks typ je het zelf.':'Helaas.'}</div><div class="ans">${esc(w.fr)} ${spk(w.fr)}</div><div>${esc(w.nl)}</div></div>`+nextBtn();if(ok)say(w.fr);bindNext(learnNext);save()});
+  }else{
+    let phase='ask';
+    P.innerHTML=top+`<div class="slide">${head(`Vocabulaire ${w.s}`,'Stap 2 van 2 · typen')}<div class="slide-body"><div class="q">${tofr?'Typ het Franse woord':'Typ de Nederlandse betekenis'}</div><div class="prompt big">${esc(tofr?w.nl:w.fr)}${tofr?'':spk(w.fr)}</div>
+     <form class="typerow" id="tf" autocomplete="off"><input id="ti" autocapitalize="off" autocorrect="off" spellcheck="false" placeholder="${tofr?'en français…':'in het Nederlands…'}" aria-label="Antwoord"><button class="btn dark" type="submit" id="tb">Controleer</button></form>
+     ${tofr?accBar():''}<div class="acts" id="ta"><button class="btn small ghost" type="button" id="hint">Hint</button><button class="btn small ghost" type="button" id="idk">Weet ik niet</button></div><div class="pattern" id="pat"></div><div id="fbox"></div></div></div>`;
+    bindQuit();const inp=$('#ti');inp.focus();bindAcc(inp);let k=0;
+    const target=tofr?w.fr:w.nl.split(' / ')[0];
+    $('#hint').onclick=()=>{k++;it.hinted=true;$('#pat').textContent=target.split(' ').map(x=>[...x].map((c,i)=>/[\p{L}]/u.test(c)?(i<k?c:'_'):c).join(' ')).join('   ');inp.focus()};
+    const chk=v=>tofr?checkFRlist(v,sameNL(w)):checkNL(v,w);
+    const fail=(msg,typed)=>{phase='retype';it.miss=true;G.mist.add(w);const s=ws(w);s.l=Math.max(0,s.l-1);s.x++;it.stage=0;reinsert(it,3);markDay();
+      $('#ta').hidden=true;$('#pat').textContent='';
+      $('#fbox').innerHTML=`<div class="fb bad"><div class="t">${msg}</div>${typed?`<div>Jij typte: <s>${esc(typed)}</s></div>`:''}<div class="ans">${esc(tofr?w.fr:w.nl)} ${spk(w.fr)}</div><div class="tip">Typ het goede antwoord over om verder te gaan.</div></div>`;
+      inp.value='';inp.placeholder='typ het goede antwoord over…';$('#tb').textContent='Verder';inp.focus();say(w.fr)};
+    $('#idk').onclick=()=>fail('Geeft niet, zo leer je het.');
+    $('#tf').onsubmit=e=>{e.preventDefault();const v=inp.value;
+      if(phase==='done')return learnNext();
+      if(phase==='retype'){if(chk(v)==='ok'){phase='done';learnNext()}else{inp.classList.remove('shake');void inp.offsetWidth;inp.classList.add('shake')}return}
+      const r=chk(v);if(r==='empty')return;
+      if(r==='ok'){phase='done';inp.readOnly=true;inp.classList.add('okay');$('#ta').hidden=true;$('#accbar')&&($('#accbar').hidden=true);markDay();let t;
+        if(it.hinted){t='Goed, maar met hint. Hij komt nog één keer terug.';S.xp+=3;reinsert(it,3);it.hinted=false}
+        else{G.done++;if(!it.miss)G.firstOk++;const s=ws(w);s.l=Math.min(5,s.l+(it.miss?1:2));S.xp+=10;t=pick(['Très bien!','Parfait!','Super!','Bravo!'])}
+        $('#fbox').innerHTML=`<div class="fb good"><div class="t">${t}</div><div class="ans">${esc(w.fr)} ${spk(w.fr)}</div><div>${esc(w.nl)}</div></div>`;$('#tb').textContent='Verder';$('#tb').focus();say(w.fr);save()}
+      else if(r==='acc'||r==='art'||r==='near'){$('#fbox').innerHTML=`<div class="fb warn"><div class="t">${msgFor(r)} Probeer het nog eens.</div></div>`;inp.focus()}
+      else fail('Niet goed.',v)};
+  }
+}
+/* ---------- flitskaarten ---------- */
+function flashNext(){
+  if(!G.Q.length)return endScreen('Flitskaarten',G.firstOk,G.items.length,[...G.mist].map(wLi).join(''),()=>start('flash'));
+  const it=G.cur=G.Q.shift(),w=it.w,tofr=dirFor(w)==='nlfr';
+  P.innerHTML=bar(G.done,G.items.length)+`<div class="slide">${head(`Vocabulaire ${w.s}`,'Tik om te draaien')}<div class="slide-body">
+   <div class="flip" id="card" tabindex="0" role="button" aria-label="Draai kaart om"><div class="flip-in">
+    <div class="face"><div class="q">${tofr?'Hoe zeg je dit in het Frans?':'Wat betekent…'}</div><div class="prompt big">${esc(tofr?w.nl:w.fr)}</div></div>
+    <div class="face back"><div class="q">${esc(tofr?w.nl:w.fr)}</div><div class="prompt big">${esc(tofr?w.fr:w.nl)}</div></div>
+   </div></div>
+   <div class="acts" id="rate" hidden><button class="btn" id="no">1 · Nog niet</button><button class="btn primary" id="yes">2 · Wist ik</button>${spk(w.fr)}</div></div></div>`;
+  bindQuit();const card=$('#card');
+  G.flip=()=>{if(card.classList.contains('on'))return;card.classList.add('on');$('#rate').hidden=false;say(w.fr)};card.onclick=G.flip;
+  $('#no').onclick=()=>{it.miss=true;G.mist.add(w);ws(w).x++;markDay();reinsert(it,3);save();flashNext()};
+  $('#yes').onclick=()=>{G.done++;if(!it.miss)G.firstOk++;const s=ws(w);if(s.l<2)s.l++;S.xp+=3;markDay();save();flashNext()};
+}
+/* ---------- blitz ---------- */
+function blitzRender(){
+  P.innerHTML=`<div class="playbar"><button class="btn small ghost" id="quit">Stoppen</button><span class="bar"><i id="tbar" style="width:100%"></i></span><span class="timer" id="clock">60</span></div>
+  <div class="slide">${head('Blitz 60','<span id="combo"></span>')}<div class="slide-body"><div style="display:flex;justify-content:space-between;align-items:baseline"><span class="q">Score</span><span class="big" id="score" style="font-size:44px">0</span></div><div id="bq"></div></div></div>`;bindQuit()}
+function blitzNext(){
+  const rest=G.pool.filter(x=>x!==G.last);const w=G.w=pick(rest.length?rest:G.pool);G.last=w;G.lock=false;
+  const tofr=dirFor(w)==='nlfr';const opts=G.opts=shuffle([w,...wDistract(w)]);
+  $('#bq').innerHTML=`<div class="q">${tofr?'In het Frans?':'Betekenis?'}</div><div class="prompt big">${esc(tofr?w.nl:w.fr)}</div>`+mcButtons(opts.map(o=>tofr?o.fr:o.nl));
+  P.querySelectorAll('#bq .opt').forEach((btn,i)=>btn.onclick=()=>blitzAnswer(i));
+}
+function blitzAnswer(i){
+  if(G.lock)return;G.lock=true;const w=G.w,ok=G.opts[i]===w;G.n++;markOpts(G.opts.indexOf(w),i);
+  if(ok){G.streak++;G.ok++;const m=Math.min(3,1+Math.floor(G.streak/5));G.score+=m;const sc=$('#score');sc.textContent=G.score;sc.classList.remove('pop');void sc.offsetWidth;sc.classList.add('pop');setTimeout(()=>G&&G.m==='blitz'&&blitzNext(),280)}
+  else{G.streak=0;G.end-=3000;G.mist.add(w);ws(w).x++;markDay();setTimeout(()=>G&&G.m==='blitz'&&blitzNext(),1100)}
+  const m=Math.min(3,1+Math.floor(G.streak/5));$('#combo').innerHTML=m>1?`<span class="combo">combo ×${m}</span>`:(G.streak?`reeks ${G.streak}`:'');
+}
+function blitzTick(){const left=Math.max(0,G.end-performance.now());$('#clock').textContent=Math.ceil(left/1000);$('#clock').classList.toggle('low',left<10000);$('#tbar').style.width=(left/600)+'%';
+  if(left<=0){clearInterval(G.timer);G.timer=null;const rec=G.score>S.bestBlitz;if(rec){S.bestBlitz=G.score;confetti()}S.xp+=G.score;markDay();save();const mist=[...G.mist];
+    P.innerHTML=`<div class="slide">${head('Blitz 60','Temps écoulé!')}<div class="slide-body"><div><div class="q">${rec?'Nieuw record!':'Score'}</div><div class="big">${G.score}</div><div class="count">${G.ok} van ${G.n} goed · record ${S.bestBlitz}</div></div>
+    ${mist.length?`<div><div class="q" style="margin-bottom:6px">Deze gingen fout</div><ul class="mist">${mist.map(wLi).join('')}</ul></div>`:''}
+    <div class="acts"><button class="btn primary" id="again">Nog een keer</button><button class="btn ghost" id="home2">Naar start</button></div></div></div>`;
+    $('#again').onclick=()=>start('blitz');$('#home2').onclick=goHome;$('#again').focus()}}
+/* ---------- luisteren ---------- */
+function noVoice(){return !canSpeak?'<div class="fb warn"><div class="t">Deze browser kan geen Frans voorlezen.</div><div class="tip">Open de pagina in Safari, Chrome of Edge. Je kunt de vragen wel maken met de tekst (onder "Toon tekst").</div></div>':''}
+function listenMenu(){
+  stopAll();
+  P.innerHTML=`<div class="playbar"><button class="btn small ghost" id="quit">Terug</button></div><div class="slide">${head('Écouter','Luistertoets')}<div class="slide-body">
+   <div class="q">Kies een fragment. Lees eerst de vragen, luister dan maximaal twee keer en kijk daarna na.</div>
+   <div class="seq-list" style="display:grid;gap:8px">${LIST.map((l,i)=>`<button class="btn ghost" data-l="${i}" style="text-align:left"><b>${i+1}. ${esc(l.t)}</b> <span class="src">· ${esc(l.sit)} · ${l.qs.length} vragen${S.lis[l.id]!=null?` · beste: ${S.lis[l.id]}/${l.qs.length}`:''}</span></button>`).join('')}</div>
+   <label class="src" style="display:flex;gap:8px;align-items:center"><input type="checkbox" id="oef" ${S.oef?'checked':''}> Oefenmodus: onbeperkt luisteren</label>
+   ${noVoice()}</div></div>`;
+  bindQuit();$('#oef').onchange=e=>{S.oef=e.target.checked;save()};
+  P.querySelectorAll('[data-l]').forEach(b=>b.onclick=()=>listenPlay(+b.dataset.l));
+}
+function playLines(lines,spMap,rate,onLine,onEnd){
+  if(!canSpeak){onEnd&&onEnd();return}
+  try{speechSynthesis.cancel()}catch(e){}
+  let i=0;const token=G.tok=Math.random();
+  const nextL=()=>{if(!G||G.tok!==token)return;if(i>=lines.length){onLine&&onLine(-1);onEnd&&onEnd();return}
+    const [who,txt]=lines[i];onLine&&onLine(i);const u=utter(txt,spMap[who]||'a',rate);
+    u.onend=()=>{i++;setTimeout(nextL,450)};u.onerror=()=>{i++;setTimeout(nextL,100)};speechSynthesis.speak(u)};
+  nextL();
+}
+function listenPlay(li){
+  const L=LIST[li];G={m:'listen',L,plays:0,ans:{},rate:1,checked:false,playing:false};
+  const opts=L.qs.map(q=>shuffle([q[1],...q[2].split('|')]));G.opts=opts;
+  const render=()=>{
+    const max=S.oef?99:2;const left=max-G.plays;
+    P.innerHTML=`<div class="playbar"><button class="btn small ghost" id="quit">Ander fragment</button><span class="count">${L.qs.length} vragen</span></div>
+    <div class="slide">${head('Écouter · '+esc(L.t),esc(L.sit))}<div class="slide-body">
+     <div class="player"><button class="big-play" id="pl" ${(!G.checked&&left<=0)||G.playing?'disabled':''} aria-label="Afspelen">${G.playing?'…':'▶'}</button>
+      <div><div><b>${G.playing?'Aan het afspelen…':G.checked?'Luister nog eens, met tekst':'Luister'}</b></div><div class="plays">${G.checked||S.oef?'onbeperkt':`nog ${Math.max(0,left)} keer`}</div></div>
+      <div class="dir" id="spd"><button data-r="1" aria-pressed="${G.rate===1}">Normaal</button><button data-r="0.8" aria-pressed="${G.rate===0.8}">Langzaam</button></div>
+      ${G.playing?'<button class="btn small ghost" id="stop">Stop</button>':''}</div>
+     ${noVoice()}
+     <div class="qblock">${L.qs.map((q,qi)=>`<div class="qitem"><div><b>${qi+1}.</b> ${esc(q[0])}</div><div class="opts">${opts[qi].map((o,oi)=>{let c='';if(G.checked){c=o===q[1]?'good':(G.ans[qi]===oi?'bad':'dim')}else if(G.ans[qi]===oi)c='sel';return `<button class="opt ${c}" data-q="${qi}" data-o="${oi}" ${G.checked?'disabled':''}><span class="k">${'ABCD'[oi]}</span><span>${esc(o)}</span></button>`}).join('')}</div></div>`).join('')}</div>
+     ${G.checked?`<div class="fb ${G.score>=L.qs.length*.7?'good':'warn'}"><div class="t">${G.score} van ${L.qs.length} goed</div><div class="tip">Hieronder staat de tekst met vertaling. Tik op ▶ om mee te lezen.</div></div>
+       <div class="trans">${L.lines.map((l,i)=>`<div class="tline" id="tl${i}"><b>${esc(l[0])}:</b> ${esc(l[1])} ${spk(l[1])}<div class="nl">${esc(l[2])}</div></div>`).join('')}</div>
+       <div class="acts"><button class="btn primary" id="again">Opnieuw (andere volgorde)</button><button class="btn ghost" id="other">Ander fragment</button></div>`
+      :`<div class="acts"><button class="btn primary" id="chk">Nakijken</button>${!canSpeak?'<button class="btn ghost" id="showt">Toon tekst</button>':''}</div><div id="ttxt"></div>`}
+    </div></div>`;
+    $('#quit').onclick=listenMenu;
+    P.querySelectorAll('#spd button').forEach(b=>b.onclick=()=>{G.rate=+b.dataset.r;render()});
+    const st=$('#stop');if(st)st.onclick=()=>{G.tok=0;try{speechSynthesis.cancel()}catch(e){}G.playing=false;render()};
+    $('#pl').onclick=()=>{if(!G.checked&&!S.oef&&G.plays>=2)return;if(!G.checked)G.plays++;G.playing=true;render();
+      playLines(L.lines,L.sp,G.rate*0.95,i=>{P.querySelectorAll('.tline').forEach(x=>x.classList.remove('now'));const el=$('#tl'+i);if(el){el.classList.add('now');el.scrollIntoView({block:'nearest',behavior:'smooth'})}},()=>{G.playing=false;render()})};
+    P.querySelectorAll('.opt[data-q]').forEach(b=>b.onclick=()=>{G.ans[+b.dataset.q]=+b.dataset.o;P.querySelectorAll(`.opt[data-q="${b.dataset.q}"]`).forEach(x=>x.classList.toggle('sel',x===b))});
+    const chk=$('#chk');if(chk)chk.onclick=()=>{G.tok=0;try{speechSynthesis.cancel()}catch(e){}G.playing=false;G.checked=true;G.score=L.qs.reduce((a,q,qi)=>a+(opts[qi][G.ans[qi]]===q[1]?1:0),0);
+      S.lis[L.id]=Math.max(S.lis[L.id]||0,G.score);S.xp+=G.score*4;markDay();if(G.score===L.qs.length)confetti();save();render()};
+    const sh=$('#showt');if(sh)sh.onclick=()=>{$('#ttxt').innerHTML=`<div class="trans">${L.lines.map(l=>`<div class="tline"><b>${esc(l[0])}:</b> ${esc(l[1])}</div>`).join('')}</div>`};
+    const ag=$('#again');if(ag)ag.onclick=()=>listenPlay(li);const ot=$('#other');if(ot)ot.onclick=listenMenu;
+  };render();
+}
+/* ---------- dictee ---------- */
+function dictNext(){
+  if(G.i>=G.items.length)return endScreen('Verstaan en schrijven',G.ok,G.items.length,G.mist.map(t=>`<li><b>${esc(t)} ${spk(t)}</b></li>`).join(''),()=>start('dict'));
+  const t=G.items[G.i];let phase='ask';
+  P.innerHTML=bar(G.i,G.items.length)+`<div class="slide">${head('Dictée','Luister en schrijf')}<div class="slide-body">
+   <div class="player"><button class="big-play" id="pl" aria-label="Afspelen">▶</button><button class="btn small ghost" id="slow">🐢 Langzaam</button><span class="src">Zo vaak als je wilt</span></div>${noVoice()}
+   <form class="typerow" id="df" autocomplete="off"><input id="di" autocapitalize="off" autocorrect="off" spellcheck="false" placeholder="wat hoor je?" aria-label="Wat hoor je"><button class="btn dark" type="submit" id="db">Controleer</button></form>${accBar()}<div id="fbox"></div></div></div>`;
+  bindQuit();const inp=$('#di');bindAcc(inp);
+  $('#pl').onclick=()=>{say(t,'a',0.9);inp.focus()};$('#slow').onclick=()=>{say(t,'a',0.6);inp.focus()};
+  setTimeout(()=>say(t,'a',0.9),300);
+  $('#df').onsubmit=e=>{e.preventDefault();if(phase==='done'){G.i++;return dictNext()}
+    const r=checkFRlist(inp.value,[t]);if(r==='empty')return;
+    if(r==='acc'||r==='art'){$('#fbox').innerHTML=`<div class="fb warn"><div class="t">${msgFor(r)} Probeer het nog eens.</div></div>`;return}
+    phase='done';const ok=r==='ok';if(ok){G.ok++;S.xp+=5}else G.mist.push(t);markDay();inp.readOnly=true;
+    $('#fbox').innerHTML=`<div class="fb ${ok?'good':'bad'}"><div class="t">${ok?'Très bien!':'Het was:'}</div><div class="ans">${esc(t)}</div></div>`;$('#db').textContent='Verder';$('#db').focus();save()};
+}
+/* ---------- lezen ---------- */
+function readMenu(){
+  P.innerHTML=`<div class="playbar"><button class="btn small ghost" id="quit">Terug</button></div><div class="slide">${head('Lire','Kies een tekst')}<div class="slide-body"><div style="display:grid;gap:8px">${LEES.map((r,i)=>`<button class="btn ghost" data-r="${i}" style="text-align:left"><b>${esc(r.t)}</b> <span class="src">· ${r.qs.length} vragen${S.lis[r.id]!=null?` · beste: ${S.lis[r.id]}/${r.qs.length}`:''}</span></button>`).join('')}</div></div></div>`;
+  bindQuit();P.querySelectorAll('[data-r]').forEach(b=>b.onclick=()=>readPlay(+b.dataset.r));
+}
+function readPlay(ri){
+  const R=LEES[ri];const opts=R.qs.map(q=>shuffle([q[1],...q[2].split('|')]));const st={ans:{},checked:false,score:0};
+  const render=()=>{
+    P.innerHTML=`<div class="playbar"><button class="btn small ghost" id="quit">Andere tekst</button></div><div class="slide">${head('Lire',esc(R.t))}<div class="slide-body"><div class="reading">${R.txt}</div>
+     <div class="qblock">${R.qs.map((q,qi)=>`<div class="qitem"><div><b>${qi+1}.</b> ${esc(q[0])}</div><div class="opts">${opts[qi].map((o,oi)=>{let c='';if(st.checked){c=o===q[1]?'good':(st.ans[qi]===oi?'bad':'dim')}else if(st.ans[qi]===oi)c='sel';return `<button class="opt ${c}" data-q="${qi}" data-o="${oi}" ${st.checked?'disabled':''}><span class="k">${'ABCD'[oi]}</span><span>${esc(o)}</span></button>`}).join('')}</div></div>`).join('')}</div>
+     ${st.checked?`<div class="fb ${st.score>=R.qs.length*.7?'good':'warn'}"><div class="t">${st.score} van ${R.qs.length} goed</div></div><div class="acts"><button class="btn primary" id="other">Andere tekst</button><button class="btn ghost" id="home2">Naar start</button></div>`:'<div class="acts"><button class="btn primary" id="chk">Nakijken</button></div>'}</div></div>`;
+    $('#quit').onclick=readMenu;
+    P.querySelectorAll('.opt[data-q]').forEach(b=>b.onclick=()=>{st.ans[+b.dataset.q]=+b.dataset.o;P.querySelectorAll(`.opt[data-q="${b.dataset.q}"]`).forEach(x=>x.classList.toggle('sel',x===b))});
+    const c=$('#chk');if(c)c.onclick=()=>{st.checked=true;st.score=R.qs.reduce((a,q,qi)=>a+(opts[qi][st.ans[qi]]===q[1]?1:0),0);S.lis[R.id]=Math.max(S.lis[R.id]||0,st.score);S.xp+=st.score*3;markDay();if(st.score===R.qs.length)confetti();save();render();window.scrollTo(0,document.body.scrollHeight)};
+    const o=$('#other');if(o){o.onclick=readMenu;$('#home2').onclick=goHome}
+  };render();
+}
+/* ---------- phrases-clés ---------- */
+function phrMenu(){
+  P.innerHTML=`<div class="playbar"><button class="btn small ghost" id="quit">Terug</button></div><div class="slide">${head('Phrases-clés','C en G')}<div class="slide-body">
+   <div class="q">Welke zinnen?</div><div class="dir" id="ps"><button data-s="C" aria-pressed="true">C · Réseaux sociaux</button><button data-s="G" aria-pressed="true">G · Mes amis</button></div>
+   <div class="modes"><button class="mode" id="bouw"><span class="lab">Bouwen</span><h3>Zinnen bouwen</h3><p>Tik de Franse woorden in de goede volgorde.</p></button><button class="mode main" id="typ"><span class="lab">Typen</span><h3>Zelf typen</h3><p>Nederlands gegeven, typ de Franse zin.</p></button></div></div></div>`;
+  bindQuit();const sel=new Set(['C','G']);
+  P.querySelectorAll('#ps button').forEach(b=>b.onclick=()=>{const s=b.dataset.s;if(sel.has(s)&&sel.size>1)sel.delete(s);else sel.add(s);P.querySelectorAll('#ps button').forEach(x=>x.setAttribute('aria-pressed',sel.has(x.dataset.s)))});
+  const go=mode=>{const items=shuffle(PHR.filter(p=>sel.has(p.s))).slice(0,8);G={m:'phr',mode,items,i:0,ok:0,mist:[],sel:[...sel]};phrNext()};
+  $('#bouw').onclick=()=>go('b');$('#typ').onclick=()=>go('t');
+}
+function phrNext(){
+  if(G.i>=G.items.length)return endScreen('Phrases-clés',G.ok,G.items.length,G.mist.map(p=>`<li><b>${esc(p.fr)} ${spk(p.fr)}</b><span>${esc(p.nl)}</span></li>`).join(''),phrMenu);
+  const p=G.items[G.i];const clean=p.fr.replace(/\s*…\s*/g,' ').replace(/\s+/g,' ').trim();
+  if(G.mode==='b'){
+    const toks=clean.split(' ');const pool=shuffle(toks.map((t,i)=>({t,i})));let built=[],err=0;
+    const draw=()=>{
+      P.innerHTML=bar(G.i,G.items.length)+`<div class="slide">${head('Phrases-clés · '+p.s,'Zin bouwen')}<div class="slide-body"><div class="q">Zeg in het Frans:</div><div class="prompt">${esc(p.nl)}</div>
+       <div class="built" id="built">${built.map((o,k)=>`<span data-k="${k}">${esc(o.t)}</span>`).join('')||'<span class="src" style="background:none">tik de woorden hieronder aan</span>'}</div>
+       <div class="tiles" id="tiles">${pool.filter(o=>!built.includes(o)).map(o=>`<button data-i="${pool.indexOf(o)}">${esc(o.t)}</button>`).join('')}</div><div id="fbox"></div></div></div>`;
+      bindQuit();
+      P.querySelectorAll('#tiles button').forEach(b=>b.onclick=()=>{built.push(pool[+b.dataset.i]);if(built.length===toks.length){const ok=built.map(o=>o.t).join(' ')===clean;
+        if(ok){if(!err){G.ok++;S.xp+=4}else G.mist.push(p);markDay();draw();P.querySelectorAll('#built span').forEach(s=>s.style.background='var(--good-bg)');$('#tiles').innerHTML='';$('#fbox').innerHTML=`<div class="fb good"><div class="t">${err?'Goed, na een poging.':'Parfait!'}</div><div class="ans">${esc(p.fr)} ${spk(p.fr)}</div></div>`+nextBtn();say(p.fr);bindNext(()=>{G.i++;phrNext()});save()}
+        else{err++;draw();$('#fbox').innerHTML='<div class="fb bad"><div class="t">Nog niet goed. Tik op een woord in je zin om het terug te zetten.</div></div>'}}else draw()});
+      P.querySelectorAll('#built span[data-k]').forEach(s=>s.onclick=()=>{built.splice(+s.dataset.k);draw()});
+    };draw();
+  }else{
+    let phase='ask';
+    P.innerHTML=bar(G.i,G.items.length)+`<div class="slide">${head('Phrases-clés · '+p.s,'Typen')}<div class="slide-body"><div class="q">Zeg in het Frans:</div><div class="prompt">${esc(p.nl)}</div>
+     <form class="typerow" id="pf" autocomplete="off"><input id="pi" autocapitalize="off" autocorrect="off" spellcheck="false" placeholder="en français…" aria-label="Franse zin"><button class="btn dark" type="submit" id="pb">Controleer</button></form>${accBar()}<div id="fbox"></div></div></div>`;
+    bindQuit();const inp=$('#pi');inp.focus();bindAcc(inp);
+    $('#pf').onsubmit=e=>{e.preventDefault();if(phase==='done'){G.i++;return phrNext()}
+      const r=checkFRlist(inp.value,[clean]);if(r==='empty')return;
+      if((r==='acc'||r==='near')&&phase==='ask'){phase='second';$('#fbox').innerHTML=`<div class="fb warn"><div class="t">${msgFor(r)} Probeer het nog eens.</div></div>`;return}
+      const ok=r==='ok';phase='done';if(ok){G.ok++;S.xp+=8}else G.mist.push(p);markDay();inp.readOnly=true;
+      $('#fbox').innerHTML=`<div class="fb ${ok?'good':'bad'}"><div class="t">${ok?'Très bien!':'Het goede antwoord:'}</div><div class="ans">${esc(p.fr)} ${spk(p.fr)}</div></div>`;say(p.fr);$('#pb').textContent='Verder';$('#pb').focus();save()};
+  }
+}
+/* ---------- grammatica ---------- */
+function typedQ(title,headR,promptHtml,answers,explain,onDone){
+  let phase='ask';
+  P.innerHTML=bar(G.i,G.items.length)+`<div class="slide">${head(title,headR)}<div class="slide-body">${promptHtml}
+   <form class="typerow" id="gf" autocomplete="off"><input id="gi" autocapitalize="off" autocorrect="off" spellcheck="false" placeholder="vul in…" aria-label="Antwoord"><button class="btn dark" type="submit" id="gb">Controleer</button></form>${accBar()}<div id="fbox"></div></div></div>`;
+  bindQuit();const inp=$('#gi');inp.focus();bindAcc(inp);
+  $('#gf').onsubmit=e=>{e.preventDefault();if(phase==='done')return onDone();
+    const r=checkFRlist(inp.value,answers);if(r==='empty')return;
+    if(r==='acc'&&phase==='ask'){phase='second';$('#fbox').innerHTML=`<div class="fb warn"><div class="t">${msgFor(r)} Probeer het nog eens.</div></div>`;return}
+    const ok=r==='ok';phase='done';if(ok){G.ok++;S.xp+=5}else G.mist.push({a:answers[0],e:explain});markDay();inp.readOnly=true;
+    $('#fbox').innerHTML=`<div class="fb ${ok?'good':'bad'}"><div class="t">${ok?'Très bien!':'Het goede antwoord:'}</div><div class="ans">${esc(answers[0])}</div><div class="tip">${esc(explain)}</div></div>`;$('#gb').textContent='Verder';$('#gb').focus();save()};
+}
+function mcQ(title,headR,promptHtml,labels,ci,explain,onDone){
+  P.innerHTML=bar(G.i,G.items.length)+`<div class="slide">${head(title,headR)}<div class="slide-body">${promptHtml}${mcButtons(labels)}<div id="fbox"></div></div></div>`;bindQuit();
+  P.querySelectorAll('.opt').forEach((b,i)=>b.onclick=()=>{markOpts(ci,i);const ok=i===ci;if(ok){G.ok++;S.xp+=3}else G.mist.push({a:labels[ci],e:explain});markDay();
+    $('#fbox').innerHTML=`<div class="fb ${ok?'good':'bad'}"><div class="t">${ok?'Goed!':'Het goede antwoord: '+esc(labels[ci])}</div><div class="tip">${esc(explain)}</div></div>`+nextBtn();bindNext(onDone);save()});
+}
+const gMist=()=>G.mist.map(m=>`<li><b>${esc(m.a)}</b><span>${esc(m.e)}</span></li>`).join('');
+function adjNext(){
+  if(G.i>=G.items.length)return endScreen('Bijvoeglijk naamwoord',G.ok,G.items.length,gMist(),()=>start('adj'));
+  const it=G.items[G.i],nx=()=>{G.i++;adjNext()};
+  if(it.t==='f'){const [s,base,ans,ex]=it.a;typedQ('Grammaire D','Vorm',`<div class="q">Vul de goede vorm in van <b>${esc(base)}</b></div><div class="prompt">${esc(s).replace('___','<span style="border-bottom:3px solid var(--pink);padding:0 1.5em"></span>')}</div>`,[ans],ex,nx)}
+  else{const [good,bad,ex]=it.a;const labels=shuffle([good,bad]);mcQ('Grammaire D','Plaats','<div class="q">Welke zin is goed?</div>',labels,labels.indexOf(good),ex,nx)}
+}
+function makeRe(){const [inf,stem,nl]=pick(REV),[pr,end,aux,pnl]=pick(PERS),pc=Math.random()<.4;
+  const ans=pc?`${aux.replace(/^(j'|tu |il |elle |on |nous |vous |ils |elles )/,'')} ${stem}u`:stem+end;
+  const lead=pc&&pr==='je'?"j'":pr+' ';return {inf,nl,pr,pc,ans,full:(pc?aux+' '+stem+'u':(pr==='je'?'je ':pr+' ')+stem+end),lead}}
+function reNext(){
+  if(G.i>=G.items.length)return endScreen('Werkwoorden op -re',G.ok,G.items.length,gMist(),()=>start('re'));
+  const r=G.items[G.i];
+  typedQ('Grammaire H',r.pc?'Passé composé':'Présent',`<div class="q">${r.pc?'Passé composé (avoir + -u)':'Présent'} van <b>${esc(r.inf)}</b> (${esc(r.nl)})</div><div class="prompt big">${esc(r.lead)}<span style="border-bottom:3px solid var(--pink);padding:0 1.5em"></span></div>`,[r.ans,r.full],`${r.full}`,()=>{G.i++;reNext()});
+}
+function cultNext(){
+  if(G.i>=G.items.length)return endScreen('SMS-taal en cultuur',G.ok,G.items.length,gMist(),()=>start('cult'));
+  const c=G.items[G.i];const labels=shuffle([c.a,...c.o]);mcQ('Culture','Francofolies',`<div class="prompt">${esc(c.q)}</div>`,labels,labels.indexOf(c.a),'',()=>{G.i++;cultNext()});
+}
+function sumView(){
+  const blk=(t,h)=>`<div class="sum"><h3>${t}</h3>${h}</div>`;
+  P.innerHTML=`<div class="playbar"><button class="btn small ghost" id="quit">Terug</button></div><div style="display:grid;gap:12px">${blk('Woordjes leren',SAM.woord)}${blk('Phrases-clés',SAM.phr)}${blk('Grammaire D · bijvoeglijk naamwoord',SAM.adj)}${blk('Grammaire H · werkwoorden op -re',SAM.re)}${blk('Uitspraak',SAM.uit)}
+   <div class="sum"><h3>Alle woorden</h3>${SETS.map(s=>`<p><b>${esc(s.t)}</b></p><div style="overflow-x:auto"><table class="gt">${WORDS.filter(w=>w.s===s.id).map(w=>`<tr><td>${esc(w.fr)} ${spk(w.fr)}</td><td>${esc(w.nl)}${w.r?' <span class="tagR">alleen FR→NL</span>':''}</td></tr>`).join('')}</table></div>`).join('')}</div></div>`;
+  bindQuit();
+}
+/* ---------- proeftoets ---------- */
+function toetsStart(){
+  const qs=[];const W=WORDS;
+  shuffle(W).slice(0,8).forEach(w=>{const tofr=!w.r&&Math.random()<.5;const o=shuffle([w,...wDistract(w)]);qs.push({k:'mc',cat:'woorden',q:tofr?`Hoe zeg je “${w.nl}” in het Frans?`:`Wat betekent “${w.fr}”?`,opts:o.map(x=>tofr?x.fr:x.nl),a:tofr?w.fr:w.nl})});
+  shuffle(W.filter(w=>!w.r)).slice(0,4).forEach(w=>qs.push({k:'ty',cat:'woorden',q:`Vertaal in het Frans: “${w.nl}”`,ans:sameNL(w),show:w.fr}));
+  shuffle(PHR).slice(0,3).forEach(p=>{const o=shuffle([p,...shuffle(PHR.filter(x=>x!==p)).slice(0,3)]);qs.push({k:'mc',cat:'zinnen',q:`Hoe zeg je: “${p.nl}”?`,opts:o.map(x=>x.fr),a:p.fr})});
+  shuffle(ADJ).slice(0,3).forEach(a=>qs.push({k:'ty',cat:'grammatica',q:`Goede vorm van “${a[1]}”: ${a[0]}`,ans:[a[2]],show:a[2]}));
+  shuffle(PLACE).slice(0,2).forEach(a=>{const o=shuffle([a[0],a[1]]);qs.push({k:'mc',cat:'grammatica',q:'Welke zin is goed?',opts:o,a:a[0]})});
+  for(let i=0;i<3;i++){const r=makeRe();qs.push({k:'ty',cat:'grammatica',q:`${r.pc?'Passé composé':'Présent'} van ${r.inf}: ${r.lead}___`,ans:[r.ans,r.full],show:r.full})}
+  shuffle(CULT).slice(0,2).forEach(c=>qs.push({k:'mc',cat:'cultuur',q:c.q,opts:shuffle([c.a,...c.o]),a:c.a}));
+  G={m:'toets',qs:shuffle(qs),i:0,score:0,wrong:[],items:qs};show('play');toetsNext();
+}
+function toetsNext(){
+  if(G.i>=G.qs.length){const n=G.qs.length,c=Math.round((1+9*G.score/n)*10)/10;if(c>S.bestToets)S.bestToets=c;if(c>=7.5)confetti();S.xp+=G.score*3;markDay();save();
+    P.innerHTML=`<div class="slide">${head('Proeftoets','Uitslag')}<div class="slide-body"><div><div class="q">Je cijfer</div><div class="big" style="color:${c>=5.5?'var(--good)':'var(--bad)'}">${fmt(c)}</div><div class="count">${G.score} van ${n} goed</div></div>
+     ${G.wrong.length?`<div><div class="q" style="margin-bottom:6px">Dit ging fout</div><ul class="mist">${G.wrong.map(q=>`<li><b>${esc(q.q)}</b><span>Goed: ${esc(q.k==='mc'?q.a:q.show)}${q.given?` · jij: ${esc(q.given)}`:''}</span></li>`).join('')}</ul></div>`:''}
+     <div class="acts"><button class="btn primary" id="again">Nieuwe proeftoets</button><button class="btn ghost" id="home2">Naar start</button></div></div></div>`;
+    $('#again').onclick=toetsStart;$('#home2').onclick=goHome;return}
+  const q=G.qs[G.i];
+  const body=q.k==='ty'?`<form class="typerow" id="tf" autocomplete="off"><input id="ti" autocapitalize="off" autocorrect="off" spellcheck="false" placeholder="antwoord…" aria-label="Antwoord"><button class="btn dark" type="submit">Antwoord</button></form>${accBar()}`:mcButtons(q.opts);
+  P.innerHTML=bar(G.i,G.qs.length)+`<div class="slide">${head('Proeftoets','Vraag '+(G.i+1)+' · '+q.cat)}<div class="slide-body"><div class="prompt">${esc(q.q)}</div>${body}<div class="src">Je ziet de antwoorden aan het eind. Accenten tellen mee.</div></div></div>`;
+  bindQuit();
+  const answer=(ok,given)=>{if(ok)G.score++;else G.wrong.push({...q,given});G.i++;toetsNext()};
+  if(q.k==='ty'){const inp=$('#ti');inp.focus();bindAcc(inp);$('#tf').onsubmit=e=>{e.preventDefault();const r=checkFRlist(inp.value,q.ans);if(r==='empty')return;answer(r==='ok',inp.value)}}
+  else P.querySelectorAll('.opt').forEach((b,i)=>b.onclick=()=>answer(q.opts[i]===q.a,q.opts[i]));
+}
+/* ---------- toetsenbord ---------- */
+document.addEventListener('keydown',e=>{
+  if(P.hidden||!G)return;const inInput=e.target.tagName==='INPUT';
+  if(!inInput&&/^[1-4]$/.test(e.key)){
+    if(G.m==='flash'){const b=e.key==='1'?$('#no'):e.key==='2'?$('#yes'):null;if(b&&!$('#rate').hidden)b.click();return}
+    if(G.m==='listen')return;
+    const b=P.querySelectorAll('.opt')[+e.key-1];if(b&&!b.disabled)b.click();return}
+  if(G.m==='flash'&&(e.key===' '||e.key==='Enter')&&!inInput){e.preventDefault();if($('#rate')&&$('#rate').hidden)G.flip&&G.flip()}
+});
+function confetti(){
+  if(matchMedia('(prefers-reduced-motion: reduce)').matches)return;
+  const c=$('#conf'),x=c.getContext('2d');c.width=innerWidth;c.height=innerHeight;
+  const cols=['#1C7C8C','#E0483E','#F2B400','#2E5AAC','#FFFFFF'];
+  const ps=Array.from({length:110},()=>({x:c.width/2,y:c.height*.35,vx:(Math.random()-.5)*14,vy:-Math.random()*12-4,r:Math.random()*6+4,c:pick(cols),a:Math.random()*6}));
+  let f=0;(function loop(){x.clearRect(0,0,c.width,c.height);ps.forEach(p=>{p.x+=p.vx;p.y+=p.vy;p.vy+=.4;p.vx*=.99;p.a+=.2;x.save();x.translate(p.x,p.y);x.rotate(p.a);x.fillStyle=p.c;x.fillRect(-p.r/2,-p.r/4,p.r,p.r/2);x.restore()});if(++f<110)requestAnimationFrame(loop);else x.clearRect(0,0,c.width,c.height)})();
+}
+renderHome();
+</script>
+</body>
+</html>
