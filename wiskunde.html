@@ -218,6 +218,13 @@ ol.steps li{animation:fadein .3s ease}
 .kc .bar{grid-column:1;display:block;align-self:center}.kc .count{grid-column:2;grid-row:3}
 .kc:disabled{opacity:.5;cursor:not-allowed;border-style:dashed}
 .kc.done{border-color:var(--good);background:var(--good-bg)}
+
+.lpcard .lpt{font-size:clamp(22px,5.5vw,28px);margin:0}
+.lpb{font-size:17px;line-height:1.55}.lpb p{margin:6px 0}
+.lpq{border-top:2px dashed var(--line);padding-top:12px;display:grid;gap:10px}
+.lpnav{display:flex;justify-content:space-between;gap:10px;margin-top:6px}
+.lpmode{width:100%}
+.sec .acts .btn.lp{background:var(--accent);border-color:var(--accent);color:#fff}
 </style>
 
 </head>
@@ -239,6 +246,7 @@ ol.steps li{animation:fadein .3s ease}
   </header>
   <div class="banner"><span class="pill">Eerst uitleg, dan oefenen</span><span class="pill g">Elke ronde nieuwe sommen</span></div>
 
+  <section><div id="lpbox"></div></section>
   <section>
     <div class="modes"><button class="mode main" id="klim"><span class="lab">Spel</span><h3>Beklim de Statistiekberg</h3><p>Elke goede vraag brengt je hoger. Foute vragen komen terug tot je ze goed hebt. Haal de top: 100%.</p><span class="tag" id="klimTag" style="text-transform:none">0 m</span></button></div>
   </section>
@@ -867,6 +875,75 @@ function klimNext(){const K=S.klim,c=KCAMPS[G.ci];
     else{G.combo=0;G.fout++;G.queue.splice(Math.min(3,G.queue.length),0,q)}
     save();klimNext()},{onQuit:klimHome});}
 
+/* ---------- Leerpad: theorie in kleine kaartjes met controlevragen ---------- */
+/* LP = { sec: [ [titel, html|fn, [vraag, goed, 'fout|fout', uitleg]?], ... ] } */
+function lpState(){if(!S.lp)S.lp={};if(!S.lpd)S.lpd={};return S}
+function lpStart(sec,from){lpState();const cards=LP[sec];if(!cards)return;let i=from!=null?from:(S.lpd[sec]?0:Math.min(S.lp[sec]||0,cards.length-1));
+ G={m:'lp',sec,i,cards,redo:[],ok:0,asked:0,answered:{}};show('play');lpDraw()}
+function lpDraw(){const {sec,cards}=G;const i=G.i;const c=cards[i];const s=SECS.find(x=>x.id===sec);const qz=c[2];const done=G.answered[i];
+ const body=typeof c[1]==='function'?c[1]():c[1];
+ P.innerHTML=`<div class="playbar"><button class="btn small ghost" id="quit">Stoppen</button><span class="bar"><i style="width:${Math.round((i)/cards.length*100)}%"></i></span><span class="count">${i+1}/${cards.length}</span></div>
+ <div class="slide lpcard">${head('Leerpad · '+(sec==='0'?'basis':sec),esc(s?s.t:''))}<div class="slide-body">
+  <h2 class="lpt">${c[0]}</h2><div class="lpb">${body}</div>
+  ${qz?`<div class="lpq"><div class="q">Even checken</div><div class="prompt" style="font-size:19px">${qz[0]}</div><div id="lpo"></div><div id="fbox"></div></div>`:''}
+  <div class="lpnav"><button class="btn ghost" id="lpprev" ${i===0?'disabled':''}>← Terug</button><button class="btn primary" id="lpnext" ${qz&&!done?'disabled':''}>${i===cards.length-1?'Afronden ✓':'Verder →'}</button></div>
+ </div></div>`;
+ $('#quit').onclick=()=>{save();goHome()};$('#lpprev').onclick=()=>{G.i--;lpDraw()};$('#lpnext').onclick=lpNext;
+ if(qz){const opts=shuffle([qz[1],...qz[2].split('|')]);$('#lpo').innerHTML=mcButtons(opts);
+  if(done){markOpts(opts.indexOf(qz[1]),opts.indexOf(qz[1]));$('#fbox').innerHTML=`<div class="fb good"><div class="tip">${qz[3]}</div></div>`}
+  else P.querySelectorAll('#lpo .opt').forEach((b,j)=>b.onclick=()=>{const ok=opts[j]===qz[1];markOpts(opts.indexOf(qz[1]),j);G.asked++;if(ok)G.ok++;else G.redo.push(i);G.answered[i]=1;
+   $('#fbox').innerHTML=`<div class="fb ${ok?'good':'bad'}"><div class="t">${ok?pick(['Goed!','Klopt!','Precies!']):'Niet helemaal.'}</div><div class="tip">${qz[3]}</div></div>`;const n=$('#lpnext');n.disabled=false;n.focus()})}
+ S.lp[sec]=i;save();window.scrollTo(0,0)}
+function lpNext(){const {cards}=G;if(G.i<cards.length-1){G.i++;lpDraw();return}
+ lpState();S.lpd[G.sec]=1;S.lp[G.sec]=0;markDay();save();confetti();const sec=G.sec;const nxt=SECS[SECS.findIndex(x=>x.id===sec)+1];
+ const redo=[...new Set(G.redo)];
+ P.innerHTML=`<div class="slide">${head('Leerpad '+(sec==='0'?'basis':sec),'Klaar')}<div class="slide-body"><div class="q">Controlevragen in één keer goed</div><div class="big">${G.ok}<span style="font-size:.45em;color:var(--muted)"> / ${G.asked}</span></div>
+  ${redo.length?`<div class="fb bad"><div class="t">Kijk hier nog even naar</div><div class="tip">${redo.map(i=>`<button class="btn small ghost" data-go="${i}" style="margin:3px">${cards[i][0]}</button>`).join('')}</div></div>`:'<div>Alles in één keer goed. Mooi!</div>'}
+  <div class="nextbox"><h3>Wat nu?</h3><div class="choice"><button class="btn primary" id="lpprac">Oefenronde ${sec==='0'?'basis':sec}</button><span>Test of het blijft hangen. Fouten komen terug met uitleg.</span></div>
+  ${nxt&&LP[nxt.id]?`<div class="choice"><button class="btn ghost" id="lpnxt">Leerpad ${nxt.id}: ${esc(nxt.t)} →</button><span>Of leer eerst door.</span></div>`:''}
+  <div class="choice"><button class="btn ghost" id="lphome">Naar start</button></div></div></div></div>`;
+ P.querySelectorAll('[data-go]').forEach(b=>b.onclick=()=>lpStart(sec,+b.dataset.go));$('#lpprac').onclick=()=>practice(sec);const n=$('#lpnxt');if(n)n.onclick=()=>lpStart(nxt.id);$('#lphome').onclick=goHome;$('#lpprac').focus()}
+function lpBox(){const el=$('#lpbox');if(!el)return;lpState();const todo=SECS.find(s=>LP[s.id]&&!S.lpd[s.id]);const nDone=SECS.filter(s=>S.lpd[s.id]).length;
+ el.innerHTML=`<button class="mode main lpmode" id="lpgo"><span class="lab">Leren</span><span class="tag" style="text-transform:none">${nDone} van ${SECS.length} paragrafen geleerd</span><h3>${todo?(S.lp[todo.id]?'Ga verder: ':'Begin: ')+esc(todo.t):'Alles doorlopen. Herhalen?'}</h3><p>Geen boek nodig: de theorie in korte kaartjes, één idee per kaart, met af en toe een controlevraag. Ongeveer 10 minuten per paragraaf.</p></button>`;
+ $('#lpgo').onclick=()=>lpStart((todo||SECS[0]).id)}
+
+const LP={
+'2.1':[
+ ['Waar gaat statistiek over?',`<p>Statistiek is antwoord geven op een vraag met behulp van <b>data</b> (gegevens). Bijvoorbeeld: "Hoeveel uur per dag zitten leerlingen op hun telefoon?"</p><p>Zo'n onderzoek doorloopt altijd dezelfde vier stappen.</p>`],
+ ['De statistische cyclus',`<div class="cycle"><span class="c1">1 · De onderzoeksvraag</span><span class="c2">2 · Data verzamelen</span><span class="c3">3 · Data analyseren</span><span class="c4">4 · Conclusies trekken</span></div><p>Na de conclusie heb je vaak een nieuwe vraag, en begint de cyclus opnieuw.</p>`,['Je maakt een grafiek van de resultaten. In welke fase zit je?','data analyseren','data verzamelen|conclusies trekken','Rekenen, tabellen en grafieken maken = analyseren.']],
+ ['Een goede vraag',`<p>Een onderzoeksvraag moet <b>duidelijk</b> en <b>uitvoerbaar</b> zijn.</p><div class="ex">❌ "Hoe lossen we het klimaatprobleem op?" (te groot)<br>❌ "Hebben <i>goede</i> leerlingen meer vrienden?" (wat is goed?)<br>✅ "Hoeveel minuten per dag gebruiken leerlingen van klas 3 hun telefoon?"</div>`,['Wat is er mis met "Waarom zijn mensen met een elektrische auto minder milieubewust?"','er zit een (foute) aanname in','te klein|te duidelijk','De vraag gaat er al van uit dat het zo is.']],
+ ['Populatie en steekproef',`<p>De <b>populatie</b> is de hele groep waar je iets over wilt zeggen, bijvoorbeeld alle leerlingen van de school.</p><p>Iedereen ondervragen kost te veel tijd. Dus je kiest een deel: de <b>steekproef</b>. De mensen die meedoen heten <b>respondenten</b>.</p>`],
+ ['Representatief',`<div class="rule">Een steekproef is <b>representatief</b> als hij een goede afspiegeling is van de populatie.</div><p>Wil je iets over de hele school weten, maar vraag je alleen klas 1? Dan is je steekproef niet representatief.</p>`],
+ ['Aselect',`<div class="rule">Een steekproef is <b>aselect</b> als iedereen in de populatie een even grote kans heeft om gekozen te worden.</div><p>Bijvoorbeeld door te loten. Mensen op zaterdagmiddag in de stad aanspreken is níet aselect: wie werkt of op het platteland woont, komt er bijna nooit in.</p>`,['De eerste 80 leerlingen in de kantine ondervragen is …','niet aselect','aselect|representatief','Wie nooit in de kantine komt, heeft geen kans.']]],
+'2.2':[
+ ['Variabelen en waarden',`<p>Wat je onderzoekt heet een <b>variabele</b>: leeftijd, woonplaats, lengte. De mogelijke uitkomsten zijn de <b>waarden</b>: 13, 14, 15 of Laren, Ruurlo.</p><p>Alle gegevens samen vormen de <b>dataset</b>.</p>`],
+ ['Getallen of woorden?',`<div class="rule">Waarden zijn geen hoeveelheden → <b>kwalitatief</b><br>Waarden zijn hoeveelheden → <b>kwantitatief</b></div><p>Let op: een postcode of kluisnummer is wel een getal, maar geen hoeveelheid. Dat is dus kwalitatief.</p><p>Test: heeft het gemiddelde zin? Gemiddelde lengte wel, gemiddeld kluisnummer niet.</p>`,['Welk type is "telefoonnummer"?','kwalitatief','kwantitatief|continu','Het is een getal, maar geen hoeveelheid.']],
+ ['Kwalitatief: nominaal of ordinaal',`<div class="rule">Geen logische volgorde → <b>nominaal</b> (kleur, woonplaats)<br>Wel een volgorde → <b>ordinaal</b> (nooit/soms/vaak, slecht/goed)</div><p>Nominaal komt van <i>nomen</i> = naam: je geeft alleen een naam.</p>`,['"Tevredenheid: slecht, matig, goed" is …','ordinaal','nominaal|continu','Er zit een logische volgorde in.']],
+ ['Kwantitatief: discreet of continu',`<div class="rule"><b>Tellen</b> → discreet (aantal broers, schoenmaat)<br><b>Meten</b> → continu (lengte, gewicht, tijd)</div><p>Bij continu kan elke tussenwaarde: 172,35 cm. Bij discreet niet: je hebt geen 2,5 broer.</p>`,['Het gewicht van een appel is …','continu','discreet|nominaal','Gewicht meet je, elke tussenwaarde kan.']],
+ ['Het stroomschema',`<div class="flow"><div class="fq">Hoeveelheid?</div><div class="fa">nee → kwalitatief · ja → kwantitatief</div><div class="fq">Kwalitatief: volgorde?</div><div class="fa">nee → nominaal · ja → ordinaal</div><div class="fq">Kwantitatief: tussenwaarden?</div><div class="fa">nee → discreet · ja → continu</div></div><p>Met deze drie vragen kun je elke variabele indelen.</p>`,['Aantal kinderen in een gezin is …','kwantitatief discreet','kwantitatief continu|kwalitatief ordinaal','Hoeveelheid, en je telt het.']]],
+'2.3':[
+ ['Het gemiddelde',`<p>Tel alles op en deel door het aantal. Het is wat iedereen krijgt als je eerlijk verdeelt.</p><div class="ex">8, 5, 3, 6, 3, 4, 8, 3 → som 40 → 40 ÷ 8 = <b>5</b></div>`,['Gemiddelde van 4, 6, 8?','6','18|5','18 ÷ 3 = 6.']],
+ ['De mediaan',`<p>Zet de getallen <b>op volgorde</b> en neem het middelste.</p><div class="ex">3 3 3 <b>4 5</b> 6 8 8 → even aantal, dus (4 + 5) ÷ 2 = <b>4,5</b></div><p>Bij een oneven aantal is er precies één middelste getal.</p>`,['Mediaan van 7, 1, 9, 3, 5?','5','9|3','Op volgorde: 1 3 5 7 9. Middelste is 5.']],
+ ['De modus',`<p>Het getal dat het <b>vaakst</b> voorkomt.</p><div class="ex">3 3 3 4 5 6 8 8 → modus <b>3</b></div><p>Komen twee getallen even vaak het meest voor? Dan is er geen modus.</p>`],
+ ['Welke kies je?',`<p>Het gemiddelde gebruikt alle getallen, maar schiet uit van één rare waarde: een <b>uitschieter</b>.</p><div class="ex">Leeftijden op een feestje: 14, 14, 15, 15, 68 (opa). Gemiddelde 25,2. Mediaan 15.</div><p>Bij uitschieters zegt de mediaan meer. Bij kwalitatieve data (kleuren) kan alleen de modus.</p>`,['Welke centrummaat kun je gebruiken bij "lievelingskleur"?','modus','gemiddelde|mediaan','Je kunt met kleuren niet rekenen of ordenen.']],
+ ['Frequentietabel',`<p>Bij veel gegevens maak je een tabel: welk getal, hoe vaak.</p><table class="gt"><tr><th>cijfer</th><td>5</td><td>6</td><td>7</td></tr><tr><th>frequentie</th><td>2</td><td>5</td><td>3</td></tr></table><p>Gemiddelde: (2·5 + 5·6 + 3·7) ÷ 10 = 61 ÷ 10 = <b>6,1</b>. Vergeet niet te vermenigvuldigen met de frequentie!</p>`,['Hoeveel leerlingen zijn er in deze tabel?','10','3|18','2 + 5 + 3 = 10.']],
+ ['Klassen en histogram',(()=>`<p>Bij veel verschillende waarden maak je <b>klassen</b>: [20, 30) betekent 20 tot 30, waarbij 20 meedoet en 30 niet. Het <b>klassenmidden</b> is 25.</p>${svgHist([3,7,12,9,4])}<p>Een <b>histogram</b> heeft staven die tegen elkaar aan staan. Het gemiddelde schat je met de klassenmiddens.</p>`),['Wat is het klassenmidden van [40, 50)?','45','40|50','(40 + 50) ÷ 2.']]],
+'2.4':[
+ ['Cumulatief: optellen',`<p><b>Cumulatief</b> betekent: steeds alles ervóór erbij optellen.</p><table class="gt"><tr><th>minuten</th><td>(0,1]</td><td>(1,2]</td><td>(2,3]</td></tr><tr><th>frequentie</th><td>18</td><td>23</td><td>14</td></tr><tr><th>cumulatief</th><td>18</td><td>41</td><td>55</td></tr></table><p>Dus 41 gesprekken duurden 2 minuten of korter.</p>`,['Wat komt er na 18, 41, 55 als de volgende frequentie 8 is?','63','8|26','55 + 8 = 63.']],
+ ['Kwartielen',`<p>De mediaan knipt de getallen in twee helften. Knip elke helft nog eens: dan heb je <b>kwartielen</b>.</p><div class="ex">3 5 5 6 <b>7</b> 7 8 9 11 → mediaan 7<br>Eerste helft 3 5 5 6 → Q<sub>1</sub> = (5 + 5) ÷ 2 = <b>5</b><br>Tweede helft 7 8 9 11 → Q<sub>3</sub> = (8 + 9) ÷ 2 = <b>8,5</b></div><p>Bij een oneven aantal laat je de mediaan zelf weg bij het splitsen.</p>`],
+ ['Vijf getallen',`<div class="rule">Q<sub>0</sub> kleinste · Q<sub>1</sub> · Q<sub>2</sub> mediaan · Q<sub>3</sub> · Q<sub>4</sub> grootste</div><p>Deze <b>vijfgetallensamenvatting</b> vertelt in vijf getallen hoe de data verdeeld zijn.</p>`],
+ ['Spreiding',`<p>Twee leerlingen staan allebei gemiddeld een 7. De een haalt steeds 6,5 tot 7,5, de ander 4 tot 10. Dat verschil heet <b>spreiding</b>.</p><div class="rule">spreidingsbreedte = Q<sub>4</sub> − Q<sub>0</sub><br>interkwartielafstand = Q<sub>3</sub> − Q<sub>1</sub></div>`,['Q<sub>1</sub> = 5 en Q<sub>3</sub> = 8,5. Interkwartielafstand?','3,5','13,5|8,5','8,5 − 5.']],
+ ['De boxplot',(()=>`${svgBox([10,27,38,48,70],0,70,10)}<p>De boxplot tekent de vijf getallen. De box loopt van Q<sub>1</sub> tot Q<sub>3</sub>, met een streep bij de mediaan. De snorren lopen naar Q<sub>0</sub> en Q<sub>4</sub>.</p><div class="rule">Elk van de vier stukken bevat ongeveer <b>25%</b> van de getallen, hoe lang of kort het stuk ook is.</div>`),['Hoeveel procent van de getallen zit in de box?','50%','25%|75%','Van Q<sub>1</sub> tot Q<sub>3</sub> = twee kwarten.']],
+ ['Aflezen uit een cumulatieve grafiek',`<p>Bij een <b>relatieve cumulatieve</b> grafiek staat links het percentage. Je leest de kwartielen af bij 25%, 50% en 75%: ga horizontaal naar de lijn en dan recht naar beneden.</p><p>Let op: de punten staan boven de <b>rechtergrens</b> van elke klasse. Oefen dit bij <b>Grafieken</b>.</p>`]],
+'2.5':[
+ ['De vorm van data',(()=>`<div class="distgrid">${Object.entries(SHAPES).slice(0,3).map(([k,t])=>`<figure>${svgHist(shapeFreqs(k))}<figcaption>${t}</figcaption></figure>`).join('')}</div><p>Een histogram heeft een vorm. Die vertelt veel over de data.</p>`)],
+ ['Scheef',`<p><b>Rechtsscheef</b>: de top links, een lange staart naar rechts. Bijvoorbeeld inkomens: de meeste mensen verdienen gemiddeld, een paar heel veel.</p><p><b>Linksscheef</b>: de staart naar links.</p><div class="rule">De naam gaat over de kant van de <b>staart</b>.</div><p>Het gemiddelde wordt naar de staart getrokken; de mediaan blijft beter in het midden.</p>`,['Bij een rechtsscheve verdeling is het gemiddelde …','groter dan de mediaan','kleiner dan de mediaan|gelijk aan de mediaan','De staart rechts trekt het gemiddelde omhoog.']],
+ ['Andere vormen',`<p><b>Symmetrisch</b>: links en rechts gespiegeld. <b>Uniform</b>: alle staven even hoog. <b>Meertoppig</b>: twee of meer toppen, vaak omdat er twee groepen in de data zitten (zoals lengtes van jongens en meisjes samen).</p>`],
+ ['De standaardafwijking',`<p>Nog een maat voor spreiding, die <b>alle</b> getallen gebruikt: de <b>standaardafwijking σ</b>. Groter σ = meer spreiding.</p><div class="ex">0 2 3 4 6: gemiddelde 3. Afstanden −3 −1 0 1 3. Kwadraten 9+1+0+1+9 = 20. ÷ 5 = 4. √4 = <b>2</b>.</div><p>Op je rekenmachine gaat dit automatisch.</p>`],
+ ['De normale verdeling',(()=>`${svgNormal(null,1,'')}<p>Veel metingen (lengte, gewicht van appels) zijn <b>normaal verdeeld</b>: een symmetrische klokvorm rond het gemiddelde μ.</p>`)],
+ ['De vuistregels',`<div class="rule">68% ligt binnen 1σ van het gemiddelde<br>95% ligt binnen 2σ<br>bijna 100% ligt binnen 3σ</div><div class="ex">Lengte jongens: μ = 170, σ = 8. Dan is 95% tussen 154 en 186 cm. Langer dan 186: (100 − 95) ÷ 2 = <b>2,5%</b>.</div><p>Oefen het met <b>Gebied kleuren</b> bij Grafieken.</p>`,['Hoeveel procent ligt tussen μ − σ en μ + σ?','68%','95%|50%','De eerste vuistregel.']]]
+};
+
 const $=s=>document.querySelector(s);
 const esc=s=>String(s).replace(/[&<>"]/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;'}[c]));
 const shuffle=a=>{a=[...a];for(let i=a.length-1;i>0;i--){const j=Math.random()*(i+1)|0;[a[i],a[j]]=[a[j],a[i]]}return a};
@@ -884,12 +961,12 @@ const P=$('#play');let G=null;
 function show(v){$('#home').hidden=v!=='home';P.hidden=v!=='play';window.scrollTo(0,0)}
 function goHome(){G=null;save();renderHome();show('home')}
 function renderHome(){
-  $('#secs').innerHTML=SECS.map(s=>{const m=score(s.id);return `<div class="sec"><span class="num">${s.id}</span><div><h3>${esc(s.t)}</h3><p>${esc(s.s)}</p><span class="bar"><i style="width:${Math.round(m*100)}%"></i></span></div><div class="acts"><button class="btn small ghost" data-u="${s.id}">Uitleg</button><button class="btn small primary" data-o="${s.id}">Oefenen</button></div></div>`}).join('');
+  $('#secs').innerHTML=SECS.map(s=>{const m=score(s.id);return `<div class="sec"><span class="num">${s.id}</span><div><h3>${esc(s.t)}</h3><p>${esc(s.s)}</p><span class="bar"><i style="width:${Math.round(m*100)}%"></i></span></div><div class="acts"><button class="btn small lp" data-lp="${s.id}">${S.lpd&&S.lpd[s.id]?'✓ Leerpad':'▶ Leerpad'}</button><button class="btn small ghost" data-u="${s.id}">Uitleg</button><button class="btn small primary" data-o="${s.id}">Oefenen</button></div></div>`}).join('');
   $('#grafs').innerHTML=Object.entries(GTASKS).map(([k,g])=>`<button class="btn small ghost" data-gr="${k}"><span class="src">${GSEC[k]}</span> ${esc(g.t)}</button>`).join('')+`<button class="btn small primary" data-gr="mix">Gemengd</button>`;
   $('#tools').innerHTML=Object.entries(GENS).map(([k,g])=>`<button class="btn small ghost" data-g="${k}"><span class="src">${g.sec}</span> ${esc(g.t)}</button>`).join('');
-  $('#stDone').textContent=S.done;try{const t=klimTotal();$('#klimTag').textContent=Math.round(t.p*4478).toLocaleString('nl-NL')+' m · '+Math.round(t.p*100)+'%'}catch(e){}$('#stStreak').textContent=streak();$('#stBest').textContent=S.best?nf(S.best):'–';
+  try{lpBox()}catch(e){}$('#stDone').textContent=S.done;try{const t=klimTotal();$('#klimTag').textContent=Math.round(t.p*4478).toLocaleString('nl-NL')+' m · '+Math.round(t.p*100)+'%'}catch(e){}$('#stStreak').textContent=streak();$('#stBest').textContent=S.best?nf(S.best):'–';
 }
-$('#secs').addEventListener('click',e=>{const u=e.target.closest('[data-u]'),o=e.target.closest('[data-o]');if(u)uitleg(u.dataset.u);if(o)practice(o.dataset.o)});
+$('#secs').addEventListener('click',e=>{const u=e.target.closest('[data-u]'),o=e.target.closest('[data-o]');if(u)uitleg(u.dataset.u);if(o)practice(o.dataset.o);const l=e.target.closest('[data-lp]');if(l)lpStart(l.dataset.lp)});
 $('#tools').addEventListener('click',e=>{const b=e.target.closest('[data-g]');if(b)trainer(b.dataset.g)});
 $('#grafs').addEventListener('click',e=>{const b=e.target.closest('[data-gr]');if(b)grafRun(b.dataset.gr)});
 $('#toets').onclick=toets;$('#klim').onclick=klimHome;$('#spiek').onclick=spiek;

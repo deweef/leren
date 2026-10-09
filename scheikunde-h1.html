@@ -1,0 +1,970 @@
+<!doctype html>
+<html lang="nl">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<meta name="robots" content="noindex">
+<script>(function(){try{if(localStorage.getItem('leren-ok')!=='53a39a231246354922d1b5f7242c1639ebdc75da84bde2e766eed704f5a89cf8'){location.replace('index.html')}}catch(e){location.replace('index.html')}})();</script>
+<title>Scheikunde H1 Chemisch rekenen</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,500..800&family=JetBrains+Mono:wght@500&family=Atkinson+Hyperlegible:wght@400;700&family=IBM+Plex+Mono:wght@500&display=swap">
+<style>
+/* Layout: ruitjespapier. Kaarten met een oranje kantlijn, zoals het boek. */
+:root{
+  --bg:#F6F3EE; --surface:#FFFFFF; --ink:#1E2230; --muted:#5D6375; --line:#DDD6CB; --chip:#EEE8DE; --accent:#5B4FC4;
+  --green:#2F7D5B; --green-soft:#DDF0E6; --pink:#5B4FC4; --pink-soft:#E6E3FA; --amber:#A86A12; --amber-soft:#FBEFD9;
+  --good:#2E8B4E; --good-bg:#DDF0E2; --bad:#C2413A; --bad-bg:#FADFDD;
+  --c-wall:#7BAA6A; --c-cyto:#EEF6E4; --c-vac:#E4D9F2; --c-nuc:#C9B4E0; --c-chl:#3E9B48; --c-mito:#C98A4B; --c-er:#7A93C9; --c-golgi:#D07AA0; --c-lys:#E0A93C; --c-ani:#FBE9E4;
+  --f-display:"Bricolage Grotesque",system-ui,sans-serif;
+  --f-body:"Atkinson Hyperlegible",system-ui,-apple-system,"Segoe UI",sans-serif;
+  --f-mono:"IBM Plex Mono",ui-monospace,Menlo,Consolas,monospace;
+}
+@media (prefers-color-scheme: dark){:root:not([data-theme="light"]){
+  --bg:#14161D; --surface:#1D2029; --ink:#E9EAF0; --muted:#A0A5B5; --line:#30343F; --chip:#272A35; --accent:#9C93F0;
+  --green:#5CC394; --green-soft:#183025; --pink:#9C93F0; --pink-soft:#221F3A; --amber:#E9B25A; --amber-soft:#33281A;
+  --good:#5CC383; --good-bg:#183020; --bad:#F07870; --bad-bg:#3A1C1B;
+  --c-wall:#5E8F4E; --c-cyto:#20321F; --c-vac:#3A3150; --c-nuc:#5E4A7E; --c-chl:#56B55F; --c-mito:#B47A40; --c-er:#6C84BE; --c-golgi:#C26E94; --c-lys:#C99230; --c-ani:#3A2622; color-scheme:dark}}
+:root[data-theme="dark"]{
+  --bg:#14161D; --surface:#1D2029; --ink:#E9EAF0; --muted:#A0A5B5; --line:#30343F; --chip:#272A35; --accent:#9C93F0;
+  --green:#5CC394; --green-soft:#183025; --pink:#9C93F0; --pink-soft:#221F3A; --amber:#E9B25A; --amber-soft:#33281A;
+  --good:#5CC383; --good-bg:#183020; --bad:#F07870; --bad-bg:#3A1C1B;
+  --c-wall:#5E8F4E; --c-cyto:#20321F; --c-vac:#3A3150; --c-nuc:#5E4A7E; --c-chl:#56B55F; --c-mito:#B47A40; --c-er:#6C84BE; --c-golgi:#C26E94; --c-lys:#C99230; --c-ani:#3A2622; color-scheme:dark}
+*{box-sizing:border-box}
+body{background-color:var(--bg);background-image:linear-gradient(var(--line) 1px,transparent 1px),linear-gradient(90deg,var(--line) 1px,transparent 1px);background-size:24px 24px;background-attachment:fixed;color:var(--ink);font-family:var(--f-body);font-size:16px;line-height:1.5;margin:0}
+.wrap{max-width:880px;margin:0 auto;padding-inline:16px;padding-block:20px 56px}
+button{font:inherit;color:inherit;cursor:pointer}
+button:focus-visible,input:focus-visible{outline:3px solid var(--pink);outline-offset:2px}
+h1,h2,h3{font-family:var(--f-display);margin:0;text-wrap:balance}
+.eyebrow{font-family:var(--f-mono);font-size:12px;letter-spacing:.12em;text-transform:uppercase;color:var(--muted)}
+.top{display:flex;flex-wrap:wrap;gap:16px;align-items:flex-end;justify-content:space-between;padding-bottom:16px;border-bottom:2px solid var(--ink)}
+h1{font-size:clamp(30px,6.5vw,48px);font-weight:800;line-height:1;letter-spacing:-.02em}
+h1 em{font-style:normal;color:var(--green)}
+.stats{display:flex;gap:8px;flex-wrap:wrap}
+.stat{background:var(--surface);border:1px solid var(--line);border-radius:10px;padding:6px 12px;min-width:86px}
+.stat b{display:block;font-family:var(--f-display);font-size:22px;font-weight:800;line-height:1.15;font-variant-numeric:tabular-nums}
+.stat small{font-family:var(--f-mono);font-size:10.5px;color:var(--muted);text-transform:uppercase;letter-spacing:.08em}
+.banner{margin-top:14px;display:flex;gap:8px;flex-wrap:wrap}
+.pill{font-size:13.5px;font-weight:700;padding:4px 12px;border-radius:999px;background:var(--pink-soft);color:var(--pink)}
+.pill.g{background:var(--green-soft);color:var(--green)}
+section{margin-top:26px}
+.sec-head{display:flex;flex-wrap:wrap;align-items:baseline;justify-content:space-between;gap:8px;margin-bottom:12px}
+h2{font-size:21px;font-weight:800}
+.acts{display:flex;gap:8px;flex-wrap:wrap;align-items:center}
+.btn{border:2px solid var(--ink);background:var(--surface);border-radius:10px;padding:10px 16px;font-weight:700}
+.btn.primary{background:var(--green);border-color:var(--green);color:var(--surface)}
+.btn.dark{background:var(--ink);border-color:var(--ink);color:var(--bg)}
+.btn.ghost{border-color:var(--line)}
+.btn.small{padding:6px 12px;font-size:14px}
+.btn:disabled{opacity:.4;cursor:not-allowed}
+/* paragraaf-chips */
+.pars{display:grid;grid-template-columns:repeat(auto-fill,minmax(190px,1fr));gap:10px}
+.par{position:relative;text-align:left;background:var(--surface);border:2px solid var(--line);border-radius:12px;padding:10px 12px 12px 18px;display:flex;flex-direction:column;gap:4px;min-width:0;overflow:hidden}
+.par::before{content:"";position:absolute;left:0;top:0;bottom:0;width:7px;background:var(--line)}
+.par[aria-pressed="true"]{border-color:var(--ink)}
+.par[aria-pressed="true"]::before{background:var(--pink)}
+.par .no{font-family:var(--f-mono);font-size:12px;color:var(--muted)}
+.par .no b{font-family:var(--f-display);font-size:22px;color:var(--ink);margin-right:4px}
+.par .nm{font-weight:700;font-size:14.5px;line-height:1.25}
+.bar{height:6px;border-radius:3px;background:var(--chip);overflow:hidden}
+.bar i{display:block;height:100%;background:var(--green);border-radius:3px;transition:width .4s}
+.par .src{font-size:12px}
+.src{font-size:13px;color:var(--muted)}
+/* modus-kaarten als objectglaasjes */
+.modes{display:grid;grid-template-columns:repeat(auto-fill,minmax(250px,1fr));gap:12px}
+.mode{position:relative;text-align:left;background:var(--surface);border:2px solid var(--ink);border-radius:14px;padding:14px 16px 14px 58px;min-width:0;display:flex;flex-direction:column;gap:4px}
+.mode .lab{position:absolute;left:0;top:0;bottom:0;width:44px;background:var(--chip);border-right:2px dashed var(--line);display:grid;place-items:center;font-family:var(--f-mono);font-size:12px;color:var(--muted);writing-mode:vertical-rl;transform:rotate(180deg);letter-spacing:.12em;text-transform:uppercase}
+.mode.main{background:var(--ink);color:var(--bg)}
+.mode.main .lab{background:var(--pink);color:#fff;border-color:transparent}
+.mode.main p{color:var(--bg);opacity:.8}
+.mode h3{font-size:19px;font-weight:800}
+.mode p{margin:0;font-size:14px;color:var(--muted)}
+.mode .tag{align-self:flex-start;font-family:var(--f-mono);font-size:10.5px;text-transform:uppercase;letter-spacing:.08em;background:var(--amber-soft);color:var(--amber);padding:2px 7px;border-radius:5px}
+.mode:hover{transform:translateY(-2px)}
+details.tips{background:var(--surface);border:1px solid var(--line);border-radius:12px;padding:12px 16px}
+details.tips summary{font-weight:700;cursor:pointer}
+details.tips ul{margin:10px 0 4px;padding-left:20px;display:grid;gap:6px}
+/* spel */
+.playbar{display:flex;align-items:center;gap:12px;margin-bottom:16px}
+.playbar .bar{flex:1;height:10px;border-radius:5px}
+.playbar .bar i{background:var(--pink)}
+.count{font-family:var(--f-mono);font-size:13px;color:var(--muted);font-variant-numeric:tabular-nums;white-space:nowrap}
+.slide{background:var(--surface);border:2px solid var(--ink);border-radius:18px;overflow:hidden}
+.slide-head{display:flex;justify-content:space-between;gap:8px;flex-wrap:wrap;padding:9px 18px;background:var(--pink);color:#fff;font-family:var(--f-mono);font-size:12px;letter-spacing:.1em;text-transform:uppercase}
+.slide-body{padding:20px 18px;display:flex;flex-direction:column;gap:14px}
+.q{font-size:15px;color:var(--muted);font-weight:700}
+.prompt{font-family:var(--f-display);font-weight:700;font-size:clamp(20px,4.6vw,27px);line-height:1.25;overflow-wrap:anywhere}
+.prompt.big{font-size:clamp(28px,7vw,42px);font-weight:800}
+.opts{display:grid;gap:10px}
+.opt{display:flex;align-items:center;gap:12px;text-align:left;border:2px solid var(--line);background:var(--bg);border-radius:12px;padding:12px 14px;font-size:16.5px;font-weight:700;min-width:0}
+.opt .k{flex:none;width:28px;height:28px;border-radius:8px;display:grid;place-items:center;font-family:var(--f-mono);font-size:13px;background:var(--chip);color:var(--muted)}
+.opt:hover:not(:disabled){border-color:var(--ink)}
+.opt:disabled{cursor:default}
+.opt.good{background:var(--good-bg);border-color:var(--good)}.opt.good .k{background:var(--good);color:var(--surface)}
+.opt.bad{background:var(--bad-bg);border-color:var(--bad)}.opt.bad .k{background:var(--bad);color:var(--surface)}
+.opt.dim{opacity:.5}
+.typerow{display:flex;gap:8px;flex-wrap:wrap}
+.typerow input{flex:1 1 220px;min-width:0;font:inherit;font-size:19px;font-weight:700;padding:12px 14px;border-radius:12px;border:2px solid var(--line);background:var(--bg);color:var(--ink)}
+.typerow input.okay{border-color:var(--good)}
+.pattern{font-family:var(--f-mono);font-size:17px;letter-spacing:.16em;color:var(--amber);overflow-wrap:anywhere}
+.fb{border-radius:12px;padding:12px 14px;display:flex;flex-direction:column;gap:4px}
+.fb.good{background:var(--good-bg)}.fb.bad{background:var(--bad-bg)}.fb.warn{background:var(--amber-soft)}
+.fb .t{font-weight:700}.fb.good .t{color:var(--good)}.fb.bad .t{color:var(--bad)}.fb.warn .t{color:var(--amber)}
+.fb .ans{font-family:var(--f-display);font-size:21px;font-weight:800}
+.tip{font-size:14.5px}
+.foot{display:flex;justify-content:flex-end}
+.big{font-family:var(--f-display);font-size:clamp(48px,12vw,80px);font-weight:800;line-height:1}
+.mist{display:grid;gap:6px;margin:0;padding:0;list-style:none}
+.mist li{display:flex;flex-direction:column;gap:2px;border-bottom:1px solid var(--line);padding:6px 0}
+.mist li span{color:var(--muted);font-size:14px}
+/* flip */
+.flip{perspective:1200px;cursor:pointer}
+.flip-in{position:relative;min-height:220px;transition:transform .45s;transform-style:preserve-3d}
+.flip.on .flip-in{transform:rotateY(180deg)}
+.face{position:absolute;inset:0;backface-visibility:hidden;-webkit-backface-visibility:hidden;display:flex;flex-direction:column;justify-content:center;gap:10px}
+.face.back{transform:rotateY(180deg)}
+/* volgorde */
+.seq-done{display:grid;gap:6px;counter-reset:s;margin:0;padding:0;list-style:none}
+.seq-done li{counter-increment:s;display:flex;gap:10px;align-items:center;background:var(--good-bg);border-radius:10px;padding:8px 12px;font-weight:700}
+.seq-done li::before{content:counter(s);flex:none;width:26px;height:26px;border-radius:50%;background:var(--good);color:var(--surface);display:grid;place-items:center;font-family:var(--f-mono);font-size:12px}
+.seq-pool{display:flex;flex-wrap:wrap;gap:8px}
+.seq-pool button{border:2px solid var(--line);background:var(--bg);border-radius:10px;padding:9px 12px;font-weight:700;text-align:left}
+.seq-pool button:hover{border-color:var(--ink)}
+.seq-list{display:grid;gap:8px}
+.seq-list button{text-align:left}
+/* buckets */
+.buckets{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:8px}
+.buckets button{border:2px solid var(--ink);border-radius:12px;padding:14px 6px;font-weight:800;font-size:16px;background:var(--surface)}
+.buckets button.good{background:var(--good-bg);border-color:var(--good)}
+.buckets button.bad{background:var(--bad-bg);border-color:var(--bad)}
+/* osmose */
+.osmo{display:flex;gap:14px;align-items:center;flex-wrap:wrap}
+.osmo svg{flex:none;width:120px;height:90px}
+.chipline{display:flex;gap:8px;flex-wrap:wrap}
+/* cel */
+.cellfig{background:var(--bg);border-radius:12px;padding:8px}
+.cellfig svg{display:block;width:100%;height:auto;max-height:340px}
+.marker circle{fill:var(--pink)}
+.marker text{fill:#fff;font-family:var(--f-mono);font-size:15px;font-weight:700}
+.marker line{stroke:var(--pink);stroke-width:2.5}
+.pulse{animation:pulse 1.2s ease-in-out infinite}
+@keyframes pulse{50%{opacity:.35}}
+/* samenvatting */
+.sum{background:var(--surface);border:1px solid var(--line);border-left:6px solid var(--green);border-radius:12px;padding:14px 16px}
+.sum h3{font-size:19px;margin-bottom:6px}
+.sum p{margin:0 0 8px;max-width:72ch}
+.exam{background:var(--surface);border:1px solid var(--line);border-radius:12px;padding:14px 16px;display:flex;flex-direction:column;gap:10px}
+.exam .ctx{background:var(--bg);border-radius:8px;padding:10px 12px;font-size:14.5px}
+.exq{border-top:1px dashed var(--line);padding-top:10px;display:flex;flex-direction:column;gap:8px}
+.exq .pt{font-family:var(--f-mono);font-size:12px;color:var(--pink)}
+.shake{animation:shake .35s}@keyframes shake{25%{transform:translateX(-6px)}75%{transform:translateX(6px)}}
+.pop{animation:pop .3s}@keyframes pop{50%{transform:scale(1.25)}}
+.timer{font-family:var(--f-display);font-size:32px;font-weight:800;font-variant-numeric:tabular-nums;min-width:56px;text-align:right}
+.timer.low{color:var(--bad)}
+.combo{font-family:var(--f-mono);font-size:12px;background:var(--amber);color:var(--surface);padding:2px 8px;border-radius:6px}
+canvas#conf{position:fixed;inset:0;pointer-events:none;z-index:9}
+@media (prefers-reduced-motion: reduce){*{transition:none!important;animation:none!important}}
+.nums{font-family:"JetBrains Mono",var(--f-mono);font-size:20px;font-weight:500;background:var(--bg);border-radius:10px;padding:10px 12px;margin:8px 0;overflow-wrap:anywhere;letter-spacing:.02em}
+.tw{overflow-x:auto;margin:8px 0}
+.ft{border-collapse:collapse;font-variant-numeric:tabular-nums;font-size:15.5px;background:var(--surface)}
+.ft th,.ft td{border:1px solid var(--line);padding:5px 10px;text-align:center}
+.ft th{background:var(--chip);text-align:left;font-weight:700}
+.ft.v td:first-child{font-family:var(--f-mono);font-size:14px}
+.chart{display:block;width:100%;max-width:420px;height:auto;color:var(--ink);margin:6px 0}
+.uitleg{background:var(--surface);border:1px solid var(--line);border-left:6px solid var(--pink);border-radius:12px;padding:14px 18px}
+.uitleg h3{font-size:20px;margin:16px 0 6px}.uitleg h3:first-child{margin-top:0}
+.uitleg p,.uitleg li{max-width:72ch}.uitleg ul{padding-left:20px}
+.rule{background:var(--pink-soft);border-radius:10px;padding:10px 14px;margin:8px 0;font-weight:500}
+.ex{background:var(--bg);border-left:4px solid var(--green);border-radius:6px;padding:9px 12px}
+.gt{border-collapse:collapse;font-size:15px;margin:6px 0}.gt th,.gt td{border:1px solid var(--line);padding:6px 9px;text-align:left;vertical-align:top}.gt th{background:var(--chip)}
+.cycle{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:6px;max-width:460px;margin:10px 0}
+.cycle span{border-radius:10px;padding:10px;font-weight:700;color:#1E2230;text-align:center}
+.cycle .c1{background:#F5B37A}.cycle .c2{background:#F7DB5E}.cycle .c3{background:#7FB0EA}.cycle .c4{background:#8FD18F}
+.cycle .c3{order:4}.cycle .c4{order:3}
+.flow{display:grid;grid-template-columns:minmax(0,1fr) minmax(0,1.3fr);gap:6px 10px;margin:10px 0}
+.flow .fq{background:var(--chip);border-radius:8px;padding:8px 10px;font-weight:700}.flow .fa{background:var(--bg);border-radius:8px;padding:8px 10px}
+@media (max-width:560px){.flow{grid-template-columns:1fr}}
+.distgrid{display:grid;grid-template-columns:repeat(auto-fill,minmax(150px,1fr));gap:8px}
+.distgrid figure{margin:0;background:var(--bg);border-radius:10px;padding:6px}.distgrid figcaption{text-align:center;font-weight:700;font-size:13.5px}
+.secs{display:grid;gap:10px}
+.sec{display:grid;grid-template-columns:auto minmax(0,1fr) auto;gap:6px 14px;align-items:center;background:var(--surface);border:2px solid var(--line);border-radius:14px;padding:12px 14px}
+.sec .num{font-family:var(--f-display);font-size:30px;font-weight:800;color:var(--pink);line-height:1}
+.sec h3{font-size:18px}.sec p{margin:2px 0 6px;font-size:14px;color:var(--muted)}
+.sec .acts{grid-column:3;grid-row:1}
+@media (max-width:560px){.sec{grid-template-columns:auto minmax(0,1fr)}.sec .acts{grid-column:1/-1;grid-row:auto}}
+.tools{display:flex;flex-wrap:wrap;gap:8px}
+.chart.big{max-width:520px}
+.gt td,.gt th{overflow-wrap:anywhere;hyphens:auto;-webkit-hyphens:auto}
+.draw{touch-action:none;cursor:crosshair;-webkit-user-select:none;user-select:none}
+.fb.warn{background:var(--pink-soft);border-color:var(--accent)}
+details.verdiep{margin-top:18px;border:2px dashed var(--accent);border-radius:12px;padding:10px 14px;background:var(--bg)}
+details.verdiep>summary{font-weight:700;font-size:17px;cursor:pointer}
+details.verdiep>summary .src{font-weight:400;margin-left:6px}
+details.vd{border-top:1px solid var(--line);padding:8px 0}
+details.vd:first-of-type{margin-top:8px}
+details.vd>summary{font-weight:600;cursor:pointer}
+details.vd>div{padding-top:6px}
+ul.fout{padding-left:0;list-style:none;display:grid;gap:6px}
+ul.fout li{padding-left:24px;position:relative}ul.fout li:before{content:"✗";position:absolute;left:4px;color:var(--bad);font-weight:700}
+ol.steps{padding-left:22px;display:grid;gap:8px;margin:8px 0}
+ol.steps li{animation:fadein .3s ease}
+@keyframes fadein{from{opacity:0;transform:translateY(4px)}to{opacity:1}}
+.nextbox{margin-top:18px;border-top:2px solid var(--line);padding-top:12px;display:grid;gap:12px}
+.nextbox h3{margin:0}
+.choice{display:grid;gap:4px}.choice>span{font-size:14px;color:var(--muted)}
+.choice>.btn{justify-self:start}
+.kcamps{display:grid;gap:8px}
+.kc{display:grid;grid-template-columns:minmax(0,1fr) auto;gap:2px 10px;text-align:left;background:var(--surface);border:2px solid var(--ink);border-radius:12px;padding:10px 12px;color:var(--ink);font:inherit;cursor:pointer}
+.kc b{grid-column:1/-1;font-size:16px}.kc span{font-size:13px;color:var(--muted)}
+.kc .bar{grid-column:1;display:block;align-self:center}.kc .count{grid-column:2;grid-row:3}
+.kc:disabled{opacity:.5;cursor:not-allowed;border-style:dashed}
+.kc.done{border-color:var(--good);background:var(--good-bg)}
+
+/* chemie */
+details.thc{margin-top:6px;background:var(--surface);border-radius:8px;padding:6px 10px;font-size:14.5px}
+details.thc summary{font-weight:700;cursor:pointer;color:var(--accent)}
+.bkast{display:grid;grid-template-columns:repeat(auto-fill,minmax(96px,1fr));gap:8px}
+.bk{display:flex;flex-direction:column;align-items:center;gap:2px;border:2px solid var(--line);background:var(--bg);border-radius:12px;padding:10px 4px;min-width:0}
+.bk b{font-family:var(--f-display);font-size:19px}.bk span{font-size:11.5px;color:var(--muted);text-align:center;overflow-wrap:anywhere}
+.bk .st{color:var(--amber);font-size:13px;letter-spacing:1px}
+.bk.done{border-color:var(--good);background:var(--good-bg)}
+.bk:disabled{opacity:.45;cursor:not-allowed}
+.bpal{display:flex;flex-wrap:wrap;gap:8px}
+.bpe{display:flex;flex-direction:column;align-items:flex-start;border:2px solid var(--line);border-left:8px solid var(--ec,var(--muted));background:var(--surface);border-radius:10px;padding:6px 10px;min-width:0}
+.bpe b{font-family:var(--f-display);font-size:20px;line-height:1}.bpe span{font-size:12px;color:var(--muted)}
+.bpe.on{border-color:var(--ink);box-shadow:0 0 0 2px var(--ink)}
+.bpe.gum{--ec:var(--bad)}
+.bwrap{display:flex;justify-content:center}
+.bsvg{width:100%;max-width:380px;height:auto;color:var(--ink);touch-action:manipulation;-webkit-user-select:none;user-select:none}
+.tubes{display:flex;gap:28px;justify-content:center}
+.tube{width:70px;height:170px;color:var(--ink)}
+.tfig{margin:0;text-align:center;font-weight:700;font-size:14px}
+.fadein{animation:fadein .8s ease}
+.zrow{display:flex;gap:12px;flex-wrap:wrap}
+.zfles{flex:1 1 130px;border:2px solid var(--ink);border-radius:14px 14px 22px 22px;padding:12px;display:flex;flex-direction:column;align-items:center;gap:2px;background:var(--surface)}
+.zfles b{font-family:var(--f-display);font-size:26px}.zfles span{font-size:13px;color:var(--muted)}
+.zfles.p{background:#E3EEFF;color:#1E2230}.zfles.n{background:#FFE6E3;color:#1E2230}
+.zbeker{border:3px solid var(--ink);border-top:none;border-radius:0 0 26px 26px;min-height:110px;padding:12px;display:flex;flex-direction:column;justify-content:space-between;gap:8px;background:linear-gradient(transparent 30%,var(--green-soft) 30%)}
+#zmix{display:flex;flex-wrap:wrap;gap:6px}
+.ionb{border-radius:999px;padding:4px 10px;font-weight:800;font-size:15px;animation:pop .3s}
+.ionb.p{background:#3C6FD6;color:#fff}.ionb.n{background:#D9443A;color:#fff}
+.zlad{font-weight:700}.zq{font-family:var(--f-display);font-size:22px}.zq.ok{color:var(--good)}
+.lampw{display:flex;justify-content:center}.lamp{width:110px;height:110px;color:var(--ink)}
+.glow{filter:drop-shadow(0 0 12px #FFD43B)}
+.beq{display:flex;flex-wrap:wrap;align-items:center;gap:8px;font-size:18px}
+.bsp{display:inline-flex;align-items:center;gap:4px;background:var(--bg);border:1px solid var(--line);border-radius:10px;padding:4px 6px}
+.bsp b{font-family:var(--f-display);font-size:20px;min-width:20px;text-align:center;color:var(--accent)}
+.bstep{width:30px;height:30px;border-radius:8px;border:2px solid var(--line);background:var(--surface);font-weight:800;padding:0}
+.bf{font-weight:700;margin-left:2px}
+.bplus,.barrow{font-weight:800;font-size:20px}
+.scale{width:100%;max-width:300px;height:auto;color:var(--ink);display:block;margin:0 auto}
+td.okc{background:var(--good-bg);font-weight:700}td.badc{background:var(--bad-bg);font-weight:700}
+.bandstof{display:flex;justify-content:center;padding:14px 0}
+.buckets button{font-size:15px}
+
+.asvg{width:100%;max-width:260px;height:auto;display:block}
+.arow{display:flex;gap:14px;flex-wrap:wrap;align-items:center;justify-content:center}
+.awrap{flex:1 1 220px;display:flex;justify-content:center}
+.ainfo{flex:1 1 180px;display:grid;gap:6px}
+.alab .sym{font-family:var(--f-display);font-size:44px;line-height:1}
+.asteps{display:grid;gap:8px}
+.astep{display:flex;align-items:center;gap:8px;flex-wrap:wrap}
+.astep b{min-width:92px}.astep .dot{width:14px;height:14px;border-radius:50%;flex:none}
+.astep .av{font-family:var(--f-display);font-size:22px;min-width:34px;text-align:center}
+.bstep.five{width:auto;padding:0 8px;font-size:13px}
+.mrow{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:6px}
+.mnode{flex:1 1 64px;min-width:0;border:2px solid var(--line);border-radius:12px;padding:8px 6px;display:flex;flex-direction:column;align-items:center;gap:2px;background:var(--bg);text-align:center}
+.mnode b{font-family:var(--f-display);font-size:20px}.mnode span{font-size:11px;color:var(--muted)}
+.mnode em{font-style:normal;font-weight:700;font-size:13px;overflow-wrap:anywhere}
+.mnode.on{border-color:var(--accent);background:var(--pink-soft)}.mnode.goal{border-style:dashed;border-color:var(--ink)}
+.marr{align-self:center;color:var(--muted)}
+.mops{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:8px}
+.mop{border:2px solid var(--ink);border-radius:10px;padding:10px 4px;font-weight:800;font-size:16px;background:var(--surface)}
+.mop:disabled{opacity:.4}
+.mpath{font-family:var(--f-mono);font-size:14px}
+.kpot{display:grid;grid-template-columns:repeat(auto-fit,minmax(140px,1fr));gap:10px}
+.kpot>div{background:var(--bg);border-radius:12px;padding:8px}
+.kmols{display:flex;flex-wrap:wrap;gap:5px;margin-top:4px}
+.mi{display:inline-block;border-radius:999px;padding:3px 8px;background:var(--surface);border:1.5px solid var(--accent);font-weight:700;font-size:13px;animation:pop .3s}
+.schema{display:flex;align-items:center;gap:4px;flex-wrap:wrap}
+.schema span{background:#FBE7B2;color:#1E2230;border-radius:8px;padding:6px 10px;font-weight:800}
+.schema i{font-style:normal;font-size:12px;text-align:center;line-height:1.2}
+
+.lpcard .lpt{font-size:clamp(22px,5.5vw,28px);margin:0}
+.lpb{font-size:17px;line-height:1.55}.lpb p{margin:6px 0}
+.lpq{border-top:2px dashed var(--line);padding-top:12px;display:grid;gap:10px}
+.lpnav{display:flex;justify-content:space-between;gap:10px;margin-top:6px}
+.lpmode{width:100%}
+.sec .acts .btn.lp{background:var(--accent);border-color:var(--accent);color:#fff}
+</style>
+
+</head>
+<body>
+<a href="index.html" style="position:fixed;right:12px;bottom:calc(12px + env(safe-area-inset-bottom,0px));z-index:20;background:#142A3A;color:#fff;text-decoration:none;font:700 14px system-ui,sans-serif;padding:9px 14px;border-radius:999px;box-shadow:0 2px 8px rgba(0,0,0,.25)">← Alle vakken</a>
+<canvas id="conf"></canvas>
+<div class="wrap">
+<main id="home">
+  <header class="top">
+    <div>
+      <div class="eyebrow">Scheikunde · Nova havo 4 · Hoofdstuk 1</div>
+      <h1>Chemisch <em>rekenen</em></h1>
+    </div>
+    <div class="stats">
+      <div class="stat"><b id="stDone">0</b><small>opgaven</small></div>
+      <div class="stat"><b id="stStreak">0</b><small>dagen op rij</small></div>
+      <div class="stat"><b id="stBest">–</b><small>beste toets</small></div>
+    </div>
+  </header>
+  <div class="banner"><span class="pill">Fout = uitleg erbij</span><span class="pill g">Werkt ook offline</span></div>
+
+  <section><div id="lpbox"></div></section>
+  <section>
+    <div class="sec-head"><h2>Spellen</h2><span class="src">Leren door te doen</span></div>
+    <div class="modes">
+      <button class="mode main" id="atoom"><span class="lab">Spel</span><h3>Atoombouwer</h3><p>Bouw atomen, isotopen en ionen uit protonen, neutronen en elektronen. Eindig met mysterie-atomen.</p><span class="tag" id="atoomTag" style="text-transform:none"></span></button>
+      <button class="mode" id="mach"><span class="lab">Route</span><h3>Molmachine</h3><p>Van gram naar mol naar moleculen: jij kiest de stappen (× M, : N<sub>A</sub> …), de machine rekent.</p><span class="tag" id="machTag" style="text-transform:none"></span></button>
+      <button class="mode" id="keuken"><span class="lab">Puzzel</span><h3>Reactiekeuken</h3><p>Tel moleculen: wat is als eerste op, hoeveel product ontstaat er en wat blijft over?</p><span class="tag" id="keukenTag" style="text-transform:none"></span></button>
+    </div>
+    <div class="modes" id="blitzes" style="margin-top:12px"></div>
+  </section>
+
+  <section>
+    <div class="sec-head"><h2>1. Per paragraaf</h2><span class="src">Roestig? Begin bij 0</span></div>
+    <div class="secs" id="secs"></div>
+  </section>
+
+  <section>
+    <div class="sec-head"><h2>2. Snel oefenen</h2><span class="src">Eén soort som, steeds nieuwe getallen</span></div>
+    <div class="tools" id="tools"></div>
+  </section>
+
+  <section>
+    <div class="sec-head"><h2>3. Toets</h2></div>
+    <div class="modes">
+      <button class="mode main" id="toets"><span class="lab">Cijfer</span><h3>Proeftoets</h3><p>20 gemengde vragen over het hele hoofdstuk, met uitwerkingen en theorie aan het eind.</p></button>
+      <button class="mode" id="flits"><span class="lab">Kaart</span><h3>Begrippen</h3><p>Alle begrippen uit het leerstofoverzicht als flitskaarten.</p></button>
+      <button class="mode" id="spiek"><span class="lab">Blad</span><h3>Spiekbriefje</h3><p>Formules en regels op één scherm.</p></button>
+    </div>
+  </section>
+
+  <section>
+    <details class="tips">
+      <summary>Zo pak je het aan</summary>
+      <ul>
+        <li>Lees per paragraaf de <b>Uitleg</b> en doe dan een <b>Oefenronde</b>. Fout? Je ziet de theorie en de vraag komt terug.</li>
+        <li>Rekensommen: typ het getal zonder eenheid. Komma of punt mag, en 2,3e-4 of 2,3·10^-4 ook.</li>
+        <li>Er wordt wat ruimte gelaten bij afronden; het gaat om de goede aanpak.</li>
+        <li>Leer de elementen en symbolen uit het leerstofoverzicht met <b>Symbolenblitz</b>.</li>
+      </ul>
+      <div class="acts" id="resetBox" style="margin-top:10px"><button class="btn ghost small" id="resetBtn">Voortgang wissen</button></div>
+    </details>
+  </section>
+</main>
+<main id="play" hidden></main>
+</div>
+
+<script>
+/* ---------- Scheikunde H1 Chemisch rekenen (Nova havo 4) ---------- */
+function fm(s){return String(s).replace(/\^(\d?[+-])/g,'<sup>$1</sup>').replace(/([A-Za-z\)])(\d+)/g,'$1<sub>$2</sub>')}
+const SECS=[
+ {id:'0',t:'Basis (voorkennis)',s:'Elementen en verbindingen, reactievergelijkingen, wetenschappelijke notatie, eenheden omrekenen.'},
+ {id:'1.1',t:'Atoombouw en periodiek systeem',s:'Protonen, neutronen, elektronen, schillen, isotopen, atoommassa, groepen en perioden.'},
+ {id:'1.2',t:'De chemische hoeveelheid',s:'De mol, getal van Avogadro, molaire massa, dichtheid, het rekenschema.'},
+ {id:'1.3',t:'Rekenen aan gehaltes',s:'Significante cijfers, massa%, volume%, ppm, ppb, concentratie en molariteit.'},
+ {id:'1.4',t:'Rekenen aan reacties',s:'Wet van behoud van massa, molverhouding, stappenplan, overmaat en ondermaat.'}
+];
+const TH={
+ element:{t:'Element of verbinding',h:`Een <b>element</b> (niet-ontleedbare stof) bestaat uit één soort atomen: Mg, Fe, O<sub>2</sub>, I<sub>2</sub>. Een <b>verbinding</b> (ontleedbare stof) bevat twee of meer soorten atomen: H<sub>2</sub>O, SO<sub>2</sub>, NH<sub>3</sub>. Let op: O<sub>2</sub> heeft twee atomen, maar één soort, dus een element.`},
+ kloppend:{t:'Kloppend maken',h:`Links en rechts van de pijl evenveel atomen van elke soort. Alleen de grote getallen vóór de formules veranderen, nooit de kleine. Begin met het atoom dat in de minste stoffen voorkomt, doe H en O als laatste. Halve getallen? Alles × 2.`},
+ notatie:{t:'Wetenschappelijke notatie',h:`Eén cijfer (niet 0) vóór de komma, dan × een macht van 10. 40,8 = 4,08·10<sup>1</sup>. 0,0054 = 5,4·10<sup>−3</sup>. 0,002 30 = 2,30·10<sup>−3</sup> (de nul achteraan blijft staan: die is significant). Op je rekenmachine: de <i>scientific mode</i>.`},
+ eenheden:{t:'Eenheden omrekenen',h:`1 kg = 10<sup>3</sup> g · 1 g = 10<sup>3</sup> mg · 1 mg = 10<sup>3</sup> µg<br>1 m<sup>3</sup> = 10<sup>3</sup> dm<sup>3</sup> = 10<sup>3</sup> L · 1 L = 1 dm<sup>3</sup> = 10<sup>3</sup> mL · 1 mL = 1 cm<sup>3</sup><br>Handig: 1 kg m<sup>−3</sup> = 1 g L<sup>−1</sup> = 10<sup>−3</sup> g mL<sup>−1</sup>. En kg kmol<sup>−1</sup> = g mol<sup>−1</sup>.`},
+ atoom:{t:'Bouw van het atoom',h:`<table class="gt"><tr><th>deeltje</th><th>plaats</th><th>massa</th><th>lading</th></tr><tr><td>proton p<sup>+</sup></td><td>kern</td><td>1,0 u</td><td>1+</td></tr><tr><td>neutron n</td><td>kern</td><td>1,0 u</td><td>0</td></tr><tr><td>elektron e<sup>−</sup></td><td>schillen</td><td>0,0 u</td><td>1−</td></tr></table>Bijna alle massa zit in de kern. 1 u = 1,66·10<sup>−27</sup> kg.`},
+ nummers:{t:'Atoomnummer en massagetal',h:`<b>Atoomnummer</b> = aantal protonen (bepaalt welk element). In een neutraal atoom ook = aantal elektronen.<br><b>Massagetal</b> = protonen + neutronen.<br>Dus <b>neutronen = massagetal − atoomnummer</b>.<br>Notaties: <sup>37</sup><sub>17</sub>Cl = Cl-37 = chlooratoom met massagetal 37.`},
+ schillen:{t:'Elektronenschillen',h:`Schillen K, L, M, N … Maximaal: K 2, L 8, M 18 (tot calcium vult M tot 8, dan begint N). De verdeling heet de <b>elektronenconfiguratie</b>. Fosfor (15): K2 L8 M5. De elektronen in de buitenste schil zijn de <b>valentie-elektronen</b>: die doen mee bij reacties.`},
+ isotoop:{t:'Isotopen',h:`<b>Isotopen</b> = atomen van hetzelfde element (zelfde aantal protonen) met een ander aantal neutronen. Cl-35 (18 n) en Cl-37 (20 n). N-14 en C-14 zijn géén isotopen van elkaar: ander atoomnummer, dus ander element.`},
+ atoommassa:{t:'Relatieve atoom- en molecuulmassa',h:`De <b>relatieve atoommassa A<sub>r</sub></b> is het gewogen gemiddelde van alle isotopen in de natuur (chloor 35,45 u: vooral Cl-35). De <b>relatieve molecuulmassa M<sub>r</sub></b> = som van de atoommassa's. Glucose C<sub>6</sub>H<sub>12</sub>O<sub>6</sub>: 6 × 12,01 + 12 × 1,008 + 6 × 16,00 = 180,16 u.`},
+ ps:{t:'Het periodiek systeem',h:`Gerangschikt op <b>atoomnummer</b> (Mendelejev deed het nog op atoommassa). Rijen = <b>perioden</b> (7), kolommen = <b>groepen</b> (18). Metalen links en midden, niet-metalen rechts (en H). Groep 1 <b>alkalimetalen</b>, groep 2 <b>aardalkalimetalen</b>, groep 17 <b>halogenen</b>, groep 18 <b>edelgassen</b>. Zelfde groep = zelfde aantal valentie-elektronen = vergelijkbare chemische eigenschappen.`},
+ edelgas:{t:'Edelgasconfiguratie en ionen',h:`Edelgassen hebben 8 valentie-elektronen (He 2) en reageren bijna niet. Andere atomen willen dat ook: metalen <b>staan elektronen af</b> (worden positief ion), niet-metalen <b>nemen op</b> of <b>delen</b> (atoombinding). 2 Na + Cl<sub>2</sub> → 2 Na<sup>+</sup> + 2 Cl<sup>−</sup>. Covalentie: H, halogenen 1 · O, S 2 · N, P 3 · C, Si 4.`},
+ mol:{t:'De mol',h:`1 <b>mol</b> = 6,02·10<sup>23</sup> deeltjes (het <b>getal van Avogadro N<sub>A</sub></b>). Net als 1 dozijn = 12. 1 mol NH<sub>3</sub> bevat 1 mol N-atomen en 3 mol H-atomen.<br><b>N = n × N<sub>A</sub></b> (N aantal deeltjes, n chemische hoeveelheid in mol).`},
+ molmassa:{t:'Molaire massa',h:`De <b>molaire massa M</b> (g mol<sup>−1</sup>) heeft hetzelfde getal als de molecuulmassa in u. H<sub>2</sub>O: 18,016 u → 18,016 g mol<sup>−1</sup>. <b>m = n × M</b>, dus n = m ÷ M. Binas 98 (of zelf uitrekenen met Binas 99).`},
+ dichtheid:{t:'Dichtheid',h:`<b>ρ = m ÷ V</b>. Eenheid kg m<sup>−3</sup> (Binas 8 t/m 12). Aluminium 2,70·10<sup>3</sup> kg m<sup>−3</sup> = 2,70 g cm<sup>−3</sup> = 2,70 g mL<sup>−1</sup>. Dus m = ρ × V en V = m ÷ ρ.`},
+ schema:{t:'Het rekenschema',h:`<div class="schema"><span>V</span><i>× ρ →<br>← : ρ</i><span>m</span><i>: M →<br>← × M</i><span>n</span><i>× N<sub>A</sub> →<br>← : N<sub>A</sub></i><span>N</span></div><p style="margin:6px 0 0">En van n naar molariteit: [A] = n ÷ V<sub>opl</sub>. Je komt altijd via <b>n (mol)</b> van de ene grootheid naar de andere.</p>`},
+ sig:{t:'Significante cijfers tellen',h:`Tel vanaf het eerste cijfer dat geen 0 is. Nullen achteraan tellen wél mee. 0,002 30 → 3 · 12,01 → 4 · 10,0 → 3 · 1,0006 → 5 · 3,50·10<sup>3</sup> → 3. <b>Telwaarden</b> (12 leerlingen, coëfficiënten, 1 mol = 6,02·10<sup>23</sup> is géén telwaarde) zijn exact en tellen niet mee.`},
+ afronden:{t:'Afronden in berekeningen',h:`<b>× en ÷</b>: antwoord in het <b>kleinste aantal significante cijfers</b> van de gegevens. 3,34 × 5,026 = 16,8.<br><b>+ en −</b>: antwoord in het <b>kleinste aantal decimalen</b>. 1,003 + 0,5 = 1,5.<br>Tussenantwoorden niet afronden, alleen het eindantwoord.`},
+ gehalte:{t:'Gehaltes',h:`massa% = m(A) ÷ m(mengsel) × 100%<br>volume% = V(A) ÷ V(mengsel) × 100%<br>massa-ppm = m(A) ÷ m(mengsel) × 10<sup>6</sup><br>massa-ppb = m(A) ÷ m(mengsel) × 10<sup>9</sup><br>Boven en onder dezelfde eenheid! 1 massa-ppm = 1 mg per kg, 1 massa-ppb = 1 µg per kg.`},
+ molariteit:{t:'Concentratie en molariteit',h:`<b>Concentratie</b> in g L<sup>−1</sup>: gram opgeloste stof per liter oplossing.<br><b>Molariteit [A]</b> = n(A) ÷ V<sub>opl</sub> in mol L<sup>−1</sup> = M (molair).<br>Voorbeeld: 3,8 g glucose in 750 mL: 3,8 ÷ 180,16 = 0,0211 mol; ÷ 0,750 L = 2,8·10<sup>−2</sup> M.`},
+ behoud:{t:'Wet van behoud van massa',h:`Bij een reactie gaan geen atomen verloren: <b>massa beginstoffen = massa reactieproducten</b>. 9,0 g aluminium + 8,0 g zuurstof → 17 g aluminiumoxide. Ontbreekt er één massa, dan kun je die uitrekenen door op te tellen of af te trekken.`},
+ molverh:{t:'Molverhouding',h:`De coëfficiënten in de reactievergelijking geven de <b>molverhouding</b> (stoichiometrische verhouding), <b>niet</b> de massaverhouding. 2 C<sub>4</sub>H<sub>10</sub> + 13 O<sub>2</sub> → 8 CO<sub>2</sub> + 10 H<sub>2</sub>O: 2 mol butaan reageert met 13 mol zuurstof.`},
+ stappen:{t:'Stappenplan rekenen aan reacties',h:`<ol style="margin:0;padding-left:20px"><li>Geef de kloppende reactievergelijking.</li><li>Reken de gegeven stof om naar <b>mol</b>.</li><li>Reken via de <b>molverhouding</b> om naar mol van de gevraagde stof.</li><li>Reken om naar de gevraagde grootheid en eenheid.</li><li>Controleer de significantie.</li></ol>`},
+ overmaat:{t:'Overmaat en ondermaat',h:`De beginstof die als eerste <b>op</b> is, is in <b>ondermaat</b>: die bepaalt hoeveel product er ontstaat. De stof die <b>over</b> blijft is in <b>overmaat</b>. Reken beide beginstoffen om naar mol en deel door hun coëfficiënt: de kleinste uitkomst is de ondermaat.`}
+};
+const UITLEG={
+'0':`<h3>Waarom chemisch rekenen?</h3><p>Een apotheker die een medicijn maakt, moet de stoffen in precies de goede hoeveelheden mengen. Stoffen reageren op microniveau in vaste verhoudingen. Dit hoofdstuk leert je die verhoudingen te gebruiken. Eerst de basis uit klas 3.</p>
+<h3>Element of verbinding</h3>${TH.element.h}
+<h3>Reactievergelijking</h3>${TH.kloppend.h}<div class="ex">Ammoniak ontleedt in de elementen: <b>2 NH<sub>3</sub>(g) → N<sub>2</sub>(g) + 3 H<sub>2</sub>(g)</b>. Links 2 N en 6 H, rechts 2 N en 6 H.</div>
+<p>Faseaanduidingen: (s) vast, (l) vloeibaar, (g) gas, (aq) opgelost in water.</p>
+<h3>Wetenschappelijke notatie</h3>${TH.notatie.h}
+<h3>Eenheden omrekenen</h3>${TH.eenheden.h}<div class="ex">23,14 L = 2,314·10<sup>−2</sup> m<sup>3</sup> · 0,002 46 cm<sup>3</sup> = 2,46·10<sup>−9</sup> m<sup>3</sup> · 3,46 kg = 3,46·10<sup>3</sup> g · 0,80 kg m<sup>−3</sup> = 8,0·10<sup>−4</sup> g mL<sup>−1</sup> · 100,09 kg kmol<sup>−1</sup> = 100,09 g mol<sup>−1</sup></div>`,
+'1.1':`<h3>Het atoommodel door de tijd</h3><table class="gt"><tr><td>±420 v.Chr.</td><td>Demokritos</td><td>atomos = ondeelbaar</td></tr><tr><td>1808</td><td>Dalton</td><td>massieve, ondeelbare bolletjes</td></tr><tr><td>1897</td><td>Thomson</td><td>positieve en negatieve ladingen</td></tr><tr><td>1911</td><td>Rutherford</td><td>positieve kern, elektronen eromheen</td></tr><tr><td>1914</td><td>Bohr</td><td>elektronen in vaste banen (schillen)</td></tr><tr><td>1932</td><td>Chadwick</td><td>neutronen in de kern</td></tr></table>
+<h3>Het atoom van nu</h3>${TH.atoom.h}
+<h3>Atoomnummer en massagetal</h3>${TH.nummers.h}<div class="ex"><b>Cl-37</b>: atoomnummer 17 → 17 protonen en 17 elektronen. Neutronen: 37 − 17 = 20. Elektronen: K2 L8 M7.</div>
+<p>Bouw het zelf in het spel <b>Atoombouwer</b>.</p>
+<h3>Schillen</h3>${TH.schillen.h}
+<h3>Isotopen</h3>${TH.isotoop.h}
+<h3>Atoommassa en molecuulmassa</h3>${TH.atoommassa.h}
+<h3>Periodiek systeem</h3>${TH.ps.h}
+<h3>Edelgassen, ionen en covalentie</h3>${TH.edelgas.h}
+<div class="rule">Elementen uit twee atomen: H<sub>2</sub>, N<sub>2</sub>, O<sub>2</sub>, F<sub>2</sub>, Cl<sub>2</sub>, Br<sub>2</sub>, I<sub>2</sub>. De naam en het symbool van de elementen in het leerstofoverzicht moet je kennen: oefen ze met <b>Symbolenblitz</b>.</div>`,
+'1.2':`<h3>Waarom de mol?</h3><p>Moleculen zijn veel te klein om te tellen of los te wegen. Toch wil je weten hoeveel deeltjes je afweegt, omdat stoffen in vaste aantallen met elkaar reageren. Daarom de <b>mol</b>.</p>
+<h3>De mol en Avogadro</h3>${TH.mol.h}<div class="ex">1 dozijn NH<sub>3</sub> = 12 moleculen, met 12 N en 36 H. 1 mol NH<sub>3</sub> = 6,02·10<sup>23</sup> moleculen, met 6,02·10<sup>23</sup> N en 18,06·10<sup>23</sup> H.</div>
+<h3>Molaire massa</h3>${TH.molmassa.h}<div class="ex"><b>Voorbeeld 1.</b> Iemand ademt per uur 33 g CO<sub>2</sub> uit. n = m ÷ M = 33 ÷ 44,010 = <b>0,75 mol</b>.</div>
+<h3>Dichtheid</h3>${TH.dichtheid.h}
+<h3>Het rekenschema</h3>${TH.schema.h}<div class="ex"><b>Voorbeeld 2.</b> Volume van 2,0 mol ethanol (ρ = 0,80 g mL<sup>−1</sup>)? m = 2,0 × 46,069 = 92,138 g. V = 92,138 ÷ 0,80 = 115 mL = <b>1,2·10<sup>2</sup> mL</b>.</div>
+<p>Oefen de route in het spel <b>Molmachine</b>: jij kiest de stappen, de machine rekent.</p>`,
+'1.3':`<h3>Meetwaarden en nauwkeurigheid</h3><p>Hoe nauwkeurig een meetwaarde is, hangt af van het instrument. 50 mL in een bekerglas (2 significante cijfers), 50,0 mL in een maatcilinder (3), 50,00 mL in een maatkolf of volpipet (4).</p>
+<h3>Significante cijfers</h3>${TH.sig.h}
+<h3>Rekenen en afronden</h3>${TH.afronden.h}<div class="ex"><b>Voorbeeld.</b> 10,0 mL + 4,55 mL = 14,55 → <b>14,6 mL</b> (één decimaal). ρ = 42,5 g ÷ 50,00 mL = 0,8500 → <b>0,850 g mL<sup>−1</sup></b> (drie significante cijfers).</div>
+<h3>Gehaltes</h3>${TH.gehalte.h}<div class="ex"><b>Voorbeeld.</b> Maximaal 1,0 g lood per 20 000 L drinkwater (= 20 000 kg = 2,0·10<sup>7</sup> g). massa-ppb = 1,0 ÷ 2,0·10<sup>7</sup> × 10<sup>9</sup> = <b>50 ppb</b>.</div>
+<h3>Concentratie en molariteit</h3>${TH.molariteit.h}`,
+'1.4':`<h3>Wet van behoud van massa</h3>${TH.behoud.h}<div class="ex"><b>Voorbeeld.</b> 4 P + 5 O<sub>2</sub> → 2 P<sub>2</sub>O<sub>5</sub>. Uit 10,0 g fosfor ontstaat 17,8 g P<sub>2</sub>O<sub>5</sub>. Dus zuurstof: 17,8 − 10,0 = <b>7,8 g</b>.</div>
+<h3>Molverhouding</h3>${TH.molverh.h}
+<h3>Stappenplan</h3>${TH.stappen.h}<div class="ex"><b>Voorbeeld.</b> Hoeveel gram chloor ontstaat uit 45 g AlCl<sub>3</sub>?<br>1: 2 AlCl<sub>3</sub> → 2 Al + 3 Cl<sub>2</sub><br>2: 45 ÷ 133,34 = 0,3375 mol AlCl<sub>3</sub><br>3: verhouding 2 : 3, dus 0,3375 × 3/2 = 0,5062 mol Cl<sub>2</sub><br>4: 0,5062 × 70,90 = 35,89 g<br>5: 45 g heeft 2 sig. cijfers → <b>36 g</b></div>
+<h3>Overmaat en ondermaat</h3>${TH.overmaat.h}<div class="ex"><b>Voorbeeld.</b> 3 Mg + N<sub>2</sub> → Mg<sub>3</sub>N<sub>2</sub>, met 40,00 g Mg en 10 g N<sub>2</sub>. N<sub>2</sub>: 10 ÷ 28,02 = 0,357 mol. Daarvoor is 3 × 0,357 = 1,071 mol Mg nodig = 26,03 g. Er is 40,00 g, dus Mg is in overmaat: er blijft 40,00 − 26,03 = <b>14 g</b> over.</div>
+<p>Oefen dit met de <b>Reactiekeuken</b>: tel moleculen en zie wat er overblijft.</p>`
+};
+const VERDIEP={
+'0':{extra:[['Rekenen met machten van 10',`<p>Vermenigvuldigen: exponenten optellen. 10<sup>3</sup> × 10<sup>−5</sup> = 10<sup>−2</sup>. Delen: aftrekken. 10<sup>3</sup> ÷ 10<sup>−5</sup> = 10<sup>8</sup>. Een kubieke eenheid: alles tot de derde. 1 m = 100 cm, dus 1 m<sup>3</sup> = 100<sup>3</sup> cm<sup>3</sup> = 10<sup>6</sup> cm<sup>3</sup>.</p>`]],
+ fouten:['cm<sup>3</sup> naar m<sup>3</sup> met 10<sup>−2</sup> omrekenen. Het is 10<sup>−6</sup>: drie dimensies.','O<sub>2</sub> een verbinding noemen omdat er twee atomen zijn. Eén soort atoom = element.','Bij kloppend maken H<sub>2</sub>O veranderen in H<sub>2</sub>O<sub>2</sub>.'],
+ stap:{t:'0,80 kg m<sup>−3</sup> omrekenen naar g mL<sup>−1</sup>',q:'De dichtheid van een gas is 0,80 kg m<sup>−3</sup>. Hoeveel is dat in g mL<sup>−1</sup>?',s:['Teller: 0,80 kg = 0,80·10<sup>3</sup> g = 800 g.','Noemer: 1 m<sup>3</sup> = 10<sup>3</sup> L = 10<sup>6</sup> mL.','800 g per 10<sup>6</sup> mL = 800 ÷ 10<sup>6</sup> = 8,0·10<sup>−4</sup> g mL<sup>−1</sup>.','Controle: gassen zijn heel licht, water is 1 g mL<sup>−1</sup>. Dit is 1250 keer lichter. Logisch.']}},
+'1.1':{extra:[['Gewogen gemiddelde van isotopen',`<p>Chloor bestaat voor ongeveer 75,8% uit Cl-35 (34,97 u) en 24,2% uit Cl-37 (36,97 u). Gemiddeld: 0,758 × 34,97 + 0,242 × 36,97 = 35,45 u. Dat getal staat in het periodiek systeem. Broom: Br-79 en Br-81 ongeveer half-half → 79,90 u.</p>`],['Zwaar water',`<p>Er bestaat ook waterstof met een neutron in de kern: <sup>2</sup>H, deuterium (2,014 u). Zo zijn er drie soorten watermoleculen: H<sub>2</sub>O (18,02 u), HDO (19,02 u) en D<sub>2</sub>O (20,03 u, "zwaar water").</p>`],['Nieuwe elementen',`<p>Element 113 is gemaakt door bismut (83) en zink (30) te laten botsen: 83 + 30 = 113 protonen. Element 120 zou in groep 2, periode 8 komen, met 2 valentie-elektronen.</p>`]],
+ fouten:['Neutronen = massagetal + atoomnummer. Fout! Het is <b>min</b>: massagetal − atoomnummer. (Radium: 226 − 88 = 138, niet 314.)','Denken dat het massagetal hetzelfde is als de atoommassa uit Binas. Massagetal is een heel getal (37), atoommassa een gemeten getal (35,45 u gemiddeld).','Bij een ion het aantal protonen veranderen. Alleen elektronen komen erbij of gaan weg.','N-14 en C-14 isotopen noemen. Isotopen hebben hetzelfde atoomnummer.'],
+ stap:{t:'Bouw van <sup>23</sup>Na<sup>+</sup>',q:'Geef protonen, neutronen, elektronen en de elektronenconfiguratie van het Na<sup>+</sup>-ion (Na-23).',s:['Natrium heeft atoomnummer 11: <b>11 protonen</b>.','Massagetal 23: neutronen = 23 − 11 = <b>12 neutronen</b>.','Neutraal atoom: 11 elektronen (K2 L8 M1). Het + ion heeft er één afgestaan: <b>10 elektronen</b>.','Configuratie Na<sup>+</sup>: <b>K2 L8</b>, net als het edelgas neon.']}},
+'1.2':{extra:[['Waarom 6,02·10<sup>23</sup>?',`<p>Het is precies het aantal u dat in 1 gram past: 1 g ÷ 1,66·10<sup>−24</sup> g = 6,02·10<sup>23</sup>. Daardoor weegt 1 mol koolstofatomen (12,01 u per stuk) precies 12,01 gram. Handig: het getal in u wordt het getal in gram per mol.</p>`],['Atomen in een molecuul tellen',`<p>Vraag je naar <b>atomen</b> in plaats van moleculen, vermenigvuldig dan met het aantal van dat atoom in de formule. 1,2 g Cl<sub>2</sub> = 0,0169 mol Cl<sub>2</sub> = 0,0338 mol Cl-atomen. 1,2 g CCl<sub>4</sub> = 0,00780 mol × 4 = 0,0312 mol Cl-atomen.</p>`],['Echt of nep zilver?',`<p>Een armbandje van 63,8 g laat het water in een maatcilinder stijgen van 25,0 naar 31,1 mL: V = 6,1 mL. ρ = 63,8 ÷ 6,1 = 10,5 g mL<sup>−1</sup>. Zilver: 10,5·10<sup>3</sup> kg m<sup>−3</sup>. Echt zilver!</p>`]],
+ fouten:['m × M rekenen als je van gram naar mol wilt. Het is <b>delen</b>: n = m ÷ M.','Dichtheid in kg m<sup>−3</sup> gebruiken met mL. Reken eerst om: 0,80·10<sup>3</sup> kg m<sup>−3</sup> = 0,80 g mL<sup>−1</sup>.','Vergeten dat Cl<sub>2</sub> molaire massa 70,90 heeft, niet 35,45.'],
+ stap:{t:'Hoeveel moleculen in 12 mL ethanol?',q:'Ethanol C<sub>2</sub>H<sub>6</sub>O, ρ = 0,80 g mL<sup>−1</sup>, M = 46,07 g mol<sup>−1</sup>.',s:['V → m: m = ρ × V = 0,80 × 12 = 9,6 g.','m → n: n = m ÷ M = 9,6 ÷ 46,07 = 0,208 mol.','n → N: N = n × N<sub>A</sub> = 0,208 × 6,02·10<sup>23</sup> = 1,25·10<sup>23</sup>.','Significantie: 12 mL en 0,80 hebben 2 sig. cijfers → <b>1,3·10<sup>23</sup> moleculen</b>.']}},
+'1.3':{extra:[['Waarom geen afronding tussendoor?',`<p>Elke afronding geeft een klein foutje. Doe je dat bij elke stap, dan stapelen de foutjes op. Laat tussenwaarden in je rekenmachine staan, of schrijf minimaal twee cijfers extra op. Rond alleen het eindantwoord af.</p>`],['Ppm in lucht (volume-ppm)',`<p>Bij gassen gebruik je vaak volume-ppm: 1 ppm = 1 mL per m<sup>3</sup>. Een klaslokaal van 200 m<sup>3</sup> met 1200 ppm CO<sub>2</sub> bevat 1200 × 200 = 2,4·10<sup>5</sup> mL = 240 L CO<sub>2</sub>. Buitenlucht heeft ongeveer 400 ppm (Praktijk: ventilatie in de klas).</p>`],['Massapercentage van een element',`<p>Hoeveel procent ijzer zit er in hematiet Fe<sub>2</sub>O<sub>3</sub>? M = 159,7 g mol<sup>−1</sup>, waarvan 2 × 55,85 = 111,7 g ijzer. 111,7 ÷ 159,7 × 100% = <b>69,94%</b>.</p>`]],
+ fouten:['Nullen vóóraan meetellen: 0,0030 heeft 2 significante cijfers, niet 4 of 5.','Bij optellen op significante cijfers afronden in plaats van op decimalen.','Bij massa-ppm de massa\'s in verschillende eenheden laten staan (mg boven, kg onder).','Molariteit met mL in plaats van L uitrekenen.'],
+ stap:{t:'Molariteit van een glucoseoplossing',q:'3,8 g glucose (C<sub>6</sub>H<sub>12</sub>O<sub>6</sub>, 180,16 g mol<sup>−1</sup>) wordt opgelost tot 750 mL.',s:['Massa naar mol: n = 3,8 ÷ 180,16 = 0,021 09 mol.','Volume in liter: 750 mL = 0,750 L.','[glucose] = n ÷ V = 0,021 09 ÷ 0,750 = 0,028 12 M.','3,8 heeft 2 sig. cijfers → <b>2,8·10<sup>−2</sup> M</b>.']}},
+'1.4':{extra:[['Molverhouding ≠ massaverhouding',`<p>In 2 H<sub>2</sub> + O<sub>2</sub> → 2 H<sub>2</sub>O reageren 2 moleculen H<sub>2</sub> met 1 O<sub>2</sub>. Maar in gram: 4 g waterstof met 32 g zuurstof. De verhouding in gram is 1 : 8, niet 2 : 1. Reken daarom altijd via mol.</p>`],['Ondermaat vinden met een truc',`<p>Deel het aantal mol van elke beginstof door zijn coëfficiënt. De kleinste uitkomst = ondermaat. 3 Mg + N<sub>2</sub>: Mg 1,645 mol ÷ 3 = 0,548; N<sub>2</sub> 0,357 ÷ 1 = 0,357. N<sub>2</sub> is kleiner, dus ondermaat.</p>`],['Kaarsje in een fles (practicum)',`<p>Een kaarsje onder een omgekeerde erlenmeyer gaat uit terwijl er nog kaarsvet over is. Kaarsvet is in overmaat, de zuurstof in ondermaat.</p>`]],
+ fouten:['De coëfficiënten als grammen gebruiken.','Met de verkeerde kant van de verhouding vermenigvuldigen (×2/3 in plaats van ×3/2). Controle: van de stof met het grootste getal ontstaan meer mol.','Bij overmaat vergeten de gereageerde hoeveelheid van de beginhoeveelheid af te trekken.'],
+ stap:{t:'Zuurstof voor 1,00 kg benzine',q:'Benzine C<sub>8</sub>H<sub>18</sub> verbrandt volledig. Hoeveel kg zuurstof is nodig voor 1,00 kg?',s:['Stap 1: 2 C<sub>8</sub>H<sub>18</sub> + 25 O<sub>2</sub> → 16 CO<sub>2</sub> + 18 H<sub>2</sub>O.','Stap 2: M = 114,22 g mol<sup>−1</sup>; 1,00·10<sup>3</sup> g ÷ 114,22 = 8,755 mol.','Stap 3: verhouding 2 : 25 → 8,755 × 25/2 = 109,4 mol O<sub>2</sub>.','Stap 4: 109,4 × 32,00 = 3502 g = 3,502 kg.','Stap 5: 1,00 kg heeft 3 sig. cijfers → <b>3,50 kg</b> zuurstof.']}}
+};
+/* [par, vraag, goed, 'fout|fout|fout', uitleg, theorie] */
+const MC=[
+['0','Welke stof is een element?','I<sub>2</sub>','SO<sub>2</sub>|NH<sub>3</sub>|H<sub>2</sub>O','Eén soort atoom (jood): niet-ontleedbaar, dus element.','element'],
+['0','Welke stof is een verbinding?','SO<sub>2</sub>','Mg|O<sub>2</sub>|I<sub>2</sub>','Twee soorten atomen (S en O): ontleedbaar.','element'],
+['0','Een mengsel heeft …','een smelttraject','één vast smeltpunt|altijd één soort atomen|geen kookpunt','Een zuivere stof heeft een smeltpunt, een mengsel een traject.','element'],
+['0','Welke vergelijking voor de ontleding van ammoniak klopt?','2 NH<sub>3</sub> → N<sub>2</sub> + 3 H<sub>2</sub>','NH<sub>3</sub> → N + H<sub>3</sub>|NH<sub>3</sub> → N<sub>2</sub> + H<sub>2</sub>|2 NH<sub>3</sub> → N<sub>2</sub> + 2 H<sub>2</sub>','Links 2 N en 6 H, rechts 2 N en 3 × 2 = 6 H.','kloppend'],
+['0','23,14 L is in m<sup>3</sup> …','2,314·10<sup>−2</sup>','2,314·10<sup>−3</sup>|2,314·10<sup>1</sup>|2,314·10<sup>−1</sup>','1 L = 10<sup>−3</sup> m<sup>3</sup>: 23,14 × 10<sup>−3</sup> = 2,314·10<sup>−2</sup>.','eenheden'],
+['0','100,09 kg kmol<sup>−1</sup> is in g mol<sup>−1</sup> …','100,09','0,100 09|100 090|1,0009','kg/kmol: boven en onder ×1000, dus hetzelfde getal.','eenheden'],
+['0','Hoe schrijf je 0,0054 in wetenschappelijke notatie?','5,4·10<sup>−3</sup>','54·10<sup>−4</sup>|5,4·10<sup>3</sup>|0,54·10<sup>−2</sup>','Eén cijfer vóór de komma: 5,4, en de komma schoof 3 plaatsen.','notatie'],
+['1.1','Waar bevinden zich de neutronen?','in de kern','in de schillen|in de elektronenwolk|tussen de atomen','Kern: protonen en neutronen. Schillen: elektronen.','atoom'],
+['1.1','Wat bepaalt welk element een atoom is?','het aantal protonen','het aantal neutronen|het massagetal|het aantal schillen','Atoomnummer = aantal protonen.','nummers'],
+['1.1','Hoeveel neutronen heeft Ra-226 (atoomnummer 88)?','138','314|88|226','226 − 88 = 138. Niet optellen!','nummers'],
+['1.1','Hoeveel neutronen heeft Au-197 (atoomnummer 79)?','118','79|197|276','197 − 79 = 118.','nummers'],
+['1.1','Wat zijn isotopen?','atomen met hetzelfde aantal protonen maar een ander aantal neutronen','atomen met hetzelfde massagetal|atomen met verschillende aantallen protonen|ionen van hetzelfde element','Cl-35 en Cl-37.','isotoop'],
+['1.1','Zijn N-14 en C-14 isotopen van elkaar?','nee, ze hebben een ander atoomnummer','ja, ze hebben hetzelfde massagetal|ja, het zijn allebei gassen|nee, ze hebben evenveel neutronen','Isotopen zijn van hetzelfde element.','isotoop'],
+['1.1','Hoeveel elektronen kunnen er maximaal in de L-schil?','8','2|18|32','K 2, L 8, M 18.','schillen'],
+['1.1','De elektronenconfiguratie van fosfor (15) is …','K2 L8 M5','K2 L10 M3|K8 L5 M2|K2 L5 M8','K vol (2), L vol (8), rest 5 in M.','schillen'],
+['1.1','Wat zijn valentie-elektronen?','de elektronen in de buitenste schil','alle elektronen|de elektronen in de K-schil|de elektronen in de kern','Die doen mee bij reacties.','schillen'],
+['1.1','Hoeveel valentie-elektronen heeft magnesium (groep 2)?','2','12|8|1','Groep 2: 2 valentie-elektronen, die het afstaat → Mg<sup>2+</sup>.','edelgas'],
+['1.1','Wat is de relatieve atoommassa A<sub>r</sub>?','het gewogen gemiddelde van de massa\'s van de isotopen in de natuur','het massagetal|het aantal protonen|de massa van één neutron','Daarom is chloor 35,45 u en niet precies 35.','atoommassa'],
+['1.1','De relatieve molecuulmassa van CO<sub>2</sub> is …','44,01 u','28,01 u|12,01 u|60,01 u','12,01 + 2 × 16,00 = 44,01.','atoommassa'],
+['1.1','Waarop is het huidige periodiek systeem gerangschikt?','atoomnummer','atoommassa|dichtheid|alfabet','Mendelejev gebruikte nog atoommassa.','ps'],
+['1.1','Hoe heten de rijen in het periodiek systeem?','perioden','groepen|kolommen|schillen','Rijen = perioden (7), kolommen = groepen (18).','ps'],
+['1.1','Groep 17 heet …','de halogenen','de edelgassen|de alkalimetalen|de aardalkalimetalen','F, Cl, Br, I: 7 valentie-elektronen.','ps'],
+['1.1','Groep 1 heet …','de alkalimetalen','de halogenen|de aardalkalimetalen|de edelgassen','Li, Na, K: zeer reactief, staan 1 elektron af.','ps'],
+['1.1','Waarom reageren edelgassen bijna niet?','ze hebben een volle buitenste schil (8 valentie-elektronen)','ze hebben geen elektronen|ze zijn te zwaar|ze hebben geen neutronen','Edelgasconfiguratie: heel stabiel.','edelgas'],
+['1.1','Wie ontdekte het neutron?','Chadwick (1932)','Dalton (1808)|Thomson (1897)|Demokritos','Chadwick, 1932.','atoom'],
+['1.1','Welk atoommodel had elektronen in vaste banen?','Bohr','Dalton|Thomson|Demokritos','Bohr, 1914: schillen.','atoom'],
+['1.1','Welk element bestaat uit twee-atomige moleculen?','stikstof N<sub>2</sub>','neon Ne|ijzer Fe|helium He','H<sub>2</sub>, N<sub>2</sub>, O<sub>2</sub>, F<sub>2</sub>, Cl<sub>2</sub>, Br<sub>2</sub>, I<sub>2</sub>.','ps'],
+['1.2','Hoeveel deeltjes zitten er in 1 mol?','6,02·10<sup>23</sup>','12|1000|1,66·10<sup>−24</sup>','Het getal van Avogadro.','mol'],
+['1.2','Hoeveel mol H-atomen zit er in 1 mol NH<sub>3</sub>?','3 mol','1 mol|1/3 mol|6,02·10<sup>23</sup> mol','Elk molecuul heeft 3 H.','mol'],
+['1.2','Van gram naar mol reken je met …','delen door de molaire massa','vermenigvuldigen met de molaire massa|vermenigvuldigen met N<sub>A</sub>|delen door de dichtheid','n = m ÷ M.','molmassa'],
+['1.2','Van mol naar aantal deeltjes reken je met …','× N<sub>A</sub>',': N<sub>A</sub>|× M|: M','N = n × N<sub>A</sub>.','mol'],
+['1.2','De molaire massa van water is 18,02 g mol<sup>−1</sup>. Hoeveel weegt 2,00 mol water?','36,0 g','9,01 g|18,0 g|20,0 g','m = n × M = 2,00 × 18,02 = 36,04 → 36,0 g.','molmassa'],
+['1.2','Wat is de eenheid van molaire massa?','g mol<sup>−1</sup>','u|mol g<sup>−1</sup>|kg m<sup>−3</sup>','Gram per mol.','molmassa'],
+['1.2','Wat is de formule voor dichtheid?','ρ = m ÷ V','ρ = V ÷ m|ρ = m × V|ρ = n ÷ V','Massa per volume.','dichtheid'],
+['1.2','2,70·10<sup>3</sup> kg m<sup>−3</sup> is in g cm<sup>−3</sup> …','2,70','2700|0,270|2,70·10<sup>6</sup>','1 kg m<sup>−3</sup> = 10<sup>−3</sup> g cm<sup>−3</sup>.','dichtheid'],
+['1.2','Je wilt van volume naar aantal moleculen. Welke route?','V → m → n → N','V → n → m → N|V → N|V → m → N','Altijd via de mol: × ρ, : M, × N<sub>A</sub>.','schema'],
+['1.2','Een onbekend gas: 2,0 mol weegt 92,0 g. Welke molaire massa?','46,0 g mol<sup>−1</sup>','184 g mol<sup>−1</sup>|94,0 g mol<sup>−1</sup>|23,0 g mol<sup>−1</sup>','M = m ÷ n = 92,0 ÷ 2,0. Met N en O: NO<sub>2</sub>.','molmassa'],
+['1.3','Hoeveel significante cijfers heeft 0,003 L?','1','3|4|0','Voorloopnullen tellen niet.','sig'],
+['1.3','Hoeveel significante cijfers heeft 10,0 mmol?','3','1|2|4','Nul achteraan na de komma telt mee.','sig'],
+['1.3','Hoeveel significante cijfers heeft 1,0006 dm<sup>3</sup>?','5','2|4|1','Nullen tussen cijfers tellen mee.','sig'],
+['1.3','3,34 m × 5,026 m = 16,786 84 m<sup>2</sup>. Correct afgerond?','16,8 m<sup>2</sup>','16,79 m<sup>2</sup>|17 m<sup>2</sup>|16,786 84 m<sup>2</sup>','Kleinste aantal sig. cijfers: 3.','afronden'],
+['1.3','1,003 m + 0,5 m = ?','1,5 m','1,503 m|1,50 m|2 m','Optellen: kleinste aantal decimalen (1).','afronden'],
+['1.3','Met welk instrument meet je het nauwkeurigst 50 mL af?','volpipet of maatkolf (50,00 mL)','bekerglas (50 mL)|maatcilinder (50,0 mL)|erlenmeyer','4 significante cijfers.','sig'],
+['1.3','Wat is een telwaarde?','een exact geheel getal, zoals 23 leerlingen of een coëfficiënt','een meetwaarde met 2 decimalen|een afgerond antwoord|de uitkomst van een weging','Telwaarden tellen niet mee voor de significantie.','sig'],
+['1.3','Massa-ppm betekent …','gram stof per miljoen gram mengsel','gram stof per 100 gram|milligram per liter altijd|deeltjes per miljard','× 10<sup>6</sup>. (ppb: × 10<sup>9</sup>)','gehalte'],
+['1.3','1,0 g lood in 20 000 kg water. Hoeveel massa-ppb?','50 ppb','0,05 ppb|50 000 ppb|5,0 ppb','1,0 ÷ 2,0·10<sup>7</sup> g × 10<sup>9</sup> = 50.','gehalte'],
+['1.3','Wat is de eenheid van molariteit?','mol L<sup>−1</sup> (M)','g L<sup>−1</sup>|mol g<sup>−1</sup>|g mol<sup>−1</sup>','[A] = n ÷ V in liter.','molariteit'],
+['1.3','Hoeveel massaprocent ijzer zit in Fe<sub>2</sub>O<sub>3</sub>?','69,94%','66,7%|40%|55,85%','2 × 55,85 ÷ 159,7 × 100%.','gehalte'],
+['1.4','Wat zegt de wet van behoud van massa?','massa beginstoffen = massa reactieproducten','de massa neemt toe bij verbranden|moleculen blijven hetzelfde|de massaverhouding is altijd 1 : 1','Atomen gaan niet verloren.','behoud'],
+['1.4','9,0 g aluminium reageert met 8,0 g zuurstof. Hoeveel aluminiumoxide ontstaat?','17 g','9,0 g|1,0 g|72 g','9,0 + 8,0 = 17.','behoud'],
+['1.4','Wat geven de coëfficiënten in een reactievergelijking aan?','de molverhouding','de massaverhouding|de volumeverhouding altijd|de dichtheid','Aantal deeltjes, dus mol. Niet gram.','molverh'],
+['1.4','2 C<sub>4</sub>H<sub>10</sub> + 13 O<sub>2</sub> → 8 CO<sub>2</sub> + 10 H<sub>2</sub>O. Hoeveel mol O<sub>2</sub> voor 4 mol butaan?','26 mol','13 mol|6,5 mol|52 mol','4 is 2 × 2, dus 2 × 13 = 26.','molverh'],
+['1.4','2 AlCl<sub>3</sub> → 2 Al + 3 Cl<sub>2</sub>. Hoeveel mol Cl<sub>2</sub> uit 0,40 mol AlCl<sub>3</sub>?','0,60 mol','0,27 mol|0,40 mol|1,2 mol','× 3/2.','molverh'],
+['1.4','Wat is stap 2 van het stappenplan?','de gegeven stof omrekenen naar mol','de significantie controleren|de vergelijking opstellen|naar gram omrekenen','1 vergelijking · 2 naar mol · 3 molverhouding · 4 omrekenen · 5 significantie.','stappen'],
+['1.4','De stof die als eerste op is, heet …','in ondermaat','in overmaat|de katalysator|het reactieproduct','Die bepaalt hoeveel product er ontstaat.','overmaat'],
+['1.4','2 H<sub>2</sub> + O<sub>2</sub> → 2 H<sub>2</sub>O met 4 mol H<sub>2</sub> en 3 mol O<sub>2</sub>. Wat is in overmaat?','O<sub>2</sub> (er blijft 1 mol over)','H<sub>2</sub>|geen van beide|allebei','4 mol H<sub>2</sub> heeft 2 mol O<sub>2</sub> nodig; 3 − 2 = 1 over.','overmaat'],
+['1.4','Een kaarsje onder een glazen pot gaat uit. Welke stof is in ondermaat?','zuurstof','kaarsvet|koolstofdioxide|waterdamp','Er is nog kaarsvet over: zuurstof was eerst op.','overmaat']
+];
+const BEGRIP=[
+['aardalkalimetalen','elementen in groep 2 van het periodiek systeem','1.1'],['alkalimetalen','elementen in groep 1 van het periodiek systeem','1.1'],['atomaire massa-eenheid (u)','eenheid om atoommassa\'s en molecuulmassa\'s in uit te drukken','1.1'],['atoombinding','binding tussen twee atomen door een gemeenschappelijk elektronenpaar','1.1'],['atoommodel','model dat weergeeft hoe een atoom uit protonen, neutronen en elektronen is opgebouwd','1.1'],['atoomnummer','getal dat het aantal protonen in de kern weergeeft','1.1'],['covalentie','aantal atoombindingen dat een atoom aangaat om de edelgasconfiguratie te bereiken','1.1'],['edelgasconfiguratie','elektronenconfiguratie met acht valentie-elektronen (twee bij H en He)','1.1'],['edelgassen','elementen in groep 18, die nagenoeg geen reacties aangaan','1.1'],['elektron','negatief geladen deeltje met verwaarloosbare massa, in schillen om de kern','1.1'],['elektronenconfiguratie','manier waarop de elektronen over de schillen zijn verdeeld','1.1'],['elektronenschil','baan op bepaalde afstand rond de kern waarin elektronen zich bevinden (K, L, M)','1.1'],['elektronenwolk','gebied om de kern waarin de elektronen zich bevinden','1.1'],['groep','kolom in het periodiek systeem met elementen met vergelijkbare chemische eigenschappen','1.1'],['halogenen','elementen in groep 17','1.1'],['ion','atoom of atoomgroep met een lading','1.1'],['isotopen','atomen met hetzelfde aantal protonen maar een verschillend aantal neutronen','1.1'],['massagetal','som van het aantal protonen en neutronen in de kern','1.1'],['metaal','atoomsoort die valentie-elektronen afstaat om de edelgasconfiguratie te bereiken','1.1'],['neutron','ongeladen deeltje met massa 1 u in de kern','1.1'],['niet-metaal','atoomsoort die valentie-elektronen opneemt (of deelt) om de edelgasconfiguratie te bereiken','1.1'],['periode','rij in het periodiek systeem: elementen met valentie-elektronen in dezelfde schil','1.1'],['proton','positief geladen deeltje met massa 1 u in de kern','1.1'],['relatieve atoommassa (Ar)','gewogen gemiddelde van de atoommassa\'s van de isotopen in de natuur','1.1'],['relatieve molecuulmassa (Mr)','massa van een molecuul in u: de som van de atoommassa\'s','1.1'],['valentie-elektronen','elektronen in de buitenste schil','1.1'],
+['aantal deeltjes (N)','aantal deeltjes dat aanwezig is','1.2'],['chemische hoeveelheid (n)','hoeveelheid deeltjes uitgedrukt in mol','1.2'],['dichtheid (ρ)','massa van een stof per volume-eenheid','1.2'],['getal van Avogadro (NA)','aantal deeltjes in één mol: 6,02·10²³','1.2'],['molaire massa (M)','massa in gram van één mol van een stof','1.2'],
+['concentratie','hoeveel stof er in een bepaald volume aanwezig is (g/L, mol/L)','1.3'],['massa-ppb','massagehalte in delen per miljard (µg/kg)','1.3'],['massa-ppm','massagehalte in delen per miljoen (mg/kg)','1.3'],['massapercentage','hoeveel procent van de massa van een mengsel uit een bepaalde stof bestaat','1.3'],['meetwaarde','getal bepaald door een meetinstrument met een bepaalde nauwkeurigheid en eenheid','1.3'],['molariteit [A]','concentratie in mol per liter (M)','1.3'],['significant cijfer','cijfer in een meetwaarde dat, gezien de nauwkeurigheid van het instrument, gebruikt mag worden','1.3'],['telwaarde','natuurlijk geheel getal met oneindige significantie','1.3'],['volumepercentage','hoeveel procent van het volume van een mengsel uit een bepaalde stof bestaat','1.3'],
+['massaverhouding','verhouding waarin stoffen reageren, gebaseerd op de massa\'s','1.4'],['ondermaat','beginstof die als eerste op is','1.4'],['overmaat','beginstof die over blijft als de reactie stopt','1.4'],['molverhouding','aantalsverhouding waarin moleculen reageren (coëfficiënten)','1.4'],['wet van behoud van massa','bij een reactie gaat geen massa verloren en ontstaat geen massa','1.4']
+];
+
+/* ---------- hulpjes ---------- */
+const R=(a,b)=>a+Math.floor(Math.random()*(b-a+1));
+const nf=(v,d=1)=>{const r=Math.round(v*10**d)/10**d;return String(r).replace('.',',')};
+const sum=a=>a.reduce((s,x)=>s+x,0);
+const NA=6.02e23;
+/* element: [naam, Z, Ar, metaal] */
+const ELS={H:['waterstof',1,1.008,0],He:['helium',2,4.003,0],Li:['lithium',3,6.94,1],Be:['beryllium',4,9.012,1],B:['boor',5,10.81,0],C:['koolstof',6,12.01,0],N:['stikstof',7,14.01,0],O:['zuurstof',8,16.00,0],F:['fluor',9,19.00,0],Ne:['neon',10,20.18,0],
+ Na:['natrium',11,22.99,1],Mg:['magnesium',12,24.31,1],Al:['aluminium',13,26.98,1],Si:['silicium',14,28.09,0],P:['fosfor',15,30.97,0],S:['zwavel',16,32.06,0],Cl:['chloor',17,35.45,0],Ar:['argon',18,39.95,0],K:['kalium',19,39.10,1],Ca:['calcium',20,40.08,1],
+ Cr:['chroom',24,52.00,1],Mn:['mangaan',25,54.94,1],Fe:['ijzer',26,55.85,1],Co:['kobalt',27,58.93,1],Ni:['nikkel',28,58.69,1],Cu:['koper',29,63.55,1],Zn:['zink',30,65.38,1],Br:['broom',35,79.90,0],Kr:['krypton',36,83.80,0],Ag:['zilver',47,107.9,1],Cd:['cadmium',48,112.4,1],Sn:['tin',50,118.7,1],I:['jood',53,126.9,0],Xe:['xenon',54,131.3,0],Ba:['barium',56,137.3,1],
+ Pt:['platina',78,195.1,1],Au:['goud',79,197.0,1],Hg:['kwik',80,200.6,1],Pb:['lood',82,207.2,1],Ra:['radium',88,226,1],U:['uraan',92,238.0,1]};
+const KENNEN=['Ar','B','Br','Cl','F','P','He','I','C','Ne','Si','N','H','O','S','Al','Ba','Cd','Ca','Cr','Au','Fe','K','Co','Cu','Hg','Li','Pb','Mn','Mg','Na','Ni','Pt','Sn','U','Ag','Zn'];
+const ZSYM={};for(const [s,v] of Object.entries(ELS))ZSYM[v[1]]=s;
+function parseF(f){f=String(f);let i=0;function grp(){const o={};while(i<f.length&&f[i]!==')'){let part;if(f[i]==='('){i++;part=grp();i++}else{const m=/^[A-Z][a-z]?/.exec(f.slice(i));if(!m){i++;continue}i+=m[0].length;part={[m[0]]:1}}
+  const n=/^\d+/.exec(f.slice(i));const k=n?+n[0]:1;if(n)i+=n[0].length;for(const e in part)o[e]=(o[e]||0)+part[e]*k}return o}return grp()}
+const molMass=f=>sum(Object.entries(parseF(f)).map(([e,k])=>ELS[e][2]*k));
+const config=z=>{const cap=[2,8,8,2];const o=[];let r=z;for(const c of cap){if(r<=0)break;const t=Math.min(c,r);o.push(t);r-=t}return o};
+const shellStr=a=>a.map((n,i)=>'KLMN'[i]+n).join(' ');
+/* significante cijfers */
+function sigOf(str){let s=String(str).replace(',','.').replace(/·10\^?.*$/,'').replace(/e.*$/i,'').replace('-','');s=s.replace('.','');s=s.replace(/^0+/,'');return s.length}
+function toSig(x,n){if(x===0)return '0';const e=Math.floor(Math.log10(Math.abs(x)));let m=x/10**e;m=Math.round(m*10**(n-1))/10**(n-1);let ee=e;if(Math.abs(m)>=10){m/=10;ee++}
+  if(ee>=-2&&ee<=3&&ee>=n-1-2&&!(ee>=n)){const d=Math.max(0,n-1-ee);return (x<0?'-':'')+Math.abs(m*10**ee).toFixed(d).replace('.',',')}
+  return sci(m,ee,n)}
+function sci(m,e,n){return `${Math.abs(m).toFixed(n-1).replace('.',',')}·10<sup>${e<0?'−':''}${Math.abs(e)}</sup>`}
+const fmtSig=(x,n)=>{const e=Math.floor(Math.log10(Math.abs(x)));if(e>=4||e<=-3)return sci(x/10**e,e,n);return toSig(x,n)};
+const opt4=(a,pool)=>{const o=[a];for(const p of shuffle(pool))if(!o.includes(p)&&o.length<4)o.push(p);return o};
+/* stoffen voor rekenen */
+const STOF=[['water','H2O',1.00],['ethanol','C2H6O',0.80],['koolstofdioxide','CO2'],['methaan','CH4'],['glucose','C6H12O6'],['ammoniak','NH3'],['zwavelzuur','H2SO4',1.83],['natriumchloride','NaCl'],['zuurstof','O2'],['stikstof','N2'],['chloor','Cl2'],['zwaveldioxide','SO2'],['glycerol','C3H8O3',1.26],['kopercarbonaat','CuCO3'],['kaliumfosfaat','K3PO4'],['butaan','C4H10'],['propaan','C3H8'],['ijzer','Fe'],['magnesium','Mg'],['calciumcarbonaat','CaCO3']];
+const ISO=[['H',1],['He',4],['Li',7],['C',12],['C',13],['C',14],['N',14],['O',16],['O',18],['F',19],['Ne',20],['Na',23],['Mg',24],['Al',27],['P',31],['S',32],['Cl',35],['Cl',37],['K',39],['Ca',40],['Fe',56],['Cu',63],['Br',79],['Br',81],['Ag',108],['Au',197],['Pb',207],['Ra',226],['U',235],['U',238]];
+const isoNot=(s,A,q)=>`<sup>${A}</sup><sub>${ELS[s][1]}</sub>${s}${q?`<sup>${Math.abs(q)>1?Math.abs(q):''}${q>0?'+':'−'}</sup>`:''}`;
+/* reacties voor rekenen: [[formule,coëff,kant]] */
+const RX=[
+ {n:'de verbranding van methaan',r:[['CH4',1,0],['O2',2,0],['CO2',1,1],['H2O',2,1]]},
+ {n:'de verbranding van propaan',r:[['C3H8',1,0],['O2',5,0],['CO2',3,1],['H2O',4,1]]},
+ {n:'de verbranding van butaan',r:[['C4H10',2,0],['O2',13,0],['CO2',8,1],['H2O',10,1]]},
+ {n:'de verbranding van ethanol',r:[['C2H6O',1,0],['O2',3,0],['CO2',2,1],['H2O',3,1]]},
+ {n:'de ontleding van aluminiumchloride',r:[['AlCl3',2,0],['Al',2,1],['Cl2',3,1]]},
+ {n:'de vorming van ammoniak',r:[['N2',1,0],['H2',3,0],['NH3',2,1]]},
+ {n:'de vorming van magnesiumnitride',r:[['Mg',3,0],['N2',1,0],['Mg3N2',1,1]]},
+ {n:'de verbranding van fosfor',r:[['P',4,0],['O2',5,0],['P2O5',2,1]]},
+ {n:'de vorming van lithiumoxide',r:[['Li',4,0],['O2',1,0],['Li2O',2,1]]},
+ {n:'de verbranding van octaan (benzine)',r:[['C8H18',2,0],['O2',25,0],['CO2',16,1],['H2O',18,1]]},
+ {n:'de ontleding van waterstofperoxide',r:[['H2O2',2,0],['H2O',2,1],['O2',1,1]]},
+ {n:'de vergisting van glucose',r:[['C6H12O6',1,0],['C2H6O',2,1],['CO2',2,1]]},
+ {n:'het roesten van ijzer',r:[['Fe',4,0],['O2',3,0],['Fe2O3',2,1]]}];
+const eqStr=x=>[0,1].map(s=>x.r.filter(a=>a[2]===s).map(a=>(a[1]>1?a[1]+' ':'')+fm(a[0])).join(' + ')).join(' → ');
+const nice=v=>{const e=Math.floor(Math.log10(v));return Math.round(v/10**(e-1))*10**(e-1)};
+/* ---------- generatoren ---------- */
+const GENS={
+ elver:{sec:'0',t:'Element of verbinding?',th:'element',f(){const f=pick(['Mg','SO2','I2','O2','H2O','Fe','NH3','N2','CO2','NaCl','He','Cl2','CH4','Cu','P4','S8','H2O2','C6H12O6']);const k=Object.keys(parseF(f)).length>1;
+   return {mc:true,keep:true,q:`Is <b>${fm(f)}</b> een element of een verbinding?`,opts:['element (niet-ontleedbaar)','verbinding (ontleedbaar)'],a:k?'verbinding (ontleedbaar)':'element (niet-ontleedbaar)',w:k?'Meer dan één soort atoom: verbinding.':'Eén soort atoom (ook als het er meer zijn, zoals O<sub>2</sub>): element.',th:'element'}}},
+ eenh:{sec:'0',t:'Eenheden omrekenen',th:'eenheden',f(){const t=pick([
+   ()=>{const v=nice(R(11,990)/10);return {q:`${nf(v,2)} L = … m<sup>3</sup>`,a:v/1000,u:'m³'}},
+   ()=>{const v=R(12,950)/100;return {q:`${nf(v,2)} kg = … g`,a:v*1000,u:'g'}},
+   ()=>{const v=R(15,900);return {q:`${v} mL = … L`,a:v/1000,u:'L'}},
+   ()=>{const v=R(12,990)/10;return {q:`${nf(v,1)} g = … mg`,a:v*1000,u:'mg'}},
+   ()=>{const v=R(2,95)/10;return {q:`${nf(v,1)} g mL<sup>−1</sup> = … kg m<sup>−3</sup>`,a:v*1000,u:'kg/m³'}},
+   ()=>{const v=R(5,950);return {q:`${v} cm<sup>3</sup> = … dm<sup>3</sup>`,a:v/1000,u:'dm³'}}])();
+   return {q:t.q+'<br><span class="src">Typ gewoon het getal; 0,0231 of 2,31e-2 mag allebei.</span>',a:t.a,tol:Math.abs(t.a)*0.005,u:t.u,w:TH.eenheden.h,th:'eenheden'}}},
+ ptn:{sec:'1.1',t:'Protonen, neutronen, elektronen',th:'nummers',f(){const [s,A]=pick(ISO);const Z=ELS[s][1];const ion=Math.random()<.3&&['Na','Mg','Al','O','F','Cl','S','K','Ca','Li'].includes(s);const q=ion?{Na:1,Mg:2,Al:3,O:-2,F:-1,Cl:-1,S:-2,K:1,Ca:2,Li:1}[s]:0;
+   const what=pick(['protonen','neutronen','elektronen']);const a=what==='protonen'?Z:what==='neutronen'?A-Z:Z-q;
+   return {q:`Hoeveel <b>${what}</b> heeft ${isoNot(s,A,q)} (${ELS[s][0]}${ion?'-ion':''})?`,a,tol:0,w:what==='neutronen'?`Neutronen = massagetal − atoomnummer = ${A} − ${Z} = ${a}.`:what==='protonen'?`Protonen = atoomnummer = ${Z}.`:`Neutraal ${Z} elektronen${q?`, lading ${q>0?'+':'−'}${Math.abs(q)}: ${a}`:''}.`,th:'nummers'}}},
+ conf:{sec:'1.1',t:'Elektronenconfiguratie',th:'schillen',f(){const z=R(3,20);const c=config(z);const s=ZSYM[z];const wrong=[shellStr([2,z-2]),shellStr(z>10?[2,8,z-10]:[2,z-2]).replace(/^K2/,'K1'),shellStr(z>10?[8,z-8]:[1,z-1]),shellStr(z>4?[2,4,z-6].filter(x=>x>0):[1,z-1])].filter(x=>x!==shellStr(c));
+   return {mc:true,q:`Wat is de elektronenconfiguratie van <b>${ELS[s][0]}</b> (${s}, atoomnummer ${z})?`,opts:opt4(shellStr(c),wrong),a:shellStr(c),w:`K max 2, L max 8, dan M (tot calcium max 8). ${s}: ${shellStr(c)}. Valentie-elektronen: ${c[c.length-1]}.`,th:'schillen'}}},
+ mr:{sec:'1.1',t:'Molecuulmassa berekenen',th:'atoommassa',f(){const [n,f]=pick(STOF);const p=parseF(f);const m=molMass(f);
+   return {q:`Bereken de molecuulmassa van <b>${n} ${fm(f)}</b> in u.<br><span class="src">${Object.keys(p).map(e=>`${e} ${nf(ELS[e][2],3)}`).join(' · ')}</span>`,a:m,tol:Math.max(.05,m*.002),u:'u',w:Object.entries(p).map(([e,k])=>`${k} × ${nf(ELS[e][2],3)}`).join(' + ')+` = ${nf(m,2)} u.`,th:'atoommassa'}}},
+ mn:{sec:'1.2',t:'Gram ↔ mol ↔ deeltjes',th:'schema',f(){const [n,f]=pick(STOF);const M=molMass(f);const k=pick(['m2n','n2m','n2N','N2n','m2N']);
+   if(k==='m2n'){const m=R(10,500)/10;const a=m/M;return {q:`Hoeveel mol is <b>${nf(m,1)} g ${n}</b> (${fm(f)}, M = ${nf(M,2)} g mol<sup>−1</sup>)?`,a,tol:a*.02,u:'mol',w:`n = m ÷ M = ${nf(m,1)} ÷ ${nf(M,2)} = ${nf(a,3)} mol.`,th:'molmassa'}}
+   if(k==='n2m'){const nn=R(5,300)/100;const a=nn*M;return {q:`Hoeveel gram is <b>${nf(nn,2)} mol ${n}</b> (${fm(f)}, M = ${nf(M,2)} g mol<sup>−1</sup>)?`,a,tol:a*.02,u:'g',w:`m = n × M = ${nf(nn,2)} × ${nf(M,2)} = ${nf(a,1)} g.`,th:'molmassa'}}
+   if(k==='n2N'){const nn=R(2,90)/10;const a=nn*NA;return {mc:true,q:`Hoeveel moleculen zitten er in <b>${nf(nn,1)} mol ${n}</b>?`,opts:opt4(fmtSig(a,2),[fmtSig(nn/NA,2),fmtSig(a*10,2),fmtSig(a/10,2),fmtSig(nn*M,2)]),a:fmtSig(a,2),w:`N = n × N<sub>A</sub> = ${nf(nn,1)} × 6,02·10<sup>23</sup> = ${fmtSig(a,3)}.`,th:'mol'}}
+   if(k==='N2n'){const e=R(21,25),mm=R(12,95)/10;const N=mm*10**e;const a=N/NA;return {q:`Hoeveel mol is <b>${nf(mm,1)}·10<sup>${e}</sup> moleculen</b> ${n}?`,a,tol:a*.02,u:'mol',w:`n = N ÷ N<sub>A</sub> = ${nf(mm,1)}·10<sup>${e}</sup> ÷ 6,02·10<sup>23</sup> = ${nf(a,3)} mol.`,th:'mol'}}
+   const m=R(10,200)/10;const a=m/M*NA;return {mc:true,q:`Hoeveel moleculen zitten er in <b>${nf(m,1)} g ${n}</b> (M = ${nf(M,2)} g mol<sup>−1</sup>)?`,opts:opt4(fmtSig(a,2),[fmtSig(m*M*NA,2),fmtSig(m/M,2),fmtSig(a*10,2),fmtSig(M/m*NA,2)]),a:fmtSig(a,2),w:`n = ${nf(m,1)} ÷ ${nf(M,2)} = ${nf(m/M,4)} mol; N = n × 6,02·10<sup>23</sup> = ${fmtSig(a,3)}.`,th:'schema'}}},
+ rho:{sec:'1.2',t:'Rekenen met dichtheid',th:'dichtheid',f(){const s=pick(STOF.filter(x=>x[2]));const [n,f,r]=s;const k=pick(['V2m','m2V','V2n']);
+   if(k==='V2m'){const V=R(5,250);const a=V*r;return {q:`Hoeveel gram is <b>${V} mL ${n}</b> (ρ = ${nf(r,2)} g mL<sup>−1</sup>)?`,a,tol:a*.02,u:'g',w:`m = ρ × V = ${nf(r,2)} × ${V} = ${nf(a,1)} g.`,th:'dichtheid'}}
+   if(k==='m2V'){const m=R(10,400);const a=m/r;return {q:`Welk volume heeft <b>${m} g ${n}</b> (ρ = ${nf(r,2)} g mL<sup>−1</sup>)? In mL.`,a,tol:a*.02,u:'mL',w:`V = m ÷ ρ = ${m} ÷ ${nf(r,2)} = ${nf(a,1)} mL.`,th:'dichtheid'}}
+   const V=R(5,100);const M=molMass(f);const a=V*r/M;return {q:`Hoeveel mol is <b>${V} mL ${n}</b>? (ρ = ${nf(r,2)} g mL<sup>−1</sup>, M = ${nf(M,2)} g mol<sup>−1</sup>)`,a,tol:a*.02,u:'mol',w:`m = ${nf(r,2)} × ${V} = ${nf(V*r,1)} g; n = ${nf(V*r,1)} ÷ ${nf(M,2)} = ${nf(a,3)} mol.`,th:'schema'}}},
+ sig:{sec:'1.3',t:'Significante cijfers tellen',th:'sig',f(){const s=pick(['10,0','1,06','0,003','12,01','1,0006','0,002 30','3,50·10³','2,4','0,050','100,09','6,02·10²³','0,80','237,15','5,0','0,000 0120','45,0','7,0·10⁻⁴','1,000','0,4','18,016']);const a=sigOf(s.replace(/ /g,'').replace(/·10[⁰¹²³⁴⁵⁶⁷⁸⁹⁻]+/,''));
+   return {mc:true,keep:true,q:`Hoeveel significante cijfers heeft <b>${s}</b>?`,opts:['1','2','3','4','5'],a:String(a),w:`Tel vanaf het eerste cijfer dat geen 0 is; nullen achteraan tellen mee. ${s} → ${a}.`,th:'sig'}}},
+ afr:{sec:'1.3',t:'Correct afronden',th:'afronden',f(){if(Math.random()<.6){const a=R(101,999)/100,b=R(1001,9999)/(pick([10,100,1000]));const sa=sigOf(nf(a,2)),sb=sigOf(String(b).replace('.',','));const n=Math.min(sa,sb);const x=a*b;const ans=toSig(x,n);
+     return {mc:true,q:`${nf(a,2)} × ${String(b).replace('.',',')} = ${String(Math.round(x*1e5)/1e5).replace('.',',')}<br>Wat is het correct afgeronde antwoord?`,opts:opt4(ans,[toSig(x,n+1),toSig(x,Math.max(1,n-1)),toSig(x,n+2),String(Math.round(x*1e5)/1e5).replace('.',',')]),a:ans,w:`Vermenigvuldigen: kleinste aantal significante cijfers (${sa} en ${sb} → ${n}).`,th:'afronden'}}
+   const a=R(1001,9999)/1000,b=R(1,99)/10;const x=a+b;const ans=nf(x,1);return {mc:true,q:`${String(a).replace('.',',')} m + ${String(b).replace('.',',')} m = ?`,opts:opt4(ans,[nf(x,3),nf(x,2),String(Math.round(x)),nf(x,4)]),a:ans,w:'Optellen: afronden op het kleinste aantal decimalen (1).',th:'afronden'}}},
+ geh:{sec:'1.3',t:'Gehaltes: %, ppm, ppb',th:'gehalte',f(){const k=pick(['mp','vp','ppm','ppb','mpEl']);
+   if(k==='mp'){const a=R(2,80)/10,m=R(50,500);const r=a/m*100;return {q:`In ${m} g mengsel zit ${nf(a,1)} g stof A. Bereken het massapercentage A.`,a:r,tol:r*.02,u:'%',w:`${nf(a,1)} ÷ ${m} × 100% = ${nf(r,2)}%.`,th:'gehalte'}}
+   if(k==='vp'){const a=R(5,90),v=R(150,1000);const r=a/v*100;return {q:`${a} mL alcohol in ${v} mL drank. Bereken het volumepercentage alcohol.`,a:r,tol:r*.02,u:'%',w:`${a} ÷ ${v} × 100% = ${nf(r,2)}%.`,th:'gehalte'}}
+   if(k==='ppm'){const a=R(2,90),kg=R(2,50);const r=a*1e-3/(kg*1e3)*1e6;return {q:`In ${kg} kg grond zit ${a} mg lood. Hoeveel massa-ppm is dat?`,a:r,tol:r*.02,u:'ppm',w:`${a} mg = ${a}·10<sup>−3</sup> g; ${kg} kg = ${kg}·10<sup>3</sup> g. ${a}·10<sup>−3</sup> ÷ ${kg}·10<sup>3</sup> × 10<sup>6</sup> = ${nf(r,2)} ppm. (Kort: mg per kg.)`,th:'gehalte'}}
+   if(k==='ppb'){const ug=R(2,90)/10,g=pick([100,250,500,1000]);const r=ug*1e-6/g*1e9;return {q:`${g} g zalm bevat ${nf(ug,1)} µg vitamine B12. Hoeveel massa-ppb?`,a:r,tol:r*.02,u:'ppb',w:`${nf(ug,1)}·10<sup>−6</sup> g ÷ ${g} g × 10<sup>9</sup> = ${nf(r,1)} ppb.`,th:'gehalte'}}
+   const f=pick(['Fe2O3','CuCO3','H2O','CO2','NaCl','CaCO3','C6H12O6','NH3']);const p=parseF(f);const e=Object.keys(p)[0];const r=p[e]*ELS[e][2]/molMass(f)*100;
+   return {q:`Hoeveel massaprocent ${ELS[e][0]} zit er in ${fm(f)}?`,a:r,tol:.3,u:'%',w:`${p[e]} × ${nf(ELS[e][2],2)} ÷ ${nf(molMass(f),2)} × 100% = ${nf(r,2)}%.`,th:'gehalte'}}},
+ mol:{sec:'1.3',t:'Molariteit',th:'molariteit',f(){const [n,f]=pick(STOF.filter(x=>['C6H12O6','NaCl','C2H6O','NH3','H2SO4','C3H8O3','CuCO3'].includes(x[1])));const M=molMass(f);const k=Math.random()<.6;
+   if(k){const g=R(10,200)/10,mL=pick([100,250,500,750,1000]);const a=g/M/(mL/1000);return {q:`${nf(g,1)} g ${n} (${fm(f)}, M = ${nf(M,2)}) wordt opgelost tot ${mL} mL. Bereken de molariteit.`,a,tol:a*.02,u:'M',w:`n = ${nf(g,1)} ÷ ${nf(M,2)} = ${nf(g/M,4)} mol; ÷ ${nf(mL/1000,3)} L = ${nf(a,3)} M.`,th:'molariteit'}}
+   const c=R(5,200)/100,mL=pick([100,250,500]);const a=c*mL/1000*M;return {q:`Hoeveel gram ${n} (M = ${nf(M,2)}) heb je nodig voor ${mL} mL van een ${nf(c,2)} M oplossing?`,a,tol:a*.02,u:'g',w:`n = [A] × V = ${nf(c,2)} × ${nf(mL/1000,3)} = ${nf(c*mL/1000,4)} mol; m = n × M = ${nf(a,2)} g.`,th:'molariteit'}}},
+ mverh:{sec:'1.4',t:'Molverhouding',th:'molverh',f(){const x=pick(RX);const [A,B]=shuffle(x.r).slice(0,2);const nA=R(2,40)/10;const a=nA*B[1]/A[1];
+   return {q:`${eqStr(x)}<br>Hoeveel mol <b>${fm(B[0])}</b> hoort bij <b>${nf(nA,1)} mol ${fm(A[0])}</b>?`,a,tol:a*.01+.001,u:'mol',w:`Verhouding ${fm(A[0])} : ${fm(B[0])} = ${A[1]} : ${B[1]}. ${nf(nA,1)} × ${B[1]}/${A[1]} = ${nf(a,3)} mol.`,th:'molverh'}}},
+ reac:{sec:'1.4',t:'Rekenen aan reacties (stappenplan)',th:'stappen',f(){const x=pick(RX);const [A,B]=shuffle(x.r).slice(0,2);const MA=molMass(A[0]),MB=molMass(B[0]);const m=R(20,500)/10;const nA=m/MA,nB=nA*B[1]/A[1],a=nB*MB;
+   return {q:`Bij ${x.n}: ${eqStr(x)}<br>Hoeveel gram <b>${fm(B[0])}</b> hoort bij <b>${nf(m,1)} g ${fm(A[0])}</b>?<br><span class="src">M(${fm(A[0])}) = ${nf(MA,2)} · M(${fm(B[0])}) = ${nf(MB,2)} g mol<sup>−1</sup></span>`,a,tol:a*.02,u:'g',
+     w:`2: ${nf(m,1)} ÷ ${nf(MA,2)} = ${nf(nA,4)} mol. 3: × ${B[1]}/${A[1]} = ${nf(nB,4)} mol. 4: × ${nf(MB,2)} = ${nf(a,2)} g.`,th:'stappen'}}},
+ over:{sec:'1.4',t:'Overmaat of ondermaat?',th:'overmaat',f(){const x=pick(RX.filter(r=>r.r.filter(a=>a[2]===0).length===2));const [A,B]=x.r.filter(a=>a[2]===0);let nA=R(2,30)/10,nB=R(2,30)/10;if(Math.abs(nA/A[1]-nB/B[1])<.05)nB+=.5;
+   const und=nA/A[1]<nB/B[1]?A:B;const ans=`${fm(und[0])} is in ondermaat`;
+   return {mc:true,keep:true,q:`${eqStr(x)}<br>Je hebt ${nf(nA,1)} mol ${fm(A[0])} en ${nf(nB,1)} mol ${fm(B[0])}. Welke stof is in ondermaat?`,opts:[`${fm(A[0])} is in ondermaat`,`${fm(B[0])} is in ondermaat`,'ze zijn precies op'],a:ans,w:`Deel door de coëfficiënt: ${fm(A[0])} ${nf(nA,1)} ÷ ${A[1]} = ${nf(nA/A[1],3)}; ${fm(B[0])} ${nf(nB,1)} ÷ ${B[1]} = ${nf(nB/B[1],3)}. Kleinste = ondermaat.`,th:'overmaat'}}},
+ behoud:{sec:'1.4',t:'Wet van behoud van massa',th:'behoud',f(){const x=pick(RX);const ms=x.r.map(a=>a[1]*molMass(a[0]));const scale=R(5,40)/10/ms[0];const g=ms.map(v=>v*scale);const hide=R(0,x.r.length-1);
+   return {q:`${eqStr(x)}<br>${x.r.map((a,i)=>i===hide?`<b>? g ${fm(a[0])}</b>`:`${nf(g[i],2)} g ${fm(a[0])}`).join(' · ')}<br>Hoeveel gram ${fm(x.r[hide][0])}?`,a:g[hide],tol:.02,u:'g',w:`Massa links = massa rechts. Tel op en trek af: ${nf(g[hide],2)} g.`,th:'behoud'}}}
+};
+const SECGENS={'0':['elver','eenh'],'1.1':['ptn','conf','mr'],'1.2':['mn','rho'],'1.3':['sig','afr','geh','mol'],'1.4':['mverh','reac','over','behoud']};
+
+function verdiepHtml(sec){const v=VERDIEP[sec];if(!v)return'';
+ return `<details class="verdiep"><summary>Dieper in de theorie <span class="src">voor wie meer wil weten</span></summary>
+  ${v.extra.map(([t,h])=>`<details class="vd"><summary>${t}</summary><div>${h}</div></details>`).join('')}
+  <details class="vd"><summary>Veelgemaakte fouten</summary><div><ul class="fout">${v.fouten.map(f=>`<li>${f}</li>`).join('')}</ul></div></details>
+  <details class="vd" id="stapbox"><summary>Stap voor stap: ${v.stap.t}</summary><div><p class="ex">${v.stap.q}</p><ol class="steps" id="steps"></ol><button class="btn small primary" id="stapNext">Volgende stap</button></div></details>
+ </details>`}
+function bindVerdiep(sec){const v=VERDIEP[sec];if(!v)return;let i=0;const ol=$('#steps'),b=$('#stapNext');if(!ol)return;
+ b.onclick=()=>{if(i>=v.stap.s.length){i=0;ol.innerHTML='';b.textContent='Volgende stap';return}
+  ol.insertAdjacentHTML('beforeend',`<li>${v.stap.s[i]}</li>`);i++;
+  if(i>=v.stap.s.length)b.textContent='Opnieuw'}}
+
+const thCard=k=>TH[k]?`<details class="thc" open><summary>📖 Theorie: ${TH[k].t}</summary>${TH[k].h}</details>`:"";
+/* ================= Atoombouwer ================= */
+const ALEV=[
+ {s:'H',A:1,q:0},{s:'He',A:4,q:0},{s:'Li',A:7,q:0},{s:'C',A:12,q:0},{s:'C',A:14,q:0,tip:'C-14: zelfde element, meer neutronen. Een isotoop!'},{s:'N',A:14,q:0},{s:'O',A:16,q:0},{s:'F',A:19,q:0},{s:'Ne',A:20,q:0},
+ {s:'Na',A:23,q:0},{s:'Na',A:23,q:1},{s:'Mg',A:24,q:0},{s:'Mg',A:24,q:2},{s:'Al',A:27,q:3},{s:'P',A:31,q:0},{s:'S',A:32,q:0},{s:'Cl',A:35,q:0},{s:'Cl',A:37,q:0},{s:'Cl',A:35,q:-1},{s:'O',A:16,q:-2},{s:'K',A:39,q:0},{s:'Ca',A:40,q:2},
+ {mys:1,p:6,n:7,e:6},{mys:1,p:17,n:20,e:18},{mys:1,p:12,n:12,e:10},{mys:1,p:19,n:20,e:19}];
+function atoomHome(){show('play');const b=S.atoom||{};const done=ALEV.filter((l,i)=>b[i]).length;const next=ALEV.findIndex((l,i)=>!b[i]);
+ P.innerHTML=`<div class="playbar"><button class="btn small ghost" id="quit">Terug</button><span class="bar"><i style="width:${Math.round(done/ALEV.length*100)}%"></i></span><span class="count">${done}/${ALEV.length}</span></div>
+ <div class="slide">${head('Spel','Atoombouwer')}<div class="slide-body"><p style="margin:0">Bouw atomen en ionen uit protonen, neutronen en elektronen. De elektronen vullen vanzelf de schillen K, L, M en N. De laatste vier zijn <b>mysterie-atomen</b>: daar bouw je eerst en raad je dan wat het is.</p>
+ <div class="bkast">${ALEV.map((l,i)=>{const open=i===0||b[i-1];return `<button class="bk${b[i]?' done':''}" data-i="${i}" ${open?'':'disabled'}><b>${!open?'🔒':l.mys?'?':isoNot(l.s,l.A,l.q)}</b><span>${!open?'&nbsp;':l.mys?'mysterie':ELS[l.s][0]+(l.q?'-ion':'')}</span><span class="st">${b[i]?'★'.repeat(b[i])+'☆'.repeat(3-b[i]):''}</span></button>`}).join('')}</div>
+ ${next>=0?`<div class="acts"><button class="btn primary" id="go">Volgende bouwen</button></div>`:'<div class="fb good"><div class="t">Alle atomen gebouwd!</div></div>'}</div></div>`;
+ $('#quit').onclick=goHome;P.querySelectorAll('[data-i]').forEach(x=>x.onclick=()=>atoomPlay(+x.dataset.i));const g=$('#go');if(g){g.onclick=()=>atoomPlay(next);g.focus()}}
+function atoomSvg(p,n,e){const W=300,H=300,cx=150,cy=150;let s='';const sh=config(e);const radii=[48,76,104,132];
+ radii.slice(0,Math.max(sh.length,1)).forEach((r,i)=>s+=`<circle cx="${cx}" cy="${cy}" r="${r}" fill="none" stroke="var(--line)" stroke-width="2"/><text x="${cx+r*0.71+4}" y="${cy-r*0.71}" font-size="11" fill="var(--muted)">${'KLMN'[i]}</text>`);
+ sh.forEach((k,i)=>{for(let j=0;j<k;j++){const a=(j/k)*Math.PI*2-Math.PI/2+i*.3;s+=`<circle cx="${cx+radii[i]*Math.cos(a)}" cy="${cy+radii[i]*Math.sin(a)}" r="6" fill="#D9443A" stroke="var(--surface)" stroke-width="1.5"/>`}});
+ const tot=p+n;const rr=Math.min(34,8+Math.sqrt(tot)*4.2);const pts=[];for(let i=0;i<tot;i++){const a=i*2.39996,d=Math.sqrt((i+.5)/Math.max(tot,1))*(rr-5);pts.push([cx+d*Math.cos(a),cy+d*Math.sin(a)])}
+ const kinds=shuffleSeed([...Array(p).fill(1),...Array(n).fill(0)],p*31+n);pts.forEach(([x,y],i)=>s+=`<circle cx="${x}" cy="${y}" r="${tot>40?3.4:4.6}" fill="${kinds[i]?'#3C6FD6':'#7FB56A'}" stroke="rgba(0,0,0,.25)" stroke-width=".6"/>`);
+ if(!tot)s+=`<circle cx="${cx}" cy="${cy}" r="5" fill="none" stroke="var(--muted)" stroke-dasharray="2 2"/>`;
+ return `<svg viewBox="0 0 ${W} ${H}" class="asvg">${s}</svg>`}
+function shuffleSeed(a,seed){let x=seed||1;const r=()=>{x=(x*9301+49297)%233280;return x/233280};for(let i=a.length-1;i>0;i--){const j=Math.floor(r()*(i+1));[a[i],a[j]]=[a[j],a[i]]}return a}
+function atoomPlay(i){const L=ALEV[i];G={m:'atoom',i,L,p:0,n:0,e:0,fails:0,done:false};atoomDraw()}
+function atoomDraw(msg){const L=G.L,{p,n,e}=G;const s=ZSYM[p];const q=p-e;
+ const goal=L.mys?`Bouw een deeltje met <b>${L.p} protonen, ${L.n} neutronen en ${L.e} elektronen</b>. Daarna raad je wat het is.`:`Bouw ${isoNot(L.s,L.A,L.q)}: ${ELS[L.s][0]}${L.q?`-ion met lading ${L.q>0?'+':'−'}${Math.abs(L.q)>1?Math.abs(L.q):''}`:`-${L.A}`}`;
+ const step=(k,lab,col)=>`<div class="astep"><span class="dot" style="background:${col}"></span><b>${lab}</b><button class="bstep" data-k="${k}" data-d="-1">−</button><span class="av">${G[k]}</span><button class="bstep" data-k="${k}" data-d="1">+</button><button class="bstep five" data-k="${k}" data-d="5">+5</button></div>`;
+ P.innerHTML=`<div class="playbar"><button class="btn small ghost" id="quit">Kast</button><span class="count" style="flex:1">Atoom ${G.i+1} van ${ALEV.length}</span></div>
+ <div class="slide">${head('Atoombouwer',L.mys?'mysterie':ELS[L.s][0])}<div class="slide-body"><div class="q">${goal}</div>
+  <div class="arow"><div class="awrap">${atoomSvg(p,n,e)}</div>
+  <div class="ainfo"><div class="alab">${p?`<b class="sym">${p&&!L.mys?(s||'?'):p?(G.done?(s||'?'):'?'):''}</b>`:'<span class="src">leeg</span>'}</div>
+   <table class="gt"><tr><td>atoomnummer</td><td>${p}</td></tr><tr><td>massagetal</td><td>${p+n}</td></tr><tr><td>lading</td><td>${q===0?'0 (neutraal)':(q>0?'+':'−')+Math.abs(q)}</td></tr><tr><td>schillen</td><td>${e?shellStr(config(e)):'–'}</td></tr></table></div></div>
+  <div class="asteps">${step('p','protonen','#3C6FD6')}${step('n','neutronen','#7FB56A')}${step('e','elektronen','#D9443A')}</div>
+  <div class="src" id="amsg">${msg||(L.mys?'':'Tip: het atoomnummer staat in het periodiek systeem (Binas 99).')}</div>
+  <div class="acts"><button class="btn ghost small" id="atip">Tip</button><button class="btn dark" id="achk">Controleer</button></div><div id="fbox"></div></div></div>`;
+ $('#quit').onclick=atoomHome;
+ P.querySelectorAll('.bstep').forEach(b=>b.onclick=()=>{if(G.done)return;const k=b.dataset.k;G[k]=Math.max(0,Math.min(k==='e'?20:k==='p'?20:24,G[k]+ +b.dataset.d));atoomDraw()});
+ $('#atip').onclick=()=>{$('#fbox').innerHTML=`<div class="fb warn"><div class="t">Tip</div><div class="tip">${L.mys?'Het aantal protonen bepaalt het element. Zoek het atoomnummer op.':`${ELS[L.s][0]} heeft atoomnummer ${ELS[L.s][1]}. Neutronen = ${L.A} − ${ELS[L.s][1]}. ${L.q?`Een ${L.q>0?'positief ion heeft elektronen afgestaan':'negatief ion heeft elektronen opgenomen'}.`:'Neutraal: evenveel elektronen als protonen.'}`}</div></div>`};
+ $('#achk').onclick=atoomCheck}
+function atoomCheck(){if(G.done)return;const L=G.L;const want=L.mys?{p:L.p,n:L.n,e:L.e}:{p:ELS[L.s][1],n:L.A-ELS[L.s][1],e:ELS[L.s][1]-L.q};
+ const bad=[];for(const k of ['p','n','e'])if(G[k]!==want[k])bad.push(`${{p:'protonen',n:'neutronen',e:'elektronen'}[k]}: ${G[k]<want[k]?'te weinig':'te veel'}`);
+ if(bad.length){G.fails++;$('#fbox').innerHTML=`<div class="fb bad"><div class="t">Nog niet goed</div><div class="tip">${bad.join(' · ')}</div>${thCard('nummers')}</div>`;return}
+ if(L.mys){const s=ZSYM[L.p],q=L.p-L.e,A=L.p+L.n;const ans=isoNot(s,A,q);const opts=shuffle([ans,isoNot(ZSYM[L.p+1]||'Ne',A,q),isoNot(s,A,-q||1),isoNot(ZSYM[L.n]||'O',A,q)].filter((x,i,a)=>a.indexOf(x)===i)).slice(0,4);if(!opts.includes(ans))opts[0]=ans;
+  $('#fbox').innerHTML=`<div class="fb good"><div class="t">Gebouwd! Maar wat is het?</div></div>${mcButtons(opts)}`;
+  P.querySelectorAll('.opt').forEach((b,i)=>b.onclick=()=>{const ok=opts[i]===ans;markOpts(opts.indexOf(ans),i);if(!ok)G.fails++;atoomWin(`Het is ${ans}: ${L.p} protonen = ${ELS[s][0]}, massagetal ${L.p}+${L.n} = ${A}${q?`, lading ${q>0?'+':'−'}${Math.abs(q)}`:''}.`)});return}
+ atoomWin(L.tip||`${isoNot(L.s,L.A,L.q)}: ${want.p} p, ${want.n} n, ${want.e} e. Schillen ${shellStr(config(want.e))}.`)}
+function atoomWin(txt){G.done=true;const st=G.fails===0?3:G.fails<=2?2:1;if(!S.atoom)S.atoom={};S.atoom[G.i]=Math.max(S.atoom[G.i]||0,st);rec('1.1',G.fails===0);save();confetti();const nx=G.i+1<ALEV.length?G.i+1:-1;
+ $('#fbox').insertAdjacentHTML('beforeend',`<div class="fb good" style="margin-top:8px"><div class="t">${'★'.repeat(st)+'☆'.repeat(3-st)}</div><div class="tip">${txt}</div></div><div class="acts" style="margin-top:10px">${nx>=0?'<button class="btn primary" id="anext">Volgende ↵</button>':''}<button class="btn ghost" id="akast">Naar de kast</button></div>`);
+ const n=$('#anext');if(n){n.onclick=()=>atoomPlay(nx);n.focus()}$('#akast').onclick=atoomHome}
+
+/* ================= Molmachine ================= */
+const MNODES={V:{t:'volume',u:'mL'},m:{t:'massa',u:'g'},n:{t:'chem. hoeveelheid',u:'mol'},N:{t:'aantal deeltjes',u:''},c:{t:'molariteit',u:'M'}};
+const MOPS=[['×ρ','V','m'],[':ρ','m','V'],[':M','m','n'],['×M','n','m'],['×NA','n','N'],[':NA','N','n'],[':V','n','c'],['×V','c','n']];
+function machHome(){G={m:'mach',r:0,ok:0,total:6,fails:0};show('play');machNext()}
+function machTask(){const liq=STOF.filter(x=>x[2]);const opl=STOF.filter(x=>['C6H12O6','NaCl','NH3','H2SO4','CuCO3'].includes(x[1]));
+ const k=pick(['m-n','n-m','m-N','V-n','V-N','N-m','m-c','c-m','n-N']);const [from,to]=k.split('-');
+ const s=(from==='V'||to==='V')?pick(liq):(from==='c'||to==='c')?pick(opl):pick(STOF);const M=molMass(s[1]);const Vopl=pick([0.250,0.500,0.750,1.00]);
+ const start={V:R(5,150),m:R(10,500)/10,n:R(5,300)/100,N:R(12,95)/10*1e23,c:R(5,200)/1000}[from];return {s,M,rho:s[2],Vopl,from,to,start,sig:2}}
+const fmtQ=(k,v)=>k==='N'?fmtSig(v,3)+' moleculen':k==='c'?fmtSig(v,3)+' M':`${v>=1000||v<0.01?fmtSig(v,3):nf(v,v<1?4:2)} ${MNODES[k].u}`;
+function machNext(){if(G.r>=G.total){if(G.ok>=5)confetti();S.mach=Math.max(S.mach||0,G.ok);rec('1.2',G.ok>=4);save();
+  P.innerHTML=`<div class="slide">${head('Molmachine','Klaar')}<div class="slide-body"><div class="q">Zonder omweg opgelost</div><div class="big">${G.ok}<span style="font-size:.45em;color:var(--muted)"> / ${G.total}</span></div><div class="acts"><button class="btn primary" id="again">Nog een rondje</button><button class="btn ghost" id="home2">Naar start</button></div></div></div>`;
+  $('#again').onclick=machHome;$('#home2').onclick=goHome;$('#again').focus();return}
+ const T=machTask();G.T=T;G.cur=T.from;G.val=T.start;G.path=[];G.wrong=0;machDraw()}
+function machDraw(msg){const T=G.T;const order=['V','m','n','N'];const showC=T.from==='c'||T.to==='c';
+ const box=k=>`<div class="mnode${G.cur===k?' on':''}${T.to===k?' goal':''}"><b>${k==='c'?'[A]':k}</b><span>${MNODES[k].t}</span>${G.cur===k?`<em>${fmtQ(k,G.val)}</em>`:T.to===k?'<em>?</em>':''}</div>`;
+ const given=[`M(${fm(T.s[1])}) = ${nf(T.M,2)} g mol<sup>−1</sup>`,T.rho?`ρ = ${nf(T.rho,2)} g mL<sup>−1</sup>`:'','N<sub>A</sub> = 6,02·10<sup>23</sup> mol<sup>−1</sup>',showC?`V<sub>opl</sub> = ${nf(T.Vopl,3)} L`:''].filter(Boolean).join(' · ');
+ P.innerHTML=topbar(G.r,G.total)+`<div class="slide">${head('Molmachine',T.s[0])}<div class="slide-body">
+  <div class="prompt" style="font-size:19px">Van <b>${fmtQ(T.from,T.start)}</b> ${T.s[0]} naar <b>${MNODES[T.to].t}</b>. Kies de stappen.</div>
+  <div class="src">${given}</div>
+  <div class="mrow">${order.map(box).join('')}</div>${showC?`<div class="mrow"><span></span><span></span>${box('c')}</div>`:''}
+  <div class="mops">${MOPS.filter(o=>showC||!['c'].includes(o[2])&&!['c'].includes(o[1])).map(([l])=>`<button class="mop" data-op="${l}">${l.replace('NA','N<sub>A</sub>')}</button>`).join('')}</div>
+  <div class="mpath">${G.path.map(p=>`<span>${p}</span>`).join(' → ')||'<span class="src">nog geen stappen</span>'}</div>
+  <div class="src" id="mmsg">${msg||''}</div><div class="acts"><button class="btn ghost small" id="mreset">Opnieuw</button></div><div id="fbox"></div></div></div>`;
+ $('#quit').onclick=goHome;$('#mreset').onclick=()=>{G.cur=T.from;G.val=T.start;G.path=[];machDraw()};
+ P.querySelectorAll('[data-op]').forEach(b=>b.onclick=()=>machOp(b.dataset.op))}
+function machOp(op){const T=G.T;const o=MOPS.find(x=>x[0]===op);
+ if(o[1]!==G.cur){G.wrong++;const hint={V:'Bij een volume heb je eerst de dichtheid nodig (× ρ).',m:'Vanuit massa: : M naar mol, of : ρ naar volume.',n:'Vanuit mol kun je alle kanten op: × M, × N<sub>A</sub> of : V.',N:'Vanuit deeltjes: eerst : N<sub>A</sub> naar mol.',c:'Vanuit molariteit: × V naar mol.'}[G.cur];
+  machDraw(`<b style="color:var(--bad)">${op.replace('NA','N<sub>A</sub>')} kan niet vanuit ${G.cur==='c'?'[A]':G.cur}.</b> ${hint}`);return}
+ if((o[0].includes('ρ'))&&!T.rho){machDraw('Van deze stof is geen dichtheid gegeven: kies een andere route.');return}
+ const f={'×ρ':v=>v*T.rho,':ρ':v=>v/T.rho,':M':v=>v/T.M,'×M':v=>v*T.M,'×NA':v=>v*NA,':NA':v=>v/NA,':V':v=>v/T.Vopl,'×V':v=>v*T.Vopl}[op];
+ G.val=f(G.val);G.path.push(op.replace('NA','N<sub>A</sub>'));G.cur=o[2];
+ const short={'m-n':1,'n-m':1,'m-N':2,'V-n':2,'V-N':3,'N-m':2,'m-c':2,'c-m':2,'n-N':1}[T.from+'-'+T.to];
+ if(G.cur===T.to){const okk=G.path.length===short&&G.wrong===0;G.r++;if(okk)G.ok++;machDraw();
+  $('#fbox').innerHTML=`<div class="fb ${okk?'good':'warn'}"><div class="t">${okk?'Kortste route, foutloos!':'Aangekomen, maar met omweg of foute stap.'}</div><div class="tip">Antwoord: <b>${fmtQ(T.to,G.val)}</b>. Route: ${G.path.join(' → ')}.${okk?'':' '+TH.schema.h}</div></div><div class="foot" style="margin-top:12px"><button class="btn primary" id="next">Verder ↵</button></div>`;
+  P.querySelectorAll('[data-op]').forEach(b=>b.disabled=true);const n=$('#next');n.onclick=machNext;n.focus();return}
+ if(G.path.length>6){machDraw('Dat zijn veel stappen. Druk op Opnieuw en zoek een kortere weg via n (mol).');return}
+ machDraw()}
+
+/* ================= Reactiekeuken (overmaat) ================= */
+const KRX=[
+ {r:[['H2',2],['O2',1]],p:['H2O',2],ic:{H2:'⚪⚪',O2:'🔴🔴'}},{r:[['N2',1],['H2',3]],p:['NH3',2]},{r:[['C',1],['O2',1]],p:['CO2',1]},{r:[['Mg',2],['O2',1]],p:['MgO',2]},
+ {r:[['CH4',1],['O2',2]],p:['CO2',1]},{r:[['Mg',3],['N2',1]],p:['Mg3N2',1]},{r:[['Na',2],['Cl2',1]],p:['NaCl',2]},{r:[['H2',1],['Cl2',1]],p:['HCl',2]},{r:[['Al',4],['O2',3]],p:['Al2O3',2]}];
+function keukenHome(){G={m:'keuken',r:0,ok:0,total:6};show('play');keukenNext()}
+const molIcon=f=>`<span class="mi" title="${f}">${fm(f)}</span>`;
+function keukenNext(){if(G.r>=G.total){if(G.ok>=5)confetti();S.keuken=Math.max(S.keuken||0,G.ok);save();
+  P.innerHTML=`<div class="slide">${head('Reactiekeuken','Klaar')}<div class="slide-body"><div class="q">Goed</div><div class="big">${G.ok}<span style="font-size:.45em;color:var(--muted)"> / ${G.total}</span></div><div class="acts"><button class="btn primary" id="again">Nog een rondje</button><button class="btn ghost" id="home2">Naar start</button></div></div></div>`;
+  $('#again').onclick=keukenHome;$('#home2').onclick=goHome;$('#again').focus();return}
+ const x=pick(KRX);const [[A,a],[B,b]]=x.r;let nA,nB;do{nA=R(2,9);nB=R(1,8)}while(nA/a===nB/b);
+ const times=Math.min(Math.floor(nA/a),Math.floor(nB/b));const prod=times*x.p[1];const und=nA/a<nB/b?A:B;const leftA=nA-times*a,leftB=nB-times*b;
+ const eq=`${a>1?a+' ':''}${fm(A)} + ${b>1?b+' ':''}${fm(B)} → ${x.p[1]>1?x.p[1]+' ':''}${fm(x.p[0])}`;let pick1=null,cnt=0;
+ const draw=()=>{P.innerHTML=topbar(G.r,G.total)+`<div class="slide">${head('Reactiekeuken','overmaat & ondermaat')}<div class="slide-body"><div class="prompt" style="font-size:21px">${eq}</div>
+  <div class="kpot"><div><div class="q">${nA} × ${fm(A)}</div><div class="kmols">${Array(nA).fill(molIcon(A)).join('')}</div></div><div><div class="q">${nB} × ${fm(B)}</div><div class="kmols">${Array(nB).fill(molIcon(B)).join('')}</div></div></div>
+  <div class="q">1. Welke stof is als eerste op (ondermaat)?</div><div class="opts"><button class="opt" data-und="${A}"><span class="k">1</span><span>${fm(A)}</span></button><button class="opt" data-und="${B}"><span class="k">2</span><span>${fm(B)}</span></button></div>
+  <div id="k2" ${pick1?'':'hidden'}><div class="q">2. Hoeveel moleculen ${fm(x.p[0])} ontstaan er?</div><div class="astep"><button class="bstep" id="km">−</button><span class="av">${cnt}</span><button class="bstep" id="kp">+</button><button class="btn dark small" id="kok">Klaar</button></div></div><div id="fbox"></div></div></div>`;
+  $('#quit').onclick=goHome;
+  P.querySelectorAll('[data-und]').forEach(btn=>{if(pick1){btn.disabled=true;btn.classList.add(btn.dataset.und===und?'good':btn.dataset.und===pick1?'bad':'dim')}btn.onclick=()=>{if(pick1)return;pick1=btn.dataset.und;draw()}});
+  if(pick1){$('#km').onclick=()=>{cnt=Math.max(0,cnt-1);draw()};$('#kp').onclick=()=>{cnt=Math.min(30,cnt+1);draw()};$('#kok').onclick=()=>{const ok=pick1===und&&cnt===prod;G.r++;if(ok)G.ok++;rec('1.4',ok);save();
+   $('#k2').innerHTML=`<div class="kpot"><div><div class="q">Ontstaan</div><div class="kmols">${Array(prod).fill(molIcon(x.p[0])).join('')}</div></div><div><div class="q">Over</div><div class="kmols">${Array(leftA).fill(molIcon(A)).join('')}${Array(leftB).fill(molIcon(B)).join('')}</div></div></div>`;
+   $('#fbox').innerHTML=`<div class="fb ${ok?'good':'bad'}"><div class="t">${ok?'Goed!':'Niet helemaal.'}</div><div class="tip">De reactie kan ${times} keer lopen (${fm(A)}: ${nA} ÷ ${a} = ${nf(nA/a,2)}; ${fm(B)}: ${nB} ÷ ${b} = ${nf(nB/b,2)}; de kleinste telt). <b>${fm(und)}</b> is in ondermaat. Er ontstaan ${times} × ${x.p[1]} = <b>${prod}</b> ${fm(x.p[0])} en er blijft ${leftA?leftA+' '+fm(A):leftB+' '+fm(B)} over.</div>${ok?'':thCard('overmaat')}</div><div class="foot" style="margin-top:12px"><button class="btn primary" id="next">Verder ↵</button></div>`;
+   const n=$('#next');n.onclick=keukenNext;n.focus()}}};
+ draw()}
+
+/* ================= Blitz (60 s meerkeuze) ================= */
+const BLITZ={
+ sym:{t:'Symbolenblitz',d:'Naam ↔ symbool van alle elementen die je moet kennen.',make(){const s=pick(KENNEN);const dir=Math.random()<.5;const others=shuffle(KENNEN.filter(x=>x!==s));
+   if(dir)return {q:`Symbool van <b>${ELS[s][0]}</b>?`,opts:shuffle([s,...others.slice(0,3)]),a:s,w:`${ELS[s][0]} = ${s}`};
+   return {q:`Welk element is <b>${s}</b>?`,opts:shuffle([ELS[s][0],...others.slice(0,3).map(x=>ELS[x][0])]),a:ELS[s][0],w:`${s} = ${ELS[s][0]}`}}},
+ sig:{t:'Significantie-sprint',d:'Hoeveel significante cijfers? Zo snel mogelijk.',make(){const q=GENS.sig.f();return {q:q.q,opts:q.opts,a:q.a,w:q.w,keep:1}}},
+ mm:{t:'Metaal of niet-metaal?',d:'Elementen herkennen in het periodiek systeem.',make(){const s=pick(KENNEN);const a=ELS[s][3]?'metaal':'niet-metaal';return {q:`<b>${ELS[s][0]}</b> (${s})`,opts:['metaal','niet-metaal'],a,w:`${ELS[s][0]} is een ${a}.`,keep:1}}}
+};
+function blitzStart(k){const B=BLITZ[k];show('play');G={m:'blitz',k,score:0,combo:0,n:0,ok:0,end:performance.now()+60000,mist:[]};
+ P.innerHTML=`<div class="playbar"><button class="btn small ghost" id="quit">Stoppen</button><span class="count" id="bsc">0 punten</span><span class="timer" id="btm">60</span></div><div class="slide">${head(B.t,'60 seconden')}<div class="slide-body"><div class="prompt" id="bq" style="text-align:center"></div><span class="combo" id="bcb" hidden></span><div id="bo"></div><div class="src" id="bfb">&nbsp;</div></div></div>`;
+ $('#quit').onclick=()=>{clearInterval(G.timer);goHome()};blitzNext();G.timer=setInterval(()=>{const l=Math.max(0,(G.end-performance.now())/1000);const t=$('#btm');if(!t)return;t.textContent=Math.ceil(l);t.classList.toggle('low',l<10);if(l<=0)blitzEnd()},100)}
+function blitzNext(){const q=BLITZ[G.k].make();G.q=q;$('#bq').innerHTML=q.q;$('#bo').innerHTML=mcButtons(q.opts);
+ P.querySelectorAll('.opt').forEach((b,i)=>b.onclick=()=>{if(G.over)return;const ok=q.opts[i]===q.a;G.n++;if(ok){G.ok++;G.combo++;G.score+=1+Math.floor(G.combo/5);b.classList.add('good')}else{G.combo=0;G.end-=3000;b.classList.add('bad');G.mist.push(q.w)}
+  $('#bsc').textContent=G.score+' punten';const cb=$('#bcb');cb.hidden=G.combo<5;cb.textContent=`combo ×${1+Math.floor(G.combo/5)}`;$('#bfb').innerHTML=ok?'&nbsp;':q.w+' (−3 s)';P.querySelectorAll('.opt').forEach(x=>x.disabled=true);setTimeout(()=>{if(G&&G.m==='blitz'&&!G.over)blitzNext()},ok?160:700)})}
+function blitzEnd(){clearInterval(G.timer);G.over=true;if(!S.blitz)S.blitz={};const best=S.blitz[G.k]||0;const nr=G.score>best;if(nr){S.blitz[G.k]=G.score;confetti()}save();const k=G.k;
+ P.innerHTML=`<div class="slide">${head(BLITZ[k].t,'Klaar')}<div class="slide-body"><div class="q">${nr?'Nieuw record!':'Score'}</div><div class="big">${G.score}</div><div class="count">${G.ok} van ${G.n} goed · record ${Math.max(best,G.score)}</div>${G.mist.length?`<div class="fb bad"><div class="t">Even onthouden</div><div class="tip">${[...new Set(G.mist)].join('<br>')}</div></div>`:''}<div class="acts"><button class="btn primary" id="again">Nog een keer</button><button class="btn ghost" id="home2">Naar start</button></div></div></div>`;
+ $('#again').onclick=()=>blitzStart(k);$('#home2').onclick=goHome;$('#again').focus()}
+
+/* ---------- Leerpad: theorie in kleine kaartjes met controlevragen ---------- */
+/* LP = { sec: [ [titel, html|fn, [vraag, goed, 'fout|fout', uitleg]?], ... ] } */
+function lpState(){if(!S.lp)S.lp={};if(!S.lpd)S.lpd={};return S}
+function lpStart(sec,from){lpState();const cards=LP[sec];if(!cards)return;let i=from!=null?from:(S.lpd[sec]?0:Math.min(S.lp[sec]||0,cards.length-1));
+ G={m:'lp',sec,i,cards,redo:[],ok:0,asked:0,answered:{}};show('play');lpDraw()}
+function lpDraw(){const {sec,cards}=G;const i=G.i;const c=cards[i];const s=SECS.find(x=>x.id===sec);const qz=c[2];const done=G.answered[i];
+ const body=typeof c[1]==='function'?c[1]():c[1];
+ P.innerHTML=`<div class="playbar"><button class="btn small ghost" id="quit">Stoppen</button><span class="bar"><i style="width:${Math.round((i)/cards.length*100)}%"></i></span><span class="count">${i+1}/${cards.length}</span></div>
+ <div class="slide lpcard">${head('Leerpad · '+(sec==='0'?'basis':sec),esc(s?s.t:''))}<div class="slide-body">
+  <h2 class="lpt">${c[0]}</h2><div class="lpb">${body}</div>
+  ${qz?`<div class="lpq"><div class="q">Even checken</div><div class="prompt" style="font-size:19px">${qz[0]}</div><div id="lpo"></div><div id="fbox"></div></div>`:''}
+  <div class="lpnav"><button class="btn ghost" id="lpprev" ${i===0?'disabled':''}>← Terug</button><button class="btn primary" id="lpnext" ${qz&&!done?'disabled':''}>${i===cards.length-1?'Afronden ✓':'Verder →'}</button></div>
+ </div></div>`;
+ $('#quit').onclick=()=>{save();goHome()};$('#lpprev').onclick=()=>{G.i--;lpDraw()};$('#lpnext').onclick=lpNext;
+ if(qz){const opts=shuffle([qz[1],...qz[2].split('|')]);$('#lpo').innerHTML=mcButtons(opts);
+  if(done){markOpts(opts.indexOf(qz[1]),opts.indexOf(qz[1]));$('#fbox').innerHTML=`<div class="fb good"><div class="tip">${qz[3]}</div></div>`}
+  else P.querySelectorAll('#lpo .opt').forEach((b,j)=>b.onclick=()=>{const ok=opts[j]===qz[1];markOpts(opts.indexOf(qz[1]),j);G.asked++;if(ok)G.ok++;else G.redo.push(i);G.answered[i]=1;
+   $('#fbox').innerHTML=`<div class="fb ${ok?'good':'bad'}"><div class="t">${ok?pick(['Goed!','Klopt!','Precies!']):'Niet helemaal.'}</div><div class="tip">${qz[3]}</div></div>`;const n=$('#lpnext');n.disabled=false;n.focus()})}
+ S.lp[sec]=i;save();window.scrollTo(0,0)}
+function lpNext(){const {cards}=G;if(G.i<cards.length-1){G.i++;lpDraw();return}
+ lpState();S.lpd[G.sec]=1;S.lp[G.sec]=0;markDay();save();confetti();const sec=G.sec;const nxt=SECS[SECS.findIndex(x=>x.id===sec)+1];
+ const redo=[...new Set(G.redo)];
+ P.innerHTML=`<div class="slide">${head('Leerpad '+(sec==='0'?'basis':sec),'Klaar')}<div class="slide-body"><div class="q">Controlevragen in één keer goed</div><div class="big">${G.ok}<span style="font-size:.45em;color:var(--muted)"> / ${G.asked}</span></div>
+  ${redo.length?`<div class="fb bad"><div class="t">Kijk hier nog even naar</div><div class="tip">${redo.map(i=>`<button class="btn small ghost" data-go="${i}" style="margin:3px">${cards[i][0]}</button>`).join('')}</div></div>`:'<div>Alles in één keer goed. Mooi!</div>'}
+  <div class="nextbox"><h3>Wat nu?</h3><div class="choice"><button class="btn primary" id="lpprac">Oefenronde ${sec==='0'?'basis':sec}</button><span>Test of het blijft hangen. Fouten komen terug met uitleg.</span></div>
+  ${nxt&&LP[nxt.id]?`<div class="choice"><button class="btn ghost" id="lpnxt">Leerpad ${nxt.id}: ${esc(nxt.t)} →</button><span>Of leer eerst door.</span></div>`:''}
+  <div class="choice"><button class="btn ghost" id="lphome">Naar start</button></div></div></div></div>`;
+ P.querySelectorAll('[data-go]').forEach(b=>b.onclick=()=>lpStart(sec,+b.dataset.go));$('#lpprac').onclick=()=>practice(sec);const n=$('#lpnxt');if(n)n.onclick=()=>lpStart(nxt.id);$('#lphome').onclick=goHome;$('#lpprac').focus()}
+function lpBox(){const el=$('#lpbox');if(!el)return;lpState();const todo=SECS.find(s=>LP[s.id]&&!S.lpd[s.id]);const nDone=SECS.filter(s=>S.lpd[s.id]).length;
+ el.innerHTML=`<button class="mode main lpmode" id="lpgo"><span class="lab">Leren</span><span class="tag" style="text-transform:none">${nDone} van ${SECS.length} paragrafen geleerd</span><h3>${todo?(S.lp[todo.id]?'Ga verder: ':'Begin: ')+esc(todo.t):'Alles doorlopen. Herhalen?'}</h3><p>Geen boek nodig: de theorie in korte kaartjes, één idee per kaart, met af en toe een controlevraag. Ongeveer 10 minuten per paragraaf.</p></button>`;
+ $('#lpgo').onclick=()=>lpStart((todo||SECS[0]).id)}
+
+const LP={
+'0':[
+ ['Waar gaat dit over?',`<p>Scheikunde is eigenlijk <b>tellen</b>. Stoffen reageren in vaste verhoudingen, zoals een recept: 2 eieren op 1 pak meel. Dit hoofdstuk leert je die verhoudingen uitrekenen.</p><p>Eerst vier dingen uit klas 3 die je nodig hebt. Dit gaat snel.</p>`],
+ ['Element of verbinding',`<p>Alles is gemaakt van <b>atomen</b>. Er bestaan zo'n 118 soorten, die staan in het periodiek systeem.</p><div class="rule">Eén soort atoom → <b>element</b> (Fe, O<sub>2</sub>, I<sub>2</sub>)<br>Meerdere soorten → <b>verbinding</b> (H<sub>2</sub>O, CO<sub>2</sub>)</div><p>Een verbinding kun je ontleden in elementen, een element niet.</p>`,['Is O<sub>2</sub> een element of een verbinding?','element','verbinding|mengsel','Twee atomen, maar één soort: zuurstof. Dus een element.']],
+ ['Een formule lezen',`<p>H<sub>2</sub>O: het kleine getal hoort bij het atoom ervóór. Dus 2 H en 1 O.</p><p>3 H<sub>2</sub>O: het grote getal geldt voor het hele molecuul. Dus 3 moleculen, samen 6 H en 3 O.</p><p>Let op hoofdletters: <b>Co</b> is het metaal kobalt, <b>CO</b> is koolstof + zuurstof.</p>`,['Hoeveel H-atomen staan er in 2 NH<sub>3</sub>?','6','3|5|2','2 moleculen × 3 H = 6 H.']],
+ ['Kloppend maken',`<p>Bij een reactie verdwijnen geen atomen. Links en rechts van de pijl moeten dus <b>evenveel atomen van elke soort</b> staan.</p><div class="ex">__ H<sub>2</sub> + __ O<sub>2</sub> → __ H<sub>2</sub>O<br>Links 2 O, dus rechts 2 H<sub>2</sub>O. Dan rechts 4 H, dus links 2 H<sub>2</sub>.<br><b>2 H<sub>2</sub> + O<sub>2</sub> → 2 H<sub>2</sub>O</b></div><p>Je verandert alleen de grote getallen, nooit de kleine.</p>`,['Welke vergelijking klopt?','2 Mg + O<sub>2</sub> → 2 MgO','Mg + O<sub>2</sub> → MgO|Mg + O → MgO<sub>2</sub>','Links 2 Mg en 2 O, rechts ook.']],
+ ['Grote en kleine getallen',`<p>In de scheikunde reken je met piepkleine en gigantische getallen. Daarom de <b>wetenschappelijke notatie</b>: één cijfer voor de komma, en dan × 10 tot een macht.</p><div class="ex">0,0054 = 5,4·10<sup>−3</sup><br>602 000 000 000 000 000 000 000 = 6,02·10<sup>23</sup></div>`,['Hoe schrijf je 40,8 in wetenschappelijke notatie?','4,08·10<sup>1</sup>','40,8·10<sup>0</sup>|4,08·10<sup>−1</sup>','Eén cijfer voor de komma: 4,08, en de komma schoof één plek: 10<sup>1</sup>.']],
+ ['Eenheden',`<p>De drie die je steeds tegenkomt:</p><div class="rule">1 kg = 1000 g<br>1 L = 1000 mL = 1 dm<sup>3</sup><br>1 m<sup>3</sup> = 1000 L</div><p>En: 1 mL = 1 cm<sup>3</sup>. Een pak melk is 1 L = 1 dm<sup>3</sup>.</p>`,['Hoeveel liter is 1 m<sup>3</sup>?','1000 L','100 L|10 L','Een kubus van 1 m × 1 m × 1 m = 10 × 10 × 10 dm<sup>3</sup> = 1000 L.']]],
+'1.1':[
+ ['Het atoom',(()=>`<div style="display:flex;justify-content:center">${atoomSvg(3,4,3)}</div><p>In het midden de <b>kern</b> met <span style="color:#3C6FD6">●</span> <b>protonen</b> (+) en <span style="color:#7FB56A">●</span> <b>neutronen</b> (geen lading). Daaromheen draaien de <span style="color:#D9443A">●</span> <b>elektronen</b> (−) in schillen.</p><p>Dit is lithium: 3 protonen, 4 neutronen, 3 elektronen.</p>`)],
+ ['Wie weegt wat?',`<p>Een proton en een neutron wegen allebei ongeveer <b>1 u</b> (atomaire massa-eenheid). Een elektron weegt bijna niets.</p><p>Dus: bijna alle massa zit in de kern.</p><p>Een atoom is neutraal: evenveel protonen (+) als elektronen (−).</p>`,['Waar zit bijna alle massa van een atoom?','in de kern','in de elektronen|gelijk verdeeld','Protonen en neutronen wegen elk 1 u, elektronen bijna niets.']],
+ ['Atoomnummer',`<p>Het <b>atoomnummer</b> is het aantal protonen. Dat nummer bepaalt welk element het is.</p><div class="rule">6 protonen = altijd koolstof. 8 protonen = altijd zuurstof.</div><p>Het atoomnummer staat in het periodiek systeem.</p>`,['Een atoom heeft 11 protonen. Welk element?','natrium','koolstof|neon','Atoomnummer 11 = natrium (Na).']],
+ ['Massagetal en neutronen',`<p>Het <b>massagetal</b> = protonen + neutronen. Het staat linksboven: <sup>23</sup>Na of Na-23.</p><div class="rule">neutronen = massagetal − atoomnummer</div><div class="ex">Na-23: 23 − 11 = 12 neutronen.</div><p>Veelgemaakte fout: optellen in plaats van aftrekken!</p>`,['Hoeveel neutronen heeft Cl-37 (atoomnummer 17)?','20','54|17','37 − 17 = 20.']],
+ ['Isotopen',`<p>Atomen van hetzelfde element kunnen een verschillend aantal neutronen hebben. Die heten <b>isotopen</b>.</p><div class="ex">Cl-35: 17 p, 18 n<br>Cl-37: 17 p, 20 n<br>Allebei chloor, want allebei 17 protonen.</div>`,['Zijn C-12 en C-14 isotopen?','ja, zelfde element, ander aantal neutronen','nee, ander massagetal|nee, ander element','Allebei 6 protonen (koolstof), maar 6 en 8 neutronen.']],
+ ['Schillen',(()=>`<div style="display:flex;justify-content:center">${atoomSvg(11,12,11)}</div><p>Elektronen zitten in <b>schillen</b>: K, L, M, N. De K-schil past er 2, de L-schil 8, de M-schil 8 (later 18).</p><p>Natrium (11): <b>K2 L8 M1</b>. Die 1 in de buitenste schil is het <b>valentie-elektron</b>. Die doet mee bij reacties.</p>`),['Hoe zitten de 8 elektronen van zuurstof?','K2 L6','K8|K2 L8 M8','K vol met 2, de overige 6 in L.']],
+ ['Atoommassa',`<p>In het periodiek systeem staat bij chloor geen 35 of 37 maar <b>35,45 u</b>. Dat is het gemiddelde van alle isotopen zoals ze in de natuur voorkomen: de <b>relatieve atoommassa</b>.</p><p>Tel je die op voor een molecuul, dan heb je de <b>molecuulmassa</b>:</p><div class="ex">H<sub>2</sub>O = 2 × 1,008 + 16,00 = 18,02 u</div>`,['Molecuulmassa van CO<sub>2</sub> (C 12,01, O 16,00)?','44,01 u','28,01 u|32,00 u','12,01 + 2 × 16,00 = 44,01.']],
+ ['Het periodiek systeem',`<p>Gerangschikt op atoomnummer. Rijen heten <b>perioden</b>, kolommen <b>groepen</b>.</p><table class="gt"><tr><td>groep 1</td><td>alkalimetalen (Na, K)</td></tr><tr><td>groep 2</td><td>aardalkalimetalen (Mg, Ca)</td></tr><tr><td>groep 17</td><td>halogenen (F, Cl, Br, I)</td></tr><tr><td>groep 18</td><td>edelgassen (He, Ne, Ar)</td></tr></table><p>Metalen links en midden, niet-metalen rechts.</p>`,['Hoe heet groep 17?','halogenen','edelgassen|alkalimetalen','F, Cl, Br, I.']],
+ ['Edelgassen en ionen',`<p>Edelgassen hebben een volle buitenste schil (8 elektronen) en reageren daardoor bijna niet. Andere atomen willen dat ook.</p><div class="rule">Metalen <b>geven</b> elektronen weg → positief ion (Na<sup>+</sup>)<br>Niet-metalen <b>nemen</b> elektronen op → negatief ion (Cl<sup>−</sup>)</div><p>Zo reageert natrium met chloor tot Na<sup>+</sup> en Cl<sup>−</sup>: keukenzout.</p>`,['Wat doet een metaalatoom bij een reactie met een niet-metaal?','elektronen afstaan','elektronen opnemen|protonen afstaan','Het wordt een positief ion. Protonen veranderen nooit.']]],
+'1.2':[
+ ['Het probleem',`<p>Moleculen zijn zó klein dat je ze niet kunt tellen. Eén druppel water bevat al meer dan 10<sup>21</sup> moleculen.</p><p>Toch moet een scheikundige weten hoeveel deeltjes hij afweegt, want stoffen reageren in aantallen. De oplossing: tellen in pakketjes.</p>`],
+ ['De mol is een dozijn',`<p>Een dozijn = 12 stuks. Een <b>mol</b> = 6,02·10<sup>23</sup> stuks. Dat getal heet het <b>getal van Avogadro</b> (N<sub>A</sub>).</p><div class="rule">aantal deeltjes N = n × N<sub>A</sub></div><p>n is het aantal mol (de <b>chemische hoeveelheid</b>).</p>`,['Hoeveel moleculen zitten er in 2 mol water?','1,204·10<sup>24</sup>','6,02·10<sup>23</sup>|2','2 × 6,02·10<sup>23</sup> = 12,04·10<sup>23</sup> = 1,204·10<sup>24</sup>.']],
+ ['Het mooie van de mol',`<p>Water weegt 18,02 u per molecuul. Eén mol water weegt dan precies <b>18,02 gram</b>. Hetzelfde getal, alleen in gram!</p><p>Dat heet de <b>molaire massa M</b>, in g mol<sup>−1</sup>.</p><div class="rule">m = n × M &nbsp;en dus&nbsp; n = m ÷ M</div>`,['Hoeveel weegt 1 mol CO<sub>2</sub> (44,01 u)?','44,01 g','1 g|6,02·10<sup>23</sup> g','Het getal in u = het getal in gram per mol.']],
+ ['Van gram naar mol',`<div class="ex">Je ademt per uur 33 g CO<sub>2</sub> uit. Hoeveel mol is dat?<br>n = m ÷ M = 33 ÷ 44,01 = <b>0,75 mol</b></div><p>Van gram naar mol: <b>delen</b> door M. Van mol naar gram: <b>vermenigvuldigen</b>.</p>`,['Hoeveel mol is 36 g water (18 g mol<sup>−1</sup>)?','2,0 mol','648 mol|0,5 mol','36 ÷ 18 = 2,0.']],
+ ['Dichtheid',`<p>Een blokje aluminium van 1 cm<sup>3</sup> weegt 2,70 g, een blokje ijzer 7,87 g. Dat is de <b>dichtheid</b>:</p><div class="rule">ρ = m ÷ V</div><p>Met de dichtheid reken je van volume naar massa: m = ρ × V. Handig bij vloeistoffen, die meet je in mL.</p>`,['50 mL ethanol (ρ = 0,80 g mL<sup>−1</sup>) weegt…','40 g','62,5 g|50 g','m = ρ × V = 0,80 × 50 = 40 g.']],
+ ['Het rekenschema',`${TH.schema.h}<p>Dit is het hele kunstje van dit hoofdstuk. Welke vraag je ook krijgt: ga via de <b>mol</b>.</p><div class="ex">12 mL ethanol → hoeveel moleculen?<br>× ρ → 9,6 g · : M → 0,208 mol · × N<sub>A</sub> → 1,25·10<sup>23</sup></div><p>Oefen het met de <b>Molmachine</b>.</p>`,['Je wilt van gram naar aantal moleculen. Welke stappen?',': M en dan × N<sub>A</sub>','× M en dan × N<sub>A</sub>|: N<sub>A</sub> en dan × M','Gram → mol (: M) → deeltjes (× N<sub>A</sub>).']]],
+'1.3':[
+ ['Hoe nauwkeurig meet je?',`<p>50 mL in een bekerglas is ongeveer 50. In een maatcilinder lees je 50,0 af, met een pipet 50,00.</p><p>Hoe meer cijfers, hoe nauwkeuriger. Die cijfers heten <b>significante cijfers</b>.</p>`],
+ ['Significante cijfers tellen',`<div class="rule">Begin te tellen bij het eerste cijfer dat geen 0 is. Nullen achteraan tellen wél mee.</div><table class="gt"><tr><td>12,01</td><td>4</td></tr><tr><td>0,0030</td><td>2</td></tr><tr><td>10,0</td><td>3</td></tr><tr><td>6,02·10<sup>23</sup></td><td>3</td></tr></table>`,['Hoeveel significante cijfers heeft 0,050?','2','3|1','Nullen vooraan tellen niet, die achteraan wel: 5 en 0.']],
+ ['Afronden',`<div class="rule">× en ÷ → zoveel significante cijfers als de minst nauwkeurige meetwaarde<br>+ en − → zoveel decimalen als het getal met de minste decimalen</div><div class="ex">3,34 × 5,026 = 16,79 → <b>16,8</b> (3 sig.)<br>1,003 + 0,5 = 1,503 → <b>1,5</b> (1 decimaal)</div><p>Rond pas aan het eind af.</p>`,['2,0 × 3,456 = 6,912. Correct afgerond?','6,9','6,91|7','2,0 heeft 2 significante cijfers.']],
+ ['Gehaltes',`<p>Hoeveel van stof A zit er in een mengsel?</p>${TH.gehalte.h}<p>Ppm en ppb gebruik je voor heel kleine hoeveelheden, zoals gif in eten.</p>`,['5 g zout in 200 g zeewater. Massapercentage?','2,5%','40%|0,025%','5 ÷ 200 × 100% = 2,5%.']],
+ ['Ppm in de klas',`<p>Buitenlucht bevat ongeveer 400 ppm CO<sub>2</sub>. In een volle klas zonder open raam loopt dat op tot boven 1200 ppm, de grenswaarde. Daar word je moe en suf van.</p><p>Bij gassen betekent 1 ppm: 1 mL per m<sup>3</sup> lucht.</p>`,['Een lokaal van 100 m<sup>3</sup> met 1000 ppm CO<sub>2</sub> bevat …','100 L CO<sub>2</sub>','1000 L|10 L','1000 mL per m<sup>3</sup> × 100 m<sup>3</sup> = 100 000 mL = 100 L.']],
+ ['Molariteit',`<p>Bij oplossingen wil je weten hoeveel mol er per liter in zit: de <b>molariteit</b>.</p><div class="rule">[A] = n ÷ V &nbsp; in mol L<sup>−1</sup> = M (molair)</div><div class="ex">0,50 mol suiker in 2,0 L water → 0,25 M</div><p>Let op: volume altijd in <b>liter</b>.</p>`,['0,20 mol zout in 500 mL. Molariteit?','0,40 M','0,10 M|100 M','500 mL = 0,500 L. 0,20 ÷ 0,500 = 0,40.']]],
+'1.4':[
+ ['Er gaat niets verloren',`<p>Bij een reactie worden atomen anders gegroepeerd, maar er verdwijnt niets. Dat is de <b>wet van behoud van massa</b>:</p><div class="rule">massa beginstoffen = massa reactieproducten</div><div class="ex">9,0 g aluminium + 8,0 g zuurstof → 17 g aluminiumoxide</div>`,['10 g fosfor geeft 17,8 g P<sub>2</sub>O<sub>5</sub>. Hoeveel zuurstof reageerde?','7,8 g','27,8 g|10 g','17,8 − 10,0 = 7,8.']],
+ ['Coëfficiënten = mol',`<p>2 H<sub>2</sub> + O<sub>2</sub> → 2 H<sub>2</sub>O betekent: 2 moleculen waterstof met 1 molecuul zuurstof. Maar ook 2 <b>mol</b> met 1 <b>mol</b>.</p><div class="rule">De coëfficiënten zijn de <b>molverhouding</b>. Niet de verhouding in gram!</div>`,['N<sub>2</sub> + 3 H<sub>2</sub> → 2 NH<sub>3</sub>. Hoeveel mol NH<sub>3</sub> uit 3 mol N<sub>2</sub>?','6 mol','2 mol|9 mol','1 : 2, dus 3 × 2 = 6.']],
+ ['Het stappenplan',`${TH.stappen.h}<p>Je gaat dus altijd: <b>gram → mol → (verhouding) → mol → gram</b>.</p>`],
+ ['Voorbeeld uitgewerkt',`<div class="ex">Hoeveel gram chloor uit 45 g AlCl<sub>3</sub>?<br>1. 2 AlCl<sub>3</sub> → 2 Al + 3 Cl<sub>2</sub><br>2. 45 ÷ 133,34 = 0,3375 mol AlCl<sub>3</sub><br>3. × 3/2 = 0,506 mol Cl<sub>2</sub><br>4. × 70,90 = 35,9 g<br>5. 45 heeft 2 sig. cijfers → <b>36 g</b></div>`,['Waarom × 3/2 bij stap 3?','de verhouding AlCl<sub>3</sub> : Cl<sub>2</sub> is 2 : 3','de molmassa is 3/2 zo groot|er zijn 3 Cl-atomen','Van 2 mol AlCl<sub>3</sub> komt 3 mol Cl<sub>2</sub>.']],
+ ['Overmaat en ondermaat',`<p>Heb je 10 broodjes en 4 plakken kaas, dan kun je maar 4 kaasbroodjes maken. De kaas is in <b>ondermaat</b> (eerst op), de broodjes in <b>overmaat</b> (er blijven er 6 over).</p><p>Bij reacties precies zo: de stof in ondermaat bepaalt hoeveel product er ontstaat.</p><p>Probeer het in de <b>Reactiekeuken</b>.</p>`,['2 H<sub>2</sub> + O<sub>2</sub> → 2 H<sub>2</sub>O, met 6 H<sub>2</sub> en 5 O<sub>2</sub>. Wat is in ondermaat?','H<sub>2</sub>','O<sub>2</sub>|geen van beide','6 H<sub>2</sub> heeft maar 3 O<sub>2</sub> nodig. H<sub>2</sub> is eerst op.']]]
+};
+
+const $=s=>document.querySelector(s);
+const esc=s=>String(s).replace(/[&<>"]/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;'}[c]));
+const shuffle=a=>{a=[...a];for(let i=a.length-1;i>0;i--){const j=Math.random()*(i+1)|0;[a[i],a[j]]=[a[j],a[i]]}return a};
+const pick=a=>a[Math.random()*a.length|0];
+const KEY='chem-h1-v1';
+let S={sec:{},mc:{},done:0,days:[],best:0,atoom:{},mach:0,keuken:0,blitz:{}};
+try{const r=localStorage.getItem(KEY);if(r)S=Object.assign(S,JSON.parse(r))}catch(e){}
+const save=()=>{try{localStorage.setItem(KEY,JSON.stringify(S))}catch(e){}};
+const today=()=>new Date().toISOString().slice(0,10);
+function markDay(){const t=today();if(!S.days.includes(t)){S.days.push(t);S.days=S.days.slice(-60)}}
+function streak(){const set=new Set(S.days);let d=new Date(),n=0;if(!set.has(d.toISOString().slice(0,10)))d.setDate(d.getDate()-1);while(set.has(d.toISOString().slice(0,10))){n++;d.setDate(d.getDate()-1)}return n}
+function rec(sec,ok){const a=S.sec[sec]||(S.sec[sec]=[]);a.push(ok?1:0);if(a.length>20)a.shift();S.done++;markDay()}
+const score=sec=>{const a=S.sec[sec]||[];return a.length?sum(a)/Math.max(a.length,10):0};
+const P=$('#play');let G=null;
+function show(v){$('#home').hidden=v!=='home';P.hidden=v!=='play';window.scrollTo(0,0)}
+function goHome(){if(G&&G.timer)clearInterval(G.timer);G=null;save();renderHome();show('home')}
+function renderHome(){
+  $('#secs').innerHTML=SECS.map(s=>{const m=score(s.id);return `<div class="sec"><span class="num">${s.id==='0'?'0':s.id}</span><div><h3>${esc(s.t)}</h3><p>${esc(s.s)}</p><span class="bar"><i style="width:${Math.round(m*100)}%"></i></span></div><div class="acts"><button class="btn small lp" data-lp="${s.id}">${S.lpd&&S.lpd[s.id]?'✓ Leerpad':'▶ Leerpad'}</button><button class="btn small ghost" data-u="${s.id}">Uitleg</button><button class="btn small primary" data-o="${s.id}">Oefenen</button></div></div>`}).join('');
+  $('#tools').innerHTML=Object.entries(GENS).map(([k,g])=>`<button class="btn small ghost" data-g="${k}"><span class="src">${g.sec==='0'?'basis':g.sec}</span> ${esc(g.t)}</button>`).join('');
+  try{lpBox()}catch(e){}$('#stDone').textContent=S.done;$('#stStreak').textContent=streak();$('#stBest').textContent=S.best?nf(S.best):'–';
+  const na=Object.keys(S.atoom||{}).length;$('#atoomTag').textContent=`${na} van ${ALEV.length} gebouwd`;$('#machTag').textContent=S.mach?`beste ${S.mach}/6`:'nog niet gespeeld';$('#keukenTag').textContent=S.keuken?`beste ${S.keuken}/6`:'nog niet gespeeld';
+  $('#blitzes').innerHTML=Object.entries(BLITZ).map(([k,b])=>`<button class="mode" data-blitz="${k}"><span class="lab">60 s</span><h3>${b.t}</h3><p>${b.d}</p><span class="tag" style="text-transform:none">${S.blitz&&S.blitz[k]?'record '+S.blitz[k]:'nog geen record'}</span></button>`).join('');
+}
+$('#secs').addEventListener('click',e=>{const u=e.target.closest('[data-u]'),o=e.target.closest('[data-o]');if(u)uitleg(u.dataset.u);if(o)practice(o.dataset.o);const l=e.target.closest('[data-lp]');if(l)lpStart(l.dataset.lp)});
+$('#tools').addEventListener('click',e=>{const b=e.target.closest('[data-g]');if(b)trainer(b.dataset.g)});
+$('#toets').onclick=toets;$('#spiek').onclick=spiek;$('#atoom').onclick=atoomHome;$('#mach').onclick=machHome;$('#keuken').onclick=keukenHome;$('#blitzes').addEventListener('click',e=>{const b=e.target.closest('[data-blitz]');if(b)blitzStart(b.dataset.blitz)});$('#flits').onclick=()=>flits();
+function askReset(){$('#resetBox').innerHTML='<span>Alle voortgang wissen?</span><button class="btn small dark" id="rsY">Ja, wissen</button><button class="btn small ghost" id="rsN">Annuleer</button>';
+  $('#rsY').onclick=()=>{S={sec:{},mc:{},done:0,days:[],best:0,atoom:{},mach:0,keuken:0,blitz:{}};save();location.reload()};$('#rsN').onclick=()=>{$('#resetBox').innerHTML='<button class="btn ghost small" id="resetBtn">Voortgang wissen</button>';$('#resetBtn').onclick=askReset}}
+$('#resetBtn').onclick=askReset;
+const head=(l,r)=>`<div class="slide-head"><span>${l}</span><span>${r}</span></div>`;
+function topbar(done,total,label='Stoppen'){return `<div class="playbar"><button class="btn small ghost" id="quit">${label}</button>${total?`<span class="bar"><i style="width:${Math.round(done/total*100)}%"></i></span><span class="count">${done}/${total}</span>`:`<span class="count" style="flex:1;text-align:right">${done}</span>`}</div>`}
+function mcButtons(labels){return `<div class="opts">${labels.map((o,i)=>`<button class="opt" data-i="${i}"><span class="k">${i+1}</span><span>${o}</span></button>`).join('')}</div>`}
+function markOpts(ci,chosen){P.querySelectorAll('.opt').forEach((b,i)=>{b.disabled=true;b.classList.add(i===ci?'good':i===chosen?'bad':'dim')})}
+function parseNum(v){let t=String(v).trim().replace(/\s/g,'').replace('%','').replace(',','.').replace(/[·x×\*]10\^?/i,'e').replace('−','-');if(!/^[-+]?\d*\.?\d+(e[-+]?\d+)?$/i.test(t))return NaN;return parseFloat(t)}
+/* één vraag: q = {q, mc, opts, a, tol, u, w, th} */
+function ask(q,title,right,top,cb,opts={}){window.__last={mc:!!q.mc,a:q.a};
+  const isMC=!!q.mc;let labels;if(isMC){labels=q.keep?q.opts:shuffle(q.opts)}
+  P.innerHTML=top+`<div class="slide">${head(title,right)}<div class="slide-body">${opts.again?'<div class="pill" style="align-self:flex-start">Herkansing: deze ging eerder fout</div>':''}<div class="prompt" style="font-size:clamp(18px,4vw,22px);font-weight:600">${q.q}</div>
+   ${isMC?mcButtons(labels):`<form class="typerow" id="nf" autocomplete="off"><input id="ni" inputmode="decimal" placeholder="antwoord${q.u?' in '+q.u:''}" aria-label="Antwoord"><button class="btn dark" type="submit" id="nb">Controleer</button></form>`}
+   <div id="fbox"></div></div></div>`;
+  const qb=$('#quit');if(qb)qb.onclick=opts.onQuit||goHome;
+  const fin=(ok,given)=>{const fb=$('#fbox');
+    if(opts.silent){cb(ok,given);return}
+    fb.innerHTML=`<div class="fb ${ok?'good':'bad'}"><div class="t">${ok?pick(['Goed!','Klopt!','Top!','Netjes!']):'Niet goed. Het antwoord is '+(isMC?q.a:nf(q.a,2)+(q.u?' '+q.u:''))+'.'}</div>${q.w?`<div class="tip"><b>Uitleg:</b> ${q.w}</div>`:''}${!ok&&q.th?thCard(q.th):''}</div><div class="foot" style="margin-top:12px"><button class="btn primary" id="next">Verder ↵</button></div>`;
+    const n=$('#next');n.onclick=()=>cb(ok,given);n.focus()};
+  if(isMC)P.querySelectorAll('.opt').forEach((b,i)=>b.onclick=()=>{const ok=labels[i]===q.a;if(!opts.silent)markOpts(labels.indexOf(q.a),i);fin(ok,labels[i])});
+  else{const inp=$('#ni');inp.focus();$('#nf').onsubmit=e=>{e.preventDefault();const v=parseNum(inp.value);if(isNaN(v)){inp.classList.remove('shake');void inp.offsetWidth;inp.classList.add('shake');return}
+    const ok=Math.abs(v-q.a)<=(q.tol??.051);inp.readOnly=true;if(ok)inp.classList.add('okay');$('#nb').hidden=true;fin(ok,inp.value)}}
+}
+function mcItem(m){return {sec:m[0],mc:true,q:m[1],opts:[m[2],...m[3].split('|')],a:m[2],w:m[4],th:m[5],id:m[1]}}
+function makeSet(sec,n){
+  const mcs=shuffle(MC.filter(m=>m[0]===sec)).sort((a,b)=>(S.mc[a[1]]||0)-(S.mc[b[1]]||0));
+  const gens=SECGENS[sec];const nG=sec==='2.3'?2:4;const items=[];
+  mcs.slice(0,n-nG).forEach(m=>items.push(mcItem(m)));
+  for(let i=0;i<nG;i++){const k=gens[i%gens.length];items.push(Object.assign({sec,gen:k},GENS[k].f()))}
+  return shuffle(items);
+}
+/* oefenronde: foute vragen komen terug tot ze goed zijn */
+function practice(sec){const items=makeSet(sec,10);G={m:'prac',sec,queue:items.map(q=>({q,tries:0})),n0:items.length,done:0,first:0,mist:[]};show('play');pracNext()}
+function pracNext(){
+  if(!G.queue.length)return endScreen();
+  const it=G.queue[0],q=it.q;
+  ask(q,`Paragraaf ${G.sec==='0'?'0 · basis':G.sec}`,q.gen?GENS[q.gen].t:'Begrip',topbar(G.done,G.n0),ok=>{G.queue.shift();
+    if(it.tries===0){rec(G.sec,ok);if(q.id)S.mc[q.id]=(S.mc[q.id]||0)+(ok?1:-1);if(ok)G.first++;else G.mist.push(q)}
+    if(ok||it.tries>=2)G.done++;else{it.tries++;const nq=q.gen?Object.assign({sec:q.sec,gen:q.gen},GENS[q.gen].f()):q;G.queue.splice(Math.min(3,G.queue.length),0,{q:nq,tries:it.tries})}
+    save();pracNext()},{again:it.tries>0});
+}
+function endScreen(){
+  const t=G.n0,pct=G.first/t;if(pct>=.8)confetti();save();const sec=G.sec;
+  P.innerHTML=`<div class="slide">${head('Paragraaf '+sec,'Klaar')}<div class="slide-body"><div><div class="q">In één keer goed</div><div class="big">${G.first}<span style="font-size:.45em;color:var(--muted)"> / ${t}</span></div></div>
+   <div>${pct>=.9?'Uitstekend, deze paragraaf zit erin.':pct>=.6?'Goed bezig. De foute vragen heb je inmiddels ook goed gedaan. Nog een ronde en het zit vast.':'De foute vragen kwamen terug tot je ze goed had. Lees de uitleg nog eens en doe nog een ronde.'}</div>
+   ${G.mist.length?`<div><div class="q" style="margin-bottom:6px">Hier ging het de eerste keer mis</div><ul class="mist">${G.mist.map(q=>`<li><b>${q.q}</b><span>Antwoord: ${q.mc?q.a:nf(q.a,2)} · ${q.w||''}</span></li>`).join('')}</ul></div>`:''}
+   <div class="acts"><button class="btn primary" id="again">Nog een ronde</button><button class="btn ghost" id="uit">Uitleg</button><button class="btn ghost" id="home2">Naar start</button></div></div></div>`;
+  $('#again').onclick=()=>practice(sec);$('#uit').onclick=()=>uitleg(sec);$('#home2').onclick=goHome;$('#again').focus();
+}
+function trainer(k){G={m:'tr',k,n:0,ok:0,streak:0};show('play');trNext()}
+function trNext(){const g=GENS[G.k];const q=g.f();
+  ask(q,g.t,`Reeks: ${G.streak}`,topbar(`${G.ok} van ${G.n} goed`,0,'Klaar'),ok=>{G.n++;if(ok){G.ok++;G.streak++;if(G.streak%5===0)confetti()}else G.streak=0;rec(g.sec,ok);save();trNext()});
+}
+const SECGAMES={'0':[['sym','Symbolenblitz']],'1.1':[['atoom','⚛️ Atoombouwer'],['mm','Metaal of niet-metaal?'],['sym','Symbolenblitz']],'1.2':[['mach','⚙️ Molmachine']],'1.3':[['sig','Significantie-sprint']],'1.4':[['keuken','🍳 Reactiekeuken']]};
+function uitleg(sec){
+  const s=SECS.find(x=>x.id===sec);show('play');
+  P.innerHTML=`<div class="playbar"><button class="btn small ghost" id="quit">Terug</button></div><div class="uitleg"><div class="eyebrow">${sec==='0'?'Voorkennis':'Paragraaf '+sec}</div><h2 style="font-size:26px;margin-bottom:10px">${esc(s.t)}</h2>${UITLEG[sec]}
+  ${verdiepHtml(sec)}
+  <div class="nextbox"><h3>Wat nu?</h3>
+   <div class="choice"><button class="btn primary" id="go">Oefenronde ${sec==='0'?'basis':sec}</button><span>10 gemengde vragen. Fout? Dan krijg je uitleg en komt de vraag later terug tot je hem goed hebt.</span></div>
+   <div class="choice"><div class="acts">${SECGENS[sec].map(k=>`<button class="btn ghost small" data-g="${k}">${esc(GENS[k].t)}</button>`).join('')}</div><span>Eén soort vraag oefenen, zo lang je wilt.</span></div>
+   <div class="choice"><div class="acts">${SECGAMES[sec].map(([k,t])=>`<button class="btn ghost small" data-game="${k}">${t}</button>`).join('')}</div><span>Of speel het als spel.</span></div>
+  </div></div>`;
+  $('#quit').onclick=goHome;$('#go').onclick=()=>practice(sec);P.querySelectorAll('[data-g]').forEach(b=>b.onclick=()=>trainer(b.dataset.g));
+  P.querySelectorAll('[data-game]').forEach(b=>b.onclick=()=>{const k=b.dataset.game;k==='atoom'?atoomHome():k==='mach'?machHome():k==='keuken'?keukenHome():blitzStart(k)});
+  bindVerdiep(sec);
+}
+function spiek(){show('play');
+  P.innerHTML=`<div class="playbar"><button class="btn small ghost" id="quit">Terug</button></div><div class="uitleg"><h2 style="font-size:26px">Spiekbriefje H1</h2>
+  <h3>Atoom</h3>${TH.atoom.h}<p>atoomnummer = protonen · massagetal = p + n · <b>neutronen = massagetal − atoomnummer</b> · neutraal: elektronen = protonen. Schillen K2 L8 M8(18).</p>
+  <h3>Periodiek systeem</h3><p>Groep 1 alkalimetalen · 2 aardalkalimetalen · 17 halogenen · 18 edelgassen. Rijen = perioden. Metalen links, niet-metalen rechts.</p>
+  <h3>Rekenschema</h3>${TH.schema.h}<p>N<sub>A</sub> = 6,02·10<sup>23</sup> · n = m ÷ M · ρ = m ÷ V · [A] = n ÷ V<sub>opl</sub> (L)</p>
+  <h3>Gehaltes</h3>${TH.gehalte.h}
+  <h3>Significantie</h3><p>× en ÷: minste significante cijfers. + en −: minste decimalen. Voorloopnullen tellen niet, nullen achteraan wel.</p>
+  <h3>Reacties</h3>${TH.stappen.h}<p>Coëfficiënten = molverhouding. Ondermaat = eerst op, bepaalt de opbrengst.</p></div>`;
+  $('#quit').onclick=goHome;
+}
+function flits(){const list=shuffle(BEGRIP);G={m:'flits',list,i:0,known:0};show('play');flitsNext()}
+function flitsNext(){if(G.i>=G.list.length){confetti();P.innerHTML=`<div class="slide">${head('Begrippen','Klaar')}<div class="slide-body"><div class="q">Wist je meteen</div><div class="big">${G.known}<span style="font-size:.45em;color:var(--muted)"> / ${G.list.length}</span></div><div class="acts"><button class="btn primary" id="again">Nog een keer</button><button class="btn ghost" id="home2">Naar start</button></div></div></div>`;$('#again').onclick=flits;$('#home2').onclick=goHome;return}
+  const [b,d,s]=G.list[G.i];
+  P.innerHTML=topbar(G.i,G.list.length)+`<div class="slide">${head('Begrippen','par. '+s)}<div class="slide-body"><div class="flip" id="fl"><div class="flip-in"><div class="face"><div class="q">Wat betekent dit begrip?</div><div class="prompt big" style="font-size:clamp(24px,6vw,34px)">${esc(b)}</div><div class="src">tik om om te draaien</div></div><div class="face back"><div class="q">${esc(b)}</div><div class="prompt" style="font-size:20px">${esc(d)}</div></div></div></div>
+  <div class="acts" id="fa" hidden><button class="btn ghost" id="fn">Wist ik niet</button><button class="btn primary" id="fy">Wist ik ✓</button></div></div></div>`;
+  $('#quit').onclick=goHome;$('#fl').onclick=()=>{$('#fl').classList.toggle('on');$('#fa').hidden=false};
+  $('#fy').onclick=()=>{G.known++;G.i++;flitsNext()};$('#fn').onclick=()=>{G.list.push(G.list[G.i]);G.i++;flitsNext()};
+}
+/* proeftoets */
+function toets(){
+  const items=[];SECS.forEach(s=>{const mcs=shuffle(MC.filter(m=>m[0]===s.id)).slice(0,2).map(mcItem);items.push(...mcs);const gs=SECGENS[s.id];for(let i=0;i<2;i++){const k=gs[(i+Math.random()*gs.length|0)%gs.length];items.push(Object.assign({sec:s.id,gen:k},GENS[k].f()))}});
+  G={m:'toets',items:shuffle(items),i:0,score:0,wrong:[]};show('play');toetsNext();
+}
+function toetsNext(){
+  if(G.i>=G.items.length){const n=G.items.length,c=Math.round((1+9*G.score/n)*10)/10;if(c>S.best)S.best=c;if(c>=7.5)confetti();save();
+    P.innerHTML=`<div class="slide">${head('Proeftoets','Uitslag')}<div class="slide-body"><div><div class="q">Je cijfer</div><div class="big" style="color:${c>=5.5?'var(--good)':'var(--bad)'}">${nf(c)}</div><div class="count">${G.score} van ${n} goed</div></div>
+    ${G.wrong.length?`<div><div class="q" style="margin-bottom:6px">Uitwerkingen van wat fout ging</div><div style="display:grid;gap:10px">${G.wrong.map(([q,g])=>`<div class="fb bad"><div>${q.q}</div><div class="t">Antwoord: ${q.mc?q.a:nf(q.a,2)+(q.u?' '+q.u:'')} · jij: ${esc(g)}</div><div class="tip">${q.w||''}</div>${q.th?`<details class="thc"><summary>📖 Theorie: ${TH[q.th].t}</summary>${TH[q.th].h}</details>`:''}</div>`).join('')}</div></div>`:''}
+    <div class="acts"><button class="btn primary" id="again">Nieuwe proeftoets</button><button class="btn ghost" id="home2">Naar start</button></div></div></div>`;
+    $('#again').onclick=toets;$('#home2').onclick=goHome;return}
+  const q=G.items[G.i];
+  ask(q,'Proeftoets','Vraag '+(G.i+1)+' · '+(q.sec==='0'?'basis':'par. '+q.sec),topbar(G.i,G.items.length),(ok,given)=>{rec(q.sec,ok);if(ok)G.score++;else G.wrong.push([q,given]);G.i++;toetsNext()},{silent:true});
+}
+document.addEventListener('keydown',e=>{if(P.hidden||!G)return;if(e.target.tagName==='INPUT')return;if(/^[1-9]$/.test(e.key)){const b=P.querySelectorAll('.opt')[+e.key-1]||(G.m==='band'?P.querySelectorAll('[data-b]')[+e.key-1]:null);if(b&&!b.disabled)b.click()}});
+function confetti(){
+  if(matchMedia('(prefers-reduced-motion: reduce)').matches)return;
+  const c=$('#conf'),x=c.getContext('2d');c.width=innerWidth;c.height=innerHeight;
+  const cols=['#5B4FC4','#2F7D5B','#7FB0EA','#F7DB5E','#D9443A'];
+  const ps=Array.from({length:110},()=>({x:c.width/2,y:c.height*.35,vx:(Math.random()-.5)*14,vy:-Math.random()*12-4,r:Math.random()*6+4,c:pick(cols),a:Math.random()*6}));
+  let f=0;(function loop(){x.clearRect(0,0,c.width,c.height);ps.forEach(p=>{p.x+=p.vx;p.y+=p.vy;p.vy+=.4;p.vx*=.99;p.a+=.2;x.save();x.translate(p.x,p.y);x.rotate(p.a);x.fillStyle=p.c;x.fillRect(-p.r/2,-p.r/4,p.r,p.r/2);x.restore()});if(++f<110)requestAnimationFrame(loop);else x.clearRect(0,0,c.width,c.height)})();
+}
+try{if('serviceWorker' in navigator&&(location.protocol==='https:'||location.hostname==='localhost'))navigator.serviceWorker.register('sw.js').catch(()=>{})}catch(e){}
+renderHome();
+
+
+</script>
+</body>
+</html>

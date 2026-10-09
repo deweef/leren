@@ -1,0 +1,1113 @@
+<!doctype html>
+<html lang="nl">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<meta name="robots" content="noindex">
+<script>(function(){try{if(localStorage.getItem('leren-ok')!=='53a39a231246354922d1b5f7242c1639ebdc75da84bde2e766eed704f5a89cf8'){location.replace('index.html')}}catch(e){location.replace('index.html')}})();</script>
+<title>Scheikunde H2 Bindingen</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,500..800&family=JetBrains+Mono:wght@500&family=Atkinson+Hyperlegible:wght@400;700&family=IBM+Plex+Mono:wght@500&display=swap">
+<style>
+/* Layout: ruitjespapier. Kaarten met een oranje kantlijn, zoals het boek. */
+:root{
+  --bg:#F6F3EE; --surface:#FFFFFF; --ink:#1E2230; --muted:#5D6375; --line:#DDD6CB; --chip:#EEE8DE; --accent:#1B8A78;
+  --green:#2F7D5B; --green-soft:#DDF0E6; --pink:#1B8A78; --pink-soft:#D6EFEA; --amber:#A86A12; --amber-soft:#FBEFD9;
+  --good:#2E8B4E; --good-bg:#DDF0E2; --bad:#C2413A; --bad-bg:#FADFDD;
+  --c-wall:#7BAA6A; --c-cyto:#EEF6E4; --c-vac:#E4D9F2; --c-nuc:#C9B4E0; --c-chl:#3E9B48; --c-mito:#C98A4B; --c-er:#7A93C9; --c-golgi:#D07AA0; --c-lys:#E0A93C; --c-ani:#FBE9E4;
+  --f-display:"Bricolage Grotesque",system-ui,sans-serif;
+  --f-body:"Atkinson Hyperlegible",system-ui,-apple-system,"Segoe UI",sans-serif;
+  --f-mono:"IBM Plex Mono",ui-monospace,Menlo,Consolas,monospace;
+}
+@media (prefers-color-scheme: dark){:root:not([data-theme="light"]){
+  --bg:#14161D; --surface:#1D2029; --ink:#E9EAF0; --muted:#A0A5B5; --line:#30343F; --chip:#272A35; --accent:#45C2AE;
+  --green:#5CC394; --green-soft:#183025; --pink:#45C2AE; --pink-soft:#14302B; --amber:#E9B25A; --amber-soft:#33281A;
+  --good:#5CC383; --good-bg:#183020; --bad:#F07870; --bad-bg:#3A1C1B;
+  --c-wall:#5E8F4E; --c-cyto:#20321F; --c-vac:#3A3150; --c-nuc:#5E4A7E; --c-chl:#56B55F; --c-mito:#B47A40; --c-er:#6C84BE; --c-golgi:#C26E94; --c-lys:#C99230; --c-ani:#3A2622; color-scheme:dark}}
+:root[data-theme="dark"]{
+  --bg:#14161D; --surface:#1D2029; --ink:#E9EAF0; --muted:#A0A5B5; --line:#30343F; --chip:#272A35; --accent:#45C2AE;
+  --green:#5CC394; --green-soft:#183025; --pink:#45C2AE; --pink-soft:#14302B; --amber:#E9B25A; --amber-soft:#33281A;
+  --good:#5CC383; --good-bg:#183020; --bad:#F07870; --bad-bg:#3A1C1B;
+  --c-wall:#5E8F4E; --c-cyto:#20321F; --c-vac:#3A3150; --c-nuc:#5E4A7E; --c-chl:#56B55F; --c-mito:#B47A40; --c-er:#6C84BE; --c-golgi:#C26E94; --c-lys:#C99230; --c-ani:#3A2622; color-scheme:dark}
+*{box-sizing:border-box}
+body{background-color:var(--bg);background-image:linear-gradient(var(--line) 1px,transparent 1px),linear-gradient(90deg,var(--line) 1px,transparent 1px);background-size:24px 24px;background-attachment:fixed;color:var(--ink);font-family:var(--f-body);font-size:16px;line-height:1.5;margin:0}
+.wrap{max-width:880px;margin:0 auto;padding-inline:16px;padding-block:20px 56px}
+button{font:inherit;color:inherit;cursor:pointer}
+button:focus-visible,input:focus-visible{outline:3px solid var(--pink);outline-offset:2px}
+h1,h2,h3{font-family:var(--f-display);margin:0;text-wrap:balance}
+.eyebrow{font-family:var(--f-mono);font-size:12px;letter-spacing:.12em;text-transform:uppercase;color:var(--muted)}
+.top{display:flex;flex-wrap:wrap;gap:16px;align-items:flex-end;justify-content:space-between;padding-bottom:16px;border-bottom:2px solid var(--ink)}
+h1{font-size:clamp(30px,6.5vw,48px);font-weight:800;line-height:1;letter-spacing:-.02em}
+h1 em{font-style:normal;color:var(--green)}
+.stats{display:flex;gap:8px;flex-wrap:wrap}
+.stat{background:var(--surface);border:1px solid var(--line);border-radius:10px;padding:6px 12px;min-width:86px}
+.stat b{display:block;font-family:var(--f-display);font-size:22px;font-weight:800;line-height:1.15;font-variant-numeric:tabular-nums}
+.stat small{font-family:var(--f-mono);font-size:10.5px;color:var(--muted);text-transform:uppercase;letter-spacing:.08em}
+.banner{margin-top:14px;display:flex;gap:8px;flex-wrap:wrap}
+.pill{font-size:13.5px;font-weight:700;padding:4px 12px;border-radius:999px;background:var(--pink-soft);color:var(--pink)}
+.pill.g{background:var(--green-soft);color:var(--green)}
+section{margin-top:26px}
+.sec-head{display:flex;flex-wrap:wrap;align-items:baseline;justify-content:space-between;gap:8px;margin-bottom:12px}
+h2{font-size:21px;font-weight:800}
+.acts{display:flex;gap:8px;flex-wrap:wrap;align-items:center}
+.btn{border:2px solid var(--ink);background:var(--surface);border-radius:10px;padding:10px 16px;font-weight:700}
+.btn.primary{background:var(--green);border-color:var(--green);color:var(--surface)}
+.btn.dark{background:var(--ink);border-color:var(--ink);color:var(--bg)}
+.btn.ghost{border-color:var(--line)}
+.btn.small{padding:6px 12px;font-size:14px}
+.btn:disabled{opacity:.4;cursor:not-allowed}
+/* paragraaf-chips */
+.pars{display:grid;grid-template-columns:repeat(auto-fill,minmax(190px,1fr));gap:10px}
+.par{position:relative;text-align:left;background:var(--surface);border:2px solid var(--line);border-radius:12px;padding:10px 12px 12px 18px;display:flex;flex-direction:column;gap:4px;min-width:0;overflow:hidden}
+.par::before{content:"";position:absolute;left:0;top:0;bottom:0;width:7px;background:var(--line)}
+.par[aria-pressed="true"]{border-color:var(--ink)}
+.par[aria-pressed="true"]::before{background:var(--pink)}
+.par .no{font-family:var(--f-mono);font-size:12px;color:var(--muted)}
+.par .no b{font-family:var(--f-display);font-size:22px;color:var(--ink);margin-right:4px}
+.par .nm{font-weight:700;font-size:14.5px;line-height:1.25}
+.bar{height:6px;border-radius:3px;background:var(--chip);overflow:hidden}
+.bar i{display:block;height:100%;background:var(--green);border-radius:3px;transition:width .4s}
+.par .src{font-size:12px}
+.src{font-size:13px;color:var(--muted)}
+/* modus-kaarten als objectglaasjes */
+.modes{display:grid;grid-template-columns:repeat(auto-fill,minmax(250px,1fr));gap:12px}
+.mode{position:relative;text-align:left;background:var(--surface);border:2px solid var(--ink);border-radius:14px;padding:14px 16px 14px 58px;min-width:0;display:flex;flex-direction:column;gap:4px}
+.mode .lab{position:absolute;left:0;top:0;bottom:0;width:44px;background:var(--chip);border-right:2px dashed var(--line);display:grid;place-items:center;font-family:var(--f-mono);font-size:12px;color:var(--muted);writing-mode:vertical-rl;transform:rotate(180deg);letter-spacing:.12em;text-transform:uppercase}
+.mode.main{background:var(--ink);color:var(--bg)}
+.mode.main .lab{background:var(--pink);color:#fff;border-color:transparent}
+.mode.main p{color:var(--bg);opacity:.8}
+.mode h3{font-size:19px;font-weight:800}
+.mode p{margin:0;font-size:14px;color:var(--muted)}
+.mode .tag{align-self:flex-start;font-family:var(--f-mono);font-size:10.5px;text-transform:uppercase;letter-spacing:.08em;background:var(--amber-soft);color:var(--amber);padding:2px 7px;border-radius:5px}
+.mode:hover{transform:translateY(-2px)}
+details.tips{background:var(--surface);border:1px solid var(--line);border-radius:12px;padding:12px 16px}
+details.tips summary{font-weight:700;cursor:pointer}
+details.tips ul{margin:10px 0 4px;padding-left:20px;display:grid;gap:6px}
+/* spel */
+.playbar{display:flex;align-items:center;gap:12px;margin-bottom:16px}
+.playbar .bar{flex:1;height:10px;border-radius:5px}
+.playbar .bar i{background:var(--pink)}
+.count{font-family:var(--f-mono);font-size:13px;color:var(--muted);font-variant-numeric:tabular-nums;white-space:nowrap}
+.slide{background:var(--surface);border:2px solid var(--ink);border-radius:18px;overflow:hidden}
+.slide-head{display:flex;justify-content:space-between;gap:8px;flex-wrap:wrap;padding:9px 18px;background:var(--pink);color:#fff;font-family:var(--f-mono);font-size:12px;letter-spacing:.1em;text-transform:uppercase}
+.slide-body{padding:20px 18px;display:flex;flex-direction:column;gap:14px}
+.q{font-size:15px;color:var(--muted);font-weight:700}
+.prompt{font-family:var(--f-display);font-weight:700;font-size:clamp(20px,4.6vw,27px);line-height:1.25;overflow-wrap:anywhere}
+.prompt.big{font-size:clamp(28px,7vw,42px);font-weight:800}
+.opts{display:grid;gap:10px}
+.opt{display:flex;align-items:center;gap:12px;text-align:left;border:2px solid var(--line);background:var(--bg);border-radius:12px;padding:12px 14px;font-size:16.5px;font-weight:700;min-width:0}
+.opt .k{flex:none;width:28px;height:28px;border-radius:8px;display:grid;place-items:center;font-family:var(--f-mono);font-size:13px;background:var(--chip);color:var(--muted)}
+.opt:hover:not(:disabled){border-color:var(--ink)}
+.opt:disabled{cursor:default}
+.opt.good{background:var(--good-bg);border-color:var(--good)}.opt.good .k{background:var(--good);color:var(--surface)}
+.opt.bad{background:var(--bad-bg);border-color:var(--bad)}.opt.bad .k{background:var(--bad);color:var(--surface)}
+.opt.dim{opacity:.5}
+.typerow{display:flex;gap:8px;flex-wrap:wrap}
+.typerow input{flex:1 1 220px;min-width:0;font:inherit;font-size:19px;font-weight:700;padding:12px 14px;border-radius:12px;border:2px solid var(--line);background:var(--bg);color:var(--ink)}
+.typerow input.okay{border-color:var(--good)}
+.pattern{font-family:var(--f-mono);font-size:17px;letter-spacing:.16em;color:var(--amber);overflow-wrap:anywhere}
+.fb{border-radius:12px;padding:12px 14px;display:flex;flex-direction:column;gap:4px}
+.fb.good{background:var(--good-bg)}.fb.bad{background:var(--bad-bg)}.fb.warn{background:var(--amber-soft)}
+.fb .t{font-weight:700}.fb.good .t{color:var(--good)}.fb.bad .t{color:var(--bad)}.fb.warn .t{color:var(--amber)}
+.fb .ans{font-family:var(--f-display);font-size:21px;font-weight:800}
+.tip{font-size:14.5px}
+.foot{display:flex;justify-content:flex-end}
+.big{font-family:var(--f-display);font-size:clamp(48px,12vw,80px);font-weight:800;line-height:1}
+.mist{display:grid;gap:6px;margin:0;padding:0;list-style:none}
+.mist li{display:flex;flex-direction:column;gap:2px;border-bottom:1px solid var(--line);padding:6px 0}
+.mist li span{color:var(--muted);font-size:14px}
+/* flip */
+.flip{perspective:1200px;cursor:pointer}
+.flip-in{position:relative;min-height:220px;transition:transform .45s;transform-style:preserve-3d}
+.flip.on .flip-in{transform:rotateY(180deg)}
+.face{position:absolute;inset:0;backface-visibility:hidden;-webkit-backface-visibility:hidden;display:flex;flex-direction:column;justify-content:center;gap:10px}
+.face.back{transform:rotateY(180deg)}
+/* volgorde */
+.seq-done{display:grid;gap:6px;counter-reset:s;margin:0;padding:0;list-style:none}
+.seq-done li{counter-increment:s;display:flex;gap:10px;align-items:center;background:var(--good-bg);border-radius:10px;padding:8px 12px;font-weight:700}
+.seq-done li::before{content:counter(s);flex:none;width:26px;height:26px;border-radius:50%;background:var(--good);color:var(--surface);display:grid;place-items:center;font-family:var(--f-mono);font-size:12px}
+.seq-pool{display:flex;flex-wrap:wrap;gap:8px}
+.seq-pool button{border:2px solid var(--line);background:var(--bg);border-radius:10px;padding:9px 12px;font-weight:700;text-align:left}
+.seq-pool button:hover{border-color:var(--ink)}
+.seq-list{display:grid;gap:8px}
+.seq-list button{text-align:left}
+/* buckets */
+.buckets{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:8px}
+.buckets button{border:2px solid var(--ink);border-radius:12px;padding:14px 6px;font-weight:800;font-size:16px;background:var(--surface)}
+.buckets button.good{background:var(--good-bg);border-color:var(--good)}
+.buckets button.bad{background:var(--bad-bg);border-color:var(--bad)}
+/* osmose */
+.osmo{display:flex;gap:14px;align-items:center;flex-wrap:wrap}
+.osmo svg{flex:none;width:120px;height:90px}
+.chipline{display:flex;gap:8px;flex-wrap:wrap}
+/* cel */
+.cellfig{background:var(--bg);border-radius:12px;padding:8px}
+.cellfig svg{display:block;width:100%;height:auto;max-height:340px}
+.marker circle{fill:var(--pink)}
+.marker text{fill:#fff;font-family:var(--f-mono);font-size:15px;font-weight:700}
+.marker line{stroke:var(--pink);stroke-width:2.5}
+.pulse{animation:pulse 1.2s ease-in-out infinite}
+@keyframes pulse{50%{opacity:.35}}
+/* samenvatting */
+.sum{background:var(--surface);border:1px solid var(--line);border-left:6px solid var(--green);border-radius:12px;padding:14px 16px}
+.sum h3{font-size:19px;margin-bottom:6px}
+.sum p{margin:0 0 8px;max-width:72ch}
+.exam{background:var(--surface);border:1px solid var(--line);border-radius:12px;padding:14px 16px;display:flex;flex-direction:column;gap:10px}
+.exam .ctx{background:var(--bg);border-radius:8px;padding:10px 12px;font-size:14.5px}
+.exq{border-top:1px dashed var(--line);padding-top:10px;display:flex;flex-direction:column;gap:8px}
+.exq .pt{font-family:var(--f-mono);font-size:12px;color:var(--pink)}
+.shake{animation:shake .35s}@keyframes shake{25%{transform:translateX(-6px)}75%{transform:translateX(6px)}}
+.pop{animation:pop .3s}@keyframes pop{50%{transform:scale(1.25)}}
+.timer{font-family:var(--f-display);font-size:32px;font-weight:800;font-variant-numeric:tabular-nums;min-width:56px;text-align:right}
+.timer.low{color:var(--bad)}
+.combo{font-family:var(--f-mono);font-size:12px;background:var(--amber);color:var(--surface);padding:2px 8px;border-radius:6px}
+canvas#conf{position:fixed;inset:0;pointer-events:none;z-index:9}
+@media (prefers-reduced-motion: reduce){*{transition:none!important;animation:none!important}}
+.nums{font-family:"JetBrains Mono",var(--f-mono);font-size:20px;font-weight:500;background:var(--bg);border-radius:10px;padding:10px 12px;margin:8px 0;overflow-wrap:anywhere;letter-spacing:.02em}
+.tw{overflow-x:auto;margin:8px 0}
+.ft{border-collapse:collapse;font-variant-numeric:tabular-nums;font-size:15.5px;background:var(--surface)}
+.ft th,.ft td{border:1px solid var(--line);padding:5px 10px;text-align:center}
+.ft th{background:var(--chip);text-align:left;font-weight:700}
+.ft.v td:first-child{font-family:var(--f-mono);font-size:14px}
+.chart{display:block;width:100%;max-width:420px;height:auto;color:var(--ink);margin:6px 0}
+.uitleg{background:var(--surface);border:1px solid var(--line);border-left:6px solid var(--pink);border-radius:12px;padding:14px 18px}
+.uitleg h3{font-size:20px;margin:16px 0 6px}.uitleg h3:first-child{margin-top:0}
+.uitleg p,.uitleg li{max-width:72ch}.uitleg ul{padding-left:20px}
+.rule{background:var(--pink-soft);border-radius:10px;padding:10px 14px;margin:8px 0;font-weight:500}
+.ex{background:var(--bg);border-left:4px solid var(--green);border-radius:6px;padding:9px 12px}
+.gt{border-collapse:collapse;font-size:15px;margin:6px 0}.gt th,.gt td{border:1px solid var(--line);padding:6px 9px;text-align:left;vertical-align:top}.gt th{background:var(--chip)}
+.cycle{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:6px;max-width:460px;margin:10px 0}
+.cycle span{border-radius:10px;padding:10px;font-weight:700;color:#1E2230;text-align:center}
+.cycle .c1{background:#F5B37A}.cycle .c2{background:#F7DB5E}.cycle .c3{background:#7FB0EA}.cycle .c4{background:#8FD18F}
+.cycle .c3{order:4}.cycle .c4{order:3}
+.flow{display:grid;grid-template-columns:minmax(0,1fr) minmax(0,1.3fr);gap:6px 10px;margin:10px 0}
+.flow .fq{background:var(--chip);border-radius:8px;padding:8px 10px;font-weight:700}.flow .fa{background:var(--bg);border-radius:8px;padding:8px 10px}
+@media (max-width:560px){.flow{grid-template-columns:1fr}}
+.distgrid{display:grid;grid-template-columns:repeat(auto-fill,minmax(150px,1fr));gap:8px}
+.distgrid figure{margin:0;background:var(--bg);border-radius:10px;padding:6px}.distgrid figcaption{text-align:center;font-weight:700;font-size:13.5px}
+.secs{display:grid;gap:10px}
+.sec{display:grid;grid-template-columns:auto minmax(0,1fr) auto;gap:6px 14px;align-items:center;background:var(--surface);border:2px solid var(--line);border-radius:14px;padding:12px 14px}
+.sec .num{font-family:var(--f-display);font-size:30px;font-weight:800;color:var(--pink);line-height:1}
+.sec h3{font-size:18px}.sec p{margin:2px 0 6px;font-size:14px;color:var(--muted)}
+.sec .acts{grid-column:3;grid-row:1}
+@media (max-width:560px){.sec{grid-template-columns:auto minmax(0,1fr)}.sec .acts{grid-column:1/-1;grid-row:auto}}
+.tools{display:flex;flex-wrap:wrap;gap:8px}
+.chart.big{max-width:520px}
+.gt td,.gt th{overflow-wrap:anywhere;hyphens:auto;-webkit-hyphens:auto}
+.draw{touch-action:none;cursor:crosshair;-webkit-user-select:none;user-select:none}
+.fb.warn{background:var(--pink-soft);border-color:var(--accent)}
+details.verdiep{margin-top:18px;border:2px dashed var(--accent);border-radius:12px;padding:10px 14px;background:var(--bg)}
+details.verdiep>summary{font-weight:700;font-size:17px;cursor:pointer}
+details.verdiep>summary .src{font-weight:400;margin-left:6px}
+details.vd{border-top:1px solid var(--line);padding:8px 0}
+details.vd:first-of-type{margin-top:8px}
+details.vd>summary{font-weight:600;cursor:pointer}
+details.vd>div{padding-top:6px}
+ul.fout{padding-left:0;list-style:none;display:grid;gap:6px}
+ul.fout li{padding-left:24px;position:relative}ul.fout li:before{content:"✗";position:absolute;left:4px;color:var(--bad);font-weight:700}
+ol.steps{padding-left:22px;display:grid;gap:8px;margin:8px 0}
+ol.steps li{animation:fadein .3s ease}
+@keyframes fadein{from{opacity:0;transform:translateY(4px)}to{opacity:1}}
+.nextbox{margin-top:18px;border-top:2px solid var(--line);padding-top:12px;display:grid;gap:12px}
+.nextbox h3{margin:0}
+.choice{display:grid;gap:4px}.choice>span{font-size:14px;color:var(--muted)}
+.choice>.btn{justify-self:start}
+.kcamps{display:grid;gap:8px}
+.kc{display:grid;grid-template-columns:minmax(0,1fr) auto;gap:2px 10px;text-align:left;background:var(--surface);border:2px solid var(--ink);border-radius:12px;padding:10px 12px;color:var(--ink);font:inherit;cursor:pointer}
+.kc b{grid-column:1/-1;font-size:16px}.kc span{font-size:13px;color:var(--muted)}
+.kc .bar{grid-column:1;display:block;align-self:center}.kc .count{grid-column:2;grid-row:3}
+.kc:disabled{opacity:.5;cursor:not-allowed;border-style:dashed}
+.kc.done{border-color:var(--good);background:var(--good-bg)}
+
+/* chemie */
+details.thc{margin-top:6px;background:var(--surface);border-radius:8px;padding:6px 10px;font-size:14.5px}
+details.thc summary{font-weight:700;cursor:pointer;color:var(--accent)}
+.bkast{display:grid;grid-template-columns:repeat(auto-fill,minmax(96px,1fr));gap:8px}
+.bk{display:flex;flex-direction:column;align-items:center;gap:2px;border:2px solid var(--line);background:var(--bg);border-radius:12px;padding:10px 4px;min-width:0}
+.bk b{font-family:var(--f-display);font-size:19px}.bk span{font-size:11.5px;color:var(--muted);text-align:center;overflow-wrap:anywhere}
+.bk .st{color:var(--amber);font-size:13px;letter-spacing:1px}
+.bk.done{border-color:var(--good);background:var(--good-bg)}
+.bk:disabled{opacity:.45;cursor:not-allowed}
+.bpal{display:flex;flex-wrap:wrap;gap:8px}
+.bpe{display:flex;flex-direction:column;align-items:flex-start;border:2px solid var(--line);border-left:8px solid var(--ec,var(--muted));background:var(--surface);border-radius:10px;padding:6px 10px;min-width:0}
+.bpe b{font-family:var(--f-display);font-size:20px;line-height:1}.bpe span{font-size:12px;color:var(--muted)}
+.bpe.on{border-color:var(--ink);box-shadow:0 0 0 2px var(--ink)}
+.bpe.gum{--ec:var(--bad)}
+.bwrap{display:flex;justify-content:center}
+.bsvg{width:100%;max-width:380px;height:auto;color:var(--ink);touch-action:manipulation;-webkit-user-select:none;user-select:none}
+.tubes{display:flex;gap:28px;justify-content:center}
+.tube{width:70px;height:170px;color:var(--ink)}
+.tfig{margin:0;text-align:center;font-weight:700;font-size:14px}
+.fadein{animation:fadein .8s ease}
+.zrow{display:flex;gap:12px;flex-wrap:wrap}
+.zfles{flex:1 1 130px;border:2px solid var(--ink);border-radius:14px 14px 22px 22px;padding:12px;display:flex;flex-direction:column;align-items:center;gap:2px;background:var(--surface)}
+.zfles b{font-family:var(--f-display);font-size:26px}.zfles span{font-size:13px;color:var(--muted)}
+.zfles.p{background:#E3EEFF;color:#1E2230}.zfles.n{background:#FFE6E3;color:#1E2230}
+.zbeker{border:3px solid var(--ink);border-top:none;border-radius:0 0 26px 26px;min-height:110px;padding:12px;display:flex;flex-direction:column;justify-content:space-between;gap:8px;background:linear-gradient(transparent 30%,var(--green-soft) 30%)}
+#zmix{display:flex;flex-wrap:wrap;gap:6px}
+.ionb{border-radius:999px;padding:4px 10px;font-weight:800;font-size:15px;animation:pop .3s}
+.ionb.p{background:#3C6FD6;color:#fff}.ionb.n{background:#D9443A;color:#fff}
+.zlad{font-weight:700}.zq{font-family:var(--f-display);font-size:22px}.zq.ok{color:var(--good)}
+.lampw{display:flex;justify-content:center}.lamp{width:110px;height:110px;color:var(--ink)}
+.glow{filter:drop-shadow(0 0 12px #FFD43B)}
+.beq{display:flex;flex-wrap:wrap;align-items:center;gap:8px;font-size:18px}
+.bsp{display:inline-flex;align-items:center;gap:4px;background:var(--bg);border:1px solid var(--line);border-radius:10px;padding:4px 6px}
+.bsp b{font-family:var(--f-display);font-size:20px;min-width:20px;text-align:center;color:var(--accent)}
+.bstep{width:30px;height:30px;border-radius:8px;border:2px solid var(--line);background:var(--surface);font-weight:800;padding:0}
+.bf{font-weight:700;margin-left:2px}
+.bplus,.barrow{font-weight:800;font-size:20px}
+.scale{width:100%;max-width:300px;height:auto;color:var(--ink);display:block;margin:0 auto}
+td.okc{background:var(--good-bg);font-weight:700}td.badc{background:var(--bad-bg);font-weight:700}
+.bandstof{display:flex;justify-content:center;padding:14px 0}
+.buckets button{font-size:15px}
+
+.lpcard .lpt{font-size:clamp(22px,5.5vw,28px);margin:0}
+.lpb{font-size:17px;line-height:1.55}.lpb p{margin:6px 0}
+.lpq{border-top:2px dashed var(--line);padding-top:12px;display:grid;gap:10px}
+.lpnav{display:flex;justify-content:space-between;gap:10px;margin-top:6px}
+.lpmode{width:100%}
+.sec .acts .btn.lp{background:var(--accent);border-color:var(--accent);color:#fff}
+</style>
+
+</head>
+<body>
+<a href="index.html" style="position:fixed;right:12px;bottom:calc(12px + env(safe-area-inset-bottom,0px));z-index:20;background:#142A3A;color:#fff;text-decoration:none;font:700 14px system-ui,sans-serif;padding:9px 14px;border-radius:999px;box-shadow:0 2px 8px rgba(0,0,0,.25)">← Alle vakken</a>
+<canvas id="conf"></canvas>
+<div class="wrap">
+<main id="home">
+  <header class="top">
+    <div>
+      <div class="eyebrow">Scheikunde · Nova havo 4 · Hoofdstuk 2</div>
+      <h1>Chemische <em>bindingen</em></h1>
+    </div>
+    <div class="stats">
+      <div class="stat"><b id="stDone">0</b><small>opgaven</small></div>
+      <div class="stat"><b id="stStreak">0</b><small>dagen op rij</small></div>
+      <div class="stat"><b id="stBest">–</b><small>beste toets</small></div>
+    </div>
+  </header>
+  <div class="banner"><span class="pill">Fout = uitleg erbij</span><span class="pill g">Werkt ook offline</span></div>
+
+  <section><div id="lpbox"></div></section>
+  <section>
+    <div class="sec-head"><h2>Spellen</h2><span class="src">Leren door te doen</span></div>
+    <div class="modes">
+      <button class="mode main" id="bouw"><span class="lab">Spel</span><h3>Molecuulbouwer</h3><p>Bouw moleculen uit losse atomen. Elk atoom heeft een vast aantal armen. Van H<sub>2</sub> tot azijnzuur: vul de hele kast.</p><span class="tag" id="bouwTag">0 moleculen</span></button>
+      <button class="mode" id="lab"><span class="lab">Lab</span><h3>Het Lab</h3><p>Reageerbuis-puzzels: oplossen, zoutfabriek, stroomtest, metalenrace, weegschaal en kookpuntladder.</p></button>
+      <button class="mode" id="band"><span class="lab">60 s</span><h3>Sorteerband</h3><p>Metaal, zout of moleculaire stof? Sorteer zoveel mogelijk formules in 60 seconden.</p><span class="tag" id="bandTag"></span></button>
+    </div>
+  </section>
+
+  <section>
+    <div class="sec-head"><h2>1. Per paragraaf</h2><span class="src">Lui of roestig? Begin bij 0</span></div>
+    <div class="secs" id="secs"></div>
+  </section>
+
+  <section>
+    <div class="sec-head"><h2>2. Snel oefenen</h2><span class="src">Eén soort vraag, steeds nieuwe</span></div>
+    <div class="tools" id="tools"></div>
+  </section>
+
+  <section>
+    <div class="sec-head"><h2>3. Toets</h2></div>
+    <div class="modes">
+      <button class="mode main" id="toets"><span class="lab">Cijfer</span><h3>Proeftoets</h3><p>20 gemengde vragen over het hele hoofdstuk, met uitwerkingen en theorie aan het eind.</p></button>
+      <button class="mode" id="flits"><span class="lab">Kaart</span><h3>Begrippen</h3><p>Alle begrippen uit het leerstofoverzicht als flitskaarten.</p></button>
+      <button class="mode" id="spiek"><span class="lab">Blad</span><h3>Spiekbriefje</h3><p>Alle regels op één scherm.</p></button>
+    </div>
+  </section>
+
+  <section>
+    <details class="tips">
+      <summary>Zo pak je het aan</summary>
+      <ul>
+        <li>Lees per paragraaf de <b>Uitleg</b> en doe dan een <b>Oefenronde</b>. Een fout antwoord laat de theorie zien en komt later terug.</li>
+        <li><b>Molecuulbouwer</b>: kies een atoom, tik een vakje, en tik twee atomen na elkaar aan om ze te verbinden. Nog eens tikken = dubbele binding.</li>
+        <li>Getallen typ je met een komma of punt.</li>
+        <li>Offline: open de pagina één keer met internet. Daarna werkt hij ook in het vliegtuig.</li>
+      </ul>
+      <div class="acts" id="resetBox" style="margin-top:10px"><button class="btn ghost small" id="resetBtn">Voortgang wissen</button></div>
+    </details>
+  </section>
+</main>
+<main id="play" hidden></main>
+</div>
+
+<script>
+/* ---------- Scheikunde H2 Chemische bindingen (Nova havo 4) ---------- */
+/* formule-opmaak: H2O -> H<sub>2</sub>O ; Mg^2+ -> Mg<sup>2+</sup> */
+function fm(s){return String(s).replace(/\^(\d?[+-])/g,'<sup>$1</sup>').replace(/([A-Za-z\)])(\d+)/g,'$1<sub>$2</sub>')}
+const SECS=[
+ {id:'0',t:'Basis (voorkennis)',s:'Atoom, periodiek systeem, formules lezen, kloppend maken. Begin hier als het weggezakt is.'},
+ {id:'2.1',t:'Atoombinding',s:'Moleculen, gedeelde elektronenparen, covalentie, structuurformules, namen.'},
+ {id:'2.2',t:'Bindingen tussen moleculen',s:'Vanderwaalsbinding, waterstofbrug, kookpunt, hydrofiel en hydrofoob.'},
+ {id:'2.3',t:'Metaalbinding',s:'Metaalrooster, vrije elektronen, eigenschappen, legeringen, edelheid.'},
+ {id:'2.4',t:'Ionbinding',s:'Ionen, zouten, ionrooster, lading en formule van een zout.'}
+];
+/* ---------- theorie-kaartjes: verschijnen bij een fout antwoord ---------- */
+const TH={
+ atoom:{t:'Bouw van een atoom',h:`Een atoom heeft een <b>kern</b> met protonen (+) en neutronen (0), met daaromheen <b>elektronen</b> (−) in schillen. Atoomnummer = aantal protonen = aantal elektronen (in een neutraal atoom). Massagetal = protonen + neutronen. Schillen: K max 2, L max 8, M (hier) max 8. De elektronen in de buitenste schil heten <b>valentie-elektronen</b>.`},
+ ps:{t:'Periodiek systeem',h:`Groepen = kolommen. Atomen in dezelfde groep hebben evenveel valentie-elektronen (groep 1: 1, groep 2: 2, groep 13: 3, groep 14: 4 … groep 17: 7). Groep 18 = <b>edelgassen</b>: volle buitenste schil, heel stabiel. Links en in het midden staan de <b>metalen</b>, rechtsboven de <b>niet-metalen</b> (H, C, N, O, F, P, S, Cl, Br, I …).`},
+ formule:{t:'Een formule lezen',h:`Het kleine getal ná een symbool geldt voor dat atoom: H<sub>2</sub>O = 2 H + 1 O. Het grote getal ervóór geldt voor het hele molecuul: 3 H<sub>2</sub>O = 6 H + 3 O. Een symbool met hoofdletter + eventueel kleine letter is één atoomsoort: Co (kobalt) is niet CO (koolstof + zuurstof).`},
+ fase:{t:'Fasen en faseovergangen',h:`(s) vast, (l) vloeibaar, (g) gas, (aq) opgelost in water. Smelten s→l, stollen l→s, verdampen l→g, condenseren g→l, sublimeren s→g, rijpen g→s. Bij een faseovergang van een moleculaire stof blijven de <b>moleculen hetzelfde</b>; alleen de afstand en de manier van bewegen veranderen.`},
+ kloppend:{t:'Reactievergelijking kloppend maken',h:`Links en rechts van de pijl moeten <b>evenveel atomen van elke soort</b> staan. Je mag alleen de grote getallen (coëfficiënten) vóór de formules veranderen, nooit de kleine getallen in een formule. Tip: begin met het atoom dat in de minste stoffen voorkomt, doe H en O als laatste.`},
+ drie:{t:'Drie groepen stoffen',h:`<table class="gt"><tr><th>groep</th><th>atomen</th><th>binding</th></tr><tr><td>moleculaire stof</td><td>alleen niet-metalen</td><td>atoombinding in het molecuul, vanderwaals (en H-brug) tussen moleculen</td></tr><tr><td>metaal</td><td>alleen metaal</td><td>metaalbinding</td></tr><tr><td>zout</td><td>metaal + niet-metaal</td><td>ionbinding</td></tr></table>`},
+ atoombinding:{t:'Atoombinding',h:`Twee niet-metaalatomen delen elk een valentie-elektron: samen een <b>gemeenschappelijk elektronenpaar</b>. Dat is een <b>atoombinding</b> (= covalente binding), een zeer sterke binding. Zo krijgen beide atomen een edelgasconfiguratie (volle buitenste schil). In een structuurformule is elk streepje één elektronenpaar.`},
+ covalentie:{t:'Covalentie',h:`Covalentie = aantal atoombindingen dat een atoom aangaat = hoeveel plaatsen het van de edelgassen af staat. <table class="gt"><tr><th>atoom</th><th>covalentie</th></tr><tr><td>H, F, Cl, Br, I</td><td>1</td></tr><tr><td>O, S</td><td>2</td></tr><tr><td>N, P</td><td>3</td></tr><tr><td>C, Si</td><td>4</td></tr></table>Ezelsbrug: <b>HONC 1234</b>.`},
+ structuur:{t:'Molecuulformule en structuurformule',h:`<b>Molecuulformule</b>: welke atomen en hoeveel (H<sub>2</sub>O). <b>Structuurformule</b>: hoe ze aan elkaar zitten (H–O–H). Elke atoom heeft precies zoveel streepjes als zijn covalentie. Dubbele binding O=O, drievoudige N≡N.`},
+ naam:{t:'Systematische naam',h:`Voor moleculen met twee atoomsoorten: aantal + naam eerste atoom, aantal + stam tweede atoom + <b>-ide</b>. 1 mono, 2 di, 3 tri, 4 tetra, 5 penta, 6 hexa. F fluoride, Cl chloride, Br bromide, I jodide, O oxide, S sulfide. Mono- schrijf je alleen bij het tweede atoom: CO = koolstof<b>mono</b>oxide, CO<sub>2</sub> = koolstofdioxide, P<sub>2</sub>O<sub>5</sub> = difosforpentaoxide. Waterstofchloride (HCl) zonder voorvoegsels.`},
+ triviaal:{t:'Triviale namen (leren!)',h:`<table class="gt"><tr><td>alcohol</td><td>C<sub>2</sub>H<sub>6</sub>O (CH<sub>3</sub>CH<sub>2</sub>OH)</td></tr><tr><td>ammoniak</td><td>NH<sub>3</sub></td></tr><tr><td>azijnzuur</td><td>C<sub>2</sub>H<sub>4</sub>O<sub>2</sub> (CH<sub>3</sub>COOH)</td></tr><tr><td>fosforzuur</td><td>H<sub>3</sub>PO<sub>4</sub></td></tr><tr><td>glucose</td><td>C<sub>6</sub>H<sub>12</sub>O<sub>6</sub></td></tr><tr><td>salpeterzuur</td><td>HNO<sub>3</sub></td></tr><tr><td>water</td><td>H<sub>2</sub>O</td></tr><tr><td>waterstofperoxide</td><td>H<sub>2</sub>O<sub>2</sub></td></tr><tr><td>zwavelzuur</td><td>H<sub>2</sub>SO<sub>4</sub></td></tr></table>`},
+ element:{t:'Elementen uit twee atomen',h:`Deze niet-ontleedbare stoffen bestaan uit moleculen van twee dezelfde atomen: H<sub>2</sub>, N<sub>2</sub>, O<sub>2</sub>, F<sub>2</sub>, Cl<sub>2</sub>, Br<sub>2</sub>, I<sub>2</sub>. Ezelsbrug: <b>HONClBrIF</b>. Een stof uit twee of meer atoomsoorten is een <b>verbinding</b> (ontleedbaar).`},
+ reactie:{t:'Reactie of faseovergang?',h:`Bij een <b>chemische reactie</b> worden atoombindingen in de moleculen verbroken en nieuwe gevormd: er ontstaan nieuwe stoffen. Verbreken kost energie, vormen levert energie op. Bij een <b>faseovergang</b> of bij <b>oplossen</b> blijven de moleculen heel; alleen de bindingen <i>tussen</i> de moleculen veranderen.`},
+ vdw:{t:'Vanderwaalsbinding',h:`De <b>vanderwaalsbinding</b> (molecuulbinding) houdt moleculen bij elkaar in de vaste en vloeibare fase. Hij is sterker naarmate de <b>molecuulmassa groter</b> is, het <b>contactoppervlak groter</b> (onvertakt > vertakt) en de afstand kleiner. Sterker → hoger smelt- en kookpunt. In de gasfase zijn de bindingen tussen moleculen verbroken.`},
+ hbrug:{t:'Waterstofbrug',h:`In een O–H of N–H binding trekt O (of N) harder aan het gedeelde elektronenpaar: O wordt een beetje negatief (δ−), H een beetje positief (δ+). Dat heet een <b>polaire atoombinding</b>. De δ+ H van het ene molecuul trekt de δ− O of N van een ander molecuul aan: een <b>waterstofbrug</b> (stippellijn). Alleen mogelijk met een <b>–OH of –NH groep</b>. H aan C kan geen H-brug vormen. H-bruggen zijn sterker dan vanderwaalsbindingen.`},
+ oplos:{t:'Oplosbaarheid: soort zoekt soort',h:`Stoffen met –OH of –NH groepen kunnen H-bruggen met water vormen: <b>hydrofiel</b> (houdt van water), goed oplosbaar. Stoffen zonder die groepen, of met een groot koolstofdeel, zijn <b>hydrofoob</b>. Hoe groter het hydrofobe deel, hoe slechter oplosbaar (vanaf ongeveer 4 C-atomen met één –OH). Hydrofobe stoffen lossen wel op in een hydrofoob oplosmiddel zoals wasbenzine. Bij oplossen blijven de moleculen heel.`},
+ molrooster:{t:'Molecuulrooster en geleiding',h:`In de vaste fase zitten moleculen netjes gestapeld in een <b>molecuulrooster</b> (suiker, ijs). Ze trillen maar verplaatsen niet. Moleculaire stoffen <b>geleiden nooit</b> stroom: er zijn geen vrij bewegende geladen deeltjes. Voorwaarden voor stroom: 1) geladen deeltjes, 2) die vrij kunnen bewegen.`},
+ metaal:{t:'Metaalbinding',h:`In een <b>metaalrooster</b> staan positieve <b>atoomresten</b> op vaste plaatsen. De valentie-elektronen bewegen vrij tussen de atoomresten. De aantrekking tussen de negatieve vrije elektronen en de positieve atoomresten is de <b>metaalbinding</b>, meestal sterk. Formule van een metaal = symbool: Fe(s), Cu(s).`},
+ metaaleig:{t:'Eigenschappen van metalen',h:`Metalen geleiden stroom (vrije elektronen, ook vloeibaar), geleiden warmte, glanzen als ze gepolijst zijn, hebben vaak een hoog smeltpunt (alleen kwik is vloeibaar bij kamertemperatuur) en zijn <b>vervormbaar</b>: lagen atoomresten schuiven langs elkaar en het rooster blijft heel.`},
+ legering:{t:'Legering',h:`Een <b>legering</b> is een mengsel van samengesmolten metalen (staal: ijzer + wat koolstof). Andere atomen zijn groter of kleiner, verstoren het patroon, waardoor de lagen minder makkelijk schuiven: <b>harder</b> (en brosser), minder vervormbaar. Brons = 90% koper + 10% tin. Messing = koper + zink.`},
+ edel:{t:'Edelheid',h:`<b>Edelheid</b> = hoe ongevoelig een metaal is voor reacties (corrosie). Zeer onedel: natrium, kalium (heftig met water). Onedel: calcium, magnesium, aluminium, zink, ijzer, lood (corrosie door zuurstof en water). Edel: koper (beetje), zilver, goud, platina. Volgorde proef: Na < Ca < Mg < Fe < Cu (van onedel naar edel). Roest bij ijzer is poreus; het oxidelaagje op zink en aluminium beschermt.`},
+ zout:{t:'Zouten herkennen',h:`Een stof is een <b>zout</b> als de formule metaal én niet-metaal bevat: NaCl, MgO, Al<sub>2</sub>O<sub>3</sub>, KI. Zouten bestaan uit <b>ionen</b>, zijn altijd verbindingen (ontleedbaar), vast bij kamertemperatuur en hebben een hoog smeltpunt.`},
+ ion:{t:'Ionen en lading',h:`Een ion is een atoom met lading. Metaalatomen staan hun valentie-elektronen af → <b>positief</b>: groep 1 → 1+, groep 2 → 2+, groep 13 → 3+. Niet-metaalatomen nemen elektronen op tot 8 → <b>negatief</b>: groep 17 → 1−, groep 16 → 2−. Aantal protonen verandert nooit; bij een + ion zijn er minder elektronen dan protonen, bij een − ion meer.`},
+ zoutformule:{t:'Formule van een zout',h:`Een zout is als geheel <b>neutraal</b>: totale plus = totale min. Mg<sup>2+</sup> en Cl<sup>−</sup> → 1 Mg<sup>2+</sup> + 2 Cl<sup>−</sup> → MgCl<sub>2</sub>. Al<sup>3+</sup> en O<sup>2−</sup> → 2 × 3+ = 6+ en 3 × 2− = 6− → Al<sub>2</sub>O<sub>3</sub>. Gebruik de kleinste verhouding. Naam: metaal + niet-metaal-ide (aluminiumoxide).`},
+ ionrooster:{t:'Ionbinding en ionrooster',h:`Positieve en negatieve ionen trekken elkaar aan: de <b>ionbinding</b>, een zeer sterke binding. In de vaste fase vormen ze een <b>ionrooster</b> (afwisselend + en −). Hogere ladingen en kleinere ionen (kleinere afstand) → sterkere binding → hoger smeltpunt: MgO (3098 K) ≫ NaCl (1074 K).`},
+ zouteig:{t:'Eigenschappen van zouten',h:`Zouten geleiden <b>niet</b> als ze vast zijn (ionen zitten vast). Ze geleiden <b>wel</b> als ze gesmolten of opgelost zijn: dan bewegen de ionen vrij. Zouten zijn stevig maar <b>bros</b>: schuift een laag ionen op, dan komen gelijke ladingen tegenover elkaar, die stoten af en het breekt.`},
+ rekenen:{t:'Chemisch rekenen',h:`Molecuulmassa = som van de atoommassa's (H 1,008 · C 12,01 · N 14,01 · O 16,00 · Na 22,99 · Mg 24,31 · Al 26,98 · S 32,06 · Cl 35,45 · K 39,10 · Ca 40,08 · Fe 55,85 · Cu 63,55). 1 mol = 6,02·10<sup>23</sup> deeltjes en weegt de molecuulmassa in gram. Stappen: gram → mol (÷ molmassa) → molverhouding uit de vergelijking → gram (× molmassa).`}
+};
+/* ---------- uitleg per paragraaf ---------- */
+const UITLEG={
+'0':`<h3>Waar gaat dit hoofdstuk over?</h3>
+<p>Waarom kookt water pas bij 100 °C, terwijl zuurstof al bij −183 °C kookt? Waarom buigt een paperclip, maar breekt een zoutkristal? Het antwoord zit steeds in de <b>bindingen</b> tussen de deeltjes. Dit hoofdstuk legt vier soorten uit. Eerst even de basis.</p>
+<h3>Het atoom</h3>${TH.atoom.h}
+<div class="ex"><b>Voorbeeld.</b> Natrium (Na, atoomnummer 11): 11 protonen, 11 elektronen. Verdeling K2 L8 M1, dus 1 valentie-elektron. Fosfor (15): K2 L8 M5.</div>
+<h3>Het periodiek systeem</h3>${TH.ps.h}
+<h3>Formules lezen</h3>${TH.formule.h}
+<div class="ex">C<sub>2</sub>H<sub>6</sub>O: 2 C + 6 H + 1 O = 9 atomen. 2 CO<sub>2</sub>: 2 C + 4 O.</div>
+<h3>Fasen</h3>${TH.fase.h}
+<h3>Kloppend maken</h3>${TH.kloppend.h}
+<div class="ex">Verbranding van butaan: __ C<sub>4</sub>H<sub>10</sub> + __ O<sub>2</sub> → __ CO<sub>2</sub> + __ H<sub>2</sub>O. C: 4 CO<sub>2</sub>. H: 10 H → 5 H<sub>2</sub>O. O rechts: 8 + 5 = 13, links O<sub>2</sub> dus 6½. Geen halven: alles × 2 → <b>2 C<sub>4</sub>H<sub>10</sub> + 13 O<sub>2</sub> → 8 CO<sub>2</sub> + 10 H<sub>2</sub>O</b>.</div>
+<h3>De drie groepen stoffen (de kern van het hoofdstuk)</h3>${TH.drie.h}
+<div class="rule">Kijk naar de formule. Alleen niet-metalen → moleculaire stof. Alleen metaal → metaal. Metaal + niet-metaal → zout.</div>`,
+'2.1':`<h3>Moleculaire stoffen</h3>
+<p>Een <b>moleculaire stof</b> bestaat uit <b>moleculen</b>, en moleculen bestaan alleen uit <b>niet-metaalatomen</b>. Water (H<sub>2</sub>O), zuurstof (O<sub>2</sub>), suiker, alcohol. De <b>molecuulformule</b> zegt welke atomen en hoeveel.</p>
+<h3>De atoombinding</h3>${TH.atoombinding.h}
+<div class="ex"><b>H<sub>2</sub>:</b> elk H-atoom heeft 1 elektron en wil er 2 (zoals helium). Ze delen hun elektronen: H–H. <b>O<sub>2</sub>:</b> elk O-atoom heeft 6 valentie-elektronen en wil er 8. Ze delen twee paren: een <b>dubbele binding</b> O=O.</div>
+<h3>Covalentie</h3>${TH.covalentie.h}
+<h3>Structuurformules</h3>${TH.structuur.h}
+<div class="ex"><b>HCN</b> (waterstofcyanide): H heeft 1 arm, C 4, N 3. H–C≡N: H 1 ✓, C 1+3 = 4 ✓, N 3 ✓.<br><b>Ammoniak</b> NH<sub>3</sub>: N in het midden met drie H. <b>Methaan</b> CH<sub>4</sub>: C met vier H. <b>Water</b>: H–O–H.</div>
+<p>Probeer het zelf in het spel <b>Molecuulbouwer</b>: daar zet je atomen neer en verbind je ze tot elke arm gebruikt is.</p>
+<h3>Chemische reactie</h3>${TH.reactie.h}
+<div class="ex">Ontleding van water: 2 H<sub>2</sub>O(l) → 2 H<sub>2</sub>(g) + O<sub>2</sub>(g). In structuurformules: 2 H–O–H → O=O + 2 H–H. Alle O–H bindingen worden verbroken, H–H en O=O gevormd.</div>
+<h3>Namen</h3>${TH.naam.h}${TH.triviaal.h}${TH.element.h}`,
+'2.2':`<h3>Waarom kookt water zo hoog?</h3>
+<p>Smeltpunt, kookpunt en oplosbaarheid hangen af van hoe hard moleculen <b>elkaar</b> aantrekken. Let op: dat zijn andere bindingen dan de atoombindingen <i>in</i> het molecuul.</p>
+<table class="gt"><tr><th>stof</th><th>smeltpunt</th><th>kookpunt</th></tr><tr><td>water H<sub>2</sub>O</td><td>273 K</td><td>373 K</td></tr><tr><td>zuurstof O<sub>2</sub></td><td>54 K</td><td>90 K</td></tr></table>
+<h3>Vanderwaalsbinding</h3>${TH.vdw.h}
+<table class="gt"><tr><th>alkaan</th><th>massa (u)</th><th>kookpunt</th></tr><tr><td>methaan CH<sub>4</sub></td><td>16</td><td>112 K</td></tr><tr><td>ethaan C<sub>2</sub>H<sub>6</sub></td><td>30</td><td>185 K</td></tr><tr><td>propaan C<sub>3</sub>H<sub>8</sub></td><td>44</td><td>231 K</td></tr><tr><td>butaan C<sub>4</sub>H<sub>10</sub></td><td>58</td><td>273 K</td></tr><tr><td>pentaan C<sub>5</sub>H<sub>12</sub></td><td>72</td><td>309 K</td></tr><tr><td>hexaan C<sub>6</sub>H<sub>14</sub></td><td>86</td><td>342 K</td></tr></table>
+<div class="ex">C<sub>5</sub>H<sub>12</sub> onvertakt (pentaan, een lange sliert): 309 K. C<sub>5</sub>H<sub>12</sub> vertakt (bolletje): 283 K. Zelfde massa, maar een bolletje heeft minder contactoppervlak.</div>
+<h3>Waterstofbrug</h3>${TH.hbrug.h}
+<div class="ex">Water (18 u) zou op basis van zijn massa rond 200 K moeten koken, maar kookt bij 373 K. Oorzaak: de vele H-bruggen tussen watermoleculen. Ook ethanol en ammoniak vormen H-bruggen.</div>
+<h3>Oplosbaarheid</h3>${TH.oplos.h}
+<div class="ex">Ethanol (C<sub>2</sub>H<sub>5</sub>OH) mengt in elke verhouding met water. Pentaan lost slecht op. Octaan-1-ol (C<sub>8</sub>H<sub>17</sub>OH) heeft wel een –OH, maar de lange staart wint: nauwelijks oplosbaar. Jood lost slecht op in water maar goed in wasbenzine.</div>
+<h3>Molecuulrooster en stroom</h3>${TH.molrooster.h}`,
+'2.3':`<h3>Metalen</h3>
+<p>Metalen bestaan uit <b>één soort metaalatomen</b> en zijn dus niet-ontleedbaar. De formule is het symbool: ijzer = Fe(s), koper = Cu(s).</p>
+<h3>Microstructuur: de metaalbinding</h3>${TH.metaal.h}
+<h3>Eigenschappen verklaren</h3>${TH.metaaleig.h}
+<table class="gt"><tr><th>metaal</th><th>dichtheid (10<sup>3</sup> kg/m<sup>3</sup>)</th></tr><tr><td>aluminium</td><td>2,70 (licht metaal)</td></tr><tr><td>ijzer</td><td>7,87</td></tr><tr><td>koper</td><td>8,96</td></tr><tr><td>zilver</td><td>10,5</td></tr><tr><td>goud</td><td>19,3 (zwaar metaal)</td></tr></table>
+<p>Wolfraam heeft het hoogste smeltpunt (3695 K, gloeidraad). Kwik is als enige vloeibaar bij kamertemperatuur: de metaalbinding is daar zwak.</p>
+<h3>Edelheid en corrosie</h3>${TH.edel.h}
+<p>Een <b>erts</b> is gesteente met een winbaar gehalte metaal. Onedele metalen zitten als verbinding in erts (ijzererts), edele metalen komen als element voor (goud).</p>
+<h3>Legeringen</h3>${TH.legering.h}
+<div class="ex">Gouden olympische medaille: ruim 90% zilver, koper en maar ongeveer 1% goud. Euromunten van 10, 20 en 50 cent: Nordic Gold (89% koper, 5% aluminium, 5% zink, 1% tin).</div>`,
+'2.4':`<h3>Zouten</h3>${TH.zout.h}
+<h3>Ionen</h3>${TH.ion.h}
+<div class="ex">Na (K2 L8 M1) geeft 1 elektron af → Na<sup>+</sup> (K2 L8, net als neon). Cl (K2 L8 M7) neemt dat elektron op → Cl<sup>−</sup> (K2 L8 M8, net als argon).</div>
+<h3>Ionbinding en ionrooster</h3>${TH.ionrooster.h}
+<h3>Formule van een zout opstellen</h3>${TH.zoutformule.h}
+<p>Oefen dit in het <b>Lab</b> bij <b>Zoutfabriek</b>: giet ionen bij elkaar tot de lading nul is.</p>
+<h3>Eigenschappen verklaren</h3>${TH.zouteig.h}
+<h3>Bindingen bij reacties en faseovergangen</h3>
+<table class="gt"><tr><th>wat gebeurt er</th><th>verbroken</th><th>gevormd</th></tr>
+<tr><td>2 Na(s) + Cl<sub>2</sub>(g) → 2 NaCl(s)</td><td>metaalbinding, atoombinding (Cl–Cl)</td><td>ionbinding</td></tr>
+<tr><td>NaCl smelten</td><td>(een deel van de) ionbindingen</td><td>–</td></tr>
+<tr><td>NH<sub>3</sub>(l) verdampen</td><td>vanderwaals + H-bruggen</td><td>–</td></tr>
+<tr><td>N<sub>2</sub>(g) condenseren</td><td>–</td><td>vanderwaals</td></tr>
+<tr><td>ethanol oplossen in water</td><td>vdw + H-bruggen tussen ethanol</td><td>H-bruggen ethanol–water</td></tr>
+<tr><td>kwik verdampen</td><td>metaalbinding</td><td>–</td></tr></table>
+<div class="rule">Overzicht geleiding. <b>Metaal</b>: altijd (vrije elektronen). <b>Zout</b>: alleen gesmolten of opgelost (vrije ionen). <b>Moleculaire stof</b>: nooit.</div>`
+};
+/* ---------- verdieping (inklapbaar) ---------- */
+const VERDIEP={
+'0':{extra:[['Rekenen met mol (voorkennis 5)',`${TH.rekenen.h}<div class="ex">Hoeveel moleculen in 100 g N<sub>2</sub>? 100 ÷ 28,02 = 3,57 mol × 6,02·10<sup>23</sup> = 2,15·10<sup>24</sup>.</div>`],['Waarom wil een atoom 8 elektronen?',`<p>Edelgassen hebben een volle buitenste schil en reageren bijna nergens mee: dat is blijkbaar een heel stabiele toestand. Andere atomen bereiken die toestand door elektronen te <b>delen</b> (atoombinding), <b>af te staan of op te nemen</b> (ionen) of <b>gemeenschappelijk te gebruiken</b> (metaalbinding). Waterstof is een uitzondering: die wil er 2, zoals helium.</p>`]],
+ fouten:['Kleine getallen veranderen bij kloppend maken (H<sub>2</sub>O wordt H<sub>2</sub>O<sub>2</sub>). Mag nooit: dan krijg je een andere stof.','Co (kobalt, een metaal) verwarren met CO (koolstofmono-oxide).','Vergeten dat O<sub>2</sub>, H<sub>2</sub>, N<sub>2</sub> enzovoort uit twee atomen bestaan.'],
+ stap:{t:'Reactievergelijking kloppend maken',q:'__ C<sub>3</sub>H<sub>8</sub> + __ O<sub>2</sub> → __ CO<sub>2</sub> + __ H<sub>2</sub>O (verbranding van propaan)',s:['Begin met C: links 3 C, dus rechts 3 CO<sub>2</sub>.','Dan H: links 8 H, dus rechts 4 H<sub>2</sub>O.','Tel O rechts: 3 × 2 + 4 × 1 = 10 O.','Links moet dan 10 O, dus 5 O<sub>2</sub>.','Controle: C 3 = 3, H 8 = 8, O 10 = 10. <b>C<sub>3</sub>H<sub>8</sub> + 5 O<sub>2</sub> → 3 CO<sub>2</sub> + 4 H<sub>2</sub>O</b>']}},
+'2.1':{extra:[['Afwijkende covalentie: S en P',`<p>Zwavel en fosfor kunnen soms <b>meer</b> bindingen hebben dan je verwacht. In zwavelzuur H<sub>2</sub>SO<sub>4</sub> heeft S covalentie <b>6</b> (twee S=O en twee S–OH). In fosforzuur H<sub>3</sub>PO<sub>4</sub> heeft P covalentie <b>5</b> (P=O en drie P–OH). Gewoon onthouden.</p>`],['Zwavelbruggen in je haar (Praktijk)',`<p>Keratine in haar bevat cysteïne met –SH groepen. Twee –SH groepen vormen een <b>zwavelbrug</b> S–S: een atoombinding. Bij permanenten breekt permanentvloeistof (thioglycolzuur) de zwavelbruggen, krullen je haar om krulspelden, en een neutralisatievloeistof met waterstofperoxide vormt nieuwe zwavelbruggen op andere plekken. Dat is dus een <b>chemische reactie</b>.</p>`],['Hoeveel elektronen worden gedeeld?',`<p>Elke binding (streepje) = 1 paar = 2 elektronen. Azijnzuur CH<sub>3</sub>COOH: 3 C–H, 1 C–C, 1 C=O (2 paren), 1 C–O, 1 O–H = 8 paren = <b>16 gedeelde elektronen</b>.</p>`]],
+ fouten:['Een H-atoom met twee streepjes tekenen. H heeft er altijd precies één.','Mono- bij het eerste atoom zetten: het is stikstof<b>mono</b>oxide, niet monostikstofmono-oxide.','Smelten of verdampen als chemische reactie zien. De moleculen blijven heel!','Vergeten dat een dubbele binding twee armen kost: in CO<sub>2</sub> (O=C=O) heeft C 4 armen gebruikt.'],
+ stap:{t:'Structuurformule van ureum, CH<sub>4</sub>N<sub>2</sub>O',q:'Ureum: twee N-atomen en het O-atoom zitten aan het C-atoom. Teken de structuurformule.',s:['Armen tellen: C 4, N 3 (×2), O 2, H 1 (×4).','C in het midden met de twee N en de O eraan: dat zijn 3 bindingen, C heeft er 4 nodig.','O heeft 2 armen en zit verder nergens aan: dus <b>C=O</b>. Nu heeft C 4 ✓ en O 2 ✓.','Elke N heeft nu 1 binding, nog 2 vrij: elk krijgt 2 H. Dat zijn de 4 H ✓.','<b>H<sub>2</sub>N–C(=O)–NH<sub>2</sub></b>']}},
+'2.2':{extra:[['Hoe herken je of een stof H-bruggen vormt?',`<p>Zoek in de structuurformule een <b>H direct aan O of N</b>. Ethanol CH<sub>3</sub>CH<sub>2</sub>–O–H: ja. Ethaanamine C<sub>2</sub>H<sub>5</sub>–NH<sub>2</sub>: ja. Propaan C<sub>3</sub>H<sub>8</sub>: nee, alleen H aan C. Let op: alleen in de vaste en vloeibare fase; in gas zijn de bindingen tussen moleculen verbroken.</p>`],['Waarom blijft olie op water drijven?',`<p>Watermoleculen houden elkaar stevig vast met H-bruggen. Een oliemolecuul kan geen H-bruggen vormen. Als olie zich tussen het water zou mengen, moeten H-bruggen verbroken worden zonder dat er iets terugkomt. Dus blijven water en olie gescheiden. <b>Soort zoekt soort.</b> Zeep heeft een hydrofiele kop (in het water) en een hydrofobe staart (in het vet): zo neemt zeep vet mee.</p>`],['Rekenvoorbeeld kookpunten',`<p>Methaanamine CH<sub>3</sub>NH<sub>2</sub> (31 u) kookt 36 K hoger dan propaan (44 u), terwijl propaan zwaarder is. Verklaring: methaanamine heeft een –NH<sub>2</sub> groep en vormt H-bruggen; propaan alleen vanderwaalsbindingen.</p>`]],
+ fouten:['Denken dat bij koken de atoombindingen in het molecuul breken. Alleen de bindingen tussen moleculen breken.','Een H-brug tekenen vanaf een H die aan C zit.','"Hydrofoob lost nergens op." Fout: het lost juist goed op in een hydrofoob oplosmiddel zoals wasbenzine.','Vergeten dat vertakking het kookpunt verlaagt (minder contactoppervlak).'],
+ stap:{t:'Zet op volgorde van kookpunt: methanol, ethanol, glycol',q:'Methanol CH<sub>3</sub>OH, ethanol C<sub>2</sub>H<sub>5</sub>OH, glycol HO–CH<sub>2</sub>–CH<sub>2</sub>–OH.',s:['Alle drie hebben –OH, dus H-bruggen én vanderwaals.','Methanol en ethanol hebben één –OH. Ethanol is groter: sterkere vanderwaals → hoger.','Glycol heeft <b>twee</b> –OH groepen: veel meer H-bruggen, en is ook nog het zwaarst.','Volgorde: methanol (338 K) < ethanol (351 K) < glycol (470 K).']}},
+'2.3':{extra:[['Waarom geleidt een metaal ook warmte zo goed?',`<p>De vrije elektronen kunnen bewegingsenergie (warmte) snel doorgeven door het hele metaal. Daarom voelt een metalen lepel koud aan: hij voert de warmte van je hand snel af.</p>`],['Rekenen met dichtheid',`<p>Massa = dichtheid × volume. Titaan 4,54·10<sup>3</sup> kg/m<sup>3</sup> = 4,54 g/cm<sup>3</sup>. Plaatje 5,0 × 1,0 × 0,30 cm = 1,5 cm<sup>3</sup> → 1,5 × 4,54 = <b>6,8 g</b>.</p>`],['Verzinken',`<p>IJzer wordt gedompeld in vloeibaar zink (smeltpunt 693 K = 420 °C). Er ontstaat een laagje ijzer-zinklegering: een metaalrooster met metaalbinding. Zink vormt een beschermend oxidelaagje, zodat het ijzer niet roest.</p>`]],
+ fouten:['Denken dat bij een metaal de atomen zelf bewegen bij stroom. Het zijn de vrije elektronen.','Legering = verbinding. Fout: een legering is een mengsel.','Roest beschermt. Fout: roest is poreus. Alleen het oxidelaagje op zink en aluminium beschermt.'],
+ stap:{t:'Leg uit waarom brons harder is dan koper',q:'Brons = 90% koper + 10% tin.',s:['Koper: alle atomen even groot, nette lagen in het metaalrooster.','Lagen kunnen langs elkaar schuiven: koper is goed vervormbaar.','In brons zitten tinatomen, die groter zijn dan koperatomen (Binas 40A).','Die verstoren het regelmatige patroon: de lagen schuiven moeilijker langs elkaar.','Dus brons vervormt minder: het is <b>harder</b> (maar ook brosser).']}},
+'2.4':{extra:[['Protonen, elektronen en neutronen in een ion',`<table class="gt"><tr><th>ion</th><th>protonen</th><th>elektronen</th><th>neutronen</th></tr><tr><td>Al<sup>3+</sup> (13, 27)</td><td>13</td><td>10</td><td>14</td></tr><tr><td>O<sup>2−</sup> (8, 16)</td><td>8</td><td>10</td><td>8</td></tr><tr><td>Na<sup>+</sup> (11, 23)</td><td>11</td><td>10</td><td>12</td></tr><tr><td>Cl<sup>−</sup> (17, 35)</td><td>17</td><td>18</td><td>18</td></tr></table><p>Neutronen = massagetal − atoomnummer. Elektronen = protonen − lading.</p>`],['Hygroscopisch zout (eindopdracht)',`<p>Na zwemmen in zee blijft er zout op je haar achter als het water verdampt. Zouten zijn <b>hygroscopisch</b>: ze trekken vocht aan, ook uit je haar, dat daardoor droog wordt. Een spray met olieachtige (hydrofobe) stoffen houdt het zoute water weg.</p>`],['Wat breekt er bij elektrolyse van aluminiumoxide?',`<p>Bauxiet bevat Al<sub>2</sub>O<sub>3</sub>. Dat wordt gesmolten (2345 K: ionbinding gedeeltelijk verbroken) en via elektrolyse ontleed: 2 Al<sub>2</sub>O<sub>3</sub>(l) → 4 Al(l) + 3 O<sub>2</sub>(g). Ionbinding verbroken, metaalbinding en atoombinding (O=O) gevormd.</p>`]],
+ fouten:['Denken dat een vast zout stroom geleidt. Alleen gesmolten of opgelost.','Bij een ion het aantal protonen veranderen. Alleen het aantal elektronen verandert.','Al<sub>3</sub>O<sub>2</sub> schrijven: de lading van het ene ion wordt het aantal van het andere, kruislings: Al<sub>2</sub>O<sub>3</sub>.','MgO "Mg<sub>2</sub>O<sub>2</sub>" schrijven: altijd de kleinste verhouding.'],
+ stap:{t:'Formule van aluminiumsulfide',q:'Aluminium staat in groep 13, zwavel in groep 16.',s:['Aluminium groep 13 → 3 valentie-elektronen afstaan → Al<sup>3+</sup>.','Zwavel groep 16 → 2 elektronen opnemen → S<sup>2−</sup>.','Kleinste getal dat deelbaar is door 3 en 2: 6.','6+ = 2 × Al<sup>3+</sup>; 6− = 3 × S<sup>2−</sup>.','Formule: <b>Al<sub>2</sub>S<sub>3</sub></b> (aluminiumsulfide).']}}
+};
+/* ---------- meerkeuzevragen: [par, vraag, goed, 'fout|fout|fout', uitleg, theorie] ---------- */
+const MC=[
+['0','Hoeveel atomen zitten er in één molecuul C<sub>2</sub>H<sub>6</sub>O?','9','8|3|12','2 C + 6 H + 1 O = 9.','formule'],
+['0','Hoeveel O-atomen staan er in 3 H<sub>2</sub>O?','3','1|6|5','Het grote getal geldt voor het hele molecuul: 3 × 1 O = 3 O. (En 3 × 2 = 6 H.)','formule'],
+['0','Wat is het verschil tussen Co en CO?','Co is het metaal kobalt; CO is koolstof + zuurstof','Er is geen verschil|CO is het metaal kobalt; Co is een gas|Co is een ion','Hoofdletter = nieuw atoom. Co = één atoomsoort (kobalt). CO = C + O.','formule'],
+['0','Hoeveel valentie-elektronen heeft een natriumatoom (groep 1)?','1','11|2|8','Groep 1 → 1 valentie-elektron (K2 L8 M1).','ps'],
+['0','Hoe zijn de 15 elektronen van fosfor over de schillen verdeeld?','K2 L8 M5','K2 L10 M3|K8 L5 M2|K5 L5 M5','K max 2, L max 8, de rest (5) in M. Fosfor staat dan ook in groep 15.','atoom'],
+['0','In welke groep staan de edelgassen?','Groep 18','Groep 1|Groep 17|Groep 8','Edelgassen (He, Ne, Ar …) in groep 18: volle buitenste schil.','ps'],
+['0','Welke uitspraak over het verdampen van water klopt?','De watermoleculen blijven heel, ze gaan verder uit elkaar en bewegen anders','De watermoleculen vallen uiteen in H en O|Er ontstaan nieuwe stoffen|De afstand tussen de moleculen blijft gelijk','Faseovergang: moleculen blijven hetzelfde, afstand en beweging veranderen.','fase'],
+['0','Een faseovergang is een begrip op …','macroniveau','microniveau|atoomniveau|ionniveau','Wat je kunt zien en meten (smelten, koken) is macroniveau. De verklaring met deeltjes is microniveau.','fase'],
+['0','Hoe heet de overgang van gas naar vast?','rijpen','sublimeren|stollen|condenseren','Vast → gas = sublimeren, gas → vast = rijpen (desublimeren).','fase'],
+['0','Bij kloppend maken mag je …','alleen de getallen vóór de formules veranderen','de kleine getallen in de formules aanpassen|atomen weglaten|alles veranderen zolang het klopt','Kleine getallen veranderen maakt er een andere stof van.','kloppend'],
+['0','Welke vergelijking is kloppend?','2 H<sub>2</sub> + O<sub>2</sub> → 2 H<sub>2</sub>O','H<sub>2</sub> + O<sub>2</sub> → H<sub>2</sub>O|H<sub>2</sub> + O<sub>2</sub> → H<sub>2</sub>O<sub>2</sub>|2 H<sub>2</sub> + 2 O<sub>2</sub> → 2 H<sub>2</sub>O','Links 4 H en 2 O, rechts 4 H en 2 O.','kloppend'],
+['0','Welke stof is een zout?','NaCl','CO<sub>2</sub>|Fe|H<sub>2</sub>O','Na is een metaal, Cl een niet-metaal: metaal + niet-metaal = zout.','drie'],
+['0','Welke stof is een moleculaire stof?','NH<sub>3</sub>','Cu|MgO|KI','N en H zijn allebei niet-metalen.','drie'],
+['2.1','Uit welke soort atomen bestaan moleculen?','alleen niet-metaalatomen','alleen metaalatomen|metaal- en niet-metaalatomen|ionen','Moleculaire stoffen = alleen niet-metalen, verbonden door atoombindingen.','drie'],
+['2.1','Wat is een atoombinding?','een gemeenschappelijk elektronenpaar tussen twee atomen','de aantrekking tussen + en − ionen|de binding tussen moleculen|vrije elektronen tussen atoomresten','Elk atoom levert één valentie-elektron; samen een gedeeld paar.','atoombinding'],
+['2.1','Een ander woord voor atoombinding is …','covalente binding','ionbinding|vanderwaalsbinding|waterstofbrug','Atoombinding = covalente binding.','atoombinding'],
+['2.1','Wat is de covalentie van zuurstof (O)?','2','1|3|4','O staat in groep 16, twee plaatsen van de edelgassen: 2 bindingen. HONC 1234.','covalentie'],
+['2.1','Wat is de covalentie van stikstof (N)?','3','1|2|5','Groep 15, drie plaatsen van de edelgassen: 3.','covalentie'],
+['2.1','Wat is de covalentie van koolstof (C)?','4','2|3|6','Groep 14: 4 bindingen. Daarom CH<sub>4</sub>.','covalentie'],
+['2.1','Wat is de covalentie van chloor (Cl)?','1','7|2|3','Groep 17, één plaats van de edelgassen: 1. Zoals H, F, Br, I.','covalentie'],
+['2.1','Welke structuurformule hoort bij stikstof, N<sub>2</sub>?','N≡N','N–N|N=N|N–N–N','N heeft covalentie 3: drie gedeelde paren, een drievoudige binding.','structuur'],
+['2.1','Welke structuurformule is goed voor koolstofdioxide?','O=C=O','O–C–O|C=O=O|O–C=O','C heeft 4 armen, elke O 2: twee dubbele bindingen.','structuur'],
+['2.1','Welke structuurformule hoort bij HCN?','H–C≡N','H–C=N|H=C=N|H–N≡C','H 1, C 4, N 3. H–C≡N: C heeft 1 + 3 = 4, N heeft 3.','structuur'],
+['2.1','Wat geeft een structuurformule wél en een molecuulformule niet?','hoe de atomen in het molecuul aan elkaar vastzitten','welke atoomsoorten erin zitten|hoeveel atomen erin zitten|de fase van de stof','Molecuulformule: welke en hoeveel. Structuurformule: ook hoe verbonden.','structuur'],
+['2.1','Wat is de systematische naam van P<sub>2</sub>O<sub>5</sub>?','difosforpentaoxide','fosforoxide|pentafosfordioxide|difosforpentoxide','2 P = difosfor, 5 O = pentaoxide.','naam'],
+['2.1','Wat is de systematische naam van NO?','stikstofmono-oxide','monostikstofmono-oxide|stikstofoxide|nitraat','Mono- alleen bij het tweede atoom.','naam'],
+['2.1','Welke formule hoort bij zwaveltrioxide?','SO<sub>3</sub>','S<sub>3</sub>O|SO<sub>2</sub>|S<sub>2</sub>O<sub>3</sub>','Tri = 3, bij het tweede atoom (oxide): SO<sub>3</sub>.','naam'],
+['2.1','Welke formule hoort bij ammoniak?','NH<sub>3</sub>','NH<sub>4</sub>|N<sub>2</sub>H<sub>4</sub>|NO<sub>3</sub>','Triviale naam uit tabel 4.','triviaal'],
+['2.1','Welke formule hoort bij waterstofperoxide?','H<sub>2</sub>O<sub>2</sub>','H<sub>2</sub>O|HO|H<sub>2</sub>O<sub>3</sub>','Waterstofperoxide H<sub>2</sub>O<sub>2</sub> (H–O–O–H).','triviaal'],
+['2.1','Welke stof heeft de formule H<sub>2</sub>SO<sub>4</sub>?','zwavelzuur','salpeterzuur|fosforzuur|zwaveldioxide','Zwavelzuur H<sub>2</sub>SO<sub>4</sub>, salpeterzuur HNO<sub>3</sub>, fosforzuur H<sub>3</sub>PO<sub>4</sub>.','triviaal'],
+['2.1','Welke formule hoort bij glucose?','C<sub>6</sub>H<sub>12</sub>O<sub>6</sub>','C<sub>12</sub>H<sub>22</sub>O<sub>11</sub>|C<sub>2</sub>H<sub>6</sub>O|CH<sub>4</sub>N<sub>2</sub>O','Glucose C<sub>6</sub>H<sub>12</sub>O<sub>6</sub>. (C<sub>12</sub>H<sub>22</sub>O<sub>11</sub> is gewone suiker.)','triviaal'],
+['2.1','Welke van deze stoffen is een element (niet-ontleedbaar)?','Cl<sub>2</sub>','HCl|H<sub>2</sub>O|CO','Twee dezelfde atomen: element. HCl, H<sub>2</sub>O en CO zijn verbindingen.','element'],
+['2.1','Wat gebeurt er met de atoombindingen als water <b>verdampt</b>?','niets, de moleculen blijven heel','ze worden verbroken|er komen nieuwe bij|ze worden sterker','Faseovergang: alleen bindingen tussen moleculen veranderen.','reactie'],
+['2.1','Wat gebeurt er bij een chemische reactie van moleculaire stoffen?','atoombindingen worden verbroken en nieuwe gevormd','alleen de afstand tussen moleculen verandert|er verdwijnen atomen|de moleculen blijven hetzelfde','Nieuwe stoffen = nieuwe moleculen = nieuwe atoombindingen.','reactie'],
+['2.1','Het verbreken van atoombindingen …','kost energie','levert energie op|kost geen energie|gebeurt vanzelf','Verbreken kost energie, vormen levert energie op.','reactie'],
+['2.1','Zwavel heeft in zwavelzuur (H<sub>2</sub>SO<sub>4</sub>) covalentie …','6','2|4|1','Uitzondering uit het boek: S in zwavelzuur heeft 6 bindingen (2× S=O en 2× S–OH).','covalentie'],
+['2.1','Hoeveel elektronen delen de twee O-atomen in O<sub>2</sub> samen?','4','2|6|8','Dubbele binding = 2 paren = 4 elektronen.','atoombinding'],
+['2.2','Welke binding houdt moleculen bij elkaar in vaste en vloeibare fase?','vanderwaalsbinding','atoombinding|ionbinding|metaalbinding','Tussen moleculen: vanderwaals (en soms H-bruggen). Atoombinding zit ín het molecuul.','vdw'],
+['2.2','Welke stof heeft het hoogste kookpunt?','hexaan C<sub>6</sub>H<sub>14</sub>','methaan CH<sub>4</sub>|propaan C<sub>3</sub>H<sub>8</sub>|butaan C<sub>4</sub>H<sub>10</sub>','Grootste molecuulmassa → sterkste vanderwaals → hoogste kookpunt (342 K).','vdw'],
+['2.2','Onvertakt pentaan kookt bij 309 K, vertakt (C<sub>5</sub>H<sub>12</sub>) bij 283 K. Waarom?','vertakte moleculen hebben minder contactoppervlak','vertakte moleculen zijn lichter|vertakte moleculen vormen H-bruggen|onvertakt heeft ionbindingen','Zelfde massa, maar een bolvorm raakt de buren minder: zwakkere vanderwaals.','vdw'],
+['2.2','Waarom kookt water (18 u) veel hoger dan methaan (16 u)?','tussen watermoleculen zijn waterstofbruggen','water is zwaarder|water heeft ionbindingen|methaan heeft H-bruggen','Water heeft –OH groepen: H-bruggen, veel sterker dan vanderwaals.','hbrug'],
+['2.2','Welke stof kan waterstofbruggen vormen?','ethanol CH<sub>3</sub>CH<sub>2</sub>OH','propaan C<sub>3</sub>H<sub>8</sub>|methaan CH<sub>4</sub>|zuurstof O<sub>2</sub>','Alleen met een –OH of –NH groep.','hbrug'],
+['2.2','In een O–H binding is …','O een beetje negatief (δ−) en H een beetje positief (δ+)','O positief en H negatief|O en H allebei neutraal|H volledig + geladen','O trekt harder aan het gedeelde paar: polaire atoombinding.','hbrug'],
+['2.2','Wat is een polaire atoombinding?','een atoombinding waarbij het elektronenpaar niet gelijk verdeeld is','een binding tussen ionen|een binding tussen moleculen|een binding in metalen','Ongelijke verdeling → δ+ en δ−.','hbrug'],
+['2.2','Kunnen de H-atomen aan een C-atoom H-bruggen vormen?','nee','ja|alleen in water|alleen als gas','C–H is (bijna) niet polair. Alleen H aan O of N.','hbrug'],
+['2.2','Wat betekent hydrofiel?','houdt van water, lost goed op in water','houdt niet van water|lost op in wasbenzine|is giftig','Hydro = water, fiel = houdt van.','oplos'],
+['2.2','Jood lost slecht op in water, maar goed in …','wasbenzine','zout water|azijnzuur|alcohol en water evenveel','Jood is hydrofoob; wasbenzine is een hydrofoob oplosmiddel: soort zoekt soort.','oplos'],
+['2.2','Waarom lost octaan-1-ol (C<sub>8</sub>H<sub>17</sub>OH) nauwelijks op in water, terwijl ethanol dat wel doet?','het hydrofobe koolstofdeel is te groot','het heeft geen –OH groep|het is een zout|het is een gas','Eén –OH maar een staart van 8 C: het hydrofobe deel wint.','oplos'],
+['2.2','Hoe heet het kristalrooster van een moleculaire stof?','molecuulrooster','ionrooster|metaalrooster|atoomrooster','Suiker en ijs: molecuulrooster.','molrooster'],
+['2.2','Waarom geleidt suiker geen stroom, ook niet opgelost?','er zijn geen vrij bewegende geladen deeltjes','de moleculen zijn te groot|suiker is een metaal|suiker is hydrofoob','Moleculaire stoffen hebben geen ionen of vrije elektronen.','molrooster'],
+['2.2','Welke bindingen worden verbroken als ammoniak (vloeibaar) verdampt?','vanderwaalsbindingen en waterstofbruggen','atoombindingen|ionbindingen|alleen atoombindingen tussen N en H','Bij verdampen gaan de moleculen los van elkaar; NH<sub>3</sub> heeft N–H, dus ook H-bruggen.','reactie'],
+['2.2','Een zeepdeeltje heeft …','een hydrofiele kop en een hydrofobe staart','twee hydrofiele uiteinden|alleen ionbindingen|een hydrofobe kop en een hydrofiele staart','De staart gaat in het vet, de kop in het water.','oplos'],
+['2.2','Waarom heeft glycol (twee –OH) een veel hoger kookpunt dan ethanol (één –OH)?','meer –OH groepen geven meer waterstofbruggen','glycol is een zout|glycol heeft geen vanderwaals|ethanol heeft geen H-bruggen','Glycol 470 K, ethanol 351 K.','hbrug'],
+['2.3','Waaruit bestaat een metaal?','uit één soort metaalatomen','uit moleculen|uit + en − ionen|uit metaal- en niet-metaalatomen','Een metaal is niet-ontleedbaar: één atoomsoort. Formule = symbool.','metaal'],
+['2.3','Wat is de metaalbinding?','aantrekking tussen positieve atoomresten en vrije elektronen','een gedeeld elektronenpaar|aantrekking tussen + en − ionen|binding tussen moleculen','Vrije elektronen houden de atoomresten bij elkaar.','metaal'],
+['2.3','Wat is een atoomrest?','een metaalatoom zonder zijn valentie-elektronen (positief)','een losgeraakt elektron|een negatief ion|een stukje molecuul','Wat overblijft als de valentie-elektronen vrij rondgaan.','metaal'],
+['2.3','Waardoor geleidt een metaal stroom?','vrije elektronen kunnen bewegen','ionen bewegen|atoomresten bewegen|moleculen bewegen','Geladen deeltjes (elektronen) die vrij kunnen bewegen.','metaal'],
+['2.3','Waarom kun je een paperclip buigen zonder dat hij breekt?','lagen atoomresten schuiven langs elkaar en het metaalrooster blijft heel','de atoombindingen zijn zwak|het is een zout|de elektronen verdwijnen','Vervormbaarheid: zelfde rooster na verschuiven.','metaaleig'],
+['2.3','Welk metaal is vloeibaar bij kamertemperatuur?','kwik','natrium|wolfraam|aluminium','Kwik: de metaalbinding is daar het zwakst.','metaaleig'],
+['2.3','Wat is een legering?','een mengsel van samengesmolten metalen','een verbinding van een metaal met zuurstof|een zout|een zuiver metaal','Bijvoorbeeld brons (Cu + Sn) of messing (Cu + Zn).','legering'],
+['2.3','Waarom is een legering harder dan het zuivere metaal?','atomen van een andere grootte verstoren de lagen, die schuiven minder makkelijk','er komen ionbindingen bij|er zijn geen vrije elektronen meer|de dichtheid is hoger','Verstoord patroon → minder vervormbaar → harder.','legering'],
+['2.3','Brons bestaat uit …','90% koper en 10% tin','koper en zink|ijzer en koolstof|goud en zilver','Messing = koper + zink, staal = ijzer + koolstof.','legering'],
+['2.3','Wat is corrosie?','aantasting van een metaal door zuurstof en water','het smelten van een metaal|het mengen van metalen|het polijsten van een metaal','IJzer roest; dat is corrosie.','edel'],
+['2.3','Welk metaal is het meest edel?','goud','ijzer|natrium|magnesium','Edel = reageert bijna niet. Goud ligt als element in de natuur.','edel'],
+['2.3','Welk metaal reageert heftig met koud water?','natrium','koper|goud|ijzer','Zeer onedel: natrium en kalium.','edel'],
+['2.3','Waarom roest gegalvaniseerd (verzinkt) ijzer niet snel?','het zink vormt een afsluitend oxidelaagje','zink is edeler dan goud|zink is een zout|ijzer is edel','Het oxidelaagje op zink en aluminium beschermt; roest op ijzer is poreus.','edel'],
+['2.3','Wat is een erts?','gesteente met een winbaar gehalte metaal','een zuiver metaal|een legering|een soort zout dat je eet','IJzer haal je met chemische reacties uit ijzererts.','edel'],
+['2.3','Aluminium heeft dichtheid 2,70·10<sup>3</sup> kg/m<sup>3</sup>, goud 19,3·10<sup>3</sup>. Aluminium is dus een …','licht metaal','zwaar metaal|edel metaal|legering','Licht en zwaar gaat over dichtheid.','metaaleig'],
+['2.4','Wanneer is een stof een zout?','als de formule metaal- en niet-metaalatomen bevat','als hij zout smaakt|als hij uit één soort atomen bestaat|als hij alleen niet-metalen bevat','NaCl, MgO, KI, Al<sub>2</sub>O<sub>3</sub>.','zout'],
+['2.4','Welk ion vormt een natriumatoom?','Na<sup>+</sup>','Na<sup>−</sup>|Na<sup>2+</sup>|Na<sup>7−</sup>','Groep 1: staat 1 elektron af → 1+.','ion'],
+['2.4','Welk ion vormt een zuurstofatoom?','O<sup>2−</sup>','O<sup>2+</sup>|O<sup>−</sup>|O<sup>6+</sup>','Groep 16: neemt 2 elektronen op → 2−.','ion'],
+['2.4','Welk ion vormt aluminium (groep 13)?','Al<sup>3+</sup>','Al<sup>3−</sup>|Al<sup>+</sup>|Al<sup>5−</sup>','3 valentie-elektronen afstaan → 3+.','ion'],
+['2.4','Een negatief ion heeft …','meer elektronen dan protonen','meer protonen dan elektronen|evenveel elektronen als protonen|geen elektronen','Elektronen opgenomen → meer − dan +.','ion'],
+['2.4','Hoeveel elektronen heeft een Cl<sup>−</sup> ion (atoomnummer 17)?','18','17|16|35','17 protonen, 1 extra elektron = 18.','ion'],
+['2.4','Wat is de formule van magnesiumchloride?','MgCl<sub>2</sub>','MgCl|Mg<sub>2</sub>Cl|Mg<sub>2</sub>Cl<sub>2</sub>','Mg<sup>2+</sup> en Cl<sup>−</sup>: 1 Mg voor 2 Cl.','zoutformule'],
+['2.4','Wat is de formule van aluminiumoxide?','Al<sub>2</sub>O<sub>3</sub>','AlO|Al<sub>3</sub>O<sub>2</sub>|AlO<sub>3</sub>','2 × 3+ = 6+ en 3 × 2− = 6−.','zoutformule'],
+['2.4','Hoe heet K<sub>2</sub>S?','kaliumsulfide','dikaliumsulfide|kaliumsulfaat|kaliumzwavel','Bij zouten géén voorvoegsels: metaal + niet-metaal-ide.','zoutformule'],
+['2.4','Wat is de ionbinding?','aantrekking tussen positieve en negatieve ionen','een gedeeld elektronenpaar|vrije elektronen tussen atoomresten|binding tussen moleculen','+ en − trekken elkaar aan.','ionrooster'],
+['2.4','Geleidt vast keukenzout stroom?','nee, de ionen zitten vast in het ionrooster','ja, er zijn ionen|ja, er zijn vrije elektronen|alleen als het koud is','Geladen deeltjes wel, maar niet vrij beweeglijk.','zouteig'],
+['2.4','Wanneer geleidt een zout wel stroom?','gesmolten of opgelost in water','alleen als vaste stof|nooit|alleen als gas','Dan bewegen de ionen vrij.','zouteig'],
+['2.4','Waarom breekt een zoutkristal als je erop slaat?','gelijke ladingen komen tegenover elkaar en stoten elkaar af','de vrije elektronen verdwijnen|de moleculen vallen uit elkaar|zouten zijn zacht','Brosheid door verschuiven van ionlagen.','zouteig'],
+['2.4','Waarom heeft MgO (3098 K) een veel hoger smeltpunt dan NaCl (1074 K)?','de ionen hebben hogere ladingen (2+ en 2−), dus een sterkere ionbinding','MgO is een metaal|NaCl heeft H-bruggen|MgO is zwaarder, dus sterkere vanderwaals','Grotere lading → sterkere aantrekking.','ionrooster'],
+['2.4','Welke binding wordt gevormd bij 2 Na + Cl<sub>2</sub> → 2 NaCl?','ionbinding','atoombinding|metaalbinding|waterstofbrug','Metaalbinding (Na) en atoombinding (Cl–Cl) breken, ionbinding ontstaat.','ionrooster'],
+['2.4','In welke verhouding zitten Na<sup>+</sup> en Cl<sup>−</sup> in keukenzout?','1 : 1','1 : 2|2 : 1|het maakt niet uit','Lading +1 en −1 heffen elkaar op.','zoutformule'],
+['2.4','Welke stof is GEEN zout?','HBr','FeO|PbS|NiBr<sub>2</sub>','H en Br zijn allebei niet-metalen: moleculaire stof.','zout']
+];
+/* ---------- begrippen (leerstofoverzicht) ---------- */
+const BEGRIP=[
+['atoombinding','binding tussen twee atomen gevormd door een gemeenschappelijk elektronenpaar','2.1'],
+['covalente binding','andere naam voor atoombinding','2.1'],
+['covalentie','aantal atoombindingen dat een atoom kan aangaan','2.1'],
+['gemeenschappelijk elektronenpaar','elektronenpaar dat ontstaat doordat het ene atoom een valentie-elektron deelt met het andere atoom','2.1'],
+['moleculaire stof','stof die is opgebouwd uit moleculen','2.1'],
+['molecuulformule','formule die aangeeft welke atoomsoorten en hoeveel van elk in een molecuul zitten','2.1'],
+['structuurformule','tekening die laat zien hoe de atomen door atoombindingen met elkaar verbonden zijn','2.1'],
+['triviale naam','alledaagse, niet-systematische naam die niets zegt over de structuur','2.1'],
+['hydrofiel','stof die goed in water oplost, of materiaal dat goed vocht opneemt','2.2'],
+['hydrofoob','stof die slecht in water oplost, of materiaal dat slecht vocht opneemt','2.2'],
+['molecuulrooster','regelmatige rangschikking van moleculen in de vaste fase','2.2'],
+['polaire atoombinding','atoombinding waarbij het gemeenschappelijke elektronenpaar niet gelijk verdeeld is','2.2'],
+['vanderwaalsbinding','binding tussen moleculen in de vaste en vloeibare fase','2.2'],
+['waterstofbrug','binding tussen moleculen met een –OH en/of –NH groep','2.2'],
+['brosheid','mate waarin een materiaal gevoelig is voor breuk door een uitgeoefende kracht','2.3'],
+['corrosie','aantasting van een metaal door zuurstof en water','2.3'],
+['edelheid','ongevoeligheid van een metaal voor corrosie','2.3'],
+['elektrisch geleidingsvermogen','vermogen om stroom te geleiden','2.3'],
+['erts','gesteente of mineraal met een economisch winbaar gehalte metaal','2.3'],
+['hardheid','mate waarin een stof bestand is tegen blijvende vervorming','2.3'],
+['legering','mengsel van samengesmolten metalen','2.3'],
+['metaal','stof die is opgebouwd uit metaalatomen','2.3'],
+['metaalbinding','binding tussen positieve atoomresten en vrij bewegende negatieve elektronen','2.3'],
+['metaalrooster','regelmatige rangschikking van metaalatomen in de vaste fase','2.3'],
+['vervormbaarheid','mate waarin een materiaal vervormt door een uitgeoefende kracht','2.3'],
+['ion','atoom of atoomgroep met een lading','2.4'],
+['ionbinding','aantrekkende kracht tussen positieve en negatieve ionen','2.4'],
+['ionrooster','regelmatige stapeling van afwisselend positieve en negatieve ionen in de vaste fase','2.4'],
+['zout','stof die is opgebouwd uit positieve en negatieve ionen','2.4']
+];
+
+/* ---------- chemie-hulpjes ---------- */
+const R=(a,b)=>a+Math.floor(Math.random()*(b-a+1));
+const nf=(v,d=1)=>{const r=Math.round(v*10**d)/10**d;return String(r).replace('.',',')};
+const sum=a=>a.reduce((s,x)=>s+x,0);
+const EL={H:{n:'waterstof',v:1,m:1.008,c:'#9AA3B5'},C:{n:'koolstof',v:4,m:12.01,c:'#3A3F4B'},N:{n:'stikstof',v:3,m:14.01,c:'#3C6FD6'},O:{n:'zuurstof',v:2,m:16.00,c:'#D9443A'},
+ F:{n:'fluor',v:1,m:19.00,c:'#7CC46A'},P:{n:'fosfor',v:3,m:30.97,c:'#E58A2B'},S:{n:'zwavel',v:2,m:32.06,c:'#D9B92A'},Cl:{n:'chloor',v:1,m:35.45,c:'#2FA34E'},Br:{n:'broom',v:1,m:79.90,c:'#9A3B26'},I:{n:'jood',v:1,m:126.9,c:'#7B3FA0'},Si:{n:'silicium',v:4,m:28.09,c:'#B38D63'},
+ Na:{n:'natrium',m:22.99,met:1},K:{n:'kalium',m:39.10,met:1},Li:{n:'lithium',m:6.94,met:1},Mg:{n:'magnesium',m:24.31,met:1},Ca:{n:'calcium',m:40.08,met:1},Ba:{n:'barium',m:137.3,met:1},Al:{n:'aluminium',m:26.98,met:1},
+ Fe:{n:'ijzer',m:55.85,met:1},Cu:{n:'koper',m:63.55,met:1},Zn:{n:'zink',m:65.38,met:1},Ag:{n:'zilver',m:107.9,met:1},Au:{n:'goud',m:197.0,met:1},Pb:{n:'lood',m:207.2,met:1},Hg:{n:'kwik',m:200.6,met:1},Ni:{n:'nikkel',m:58.69,met:1},Cr:{n:'chroom',m:52.00,met:1},Co:{n:'kobalt',m:58.93,met:1},Sn:{n:'tin',m:118.7,met:1},La:{n:'lanthaan',m:138.9,met:1},Ti:{n:'titaan',m:47.87,met:1},Mn:{n:'mangaan',m:54.94,met:1},B:{n:'boor',m:10.81}};
+/* formule ontleden, ook met haakjes: Ca(OH)2 */
+function parseF(f){f=String(f).replace(/\^.*$/,'');let i=0;function grp(){const o={};while(i<f.length&&f[i]!==')'){let part;if(f[i]==='('){i++;part=grp();i++}else{const m=/^[A-Z][a-z]?/.exec(f.slice(i));if(!m){i++;continue}i+=m[0].length;part={[m[0]]:1}}
+  const n=/^\d+/.exec(f.slice(i));const k=n?+n[0]:1;if(n)i+=n[0].length;for(const e in part)o[e]=(o[e]||0)+part[e]*k}return o}return grp()}
+const molMass=f=>{const p=parseF(f);return sum(Object.entries(p).map(([e,k])=>(EL[e]?.m||0)*k))};
+const kind=f=>{const els=Object.keys(parseF(f));const met=els.filter(e=>EL[e]?.met).length;return met===els.length?'metaal':met?'zout':'moleculair'};
+/* ---------- stoffen ---------- */
+const MOLNAMES=[['CO','koolstofmono-oxide'],['CO2','koolstofdioxide'],['NO','stikstofmono-oxide'],['NO2','stikstofdioxide'],['N2O','distikstofmono-oxide'],['N2O4','distikstoftetraoxide'],['N2O5','distikstofpentaoxide'],['P2O5','difosforpentaoxide'],['SO2','zwaveldioxide'],['SO3','zwaveltrioxide'],['PCl3','fosfortrichloride'],['PCl5','fosforpentachloride'],['CCl4','koolstoftetrachloride'],['SF6','zwavelhexafluoride'],['CS2','koolstofdisulfide'],['OF2','zuurstofdifluoride'],['NF3','stikstoftrifluoride'],['HCl','waterstofchloride'],['HBr','waterstofbromide'],['HF','waterstoffluoride'],['HI','waterstofjodide'],['H2S','diwaterstofsulfide'],['SiCl4','siliciumtetrachloride'],['PBr3','fosfortribromide']];
+const TRIV=[['alcohol (ethanol)','C2H6O'],['ammoniak','NH3'],['azijnzuur','C2H4O2'],['fosforzuur','H3PO4'],['glucose','C6H12O6'],['salpeterzuur','HNO3'],['water','H2O'],['waterstofperoxide','H2O2'],['zwavelzuur','H2SO4'],['broom','Br2'],['chloor','Cl2'],['fluor','F2'],['jood','I2'],['stikstof','N2'],['waterstof','H2'],['zuurstof','O2']];
+const STOFSOORT=['Fe','Cu','Au','Ag','Al','Zn','Pb','Hg','Ni','Ca','Na','Mg','NaCl','MgO','KI','Al2O3','LiF','CaS','FeO','PbS','NiBr2','MgCl2','K2O','CaCl2','BaO','Li2S','LaF3','H2O','CO2','NH3','CH4','O2','N2','HBr','HCl','SO2','C6H12O6','C2H6O','H2O2','P2O5','I2','CO','S8'];
+const CATS=[['Na','natrium',1],['K','kalium',1],['Li','lithium',1],['Mg','magnesium',2],['Ca','calcium',2],['Ba','barium',2],['Al','aluminium',3]];
+const ANS=[['Cl','chloride',1],['F','fluoride',1],['Br','bromide',1],['I','jodide',1],['O','oxide',2],['S','sulfide',2]];
+const gcd=(a,b)=>b?gcd(b,a%b):a;
+function saltOf(c,a){const l=c[2]*a[2]/gcd(c[2],a[2]);const nc=l/c[2],na=l/a[2];return {f:c[0]+(nc>1?nc:'')+a[0]+(na>1?na:''),n:c[1]+a[1],nc,na}}
+const ionStr=(s,q,neg)=>`${s}<sup>${q>1?q:''}${neg?'−':'+'}</sup>`;
+const opt4=(a,pool)=>{const o=[a];for(const p of shuffle(pool))if(!o.includes(p)&&o.length<4)o.push(p);return o};
+/* ---------- generatoren (steeds nieuwe vragen) ---------- */
+const GENS={
+ tel:{sec:'0',t:'Atomen tellen in een formule',th:'formule',f(){const f=pick(['H2O','CO2','C2H6O','C6H12O6','H2SO4','NH3','C3H8','HNO3','CH4N2O','C4H10','H3PO4','C2H4O2','Al2O3','Ca(OH)2']);const k=R(1,3);const p=parseF(f);const el=pick(Object.keys(p));const a=p[el]*k;
+   return {q:`Hoeveel <b>${EL[el].n}</b>-atomen (${el}) staan er in <b>${k>1?k+' ':''}${fm(f)}</b>?`,a,tol:0,w:`${fm(f)} bevat ${p[el]} ${el}${k>1?`, en ${k} moleculen dus ${k} × ${p[el]} = ${a}`:''}.`,th:'formule'}}},
+ massa:{sec:'0',t:'Molecuulmassa berekenen',th:'rekenen',f(){const f=pick(['H2O','CO2','NH3','CH4','C2H6O','C6H12O6','NaCl','MgO','O2','N2','H2SO4','C3H8','HCl','CaCl2','Al2O3']);const p=parseF(f);const m=molMass(f);
+   return {q:`Bereken de molecuulmassa van <b>${fm(f)}</b> (in u). Atoommassa's: ${Object.keys(p).map(e=>`${e} ${nf(EL[e].m,2)}`).join(' · ')}`,a:m,tol:.15,u:'u',w:Object.entries(p).map(([e,k])=>`${k} × ${nf(EL[e].m,2)}`).join(' + ')+` = ${nf(m,2)} u.`,th:'rekenen'}}},
+ soort:{sec:'0',t:'Metaal, zout of moleculaire stof?',th:'drie',f(){const f=pick(STOFSOORT);const k=kind(f);
+   return {mc:true,keep:true,q:`Tot welke groep hoort <b>${fm(f)}</b>?`,opts:['metaal','zout','moleculaire stof'],a:k==='moleculair'?'moleculaire stof':k,w:k==='metaal'?'Alleen metaalatomen: metaal.':k==='zout'?'Metaal + niet-metaal: zout.':'Alleen niet-metalen: moleculaire stof.',th:'drie'}}},
+ cov:{sec:'2.1',t:'Covalentie',th:'covalentie',f(){const e=pick(['H','C','N','O','F','Cl','Br','I','S','P','Si']);return {mc:true,keep:true,q:`Wat is de covalentie van <b>${EL[e].n} (${e})</b>?`,opts:['1','2','3','4'],a:String(EL[e].v),w:`${e} heeft covalentie ${EL[e].v}. HONC 1234: H 1, O 2, N 3, C 4. Halogenen 1, S als O, P als N, Si als C.`,th:'covalentie'}}},
+ naam:{sec:'2.1',t:'Systematische namen',th:'naam',f(){const [f,n]=pick(MOLNAMES);const dir=Math.random()<.5;const others=MOLNAMES.filter(x=>x[0]!==f);
+   if(dir)return {mc:true,q:`Wat is de systematische naam van <b>${fm(f)}</b>?`,opts:opt4(n,others.map(x=>x[1])),a:n,w:`${fm(f)} = ${n}.`,th:'naam'};
+   return {mc:true,q:`Welke formule hoort bij <b>${n}</b>?`,opts:opt4(fm(f),others.map(x=>fm(x[0]))),a:fm(f),w:`${n} = ${fm(f)}.`,th:'naam'}}},
+ triv:{sec:'2.1',t:'Triviale namen en elementen',th:'triviaal',f(){const [n,f]=pick(TRIV);const others=TRIV.filter(x=>x[1]!==f);const dir=Math.random()<.5;
+   if(dir)return {mc:true,q:`Welke formule hoort bij <b>${n}</b>?`,opts:opt4(fm(f),others.map(x=>fm(x[1]))),a:fm(f),w:`${n} = ${fm(f)}.`,th:/2$/.test(f)&&f.length<=3?'element':'triviaal'};
+   return {mc:true,q:`Welke stof heeft de formule <b>${fm(f)}</b>?`,opts:opt4(n,others.map(x=>x[0])),a:n,w:`${fm(f)} = ${n}.`,th:'triviaal'}}},
+ kook:{sec:'2.2',t:'Welke kookt het hoogst?',th:'vdw',f(){const sets=[
+   [['methaan','CH4',112],['ethaan','C2H6',185],['propaan','C3H8',231],['butaan','C4H10',273],['pentaan','C5H12',309],['hexaan','C6H14',342]],
+   [['water','H2O',373],['methaan','CH4',112]],[['ethanol','C2H6O',351],['propaan','C3H8',231]],[['methaanamine','CH5N',267],['propaan','C3H8',231]],
+   [['methanol','CH4O',338],['ethanol','C2H6O',351],['glycol','C2H6O2',470]],[['zuurstof','O2',90],['water','H2O',373]],[['pentaan (onvertakt)','C5H12',309],['dimethylpropaan (vertakt)','C5H12',283]]];
+   const s=pick(sets);let two=shuffle(s).slice(0,Math.min(3,s.length));const best=[...two].sort((a,b)=>b[2]-a[2])[0];
+   const hb=x=>/O|N/.test(x[1])&&x[1]!=='O2';
+   return {mc:true,q:`Welke stof heeft het <b>hoogste kookpunt</b>?`,opts:two.map(x=>`${x[0]} ${fm(x[1])}`),keep:true,a:`${best[0]} ${fm(best[1])}`,w:two.map(x=>`${x[0]} ${x[2]} K`).join(' · ')+'. '+(two.some(hb)&&!two.every(hb)?'Met –OH of –NH: waterstofbruggen, die zijn sterker dan vanderwaals.':best[0].includes('onvertakt')?'Onvertakt: groter contactoppervlak, sterkere vanderwaals.':'Grotere molecuulmassa (of meer –OH): sterkere bindingen tussen moleculen.'),th:two.some(hb)?'hbrug':'vdw'}}},
+ hb:{sec:'2.2',t:'Vormt deze stof waterstofbruggen?',th:'hbrug',f(){const s=pick([['ethanol','CH3–CH2–O–H',1],['propaan','CH3–CH2–CH3',0],['water','H–O–H',1],['ammoniak','NH3',1],['methaan','CH4',0],['ethaanamine','C2H5–NH2',1],['butaan-1-ol','C4H9–OH',1],['zuurstof','O=O',0],['koolstofdioxide','O=C=O',0],['glucose','vol met –OH',1],['pentaan','C5H12',0],['methanol','CH3–OH',1],['waterstofchloride','H–Cl',0],['ureum','H2N–CO–NH2',1]]);
+   return {mc:true,keep:true,q:`Kunnen moleculen van <b>${s[0]}</b> (${fm(s[1])}) onderling waterstofbruggen vormen?`,opts:['ja','nee'],a:s[2]?'ja':'nee',w:s[2]?'Er zit een H aan O of N: ja, H-bruggen.':'Geen H aan O of N (een H aan C of Cl telt niet): alleen vanderwaals.',th:'hbrug'}}},
+ opl:{sec:'2.2',t:'Lost het op in water?',th:'oplos',f(){const s=pick(LABSTOF.filter(x=>x.mol));const a=s.w&&s.b?'in allebei':s.w?'in water':s.b?'in wasbenzine':'in geen van beide';
+   return {mc:true,keep:true,q:`Waarin lost <b>${s.n}</b> (${fm(s.f)}) goed op?`,opts:['in water','in wasbenzine','in allebei','in geen van beide'],a,w:s.why,th:'oplos'}}},
+ lading:{sec:'2.4',t:'Lading van een ion',th:'ion',f(){const all=[...CATS.map(c=>[c[0],c[1],c[2],0,{Na:1,K:1,Li:1,Mg:2,Ca:2,Ba:2,Al:13}[c[0]]]),...ANS.map(a=>[a[0],EL[a[0]].n,a[2],1,a[2]===1?17:16])];const x=pick(all);const ans=ionStr(x[0],x[2],x[3]);
+   const opts=opt4(ans,[ionStr(x[0],x[2],!x[3]),ionStr(x[0],x[2]===1?2:1,x[3]),ionStr(x[0],x[2]+1,x[3]),ionStr(x[0],3,!x[3])]);
+   return {mc:true,q:`Welk ion vormt <b>${x[1]}</b> (groep ${x[4]})?`,opts,a:ans,w:x[3]?`Niet-metaal in groep ${x[4]}: neemt ${x[2]} elektron${x[2]>1?'en':''} op tot 8 → ${ans}.`:`Metaal in groep ${x[4]}: staat ${x[2]} valentie-elektron${x[2]>1?'en':''} af → ${ans}.`,th:'ion'}}},
+ zf:{sec:'2.4',t:'Formule van een zout',th:'zoutformule',f(){const c=pick(CATS),a=pick(ANS);const s=saltOf(c,a);const wrong=[c[0]+a[0],c[0]+(a[2]>1?a[2]:'')+a[0]+(c[2]>1?c[2]:''),c[0]+'2'+a[0]+'2',c[0]+a[0]+'2',c[0]+'2'+a[0]].map(fm).filter(x=>x!==fm(s.f));const dir=Math.random()<.6;
+   if(dir)return {mc:true,q:`Wat is de formule van <b>${s.n}</b>? (${ionStr(c[0],c[2])} en ${ionStr(a[0],a[2],1)})`,opts:opt4(fm(s.f),wrong),a:fm(s.f),w:`${s.nc} × ${c[2]}+ = ${s.nc*c[2]}+ en ${s.na} × ${a[2]}− = ${s.na*a[2]}−: neutraal. ${fm(s.f)}.`,th:'zoutformule'};
+   return {mc:true,q:`Hoe heet <b>${fm(s.f)}</b>?`,opts:opt4(s.n,[c[1]+pick(ANS.filter(x=>x!==a))[1],pick(CATS.filter(x=>x!==c))[1]+a[1],(s.nc>1?'di':'')+c[1]+(s.na>1?['','','di','tri'][s.na]:'mono')+a[1]]),a:s.n,w:`Zout: metaalnaam + niet-metaal-ide, zonder voorvoegsels.`,th:'zoutformule'}}},
+ elek:{sec:'2.4',t:'Elektronen in een ion',th:'ion',f(){const x=pick([['Na',11,23,1],['Mg',12,24,2],['Al',13,27,3],['K',19,39,1],['Ca',20,40,2],['O',8,16,-2],['S',16,32,-2],['Cl',17,35,-1],['F',9,19,-1],['Li',3,7,1]]);const ion=ionStr(x[0],Math.abs(x[3]),x[3]<0);const what=pick(['elektronen','protonen','neutronen']);
+   const a=what==='elektronen'?x[1]-x[3]:what==='protonen'?x[1]:x[2]-x[1];
+   return {q:`Hoeveel <b>${what}</b> heeft ${ion}? (atoomnummer ${x[1]}, massagetal ${x[2]})`,a,tol:0,w:what==='elektronen'?`Protonen ${x[1]}, lading ${x[3]>0?'+':'−'}${Math.abs(x[3])}: ${x[1]} ${x[3]>0?'−':'+'} ${Math.abs(x[3])} = ${a} elektronen.`:what==='protonen'?`Protonen = atoomnummer = ${a}. Dat verandert nooit bij een ion.`:`Neutronen = massagetal − atoomnummer = ${x[2]} − ${x[1]} = ${a}.`,th:'ion'}}},
+ geleid:{sec:'2.4',t:'Geleidt het stroom?',th:'zouteig',f(){const s=pick([['ijzer','Fe','metaal','vast'],['koper','Cu','metaal','vast'],['kwik','Hg','metaal','vloeibaar'],['vloeibaar ijzer','Fe','metaal','vloeibaar'],['keukenzout','NaCl','zout','vast'],['keukenzout','NaCl','zout','opgelost in water'],['keukenzout','NaCl','zout','gesmolten'],['kaliumjodide','KI','zout','vast'],['kaliumjodide','KI','zout','gesmolten'],['magnesiumchloride','MgCl2','zout','opgelost in water'],['suiker','C12H22O11','moleculair','vast'],['suiker','C12H22O11','moleculair','opgelost in water'],['vloeibare suiker','C12H22O11','moleculair','gesmolten'],['ethanol','C2H6O','moleculair','vloeibaar'],['glucose','C6H12O6','moleculair','opgelost in water'],['wasbenzine','C7H16','moleculair','vloeibaar']]);
+   const ja=s[2]==='metaal'||(s[2]==='zout'&&s[3]!=='vast');
+   return {mc:true,keep:true,q:`Geleidt <b>${s[0]}</b> (${fm(s[1])}) ${s[3]} de stroom?`,opts:['ja','nee'],a:ja?'ja':'nee',w:s[2]==='metaal'?'Metaal: vrije elektronen, altijd geleiding.':s[2]==='zout'?(ja?'Zout gesmolten of opgelost: de ionen bewegen vrij.':'Vast zout: ionen zitten vast in het ionrooster.'):'Moleculaire stof: geen vrije geladen deeltjes, nooit geleiding.',th:s[2]==='metaal'?'metaaleig':s[2]==='zout'?'zouteig':'molrooster'}}}
+};
+const SECGENS={'0':['tel','massa','soort'],'2.1':['cov','naam','triv'],'2.2':['kook','hb','opl'],'2.3':['soort'],'2.4':['lading','zf','elek','geleid']};
+/* ---------- lab-stoffen (oplosbaarheid) ---------- */
+const LABSTOF=[
+ {n:'glucose',f:'C6H12O6',w:1,b:0,mol:1,col:'#ffffff',why:'Glucose heeft vijf –OH groepen: veel waterstofbruggen met water. Hydrofiel, lost niet op in wasbenzine.'},
+ {n:'ureum',f:'CH4N2O',w:1,b:0,mol:1,col:'#ffffff',why:'Ureum heeft twee –NH<sub>2</sub> groepen: H-bruggen met water. Hydrofiel.'},
+ {n:'kaarsvet (stearinezuur)',f:'C18H36O2',w:0,b:1,mol:1,col:'#f4eedd',why:'Kaarsvet heeft een staart van 17 C-atomen. Het hydrofobe deel wint: lost op in wasbenzine, niet in water.'},
+ {n:'zwavel',f:'S8',w:0,b:1,mol:1,col:'#e8d23a',why:'Zwavel (S<sub>8</sub>) heeft geen –OH of –NH: hydrofoob. Lost (een beetje) op in wasbenzine, niet in water.'},
+ {n:'jood',f:'I2',w:0,b:1,mol:1,col:'#6b2d7a',why:'Jood is hydrofoob: slecht in water, goed in wasbenzine (paarse kleur).'},
+ {n:'ethanol',f:'C2H6O',w:1,b:1,mol:1,col:'#ffffff',why:'Ethanol heeft een –OH (H-bruggen met water) én een klein koolstofdeel: mengt met water en met wasbenzine.'},
+ {n:'glycerol',f:'C3H8O3',w:1,b:0,mol:1,col:'#ffffff',why:'Glycerol heeft drie –OH groepen: sterk hydrofiel. Lost niet op in wasbenzine.'},
+ {n:'wasbenzine (heptaan)',f:'C7H16',w:0,b:1,mol:1,col:'#ffffff',why:'Alleen C en H: hydrofoob. Mengt niet met water (vormt een laag erbovenop), wel met wasbenzine zelf.'},
+ {n:'octaan-1-ol',f:'C8H18O',w:0,b:1,mol:1,col:'#ffffff',why:'Wel een –OH, maar een staart van 8 C-atomen: het hydrofobe deel wint. Lost op in wasbenzine.'},
+ {n:'suiker (sacharose)',f:'C12H22O11',w:1,b:0,mol:1,col:'#ffffff',why:'Suiker zit vol –OH groepen: H-bruggen met water, hydrofiel.'},
+ {n:'pentaan',f:'C5H12',w:0,b:1,mol:1,col:'#ffffff',why:'Alleen C en H, geen –OH: hydrofoob. Soort zoekt soort: lost op in wasbenzine.'},
+ {n:'vitamine E',f:'C29H50O2',w:0,b:1,mol:1,col:'#e9c46a',why:'Een lange koolstofketen met maar één –OH: hydrofoob (daarom zit het in olie, zoals arganolie).'},
+ {n:'keukenzout',f:'NaCl',w:1,b:0,mol:0,col:'#ffffff',why:'Een zout: in water laten de ionen los en worden omringd door watermoleculen. In wasbenzine lost een zout niet op.'},
+ {n:'ijzer',f:'Fe',w:0,b:0,mol:0,col:'#6d6d6d',why:'Een metaal lost niet op in water of wasbenzine: de metaalbinding blijft heel.'}
+];
+
+function verdiepHtml(sec){const v=VERDIEP[sec];if(!v)return'';
+ return `<details class="verdiep"><summary>Dieper in de theorie <span class="src">voor wie meer wil weten</span></summary>
+  ${v.extra.map(([t,h])=>`<details class="vd"><summary>${t}</summary><div>${h}</div></details>`).join('')}
+  <details class="vd"><summary>Veelgemaakte fouten</summary><div><ul class="fout">${v.fouten.map(f=>`<li>${f}</li>`).join('')}</ul></div></details>
+  <details class="vd" id="stapbox"><summary>Stap voor stap: ${v.stap.t}</summary><div><p class="ex">${v.stap.q}</p><ol class="steps" id="steps"></ol><button class="btn small primary" id="stapNext">Volgende stap</button></div></details>
+ </details>`}
+function bindVerdiep(sec){const v=VERDIEP[sec];if(!v)return;let i=0;const ol=$('#steps'),b=$('#stapNext');if(!ol)return;
+ b.onclick=()=>{if(i>=v.stap.s.length){i=0;ol.innerHTML='';b.textContent='Volgende stap';return}
+  ol.insertAdjacentHTML('beforeend',`<li>${v.stap.s[i]}</li>`);i++;
+  if(i>=v.stap.s.length)b.textContent='Opnieuw'}}
+
+/* ---------- Molecuulbouwer ---------- */
+const BLEVELS=[
+ {f:'H2',n:'waterstof',fact:'Elk H-atoom heeft één arm. Samen één gedeeld elektronenpaar: H–H.'},
+ {f:'HCl',n:'waterstofchloride',fact:'Cl heeft covalentie 1, net als H. Opgelost in water heet dit zoutzuur.'},
+ {f:'H2O',n:'water',fact:'O heeft twee armen: H–O–H. De O–H bindingen zijn polair, daarom vormt water waterstofbruggen.'},
+ {f:'NH3',n:'ammoniak',fact:'N heeft drie armen. Ammoniak lost heel goed op in water dankzij H-bruggen.'},
+ {f:'CH4',n:'methaan',fact:'C heeft vier armen. Methaan is aardgas en kookt al bij 112 K.'},
+ {f:'O2',n:'zuurstof',fact:'Twee armen elk: een dubbele binding O=O. Tik twee keer op hetzelfde paar.'},
+ {f:'N2',n:'stikstof',fact:'Een drievoudige binding N≡N. Daarom is stikstof zo stabiel: 78% van de lucht.'},
+ {f:'CO2',n:'koolstofdioxide',fact:'O=C=O: twee dubbele bindingen. C heeft alle vier armen gebruikt.'},
+ {f:'HCN',n:'waterstofcyanide',fact:'H–C≡N. Voorbeeldopdracht 1 uit het boek.'},
+ {f:'H2S',n:'diwaterstofsulfide',fact:'S heeft covalentie 2, net als O. Ruikt naar rotte eieren.'},
+ {f:'PCl3',n:'fosfortrichloride',fact:'P heeft covalentie 3, net als N.'},
+ {f:'CS2',n:'koolstofdisulfide',fact:'S=C=S, net als CO<sub>2</sub>.'},
+ {f:'H2O2',n:'waterstofperoxide',fact:'H–O–O–H. Wordt gebruikt om haar te bleken en bij permanenten.'},
+ {f:'C2H6',n:'ethaan',fact:'Twee C-atomen aan elkaar, elk met drie H.'},
+ {f:'CH4O',n:'methanol',fact:'CH<sub>3</sub>–O–H: een –OH groep, dus H-bruggen. Kookt bij 338 K.'},
+ {f:'C2H4',n:'etheen',fact:'H<sub>2</sub>C=CH<sub>2</sub>: een dubbele binding tussen de C-atomen. Grondstof voor plastic.'},
+ {f:'C2H2',n:'ethyn',fact:'H–C≡C–H: drievoudige binding. Lasgas.'},
+ {f:'CH2O',n:'methanal',fact:'H<sub>2</sub>C=O. Opgelost in water heet het formaline.'},
+ {f:'C2H6O',n:'ethanol (alcohol)',fact:'CH<sub>3</sub>–CH<sub>2</sub>–O–H. Lukte je een andere opbouw (CH<sub>3</sub>–O–CH<sub>3</sub>)? Ook geldig, maar dat is dimethylether: een andere stof met dezelfde molecuulformule.'},
+ {f:'CH4N2O',n:'ureum',fact:'H<sub>2</sub>N–C(=O)–NH<sub>2</sub>. Afvalstof in urine (opdracht 9).'},
+ {f:'C3H8',n:'propaan',fact:'Drie C-atomen op een rij. Campinggas, kookt bij 231 K.'},
+ {f:'CH5N',n:'methaanamine',fact:'CH<sub>3</sub>–NH<sub>2</sub>. Stinkt naar rotte vis en vormt H-bruggen.'},
+ {f:'C2H4O2',n:'azijnzuur',fact:'CH<sub>3</sub>–C(=O)–O–H. 8 bindingen = 16 gedeelde elektronen.'},
+ {f:'C2H6O2',n:'glycol',fact:'HO–CH<sub>2</sub>–CH<sub>2</sub>–OH. Twee –OH groepen: kookt pas bij 470 K. Antivries.'}
+];
+const BKEY='chem-bouw';
+function bouwState(){if(!S.bouw)S.bouw={};return S.bouw}
+function bouwPct(){const b=bouwState();return BLEVELS.filter(l=>b[l.f]).length/BLEVELS.length}
+function bouwHome(){show('play');const b=bouwState();const done=BLEVELS.filter(l=>b[l.f]).length;const next=BLEVELS.findIndex(l=>!b[l.f]);
+ P.innerHTML=`<div class="playbar"><button class="btn small ghost" id="quit">Terug</button><span class="bar"><i style="width:${Math.round(done/BLEVELS.length*100)}%"></i></span><span class="count">${done}/${BLEVELS.length}</span></div>
+ <div class="slide">${head('Spel','Molecuulbouwer')}<div class="slide-body">
+  <p style="margin:0">Bouw elk molecuul uit losse atomen. Elk atoom heeft een vast aantal <b>armen</b> (covalentie): H 1, O en S 2, N en P 3, C 4. Een molecuul is af als alle armen gebruikt zijn. Haal alle ${BLEVELS.length} moleculen en vul de kast.</p>
+  <div class="bkast">${BLEVELS.map((l,i)=>{const st=b[l.f]||0;const open=i===0||b[BLEVELS[i-1].f];return `<button class="bk${st?' done':''}" data-i="${i}" ${open?'':'disabled'}><b>${open?fm(l.f):'🔒'}</b><span>${open?esc(l.n):'&nbsp;'}</span><span class="st">${st?'★'.repeat(st)+'☆'.repeat(3-st):''}</span></button>`}).join('')}</div>
+  ${next>=0?`<div class="acts"><button class="btn primary" id="bgo">Volgende: ${esc(BLEVELS[next].n)}</button></div>`:'<div class="fb good"><div class="t">Alle moleculen gebouwd. Knap!</div></div>'}
+ </div></div>`;
+ $('#quit').onclick=goHome;P.querySelectorAll('[data-i]').forEach(x=>x.onclick=()=>bouwPlay(+x.dataset.i));const g=$('#bgo');if(g){g.onclick=()=>bouwPlay(next);g.focus()}}
+function bouwPlay(i){const L=BLEVELS[i];const need=parseF(L.f);
+ const G2={i,L,need,atoms:[],bonds:{},sel:null,pick:null,gum:false,fails:0,done:false};G=Object.assign({m:'bouw'},G2);bouwDraw()}
+const BG=5,BC=64,BW=BG*BC;
+function bFree(a){return EL[a.e].v-sum(Object.entries(G.bonds).filter(([k])=>k.split('-').includes(String(a.id))).map(([,v])=>v))}
+function bLeft(e){return (G.need[e]||0)-G.atoms.filter(a=>a.e===e).length}
+function bouwSvg(){let s='';for(let r=0;r<BG;r++)for(let c=0;c<BG;c++)s+=`<rect x="${c*BC+2}" y="${r*BC+2}" width="${BC-4}" height="${BC-4}" rx="10" fill="var(--bg)" data-cell="${r},${c}"/>`;
+ const pos=id=>{const a=G.atoms.find(x=>x.id===id);return [a.c*BC+BC/2,a.r*BC+BC/2]};
+ for(const [k,v] of Object.entries(G.bonds)){const [p,q]=k.split('-').map(Number);const [x1,y1]=pos(p),[x2,y2]=pos(q);const dx=x2-x1,dy=y2-y1,L=Math.hypot(dx,dy)||1,nx=-dy/L,ny=dx/L;
+  for(let j=0;j<v;j++){const o=(j-(v-1)/2)*7;s+=`<line x1="${x1+nx*o}" y1="${y1+ny*o}" x2="${x2+nx*o}" y2="${y2+ny*o}" stroke="currentColor" stroke-width="3.5" stroke-linecap="round"/>`}}
+ for(const a of G.atoms){const x=a.c*BC+BC/2,y=a.r*BC+BC/2;const fr=bFree(a);const col=EL[a.e].c;
+  for(let j=0;j<fr;j++){const ang=(-90+j*360/Math.max(fr,1)+(fr===1?0:45))*Math.PI/180;s+=`<line x1="${x+Math.cos(ang)*20}" y1="${y+Math.sin(ang)*20}" x2="${x+Math.cos(ang)*29}" y2="${y+Math.sin(ang)*29}" stroke="${col}" stroke-width="4" stroke-linecap="round"/>`}
+  s+=`<circle cx="${x}" cy="${y}" r="19" fill="${col}" stroke="${G.sel===a.id?'var(--accent)':'var(--surface)'}" stroke-width="${G.sel===a.id?5:2.5}" data-atom="${a.id}"/><text x="${x}" y="${y+6}" text-anchor="middle" font-size="17" font-weight="800" fill="#fff" pointer-events="none">${a.e}</text>`}
+ return `<svg class="bsvg" viewBox="0 0 ${BW} ${BW}" id="bsvg">${s}</svg>`}
+function bouwDraw(msg){const L=G.L;const els=Object.keys(G.need);if(!G.pick||bLeft(G.pick)<=0)G.pick=els.find(e=>bLeft(e)>0)||G.pick;
+ P.innerHTML=`<div class="playbar"><button class="btn small ghost" id="quit">Kast</button><span class="count" style="flex:1">Molecuul ${G.i+1} van ${BLEVELS.length}</span></div>
+ <div class="slide">${head('Molecuulbouwer',esc(L.n))}<div class="slide-body">
+  <div class="prompt">Bouw ${fm(L.f)} <span class="src" style="font-family:var(--f-body);font-weight:400">${esc(L.n)}</span></div>
+  <div class="bpal">${els.map(e=>`<button class="bpe${G.pick===e&&!G.gum?' on':''}" data-e="${e}" ${bLeft(e)<=0?'disabled':''} style="--ec:${EL[e].c}"><b>${e}</b><span>${EL[e].v} ${EL[e].v>1?'armen':'arm'} · nog ${bLeft(e)}</span></button>`).join('')}<button class="bpe gum${G.gum?' on':''}" id="bgum"><b>⌫</b><span>gum</span></button></div>
+  <div class="bwrap">${bouwSvg()}</div>
+  <div class="src" id="bhelp">${msg||(G.gum?'Gum: tik een atoom aan om het weg te halen.':G.sel!=null?'Tik nu het atoom aan waarmee het moet verbinden.':'Kies een atoom en tik op een vakje. Tik daarna twee atomen na elkaar aan om ze te verbinden. Nog eens = dubbele binding.')}</div>
+  <div class="acts"><button class="btn ghost small" id="breset">Opnieuw</button><button class="btn ghost small" id="btip">Tip</button><button class="btn dark" id="bchk">Controleer</button></div>
+  <div id="fbox"></div></div></div>`;
+ $('#quit').onclick=bouwHome;$('#breset').onclick=()=>bouwPlay(G.i);$('#bchk').onclick=bouwCheck;
+ $('#btip').onclick=()=>{$('#fbox').innerHTML=`<div class="fb warn"><div class="t">Tip</div><div class="tip">${bouwTip()}</div></div>`};
+ $('#bgum').onclick=()=>{G.gum=!G.gum;G.sel=null;bouwDraw()};
+ P.querySelectorAll('[data-e]').forEach(b=>b.onclick=()=>{G.pick=b.dataset.e;G.gum=false;G.sel=null;bouwDraw()});
+ $('#bsvg').addEventListener('click',e=>{if(G.done)return;const at=e.target.closest('[data-atom]'),cell=e.target.closest('[data-cell]');
+  if(at){const id=+at.dataset.atom;
+   if(G.gum){G.atoms=G.atoms.filter(a=>a.id!==id);for(const k of Object.keys(G.bonds))if(k.split('-').includes(String(id)))delete G.bonds[k];bouwDraw();return}
+   if(G.sel==null){G.sel=id;bouwDraw();return}
+   if(G.sel===id){G.sel=null;bouwDraw();return}
+   const k=[G.sel,id].sort((a,b)=>a-b).join('-');const A=G.atoms.find(a=>a.id===G.sel),B=G.atoms.find(a=>a.id===id);
+   let m='';if(bFree(A)>0&&bFree(B)>0&&(G.bonds[k]||0)<3){G.bonds[k]=(G.bonds[k]||0)+1;m=G.bonds[k]===2?'Dubbele binding.':G.bonds[k]===3?'Drievoudige binding.':''}
+   else if(G.bonds[k]){delete G.bonds[k];m='Binding weggehaald (er waren geen vrije armen meer).'}
+   else m=`${bFree(A)<=0?A.e:B.e} heeft geen vrije arm meer.`;
+   G.sel=null;bouwDraw(m);bouwAuto();return}
+  if(cell&&!G.gum){const [r,c]=cell.dataset.cell.split(',').map(Number);if(G.atoms.some(a=>a.r===r&&a.c===c))return;if(!G.pick||bLeft(G.pick)<=0){bouwDraw('Alle atomen staan al op het bord.');return}
+   G.atoms.push({id:(G.nid=(G.nid||0)+1),e:G.pick,r,c});G.sel=null;bouwDraw()}});
+}
+function bouwIssues(){const out=[];for(const e of Object.keys(G.need)){const l=bLeft(e);if(l>0)out.push(`Er ${l>1?'moeten':'moet'} nog ${l} ${e} op het bord.`)}
+ for(const a of G.atoms){const f=bFree(a);if(f>0)out.push(`Een ${a.e}-atoom heeft nog ${f} vrije arm${f>1?'en':''}.`)}
+ if(G.atoms.length){const seen=new Set([G.atoms[0].id]);let ch=true;while(ch){ch=false;for(const k of Object.keys(G.bonds)){const [p,q]=k.split('-').map(Number);if(seen.has(p)!==seen.has(q)){seen.add(p);seen.add(q);ch=true}}}if(seen.size<G.atoms.length&&!out.length)out.push('Niet alles hangt aan elkaar: het moeten één molecuul worden.')}
+ return out}
+function bouwAuto(){if(!bouwIssues().length)bouwCheck()}
+function bouwTip(){const L=G.L.f;const c=G.need;if(c.C)return'Zet de C-atomen eerst neer en verbind ze aan elkaar. Plak daarna O of N eraan en vul de rest op met H.';if(c.O&&c.H)return'Zet het atoom met de meeste armen in het midden en hang de H-atomen eromheen.';if(Object.keys(c).length===1)return'Twee dezelfde atomen: verbind ze net zo vaak tot alle armen op zijn (tik meerdere keren).';return'Begin met het atoom met de meeste armen in het midden.'}
+function bouwCheck(){if(G.done)return;const iss=bouwIssues();
+ if(iss.length){G.fails++;$('#fbox').innerHTML=`<div class="fb bad"><div class="t">Nog niet af</div><div class="tip">${iss.slice(0,3).join('<br>')}</div><details class="thc"><summary>📖 Theorie: covalentie</summary>${TH.covalentie.h}</details></div>`;return}
+ G.done=true;const st=G.fails===0?3:G.fails<=2?2:1;const b=bouwState();b[G.L.f]=Math.max(b[G.L.f]||0,st);rec('2.1',true);save();confetti();
+ const nxt=G.i+1<BLEVELS.length?G.i+1:-1;
+ $('#fbox').innerHTML=`<div class="fb good"><div class="t">${fm(G.L.f)} staat! ${'★'.repeat(st)}${'☆'.repeat(3-st)}</div><div class="tip">${G.L.fact}</div></div><div class="acts" style="margin-top:10px">${nxt>=0?'<button class="btn primary" id="bnext">Volgende molecuul ↵</button>':''}<button class="btn ghost" id="bkast">Naar de kast</button></div>`;
+ const n=$('#bnext');if(n){n.onclick=()=>bouwPlay(nxt);n.focus()}$('#bkast').onclick=bouwHome}
+
+/* ---------- Het Lab: reageerbuis-puzzels ---------- */
+const LABS={
+ oplos:{t:'Oplossen: water of wasbenzine?',ic:'🧪',d:'Giet de stof in het goede buisje. Soort zoekt soort.',sec:'2.2'},
+ zout:{t:'Zoutfabriek',ic:'⚗️',d:'Giet + en − ionen bij elkaar tot het zout neutraal is.',sec:'2.4'},
+ stroom:{t:'Stroomtest',ic:'💡',d:'Gaat het lampje branden? En wat voor stof is het?',sec:'2.4'},
+ metaal:{t:'Metalenrace',ic:'🔥',d:'Welk metaal reageert het heftigst? Rangschik op edelheid.',sec:'2.3'},
+ balans:{t:'Weegschaal',ic:'⚖️',d:'Maak reactievergelijkingen kloppend tot de weegschaal recht hangt.',sec:'0'},
+ kook:{t:'Kookpuntladder',ic:'🌡️',d:'Zet stoffen op volgorde van kookpunt en ontdek waarom.',sec:'2.2'}
+};
+function labHome(){show('play');const L=S.lab||{};
+ P.innerHTML=`<div class="playbar"><button class="btn small ghost" id="quit">Terug</button></div>
+ <div class="slide">${head('Spel','Het Lab')}<div class="slide-body"><p style="margin:0">Zes proefjes, gebaseerd op de practica uit het boek. Elk rondje heeft 6 opdrachten. Fout? Dan zie je meteen de uitleg met de theorie erbij.</p>
+ <div class="modes">${Object.entries(LABS).map(([k,l])=>`<button class="mode" data-lab="${k}"><span class="lab">${l.ic}</span><h3>${l.t}</h3><p>${l.d}</p>${L[k]?`<span class="tag">beste: ${L[k]}/6</span>`:''}</button>`).join('')}</div></div></div>`;
+ $('#quit').onclick=goHome;P.querySelectorAll('[data-lab]').forEach(b=>b.onclick=()=>labRun(b.dataset.lab))}
+function labRun(k){G={m:'lab',k,n:0,ok:0,total:6,used:new Set()};show('play');labNext()}
+function labNext(){if(G.n>=G.total){const t=G.total;if(!S.lab)S.lab={};S.lab[G.k]=Math.max(S.lab[G.k]||0,G.ok);if(G.ok>=5)confetti();save();const k=G.k;
+  P.innerHTML=`<div class="slide">${head(LABS[k].t,'Klaar')}<div class="slide-body"><div class="q">Goed</div><div class="big">${G.ok}<span style="font-size:.45em;color:var(--muted)"> / ${t}</span></div><div class="acts"><button class="btn primary" id="again">Nog een rondje</button><button class="btn ghost" id="lh">Naar het Lab</button></div></div></div>`;
+  $('#again').onclick=()=>labRun(k);$('#lh').onclick=labHome;$('#again').focus();return}
+ LABF[G.k]()}
+const labTop=()=>topbar(G.n,G.total);
+function labDone(ok,html,th){G.n++;if(ok)G.ok++;rec(LABS[G.k].sec,ok);save();
+ $('#fbox').innerHTML=`<div class="fb ${ok?'good':'bad'}"><div class="t">${ok?pick(['Goed!','Klopt!','Netjes!','Top!']):'Niet goed.'}</div><div class="tip">${html}</div>${!ok&&th?thCard(th):''}</div><div class="foot" style="margin-top:12px"><button class="btn primary" id="next">Verder ↵</button></div>`;
+ const n=$('#next');n.onclick=labNext;n.focus()}
+const thCard=k=>TH[k]?`<details class="thc" open><summary>📖 Theorie: ${TH[k].t}</summary>${TH[k].h}</details>`:'';
+const pickNew=(arr,key)=>{const fresh=arr.filter(x=>!G.used.has(key(x)));const x=pick(fresh.length?fresh:arr);G.used.add(key(x));return x};
+/* reageerbuis */
+function tube(liq,state,lab,col){const top=liq==='wb'?'#FFF6D6':'#DCEFFF';let s=`<svg viewBox="0 0 70 170" class="tube"><path d="M14 6 V140 a21 21 0 0 0 42 0 V6" fill="var(--surface)" stroke="currentColor" stroke-width="3"/><path d="M17 60 V140 a18 18 0 0 0 36 0 V60Z" fill="${top}"/>`;
+ if(state==='opgelost')s+=`<path d="M17 60 V140 a18 18 0 0 0 36 0 V60Z" fill="${col==='#ffffff'?'#BFE8D6':col}" opacity=".55" class="fadein"/>`;
+ if(state==='korrels')for(let i=0;i<14;i++)s+=`<circle cx="${22+Math.random()*26}" cy="${148+Math.random()*8}" r="3" fill="${col==='#ffffff'?'#bbb':col}" stroke="#666" stroke-width=".6"/>`;
+ if(state==='laag')s+=`<rect x="17" y="44" width="36" height="16" fill="${col==='#ffffff'?'#F3E7B5':col}" opacity=".9" class="fadein"/>`;
+ return `<figure class="tfig">${s}</svg><figcaption>${lab}</figcaption></figure>`}
+const LABF={
+ oplos(){const s=pickNew(LABSTOF,x=>x.n);const liquid=['C2H6O','C7H16','C8H18O','C3H8O3','C5H12'].includes(s.f);
+  P.innerHTML=labTop()+`<div class="slide">${head('Lab','Oplossen')}<div class="slide-body"><div class="q">Waarin lost deze stof goed op?</div><div class="prompt">${esc(s.n)} <span class="src">${fm(s.f)}</span></div>
+   <div class="tubes" id="tubes">${tube('w','','water')}${tube('wb','','wasbenzine')}</div>
+   <div class="opts">${['in water','in wasbenzine','in allebei','in geen van beide'].map((o,i)=>`<button class="opt" data-i="${i}"><span class="k">${i+1}</span><span>${o}</span></button>`).join('')}</div><div id="fbox"></div></div></div>`;
+  $('#quit').onclick=labHome;const ans=s.w&&s.b?2:s.w?0:s.b?1:3;
+  P.querySelectorAll('.opt').forEach((b,i)=>b.onclick=()=>{markOpts(ans,i);const st=ok=>ok?'opgelost':liquid?'laag':'korrels';
+   $('#tubes').innerHTML=tube('w',st(s.w),'water',s.col)+tube('wb',st(s.b),'wasbenzine',s.col);labDone(i===ans,s.why,'oplos')})},
+ zout(){const c=pick(CATS),a=pick(ANS);const sl=saltOf(c,a);let nc=0,na=0;
+  const draw=()=>{const q=nc*c[2]-na*a[2];$('#zmix').innerHTML=`${Array.from({length:nc},()=>`<span class="ionb p">${c[0]}<sup>${c[2]>1?c[2]:''}+</sup></span>`).join('')}${Array.from({length:na},()=>`<span class="ionb n">${a[0]}<sup>${a[2]>1?a[2]:''}−</sup></span>`).join('')}`||'<span class="src">leeg bekerglas</span>';
+   $('#zq').textContent=(q>0?'+':q<0?'−':'')+Math.abs(q);$('#zq').className='zq '+(q===0&&nc?'ok':'')};
+  P.innerHTML=labTop()+`<div class="slide">${head('Lab','Zoutfabriek')}<div class="slide-body"><div class="q">Maak <b>${sl.n}</b>. Tik op de flessen om ionen in het bekerglas te gieten. Een zout is neutraal: totale lading 0, met zo weinig mogelijk ionen.</div>
+   <div class="zrow"><button class="zfles p" id="zc"><b>${ionStr(c[0],c[2])}</b><span>${c[1]}-ion</span></button><button class="zfles n" id="za"><b>${ionStr(a[0],a[2],1)}</b><span>${a[1]}-ion</span></button></div>
+   <div class="zbeker"><div id="zmix"></div><div class="zlad">lading: <span id="zq" class="zq">0</span></div></div>
+   <div class="acts"><button class="btn ghost small" id="zundo">Leeg gieten</button><button class="btn dark" id="zok">Klaar: dit is mijn zout</button></div><div id="fbox"></div></div></div>`;
+  $('#quit').onclick=labHome;draw();$('#zc').onclick=()=>{if(nc<6){nc++;draw()}};$('#za').onclick=()=>{if(na<6){na++;draw()}};$('#zundo').onclick=()=>{nc=0;na=0;draw()};
+  $('#zok').onclick=()=>{if(!nc&&!na)return;const q=nc*c[2]-na*a[2];const ok=q===0&&nc===sl.nc&&na===sl.na;['zc','za','zundo','zok'].forEach(i=>$('#'+i).disabled=true);
+   labDone(ok,ok?`${nc} × ${c[2]}+ en ${na} × ${a[2]}− = 0. Formule: <b>${fm(sl.f)}</b>.`:q!==0?`De lading is ${q>0?'+':''}${q}, niet 0. Juist: ${sl.nc} × ${ionStr(c[0],c[2])} en ${sl.na} × ${ionStr(a[0],a[2],1)} → <b>${fm(sl.f)}</b>.`:`Wel neutraal, maar het kan met minder: kleinste verhouding ${sl.nc} : ${sl.na} → <b>${fm(sl.f)}</b>.`,'zoutformule')}},
+ stroom(){if(Math.random()<.6){const q=GENS.geleid.f();const ja=q.a==='ja';
+   P.innerHTML=labTop()+`<div class="slide">${head('Lab','Stroomtest')}<div class="slide-body"><div class="prompt" style="font-size:20px">${q.q.replace('Geleidt','Gaat het lampje branden bij').replace(' de stroom?','?')}</div><div class="lampw">${lampSvg(null)}</div>
+    <div class="opts"><button class="opt" data-i="0"><span class="k">1</span><span>💡 lampje brandt</span></button><button class="opt" data-i="1"><span class="k">2</span><span>⚫ lampje blijft uit</span></button></div><div id="fbox"></div></div></div>`;
+   $('#quit').onclick=labHome;P.querySelectorAll('.opt').forEach((b,i)=>b.onclick=()=>{const ci=ja?0:1;markOpts(ci,i);$('.lampw').innerHTML=lampSvg(ja);labDone(i===ci,q.w,q.th)});return}
+  const s=pickNew([['A','metaal'],['B','zout'],['C','moleculaire stof']].map(x=>x),x=>x[0]+Math.random());const k=s[1];const vast=k==='metaal';const opl=k==='zout';
+  P.innerHTML=labTop()+`<div class="slide">${head('Lab','Stroomtest')}<div class="slide-body"><div class="q">Proef 3: een onbekende stof wordt getest.</div>
+   <table class="gt"><tr><th></th><th>geleidt stroom?</th></tr><tr><td>stof vast</td><td>${vast?'💡 ja':'⚫ nee'}</td></tr><tr><td>${k==='metaal'?'oplossing in water':'oplossing in water'}</td><td>${k==='metaal'?'lost niet op':opl?'💡 ja':'⚫ nee'}</td></tr></table>
+   <div class="prompt" style="font-size:20px">Tot welke groep hoort de stof?</div>
+   <div class="opts">${['metaal','zout','moleculaire stof'].map((o,i)=>`<button class="opt" data-i="${i}"><span class="k">${i+1}</span><span>${o}</span></button>`).join('')}</div><div id="fbox"></div></div></div>`;
+  $('#quit').onclick=labHome;const ci=['metaal','zout','moleculaire stof'].indexOf(k);
+  P.querySelectorAll('.opt').forEach((b,i)=>b.onclick=()=>{markOpts(ci,i);labDone(i===ci,k==='metaal'?'Vast al geleiding: vrije elektronen. Dat kan alleen een metaal.':k==='zout'?'Vast geen geleiding, opgelost wel: de ionen komen pas vrij als het oplost. Zout.':'Nooit geleiding: geen vrij bewegende geladen deeltjes. Moleculaire stof.',k==='metaal'?'metaaleig':k==='zout'?'zouteig':'molrooster')})},
+ metaal(){if(Math.random()<.45){const ms=shuffle([['natrium','Na',1],['calcium','Ca',2],['magnesium','Mg',3],['ijzer','Fe',4],['koper','Cu',5],['goud','Au',6]]).slice(0,4);const want=[...ms].sort((a,b)=>a[2]-b[2]);let got=[];
+   const draw=()=>{$('#seq').innerHTML=`<ol class="seq-done">${got.map(m=>`<li>${m[0]} (${m[1]})</li>`).join('')}</ol><div class="seq-pool">${ms.filter(m=>!got.includes(m)).map(m=>`<button data-m="${m[1]}">${m[0]} (${m[1]})</button>`).join('')}</div>`;
+    P.querySelectorAll('[data-m]').forEach(b=>b.onclick=()=>{got.push(ms.find(m=>m[1]===b.dataset.m));draw();if(got.length===ms.length){const ok=got.every((m,i)=>m===want[i]);labDone(ok,`Van onedel naar edel: ${want.map(m=>m[0]).join(' → ')}. Hoe onedeler, hoe heftiger de reactie met water, zoutzuur en zuurstof.`,'edel')}})};
+   P.innerHTML=labTop()+`<div class="slide">${head('Lab','Metalenrace')}<div class="slide-body"><div class="q">Tik de metalen aan van <b>meest onedel</b> (reageert het heftigst) naar <b>meest edel</b>.</div><div id="seq"></div><div id="fbox"></div></div></div>`;
+   $('#quit').onclick=labHome;draw();return}
+  const T=pickNew([
+   ['natrium','koud water','reageert heftig, schiet over het water en sist (waterstof)','Natrium is zeer onedel: heftige reactie met koud water.'],
+   ['calcium','koud water','gasbelletjes en een witte troebeling','Calcium is onedel: Ca + 2 H<sub>2</sub>O → Ca(OH)<sub>2</sub> + H<sub>2</sub>. Het witte spul is calciumhydroxide.'],
+   ['magnesium','koud water','(bijna) niets','Magnesium reageert nauwelijks met koud water, wel langzaam met heet water.'],
+   ['magnesium','zoutzuur','heftig bruisen (waterstofgas)','Magnesium is onedel: met zoutzuur ontstaat snel waterstofgas.'],
+   ['ijzer','zoutzuur','langzaam belletjes','IJzer is minder onedel dan magnesium: het reageert langzaam met zoutzuur.'],
+   ['koper','zoutzuur','niets','Koper is (half)edel: reageert niet met zoutzuur.'],
+   ['ijzer','koud water','niets (op korte termijn)','IJzer roest wel, maar dat gaat heel langzaam. In een kwartier zie je niets.'],
+   ['magnesium','de vlam (zuurstof)','verbrandt met een fel wit licht','Magnesium brandt fel: kijk er niet te lang naar!'],
+   ['koper','de vlam (zuurstof)','wordt zwart aan de buitenkant (koperoxide)','Koper reageert alleen oppervlakkig: een zwart laagje koperoxide.']],x=>x[0]+x[1]);
+  const opts=shuffle([...new Set([T[2],'(bijna) niets','heftig bruisen (waterstofgas)','langzaam belletjes','reageert heftig, schiet over het water en sist (waterstof)','verbrandt met een fel wit licht'].filter(Boolean))]).filter((o,i,a)=>a.indexOf(o)===i);
+  const o4=[T[2],...opts.filter(o=>o!==T[2])].slice(0,4);const sh=shuffle(o4);const ci=sh.indexOf(T[2]);
+  P.innerHTML=labTop()+`<div class="slide">${head('Lab','Metalenrace')}<div class="slide-body"><div class="q">Proef 2</div><div class="prompt" style="font-size:21px">Je doet <b>${T[0]}</b> in <b>${T[1]}</b>. Wat zie je?</div>
+   <div class="opts">${sh.map((o,i)=>`<button class="opt" data-i="${i}"><span class="k">${i+1}</span><span>${o}</span></button>`).join('')}</div><div id="fbox"></div></div></div>`;
+  $('#quit').onclick=labHome;P.querySelectorAll('.opt').forEach((b,i)=>b.onclick=()=>{markOpts(ci,i);labDone(i===ci,T[3]+' Waterstofgas toon je aan met een brandende lucifer: een plofje (knalgas).','edel')})},
+ balans(){const R0=pickNew(REACT,x=>x.join());const sp=R0.map(x=>({f:x[0],side:x[1],w:x[2],k:1}));
+  const draw=()=>{const cnt=side=>{const o={};sp.filter(x=>x.side===side).forEach(x=>{for(const [e,n] of Object.entries(parseF(x.f)))o[e]=(o[e]||0)+n*x.k});return o};const L=cnt(0),Rr=cnt(1);const els=[...new Set([...Object.keys(L),...Object.keys(Rr)])];
+   const diff=sum(els.map(e=>(L[e]||0)-(Rr[e]||0)));const tilt=Math.max(-14,Math.min(14,diff*3));const bal=els.every(e=>L[e]===Rr[e]);
+   $('#beq').innerHTML=[0,1].map(side=>sp.map((x,i)=>x.side===side?`<span class="bsp"><button class="bstep" data-i="${i}" data-d="-1">−</button><b>${x.k}</b><button class="bstep" data-i="${i}" data-d="1">+</button><span class="bf">${fm(x.f)}</span></span>`:'').filter(Boolean).join('<span class="bplus">+</span>')).join('<span class="barrow">→</span>');
+   $('#bsc').innerHTML=`<svg viewBox="0 0 300 120" class="scale"><line x1="150" y1="30" x2="150" y2="110" stroke="currentColor" stroke-width="4"/><path d="M120 112 H180" stroke="currentColor" stroke-width="5"/><g transform="rotate(${-tilt} 150 30)" style="transition:transform .4s"><line x1="40" y1="30" x2="260" y2="30" stroke="currentColor" stroke-width="4"/><path d="M15 60 Q40 80 65 60" fill="${bal?'var(--good-bg)':'var(--pink-soft)'}" stroke="currentColor" stroke-width="2"/><line x1="40" y1="30" x2="20" y2="60" stroke="currentColor"/><line x1="40" y1="30" x2="60" y2="60" stroke="currentColor"/><path d="M235 60 Q260 80 285 60" fill="${bal?'var(--good-bg)':'var(--pink-soft)'}" stroke="currentColor" stroke-width="2"/><line x1="260" y1="30" x2="240" y2="60" stroke="currentColor"/><line x1="260" y1="30" x2="280" y2="60" stroke="currentColor"/><text x="40" y="96" text-anchor="middle" font-size="13" font-weight="700" fill="currentColor">links</text><text x="260" y="96" text-anchor="middle" font-size="13" font-weight="700" fill="currentColor">rechts</text></g><circle cx="150" cy="30" r="6" fill="currentColor"/></svg>`;
+   $('#btab').innerHTML=`<table class="gt"><tr><th>atoom</th>${els.map(e=>`<th>${e}</th>`).join('')}</tr><tr><td>links</td>${els.map(e=>`<td class="${L[e]===Rr[e]?'okc':'badc'}">${L[e]||0}</td>`).join('')}</tr><tr><td>rechts</td>${els.map(e=>`<td class="${L[e]===Rr[e]?'okc':'badc'}">${Rr[e]||0}</td>`).join('')}</tr></table>`;
+   P.querySelectorAll('.bstep').forEach(b=>b.onclick=()=>{const x=sp[+b.dataset.i];x.k=Math.max(1,Math.min(13,x.k+ +b.dataset.d));draw()})};
+  P.innerHTML=labTop()+`<div class="slide">${head('Lab','Weegschaal')}<div class="slide-body"><div class="q">${esc(R0.name||'')}Maak kloppend met de + en −. De weegschaal hangt recht als links en rechts evenveel atomen staan.</div><div id="beq" class="beq"></div><div id="bsc"></div><div id="btab" class="tw"></div>
+   <div class="acts"><button class="btn dark" id="bok">Controleer</button></div><div id="fbox"></div></div></div>`;
+  $('#quit').onclick=labHome;draw();
+  $('#bok').onclick=()=>{const ok=sp.every(x=>x.k===x.w);const ks=sp.map(x=>x.k);const g=ks.reduce(gcd);const prop=sp.every(x=>x.k*sp[0].w===x.w*sp[0].k);
+   P.querySelectorAll('.bstep').forEach(b=>b.disabled=true);$('#bok').disabled=true;
+   const ans=[0,1].map(side=>sp.filter(x=>x.side===side).map(x=>(x.w>1?x.w+' ':'')+fm(x.f)).join(' + ')).join(' → ');
+   labDone(ok,ok?`${ans}`:prop&&g>1?`Het klopt wel, maar alle getallen kunnen door ${g}: gebruik de kleinste getallen. ${ans}`:`Juist is: ${ans}`,'kloppend')}},
+ kook(){const set=pickNew(KOOKSETS,x=>x.t);const items=shuffle(set.s).slice(0,Math.min(4,set.s.length));const want=[...items].sort((a,b)=>a[2]-b[2]);let got=[];
+  const draw=()=>{$('#seq').innerHTML=`<ol class="seq-done">${got.map(m=>`<li>${m[0]} <span class="src">${fm(m[1])}</span></li>`).join('')}</ol><div class="seq-pool">${items.filter(m=>!got.includes(m)).map((m,i)=>`<button data-k="${items.indexOf(m)}">${m[0]} <span class="src">${fm(m[1])}</span></button>`).join('')}</div>`;
+   P.querySelectorAll('[data-k]').forEach(b=>b.onclick=()=>{got.push(items[+b.dataset.k]);draw();if(got.length===items.length){const ok=got.every((m,i)=>m===want[i]);labDone(ok,`${want.map(m=>`${m[0]} ${m[2]} K`).join(' < ')}. ${set.why}`,set.th)}})};
+  P.innerHTML=labTop()+`<div class="slide">${head('Lab','Kookpuntladder')}<div class="slide-body"><div class="q">${set.t}</div><div class="prompt" style="font-size:20px">Tik aan van <b>laagste</b> naar <b>hoogste</b> ${set.sm?'smeltpunt':'kookpunt'}.</div><div id="seq"></div><div id="fbox"></div></div></div>`;
+  $('#quit').onclick=labHome;draw()}
+};
+function lampSvg(on){return `<svg viewBox="0 0 120 120" class="lamp"><circle cx="60" cy="50" r="30" fill="${on?'#FFE066':on===false?'var(--chip)':'var(--chip)'}" stroke="currentColor" stroke-width="3" ${on?'class="glow"':''}/><rect x="46" y="80" width="28" height="18" rx="3" fill="#9aa3b5" stroke="currentColor" stroke-width="2"/><path d="M50 50 q10 -16 20 0" stroke="currentColor" fill="none" stroke-width="2"/>${on?'<g stroke="#F2B705" stroke-width="3"><line x1="60" y1="8" x2="60" y2="0"/><line x1="18" y1="50" x2="8" y2="50"/><line x1="102" y1="50" x2="112" y2="50"/><line x1="30" y1="20" x2="23" y2="13"/><line x1="90" y1="20" x2="97" y2="13"/></g>':''}</svg>`}
+/* reacties: [formule, kant (0 links/1 rechts), juiste coëfficiënt] */
+const REACT=[
+ [['H2O',0,2],['H2',1,2],['O2',1,1]],[['Na',0,2],['Cl2',0,1],['NaCl',1,2]],[['K',0,2],['Cl2',0,1],['KCl',1,2]],
+ [['CH4',0,1],['O2',0,2],['CO2',1,1],['H2O',1,2]],[['C3H8',0,1],['O2',0,5],['CO2',1,3],['H2O',1,4]],[['C4H10',0,2],['O2',0,13],['CO2',1,8],['H2O',1,10]],
+ [['Fe',0,4],['O2',0,3],['Fe2O3',1,2]],[['Al2O3',0,2],['Al',1,4],['O2',1,3]],[['La',0,2],['F2',0,3],['LaF3',1,2]],[['Li',0,2],['S',0,1],['Li2S',1,1]],
+ [['Mg',0,2],['O2',0,1],['MgO',1,2]],[['Ca',0,1],['H2O',0,2],['Ca(OH)2',1,1],['H2',1,1]],[['N2',0,1],['H2',0,3],['NH3',1,2]],[['CH4N2O',0,1],['H2O',0,1],['CO2',1,1],['NH3',1,2]],
+ [['B2O3',0,2],['C',0,7],['B4C',1,1],['CO',1,6]],[['C2H6O',0,1],['O2',0,3],['CO2',1,2],['H2O',1,3]],[['H2',0,1],['Cl2',0,1],['HCl',1,2]],[['Al',0,4],['O2',0,3],['Al2O3',1,2]]];
+const KOOKSETS=[
+ {t:'Alkanen: alleen C en H, steeds een C-atoom langer.',s:[['methaan','CH4',112],['ethaan','C2H6',185],['propaan','C3H8',231],['butaan','C4H10',273],['pentaan','C5H12',309],['hexaan','C6H14',342]],why:'Groter molecuul → grotere massa → sterkere vanderwaalsbinding → hoger kookpunt.',th:'vdw'},
+ {t:'Drie alcoholen.',s:[['methanol','CH4O',338],['ethanol','C2H6O',351],['glycol','C2H6O2',470]],why:'Allemaal H-bruggen. Ethanol is groter dan methanol; glycol heeft twee –OH groepen, dus veel meer H-bruggen.',th:'hbrug'},
+ {t:'Bijna even zware moleculen, wel of geen H-bruggen.',s:[['methaan','CH4',112],['water','H2O',373],['zuurstof','O2',90],['methanol','CH4O',338]],why:'Water en methanol vormen waterstofbruggen (–OH), methaan en zuurstof alleen zwakke vanderwaalsbindingen.',th:'hbrug'},
+ {t:'Zelfde formule C<sub>5</sub>H<sub>12</sub>, andere vorm.',s:[['pentaan (lange keten)','C5H12',309],['dimethylpropaan (bolletje)','C5H12',283],['butaan','C4H10',273]],why:'Vertakt (bolvormig) geeft minder contactoppervlak dan een rechte keten: zwakkere vanderwaals. Butaan is lichter.',th:'vdw'},
+ {t:'Waterstofverbindingen uit groep 16 (figuur 6 in het boek).',s:[['diwaterstofsulfide','H2S',213],['water','H2O',373],['methaan','CH4',112]],why:'H<sub>2</sub>S is zwaarder dan water maar kookt veel lager: water heeft waterstofbruggen, H<sub>2</sub>S niet.',th:'hbrug'},
+ {t:'Smeltpunten van zouten (oxiden van groep 2).',sm:1,s:[['bariumoxide','BaO',2286],['calciumoxide','CaO',2886],['magnesiumoxide','MgO',3098],['natriumchloride','NaCl',1074]],why:'Hogere ladingen (2+/2−) en kleinere ionen (kleinere afstand) geven een sterkere ionbinding. NaCl heeft maar 1+ en 1−.',th:'ionrooster'},
+ {t:'Met en zonder –NH<sub>2</sub>.',s:[['propaan','C3H8',231],['methaanamine','CH5N',267],['ethaan','C2H6',185]],why:'Methaanamine is lichter dan propaan, maar vormt H-bruggen (–NH<sub>2</sub>): 36 K hoger.',th:'hbrug'}
+];
+
+/* ---------- Sorteerband: 60 seconden metaal / zout / moleculair ---------- */
+function bandStart(){show('play');G={m:'band',score:0,combo:0,n:0,ok:0,end:performance.now()+60000,mist:[]};
+ P.innerHTML=`<div class="playbar"><button class="btn small ghost" id="quit">Stoppen</button><span class="count" id="bsc">0 punten</span><span class="timer" id="btm">60</span></div>
+ <div class="slide">${head('Sorteerband','60 seconden')}<div class="slide-body"><div class="q">Op welke band hoort deze stof?</div><div class="bandstof"><div class="prompt big" id="bst"></div></div><span class="combo" id="bcb" hidden></span>
+ <div class="buckets"><button data-b="metaal">⚙️<br>metaal</button><button data-b="zout">🧂<br>zout</button><button data-b="moleculair">💧<br>moleculair</button></div><div class="src" id="bfb">&nbsp;</div></div></div>`;
+ $('#quit').onclick=()=>{clearInterval(G.timer);goHome()};
+ P.querySelectorAll('[data-b]').forEach(b=>b.onclick=()=>bandAns(b));bandNext();G.timer=setInterval(bandTick,100)}
+function bandNext(){let f;do{f=pick(STOFSOORT)}while(f===G.cur);G.cur=f;const el=$('#bst');el.innerHTML=fm(f);el.classList.remove('pop');void el.offsetWidth;el.classList.add('pop');P.querySelectorAll('[data-b]').forEach(b=>b.className='')}
+function bandAns(b){if(!G||G.m!=='band'||G.over)return;const k=kind(G.cur);const ok=b.dataset.b===k;G.n++;
+ if(ok){G.ok++;G.combo++;G.score+=1+Math.floor(G.combo/5);b.className='good'}else{G.combo=0;G.end-=3000;b.className='bad';G.mist.push(G.cur)}
+ $('#bsc').textContent=G.score+' punten';const cb=$('#bcb');cb.hidden=G.combo<5;cb.textContent=`combo ×${1+Math.floor(G.combo/5)}`;
+ $('#bfb').innerHTML=ok?'&nbsp;':`${fm(G.cur)} is ${k==='moleculair'?'een moleculaire stof (alleen niet-metalen)':k==='zout'?'een zout (metaal + niet-metaal)':'een metaal'}. −3 s`;
+ setTimeout(()=>{if(G&&G.m==='band'&&!G.over)bandNext()},ok?180:650)}
+function bandTick(){const left=Math.max(0,(G.end-performance.now())/1000);const t=$('#btm');if(!t)return;t.textContent=Math.ceil(left);t.classList.toggle('low',left<10);if(left<=0)bandEnd()}
+function bandEnd(){clearInterval(G.timer);G.over=true;const best=S.band||0;const rec2=G.score>best;if(rec2){S.band=G.score;confetti()}rec('0',G.ok>=G.n*.8);save();
+ P.innerHTML=`<div class="slide">${head('Sorteerband','Klaar')}<div class="slide-body"><div class="q">${rec2?'Nieuw record!':'Score'}</div><div class="big">${G.score}</div><div class="count">${G.ok} van ${G.n} goed · record ${Math.max(best,G.score)}</div>
+ ${G.mist.length?`<div class="fb bad"><div class="t">Fout gesorteerd</div><div class="tip">${[...new Set(G.mist)].map(f=>`${fm(f)} = ${kind(f)}`).join(' · ')}</div>${thCard('drie')}</div>`:''}
+ <div class="acts"><button class="btn primary" id="again">Nog een keer</button><button class="btn ghost" id="home2">Naar start</button></div></div></div>`;
+ $('#again').onclick=bandStart;$('#home2').onclick=goHome;$('#again').focus()}
+
+/* ---------- Leerpad: theorie in kleine kaartjes met controlevragen ---------- */
+/* LP = { sec: [ [titel, html|fn, [vraag, goed, 'fout|fout', uitleg]?], ... ] } */
+function lpState(){if(!S.lp)S.lp={};if(!S.lpd)S.lpd={};return S}
+function lpStart(sec,from){lpState();const cards=LP[sec];if(!cards)return;let i=from!=null?from:(S.lpd[sec]?0:Math.min(S.lp[sec]||0,cards.length-1));
+ G={m:'lp',sec,i,cards,redo:[],ok:0,asked:0,answered:{}};show('play');lpDraw()}
+function lpDraw(){const {sec,cards}=G;const i=G.i;const c=cards[i];const s=SECS.find(x=>x.id===sec);const qz=c[2];const done=G.answered[i];
+ const body=typeof c[1]==='function'?c[1]():c[1];
+ P.innerHTML=`<div class="playbar"><button class="btn small ghost" id="quit">Stoppen</button><span class="bar"><i style="width:${Math.round((i)/cards.length*100)}%"></i></span><span class="count">${i+1}/${cards.length}</span></div>
+ <div class="slide lpcard">${head('Leerpad · '+(sec==='0'?'basis':sec),esc(s?s.t:''))}<div class="slide-body">
+  <h2 class="lpt">${c[0]}</h2><div class="lpb">${body}</div>
+  ${qz?`<div class="lpq"><div class="q">Even checken</div><div class="prompt" style="font-size:19px">${qz[0]}</div><div id="lpo"></div><div id="fbox"></div></div>`:''}
+  <div class="lpnav"><button class="btn ghost" id="lpprev" ${i===0?'disabled':''}>← Terug</button><button class="btn primary" id="lpnext" ${qz&&!done?'disabled':''}>${i===cards.length-1?'Afronden ✓':'Verder →'}</button></div>
+ </div></div>`;
+ $('#quit').onclick=()=>{save();goHome()};$('#lpprev').onclick=()=>{G.i--;lpDraw()};$('#lpnext').onclick=lpNext;
+ if(qz){const opts=shuffle([qz[1],...qz[2].split('|')]);$('#lpo').innerHTML=mcButtons(opts);
+  if(done){markOpts(opts.indexOf(qz[1]),opts.indexOf(qz[1]));$('#fbox').innerHTML=`<div class="fb good"><div class="tip">${qz[3]}</div></div>`}
+  else P.querySelectorAll('#lpo .opt').forEach((b,j)=>b.onclick=()=>{const ok=opts[j]===qz[1];markOpts(opts.indexOf(qz[1]),j);G.asked++;if(ok)G.ok++;else G.redo.push(i);G.answered[i]=1;
+   $('#fbox').innerHTML=`<div class="fb ${ok?'good':'bad'}"><div class="t">${ok?pick(['Goed!','Klopt!','Precies!']):'Niet helemaal.'}</div><div class="tip">${qz[3]}</div></div>`;const n=$('#lpnext');n.disabled=false;n.focus()})}
+ S.lp[sec]=i;save();window.scrollTo(0,0)}
+function lpNext(){const {cards}=G;if(G.i<cards.length-1){G.i++;lpDraw();return}
+ lpState();S.lpd[G.sec]=1;S.lp[G.sec]=0;markDay();save();confetti();const sec=G.sec;const nxt=SECS[SECS.findIndex(x=>x.id===sec)+1];
+ const redo=[...new Set(G.redo)];
+ P.innerHTML=`<div class="slide">${head('Leerpad '+(sec==='0'?'basis':sec),'Klaar')}<div class="slide-body"><div class="q">Controlevragen in één keer goed</div><div class="big">${G.ok}<span style="font-size:.45em;color:var(--muted)"> / ${G.asked}</span></div>
+  ${redo.length?`<div class="fb bad"><div class="t">Kijk hier nog even naar</div><div class="tip">${redo.map(i=>`<button class="btn small ghost" data-go="${i}" style="margin:3px">${cards[i][0]}</button>`).join('')}</div></div>`:'<div>Alles in één keer goed. Mooi!</div>'}
+  <div class="nextbox"><h3>Wat nu?</h3><div class="choice"><button class="btn primary" id="lpprac">Oefenronde ${sec==='0'?'basis':sec}</button><span>Test of het blijft hangen. Fouten komen terug met uitleg.</span></div>
+  ${nxt&&LP[nxt.id]?`<div class="choice"><button class="btn ghost" id="lpnxt">Leerpad ${nxt.id}: ${esc(nxt.t)} →</button><span>Of leer eerst door.</span></div>`:''}
+  <div class="choice"><button class="btn ghost" id="lphome">Naar start</button></div></div></div></div>`;
+ P.querySelectorAll('[data-go]').forEach(b=>b.onclick=()=>lpStart(sec,+b.dataset.go));$('#lpprac').onclick=()=>practice(sec);const n=$('#lpnxt');if(n)n.onclick=()=>lpStart(nxt.id);$('#lphome').onclick=goHome;$('#lpprac').focus()}
+function lpBox(){const el=$('#lpbox');if(!el)return;lpState();const todo=SECS.find(s=>LP[s.id]&&!S.lpd[s.id]);const nDone=SECS.filter(s=>S.lpd[s.id]).length;
+ el.innerHTML=`<button class="mode main lpmode" id="lpgo"><span class="lab">Leren</span><span class="tag" style="text-transform:none">${nDone} van ${SECS.length} paragrafen geleerd</span><h3>${todo?(S.lp[todo.id]?'Ga verder: ':'Begin: ')+esc(todo.t):'Alles doorlopen. Herhalen?'}</h3><p>Geen boek nodig: de theorie in korte kaartjes, één idee per kaart, met af en toe een controlevraag. Ongeveer 10 minuten per paragraaf.</p></button>`;
+ $('#lpgo').onclick=()=>lpStart((todo||SECS[0]).id)}
+
+const LP={
+'0':[
+ ['De grote vraag',`<p>Waarom kookt water pas bij 100 °C, terwijl zuurstof al bij −183 °C kookt? Waarom buigt een paperclip, maar breekt een zoutkristal?</p><p>Het antwoord zit steeds in <b>hoe deeltjes aan elkaar vastzitten</b>: de bindingen. Daar gaat dit hoofdstuk over.</p>`],
+ ['Valentie-elektronen',`<p>Een atoom heeft elektronen in schillen. Alleen de buitenste doen mee bij bindingen: de <b>valentie-elektronen</b>.</p><p>Groep 1 heeft er 1, groep 2 heeft er 2, groep 16 heeft er 6, groep 17 heeft er 7.</p><p>Edelgassen (groep 18) hebben er 8: een volle schil. Daar streeft elk atoom naar.</p>`,['Hoeveel valentie-elektronen heeft chloor (groep 17)?','7','1|17','Groep 17 → 7. Het wil er nog 1 bij.']],
+ ['Drie manieren om vol te raken',`<p>Atomen krijgen een volle buitenste schil door:</p><div class="rule">1. elektronen <b>delen</b> → atoombinding (moleculen)<br>2. elektronen <b>gemeenschappelijk</b> gebruiken → metaalbinding<br>3. elektronen <b>overgeven</b> → ionbinding (zouten)</div><p>Elke manier geeft een andere soort stof.</p>`],
+ ['Drie soorten stoffen',`${TH.drie.h}<p>Je herkent ze aan de formule. Dat is het belangrijkste trucje van het hoofdstuk.</p>`,['Wat voor stof is CaCl<sub>2</sub>?','zout','metaal|moleculaire stof','Ca is een metaal, Cl een niet-metaal: zout.']],
+ ['Metaal of niet-metaal?',`<p>In het periodiek systeem staan de <b>metalen</b> links en in het midden (Na, Mg, Fe, Cu, Au). De <b>niet-metalen</b> staan rechtsboven: H, C, N, O, F, P, S, Cl, Br, I en de edelgassen.</p><p>Tip: alles wat je als gas of in je lichaam veel tegenkomt (H, C, N, O) is een niet-metaal.</p>`,['Welke stof is een moleculaire stof?','CO<sub>2</sub>','NaCl|Fe','C en O zijn allebei niet-metalen.']]],
+'2.1':[
+ ['Delen is ook hebben',`<p>Twee waterstofatomen hebben elk 1 elektron en willen er 2. Oplossing: ze <b>delen</b> hun elektronen.</p><div class="ex" style="font-size:22px;text-align:center">H• + •H → H<b>:</b>H = H–H</div><p>Dat gedeelde paar is een <b>atoombinding</b> (ook: covalente binding). In een tekening is het een streepje.</p>`],
+ ['Moleculen',`<p>Atomen die met atoombindingen aan elkaar vastzitten vormen een <b>molecuul</b>. Dat kan alleen tussen <b>niet-metalen</b>.</p><p>Water, zuurstof, suiker, alcohol: allemaal moleculaire stoffen.</p>`,['Kan natrium (Na) een atoombinding vormen in een molecuul?','nee, natrium is een metaal','ja, met 1 streepje|ja, met 2 streepjes','Moleculen bestaan alleen uit niet-metalen.']],
+ ['Armpjes: covalentie',`<p>Elk atoom heeft een vast aantal "armpjes" om bindingen te maken: de <b>covalentie</b>.</p>${TH.covalentie.h}`,['Hoeveel bindingen maakt stikstof?','3','1|5','N staat in groep 15: nog 3 nodig tot 8.']],
+ ['Structuurformules',`<p>Met de armpjes teken je hoe een molecuul eruitziet: de <b>structuurformule</b>.</p><div class="ex" style="font-family:var(--f-mono)">water: H–O–H<br>ammoniak: H–N–H met nog een H aan N<br>methaan: C met 4 H eromheen</div><p>Elk atoom heeft precies zoveel streepjes als zijn covalentie.</p>`],
+ ['Dubbel en driedubbel',`<p>Soms delen atomen meer dan één paar.</p><div class="ex" style="font-size:20px;font-family:var(--f-mono)">O=O &nbsp; (zuurstof)<br>N≡N &nbsp; (stikstof)<br>O=C=O &nbsp; (koolstofdioxide)</div><p>Tel de streepjes: O heeft er steeds 2, N 3, C 4. Klopt!</p>`,['Hoe zit CO<sub>2</sub> in elkaar?','O=C=O','O–C–O|C=O=O','C heeft 4 armen nodig, elke O 2: twee dubbele bindingen.']],
+ ['Reactie of niet?',`${TH.reactie.h}<div class="ex">Water koken: H<sub>2</sub>O(l) → H<sub>2</sub>O(g). Moleculen blijven H<sub>2</sub>O.<br>Water ontleden: 2 H<sub>2</sub>O → 2 H<sub>2</sub> + O<sub>2</sub>. Nieuwe moleculen.</div>`,['Wat gebeurt er met de O–H bindingen als water kookt?','niets, ze blijven heel','ze breken|ze worden dubbel','Koken is een faseovergang. Alleen de moleculen gaan uit elkaar.']],
+ ['Namen geven',`${TH.naam.h}`,['Wat is de naam van N<sub>2</sub>O<sub>4</sub>?','distikstoftetraoxide','stikstofoxide|tetrastikstofdioxide','2 N = distikstof, 4 O = tetraoxide.']],
+ ['Namen die je gewoon moet kennen',`${TH.triviaal.h}<p>Ezelsbrug voor de elementen die als duo voorkomen: <b>HONClBrIF</b> (H<sub>2</sub>, O<sub>2</sub>, N<sub>2</sub>, Cl<sub>2</sub>, Br<sub>2</sub>, I<sub>2</sub>, F<sub>2</sub>).</p>`,['Wat is de formule van ammoniak?','NH<sub>3</sub>','NH<sub>4</sub>|N<sub>2</sub>H','Triviale naam: ammoniak = NH<sub>3</sub>.']]],
+'2.2':[
+ ['Binnen en tussen',`<p>Er zijn twee soorten bindingen bij moleculaire stoffen:</p><div class="rule"><b>binnen</b> een molecuul: atoombindingen (heel sterk)<br><b>tussen</b> moleculen: vanderwaalsbinding en soms waterstofbruggen (veel zwakker)</div><p>Bij koken en smelten breken alleen de bindingen <b>tussen</b> de moleculen.</p>`],
+ ['De vanderwaalsbinding',`<p>Alle moleculen trekken elkaar een beetje aan: de <b>vanderwaalsbinding</b>. Hoe groter en zwaarder het molecuul, hoe sterker.</p><table class="gt"><tr><td>methaan CH<sub>4</sub></td><td>kookt bij 112 K</td></tr><tr><td>propaan C<sub>3</sub>H<sub>8</sub></td><td>231 K</td></tr><tr><td>hexaan C<sub>6</sub>H<sub>14</sub></td><td>342 K</td></tr></table><p>Sterkere binding = meer warmte nodig = hoger kookpunt.</p>`,['Welke kookt het hoogst?','butaan C<sub>4</sub>H<sub>10</sub>','ethaan C<sub>2</sub>H<sub>6</sub>|methaan CH<sub>4</sub>','Grootste molecuul, sterkste vanderwaals.']],
+ ['Lang of bolletje',`<p>Twee moleculen met dezelfde formule C<sub>5</sub>H<sub>12</sub>:</p><div class="ex">lange sliert (pentaan): 309 K<br>bolletje (dimethylpropaan): 283 K</div><p>Lange slierten raken elkaar over een groter oppervlak, net als spaghetti versus knikkers. Meer contact = sterkere vanderwaals.</p>`],
+ ['De waterstofbrug',`${TH.hbrug.h}`,['Welke stof vormt waterstofbruggen?','ethanol (heeft –OH)','methaan|zuurstof','Alleen stoffen met H aan O of N.']],
+ ['Daarom is water bijzonder',`<p>Water is een klein molecuul (18 u). Op basis van zijn massa zou het rond −80 °C koken. Maar het kookt bij <b>100 °C</b>.</p><p>De reden: elk watermolecuul maakt waterstofbruggen met zijn buren. Die moet je eerst allemaal breken.</p><p>Zonder waterstofbruggen zou er geen vloeibaar water op aarde zijn.</p>`],
+ ['Oplossen: soort zoekt soort',`${TH.oplos.h}`,['Lost suiker (vol –OH groepen) goed op in water?','ja, hydrofiel','nee, hydrofoob|alleen in wasbenzine','Veel –OH → veel H-bruggen met water.']],
+ ['Olie en water',`<p>Watermoleculen houden elkaar stevig vast met waterstofbruggen. Een oliemolecuul kan dat niet. Daarom duwt het water de olie weg: ze mengen niet.</p><p>Zeep heeft een kop die van water houdt en een staart die van vet houdt. Zo neemt zeep vet mee in het water.</p>`],
+ ['Moleculaire stoffen en stroom',`${TH.molrooster.h}`,['Geleidt suikerwater stroom?','nee','ja|alleen warm','Suiker is een moleculaire stof: geen vrije geladen deeltjes.']]],
+'2.3':[
+ ['Een zee van elektronen',`<p>Metaalatomen houden hun valentie-elektronen niet goed vast. In een metaal laten ze ze los. Er blijven positieve <b>atoomresten</b> over, op vaste plekken, in een zee van vrij bewegende elektronen.</p><p>De aantrekking tussen die + resten en de − elektronen is de <b>metaalbinding</b>.</p>`],
+ ['Daarom geleiden metalen',`<p>Stroom = bewegende lading. Een metaal heeft vrije elektronen die kunnen bewegen. Dus metalen geleiden stroom, vast én vloeibaar.</p><p>Die vrije elektronen voeren ook warmte snel af. Daarom voelt metaal koud aan.</p>`,['Waardoor geleidt koper stroom?','vrije elektronen','ionen|moleculen','De valentie-elektronen bewegen vrij door het metaal.']],
+ ['Daarom kun je metaal buigen',`<p>Duw je op een metaal, dan schuiven lagen atoomresten langs elkaar. De elektronenzee gaat gewoon mee, de binding blijft. Het metaal vervormt in plaats van te breken.</p><p>Zo kun je een paperclip buigen en goud tot flinterdun bladgoud slaan.</p>`],
+ ['Formule van een metaal',`<p>Een metaal bestaat uit één soort atomen, zonder moleculen. De formule is gewoon het symbool:</p><div class="ex">ijzer Fe(s) · koper Cu(s) · goud Au(s) · kwik Hg(l)</div><p>Kwik is als enige metaal vloeibaar bij kamertemperatuur.</p>`],
+ ['Legeringen',`${TH.legering.h}`,['Waarom is brons harder dan koper?','de tinatomen verstoren de lagen, die schuiven minder','brons heeft ionbindingen|brons is zwaarder','Andere atoomgrootte → lagen haken achter elkaar.']],
+ ['Edel en onedel',`${TH.edel.h}`,['Welk metaal reageert het heftigst met water?','natrium','koper|goud','Natrium is zeer onedel.']]],
+'2.4':[
+ ['Elektronen overgeven',`<p>Natrium heeft 1 valentie-elektron te veel, chloor komt er 1 tekort. Natrium geeft het elektron aan chloor.</p><div class="ex" style="font-size:20px;text-align:center">Na + Cl → Na<sup>+</sup> + Cl<sup>−</sup></div><p>Nu hebben ze allebei een volle schil, maar ze zijn geladen: het zijn <b>ionen</b>.</p>`],
+ ['Ladingen voorspellen',`${TH.ion.h}`,['Welk ion vormt magnesium (groep 2)?','Mg<sup>2+</sup>','Mg<sup>2−</sup>|Mg<sup>+</sup>','Het staat 2 elektronen af.']],
+ ['De ionbinding',`<p>Plus en min trekken elkaar aan. Die aantrekking is de <b>ionbinding</b>, heel sterk. Miljarden ionen stapelen zich netjes afwisselend op: het <b>ionrooster</b>, een kristal.</p><p>Daarom hebben zouten een hoog smeltpunt: keukenzout smelt pas bij 801 °C.</p>`],
+ ['De formule van een zout',`${TH.zoutformule.h}<p>Oefen het in het Lab: <b>Zoutfabriek</b>.</p>`,['Wat is de formule van calciumchloride (Ca<sup>2+</sup>, Cl<sup>−</sup>)?','CaCl<sub>2</sub>','CaCl|Ca<sub>2</sub>Cl','2+ heeft twee keer 1− nodig.']],
+ ['Zouten en stroom',`<p>Een zout bevat geladen deeltjes, maar in een vast kristal zitten ze vast. Dus:</p><div class="rule">vast zout: geleidt <b>niet</b><br>gesmolten of opgelost: geleidt <b>wel</b> (ionen bewegen vrij)</div>`,['Geleidt een zoutkristal stroom?','nee, de ionen zitten vast','ja, er zijn ionen|ja, vrije elektronen','Geladen deeltjes moeten ook kunnen bewegen.']],
+ ['Bros als glas',`<p>Duw je op een zoutkristal, dan schuift een laag ionen op. Plotseling staan plus tegenover plus en min tegenover min. Die stoten elkaar af en het kristal breekt.</p><p>Metaal buigt, zout breekt. Nu weet je waarom.</p>`],
+ ['Het hele hoofdstuk in één tabel',`<table class="gt"><tr><th></th><th>moleculair</th><th>metaal</th><th>zout</th></tr><tr><td>atomen</td><td>niet-metalen</td><td>metaal</td><td>metaal + niet-metaal</td></tr><tr><td>binding</td><td>atoombinding + vanderwaals/H-brug</td><td>metaalbinding</td><td>ionbinding</td></tr><tr><td>smeltpunt</td><td>vaak laag</td><td>vaak hoog</td><td>hoog</td></tr><tr><td>stroom</td><td>nooit</td><td>altijd</td><td>alleen gesmolten/opgelost</td></tr><tr><td>vervormen</td><td>–</td><td>buigt</td><td>breekt (bros)</td></tr></table>`,['Welke stof geleidt alleen als hij gesmolten of opgelost is?','zout','metaal|moleculaire stof','Dan pas bewegen de ionen vrij.']]]
+};
+
+const $=s=>document.querySelector(s);
+const esc=s=>String(s).replace(/[&<>"]/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;'}[c]));
+const shuffle=a=>{a=[...a];for(let i=a.length-1;i>0;i--){const j=Math.random()*(i+1)|0;[a[i],a[j]]=[a[j],a[i]]}return a};
+const pick=a=>a[Math.random()*a.length|0];
+const KEY='chem-h2-v1';
+let S={sec:{},mc:{},done:0,days:[],best:0,bouw:{},lab:{},band:0};
+try{const r=localStorage.getItem(KEY);if(r)S=Object.assign(S,JSON.parse(r))}catch(e){}
+const save=()=>{try{localStorage.setItem(KEY,JSON.stringify(S))}catch(e){}};
+const today=()=>new Date().toISOString().slice(0,10);
+function markDay(){const t=today();if(!S.days.includes(t)){S.days.push(t);S.days=S.days.slice(-60)}}
+function streak(){const set=new Set(S.days);let d=new Date(),n=0;if(!set.has(d.toISOString().slice(0,10)))d.setDate(d.getDate()-1);while(set.has(d.toISOString().slice(0,10))){n++;d.setDate(d.getDate()-1)}return n}
+function rec(sec,ok){const a=S.sec[sec]||(S.sec[sec]=[]);a.push(ok?1:0);if(a.length>20)a.shift();S.done++;markDay()}
+const score=sec=>{const a=S.sec[sec]||[];return a.length?sum(a)/Math.max(a.length,10):0};
+const P=$('#play');let G=null;
+function show(v){$('#home').hidden=v!=='home';P.hidden=v!=='play';window.scrollTo(0,0)}
+function goHome(){if(G&&G.timer)clearInterval(G.timer);G=null;save();renderHome();show('home')}
+function renderHome(){
+  $('#secs').innerHTML=SECS.map(s=>{const m=score(s.id);return `<div class="sec"><span class="num">${s.id==='0'?'0':s.id}</span><div><h3>${esc(s.t)}</h3><p>${esc(s.s)}</p><span class="bar"><i style="width:${Math.round(m*100)}%"></i></span></div><div class="acts"><button class="btn small lp" data-lp="${s.id}">${S.lpd&&S.lpd[s.id]?'✓ Leerpad':'▶ Leerpad'}</button><button class="btn small ghost" data-u="${s.id}">Uitleg</button><button class="btn small primary" data-o="${s.id}">Oefenen</button></div></div>`}).join('');
+  $('#tools').innerHTML=Object.entries(GENS).map(([k,g])=>`<button class="btn small ghost" data-g="${k}"><span class="src">${g.sec==='0'?'basis':g.sec}</span> ${esc(g.t)}</button>`).join('');
+  try{lpBox()}catch(e){}$('#stDone').textContent=S.done;$('#stStreak').textContent=streak();$('#stBest').textContent=S.best?nf(S.best):'–';
+  const bp=bouwPct();$('#bouwTag').textContent=`${Math.round(bp*BLEVELS.length)} van ${BLEVELS.length} moleculen`;$('#bandTag').textContent=S.band?`record ${S.band}`:'nog geen record';
+}
+$('#secs').addEventListener('click',e=>{const u=e.target.closest('[data-u]'),o=e.target.closest('[data-o]');if(u)uitleg(u.dataset.u);if(o)practice(o.dataset.o);const l=e.target.closest('[data-lp]');if(l)lpStart(l.dataset.lp)});
+$('#tools').addEventListener('click',e=>{const b=e.target.closest('[data-g]');if(b)trainer(b.dataset.g)});
+$('#toets').onclick=toets;$('#spiek').onclick=spiek;$('#bouw').onclick=bouwHome;$('#lab').onclick=labHome;$('#band').onclick=bandStart;$('#flits').onclick=()=>flits();
+function askReset(){$('#resetBox').innerHTML='<span>Alle voortgang wissen?</span><button class="btn small dark" id="rsY">Ja, wissen</button><button class="btn small ghost" id="rsN">Annuleer</button>';
+  $('#rsY').onclick=()=>{S={sec:{},mc:{},done:0,days:[],best:0,bouw:{},lab:{},band:0};save();location.reload()};$('#rsN').onclick=()=>{$('#resetBox').innerHTML='<button class="btn ghost small" id="resetBtn">Voortgang wissen</button>';$('#resetBtn').onclick=askReset}}
+$('#resetBtn').onclick=askReset;
+const head=(l,r)=>`<div class="slide-head"><span>${l}</span><span>${r}</span></div>`;
+function topbar(done,total,label='Stoppen'){return `<div class="playbar"><button class="btn small ghost" id="quit">${label}</button>${total?`<span class="bar"><i style="width:${Math.round(done/total*100)}%"></i></span><span class="count">${done}/${total}</span>`:`<span class="count" style="flex:1;text-align:right">${done}</span>`}</div>`}
+function mcButtons(labels){return `<div class="opts">${labels.map((o,i)=>`<button class="opt" data-i="${i}"><span class="k">${i+1}</span><span>${o}</span></button>`).join('')}</div>`}
+function markOpts(ci,chosen){P.querySelectorAll('.opt').forEach((b,i)=>{b.disabled=true;b.classList.add(i===ci?'good':i===chosen?'bad':'dim')})}
+function parseNum(v){const t=String(v).trim().replace(/\s/g,'').replace('%','').replace(',','.');if(!/^[-+]?\d*\.?\d+$/.test(t))return NaN;return parseFloat(t)}
+/* één vraag: q = {q, mc, opts, a, tol, u, w, th} */
+function ask(q,title,right,top,cb,opts={}){
+  const isMC=!!q.mc;let labels;if(isMC){labels=q.keep?q.opts:shuffle(q.opts)}
+  P.innerHTML=top+`<div class="slide">${head(title,right)}<div class="slide-body">${opts.again?'<div class="pill" style="align-self:flex-start">Herkansing: deze ging eerder fout</div>':''}<div class="prompt" style="font-size:clamp(18px,4vw,22px);font-weight:600">${q.q}</div>
+   ${isMC?mcButtons(labels):`<form class="typerow" id="nf" autocomplete="off"><input id="ni" inputmode="decimal" placeholder="antwoord${q.u?' in '+q.u:''}" aria-label="Antwoord"><button class="btn dark" type="submit" id="nb">Controleer</button></form>`}
+   <div id="fbox"></div></div></div>`;
+  const qb=$('#quit');if(qb)qb.onclick=opts.onQuit||goHome;
+  const fin=(ok,given)=>{const fb=$('#fbox');
+    if(opts.silent){cb(ok,given);return}
+    fb.innerHTML=`<div class="fb ${ok?'good':'bad'}"><div class="t">${ok?pick(['Goed!','Klopt!','Top!','Netjes!']):'Niet goed. Het antwoord is '+(isMC?q.a:nf(q.a,2)+(q.u?' '+q.u:''))+'.'}</div>${q.w?`<div class="tip"><b>Uitleg:</b> ${q.w}</div>`:''}${!ok&&q.th?thCard(q.th):''}</div><div class="foot" style="margin-top:12px"><button class="btn primary" id="next">Verder ↵</button></div>`;
+    const n=$('#next');n.onclick=()=>cb(ok,given);n.focus()};
+  if(isMC)P.querySelectorAll('.opt').forEach((b,i)=>b.onclick=()=>{const ok=labels[i]===q.a;if(!opts.silent)markOpts(labels.indexOf(q.a),i);fin(ok,labels[i])});
+  else{const inp=$('#ni');inp.focus();$('#nf').onsubmit=e=>{e.preventDefault();const v=parseNum(inp.value);if(isNaN(v)){inp.classList.remove('shake');void inp.offsetWidth;inp.classList.add('shake');return}
+    const ok=Math.abs(v-q.a)<=(q.tol??.051);inp.readOnly=true;if(ok)inp.classList.add('okay');$('#nb').hidden=true;fin(ok,inp.value)}}
+}
+function mcItem(m){return {sec:m[0],mc:true,q:m[1],opts:[m[2],...m[3].split('|')],a:m[2],w:m[4],th:m[5],id:m[1]}}
+function makeSet(sec,n){
+  const mcs=shuffle(MC.filter(m=>m[0]===sec)).sort((a,b)=>(S.mc[a[1]]||0)-(S.mc[b[1]]||0));
+  const gens=SECGENS[sec];const nG=sec==='2.3'?2:4;const items=[];
+  mcs.slice(0,n-nG).forEach(m=>items.push(mcItem(m)));
+  for(let i=0;i<nG;i++){const k=gens[i%gens.length];items.push(Object.assign({sec,gen:k},GENS[k].f()))}
+  return shuffle(items);
+}
+/* oefenronde: foute vragen komen terug tot ze goed zijn */
+function practice(sec){const items=makeSet(sec,10);G={m:'prac',sec,queue:items.map(q=>({q,tries:0})),n0:items.length,done:0,first:0,mist:[]};show('play');pracNext()}
+function pracNext(){
+  if(!G.queue.length)return endScreen();
+  const it=G.queue[0],q=it.q;
+  ask(q,`Paragraaf ${G.sec==='0'?'0 · basis':G.sec}`,q.gen?GENS[q.gen].t:'Begrip',topbar(G.done,G.n0),ok=>{G.queue.shift();
+    if(it.tries===0){rec(G.sec,ok);if(q.id)S.mc[q.id]=(S.mc[q.id]||0)+(ok?1:-1);if(ok)G.first++;else G.mist.push(q)}
+    if(ok||it.tries>=2)G.done++;else{it.tries++;const nq=q.gen?Object.assign({sec:q.sec,gen:q.gen},GENS[q.gen].f()):q;G.queue.splice(Math.min(3,G.queue.length),0,{q:nq,tries:it.tries})}
+    save();pracNext()},{again:it.tries>0});
+}
+function endScreen(){
+  const t=G.n0,pct=G.first/t;if(pct>=.8)confetti();save();const sec=G.sec;
+  P.innerHTML=`<div class="slide">${head('Paragraaf '+sec,'Klaar')}<div class="slide-body"><div><div class="q">In één keer goed</div><div class="big">${G.first}<span style="font-size:.45em;color:var(--muted)"> / ${t}</span></div></div>
+   <div>${pct>=.9?'Uitstekend, deze paragraaf zit erin.':pct>=.6?'Goed bezig. De foute vragen heb je inmiddels ook goed gedaan. Nog een ronde en het zit vast.':'De foute vragen kwamen terug tot je ze goed had. Lees de uitleg nog eens en doe nog een ronde.'}</div>
+   ${G.mist.length?`<div><div class="q" style="margin-bottom:6px">Hier ging het de eerste keer mis</div><ul class="mist">${G.mist.map(q=>`<li><b>${q.q}</b><span>Antwoord: ${q.mc?q.a:nf(q.a,2)} · ${q.w||''}</span></li>`).join('')}</ul></div>`:''}
+   <div class="acts"><button class="btn primary" id="again">Nog een ronde</button><button class="btn ghost" id="uit">Uitleg</button><button class="btn ghost" id="home2">Naar start</button></div></div></div>`;
+  $('#again').onclick=()=>practice(sec);$('#uit').onclick=()=>uitleg(sec);$('#home2').onclick=goHome;$('#again').focus();
+}
+function trainer(k){G={m:'tr',k,n:0,ok:0,streak:0};show('play');trNext()}
+function trNext(){const g=GENS[G.k];const q=g.f();
+  ask(q,g.t,`Reeks: ${G.streak}`,topbar(`${G.ok} van ${G.n} goed`,0,'Klaar'),ok=>{G.n++;if(ok){G.ok++;G.streak++;if(G.streak%5===0)confetti()}else G.streak=0;rec(g.sec,ok);save();trNext()});
+}
+const SECGAMES={'0':[['balans','⚖️ Weegschaal: kloppend maken'],['band','Sorteerband']],'2.1':[['bouw','Molecuulbouwer']],'2.2':[['oplos','🧪 Lab: oplossen'],['kook','🌡️ Kookpuntladder']],'2.3':[['metaal','🔥 Metalenrace'],['stroom','💡 Stroomtest']],'2.4':[['zout','⚗️ Zoutfabriek'],['stroom','💡 Stroomtest']]};
+function uitleg(sec){
+  const s=SECS.find(x=>x.id===sec);show('play');
+  P.innerHTML=`<div class="playbar"><button class="btn small ghost" id="quit">Terug</button></div><div class="uitleg"><div class="eyebrow">${sec==='0'?'Voorkennis':'Paragraaf '+sec}</div><h2 style="font-size:26px;margin-bottom:10px">${esc(s.t)}</h2>${UITLEG[sec]}
+  ${verdiepHtml(sec)}
+  <div class="nextbox"><h3>Wat nu?</h3>
+   <div class="choice"><button class="btn primary" id="go">Oefenronde ${sec==='0'?'basis':sec}</button><span>10 gemengde vragen. Fout? Dan krijg je uitleg en komt de vraag later terug tot je hem goed hebt.</span></div>
+   <div class="choice"><div class="acts">${SECGENS[sec].map(k=>`<button class="btn ghost small" data-g="${k}">${esc(GENS[k].t)}</button>`).join('')}</div><span>Eén soort vraag oefenen, zo lang je wilt.</span></div>
+   <div class="choice"><div class="acts">${SECGAMES[sec].map(([k,t])=>`<button class="btn ghost small" data-game="${k}">${t}</button>`).join('')}</div><span>Of speel het als spel.</span></div>
+  </div></div>`;
+  $('#quit').onclick=goHome;$('#go').onclick=()=>practice(sec);P.querySelectorAll('[data-g]').forEach(b=>b.onclick=()=>trainer(b.dataset.g));
+  P.querySelectorAll('[data-game]').forEach(b=>b.onclick=()=>{const k=b.dataset.game;k==='bouw'?bouwHome():k==='band'?bandStart():labRun(k)});
+  bindVerdiep(sec);
+}
+function spiek(){show('play');
+  P.innerHTML=`<div class="playbar"><button class="btn small ghost" id="quit">Terug</button></div><div class="uitleg"><h2 style="font-size:26px">Spiekbriefje H2</h2>
+  <h3>Drie groepen stoffen</h3>${TH.drie.h}
+  <h3>Covalentie</h3><p>H, F, Cl, Br, I: 1 · O, S: 2 · N, P: 3 · C, Si: 4 (HONC 1234).</p>
+  <h3>Bindingen</h3><table class="gt"><tr><th>binding</th><th>tussen</th><th>sterkte</th></tr><tr><td>atoombinding</td><td>atomen in een molecuul (gedeeld paar)</td><td>zeer sterk</td></tr><tr><td>vanderwaals</td><td>moleculen</td><td>zwak, groter bij meer massa en contact</td></tr><tr><td>waterstofbrug</td><td>moleculen met –OH / –NH</td><td>sterker dan vanderwaals</td></tr><tr><td>metaalbinding</td><td>atoomresten (+) en vrije elektronen</td><td>sterk</td></tr><tr><td>ionbinding</td><td>+ en − ionen</td><td>zeer sterk</td></tr></table>
+  <h3>Geleiding</h3><p>Metaal: altijd. Zout: alleen gesmolten of opgelost. Moleculaire stof: nooit.</p>
+  <h3>Ionen</h3><p>Groep 1 → 1+, groep 2 → 2+, groep 13 → 3+, groep 16 → 2−, groep 17 → 1−. Zout is neutraal: Al<sup>3+</sup> + O<sup>2−</sup> → Al<sub>2</sub>O<sub>3</sub>.</p>
+  <h3>Namen</h3><p>mono 1, di 2, tri 3, tetra 4, penta 5, hexa 6. -ide: fluoride, chloride, bromide, jodide, oxide, sulfide. Zouten zonder voorvoegsels.</p>${TH.triviaal.h}
+  <h3>Oplossen</h3><p>–OH / –NH en klein: hydrofiel, lost op in water. Alleen C en H of groot koolstofdeel: hydrofoob, lost op in wasbenzine. Soort zoekt soort.</p>
+  <h3>Edelheid</h3><p>Na &lt; Ca &lt; Mg &lt; Fe &lt; Cu &lt; Ag &lt; Au (onedel → edel).</p></div>`;
+  $('#quit').onclick=goHome;
+}
+function flits(){const list=shuffle(BEGRIP);G={m:'flits',list,i:0,known:0};show('play');flitsNext()}
+function flitsNext(){if(G.i>=G.list.length){confetti();P.innerHTML=`<div class="slide">${head('Begrippen','Klaar')}<div class="slide-body"><div class="q">Wist je meteen</div><div class="big">${G.known}<span style="font-size:.45em;color:var(--muted)"> / ${G.list.length}</span></div><div class="acts"><button class="btn primary" id="again">Nog een keer</button><button class="btn ghost" id="home2">Naar start</button></div></div></div>`;$('#again').onclick=flits;$('#home2').onclick=goHome;return}
+  const [b,d,s]=G.list[G.i];
+  P.innerHTML=topbar(G.i,G.list.length)+`<div class="slide">${head('Begrippen','par. '+s)}<div class="slide-body"><div class="flip" id="fl"><div class="flip-in"><div class="face"><div class="q">Wat betekent dit begrip?</div><div class="prompt big" style="font-size:clamp(24px,6vw,34px)">${esc(b)}</div><div class="src">tik om om te draaien</div></div><div class="face back"><div class="q">${esc(b)}</div><div class="prompt" style="font-size:20px">${esc(d)}</div></div></div></div>
+  <div class="acts" id="fa" hidden><button class="btn ghost" id="fn">Wist ik niet</button><button class="btn primary" id="fy">Wist ik ✓</button></div></div></div>`;
+  $('#quit').onclick=goHome;$('#fl').onclick=()=>{$('#fl').classList.toggle('on');$('#fa').hidden=false};
+  $('#fy').onclick=()=>{G.known++;G.i++;flitsNext()};$('#fn').onclick=()=>{G.list.push(G.list[G.i]);G.i++;flitsNext()};
+}
+/* proeftoets */
+function toets(){
+  const items=[];SECS.forEach(s=>{const mcs=shuffle(MC.filter(m=>m[0]===s.id)).slice(0,2).map(mcItem);items.push(...mcs);const gs=SECGENS[s.id];for(let i=0;i<2;i++){const k=gs[(i+Math.random()*gs.length|0)%gs.length];items.push(Object.assign({sec:s.id,gen:k},GENS[k].f()))}});
+  G={m:'toets',items:shuffle(items),i:0,score:0,wrong:[]};show('play');toetsNext();
+}
+function toetsNext(){
+  if(G.i>=G.items.length){const n=G.items.length,c=Math.round((1+9*G.score/n)*10)/10;if(c>S.best)S.best=c;if(c>=7.5)confetti();save();
+    P.innerHTML=`<div class="slide">${head('Proeftoets','Uitslag')}<div class="slide-body"><div><div class="q">Je cijfer</div><div class="big" style="color:${c>=5.5?'var(--good)':'var(--bad)'}">${nf(c)}</div><div class="count">${G.score} van ${n} goed</div></div>
+    ${G.wrong.length?`<div><div class="q" style="margin-bottom:6px">Uitwerkingen van wat fout ging</div><div style="display:grid;gap:10px">${G.wrong.map(([q,g])=>`<div class="fb bad"><div>${q.q}</div><div class="t">Antwoord: ${q.mc?q.a:nf(q.a,2)+(q.u?' '+q.u:'')} · jij: ${esc(g)}</div><div class="tip">${q.w||''}</div>${q.th?`<details class="thc"><summary>📖 Theorie: ${TH[q.th].t}</summary>${TH[q.th].h}</details>`:''}</div>`).join('')}</div></div>`:''}
+    <div class="acts"><button class="btn primary" id="again">Nieuwe proeftoets</button><button class="btn ghost" id="home2">Naar start</button></div></div></div>`;
+    $('#again').onclick=toets;$('#home2').onclick=goHome;return}
+  const q=G.items[G.i];
+  ask(q,'Proeftoets','Vraag '+(G.i+1)+' · '+(q.sec==='0'?'basis':'par. '+q.sec),topbar(G.i,G.items.length),(ok,given)=>{rec(q.sec,ok);if(ok)G.score++;else G.wrong.push([q,given]);G.i++;toetsNext()},{silent:true});
+}
+document.addEventListener('keydown',e=>{if(P.hidden||!G)return;if(e.target.tagName==='INPUT')return;if(/^[1-9]$/.test(e.key)){const b=P.querySelectorAll('.opt')[+e.key-1]||(G.m==='band'?P.querySelectorAll('[data-b]')[+e.key-1]:null);if(b&&!b.disabled)b.click()}});
+function confetti(){
+  if(matchMedia('(prefers-reduced-motion: reduce)').matches)return;
+  const c=$('#conf'),x=c.getContext('2d');c.width=innerWidth;c.height=innerHeight;
+  const cols=['#1B8A78','#2F7D5B','#7FB0EA','#F7DB5E','#D9443A'];
+  const ps=Array.from({length:110},()=>({x:c.width/2,y:c.height*.35,vx:(Math.random()-.5)*14,vy:-Math.random()*12-4,r:Math.random()*6+4,c:pick(cols),a:Math.random()*6}));
+  let f=0;(function loop(){x.clearRect(0,0,c.width,c.height);ps.forEach(p=>{p.x+=p.vx;p.y+=p.vy;p.vy+=.4;p.vx*=.99;p.a+=.2;x.save();x.translate(p.x,p.y);x.rotate(p.a);x.fillStyle=p.c;x.fillRect(-p.r/2,-p.r/4,p.r,p.r/2);x.restore()});if(++f<110)requestAnimationFrame(loop);else x.clearRect(0,0,c.width,c.height)})();
+}
+try{if('serviceWorker' in navigator&&(location.protocol==='https:'||location.hostname==='localhost'))navigator.serviceWorker.register('sw.js').catch(()=>{})}catch(e){}
+renderHome();
+
+
+</script>
+</body>
+</html>
