@@ -310,6 +310,9 @@ td.okc{background:var(--good-bg);font-weight:700}td.badc{background:var(--bad-bg
 .trap10.cube{grid-template-columns:repeat(4,minmax(0,1fr))}
 .trap10 span{background:#FBE7B2;color:#1E2230;border-radius:6px;padding:6px 2px;text-align:center;font-weight:800;font-size:15px;display:flex;flex-direction:column;align-items:center;min-width:0;overflow-wrap:anywhere}
 .trap10 span small{font-weight:400;font-size:10.5px}.trap10 .base{background:var(--accent);color:#fff}
+.drie{width:160px;margin:8px auto;border:2px solid var(--ink);border-radius:8px;overflow:hidden;text-align:center;font-family:var(--f-display);font-weight:800;font-size:24px}
+.drie .top{padding:6px;border-bottom:2px solid var(--ink);background:#FBE7B2;color:#1E2230}.drie .bot{display:flex;justify-content:space-around;padding:6px}
+.vtres td{vertical-align:middle}.vtres td:nth-child(3){white-space:nowrap}
 </style>
 
 </head>
@@ -331,7 +334,7 @@ td.okc{background:var(--good-bg);font-weight:700}td.badc{background:var(--bad-bg
   </header>
   <div class="banner"><span class="pill">Fout = uitleg erbij</span><span class="pill g">Werkt ook offline</span></div>
 
-  <section><div id="lpbox"></div></section>
+  <section><div id="lpbox"></div><div id="vtbox" class="modes" style="margin-top:12px"></div></section>
   <section>
     <div class="sec-head"><h2>Spellen</h2><span class="src">Leren door te doen</span></div>
     <div class="modes">
@@ -955,6 +958,52 @@ function trapDraw(msg){const t=G.t,T=t.T;
   trapDraw(away?'<b style="color:var(--bad)">Dat is de verkeerde kant op.</b>':'')};
  $('#tu').onclick=()=>mv(-1);$('#td').onclick=()=>mv(1)}
 
+/* ---------- Voorkennistoets: wat mis je nog? ---------- */
+TH.ombouw={t:'Formules ombouwen',h:`<p>De driehoek-truc: zet de formule in een driehoek. Wat <b>alleen</b> staat, komt bovenaan.</p><div class="drie"><div class="top">m</div><div class="bot"><span>n</span><span>×</span><span>M</span></div></div><p>Dek af wat je zoekt: m = n × M &nbsp;·&nbsp; n = m ÷ M &nbsp;·&nbsp; M = m ÷ n</p><p>Zelfde truc voor ρ = m ÷ V: m bovenaan, ρ en V onderaan. Dus m = ρ × V en V = m ÷ ρ.</p>`};
+LP['0'].push(['Fasen',`<p>Achter een formule staat vaak een letter tussen haakjes: de <b>fase</b>.</p><table class="gt"><tr><td>(s)</td><td>vast (solid)</td></tr><tr><td>(l)</td><td>vloeibaar (liquid)</td></tr><tr><td>(g)</td><td>gas</td></tr><tr><td>(aq)</td><td>opgelost in water (aqua)</td></tr></table><p>Overgangen: smelten s→l, stollen l→s, verdampen l→g, condenseren g→l, sublimeren s→g, rijpen g→s.</p>`,['Wat betekent NaCl(aq)?','zout opgelost in water','vast zout|gesmolten zout','aq = aqua = water.']]);
+LP['0b'].push(
+ ['Procenten en verhoudingen',`<p>Procent = "per honderd". Deel het deel door het geheel en doe × 100%.</p><div class="ex">15 van de 60 leerlingen = 15 ÷ 60 × 100% = <b>25%</b></div><p>Een <b>verhouding</b> is een recept. 2 eieren op 250 g meel. Voor 750 g meel (3 × zoveel) heb je 3 × 2 = <b>6 eieren</b>. Scheikunde doet precies dit met mol.</p>`,['Een recept: 3 eieren op 200 g meel. Hoeveel eieren voor 600 g meel?','9','6|4','600 is 3 × 200, dus 3 × 3 = 9.']],
+ ['Formules ombouwen',`${TH.ombouw.h}`,['m = n × M. Hoe reken je n uit?','n = m ÷ M','n = m × M|n = M ÷ m','Dek n af in de driehoek: m boven M.']]);
+const VTOP={atoom:['Bouw van het atoom','1.1','Het atoom'],ps:['Metalen en niet-metalen','1.1','Het periodiek systeem'],elver:['Element of verbinding','0','Element of verbinding'],formule:['Formules lezen','0','Een formule lezen'],kloppend:['Kloppend maken','0','Kloppend maken'],fasen:['Fasen (s, l, g, aq)','0','Fasen'],
+ machten:['Machten van 10','0b','Machten van 10'],sci:['Wetenschappelijke notatie','0b','Komma schuiven'],calc:['Rekenmachine (E-notatie)','0b','Je rekenmachine'],trap10:['Eenheden: de trap van 10','0b','Trucje 2: de trap van 10'],kubiek:['Kubieke eenheden (m³, L)','0b','Kubiek: treden van 1000'],procent:['Procenten en verhoudingen','0b','Procenten en verhoudingen'],ombouw:['Formules ombouwen','0b','Formules ombouwen']};
+const VQ=[
+ ['atoom','Waar in een atoom zitten de protonen?','in de kern','in de schillen|tussen de atomen|in de elektronen'],
+ ['atoom','Een atoom heeft 8 protonen en 8 neutronen. Wat is het massagetal?','16','8|0|64'],
+ ['ps','Welk element is een metaal?','magnesium (Mg)','zwavel (S)|chloor (Cl)|stikstof (N)'],
+ ['elver','Welke stof is een element?','N<sub>2</sub>','NH<sub>3</sub>|CO<sub>2</sub>|H<sub>2</sub>O'],
+ ['formule','Hoeveel O-atomen staan er in 2 H<sub>2</sub>SO<sub>4</sub>?','8','4|6|2'],
+ ['kloppend','Welke getallen maken __ N<sub>2</sub> + __ H<sub>2</sub> → __ NH<sub>3</sub> kloppend?','1, 3, 2','1, 1, 1|2, 3, 2|1, 3, 1'],
+ ['fasen','Wat betekent (aq) achter een formule?','opgelost in water','vloeibaar|gas|vast'],
+ ['fasen','Hoe heet de overgang van gas naar vloeistof?','condenseren','verdampen|stollen|sublimeren'],
+ ['machten','Hoeveel is 10<sup>−2</sup>?','0,01','−100|0,001|−20'],
+ ['sci','Hoe schrijf je 0,00045 in wetenschappelijke notatie?','4,5·10<sup>−4</sup>','4,5·10<sup>4</sup>|45·10<sup>−5</sup>|4,5·10<sup>−3</sup>'],
+ ['sci','Hoeveel is 6,0·10<sup>3</sup>?','6000','600|0,006|60 000'],
+ ['calc','Je rekenmachine laat 3.2E5 zien. Wat betekent dat?','320 000','3,2 × 5 = 16|0,000 032|3,25'],
+ ['trap10','2,5 L is hoeveel mL?','2500 mL','250 mL|25 mL|0,0025 mL'],
+ ['trap10','450 g is hoeveel kg?','0,450 kg','450 000 kg|4,50 kg|45 kg'],
+ ['trap10','Hoeveel cL is 1 L?','100 cL','10 cL|1000 cL|1 cL'],
+ ['kubiek','Hoeveel liter is 1 m³?','1000 L','100 L|10 L|1 000 000 L'],
+ ['kubiek','3,0 cm³ is hoeveel mL?','3,0 mL','3000 mL|0,0030 mL|30 mL'],
+ ['procent','15 van de 60 leerlingen hebben een fiets. Hoeveel procent?','25%','15%|40%|4%'],
+ ['procent','Een recept: 2 eieren op 250 g meel. Hoeveel eieren voor 750 g meel?','6','3|4|8'],
+ ['ombouw','m = n × M. Wat is n?','n = m ÷ M','n = m × M|n = M ÷ m|n = m − M'],
+ ['ombouw','ρ = m ÷ V. Wat is V?','V = m ÷ ρ','V = m × ρ|V = ρ ÷ m|V = ρ − m']];
+function vtStart(){G={m:'vt',items:shuffle(VQ),i:0,res:{}};show('play');vtNext()}
+function vtNext(){if(G.i>=G.items.length)return vtEnd();const v=G.items[G.i];
+ ask({mc:true,q:v[1],opts:[v[2],...v[3].split('|')],a:v[2]},'Voorkennistoets',VTOP[v[0]][0],topbar(G.i,G.items.length),ok=>{const r=G.res[v[0]]||(G.res[v[0]]={ok:0,n:0});r.n++;if(ok)r.ok++;G.i++;vtNext()},{silent:true})}
+function vtEnd(){const res=G.res;const tot=sum(Object.values(res).map(r=>r.ok)),n=sum(Object.values(res).map(r=>r.n));S.vt={at:today(),res};save();if(tot/n>=.9)confetti();
+ const rows=Object.keys(VTOP).filter(k=>res[k]).map(k=>{const r=res[k],goed=r.ok===r.n;return `<tr><td>${goed?'✅':r.ok?'🟡':'❌'}</td><td>${VTOP[k][0]}</td><td>${r.ok}/${r.n}</td><td>${goed?'':`<button class="btn small primary" data-vt="${k}">Leer dit</button>`}</td></tr>`}).join('');
+ const miss=Object.keys(VTOP).filter(k=>res[k]&&res[k].ok<res[k].n);
+ P.innerHTML=`<div class="slide">${head('Voorkennistoets','Uitslag')}<div class="slide-body"><div><div class="q">Goed</div><div class="big">${tot}<span style="font-size:.45em;color:var(--muted)"> / ${n}</span></div></div>
+ <div>${miss.length===0?'Je voorkennis is op orde. Begin met het leerpad van 1.1.':miss.length<=3?'Bijna alles zit erin. Werk de paar rode en gele punten even bij, dat kost 5 tot 10 minuten.':'Er zijn een paar gaten. Geen probleem: tik bij elk punt op <b>Leer dit</b>, of doe de leerpaden 0 en 0b helemaal.'}</div>
+ <table class="gt vtres">${rows}</table>
+ <div class="acts"><button class="btn primary" id="vtagain">Toets opnieuw</button><button class="btn ghost" id="home2">Naar start</button></div></div></div>`;
+ P.querySelectorAll('[data-vt]').forEach(b=>b.onclick=()=>{const [,sec,title]=VTOP[b.dataset.vt];const idx=Math.max(0,LP[sec].findIndex(c=>c[0]===title));lpStart(sec,idx)});
+ $('#vtagain').onclick=vtStart;$('#home2').onclick=goHome}
+function vtBox(){const el=$('#vtbox');if(!el)return;const v=S.vt;let txt='21 vragen, 5 minuten. Daarna zie je precies welke basis je nog mist, met een knop naar de uitleg.';
+ if(v){const r=Object.values(v.res);const t=sum(r.map(x=>x.ok)),n=sum(r.map(x=>x.n));txt=`Laatste keer: ${t}/${n} goed. Nog eens doen?`}
+ el.innerHTML=`<button class="mode" id="vtgo"><span class="lab">Check</span><span class="tag">Begin hier</span><h3>Voorkennistoets</h3><p>${txt}</p></button>`;$('#vtgo').onclick=vtStart}
+
 const $=s=>document.querySelector(s);
 const esc=s=>String(s).replace(/[&<>"]/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;'}[c]));
 const shuffle=a=>{a=[...a];for(let i=a.length-1;i>0;i--){const j=Math.random()*(i+1)|0;[a[i],a[j]]=[a[j],a[i]]}return a};
@@ -974,7 +1023,7 @@ function goHome(){if(G&&G.timer)clearInterval(G.timer);G=null;save();renderHome(
 function renderHome(){
   $('#secs').innerHTML=SECS.map(s=>{const m=score(s.id);return `<div class="sec"><span class="num">${s.id==='0'?'0':s.id}</span><div><h3>${esc(s.t)}</h3><p>${esc(s.s)}</p><span class="bar"><i style="width:${Math.round(m*100)}%"></i></span></div><div class="acts"><button class="btn small lp" data-lp="${s.id}">${S.lpd&&S.lpd[s.id]?'✓ Leerpad':'▶ Leerpad'}</button><button class="btn small ghost" data-u="${s.id}">Uitleg</button><button class="btn small primary" data-o="${s.id}">Oefenen</button></div></div>`}).join('');
   $('#tools').innerHTML=Object.entries(GENS).map(([k,g])=>`<button class="btn small ghost" data-g="${k}"><span class="src">${g.sec==='0'?'basis':g.sec}</span> ${esc(g.t)}</button>`).join('');
-  try{lpBox()}catch(e){}$('#stDone').textContent=S.done;$('#stStreak').textContent=streak();$('#stBest').textContent=S.best?nf(S.best):'–';
+  try{lpBox()}catch(e){}try{vtBox()}catch(e){}$('#stDone').textContent=S.done;$('#stStreak').textContent=streak();$('#stBest').textContent=S.best?nf(S.best):'–';
   const na=Object.keys(S.atoom||{}).length;$('#atoomTag').textContent=`${na} van ${ALEV.length} gebouwd`;$('#machTag').textContent=S.mach?`beste ${S.mach}/6`:'nog niet gespeeld';$('#keukenTag').textContent=S.keuken?`beste ${S.keuken}/6`:'nog niet gespeeld';
   $('#blitzes').innerHTML=Object.entries(BLITZ).map(([k,b])=>`<button class="mode" data-blitz="${k}"><span class="lab">60 s</span><h3>${b.t}</h3><p>${b.d}</p><span class="tag" style="text-transform:none">${S.blitz&&S.blitz[k]?'record '+S.blitz[k]:'nog geen record'}</span></button>`).join('');
 }
