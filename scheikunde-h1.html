@@ -79,7 +79,7 @@ h2{font-size:21px;font-weight:800}
 .mode h3{font-size:19px;font-weight:800}
 .mode p{margin:0;font-size:14px;color:var(--muted)}
 .mode .tag{align-self:flex-start;font-family:var(--f-mono);font-size:10.5px;text-transform:uppercase;letter-spacing:.08em;background:var(--amber-soft);color:var(--amber);padding:2px 7px;border-radius:5px}
-.mode:hover{transform:translateY(-2px)}
+@media (hover:hover){.mode:hover{transform:translateY(-2px)}}
 details.tips{background:var(--surface);border:1px solid var(--line);border-radius:12px;padding:12px 16px}
 details.tips summary{font-weight:700;cursor:pointer}
 details.tips ul{margin:10px 0 4px;padding-left:20px;display:grid;gap:6px}
@@ -97,7 +97,7 @@ details.tips ul{margin:10px 0 4px;padding-left:20px;display:grid;gap:6px}
 .opts{display:grid;gap:10px}
 .opt{display:flex;align-items:center;gap:12px;text-align:left;border:2px solid var(--line);background:var(--bg);border-radius:12px;padding:12px 14px;font-size:16.5px;font-weight:700;min-width:0}
 .opt .k{flex:none;width:28px;height:28px;border-radius:8px;display:grid;place-items:center;font-family:var(--f-mono);font-size:13px;background:var(--chip);color:var(--muted)}
-.opt:hover:not(:disabled){border-color:var(--ink)}
+@media (hover:hover){.opt:hover:not(:disabled){border-color:var(--ink)}}
 .opt:disabled{cursor:default}
 .opt.good{background:var(--good-bg);border-color:var(--good)}.opt.good .k{background:var(--good);color:var(--surface)}
 .opt.bad{background:var(--bad-bg);border-color:var(--bad)}.opt.bad .k{background:var(--bad);color:var(--surface)}
@@ -128,7 +128,7 @@ details.tips ul{margin:10px 0 4px;padding-left:20px;display:grid;gap:6px}
 .seq-done li::before{content:counter(s);flex:none;width:26px;height:26px;border-radius:50%;background:var(--good);color:var(--surface);display:grid;place-items:center;font-family:var(--f-mono);font-size:12px}
 .seq-pool{display:flex;flex-wrap:wrap;gap:8px}
 .seq-pool button{border:2px solid var(--line);background:var(--bg);border-radius:10px;padding:9px 12px;font-weight:700;text-align:left}
-.seq-pool button:hover{border-color:var(--ink)}
+@media (hover:hover){.seq-pool button:hover{border-color:var(--ink)}}
 .seq-list{display:grid;gap:8px}
 .seq-list button{text-align:left}
 /* buckets */
@@ -967,30 +967,30 @@ LP['0b'].push(
 const VTOP={atoom:['Bouw van het atoom','1.1','Het atoom'],ps:['Metalen en niet-metalen','1.1','Het periodiek systeem'],elver:['Element of verbinding','0','Element of verbinding'],formule:['Formules lezen','0','Een formule lezen'],kloppend:['Kloppend maken','0','Kloppend maken'],fasen:['Fasen (s, l, g, aq)','0','Fasen'],
  machten:['Machten van 10','0b','Machten van 10'],sci:['Wetenschappelijke notatie','0b','Komma schuiven'],calc:['Rekenmachine (E-notatie)','0b','Je rekenmachine'],trap10:['Eenheden: de trap van 10','0b','Trucje 2: de trap van 10'],kubiek:['Kubieke eenheden (m³, L)','0b','Kubiek: treden van 1000'],procent:['Procenten en verhoudingen','0b','Procenten en verhoudingen'],ombouw:['Formules ombouwen','0b','Formules ombouwen']};
 const VQ=[
- ['atoom','Waar in een atoom zitten de protonen?','in de kern','in de schillen|tussen de atomen|in de elektronen'],
- ['atoom','Een atoom heeft 8 protonen en 8 neutronen. Wat is het massagetal?','16','8|0|64'],
- ['ps','Welk element is een metaal?','magnesium (Mg)','zwavel (S)|chloor (Cl)|stikstof (N)'],
- ['elver','Welke stof is een element?','N<sub>2</sub>','NH<sub>3</sub>|CO<sub>2</sub>|H<sub>2</sub>O'],
- ['formule','Hoeveel O-atomen staan er in 2 H<sub>2</sub>SO<sub>4</sub>?','8','4|6|2'],
- ['kloppend','Welke getallen maken __ N<sub>2</sub> + __ H<sub>2</sub> → __ NH<sub>3</sub> kloppend?','1, 3, 2','1, 1, 1|2, 3, 2|1, 3, 1'],
- ['fasen','Wat betekent (aq) achter een formule?','opgelost in water','vloeibaar|gas|vast'],
- ['fasen','Hoe heet de overgang van gas naar vloeistof?','condenseren','verdampen|stollen|sublimeren'],
- ['machten','Hoeveel is 10<sup>−2</sup>?','0,01','−100|0,001|−20'],
- ['sci','Hoe schrijf je 0,00045 in wetenschappelijke notatie?','4,5·10<sup>−4</sup>','4,5·10<sup>4</sup>|45·10<sup>−5</sup>|4,5·10<sup>−3</sup>'],
- ['sci','Hoeveel is 6,0·10<sup>3</sup>?','6000','600|0,006|60 000'],
- ['calc','Je rekenmachine laat 3.2E5 zien. Wat betekent dat?','320 000','3,2 × 5 = 16|0,000 032|3,25'],
- ['trap10','2,5 L is hoeveel mL?','2500 mL','250 mL|25 mL|0,0025 mL'],
- ['trap10','450 g is hoeveel kg?','0,450 kg','450 000 kg|4,50 kg|45 kg'],
- ['trap10','Hoeveel cL is 1 L?','100 cL','10 cL|1000 cL|1 cL'],
- ['kubiek','Hoeveel liter is 1 m³?','1000 L','100 L|10 L|1 000 000 L'],
- ['kubiek','3,0 cm³ is hoeveel mL?','3,0 mL','3000 mL|0,0030 mL|30 mL'],
- ['procent','15 van de 60 leerlingen hebben een fiets. Hoeveel procent?','25%','15%|40%|4%'],
- ['procent','Een recept: 2 eieren op 250 g meel. Hoeveel eieren voor 750 g meel?','6','3|4|8'],
- ['ombouw','m = n × M. Wat is n?','n = m ÷ M','n = m × M|n = M ÷ m|n = m − M'],
- ['ombouw','ρ = m ÷ V. Wat is V?','V = m ÷ ρ','V = m × ρ|V = ρ ÷ m|V = ρ − m']];
+ ['atoom','Waar in een atoom zitten de protonen?','in de kern','in de schillen|tussen de atomen|in de elektronen','Protonen en neutronen zitten in de kern, de elektronen in schillen eromheen.'],
+ ['atoom','Een atoom heeft 8 protonen en 8 neutronen. Wat is het massagetal?','16','8|0|64','Massagetal = protonen + neutronen = 8 + 8 = 16.'],
+ ['ps','Welk element is een metaal?','magnesium (Mg)','zwavel (S)|chloor (Cl)|stikstof (N)','Metalen staan links en in het midden van het periodiek systeem. S, Cl en N zijn niet-metalen (rechtsboven).'],
+ ['elver','Welke stof is een element?','N<sub>2</sub>','NH<sub>3</sub>|CO<sub>2</sub>|H<sub>2</sub>O','N<sub>2</sub> bestaat uit één soort atoom (stikstof). De andere hebben twee soorten: verbindingen.'],
+ ['formule','Hoeveel O-atomen staan er in 2 H<sub>2</sub>SO<sub>4</sub>?','8','4|6|2','Eén molecuul heeft 4 O. Twee moleculen: 2 × 4 = 8.'],
+ ['kloppend','Welke getallen maken __ N<sub>2</sub> + __ H<sub>2</sub> → __ NH<sub>3</sub> kloppend?','1, 3, 2','1, 1, 1|2, 3, 2|1, 3, 1','N<sub>2</sub> + 3 H<sub>2</sub> → 2 NH<sub>3</sub>: links 2 N en 6 H, rechts 2 N en 6 H.'],
+ ['fasen','Wat betekent (aq) achter een formule?','opgelost in water','vloeibaar|gas|vast','aq komt van aqua (water): opgelost in water. (s) vast, (l) vloeibaar, (g) gas.'],
+ ['fasen','Hoe heet de overgang van gas naar vloeistof?','condenseren','verdampen|stollen|sublimeren','Gas → vloeistof = condenseren (zoals waterdruppels op een koude ruit).'],
+ ['machten','Hoeveel is 10<sup>−2</sup>?','0,01','−100|0,001|−20','Een min-macht is kleiner dan 1: de 1 staat op de tweede plek achter de komma. 0,01.'],
+ ['sci','Hoe schrijf je 0,00045 in wetenschappelijke notatie?','4,5·10<sup>−4</sup>','4,5·10<sup>4</sup>|45·10<sup>−5</sup>|4,5·10<sup>−3</sup>','Komma 4 plekken naar rechts tot 4,5. Naar rechts = min: 4,5·10<sup>−4</sup>.'],
+ ['sci','Hoeveel is 6,0·10<sup>3</sup>?','6000','600|0,006|60 000','Macht 3: komma 3 plekken naar rechts. 6000.'],
+ ['calc','Je rekenmachine laat 3.2E5 zien. Wat betekent dat?','320 000','3,2 × 5 = 16|0,000 032|3,25','E betekent ·10<sup>…</sup>. Dus 3,2·10<sup>5</sup> = 320 000.'],
+ ['trap10','2,5 L is hoeveel mL?','2500 mL','250 mL|25 mL|0,0025 mL','L → mL is 3 treden omlaag (d, c, m): × 1000. 2,5 × 1000 = 2500.'],
+ ['trap10','450 g is hoeveel kg?','0,450 kg','450 000 kg|4,50 kg|45 kg','kg is groter, dus ÷ 1000: 0,450 kg.'],
+ ['trap10','Hoeveel cL is 1 L?','100 cL','10 cL|1000 cL|1 cL','L → dL → cL: 2 treden omlaag, × 100.'],
+ ['kubiek','Hoeveel liter is 1 m³?','1000 L','100 L|10 L|1 000 000 L','10 dm × 10 dm × 10 dm = 1000 dm³ = 1000 L.'],
+ ['kubiek','3,0 cm³ is hoeveel mL?','3,0 mL','3000 mL|0,0030 mL|30 mL','cm³ en mL zijn precies hetzelfde.'],
+ ['procent','15 van de 60 leerlingen hebben een fiets. Hoeveel procent?','25%','15%|40%|4%','15 ÷ 60 × 100% = 25%.'],
+ ['procent','Een recept: 2 eieren op 250 g meel. Hoeveel eieren voor 750 g meel?','6','3|4|8','750 is 3 × 250, dus 3 × 2 = 6 eieren.'],
+ ['ombouw','m = n × M. Wat is n?','n = m ÷ M','n = m × M|n = M ÷ m|n = m − M','Driehoek: m bovenaan, n × M onderaan. Dek n af: m ÷ M.'],
+ ['ombouw','ρ = m ÷ V. Wat is V?','V = m ÷ ρ','V = m × ρ|V = ρ ÷ m|V = ρ − m','Driehoek: m bovenaan, ρ × V onderaan. Dek V af: m ÷ ρ.']];
 function vtStart(){G={m:'vt',items:shuffle(VQ),i:0,res:{}};show('play');vtNext()}
 function vtNext(){if(G.i>=G.items.length)return vtEnd();const v=G.items[G.i];
- ask({mc:true,q:v[1],opts:[v[2],...v[3].split('|')],a:v[2]},'Voorkennistoets',VTOP[v[0]][0],topbar(G.i,G.items.length),ok=>{const r=G.res[v[0]]||(G.res[v[0]]={ok:0,n:0});r.n++;if(ok)r.ok++;G.i++;vtNext()},{silent:true})}
+ ask({mc:true,q:v[1],opts:[v[2],...v[3].split('|')],a:v[2],w:v[4]},'Voorkennistoets',VTOP[v[0]][0],topbar(G.i,G.items.length),ok=>{const r=G.res[v[0]]||(G.res[v[0]]={ok:0,n:0});r.n++;if(ok)r.ok++;G.i++;vtNext()})}
 function vtEnd(){const res=G.res;const tot=sum(Object.values(res).map(r=>r.ok)),n=sum(Object.values(res).map(r=>r.n));S.vt={at:today(),res};save();if(tot/n>=.9)confetti();
  const rows=Object.keys(VTOP).filter(k=>res[k]).map(k=>{const r=res[k],goed=r.ok===r.n;return `<tr><td>${goed?'✅':r.ok?'🟡':'❌'}</td><td>${VTOP[k][0]}</td><td>${r.ok}/${r.n}</td><td>${goed?'':`<button class="btn small primary" data-vt="${k}">Leer dit</button>`}</td></tr>`}).join('');
  const miss=Object.keys(VTOP).filter(k=>res[k]&&res[k].ok<res[k].n);
@@ -1000,7 +1000,7 @@ function vtEnd(){const res=G.res;const tot=sum(Object.values(res).map(r=>r.ok)),
  <div class="acts"><button class="btn primary" id="vtagain">Toets opnieuw</button><button class="btn ghost" id="home2">Naar start</button></div></div></div>`;
  P.querySelectorAll('[data-vt]').forEach(b=>b.onclick=()=>{const [,sec,title]=VTOP[b.dataset.vt];const idx=Math.max(0,LP[sec].findIndex(c=>c[0]===title));lpStart(sec,idx)});
  $('#vtagain').onclick=vtStart;$('#home2').onclick=goHome}
-function vtBox(){const el=$('#vtbox');if(!el)return;const v=S.vt;let txt='21 vragen, 5 minuten. Daarna zie je precies welke basis je nog mist, met een knop naar de uitleg.';
+function vtBox(){const el=$('#vtbox');if(!el)return;const v=S.vt;let txt='21 vragen, 5 minuten, met uitleg na elke vraag. Daarna zie je precies welke basis je nog mist, met een knop naar de uitleg.';
  if(v){const r=Object.values(v.res);const t=sum(r.map(x=>x.ok)),n=sum(r.map(x=>x.n));txt=`Laatste keer: ${t}/${n} goed. Nog eens doen?`}
  el.innerHTML=`<button class="mode" id="vtgo"><span class="lab">Check</span><span class="tag">Begin hier</span><h3>Voorkennistoets</h3><p>${txt}</p></button>`;$('#vtgo').onclick=vtStart}
 

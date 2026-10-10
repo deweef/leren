@@ -79,7 +79,7 @@ h2{font-size:21px;font-weight:800}
 .mode h3{font-size:19px;font-weight:800}
 .mode p{margin:0;font-size:14px;color:var(--muted)}
 .mode .tag{align-self:flex-start;font-family:var(--f-mono);font-size:10.5px;text-transform:uppercase;letter-spacing:.08em;background:var(--amber-soft);color:var(--amber);padding:2px 7px;border-radius:5px}
-.mode:hover{transform:translateY(-2px)}
+@media (hover:hover){.mode:hover{transform:translateY(-2px)}}
 details.tips{background:var(--surface);border:1px solid var(--line);border-radius:12px;padding:12px 16px}
 details.tips summary{font-weight:700;cursor:pointer}
 details.tips ul{margin:10px 0 4px;padding-left:20px;display:grid;gap:6px}
@@ -97,7 +97,7 @@ details.tips ul{margin:10px 0 4px;padding-left:20px;display:grid;gap:6px}
 .opts{display:grid;gap:10px}
 .opt{display:flex;align-items:center;gap:12px;text-align:left;border:2px solid var(--line);background:var(--bg);border-radius:12px;padding:12px 14px;font-size:16.5px;font-weight:700;min-width:0}
 .opt .k{flex:none;width:28px;height:28px;border-radius:8px;display:grid;place-items:center;font-family:var(--f-mono);font-size:13px;background:var(--chip);color:var(--muted)}
-.opt:hover:not(:disabled){border-color:var(--ink)}
+@media (hover:hover){.opt:hover:not(:disabled){border-color:var(--ink)}}
 .opt:disabled{cursor:default}
 .opt.good{background:var(--good-bg);border-color:var(--good)}.opt.good .k{background:var(--good);color:var(--surface)}
 .opt.bad{background:var(--bad-bg);border-color:var(--bad)}.opt.bad .k{background:var(--bad);color:var(--surface)}
@@ -128,7 +128,7 @@ details.tips ul{margin:10px 0 4px;padding-left:20px;display:grid;gap:6px}
 .seq-done li::before{content:counter(s);flex:none;width:26px;height:26px;border-radius:50%;background:var(--good);color:var(--surface);display:grid;place-items:center;font-family:var(--f-mono);font-size:12px}
 .seq-pool{display:flex;flex-wrap:wrap;gap:8px}
 .seq-pool button{border:2px solid var(--line);background:var(--bg);border-radius:10px;padding:9px 12px;font-weight:700;text-align:left}
-.seq-pool button:hover{border-color:var(--ink)}
+@media (hover:hover){.seq-pool button:hover{border-color:var(--ink)}}
 .seq-list{display:grid;gap:8px}
 .seq-list button{text-align:left}
 /* buckets */
