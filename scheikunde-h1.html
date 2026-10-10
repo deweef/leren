@@ -313,6 +313,13 @@ td.okc{background:var(--good-bg);font-weight:700}td.badc{background:var(--bad-bg
 .drie{width:160px;margin:8px auto;border:2px solid var(--ink);border-radius:8px;overflow:hidden;text-align:center;font-family:var(--f-display);font-weight:800;font-size:24px}
 .drie .top{padding:6px;border-bottom:2px solid var(--ink);background:#FBE7B2;color:#1E2230}.drie .bot{display:flex;justify-content:space-around;padding:6px}
 .vtres td{vertical-align:middle}.vtres td:nth-child(3){white-space:nowrap}
+.ktab{display:grid;grid-template-columns:repeat(var(--n),minmax(0,1fr));border:2px solid var(--ink);border-radius:10px;overflow:hidden;margin:8px 0}
+.ktab .kh{background:var(--chip);text-align:center;font-weight:800;font-size:14px;padding:6px 0;border-right:1px solid var(--line)}
+.ktab .kh.hi{background:var(--accent);color:#fff}
+.ktab .kc{position:relative;height:56px;border:0;border-right:1px solid var(--line);border-top:1px solid var(--line);background:var(--surface);font-family:var(--f-display);font-size:28px;font-weight:800;color:var(--ink);padding:0}
+.ktab .kc:disabled{opacity:1;color:var(--ink);-webkit-text-fill-color:var(--ink)}.ktab .kc.f{background:var(--pink-soft)}.ktab .kc.z,.ktab .kc.z:disabled{color:var(--accent);-webkit-text-fill-color:var(--accent)}
+.ktab .kc.cm::after{content:",";position:absolute;right:-5px;bottom:4px;font-size:34px;color:var(--bad);z-index:2}
+.kstep{background:var(--bg);border-radius:10px;padding:10px 12px}.kstep span{display:block;font-family:var(--f-mono);font-size:12px;color:var(--muted)}
 </style>
 
 </head>
@@ -344,7 +351,8 @@ td.okc{background:var(--good-bg);font-weight:700}td.badc{background:var(--bad-bg
     </div>
     <div class="modes" style="margin-top:12px">
       <button class="mode" id="komma"><span class="lab">Reken</span><span class="tag">Basis</span><h3>Kommaschuiver</h3><p>Schuif de komma en zie de macht van 10 meelopen. Zo snap je wetenschappelijke notatie.</p></button>
-      <button class="mode" id="trap"><span class="lab">Reken</span><span class="tag">Basis</span><h3>Eenhedentrap</h3><p>Loop de trap op en af: kg, g, mg en m³, L, mL. Elke trede is × of ÷ 1000.</p></button>
+      <button class="mode" id="trap"><span class="lab">Reken</span><span class="tag">Basis</span><h3>Eenhedentrap</h3><p>Loop de trap op en af: liters, grammen, meters en kubieke eenheden.</p></button>
+      <button class="mode" id="kol"><span class="lab">Reken</span><span class="tag">Basis</span><h3>Kolommentabel</h3><p>Zet de cijfers in de kolommen, plaats de komma en vul aan met nullen. Zo zie je het antwoord gewoon staan.</p></button>
     </div>
     <div class="modes" id="blitzes" style="margin-top:12px"></div>
   </section>
@@ -960,6 +968,42 @@ function trapDraw(msg){const t=G.t,T=t.T;
    const nx=$('#next');nx.onclick=trapNext;nx.focus();return}
   trapDraw(away?'<b style="color:var(--bad)">Dat is de verkeerde kant op.</b>':'')};
  $('#tu').onclick=()=>mv(-1);$('#td').onclick=()=>mv(1)}
+/* ---------- Spel: Kolommentabel ---------- */
+const KTRACKS=[{n:'lengte',u:['km','hm','dam','m','dm','cm','mm']},{n:'massa',u:['kg','hg','dag','g','dg','cg','mg']},{n:'inhoud',u:['kL','hL','daL','L','dL','cL','mL']}];
+function kolTable(u,cells,comma,opts={}){return `<div class="ktab" style="--n:${u.length}">${u.map((x,i)=>`<div class="kh${opts.hi===i?' hi':''}">${x}</div>`).join('')}${u.map((x,i)=>`<button class="kc${cells[i]!=null?' f':''}${cells[i]&&cells[i].z?' z':''}${comma===i?' cm':''}" data-c="${i}" ${opts.dis?'disabled':''}>${cells[i]!=null?cells[i].d:''}</button>`).join('')}</div>`}
+function kolStatic(u,gi,digits,ti){const c=kolPlace(u.length,gi,digits);kolZeros(c,ti);return kolTable(u,c,ti,{dis:1})}
+function kolPlace(n,gi,v){const [ip,dp='']=v.split(',');const c=Array(n).fill(null);ip.split('').reverse().forEach((d,k)=>{c[gi-k]={d}});dp.split('').forEach((d,k)=>{c[gi+1+k]={d}});return c}
+function kolZeros(c,ti){const idx=c.map((x,i)=>x?i:-1).filter(i=>i>=0);const lo=Math.min(idx[0],ti),hi=Math.max(idx[idx.length-1],ti);for(let i=lo;i<=hi;i++)if(!c[i])c[i]={d:'0',z:1};return [lo,hi]}
+function kolRead(c,ti){const idx=c.map((x,i)=>x?i:-1).filter(i=>i>=0);const lo=idx[0],hi=idx[idx.length-1];let ip='',dp='';for(let i=lo;i<=hi;i++){if(i<=ti)ip+=c[i].d;else dp+=c[i].d}ip=ip.replace(/^0+(?=\d)/,'');dp=dp.replace(/0+$/,'');return ip+(dp?','+dp:'')}
+const numStr=x=>{let s=(Math.round(x*1e9)/1e9).toFixed(9).replace(/0+$/,'').replace(/\.$/,'');return s.replace('.',',')};
+function kolHome(){G={m:'kol',r:0,ok:0,total:8};show('play');kolNext()}
+function kolNext(){if(G.r>=G.total){if(G.ok>=7)confetti();S.kol=Math.max(S.kol||0,G.ok);rec('0b',G.ok>=6);save();
+  P.innerHTML=`<div class="slide">${head('Kolommentabel','Klaar')}<div class="slide-body"><div class="q">Foutloos</div><div class="big">${G.ok}<span style="font-size:.45em;color:var(--muted)"> / ${G.total}</span></div><div class="acts"><button class="btn primary" id="again">Nog een rondje</button><button class="btn ghost" id="home2">Naar start</button></div></div></div>`;
+  $('#again').onclick=kolHome;$('#home2').onclick=goHome;$('#again').focus();return}
+ const T=pick(KTRACKS);let gi,ti,v,ok=false;
+ while(!ok){gi=R(0,6);ti=R(0,6);if(gi===ti||Math.abs(gi-ti)>4)continue;v=pick([String(R(1,9)),String(R(1,9))+','+R(1,9),String(R(11,99)),String(R(101,999)),String(R(1,9))+','+R(1,9)+R(1,9)]);
+  const [ip,dp='']=v.split(',');ok=ip.length<=gi+1&&dp.length<=6-gi}
+ G.k={T,gi,ti,v,step:0,fails:0,cells:Array(7).fill(null),comma:null};kolDraw()}
+function kolDraw(msg){const K=G.k,u=K.T.u;const steps=['Tik de kolom aan waar het <b>laatste cijfer vóór de komma</b> van '+K.v+' '+u[K.gi]+' hoort (de kolom '+u[K.gi]+').','Je wilt naar <b>'+u[K.ti]+'</b>. Tik de kolom aan waarachter de <b>komma</b> komt.','Lege vakjes tussen de komma en de cijfers vul je met <b>nullen</b>.','Lees het antwoord af.'];
+ P.innerHTML=topbar(G.r,G.total)+`<div class="slide">${head('Kolommentabel',K.T.n)}<div class="slide-body"><div class="prompt" style="font-size:22px">${K.v} ${u[K.gi]} = … ${u[K.ti]}</div>
+  ${kolTable(u,K.cells,K.comma,{hi:K.step===1?K.ti:K.step===0?null:null,dis:K.step>1})}
+  <div class="kstep"><span>Stap ${Math.min(K.step+1,4)} van 4</span>${steps[Math.min(K.step,3)]}</div>
+  ${K.step===2?'<div class="acts"><button class="btn dark" id="kz">Nullen invullen</button></div>':''}
+  <div id="kmc"></div><div class="src">${msg||''}</div><div id="fbox"></div></div></div>`;
+ $('#quit').onclick=goHome;
+ P.querySelectorAll('.kc').forEach(b=>b.onclick=()=>{const i=+b.dataset.c;
+  if(K.step===0){if(i!==K.gi){K.fails++;kolDraw(`<b style="color:var(--bad)">Nee:</b> de eenheid is ${u[K.gi]}, dus het laatste cijfer vóór de komma komt in de kolom ${u[K.gi]}.`);return}K.cells=kolPlace(7,K.gi,K.v);K.step=1;kolDraw(K.v.includes(',')?'Het cijfer na de komma schuift één kolom naar rechts mee.':'')}
+  else if(K.step===1){if(i!==K.ti){K.fails++;kolDraw(`<b style="color:var(--bad)">Nee:</b> je wilt het antwoord in ${u[K.ti]}, dus de komma komt direct achter de kolom ${u[K.ti]}.`);return}K.comma=i;K.step=2;kolDraw()}});
+ const z=$('#kz');if(z)z.onclick=()=>{kolZeros(K.cells,K.ti);K.step=3;kolDraw();kolAsk()};
+ if(K.step===3)kolAsk()}
+function kolAsk(){const K=G.k,u=K.T.u;const ans=kolRead(K.cells,K.ti);const x=parseFloat(K.v.replace(',','.'))*10**(K.ti-K.gi);
+ const opts=opt4(ans,[numStr(x*10),numStr(x/10),numStr(x*100),numStr(x/100)].filter(s=>s!==ans));
+ $('#kmc').innerHTML=mcButtons(opts.map(o=>o+' '+u[K.ti]));
+ P.querySelectorAll('#kmc .opt').forEach((b,i)=>b.onclick=()=>{const ok=opts[i]===ans;markOpts(opts.indexOf(ans),i);if(!ok)K.fails++;G.r++;if(K.fails===0)G.ok++;
+  const st=Math.abs(K.ti-K.gi);
+  $('#fbox').innerHTML=`<div class="fb ${ok?'good':'bad'}"><div class="t">${K.v} ${u[K.gi]} = ${ans} ${u[K.ti]}</div><div class="tip">Lees van links naar rechts tot de komma, dan de cijfers erachter. Met de trap: ${st} trede${st>1?'n':''} ${K.ti>K.gi?'omlaag, × ':'omhoog, ÷ '}${10**st}.</div></div><div class="foot" style="margin-top:12px"><button class="btn primary" id="next">Verder ↵</button></div>`;
+  const n=$('#next');n.onclick=kolNext;n.focus()})}
+LP['0b'].splice(LP['0b'].findIndex(c=>c[0]==='Ook voor gram en meter'),0,['De kolommentabel',(()=>`<p>Een handige manier om de trap te gebruiken: <b>één cijfer per kolom</b>.</p>${kolStatic(KTRACKS[0].u,5,'9',3)}<ol style="padding-left:20px;margin:6px 0"><li>Zet 9 in de kolom van de eenheid: <b>cm</b>.</li><li>De komma komt achter de kolom waar je naartoe wilt: <b>m</b>.</li><li>Lege vakjes ertussen vul je met <b>nullen</b>.</li><li>Aflezen: <b>9 cm = 0,09 m</b>.</li></ol><p>Oefen het met het spel <b>Kolommentabel</b>.</p>`),['Met de tabel: 9 km = … m','9000 m','900 m|0,009 m','9 in de km-kolom, komma achter m, nullen in hm, dam en m: 9000.']]);
 
 /* ---------- Voorkennistoets: wat mis je nog? ---------- */
 TH.ombouw={t:'Formules ombouwen',h:`<p>De driehoek-truc: zet de formule in een driehoek. Wat <b>alleen</b> staat, komt bovenaan.</p><div class="drie"><div class="top">m</div><div class="bot"><span>n</span><span>×</span><span>M</span></div></div><p>Dek af wat je zoekt: m = n × M &nbsp;·&nbsp; n = m ÷ M &nbsp;·&nbsp; M = m ÷ n</p><p>Zelfde truc voor ρ = m ÷ V: m bovenaan, ρ en V onderaan. Dus m = ρ × V en V = m ÷ ρ.</p>`};
@@ -1032,7 +1076,7 @@ function renderHome(){
 }
 $('#secs').addEventListener('click',e=>{const u=e.target.closest('[data-u]'),o=e.target.closest('[data-o]');if(u)uitleg(u.dataset.u);if(o)practice(o.dataset.o);const l=e.target.closest('[data-lp]');if(l)lpStart(l.dataset.lp)});
 $('#tools').addEventListener('click',e=>{const b=e.target.closest('[data-g]');if(b)trainer(b.dataset.g)});
-$('#toets').onclick=toets;$('#spiek').onclick=spiek;$('#atoom').onclick=atoomHome;$('#komma').onclick=kommaHome;$('#trap').onclick=trapHome;$('#mach').onclick=machHome;$('#keuken').onclick=keukenHome;$('#blitzes').addEventListener('click',e=>{const b=e.target.closest('[data-blitz]');if(b)blitzStart(b.dataset.blitz)});$('#flits').onclick=()=>flits();
+$('#toets').onclick=toets;$('#spiek').onclick=spiek;$('#atoom').onclick=atoomHome;$('#komma').onclick=kommaHome;$('#trap').onclick=trapHome;$('#kol').onclick=kolHome;$('#mach').onclick=machHome;$('#keuken').onclick=keukenHome;$('#blitzes').addEventListener('click',e=>{const b=e.target.closest('[data-blitz]');if(b)blitzStart(b.dataset.blitz)});$('#flits').onclick=()=>flits();
 function askReset(){$('#resetBox').innerHTML='<span>Alle voortgang wissen?</span><button class="btn small dark" id="rsY">Ja, wissen</button><button class="btn small ghost" id="rsN">Annuleer</button>';
   $('#rsY').onclick=()=>{S={sec:{},mc:{},done:0,days:[],best:0,atoom:{},mach:0,keuken:0,blitz:{}};save();location.reload()};$('#rsN').onclick=()=>{$('#resetBox').innerHTML='<button class="btn ghost small" id="resetBtn">Voortgang wissen</button>';$('#resetBtn').onclick=askReset}}
 $('#resetBtn').onclick=askReset;
@@ -1086,7 +1130,7 @@ function trainer(k){G={m:'tr',k,n:0,ok:0,streak:0};show('play');trNext()}
 function trNext(){const g=GENS[G.k];const q=g.f();
   ask(q,g.t,`Reeks: ${G.streak}`,topbar(`${G.ok} van ${G.n} goed`,0,'Klaar'),ok=>{G.n++;if(ok){G.ok++;G.streak++;if(G.streak%5===0)confetti()}else G.streak=0;rec(g.sec,ok);save();trNext()});
 }
-const SECGAMES={'0':[['sym','Symbolenblitz']],'0b':[['komma','↔ Kommaschuiver'],['trap','⇅ Eenhedentrap']],'1.1':[['atoom','⚛️ Atoombouwer'],['mm','Metaal of niet-metaal?'],['sym','Symbolenblitz']],'1.2':[['mach','⚙️ Molmachine']],'1.3':[['sig','Significantie-sprint']],'1.4':[['keuken','🍳 Reactiekeuken']]};
+const SECGAMES={'0':[['sym','Symbolenblitz']],'0b':[['komma','↔ Kommaschuiver'],['trap','⇅ Eenhedentrap'],['kol','▦ Kolommentabel']],'1.1':[['atoom','⚛️ Atoombouwer'],['mm','Metaal of niet-metaal?'],['sym','Symbolenblitz']],'1.2':[['mach','⚙️ Molmachine']],'1.3':[['sig','Significantie-sprint']],'1.4':[['keuken','🍳 Reactiekeuken']]};
 function uitleg(sec){
   const s=SECS.find(x=>x.id===sec);show('play');
   P.innerHTML=`<div class="playbar"><button class="btn small ghost" id="quit">Terug</button></div><div class="uitleg"><div class="eyebrow">${sec==='0'?'Voorkennis':'Paragraaf '+sec}</div><h2 style="font-size:26px;margin-bottom:10px">${esc(s.t)}</h2>${UITLEG[sec]}
@@ -1097,7 +1141,7 @@ function uitleg(sec){
    <div class="choice"><div class="acts">${SECGAMES[sec].map(([k,t])=>`<button class="btn ghost small" data-game="${k}">${t}</button>`).join('')}</div><span>Of speel het als spel.</span></div>
   </div></div>`;
   $('#quit').onclick=goHome;$('#go').onclick=()=>practice(sec);P.querySelectorAll('[data-g]').forEach(b=>b.onclick=()=>trainer(b.dataset.g));
-  P.querySelectorAll('[data-game]').forEach(b=>b.onclick=()=>{const k=b.dataset.game;k==='komma'?kommaHome():k==='trap'?trapHome():k==='atoom'?atoomHome():k==='mach'?machHome():k==='keuken'?keukenHome():blitzStart(k)});
+  P.querySelectorAll('[data-game]').forEach(b=>b.onclick=()=>{const k=b.dataset.game;k==='komma'?kommaHome():k==='kol'?kolHome():k==='trap'?trapHome():k==='atoom'?atoomHome():k==='mach'?machHome():k==='keuken'?keukenHome():blitzStart(k)});
   bindVerdiep(sec);
 }
 function spiek(){show('play');
