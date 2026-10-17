@@ -676,7 +676,7 @@ $('#resetBtn').onclick=askReset;
 /* ---------- gedeeld ---------- */
 const P=$('#play');let G=null;
 function show(v){$('#home').hidden=v!=='home';P.hidden=v!=='play';window.scrollTo(0,0)}
-function goHome(){if(G&&G.timer)clearInterval(G.timer);if(G&&G.traf)cancelAnimationFrame(G.traf);if(G&&G.raf)cancelAnimationFrame(G.raf);G=null;save();renderHome();show('home')}
+function goHome(){if(V5){location.href='frans-5.html';return}if(G&&G.timer)clearInterval(G.timer);if(G&&G.traf)cancelAnimationFrame(G.traf);if(G&&G.raf)cancelAnimationFrame(G.raf);G=null;save();renderHome();show('home')}
 function dirFor(){return S.dir==='mix'?pick(['nl','en']):S.dir}
 function distractors(w,n=2){let pool=WORDS.filter(x=>x.page===w.page&&x.en!==w.en&&norm(x.nl)!==norm(w.nl));if(pool.length<n)pool=pool.concat(WORDS.filter(x=>Math.abs(x.page-w.page)===1&&norm(x.nl)!==norm(w.nl)));return shuffle(pool).slice(0,n)}
 function headHtml(label,right){return `<div class="pass-head"><span>${label}</span><span>${right}</span></div>`}
@@ -1500,6 +1500,10 @@ function confetti(){
 }
 
 renderHome();
+
+/* geopend vanuit Frans versie 5 (#v5=<spel>&set=<pagina's>): meteen dat spel met die blokken, daarna terug naar versie 5 */
+const V5=(()=>{try{const h=new URLSearchParams(location.hash.slice(1));return h.get('v5')?h:null}catch(e){return null}})();
+if(V5){const p=(V5.get('set')||'').split(',').map(Number).filter(x=>PAGES.includes(x));if(p.length){S.sel=p;save();renderHome()}start(V5.get('v5'))}
 </script>
 </body>
 </html>
