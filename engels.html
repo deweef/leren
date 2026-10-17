@@ -281,6 +281,26 @@ details ul{margin:10px 0 4px;padding-left:20px;display:grid;gap:6px}
 .mist li span{color:var(--muted)}
 canvas#conf{position:fixed;inset:0;pointer-events:none;z-index:9}
 @media (prefers-reduced-motion: reduce){*{transition:none!important;animation:none!important}}
+.rt-list{display:grid;gap:8px}
+.rt-deel{font-size:15px;font-family:var(--f-mono);text-transform:uppercase;letter-spacing:.08em;color:var(--muted);margin:14px 0 2px}
+.rt-step{display:grid;grid-template-columns:34px minmax(0,1fr) auto;gap:12px;align-items:center;text-align:left;font:inherit;color:inherit;background:var(--surface);border:2px solid var(--line);border-radius:12px;padding:10px 12px;cursor:pointer}
+.rt-step .rt-ic{width:34px;height:34px;border-radius:50%;display:grid;place-items:center;background:var(--chip);color:var(--muted);font:700 14px var(--f-mono)}
+.rt-step .rt-tx{display:flex;flex-direction:column;gap:2px;min-width:0}
+.rt-step .rt-tx span{font-size:13.5px;color:var(--muted)}
+.rt-step .rt-w{font:600 13px var(--f-mono);color:var(--muted)}
+.rt-step.done{border-color:var(--good-bg)}
+.rt-step.done .rt-ic{background:var(--good);color:#fff}
+.rt-step.cur{border-color:var(--ink)}
+.rt-step.cur .rt-ic{background:var(--accent);color:var(--accent-ink)}
+@media (hover:hover){.rt-step:hover{border-color:var(--ink)}}
+.nextbox{border:2px dashed var(--line);border-radius:12px;padding:12px 14px}
+.nextbox h3{margin:0}
+.bkamps{display:grid;gap:8px}
+.bkamp{display:grid;grid-template-columns:minmax(0,1fr) auto;gap:2px 10px;text-align:left;background:var(--surface);border:2px solid var(--ink);border-radius:12px;padding:10px 12px;color:var(--ink);font:inherit;cursor:pointer}
+.bkamp b{grid-column:1/-1;font-size:16px}.bkamp span{font-size:13px;color:var(--muted)}
+.bkamp .bar{grid-column:1;display:block;align-self:center}.bkamp .count{grid-column:2;grid-row:3}
+.bkamp:disabled{opacity:.5;cursor:not-allowed;border-style:dashed}
+.bkamp.done{border-color:var(--good);background:var(--good-bg)}
 </style>
 </head>
 <body>
@@ -300,6 +320,10 @@ canvas#conf{position:fixed;inset:0;pointer-events:none;z-index:9}
         <div class="stat"><b id="stXp">0</b><small>punten</small></div>
       </div>
     </header>
+
+    <section><div id="lpbox"></div>
+      <div class="modes" style="margin-top:12px"><button class="mode" id="klim"><span class="tag" id="klimTag" style="text-transform:none">0 m</span><h3>Beklim de Woordenberg</h3><p>Alle woorden van Unit 2 en 3, kamp voor kamp. Sta je op de top (100%), dan ken je alle woorden.</p></button></div>
+    </section>
 
     <section>
       <div class="sec-head">
@@ -823,6 +847,7 @@ const starCount=m=>m>=.95?3:m>=.65?2:m>=.3?1:0;
 const starsHtml=n=>`<span class="stars" aria-label="${n} van 3 sterren">${[0,1,2].map(i=>`<span class="${i<n?'on':''}">★</span>`).join('')}</span>`;
 function hardList(){const extra=WORDS.filter(w=>(S.w[w.en]?.x||0)>0).sort((a,b)=>S.w[b.en].x-S.w[a.en].x);const base=WORDS.filter(w=>HARD.includes(w.en));return [...new Set([...base,...extra])]}
 function renderHome(){
+  try{routeBox()}catch(e){}
   const g=$('#gates');let h='';
   UNITS.forEach(u=>{const all=u.pages.every(p=>S.sel.includes(p));const n=WORDS.filter(w=>u.pages.includes(w.page)).length;
     h+=`<div class="unit-head"><h3>${esc(u.label)}</h3><span class="src">${n} woorden</span><button class="btn small ${all?'dark':'ghost'}" data-unit="${u.id}">${all?'✓ Hele unit':'Hele unit'}</button></div><div class="gates">`;
@@ -846,7 +871,7 @@ function renderHome(){
   document.querySelectorAll('#dirSeg button').forEach(b=>b.setAttribute('aria-pressed',b.dataset.d===S.dir));
   const n=selWords().length;
   $('#selLine').textContent=n?`${n} woorden geselecteerd.`:'Kies eerst minstens één bladzijde.';
-  document.querySelectorAll('.mode').forEach(b=>b.disabled=!n);
+  document.querySelectorAll('.mode[data-mode]').forEach(b=>b.disabled=!n);
 }
 function selWords(){const set=new Set();S.sel.forEach(p=>{(p==='hard'?hardList():WORDS.filter(w=>w.page===p)).forEach(w=>set.add(w))});return [...set]}
 $('#gates').addEventListener('click',e=>{const ub=e.target.closest('[data-unit]');if(ub){const u=UNITS.find(x=>x.id===+ub.dataset.unit);const all=u.pages.every(p=>S.sel.includes(p));S.sel=all?S.sel.filter(p=>!u.pages.includes(p)):[...new Set([...S.sel,...u.pages])];save();renderHome();return}
@@ -854,7 +879,7 @@ $('#gates').addEventListener('click',e=>{const ub=e.target.closest('[data-unit]'
 $('#selAll').onclick=()=>{S.sel=[...PAGES];save();renderHome()};
 $('#selNone').onclick=()=>{S.sel=[];save();renderHome()};
 $('#dirSeg').addEventListener('click',e=>{const b=e.target.closest('button');if(!b)return;S.dir=b.dataset.d;save();renderHome()});
-document.querySelectorAll('.mode').forEach(b=>b.onclick=()=>start(b.dataset.mode));
+document.querySelectorAll('.mode[data-mode]').forEach(b=>b.onclick=()=>start(b.dataset.mode));
 $('#boardSeg').addEventListener('click',e=>{const b=e.target.closest('button');if(!b)return;S.boardTab=b.dataset.g;save();renderHome()});
 function askReset(){$('#resetBox').innerHTML='<span>Alle voortgang, punten en record wissen?</span><button class="btn small dark" id="rsY">Ja, wissen</button><button class="btn small ghost" id="rsN">Annuleer</button>';
   $('#rsY').onclick=()=>{S={w:{},xp:0,days:[],best:0,sel:[1],dir:S.dir};save();location.reload()};
@@ -864,7 +889,7 @@ $('#resetBtn').onclick=askReset;
 /* ---------- gedeeld ---------- */
 const P=$('#play');let G=null;
 function show(v){$('#home').hidden=v!=='home';P.hidden=v!=='play';window.scrollTo(0,0)}
-function goHome(){if(G&&G.timer)clearInterval(G.timer);if(G&&G.traf)cancelAnimationFrame(G.traf);if(G&&G.raf)cancelAnimationFrame(G.raf);G=null;save();renderHome();show('home')}
+function goHome(){if(G&&G.timer)clearInterval(G.timer);if(G&&G.traf)cancelAnimationFrame(G.traf);if(G&&G.raf)cancelAnimationFrame(G.raf);G=null;save();if(RT.on)return routeScreen();renderHome();show('home')}
 function dirFor(){return S.dir==='mix'?pick(['nl','en']):S.dir}
 function distractors(w,n=2){let pool=WORDS.filter(x=>x.page===w.page&&x.en!==w.en&&norm(x.nl)!==norm(w.nl));if(pool.length<n)pool=pool.concat(WORDS.filter(x=>Math.abs(x.page-w.page)===1&&norm(x.nl)!==norm(w.nl)));return shuffle(pool).slice(0,n)}
 function headHtml(label,right){return `<div class="pass-head"><span>${label}</span><span>${right}</span></div>`}
@@ -1689,6 +1714,117 @@ function confetti(){
   const ps=Array.from({length:110},()=>({x:c.width/2,y:c.height*.35,vx:(Math.random()-.5)*14,vy:-Math.random()*12-4,r:Math.random()*6+4,c:pick(cols),a:Math.random()*6}));
   let f=0;(function loop(){x.clearRect(0,0,c.width,c.height);ps.forEach(p=>{p.x+=p.vx;p.y+=p.vy;p.vy+=.4;p.vx*=.99;p.a+=.2;x.save();x.translate(p.x,p.y);x.rotate(p.a);x.fillStyle=p.c;x.fillRect(-p.r/2,-p.r/4,p.r,p.r/2);x.restore()});if(++f<110)requestAnimationFrame(loop);else x.clearRect(0,0,c.width,c.height)})();
 }
+
+
+/* ---------- Woordenberg: alle woorden, één kamp per blok van bladzijden (zoals de Statistiekberg) ---------- */
+const BLOKKEN=[{n:'Unit 3 · blz 1-3',p:[1,2,3]},{n:'Unit 3 · blz 4-6',p:[4,5,6]},{n:'Unit 3 · blz 7-9',p:[7,8,9]},{n:'Unit 3 · blz 10-12',p:[10,11,12]},{n:'Unit 3 · blz 13-15',p:[13,14,15]},
+ {n:'Unit 2 · blz 1-3',p:[201,202,203]},{n:'Unit 2 · blz 4-6',p:[204,205,206]},{n:'Unit 2 · blz 7-9',p:[207,208,209]},{n:'Unit 2 · blz 10-11',p:[210,211]}];
+const KCAMPS=BLOKKEN.map((b,i)=>({n:i===0?'Basiskamp':i===BLOKKEN.length-1?'Top':'Kamp '+i,b}));
+const KTOP=4478;
+function klimS(){if(!S.klim)S.klim={m:{}};return S.klim}
+const blokW=b=>WORDS.filter(w=>b.p.includes(w.page));
+function klimPct(i){const K=klimS(),l=blokW(KCAMPS[i].b);return l.length?l.filter(w=>K.m[w.en]).length/l.length:0}
+function klimTotal(){const K=klimS();let a=0,b=0;KCAMPS.forEach(c=>{const l=blokW(c.b);a+=l.filter(w=>K.m[w.en]).length;b+=l.length});return {a,b,p:b?a/b:0}}
+function klimOpen(i){return i===0||klimPct(i-1)>=1}
+function klimMtn(){const t=klimTotal(),W=340,H=230,N=KCAMPS.length;
+  const pts=Array.from({length:N+1},(_,i)=>[20+242*i/N,210-170*Math.pow(i/N,.9)]);
+  const lerp=p=>{const seg=p*N,i=Math.min(N-1,Math.floor(seg)),f=seg-i;return [pts[i][0]+(pts[i+1][0]-pts[i][0])*f,pts[i][1]+(pts[i+1][1]-pts[i][1])*f]};
+  let s=`<path d="M0,${H} ${pts.map(p=>'L'+p[0]+','+(p[1]+2)).join(' ')} L300,82 L340,130 L340,${H}Z" fill="var(--good-bg)" stroke="var(--good)" stroke-width="2"/>
+   <polyline points="${pts.map(p=>p.join(',')).join(' ')}" fill="none" stroke="var(--muted)" stroke-width="2" stroke-dasharray="4 5"/>`;
+  KCAMPS.forEach((c,i)=>{const [x,y]=pts[i+1];s+=`<line x1="${x}" y1="${y}" x2="${x}" y2="${y-20}" stroke="currentColor" stroke-width="1.5"/><path d="M${x},${y-20} L${x+14},${y-15} L${x},${y-10}Z" fill="${klimPct(i)>=1?'var(--accent)':'var(--chip)'}" stroke="currentColor" stroke-width="1"/>`});
+  const [cx,cy]=lerp(t.p);s+=`<circle cx="${cx}" cy="${cy-7}" r="9" fill="var(--accent)" stroke="var(--surface)" stroke-width="2.5"/><text x="${cx}" y="${cy-3.5}" font-size="10" text-anchor="middle" fill="var(--accent-ink)" font-weight="700">W</text>`;
+  return `<svg viewBox="0 0 ${W} ${H}" style="max-width:520px;width:100%;color:var(--ink)">${s}</svg>`}
+function klimHome(){const t=klimTotal();show('play');G={mode:'klimkaart'};const h=Math.round(t.p*KTOP);
+  P.innerHTML=`<div class="playbar"><button class="btn small ghost" id="quit">Terug</button><span class="bar"><i style="width:${Math.round(t.p*100)}%"></i></span><span class="count">${Math.round(t.p*100)}%</span></div>
+  <div class="pass">${headHtml('Spel','Beklim de Woordenberg')}<div class="pass-body">
+   <div style="display:flex;gap:16px;flex-wrap:wrap;align-items:baseline"><div><div class="q">Hoogte</div><div class="big" style="font-size:44px">${h.toLocaleString('nl-NL')} m</div></div><div class="count">${t.a} van ${t.b} woorden veroverd</div></div>
+   ${klimMtn()}
+   <p style="margin:0">Alle woorden van Unit 2 en 3, kamp voor kamp: hoe zeg je het in het Engels? Elk goed woord brengt je hoger. Fout? Dan komt het woord terug tot je het wel goed hebt. Pas als een kamp op 100% staat, gaat het volgende open. Sta je op de top, dan ken je alle woorden.</p>
+   <div class="bkamps">${KCAMPS.map((c,i)=>{const p=klimPct(i),o=klimOpen(i);return `<button class="bkamp${p>=1?' done':''}" data-k="${i}" ${o?'':'disabled'}><b>${o?(p>=1?'★':'⛺'):'🔒'} ${c.n}</b><span>${esc(c.b.n)} · ${blokW(c.b).length} woorden</span><span class="bar"><i style="width:${Math.round(p*100)}%"></i></span><span class="count">${Math.round(p*100)}%</span></button>`}).join('')}</div>
+   <div class="acts"><button class="btn ghost small" id="kreset">Opnieuw beginnen</button></div>
+  </div></div>`;
+  $('#quit').onclick=goHome;P.querySelectorAll('[data-k]').forEach(b=>b.onclick=()=>klimPlay(+b.dataset.k));
+  $('#kreset').onclick=()=>{$('#kreset').parentNode.innerHTML='<span>Alle hoogte kwijt?</span><button class="btn small dark" id="kY">Ja</button><button class="btn small ghost" id="kN">Nee</button>';
+    $('#kY').onclick=()=>{S.klim=null;save();klimHome()};$('#kN').onclick=klimHome}}
+function klimPlay(ci){const K=klimS();const open=shuffle(blokW(KCAMPS[ci].b).filter(w=>!K.m[w.en]));
+  if(!open.length){klimHome();return}
+  G={mode:'klim',ci,queue:open.slice(0,12),n0:Math.min(12,open.length),done:0,combo:0,maxc:0};show('play');klimNext()}
+function klimNext(){const K=klimS(),c=KCAMPS[G.ci];
+  if(!G.queue.length){const p=klimPct(G.ci);if(p>=1)confetti();save();const top=klimTotal().p>=1;
+    P.innerHTML=`<div class="pass">${headHtml('Spel',c.n)}<div class="pass-body">
+     <div class="q">${top?'Je staat op de top!':p>=1?c.n+' veroverd!':'Rondje klaar'}</div><div class="big">${Math.round(p*100)}%</div>
+     <div>${top?'Alle woorden goed. Die zitten erin.':p>=1?(G.ci<KCAMPS.length-1?'Het volgende kamp is open.':''):`Nog ${blokW(c.b).filter(w=>!K.m[w.en]).length} woorden te gaan in dit kamp.`} Langste reeks: ${G.maxc}.</div>
+     ${klimMtn()}
+     <div class="acts">${p<1?'<button class="btn primary" id="kv">Verder klimmen</button>':G.ci<KCAMPS.length-1?'<button class="btn primary" id="kn">Naar het volgende kamp</button>':''}<button class="btn ghost" id="kh">Bergkaart</button></div></div></div>`;
+    const kv=$('#kv'),kn=$('#kn');if(kv){kv.onclick=()=>klimPlay(G.ci);kv.focus()}if(kn){kn.onclick=()=>klimPlay(G.ci+1);kn.focus()}$('#kh').onclick=klimHome;return}
+  const w=G.queue[0];const m=mcHtml(w,'nl');
+  P.innerHTML=`<div class="playbar"><button class="btn small ghost" id="quit">Bergkaart</button><span class="bar"><i style="width:${Math.round(G.done/G.n0*100)}%"></i></span><span class="count">${G.done}/${G.n0}</span></div>
+  <div class="pass">${headHtml(c.n+' · '+c.b.n,G.combo>=3?`🔥 ${G.combo} op rij`:`Reeks: ${G.combo}`)}<div class="pass-body">${m.html}</div></div>`;
+  $('#quit').onclick=klimHome;
+  P.querySelectorAll('.opt').forEach((btn,i)=>btn.onclick=()=>{const ok=m.opts[i]===w;markMc(m.opts,w,i);markDay();G.queue.shift();
+    if(ok){K.m[w.en]=1;G.done++;G.combo++;G.maxc=Math.max(G.maxc,G.combo);if(G.combo%5===0)confetti()}
+    else{G.combo=0;G.queue.splice(Math.min(3,G.queue.length),0,w)}
+    save();$('#fbox').innerHTML=`<div class="fb ${ok?'good':'bad'}"><div class="t">${ok?pick(['Goed!','Klopt!','Top!']):'Niet goed. Het is: '+esc(w.en)}</div><div class="tip">${esc(w.nl)} = <b>${esc(w.en)}</b></div></div><div class="acts" style="margin-top:12px"><button class="btn primary" id="next">Verder ↵</button></div>`;
+    const n=$('#next');n.onclick=klimNext;n.focus()})}
+
+/* ---------- Woordjespad (leerroute): alles in een logische volgorde, met voortgang in % ---------- */
+/* stap: [id, deel, titel, waarom nu, gewicht (%), type, arg, doel]; de gewichten tellen op tot 100 */
+const ROUTE=[];
+BLOKKEN.forEach((b,i)=>{const d=i<5?'u3':'u2',eerste=i===0;
+ ROUTE.push(['l'+i,d,b.n+': inprenten',eerste?'Eerst meerkeuze, dan zelf het Engels typen.':'De woorden van deze bladzijden inprenten.',3,'learn',i]);
+ ROUTE.push(['g'+i,d,b.n+': spelletje','Speel met deze woorden tot je ze echt kent.',3,'game',i]);
+ ROUTE.push(['k'+i,d,'Woordenberg: '+KCAMPS[i].n,'Eindcheck: elk woord van dit blok één keer goed.',3,'klim',i])});
+GTOP.forEach(t=>ROUTE.push(['gr'+t.id,'gr',t.title,t.sub,3,'gram',t.id]));
+ROUTE.push(['hard','af','Lastige woorden','De woorden die je moeilijk vond, en die vaak fout gaan.',4,'hard']);
+const RDEEL={u3:'Unit 3 · On the go',u2:'Unit 2 · It\'s just a game',gr:'Grammatica',af:'Afronden'};
+const SPELNAAM={vlucht:'Vliegroute',schiet:'Schiettent',stroom:'Stroomdraad',blitz:'Blitz 60'};
+let RT={on:false,before:null};
+function rVal(r){const ty=r[5],a=r[6];
+ if(ty==='learn')return mastery(blokW(BLOKKEN[a]));
+ if(ty==='game'){const l=blokW(BLOKKEN[a]);return l.length?l.filter(w=>((S.w[w.en]||{}).l||0)>=3).length/l.length:0}
+ if(ty==='klim')return klimPct(a);
+ if(ty==='gram')return gMastery(a);
+ if(ty==='hard'){const l=WORDS.filter(w=>HARD.includes(w.en));return l.length?l.filter(w=>((S.w[w.en]||{}).l||0)>=3).length/l.length:0}return 0}
+function rGoal(r){const ty=r[5];return ty==='learn'?.5:ty==='game'||ty==='hard'?.8:ty==='gram'?.67:1}
+function rDone(r){return rVal(r)>=rGoal(r)}
+function rPct(){return ROUTE.filter(rDone).reduce((a,r)=>a+r[4],0)}
+window.leerVoortgang=rPct;
+function rProg(r){const ty=r[5],v=Math.round(rVal(r)*100);
+ if(ty==='learn')return `${v}% geoefend · doel 50%`;
+ if(ty==='game'||ty==='hard')return `${v}% van de woorden gekend · doel 80%`;
+ if(ty==='klim')return `${v}% van dit kamp gehaald`;
+ if(ty==='gram')return `${v}% onder de knie · doel 67%`;return ''}
+function kiesSpel(i){show('play');G={mode:'kies'};const b=BLOKKEN[i];
+ P.innerHTML=`<div class="playbar"><button class="btn small ghost" id="quit">Terug</button></div><div class="pass">${headHtml('Spelletje',esc(b.n))}<div class="pass-body">
+  <div class="q">Kies een spel met de woorden van ${esc(b.n)}</div>
+  <div class="modes">${Object.entries(SPELNAAM).map(([g,n])=>`<button class="mode" data-sp="${g}"><h3>${n}</h3></button>`).join('')}</div>
+  <p class="src" style="margin:0">Elk goed woord telt mee voor "gekend". Na het spel kom je terug in het woordjespad.</p></div></div>`;
+ $('#quit').onclick=goHome;P.querySelectorAll('[data-sp]').forEach(x=>x.onclick=()=>{S.sel=[...b.p];save();start(x.dataset.sp)})}
+function rGo(r){RT={on:true,before:new Set(ROUTE.filter(rDone).map(x=>x[0]))};const ty=r[5],a=r[6];
+ if(ty==='learn'){S.sel=[...BLOKKEN[a].p];save();return start('learn')}
+ if(ty==='game')return kiesSpel(a);
+ if(ty==='klim')return klimPlay(a);
+ if(ty==='gram')return gTopic(a);
+ if(ty==='hard'){S.sel=['hard'];save();return start('learn')}}
+function routeScreen(){const before=RT.before;RT={on:false,before:null};show('play');G={mode:'route'};
+ const pct=rPct(),nxt=ROUTE.find(r=>!rDone(r));const fresh=before?ROUTE.filter(r=>rDone(r)&&!before.has(r[0])):[];if(fresh.length)confetti();
+ const gek=WORDS.filter(w=>((S.w[w.en]||{}).l||0)>=3).length;
+ let deel='';const rows=ROUTE.map((r,i)=>{const d=rDone(r),cur=r===nxt;let h='';if(r[1]!==deel){deel=r[1];h=`<h3 class="rt-deel">${RDEEL[deel]}</h3>`}
+  return h+`<button class="rt-step${d?' done':''}${cur?' cur':''}" data-r="${i}"><span class="rt-ic">${d?'✓':cur?'▶':i+1}</span><span class="rt-tx"><b>${esc(r[2])}</b><span>${cur?esc(r[3])+'<br>':''}${rProg(r)}</span></span><span class="rt-w">${d?'':'+'}${r[4]}%</span></button>`}).join('');
+ P.innerHTML=`<div class="playbar"><button class="btn small ghost" id="quit">Naar start</button><span class="bar"><i style="width:${pct}%"></i></span><span class="count">${pct}%</span></div>
+ <div class="pass">${headHtml('Woordjespad','Engels Unit 2 & 3')}<div class="pass-body">
+  ${fresh.length?`<div class="fb good"><div class="t">Gehaald: ${fresh.map(r=>esc(r[2])).join(', ')}</div><div class="tip">+${fresh.reduce((a,r)=>a+r[4],0)}% · je staat nu op ${pct}%</div></div>`:''}
+  <div style="display:flex;gap:18px;flex-wrap:wrap;align-items:baseline"><div><div class="q">Hoe ver ben je?</div><div class="big">${pct}%</div></div><div class="count">${gek} van ${WORDS.length} woorden gekend</div></div>
+  ${nxt?`<div class="nextbox"><h3>Volgende stap: ${esc(nxt[2])}</h3><p style="margin:4px 0 10px">${esc(nxt[3])}</p><button class="btn primary" id="rtgo">Start ↵</button></div>`:'<div class="fb good"><div class="t">Alles gehaald!</div><div class="tip">Houd het warm met een spelletje.</div></div>'}
+  <p class="src" style="margin:0">Zo werkt het: per blok bladzijden eerst inprenten, dan spelen tot je de woorden echt kent, en als eindcheck het kamp op de Woordenberg. Daarna de grammatica en de lastige woorden. Een stap telt als je het doel haalt, dan komen de procenten erbij. Je mag stappen overslaan of herhalen: tik er gewoon op.</p>
+  <div class="rt-list">${rows}</div>
+ </div></div>`;
+ $('#quit').onclick=goHome;P.querySelectorAll('[data-r]').forEach(b=>b.onclick=()=>rGo(ROUTE[+b.dataset.r]));const g=$('#rtgo');if(g){g.onclick=()=>rGo(nxt);g.focus()}}
+function routeBox(){const el=$('#lpbox');if(!el)return;const pct=rPct(),nxt=ROUTE.find(r=>!rDone(r));
+ el.innerHTML=`<button class="mode main" id="rtbox"><span class="tag" style="text-transform:none">${pct}% van het woordjespad</span><h3>${nxt?(pct?'Ga verder':'Begin hier'):'Woordjespad klaar'}</h3><p>${nxt?esc(nxt[2])+'. '+esc(nxt[3]):'Alle stappen gehaald. Herhalen?'}</p><span class="bar" style="margin-top:6px;background:rgba(255,255,255,.2)"><i style="width:${pct}%;background:var(--accent)"></i></span></button>`;
+ $('#rtbox').onclick=routeScreen;
+ const t=klimTotal(),kt=$('#klimTag');if(kt)kt.textContent=Math.round(t.p*KTOP).toLocaleString('nl-NL')+' m · '+Math.round(t.p*100)+'%'}
+$('#klim').onclick=klimHome;
 
 renderHome();
 </script>
