@@ -32,7 +32,8 @@ schermen `show('home'|'play')`, `goHome()`, `ask()`, `practice(sec)` (oefenronde
   (`RT.on`) gaat `goHome()` terug naar de route, met "Gehaald: … +x%". `window.leerVoortgang` geeft het % door
   aan het leerlogboek.
 - **Berg** (`klimHome`, `KCAMPS`, `KGEN`): alle vragen van het hoofdstuk, één kamp per paragraaf, 100% = alles
-  één keer goed. Wiskunde: Statistiekberg, scheikunde H1: Molberg, H2: Bindingsberg. Elk vak met een route
+  één keer goed. Wiskunde: Statistiekberg, scheikunde H1: Molberg, H2: Bindingsberg, biologie: Celberg (eigen
+  versie: kennisvragen en begrippen als meerkeuze, 7 kampen). Elk vak met een route
   eindigt met een berg (kampen in de route na de oefenronde). Klassenaam `bkamp` (niet `kc`: dat is de
   Kolommentabel in H1).
 - **Nalezen** na een oefenronde: `LEES` koppelt `th`/`gen` aan leerpad-kaartjes; de knop "Nalezen" toont alleen
