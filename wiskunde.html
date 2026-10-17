@@ -83,6 +83,18 @@ h2{font-size:21px;font-weight:800}
 details.tips{background:var(--surface);border:1px solid var(--line);border-radius:12px;padding:12px 16px}
 details.tips summary{font-weight:700;cursor:pointer}
 details.tips ul{margin:10px 0 4px;padding-left:20px;display:grid;gap:6px}
+.rt-list{display:grid;gap:8px}
+.rt-deel{font-size:15px;font-family:var(--f-mono);text-transform:uppercase;letter-spacing:.08em;color:var(--muted);margin:14px 0 2px}
+.rt-step{display:grid;grid-template-columns:34px minmax(0,1fr) auto;gap:12px;align-items:center;text-align:left;font:inherit;color:inherit;background:var(--surface);border:2px solid var(--line);border-radius:12px;padding:10px 12px;cursor:pointer}
+.rt-step .rt-ic{width:34px;height:34px;border-radius:50%;display:grid;place-items:center;background:var(--chip);color:var(--muted);font:700 14px var(--f-mono)}
+.rt-step .rt-tx{display:flex;flex-direction:column;gap:2px;min-width:0}
+.rt-step .rt-tx span{font-size:13.5px;color:var(--muted)}
+.rt-step .rt-w{font:600 13px var(--f-mono);color:var(--muted)}
+.rt-step.done{border-color:var(--green-soft)}
+.rt-step.done .rt-ic{background:var(--green);color:#fff}
+.rt-step.cur{border-color:var(--ink)}
+.rt-step.cur .rt-ic{background:var(--pink);color:#fff}
+@media (hover:hover){.rt-step:hover{border-color:var(--ink)}}
 /* spel */
 .playbar{display:flex;align-items:center;gap:12px;margin-bottom:16px}
 .playbar .bar{flex:1;height:10px;border-radius:5px}
@@ -229,10 +241,10 @@ ol.steps li{animation:fadein .3s ease}
 
 </head>
 <body>
-<a href="index.html" style="position:fixed;right:12px;bottom:calc(12px + env(safe-area-inset-bottom,0px));z-index:20;background:#142A3A;color:#fff;text-decoration:none;font:700 14px system-ui,sans-serif;padding:9px 14px;border-radius:999px;box-shadow:0 2px 8px rgba(0,0,0,.25)">← Alle vakken</a>
+
 <canvas id="conf"></canvas>
 <div class="wrap">
-<main id="home">
+<main id="home"><a href="index.html" style="display:inline-block;margin:0 0 10px;color:inherit;opacity:.7;text-decoration:none;font:700 14px system-ui,sans-serif">‹ Alle vakken</a>
   <header class="top">
     <div>
       <div class="eyebrow">Wiskunde · Hoofdstuk 2</div>
@@ -278,7 +290,7 @@ ol.steps li{animation:fadein .3s ease}
     <details class="tips">
       <summary>Zo pak je het aan</summary>
       <ul>
-        <li>Lees bij elke paragraaf eerst de <b>Uitleg</b>. Wil je meer weten, klap dan <b>Dieper in de theorie</b> open. Doe daarna <b>Oefenen</b> tot de balk groen is.</li>
+        <li>Weet je niet waar je moet beginnen? Volg de <b>Leerroute</b> bovenaan: theorie, dan meteen oefenen met precies dat stukje, en per paragraaf een check.</li><li>Lees bij elke paragraaf eerst de <b>Uitleg</b>. Wil je meer weten, klap dan <b>Dieper in de theorie</b> open. Doe daarna <b>Oefenen</b> tot de balk groen is.</li>
         <li>Fout? Lees de uitwerking goed en doe er meteen nog een paar uit de <b>Rekentrainer</b>.</li>
         <li>Bij <b>Grafieken</b> tik je op het rooster om een punt te zetten. Tik nog eens in dezelfde kolom om een punt te verplaatsen, of gebruik ↶.</li>
         <li>Getallen typ je met een komma of punt, allebei goed (6,4 of 6.4).</li>
@@ -899,13 +911,92 @@ function lpNext(){const {cards}=G;if(G.i<cards.length-1){G.i++;lpDraw();return}
  const redo=[...new Set(G.redo)];
  P.innerHTML=`<div class="slide">${head('Leerpad '+(sec==='0'?'basis':sec),'Klaar')}<div class="slide-body"><div class="q">Controlevragen in één keer goed</div><div class="big">${G.ok}<span style="font-size:.45em;color:var(--muted)"> / ${G.asked}</span></div>
   ${redo.length?`<div class="fb bad"><div class="t">Kijk hier nog even naar</div><div class="tip">${redo.map(i=>`<button class="btn small ghost" data-go="${i}" style="margin:3px">${cards[i][0]}</button>`).join('')}</div></div>`:'<div>Alles in één keer goed. Mooi!</div>'}
-  <div class="nextbox"><h3>Wat nu?</h3><div class="choice"><button class="btn primary" id="lpprac">Oefenronde ${sec==='0'?'basis':sec}</button><span>Test of het blijft hangen. Fouten komen terug met uitleg.</span></div>
+  <div class="nextbox"><h3>Wat nu?</h3>${RT.on?'<div class="choice"><button class="btn primary" id="lprt">Verder in de leerroute →</button><span>Daar staat de volgende stap al klaar.</span></div>':''}<div class="choice"><button class="btn ${RT.on?'ghost':'primary'}" id="lpprac">Oefenronde ${sec==='0'?'basis':sec}</button><span>Test of het blijft hangen. Fouten komen terug met uitleg.</span></div>
   ${nxt&&LP[nxt.id]?`<div class="choice"><button class="btn ghost" id="lpnxt">Leerpad ${nxt.id}: ${esc(nxt.t)} →</button><span>Of leer eerst door.</span></div>`:''}
   <div class="choice"><button class="btn ghost" id="lphome">Naar start</button></div></div></div></div>`;
- P.querySelectorAll('[data-go]').forEach(b=>b.onclick=()=>lpStart(sec,+b.dataset.go));$('#lpprac').onclick=()=>practice(sec);const n=$('#lpnxt');if(n)n.onclick=()=>lpStart(nxt.id);$('#lphome').onclick=goHome;$('#lpprac').focus()}
+ P.querySelectorAll('[data-go]').forEach(b=>b.onclick=()=>lpStart(sec,+b.dataset.go));$('#lpprac').onclick=()=>practice(sec);const n=$('#lpnxt');if(n)n.onclick=()=>lpStart(nxt.id);$('#lphome').onclick=()=>{RT.on=false;goHome()};const rt=$('#lprt');if(rt){rt.onclick=goHome;rt.focus()}else $('#lpprac').focus()}
 function lpBox(){const el=$('#lpbox');if(!el)return;lpState();const todo=SECS.find(s=>LP[s.id]&&!S.lpd[s.id]);const nDone=SECS.filter(s=>S.lpd[s.id]).length;
  el.innerHTML=`<button class="mode main lpmode" id="lpgo"><span class="lab">Leren</span><span class="tag" style="text-transform:none">${nDone} van ${SECS.length} paragrafen geleerd</span><h3>${todo?(S.lp[todo.id]?'Ga verder: ':'Begin: ')+esc(todo.t):'Alles doorlopen. Herhalen?'}</h3><p>Geen boek nodig: de theorie in korte kaartjes, één idee per kaart, met af en toe een controlevraag. Ongeveer 10 minuten per paragraaf.</p></button>`;
  $('#lpgo').onclick=()=>lpStart((todo||SECS[0]).id)}
+
+/* ---------- Leerroute: alles in een logische volgorde, met voortgang in % ---------- */
+/* stap: [id, deel, titel, waarom nu, gewicht (%), type, arg, doel]; de gewichten tellen op tot 100 */
+const ROUTE=[
+ ['lp2.1','2.1','Leerpad 2.1: de onderzoeksvraag','Begin hier. De statistische cyclus, populatie en steekproef.',5,'lp','2.1'],
+ ['cyc','2.1','Snel oefenen: fase van de cyclus','Welke stap van het onderzoek is dit?',3,'tr','cyc',5],
+ ['pr2.1','2.1','Oefenronde 2.1','Alles van 2.1 door elkaar. Fout? Uitleg erbij.',4,'pr','2.1'],
+ ['k0','2.1','Statistiekberg: Basiskamp','De berg is de eindcheck van de paragraaf: elke vraag één keer goed en je bent boven.',4,'klim',0],
+ ['lp2.2','2.2','Leerpad 2.2: data verzamelen','Soorten variabelen: kwalitatief of kwantitatief.',5,'lp','2.2'],
+ ['var','2.2','Snel oefenen: type variabele','Nominaal, ordinaal, discreet of continu?',3,'tr','var',5],
+ ['pr2.2','2.2','Oefenronde 2.2','Alles van 2.2 door elkaar.',4,'pr','2.2'],
+ ['k1','2.2','Statistiekberg: Kamp 1','Eindcheck van 2.2.',4,'klim',1],
+ ['lp2.3','2.3','Leerpad 2.3: data analyseren','Gemiddelde, mediaan, modus, frequentietabel en klassen.',5,'lp','2.3'],
+ ['gmm','2.3','Snel oefenen: gemiddelde, mediaan, modus','De drie centrummaten.',2,'tr','gmm',5],
+ ['freq','2.3','Snel oefenen: frequentietabel','Turven en tellen.',2,'tr','freq',5],
+ ['rel','2.3','Snel oefenen: relatieve frequentie','Van aantal naar procent.',2,'tr','rel',5],
+ ['klas','2.3','Snel oefenen: klassenindeling','Data in groepjes voor een histogram.',2,'tr','klas',5],
+ ['weeg','2.3','Snel oefenen: gewogen gemiddelde','Gemiddelde uit een frequentietabel.',2,'tr','weeg',5],
+ ['pr2.3','2.3','Oefenronde 2.3','Alles van 2.3 door elkaar.',4,'pr','2.3'],
+ ['k2','2.3','Statistiekberg: Kamp 2','Eindcheck van 2.3.',4,'klim',2],
+ ['lp2.4','2.4','Leerpad 2.4: kwartielen en spreiding','Cumulatieve frequentie, kwartielen en de boxplot.',5,'lp','2.4'],
+ ['cum','2.4','Snel oefenen: cumulatieve frequentie','Optellen tot en met.',2,'tr','cum',5],
+ ['kw','2.4','Snel oefenen: kwartielen en spreiding','Q1, mediaan, Q3, spreidingsbreedte en IKA.',2,'tr','kw',5],
+ ['box','2.4','Snel oefenen: boxplot aflezen','Wat zegt de doos, wat zeggen de snorren?',2,'tr','box',5],
+ ['pr2.4','2.4','Oefenronde 2.4','Alles van 2.4 door elkaar.',4,'pr','2.4'],
+ ['k3','2.4','Statistiekberg: Kamp 3','Eindcheck van 2.4.',4,'klim',3],
+ ['lp2.5','2.5','Leerpad 2.5: statistische verdelingen','Scheef, symmetrisch, standaardafwijking en de normale verdeling.',5,'lp','2.5'],
+ ['shape','2.5','Snel oefenen: welke verdeling?','Vorm van een verdeling herkennen.',2,'tr','shape',5],
+ ['norm','2.5','Snel oefenen: normale verdeling','De vuistregels 68% en 95%.',2,'tr','norm',5],
+ ['sd','2.5','Snel oefenen: standaardafwijking met de hand','De lastigste: drie goed op rij is genoeg.',2,'tr','sd',3],
+ ['pr2.5','2.5','Oefenronde 2.5','Alles van 2.5 door elkaar.',4,'pr','2.5'],
+ ['k4','2.5','Statistiekberg: de Top','De laatste klim: haal de top en je hebt het hele hoofdstuk één keer goed gedaan.',4,'klim',4],
+ ['toets','af','Proeftoets','De generale repetitie. Haal je een 7, dan ben je klaar voor de echte toets.',7,'toets',null,7]
+];
+const RDEEL={'2.1':'2.1 · De onderzoeksvraag','2.2':'2.2 · Data verzamelen','2.3':'2.3 · Data analyseren','2.4':'2.4 · Kwartielen en spreiding','2.5':'2.5 · Verdelingen','af':'Afronden'};
+let RT={on:false,before:null};
+function rVal(r){const ty=r[5],a=r[6];
+ if(ty==='lp')return S.lpd&&S.lpd[a]?1:0;
+ if(ty==='pr')return (S.pr||{})[a]||0;
+ if(ty==='tr')return (S.tr||{})[a]||0;
+ if(ty==='lab')return (S.lab||{})[a]||0;
+ if(ty==='band')return S.band||0;
+ if(ty==='bouw'){let n=0;for(let i=a[0];i<a[1];i++)if((S.bouw||{})[BLEVELS[i].f])n++;return n}
+ if(ty==='klim')return klimPct(KCAMPS[a].sec);
+ if(ty==='flits')return S.flits?1:0;
+ if(ty==='toets')return S.best||0;return 0}
+function rGoal(r){const ty=r[5];return ty==='lp'||ty==='flits'||ty==='klim'?1:ty==='pr'?.8:ty==='bouw'?r[6][1]-r[6][0]:r[7]}
+function rDone(r){return rVal(r)>=rGoal(r)}
+function rPct(){return sum(ROUTE.filter(rDone).map(r=>r[4]))}
+window.leerVoortgang=rPct;
+function rProg(r){const ty=r[5],v=rVal(r),g=rGoal(r);
+ if(ty==='lp'||ty==='flits')return v?'gedaan':'nog niet gedaan';
+ if(ty==='pr')return v?`beste: ${Math.round(v*100)}% in één keer goed · doel 80%`:'doel: 80% in één keer goed';
+ if(ty==='tr')return `beste reeks: ${v} · doel ${g} goed op rij`;
+ if(ty==='lab')return `beste: ${v} van 6 goed · doel ${g}`;
+ if(ty==='band')return `record: ${v} · doel ${g} punten`;
+ if(ty==='bouw')return `${v} van ${g} gebouwd`;
+ if(ty==='klim')return `${Math.round(v*100)}% van dit kamp gehaald`;
+ if(ty==='toets')return v?`beste cijfer: ${nf(v)} · doel ${g}`:`doel: een ${g}`;return ''}
+function rGo(r){RT={on:true,before:new Set(ROUTE.filter(rDone).map(x=>x[0]))};const ty=r[5],a=r[6];
+ if(ty==='lp')return lpStart(a);if(ty==='pr')return practice(a);if(ty==='tr')return trainer(a,r[7]);if(ty==='flits')return flits();if(ty==='toets')return toets();
+ if(ty==='lab')return labRun(a);if(ty==='band')return bandStart();if(ty==='klim')return klimPlay(a);
+ if(ty==='bouw'){const b=S.bouw||{};let i=a[0];while(i<a[1]-1&&b[BLEVELS[i].f])i++;return bouwPlay(i)}}
+function routeScreen(){const before=RT.before;RT={on:false,before:null};show('play');G={m:'route'};
+ const pct=rPct(),nxt=ROUTE.find(r=>!rDone(r));const fresh=before?ROUTE.filter(r=>rDone(r)&&!before.has(r[0])):[];if(fresh.length)confetti();
+ let deel='';const rows=ROUTE.map((r,i)=>{const d=rDone(r),cur=r===nxt;let h='';if(r[1]!==deel){deel=r[1];h=`<h3 class="rt-deel">${RDEEL[deel]}</h3>`}
+  return h+`<button class="rt-step${d?' done':''}${cur?' cur':''}" data-r="${i}"><span class="rt-ic">${d?'✓':cur?'▶':i+1}</span><span class="rt-tx"><b>${r[2]}</b><span>${cur?r[3]+'<br>':''}${rProg(r)}</span></span><span class="rt-w">${d?'':'+'}${r[4]}%</span></button>`}).join('');
+ P.innerHTML=`<div class="playbar"><button class="btn small ghost" id="quit">Naar start</button><span class="bar"><i style="width:${pct}%"></i></span><span class="count">${pct}%</span></div>
+ <div class="slide">${head('Leerroute','Wiskunde H2')}<div class="slide-body">
+  ${fresh.length?`<div class="fb good"><div class="t">Gehaald: ${fresh.map(r=>r[2]).join(', ')}</div><div class="tip">+${sum(fresh.map(r=>r[4]))}% · je staat nu op ${pct}%</div></div>`:''}
+  <div><div class="q">Hoe ver ben je?</div><div class="big">${pct}%</div><div class="count">${ROUTE.filter(rDone).length} van ${ROUTE.length} stappen beheerst</div></div>
+  ${nxt?`<div class="nextbox"><h3>Volgende stap: ${nxt[2]}</h3><p style="margin:4px 0 10px">${nxt[3]}</p><button class="btn primary" id="rtgo">Start ↵</button></div>`:'<div class="fb good"><div class="t">Alles beheerst!</div><div class="tip">Houd het warm met een proeftoets.</div></div>'}
+  <p class="src" style="margin:0">Zo werkt het: eerst de theorie (leerpad), dan korte oefeningen over precies dat stukje, een oefenronde, en als eindcheck van de paragraaf het volgende kamp op de Statistiekberg. Een stap telt als <b>beheerst</b> als je het doel haalt, dan komen de procenten erbij. Je mag stappen overslaan of herhalen: tik er gewoon op.</p>
+  <div class="rt-list">${rows}</div>
+ </div></div>`;
+ $('#quit').onclick=goHome;P.querySelectorAll('[data-r]').forEach(b=>b.onclick=()=>rGo(ROUTE[+b.dataset.r]));const g=$('#rtgo');if(g){g.onclick=()=>rGo(nxt);g.focus()}}
+function routeBox(){const el=$('#lpbox');if(!el)return;const pct=rPct(),nxt=ROUTE.find(r=>!rDone(r));
+ el.innerHTML=`<button class="mode main lpmode" id="rtbox"><span class="lab">Route</span><span class="tag" style="text-transform:none">${pct}% van de leerroute</span><h3>${nxt?(pct?'Ga verder: ':'Begin: ')+nxt[2]:'Leerroute klaar. Herhalen?'}</h3><p>${nxt?nxt[3]:'Alle stappen beheerst.'}</p><span class="bar" style="margin-top:6px;background:rgba(255,255,255,.2)"><i style="width:${pct}%"></i></span></button>`;
+ $('#rtbox').onclick=routeScreen}
 
 const LP={
 '2.1':[
@@ -959,12 +1050,12 @@ function rec(sec,ok){const a=S.sec[sec]||(S.sec[sec]=[]);a.push(ok?1:0);if(a.len
 const score=sec=>{const a=S.sec[sec]||[];return a.length?sum(a)/Math.max(a.length,10):0};
 const P=$('#play');let G=null;
 function show(v){$('#home').hidden=v!=='home';P.hidden=v!=='play';window.scrollTo(0,0)}
-function goHome(){G=null;save();renderHome();show('home')}
+function goHome(){G=null;save();if(RT.on)return routeScreen();renderHome();show('home')}
 function renderHome(){
   $('#secs').innerHTML=SECS.map(s=>{const m=score(s.id);return `<div class="sec"><span class="num">${s.id}</span><div><h3>${esc(s.t)}</h3><p>${esc(s.s)}</p><span class="bar"><i style="width:${Math.round(m*100)}%"></i></span></div><div class="acts"><button class="btn small lp" data-lp="${s.id}">${S.lpd&&S.lpd[s.id]?'✓ Leerpad':'▶ Leerpad'}</button><button class="btn small ghost" data-u="${s.id}">Uitleg</button><button class="btn small primary" data-o="${s.id}">Oefenen</button></div></div>`}).join('');
   $('#grafs').innerHTML=Object.entries(GTASKS).map(([k,g])=>`<button class="btn small ghost" data-gr="${k}"><span class="src">${GSEC[k]}</span> ${esc(g.t)}</button>`).join('')+`<button class="btn small primary" data-gr="mix">Gemengd</button>`;
   $('#tools').innerHTML=Object.entries(GENS).map(([k,g])=>`<button class="btn small ghost" data-g="${k}"><span class="src">${g.sec}</span> ${esc(g.t)}</button>`).join('');
-  try{lpBox()}catch(e){}$('#stDone').textContent=S.done;try{const t=klimTotal();$('#klimTag').textContent=Math.round(t.p*4478).toLocaleString('nl-NL')+' m · '+Math.round(t.p*100)+'%'}catch(e){}$('#stStreak').textContent=streak();$('#stBest').textContent=S.best?nf(S.best):'–';
+  try{routeBox()}catch(e){}$('#stDone').textContent=S.done;try{const t=klimTotal();$('#klimTag').textContent=Math.round(t.p*4478).toLocaleString('nl-NL')+' m · '+Math.round(t.p*100)+'%'}catch(e){}$('#stStreak').textContent=streak();$('#stBest').textContent=S.best?nf(S.best):'–';
 }
 $('#secs').addEventListener('click',e=>{const u=e.target.closest('[data-u]'),o=e.target.closest('[data-o]');if(u)uitleg(u.dataset.u);if(o)practice(o.dataset.o);const l=e.target.closest('[data-lp]');if(l)lpStart(l.dataset.lp)});
 $('#tools').addEventListener('click',e=>{const b=e.target.closest('[data-g]');if(b)trainer(b.dataset.g)});
@@ -1010,19 +1101,19 @@ function pracNext(){
   ask(q,`Paragraaf ${G.sec}`,q.gen?GENS[q.gen].t:'Begrip',topbar(G.i,G.items.length),ok=>{rec(G.sec,ok);if(q.id)S.mc[q.id]=(S.mc[q.id]||0)+(ok?1:-1);if(ok)G.ok++;else G.mist.push(q);save();G.i++;pracNext()});
 }
 function endScreen(){
-  const t=G.items.length,pct=G.ok/t;if(pct>=.8)confetti();save();const sec=G.sec;
+  const t=G.items.length,pct=G.ok/t;if(pct>=.8)confetti();if(!S.pr)S.pr={};S.pr[G.sec]=Math.max(S.pr[G.sec]||0,pct);save();const sec=G.sec;
   P.innerHTML=`<div class="slide">${head('Paragraaf '+sec,'Klaar')}<div class="slide-body"><div><div class="q">Goed</div><div class="big">${G.ok}<span style="font-size:.45em;color:var(--muted)"> / ${t}</span></div></div>
    <div>${pct>=.9?'Uitstekend, deze paragraaf zit erin.':pct>=.6?'Goed bezig. Nog een ronde en het zit vast.':'Lees de uitleg nog eens en probeer het dan opnieuw.'}</div>
    ${G.mist.length?`<div><div class="q" style="margin-bottom:6px">Kijk hier nog even naar</div><ul class="mist">${G.mist.map(q=>`<li><b>${q.mc?q.q.replace(/<svg[\s\S]*?<\/svg>/g,'[figuur]').replace(/<div class="tw">[\s\S]*?<\/div>/g,'[tabel]'):q.q.replace(/<svg[\s\S]*?<\/svg>/g,'[figuur]').replace(/<div class="tw">[\s\S]*?<\/div>/g,'[tabel]')}</b><span>Antwoord: ${q.mc?q.a:nf(q.a,2)} · ${q.w||''}</span></li>`).join('')}</ul></div>`:''}
    <div class="acts"><button class="btn primary" id="again">Nog een ronde</button><button class="btn ghost" id="uit">Uitleg</button><button class="btn ghost" id="home2">Naar start</button></div></div></div>`;
   $('#again').onclick=()=>practice(sec);$('#uit').onclick=()=>uitleg(sec);$('#home2').onclick=goHome;$('#again').focus();
 }
-function trainer(k){
-  G={m:'tr',k,n:0,ok:0,streak:0};show('play');trNext();
+function trainer(k,goal){
+  G={m:'tr',k,n:0,ok:0,streak:0,goal};show('play');trNext();
 }
 function trNext(){
   const g=GENS[G.k];const q=GENS[G.k].f();
-  ask(q,g.t,`Reeks: ${G.streak}`,topbar(`${G.ok} van ${G.n} goed`,0,'Klaar'),ok=>{G.n++;if(ok){G.ok++;G.streak++;if(G.streak%5===0)confetti()}else G.streak=0;rec(g.sec,ok);save();trNext()});
+  ask(q,g.t,`Reeks: ${G.streak}${G.goal?' · doel '+G.goal:''}`,topbar(`${G.ok} van ${G.n} goed`,0,'Klaar'),ok=>{G.n++;if(ok){G.ok++;G.streak++;if(G.streak%5===0||G.streak===G.goal)confetti()}else G.streak=0;if(!S.tr)S.tr={};S.tr[G.k]=Math.max(S.tr[G.k]||0,G.streak);rec(g.sec,ok);save();trNext()});
 }
 const GSEC={hist:'2.3',poly:'2.3',cum:'2.4',lees:'2.4',box:'2.4',kies:'2.4',norm:'2.5'};
 function uitleg(sec){

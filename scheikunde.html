@@ -83,6 +83,18 @@ h2{font-size:21px;font-weight:800}
 details.tips{background:var(--surface);border:1px solid var(--line);border-radius:12px;padding:12px 16px}
 details.tips summary{font-weight:700;cursor:pointer}
 details.tips ul{margin:10px 0 4px;padding-left:20px;display:grid;gap:6px}
+.rt-list{display:grid;gap:8px}
+.rt-deel{font-size:15px;font-family:var(--f-mono);text-transform:uppercase;letter-spacing:.08em;color:var(--muted);margin:14px 0 2px}
+.rt-step{display:grid;grid-template-columns:34px minmax(0,1fr) auto;gap:12px;align-items:center;text-align:left;font:inherit;color:inherit;background:var(--surface);border:2px solid var(--line);border-radius:12px;padding:10px 12px;cursor:pointer}
+.rt-step .rt-ic{width:34px;height:34px;border-radius:50%;display:grid;place-items:center;background:var(--chip);color:var(--muted);font:700 14px var(--f-mono)}
+.rt-step .rt-tx{display:flex;flex-direction:column;gap:2px;min-width:0}
+.rt-step .rt-tx span{font-size:13.5px;color:var(--muted)}
+.rt-step .rt-w{font:600 13px var(--f-mono);color:var(--muted)}
+.rt-step.done{border-color:var(--green-soft)}
+.rt-step.done .rt-ic{background:var(--green);color:#fff}
+.rt-step.cur{border-color:var(--ink)}
+.rt-step.cur .rt-ic{background:var(--pink);color:#fff}
+@media (hover:hover){.rt-step:hover{border-color:var(--ink)}}
 /* spel */
 .playbar{display:flex;align-items:center;gap:12px;margin-bottom:16px}
 .playbar .bar{flex:1;height:10px;border-radius:5px}
@@ -271,10 +283,10 @@ td.okc{background:var(--good-bg);font-weight:700}td.badc{background:var(--bad-bg
 
 </head>
 <body>
-<a href="index.html" style="position:fixed;right:12px;bottom:calc(12px + env(safe-area-inset-bottom,0px));z-index:20;background:#142A3A;color:#fff;text-decoration:none;font:700 14px system-ui,sans-serif;padding:9px 14px;border-radius:999px;box-shadow:0 2px 8px rgba(0,0,0,.25)">← Alle vakken</a>
+
 <canvas id="conf"></canvas>
 <div class="wrap">
-<main id="home">
+<main id="home"><a href="index.html" style="display:inline-block;margin:0 0 10px;color:inherit;opacity:.7;text-decoration:none;font:700 14px system-ui,sans-serif">‹ Alle vakken</a>
   <header class="top">
     <div>
       <div class="eyebrow">Scheikunde · Nova havo 4 · Hoofdstuk 2</div>
@@ -321,7 +333,7 @@ td.okc{background:var(--good-bg);font-weight:700}td.badc{background:var(--bad-bg
     <details class="tips">
       <summary>Zo pak je het aan</summary>
       <ul>
-        <li>Lees per paragraaf de <b>Uitleg</b> en doe dan een <b>Oefenronde</b>. Een fout antwoord laat de theorie zien en komt later terug.</li>
+        <li>Weet je niet waar je moet beginnen? Volg de <b>Leerroute</b> bovenaan: theorie, dan meteen oefenen met precies dat stukje, en per paragraaf een check.</li><li>Lees per paragraaf de <b>Uitleg</b> en doe dan een <b>Oefenronde</b>. Een fout antwoord laat de theorie zien en komt later terug.</li>
         <li><b>Molecuulbouwer</b>: kies een atoom, tik een vakje, en tik twee atomen na elkaar aan om ze te verbinden. Nog eens tikken = dubbele binding.</li>
         <li>Getallen typ je met een komma of punt.</li>
         <li>Offline: open de pagina één keer met internet. Daarna werkt hij ook in het vliegtuig.</li>
@@ -920,13 +932,97 @@ function lpNext(){const {cards}=G;if(G.i<cards.length-1){G.i++;lpDraw();return}
  const redo=[...new Set(G.redo)];
  P.innerHTML=`<div class="slide">${head('Leerpad '+(sec==='0'?'basis':sec),'Klaar')}<div class="slide-body"><div class="q">Controlevragen in één keer goed</div><div class="big">${G.ok}<span style="font-size:.45em;color:var(--muted)"> / ${G.asked}</span></div>
   ${redo.length?`<div class="fb bad"><div class="t">Kijk hier nog even naar</div><div class="tip">${redo.map(i=>`<button class="btn small ghost" data-go="${i}" style="margin:3px">${cards[i][0]}</button>`).join('')}</div></div>`:'<div>Alles in één keer goed. Mooi!</div>'}
-  <div class="nextbox"><h3>Wat nu?</h3><div class="choice"><button class="btn primary" id="lpprac">Oefenronde ${sec==='0'?'basis':sec}</button><span>Test of het blijft hangen. Fouten komen terug met uitleg.</span></div>
+  <div class="nextbox"><h3>Wat nu?</h3>${RT.on?'<div class="choice"><button class="btn primary" id="lprt">Verder in de leerroute →</button><span>Daar staat de volgende stap al klaar.</span></div>':''}<div class="choice"><button class="btn ${RT.on?'ghost':'primary'}" id="lpprac">Oefenronde ${sec==='0'?'basis':sec}</button><span>Test of het blijft hangen. Fouten komen terug met uitleg.</span></div>
   ${nxt&&LP[nxt.id]?`<div class="choice"><button class="btn ghost" id="lpnxt">Leerpad ${nxt.id}: ${esc(nxt.t)} →</button><span>Of leer eerst door.</span></div>`:''}
   <div class="choice"><button class="btn ghost" id="lphome">Naar start</button></div></div></div></div>`;
- P.querySelectorAll('[data-go]').forEach(b=>b.onclick=()=>lpStart(sec,+b.dataset.go));$('#lpprac').onclick=()=>practice(sec);const n=$('#lpnxt');if(n)n.onclick=()=>lpStart(nxt.id);$('#lphome').onclick=goHome;$('#lpprac').focus()}
+ P.querySelectorAll('[data-go]').forEach(b=>b.onclick=()=>lpStart(sec,+b.dataset.go));$('#lpprac').onclick=()=>practice(sec);const n=$('#lpnxt');if(n)n.onclick=()=>lpStart(nxt.id);$('#lphome').onclick=()=>{RT.on=false;goHome()};const rt=$('#lprt');if(rt){rt.onclick=goHome;rt.focus()}else $('#lpprac').focus()}
 function lpBox(){const el=$('#lpbox');if(!el)return;lpState();const todo=SECS.find(s=>LP[s.id]&&!S.lpd[s.id]);const nDone=SECS.filter(s=>S.lpd[s.id]).length;
  el.innerHTML=`<button class="mode main lpmode" id="lpgo"><span class="lab">Leren</span><span class="tag" style="text-transform:none">${nDone} van ${SECS.length} paragrafen geleerd</span><h3>${todo?(S.lp[todo.id]?'Ga verder: ':'Begin: ')+esc(todo.t):'Alles doorlopen. Herhalen?'}</h3><p>Geen boek nodig: de theorie in korte kaartjes, één idee per kaart, met af en toe een controlevraag. Ongeveer 10 minuten per paragraaf.</p></button>`;
  $('#lpgo').onclick=()=>lpStart((todo||SECS[0]).id)}
+
+/* ---------- Leerroute: alles in een logische volgorde, met voortgang in % ---------- */
+/* stap: [id, deel, titel, waarom nu, gewicht (%), type, arg, doel]; de gewichten tellen op tot 100 */
+const ROUTE=[
+ ['lp0','0','Leerpad 0: de basis','Begin hier. Atomen, het periodiek systeem, formules lezen en kloppend maken.',4,'lp','0'],
+ ['tel','0','Snel oefenen: atomen tellen','Formules lezen tot het vanzelf gaat.',2,'tr','tel',5],
+ ['massa','0','Snel oefenen: molecuulmassa','Atoommassa\'s optellen.',2,'tr','massa',5],
+ ['balans','0','Lab: Weegschaal','Reactievergelijkingen kloppend maken tot de weegschaal recht hangt.',3,'lab','balans',5],
+ ['soort','0','Snel oefenen: metaal, zout of moleculaire stof?','De drie soorten stoffen waar dit hoofdstuk over gaat.',2,'tr','soort',5],
+ ['pr0','0','Oefenronde basis','Alles van deel 0 door elkaar. Fout? Je krijgt uitleg en de vraag komt terug.',4,'pr','0'],
+ ['lp2.1','2.1','Leerpad 2.1: atoombinding','Moleculen, gedeelde elektronenparen, covalentie en namen.',4,'lp','2.1'],
+ ['cov','2.1','Snel oefenen: covalentie','Hoeveel bindingen maakt elk atoom?',2,'tr','cov',5],
+ ['bouwA','2.1','Molecuulbouwer: de eerste 12','Bouw zelf moleculen met precies het goede aantal armen per atoom.',3,'bouw',[0,12]],
+ ['naam','2.1','Snel oefenen: systematische namen','Van formule naar naam en terug.',2,'tr','naam',5],
+ ['triv','2.1','Snel oefenen: triviale namen','Water, ammoniak, glucose en hun formules.',2,'tr','triv',5],
+ ['bouwB','2.1','Molecuulbouwer: de hele kast','Grotere moleculen met dubbele bindingen, tot azijnzuur en glycol.',3,'bouw',[12,24]],
+ ['pr2.1','2.1','Oefenronde 2.1','Alles van 2.1 door elkaar.',4,'pr','2.1'],
+ ['lp2.2','2.2','Leerpad 2.2: bindingen tussen moleculen','Vanderwaalsbinding, waterstofbruggen, kookpunt, hydrofiel en hydrofoob.',4,'lp','2.2'],
+ ['hb','2.2','Snel oefenen: waterstofbruggen','Welke moleculen kunnen H-bruggen vormen?',2,'tr','hb',5],
+ ['kook','2.2','Snel oefenen: welke kookt het hoogst?','Kookpunt voorspellen uit de bindingen.',2,'tr','kook',5],
+ ['labkook','2.2','Lab: Kookpuntladder','Stoffen op volgorde van kookpunt zetten en ontdekken waarom.',3,'lab','kook',5],
+ ['opl','2.2','Snel oefenen: lost het op in water?','Soort zoekt soort.',2,'tr','opl',5],
+ ['oplos','2.2','Lab: Oplossen','Water of wasbenzine: giet de stof in het goede buisje.',3,'lab','oplos',5],
+ ['pr2.2','2.2','Oefenronde 2.2','Alles van 2.2 door elkaar.',4,'pr','2.2'],
+ ['lp2.3','2.3','Leerpad 2.3: metaalbinding','Metaalrooster, vrije elektronen, legeringen en edelheid.',4,'lp','2.3'],
+ ['metaal','2.3','Lab: Metalenrace','Welk metaal reageert het heftigst? Rangschik op edelheid.',3,'lab','metaal',5],
+ ['pr2.3','2.3','Oefenronde 2.3','Alles van 2.3 door elkaar.',4,'pr','2.3'],
+ ['lp2.4','2.4','Leerpad 2.4: ionbinding','Ionen, zouten, het ionrooster en de formule van een zout.',4,'lp','2.4'],
+ ['lading','2.4','Snel oefenen: lading van een ion','Uit het periodiek systeem de lading afleiden.',2,'tr','lading',5],
+ ['elek','2.4','Snel oefenen: elektronen in een ion','Elektronen tellen bij geladen deeltjes.',2,'tr','elek',5],
+ ['zf','2.4','Snel oefenen: formule van een zout','Plus en min moeten samen nul zijn.',2,'tr','zf',5],
+ ['zout','2.4','Lab: Zoutfabriek','Giet + en − ionen bij elkaar tot het zout neutraal is.',3,'lab','zout',5],
+ ['geleid','2.4','Snel oefenen: geleidt het stroom?','Welke stoffen geleiden, en wanneer?',2,'tr','geleid',5],
+ ['stroom','2.4','Lab: Stroomtest','Gaat het lampje branden? En wat voor stof is het?',3,'lab','stroom',5],
+ ['pr2.4','2.4','Oefenronde 2.4','Alles van 2.4 door elkaar.',4,'pr','2.4'],
+ ['band','af','Sorteerband','Metaal, zout of moleculaire stof? Nu alles door elkaar, op tijd.',2,'band',null,15],
+ ['flits','af','Begrippen','Alle begrippen nog één keer langs als flitskaarten.',2,'flits'],
+ ['toets','af','Proeftoets','De generale repetitie. Haal je een 7, dan ben je klaar voor de echte toets.',6,'toets',null,7]
+];
+const RDEEL={'0':'0 · Basis','2.1':'2.1 · Atoombinding','2.2':'2.2 · Tussen moleculen','2.3':'2.3 · Metaalbinding','2.4':'2.4 · Ionbinding','af':'Afronden'};
+let RT={on:false,before:null};
+function rVal(r){const ty=r[5],a=r[6];
+ if(ty==='lp')return S.lpd&&S.lpd[a]?1:0;
+ if(ty==='pr')return (S.pr||{})[a]||0;
+ if(ty==='tr')return (S.tr||{})[a]||0;
+ if(ty==='lab')return (S.lab||{})[a]||0;
+ if(ty==='band')return S.band||0;
+ if(ty==='bouw'){let n=0;for(let i=a[0];i<a[1];i++)if((S.bouw||{})[BLEVELS[i].f])n++;return n}
+ if(ty==='klim')return klimPct(KCAMPS[a].sec);
+ if(ty==='flits')return S.flits?1:0;
+ if(ty==='toets')return S.best||0;return 0}
+function rGoal(r){const ty=r[5];return ty==='lp'||ty==='flits'||ty==='klim'?1:ty==='pr'?.8:ty==='bouw'?r[6][1]-r[6][0]:r[7]}
+function rDone(r){return rVal(r)>=rGoal(r)}
+function rPct(){return sum(ROUTE.filter(rDone).map(r=>r[4]))}
+window.leerVoortgang=rPct;
+function rProg(r){const ty=r[5],v=rVal(r),g=rGoal(r);
+ if(ty==='lp'||ty==='flits')return v?'gedaan':'nog niet gedaan';
+ if(ty==='pr')return v?`beste: ${Math.round(v*100)}% in één keer goed · doel 80%`:'doel: 80% in één keer goed';
+ if(ty==='tr')return `beste reeks: ${v} · doel ${g} goed op rij`;
+ if(ty==='lab')return `beste: ${v} van 6 goed · doel ${g}`;
+ if(ty==='band')return `record: ${v} · doel ${g} punten`;
+ if(ty==='bouw')return `${v} van ${g} gebouwd`;
+ if(ty==='klim')return `${Math.round(v*100)}% van dit kamp gehaald`;
+ if(ty==='toets')return v?`beste cijfer: ${nf(v)} · doel ${g}`:`doel: een ${g}`;return ''}
+function rGo(r){RT={on:true,before:new Set(ROUTE.filter(rDone).map(x=>x[0]))};const ty=r[5],a=r[6];
+ if(ty==='lp')return lpStart(a);if(ty==='pr')return practice(a);if(ty==='tr')return trainer(a,r[7]);if(ty==='flits')return flits();if(ty==='toets')return toets();
+ if(ty==='lab')return labRun(a);if(ty==='band')return bandStart();if(ty==='klim')return klimPlay(a);
+ if(ty==='bouw'){const b=S.bouw||{};let i=a[0];while(i<a[1]-1&&b[BLEVELS[i].f])i++;return bouwPlay(i)}}
+function routeScreen(){const before=RT.before;RT={on:false,before:null};show('play');G={m:'route'};
+ const pct=rPct(),nxt=ROUTE.find(r=>!rDone(r));const fresh=before?ROUTE.filter(r=>rDone(r)&&!before.has(r[0])):[];if(fresh.length)confetti();
+ let deel='';const rows=ROUTE.map((r,i)=>{const d=rDone(r),cur=r===nxt;let h='';if(r[1]!==deel){deel=r[1];h=`<h3 class="rt-deel">${RDEEL[deel]}</h3>`}
+  return h+`<button class="rt-step${d?' done':''}${cur?' cur':''}" data-r="${i}"><span class="rt-ic">${d?'✓':cur?'▶':i+1}</span><span class="rt-tx"><b>${r[2]}</b><span>${cur?r[3]+'<br>':''}${rProg(r)}</span></span><span class="rt-w">${d?'':'+'}${r[4]}%</span></button>`}).join('');
+ P.innerHTML=`<div class="playbar"><button class="btn small ghost" id="quit">Naar start</button><span class="bar"><i style="width:${pct}%"></i></span><span class="count">${pct}%</span></div>
+ <div class="slide">${head('Leerroute','Scheikunde H2')}<div class="slide-body">
+  ${fresh.length?`<div class="fb good"><div class="t">Gehaald: ${fresh.map(r=>r[2]).join(', ')}</div><div class="tip">+${sum(fresh.map(r=>r[4]))}% · je staat nu op ${pct}%</div></div>`:''}
+  <div><div class="q">Hoe ver ben je?</div><div class="big">${pct}%</div><div class="count">${ROUTE.filter(rDone).length} van ${ROUTE.length} stappen beheerst</div></div>
+  ${nxt?`<div class="nextbox"><h3>Volgende stap: ${nxt[2]}</h3><p style="margin:4px 0 10px">${nxt[3]}</p><button class="btn primary" id="rtgo">Start ↵</button></div>`:'<div class="fb good"><div class="t">Alles beheerst!</div><div class="tip">Houd het warm met een proeftoets.</div></div>'}
+  <p class="src" style="margin:0">Zo werkt het: eerst de theorie (leerpad), dan direct een spel, labproefje of korte oefening over precies dat stukje, en per paragraaf een oefenronde als check. Een stap telt als <b>beheerst</b> als je het doel haalt, dan komen de procenten erbij. Je mag stappen overslaan of herhalen: tik er gewoon op.</p>
+  <div class="rt-list">${rows}</div>
+ </div></div>`;
+ $('#quit').onclick=goHome;P.querySelectorAll('[data-r]').forEach(b=>b.onclick=()=>rGo(ROUTE[+b.dataset.r]));const g=$('#rtgo');if(g){g.onclick=()=>rGo(nxt);g.focus()}}
+function routeBox(){const el=$('#lpbox');if(!el)return;const pct=rPct(),nxt=ROUTE.find(r=>!rDone(r));
+ el.innerHTML=`<button class="mode main lpmode" id="rtbox"><span class="lab">Route</span><span class="tag" style="text-transform:none">${pct}% van de leerroute</span><h3>${nxt?(pct?'Ga verder: ':'Begin: ')+nxt[2]:'Leerroute klaar. Herhalen?'}</h3><p>${nxt?nxt[3]:'Alle stappen beheerst.'}</p><span class="bar" style="margin-top:6px;background:rgba(255,255,255,.2)"><i style="width:${pct}%"></i></span></button>`;
+ $('#rtbox').onclick=routeScreen}
 
 const LP={
 '0':[
@@ -985,11 +1081,11 @@ function rec(sec,ok){const a=S.sec[sec]||(S.sec[sec]=[]);a.push(ok?1:0);if(a.len
 const score=sec=>{const a=S.sec[sec]||[];return a.length?sum(a)/Math.max(a.length,10):0};
 const P=$('#play');let G=null;
 function show(v){$('#home').hidden=v!=='home';P.hidden=v!=='play';window.scrollTo(0,0)}
-function goHome(){if(G&&G.timer)clearInterval(G.timer);G=null;save();renderHome();show('home')}
+function goHome(){if(G&&G.timer)clearInterval(G.timer);G=null;save();if(RT.on)return routeScreen();renderHome();show('home')}
 function renderHome(){
   $('#secs').innerHTML=SECS.map(s=>{const m=score(s.id);return `<div class="sec"><span class="num">${s.id==='0'?'0':s.id}</span><div><h3>${esc(s.t)}</h3><p>${esc(s.s)}</p><span class="bar"><i style="width:${Math.round(m*100)}%"></i></span></div><div class="acts"><button class="btn small lp" data-lp="${s.id}">${S.lpd&&S.lpd[s.id]?'✓ Leerpad':'▶ Leerpad'}</button><button class="btn small ghost" data-u="${s.id}">Uitleg</button><button class="btn small primary" data-o="${s.id}">Oefenen</button></div></div>`}).join('');
   $('#tools').innerHTML=Object.entries(GENS).map(([k,g])=>`<button class="btn small ghost" data-g="${k}"><span class="src">${g.sec==='0'?'basis':g.sec}</span> ${esc(g.t)}</button>`).join('');
-  try{lpBox()}catch(e){}$('#stDone').textContent=S.done;$('#stStreak').textContent=streak();$('#stBest').textContent=S.best?nf(S.best):'–';
+  try{routeBox()}catch(e){}$('#stDone').textContent=S.done;$('#stStreak').textContent=streak();$('#stBest').textContent=S.best?nf(S.best):'–';
   const bp=bouwPct();$('#bouwTag').textContent=`${Math.round(bp*BLEVELS.length)} van ${BLEVELS.length} moleculen`;$('#bandTag').textContent=S.band?`record ${S.band}`:'nog geen record';
 }
 $('#secs').addEventListener('click',e=>{const u=e.target.closest('[data-u]'),o=e.target.closest('[data-o]');if(u)uitleg(u.dataset.u);if(o)practice(o.dataset.o);const l=e.target.closest('[data-lp]');if(l)lpStart(l.dataset.lp)});
@@ -1037,16 +1133,16 @@ function pracNext(){
     save();pracNext()},{again:it.tries>0});
 }
 function endScreen(){
-  const t=G.n0,pct=G.first/t;if(pct>=.8)confetti();save();const sec=G.sec;
+  const t=G.n0,pct=G.first/t;if(pct>=.8)confetti();if(!S.pr)S.pr={};S.pr[G.sec]=Math.max(S.pr[G.sec]||0,pct);save();const sec=G.sec;
   P.innerHTML=`<div class="slide">${head('Paragraaf '+sec,'Klaar')}<div class="slide-body"><div><div class="q">In één keer goed</div><div class="big">${G.first}<span style="font-size:.45em;color:var(--muted)"> / ${t}</span></div></div>
    <div>${pct>=.9?'Uitstekend, deze paragraaf zit erin.':pct>=.6?'Goed bezig. De foute vragen heb je inmiddels ook goed gedaan. Nog een ronde en het zit vast.':'De foute vragen kwamen terug tot je ze goed had. Lees de uitleg nog eens en doe nog een ronde.'}</div>
    ${G.mist.length?`<div><div class="q" style="margin-bottom:6px">Hier ging het de eerste keer mis</div><ul class="mist">${G.mist.map(q=>`<li><b>${q.q}</b><span>Antwoord: ${q.mc?q.a:nf(q.a,2)} · ${q.w||''}</span></li>`).join('')}</ul></div>`:''}
    <div class="acts"><button class="btn primary" id="again">Nog een ronde</button><button class="btn ghost" id="uit">Uitleg</button><button class="btn ghost" id="home2">Naar start</button></div></div></div>`;
   $('#again').onclick=()=>practice(sec);$('#uit').onclick=()=>uitleg(sec);$('#home2').onclick=goHome;$('#again').focus();
 }
-function trainer(k){G={m:'tr',k,n:0,ok:0,streak:0};show('play');trNext()}
+function trainer(k,goal){G={m:'tr',k,n:0,ok:0,streak:0,goal};show('play');trNext()}
 function trNext(){const g=GENS[G.k];const q=g.f();
-  ask(q,g.t,`Reeks: ${G.streak}`,topbar(`${G.ok} van ${G.n} goed`,0,'Klaar'),ok=>{G.n++;if(ok){G.ok++;G.streak++;if(G.streak%5===0)confetti()}else G.streak=0;rec(g.sec,ok);save();trNext()});
+  ask(q,g.t,`Reeks: ${G.streak}${G.goal?' · doel '+G.goal:''}`,topbar(`${G.ok} van ${G.n} goed`,0,'Klaar'),ok=>{G.n++;if(ok){G.ok++;G.streak++;if(G.streak%5===0||G.streak===G.goal)confetti()}else G.streak=0;if(!S.tr)S.tr={};S.tr[G.k]=Math.max(S.tr[G.k]||0,G.streak);rec(g.sec,ok);save();trNext()});
 }
 const SECGAMES={'0':[['balans','⚖️ Weegschaal: kloppend maken'],['band','Sorteerband']],'2.1':[['bouw','Molecuulbouwer']],'2.2':[['oplos','🧪 Lab: oplossen'],['kook','🌡️ Kookpuntladder']],'2.3':[['metaal','🔥 Metalenrace'],['stroom','💡 Stroomtest']],'2.4':[['zout','⚗️ Zoutfabriek'],['stroom','💡 Stroomtest']]};
 function uitleg(sec){
@@ -1075,7 +1171,7 @@ function spiek(){show('play');
   $('#quit').onclick=goHome;
 }
 function flits(){const list=shuffle(BEGRIP);G={m:'flits',list,i:0,known:0};show('play');flitsNext()}
-function flitsNext(){if(G.i>=G.list.length){confetti();P.innerHTML=`<div class="slide">${head('Begrippen','Klaar')}<div class="slide-body"><div class="q">Wist je meteen</div><div class="big">${G.known}<span style="font-size:.45em;color:var(--muted)"> / ${G.list.length}</span></div><div class="acts"><button class="btn primary" id="again">Nog een keer</button><button class="btn ghost" id="home2">Naar start</button></div></div></div>`;$('#again').onclick=flits;$('#home2').onclick=goHome;return}
+function flitsNext(){if(G.i>=G.list.length){confetti();S.flits=1;save();P.innerHTML=`<div class="slide">${head('Begrippen','Klaar')}<div class="slide-body"><div class="q">Wist je meteen</div><div class="big">${G.known}<span style="font-size:.45em;color:var(--muted)"> / ${G.list.length}</span></div><div class="acts"><button class="btn primary" id="again">Nog een keer</button><button class="btn ghost" id="home2">Naar start</button></div></div></div>`;$('#again').onclick=flits;$('#home2').onclick=goHome;return}
   const [b,d,s]=G.list[G.i];
   P.innerHTML=topbar(G.i,G.list.length)+`<div class="slide">${head('Begrippen','par. '+s)}<div class="slide-body"><div class="flip" id="fl"><div class="flip-in"><div class="face"><div class="q">Wat betekent dit begrip?</div><div class="prompt big" style="font-size:clamp(24px,6vw,34px)">${esc(b)}</div><div class="src">tik om om te draaien</div></div><div class="face back"><div class="q">${esc(b)}</div><div class="prompt" style="font-size:20px">${esc(d)}</div></div></div></div>
   <div class="acts" id="fa" hidden><button class="btn ghost" id="fn">Wist ik niet</button><button class="btn primary" id="fy">Wist ik ✓</button></div></div></div>`;
