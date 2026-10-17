@@ -1,12 +1,12 @@
 /* Leerlog: houdt per bezoek bij wat Ben of Dana deed (vak, actieve minuten, wat er bijkwam) en stuurt dat
    stil naar het tabblad 'Leerhoek' van de scorebord-spreadsheet (Apps Script uit deweef/spelletjes,
    extra/scorebord.gs). Dat tabblad wordt nooit teruggegeven aan de site. Geen meldingen, niets op het scherm.
-   Werkt voor elke pagina die dit script laadt: het kijkt mee met wat de pagina zelf al in localStorage zet. */
+   Ouder ("alles") wordt ook bijgehouden, als 'Ouder'. Werkt voor elke pagina die dit script laadt: het kijkt mee met wat de pagina zelf al in localStorage zet. */
 (function(){
 const URL='https://script.google.com/macros/s/AKfycbzo6b4TQRiL2j1ZhEtBa6xpbNcBxmL7IIIB6e1FdYWnswDIxJ1MphWAlAjm12aK_J9U/exec';
 const QK='leren-logq';
 let wie=null;try{wie=localStorage.getItem('leren-wie')}catch(e){}
-if(wie!=='ben'&&wie!=='dana')return; // ouder of nog niet gekozen: niets bijhouden
+const naam={ben:'ben',dana:'dana',alle:'ouder'}[wie];if(!naam)return; // nog niet gekozen: niets bijhouden
 const vak=(location.pathname.split('/').pop()||'index').replace(/\.html$/,'')||'index';
 if(vak==='index')return;
 
@@ -50,7 +50,7 @@ function regel(){const min=actief/60000;
   nu[k]=read(k)});
  try{if(typeof window.leerVoortgang==='function')st.push(`leerroute ${window.leerVoortgang()}%`)}catch(e){}
  if(min<0.3&&!wat.length)return;
- verstuur({actie:'leer',naam:wie,vak,min:fmt(min).replace(',','.'),wat:wat.join(' · ')||'alleen gekeken',stand:st.join(' · ')});
+ verstuur({actie:'leer',naam,vak,min:fmt(min).replace(',','.'),wat:wat.join(' · ')||'alleen gekeken',stand:st.join(' · ')});
  begStand=Object.assign({},begStand||begin,nu);actief=0}
 // bij weggaan of wegklikken één regel; komt de pagina terug, dan telt een nieuw stuk
 document.addEventListener('visibilitychange',()=>{if(document.visibilityState==='hidden')regel()});
