@@ -95,6 +95,12 @@ details.tips ul{margin:10px 0 4px;padding-left:20px;display:grid;gap:6px}
 .rt-step.cur{border-color:var(--ink)}
 .rt-step.cur .rt-ic{background:var(--pink);color:#fff}
 @media (hover:hover){.rt-step:hover{border-color:var(--ink)}}
+.bkamps{display:grid;gap:8px}
+.bkamp{display:grid;grid-template-columns:minmax(0,1fr) auto;gap:2px 10px;text-align:left;background:var(--surface);border:2px solid var(--ink);border-radius:12px;padding:10px 12px;color:var(--ink);font:inherit;cursor:pointer}
+.bkamp b{grid-column:1/-1;font-size:16px}.bkamp span{font-size:13px;color:var(--muted)}
+.bkamp .bar{grid-column:1;display:block;align-self:center}.bkamp .count{grid-column:2;grid-row:3}
+.bkamp:disabled{opacity:.5;cursor:not-allowed;border-style:dashed}
+.bkamp.done{border-color:var(--good);background:var(--good-bg)}
 /* spel */
 .playbar{display:flex;align-items:center;gap:12px;margin-bottom:16px}
 .playbar .bar{flex:1;height:10px;border-radius:5px}
@@ -303,6 +309,7 @@ td.okc{background:var(--good-bg);font-weight:700}td.badc{background:var(--bad-bg
   <section><div id="lpbox"></div></section>
   <section>
     <div class="sec-head"><h2>Spellen</h2><span class="src">Leren door te doen</span></div>
+<div class="modes" style="margin-bottom:12px"><button class="mode main" id="klim"><span class="lab">Berg</span><h3>Beklim de Bindingsberg</h3><p>Alle vragen van het hoofdstuk, kamp voor kamp. Elke goede vraag brengt je hoger. Sta je op de top (100%), dan weet je alles.</p><span class="tag" id="klimTag" style="text-transform:none">0 m</span></button></div>
     <div class="modes">
       <button class="mode main" id="bouw"><span class="lab">Spel</span><h3>Molecuulbouwer</h3><p>Bouw moleculen uit losse atomen. Elk atoom heeft een vast aantal armen. Van H<sub>2</sub> tot azijnzuur: vul de hele kast.</p><span class="tag" id="bouwTag">0 moleculen</span></button>
       <button class="mode" id="lab"><span class="lab">Lab</span><h3>Het Lab</h3><p>Reageerbuis-puzzels: oplossen, zoutfabriek, stroomtest, metalenrace, weegschaal en kookpuntladder.</p></button>
@@ -908,6 +915,59 @@ function bandEnd(){clearInterval(G.timer);G.over=true;const best=S.band||0;const
  <div class="acts"><button class="btn primary" id="again">Nog een keer</button><button class="btn ghost" id="home2">Naar start</button></div></div></div>`;
  $('#again').onclick=bandStart;$('#home2').onclick=goHome;$('#again').focus()}
 
+
+/* ---------- Spel: Beklim de Bindingsberg (zoals de Statistiekberg bij wiskunde) ---------- */
+const KCAMPS=[{sec:'0',n:'Basiskamp'},{sec:'2.1',n:'Kamp 1'},{sec:'2.2',n:'Kamp 2'},{sec:'2.3',n:'Kamp 3'},{sec:'2.4',n:'Top'}];
+const KTOP=4478;
+const KGEN={'0':['tel','massa','soort','tel','massa','soort'],'2.1':['cov','naam','triv','cov','naam','triv'],'2.2':['kook','hb','opl','kook','hb','opl'],'2.3':['soort','soort','soort'],'2.4':['lading','zf','elek','geleid','lading','zf']};
+function klimInit(){if(!S.klim)S.klim={gen:{},m:{},best:0};const K=S.klim;
+  KCAMPS.forEach(c=>{if(!K.gen[c.sec])K.gen[c.sec]=KGEN[c.sec].map(k=>Object.assign({gen:k},GENS[k].f()))});save();return K}
+function klimItems(sec){const K=klimInit();
+  return [...MC.filter(m=>m[0]===sec).map(m=>Object.assign(mcItem(m),{kid:'m:'+m[1]})),...K.gen[sec].map((g,i)=>Object.assign({sec},g,{kid:'g:'+sec+':'+i}))]}
+function klimPct(sec){const K=klimInit();const it=klimItems(sec);return it.filter(q=>K.m[q.kid]).length/it.length}
+function klimTotal(){const K=klimInit();let a=0,b=0;KCAMPS.forEach(c=>{const it=klimItems(c.sec);a+=it.filter(q=>K.m[q.kid]).length;b+=it.length});return {a,b,p:a/b}}
+function klimOpen(i){return i===0||klimPct(KCAMPS[i-1].sec)>=1}
+function klimMtn(){const t=klimTotal();const W=340,H=230;
+  const pts=[[20,210],[80,175],[130,150],[175,112],[220,80],[262,40]];
+  const lerp=p=>{const seg=p*5,i=Math.min(4,Math.floor(seg)),f=seg-i;return [pts[i][0]+(pts[i+1][0]-pts[i][0])*f,pts[i][1]+(pts[i+1][1]-pts[i][1])*f]};
+  let s=`<path d="M0,${H} L20,212 L80,177 L130,152 L175,114 L220,82 L262,42 L300,82 L340,130 L340,${H}Z" fill="var(--green-soft)" stroke="var(--green)" stroke-width="2"/>
+   <path d="M240,63 L262,42 L283,63 L272,60 L262,68 L251,60Z" fill="var(--surface)" opacity=".9"/>
+   <polyline points="${pts.map(p=>p.join(',')).join(' ')}" fill="none" stroke="var(--muted)" stroke-width="2" stroke-dasharray="4 5"/>`;
+  KCAMPS.forEach((c,i)=>{const [x,y]=pts[i+1];const done=klimPct(c.sec)>=1;s+=`<line x1="${x}" y1="${y}" x2="${x}" y2="${y-20}" stroke="currentColor" stroke-width="1.5"/><path d="M${x},${y-20} L${x+14},${y-15} L${x},${y-10}Z" fill="${done?'var(--accent)':'var(--chip)'}" stroke="currentColor" stroke-width="1"/><text x="${x+4}" y="${y+16}" font-size="9.5" text-anchor="start" fill="currentColor">${c.sec}</text>`});
+  const [cx,cy]=lerp(t.p);s+=`<circle cx="${cx}" cy="${cy-7}" r="9" fill="var(--accent)" stroke="var(--surface)" stroke-width="2.5"/><text x="${cx}" y="${cy-3.5}" font-size="10" text-anchor="middle" fill="#fff" font-weight="700">B</text>`;
+  return `<svg class="chart" viewBox="0 0 ${W} ${H}" style="max-width:520px">${s}</svg>`}
+function klimHome(){const t=klimTotal();show('play');const h=Math.round(t.p*KTOP);
+  P.innerHTML=`<div class="playbar"><button class="btn small ghost" id="quit">Terug</button><span class="bar"><i style="width:${Math.round(t.p*100)}%"></i></span><span class="count">${Math.round(t.p*100)}%</span></div>
+  <div class="slide">${head('Spel','Beklim de Bindingsberg')}<div class="slide-body">
+   <div style="display:flex;gap:16px;flex-wrap:wrap;align-items:baseline"><div><div class="q">Hoogte</div><div class="big" style="font-size:44px">${h.toLocaleString('nl-NL')} m</div></div><div class="count">${t.a} van ${t.b} vragen veroverd</div></div>
+   ${klimMtn()}
+   <p style="margin:0">Alle vragen van het hoofdstuk, kamp voor kamp. Elke goede vraag brengt je hoger. Fout? Dan komt die vraag terug tot je hem wel goed hebt. Pas als een kamp op 100% staat, gaat het volgende open. Sta je op de top, dan weet je alles.</p>
+   <div class="bkamps">${KCAMPS.map((c,i)=>{const p=klimPct(c.sec),o=klimOpen(i);return `<button class="bkamp${p>=1?' done':''}" data-k="${i}" ${o?'':'disabled'}><b>${o?(p>=1?'★':'⛺'):'🔒'} ${c.n}</b><span>${c.sec==='0'?'0':c.sec} ${esc(SECS.find(x=>x.id===c.sec).t)}</span><span class="bar"><i style="width:${Math.round(p*100)}%"></i></span><span class="count">${Math.round(p*100)}%</span></button>`}).join('')}</div>
+   <div class="acts"><button class="btn ghost small" id="kreset">Opnieuw beginnen</button></div>
+  </div></div>`;
+  $('#quit').onclick=goHome;P.querySelectorAll('[data-k]').forEach(b=>b.onclick=()=>klimPlay(+b.dataset.k));
+  $('#kreset').onclick=()=>{$('#kreset').parentNode.innerHTML='<span>Alle hoogte kwijt en nieuwe rekensommen?</span><button class="btn small dark" id="kY">Ja</button><button class="btn small ghost" id="kN">Nee</button>';
+    $('#kY').onclick=()=>{S.klim=null;klimInit();klimHome()};$('#kN').onclick=klimHome}}
+function klimPlay(ci){const c=KCAMPS[ci];const K=klimInit();
+  const open=shuffle(klimItems(c.sec).filter(q=>!K.m[q.kid]));
+  if(!open.length){klimHome();return}
+  G={m:'klim',ci,queue:open.slice(0,12),n0:Math.min(12,open.length),done:0,combo:0,maxc:0,fout:0};show('play');klimNext()}
+function klimNext(){const K=S.klim,c=KCAMPS[G.ci];
+  if(!G.queue.length){const p=klimPct(c.sec);if(p>=1)confetti();save();
+    const top=klimTotal().p>=1;
+    P.innerHTML=`<div class="slide">${head('Spel',c.n)}<div class="slide-body">
+     <div class="q">${top?'Je staat op de top!':p>=1?c.n+' veroverd!':'Rondje klaar'}</div><div class="big">${Math.round(p*100)}%</div>
+     <div>${top?'Alle vragen van het hoofdstuk goed. Dit hoofdstuk zit erin.':p>=1?(G.ci<KCAMPS.length-1?'Het volgende kamp is open.':''):`Nog ${klimItems(c.sec).filter(q=>!K.m[q.kid]).length} vragen te gaan in dit kamp.`} Langste reeks: ${G.maxc}.</div>
+     ${klimMtn()}
+     <div class="acts">${p<1?'<button class="btn primary" id="kv">Verder klimmen</button>':G.ci<KCAMPS.length-1?'<button class="btn primary" id="kn">Naar het volgende kamp</button>':''}<button class="btn ghost" id="kh">Bergkaart</button></div></div></div>`;
+    const kv=$('#kv'),kn=$('#kn');if(kv){kv.onclick=()=>klimPlay(G.ci);kv.focus()}if(kn){kn.onclick=()=>klimPlay(G.ci+1);kn.focus()}$('#kh').onclick=klimHome;return}
+  const q=G.queue[0];const tot=G.n0;
+  ask(q,`${c.n} · par. ${c.sec}`,G.combo>=3?`🔥 ${G.combo} op rij`:`Reeks: ${G.combo}`,topbar(G.done,tot,'Bergkaart'),ok=>{
+    G.queue.shift();rec(c.sec,ok);
+    if(ok){K.m[q.kid]=1;G.done++;G.combo++;G.maxc=Math.max(G.maxc,G.combo);if(G.combo%5===0)confetti()}
+    else{G.combo=0;G.fout++;G.queue.splice(Math.min(3,G.queue.length),0,q)}
+    save();klimNext()},{onQuit:klimHome});}
+
 /* ---------- Leerpad: theorie in kleine kaartjes met controlevragen ---------- */
 /* LP = { sec: [ [titel, html|fn, [vraag, goed, 'fout|fout', uitleg]?], ... ] } */
 function lpState(){if(!S.lp)S.lp={};if(!S.lpd)S.lpd={};return S}
@@ -926,8 +986,10 @@ function lpDraw(){const {sec,cards}=G;const i=G.i;const c=cards[i];const s=SECS.
   if(done){markOpts(opts.indexOf(qz[1]),opts.indexOf(qz[1]));$('#fbox').innerHTML=`<div class="fb good"><div class="tip">${qz[3]}</div></div>`}
   else P.querySelectorAll('#lpo .opt').forEach((b,j)=>b.onclick=()=>{const ok=opts[j]===qz[1];markOpts(opts.indexOf(qz[1]),j);G.asked++;if(ok)G.ok++;else G.redo.push(i);G.answered[i]=1;
    $('#fbox').innerHTML=`<div class="fb ${ok?'good':'bad'}"><div class="t">${ok?pick(['Goed!','Klopt!','Precies!']):'Niet helemaal.'}</div><div class="tip">${qz[3]}</div></div>`;const n=$('#lpnext');n.disabled=false;n.focus()})}
- S.lp[sec]=i;save();window.scrollTo(0,0)}
+ if(!G.sel)S.lp[sec]=i;save();window.scrollTo(0,0)}
 function lpNext(){const {cards}=G;if(G.i<cards.length-1){G.i++;lpDraw();return}
+ if(G.sel){const sec=G.sec;P.innerHTML=`<div class="slide">${head('Nalezen','Klaar')}<div class="slide-body"><div class="q">Goed gelezen</div><div>Nu het weer vers is: probeer de oefenronde nog een keer.</div><div class="acts"><button class="btn primary" id="lpprac">Nog een oefenronde</button><button class="btn ghost" id="lphome">Terug</button></div></div></div>`;
+  $('#lpprac').onclick=()=>practice(sec);$('#lphome').onclick=goHome;$('#lpprac').focus();return}
  lpState();S.lpd[G.sec]=1;S.lp[G.sec]=0;markDay();save();confetti();const sec=G.sec;const nxt=SECS[SECS.findIndex(x=>x.id===sec)+1];
  const redo=[...new Set(G.redo)];
  P.innerHTML=`<div class="slide">${head('Leerpad '+(sec==='0'?'basis':sec),'Klaar')}<div class="slide-body"><div class="q">Controlevragen in één keer goed</div><div class="big">${G.ok}<span style="font-size:.45em;color:var(--muted)"> / ${G.asked}</span></div>
@@ -943,40 +1005,45 @@ function lpBox(){const el=$('#lpbox');if(!el)return;lpState();const todo=SECS.fi
 /* ---------- Leerroute: alles in een logische volgorde, met voortgang in % ---------- */
 /* stap: [id, deel, titel, waarom nu, gewicht (%), type, arg, doel]; de gewichten tellen op tot 100 */
 const ROUTE=[
- ['lp0','0','Leerpad 0: de basis','Begin hier. Atomen, het periodiek systeem, formules lezen en kloppend maken.',4,'lp','0'],
+ ['lp0','0','Leerpad 0: de basis','Begin hier. Atomen, het periodiek systeem, formules lezen en kloppend maken.',3,'lp','0'],
  ['tel','0','Snel oefenen: atomen tellen','Formules lezen tot het vanzelf gaat.',2,'tr','tel',5],
  ['massa','0','Snel oefenen: molecuulmassa','Atoommassa\'s optellen.',2,'tr','massa',5],
  ['balans','0','Lab: Weegschaal','Reactievergelijkingen kloppend maken tot de weegschaal recht hangt.',3,'lab','balans',5],
  ['soort','0','Snel oefenen: metaal, zout of moleculaire stof?','De drie soorten stoffen waar dit hoofdstuk over gaat.',2,'tr','soort',5],
- ['pr0','0','Oefenronde basis','Alles van deel 0 door elkaar. Fout? Je krijgt uitleg en de vraag komt terug.',4,'pr','0'],
- ['lp2.1','2.1','Leerpad 2.1: atoombinding','Moleculen, gedeelde elektronenparen, covalentie en namen.',4,'lp','2.1'],
+ ['pr0','0','Oefenronde basis','Alles van deel 0 door elkaar. Fout? Je krijgt uitleg en de vraag komt terug.',3,'pr','0'],
+ ['k0','0','Bindingsberg: Basiskamp','Eindcheck van de basis: alle vragen van deel 0, tot je ze allemaal één keer goed hebt.',3,'klim',0],
+ ['lp2.1','2.1','Leerpad 2.1: atoombinding','Moleculen, gedeelde elektronenparen, covalentie en namen.',3,'lp','2.1'],
  ['cov','2.1','Snel oefenen: covalentie','Hoeveel bindingen maakt elk atoom?',2,'tr','cov',5],
- ['bouwA','2.1','Molecuulbouwer: de eerste 12','Bouw zelf moleculen met precies het goede aantal armen per atoom.',3,'bouw',[0,12]],
+ ['bouwA','2.1','Molecuulbouwer: de eerste 12','Bouw zelf moleculen met precies het goede aantal armen per atoom.',2,'bouw',[0,12]],
  ['naam','2.1','Snel oefenen: systematische namen','Van formule naar naam en terug.',2,'tr','naam',5],
  ['triv','2.1','Snel oefenen: triviale namen','Water, ammoniak, glucose en hun formules.',2,'tr','triv',5],
- ['bouwB','2.1','Molecuulbouwer: de hele kast','Grotere moleculen met dubbele bindingen, tot azijnzuur en glycol.',3,'bouw',[12,24]],
- ['pr2.1','2.1','Oefenronde 2.1','Alles van 2.1 door elkaar.',4,'pr','2.1'],
- ['lp2.2','2.2','Leerpad 2.2: bindingen tussen moleculen','Vanderwaalsbinding, waterstofbruggen, kookpunt, hydrofiel en hydrofoob.',4,'lp','2.2'],
+ ['bouwB','2.1','Molecuulbouwer: de hele kast','Grotere moleculen met dubbele bindingen, tot azijnzuur en glycol.',2,'bouw',[12,24]],
+ ['pr2.1','2.1','Oefenronde 2.1','Alles van 2.1 door elkaar.',3,'pr','2.1'],
+ ['k1','2.1','Bindingsberg: Kamp 1','Eindcheck van 2.1.',3,'klim',1],
+ ['lp2.2','2.2','Leerpad 2.2: bindingen tussen moleculen','Vanderwaalsbinding, waterstofbruggen, kookpunt, hydrofiel en hydrofoob.',3,'lp','2.2'],
  ['hb','2.2','Snel oefenen: waterstofbruggen','Welke moleculen kunnen H-bruggen vormen?',2,'tr','hb',5],
  ['kook','2.2','Snel oefenen: welke kookt het hoogst?','Kookpunt voorspellen uit de bindingen.',2,'tr','kook',5],
  ['labkook','2.2','Lab: Kookpuntladder','Stoffen op volgorde van kookpunt zetten en ontdekken waarom.',3,'lab','kook',5],
  ['opl','2.2','Snel oefenen: lost het op in water?','Soort zoekt soort.',2,'tr','opl',5],
  ['oplos','2.2','Lab: Oplossen','Water of wasbenzine: giet de stof in het goede buisje.',3,'lab','oplos',5],
- ['pr2.2','2.2','Oefenronde 2.2','Alles van 2.2 door elkaar.',4,'pr','2.2'],
- ['lp2.3','2.3','Leerpad 2.3: metaalbinding','Metaalrooster, vrije elektronen, legeringen en edelheid.',4,'lp','2.3'],
+ ['pr2.2','2.2','Oefenronde 2.2','Alles van 2.2 door elkaar.',3,'pr','2.2'],
+ ['k2','2.2','Bindingsberg: Kamp 2','Eindcheck van 2.2.',3,'klim',2],
+ ['lp2.3','2.3','Leerpad 2.3: metaalbinding','Metaalrooster, vrije elektronen, legeringen en edelheid.',3,'lp','2.3'],
  ['metaal','2.3','Lab: Metalenrace','Welk metaal reageert het heftigst? Rangschik op edelheid.',3,'lab','metaal',5],
- ['pr2.3','2.3','Oefenronde 2.3','Alles van 2.3 door elkaar.',4,'pr','2.3'],
- ['lp2.4','2.4','Leerpad 2.4: ionbinding','Ionen, zouten, het ionrooster en de formule van een zout.',4,'lp','2.4'],
+ ['pr2.3','2.3','Oefenronde 2.3','Alles van 2.3 door elkaar.',3,'pr','2.3'],
+ ['k3','2.3','Bindingsberg: Kamp 3','Eindcheck van 2.3.',3,'klim',3],
+ ['lp2.4','2.4','Leerpad 2.4: ionbinding','Ionen, zouten, het ionrooster en de formule van een zout.',3,'lp','2.4'],
  ['lading','2.4','Snel oefenen: lading van een ion','Uit het periodiek systeem de lading afleiden.',2,'tr','lading',5],
  ['elek','2.4','Snel oefenen: elektronen in een ion','Elektronen tellen bij geladen deeltjes.',2,'tr','elek',5],
  ['zf','2.4','Snel oefenen: formule van een zout','Plus en min moeten samen nul zijn.',2,'tr','zf',5],
  ['zout','2.4','Lab: Zoutfabriek','Giet + en − ionen bij elkaar tot het zout neutraal is.',3,'lab','zout',5],
  ['geleid','2.4','Snel oefenen: geleidt het stroom?','Welke stoffen geleiden, en wanneer?',2,'tr','geleid',5],
  ['stroom','2.4','Lab: Stroomtest','Gaat het lampje branden? En wat voor stof is het?',3,'lab','stroom',5],
- ['pr2.4','2.4','Oefenronde 2.4','Alles van 2.4 door elkaar.',4,'pr','2.4'],
+ ['pr2.4','2.4','Oefenronde 2.4','Alles van 2.4 door elkaar.',3,'pr','2.4'],
+ ['k4','2.4','Bindingsberg: de Top','De laatste klim: haal de top en je weet alles van dit hoofdstuk.',3,'klim',4],
  ['band','af','Sorteerband','Metaal, zout of moleculaire stof? Nu alles door elkaar, op tijd.',2,'band',null,15],
- ['flits','af','Begrippen','Alle begrippen nog één keer langs als flitskaarten.',2,'flits'],
- ['toets','af','Proeftoets','De generale repetitie. Haal je een 7, dan ben je klaar voor de echte toets.',6,'toets',null,7]
+ ['flits','af','Begrippen','Alle begrippen nog één keer langs als flitskaarten.',1,'flits'],
+ ['toets','af','Proeftoets','De generale repetitie. Haal je een 7, dan ben je klaar voor de echte toets.',4,'toets',null,7]
 ];
 const RDEEL={'0':'0 · Basis','2.1':'2.1 · Atoombinding','2.2':'2.2 · Tussen moleculen','2.3':'2.3 · Metaalbinding','2.4':'2.4 · Ionbinding','af':'Afronden'};
 let RT={on:false,before:null};
@@ -1085,12 +1152,12 @@ function goHome(){if(G&&G.timer)clearInterval(G.timer);G=null;save();if(RT.on)re
 function renderHome(){
   $('#secs').innerHTML=SECS.map(s=>{const m=score(s.id);return `<div class="sec"><span class="num">${s.id==='0'?'0':s.id}</span><div><h3>${esc(s.t)}</h3><p>${esc(s.s)}</p><span class="bar"><i style="width:${Math.round(m*100)}%"></i></span></div><div class="acts"><button class="btn small lp" data-lp="${s.id}">${S.lpd&&S.lpd[s.id]?'✓ Leerpad':'▶ Leerpad'}</button><button class="btn small ghost" data-u="${s.id}">Uitleg</button><button class="btn small primary" data-o="${s.id}">Oefenen</button></div></div>`}).join('');
   $('#tools').innerHTML=Object.entries(GENS).map(([k,g])=>`<button class="btn small ghost" data-g="${k}"><span class="src">${g.sec==='0'?'basis':g.sec}</span> ${esc(g.t)}</button>`).join('');
-  try{routeBox()}catch(e){}$('#stDone').textContent=S.done;$('#stStreak').textContent=streak();$('#stBest').textContent=S.best?nf(S.best):'–';
+  try{routeBox()}catch(e){}try{const t=klimTotal();$('#klimTag').textContent=Math.round(t.p*KTOP).toLocaleString('nl-NL')+' m · '+Math.round(t.p*100)+'%'}catch(e){}$('#stDone').textContent=S.done;$('#stStreak').textContent=streak();$('#stBest').textContent=S.best?nf(S.best):'–';
   const bp=bouwPct();$('#bouwTag').textContent=`${Math.round(bp*BLEVELS.length)} van ${BLEVELS.length} moleculen`;$('#bandTag').textContent=S.band?`record ${S.band}`:'nog geen record';
 }
 $('#secs').addEventListener('click',e=>{const u=e.target.closest('[data-u]'),o=e.target.closest('[data-o]');if(u)uitleg(u.dataset.u);if(o)practice(o.dataset.o);const l=e.target.closest('[data-lp]');if(l)lpStart(l.dataset.lp)});
 $('#tools').addEventListener('click',e=>{const b=e.target.closest('[data-g]');if(b)trainer(b.dataset.g)});
-$('#toets').onclick=toets;$('#spiek').onclick=spiek;$('#bouw').onclick=bouwHome;$('#lab').onclick=labHome;$('#band').onclick=bandStart;$('#flits').onclick=()=>flits();
+$('#toets').onclick=toets;$('#spiek').onclick=spiek;$('#bouw').onclick=bouwHome;$('#lab').onclick=labHome;$('#band').onclick=bandStart;$('#klim').onclick=klimHome;$('#flits').onclick=()=>flits();
 function askReset(){$('#resetBox').innerHTML='<span>Alle voortgang wissen?</span><button class="btn small dark" id="rsY">Ja, wissen</button><button class="btn small ghost" id="rsN">Annuleer</button>';
   $('#rsY').onclick=()=>{S={sec:{},mc:{},done:0,days:[],best:0,bouw:{},lab:{},band:0};save();location.reload()};$('#rsN').onclick=()=>{$('#resetBox').innerHTML='<button class="btn ghost small" id="resetBtn">Voortgang wissen</button>';$('#resetBtn').onclick=askReset}}
 $('#resetBtn').onclick=askReset;
@@ -1132,13 +1199,25 @@ function pracNext(){
     if(ok||it.tries>=2)G.done++;else{it.tries++;const nq=q.gen?Object.assign({sec:q.sec,gen:q.gen},GENS[q.gen].f()):q;G.queue.splice(Math.min(3,G.queue.length),0,{q:nq,tries:it.tries})}
     save();pracNext()},{again:it.tries>0});
 }
+const LEES={atoom:['Valentie-elektronen'],ps:['Metaal of niet-metaal?'],drie:['Drie manieren om vol te raken','Drie soorten stoffen'],atoombinding:['Delen is ook hebben','Moleculen'],
+ covalentie:['Armpjes: covalentie'],structuur:['Structuurformules','Dubbel en driedubbel'],naam:['Namen geven'],triviaal:['Namen die je gewoon moet kennen'],reactie:['Reactie of niet?'],
+ vdw:['Binnen en tussen','De vanderwaalsbinding','Lang of bolletje'],hbrug:['De waterstofbrug','Daarom is water bijzonder'],oplos:['Oplossen: soort zoekt soort','Olie en water'],molrooster:['Moleculaire stoffen en stroom'],
+ metaal:['Een zee van elektronen'],metaaleig:['Daarom geleiden metalen','Daarom kun je metaal buigen'],legering:['Legeringen'],edel:['Edel en onedel'],zout:['Drie soorten stoffen'],
+ ion:['Elektronen overgeven','Ladingen voorspellen'],zoutformule:['De formule van een zout'],ionrooster:['De ionbinding'],zouteig:['Zouten en stroom','Bros als glas']};
+/* nalezen: per foute vraag het leerpad-kaartje met die stof (via th of de soort som), anders de theorie zelf */
+function leesKaarten(mist){const out=[],seen=new Set();
+ for(const q of mist){const k=q.th||q.gen;if(!k||seen.has(k))continue;seen.add(k);let found=false;
+  for(const t of LEES[k]||[])for(const s in LP){const c=LP[s].find(c=>c[0]===t);if(c){found=true;if(!out.includes(c))out.push(c)}}
+  if(!found&&typeof TH!=='undefined'&&TH[k])out.push([TH[k].t,TH[k].h])}
+ return out}
+function leesStart(sec,cards){G={m:'lp',sec,i:0,cards,redo:[],ok:0,asked:0,answered:{},sel:1};show('play');lpDraw()}
 function endScreen(){
-  const t=G.n0,pct=G.first/t;if(pct>=.8)confetti();if(!S.pr)S.pr={};S.pr[G.sec]=Math.max(S.pr[G.sec]||0,pct);save();const sec=G.sec;
+  const t=G.n0,pct=G.first/t;if(pct>=.8)confetti();if(!S.pr)S.pr={};S.pr[G.sec]=Math.max(S.pr[G.sec]||0,pct);save();const sec=G.sec,lees=leesKaarten(G.mist);
   P.innerHTML=`<div class="slide">${head('Paragraaf '+sec,'Klaar')}<div class="slide-body"><div><div class="q">In één keer goed</div><div class="big">${G.first}<span style="font-size:.45em;color:var(--muted)"> / ${t}</span></div></div>
    <div>${pct>=.9?'Uitstekend, deze paragraaf zit erin.':pct>=.6?'Goed bezig. De foute vragen heb je inmiddels ook goed gedaan. Nog een ronde en het zit vast.':'De foute vragen kwamen terug tot je ze goed had. Lees de uitleg nog eens en doe nog een ronde.'}</div>
    ${G.mist.length?`<div><div class="q" style="margin-bottom:6px">Hier ging het de eerste keer mis</div><ul class="mist">${G.mist.map(q=>`<li><b>${q.q}</b><span>Antwoord: ${q.mc?q.a:nf(q.a,2)} · ${q.w||''}</span></li>`).join('')}</ul></div>`:''}
-   <div class="acts"><button class="btn primary" id="again">Nog een ronde</button><button class="btn ghost" id="uit">Uitleg</button><button class="btn ghost" id="home2">Naar start</button></div></div></div>`;
-  $('#again').onclick=()=>practice(sec);$('#uit').onclick=()=>uitleg(sec);$('#home2').onclick=goHome;$('#again').focus();
+   ${lees.length?`<div class="fb warn"><div class="t">Lees dit nog eens</div><div class="tip">${lees.map(c=>c[0]).join(' · ')}</div><div class="acts" style="margin-top:8px"><button class="btn primary" id="lees">Nalezen (${lees.length} ${lees.length===1?'kaartje':'kaartjes'}) →</button></div></div>`:''}<div class="acts"><button class="btn ${lees.length&&pct<.8?'ghost':'primary'}" id="again">Nog een ronde</button><button class="btn ghost" id="uit">Uitleg</button><button class="btn ghost" id="home2">Naar start</button></div></div></div>`;
+  $('#again').onclick=()=>practice(sec);$('#uit').onclick=()=>uitleg(sec);$('#home2').onclick=goHome;const lb=$('#lees');if(lb){lb.onclick=()=>leesStart(sec,lees);if(pct<.8){lb.focus();return}}$('#again').focus();
 }
 function trainer(k,goal){G={m:'tr',k,n:0,ok:0,streak:0,goal};show('play');trNext()}
 function trNext(){const g=GENS[G.k];const q=g.f();

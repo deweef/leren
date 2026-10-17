@@ -905,8 +905,10 @@ function lpDraw(){const {sec,cards}=G;const i=G.i;const c=cards[i];const s=SECS.
   if(done){markOpts(opts.indexOf(qz[1]),opts.indexOf(qz[1]));$('#fbox').innerHTML=`<div class="fb good"><div class="tip">${qz[3]}</div></div>`}
   else P.querySelectorAll('#lpo .opt').forEach((b,j)=>b.onclick=()=>{const ok=opts[j]===qz[1];markOpts(opts.indexOf(qz[1]),j);G.asked++;if(ok)G.ok++;else G.redo.push(i);G.answered[i]=1;
    $('#fbox').innerHTML=`<div class="fb ${ok?'good':'bad'}"><div class="t">${ok?pick(['Goed!','Klopt!','Precies!']):'Niet helemaal.'}</div><div class="tip">${qz[3]}</div></div>`;const n=$('#lpnext');n.disabled=false;n.focus()})}
- S.lp[sec]=i;save();window.scrollTo(0,0)}
+ if(!G.sel)S.lp[sec]=i;save();window.scrollTo(0,0)}
 function lpNext(){const {cards}=G;if(G.i<cards.length-1){G.i++;lpDraw();return}
+ if(G.sel){const sec=G.sec;P.innerHTML=`<div class="slide">${head('Nalezen','Klaar')}<div class="slide-body"><div class="q">Goed gelezen</div><div>Nu het weer vers is: probeer de oefenronde nog een keer.</div><div class="acts"><button class="btn primary" id="lpprac">Nog een oefenronde</button><button class="btn ghost" id="lphome">Terug</button></div></div></div>`;
+  $('#lpprac').onclick=()=>practice(sec);$('#lphome').onclick=goHome;$('#lpprac').focus();return}
  lpState();S.lpd[G.sec]=1;S.lp[G.sec]=0;markDay();save();confetti();const sec=G.sec;const nxt=SECS[SECS.findIndex(x=>x.id===sec)+1];
  const redo=[...new Set(G.redo)];
  P.innerHTML=`<div class="slide">${head('Leerpad '+(sec==='0'?'basis':sec),'Klaar')}<div class="slide-body"><div class="q">Controlevragen in één keer goed</div><div class="big">${G.ok}<span style="font-size:.45em;color:var(--muted)"> / ${G.asked}</span></div>
@@ -1100,13 +1102,23 @@ function pracNext(){
   const q=G.items[G.i];
   ask(q,`Paragraaf ${G.sec}`,q.gen?GENS[q.gen].t:'Begrip',topbar(G.i,G.items.length),ok=>{rec(G.sec,ok);if(q.id)S.mc[q.id]=(S.mc[q.id]||0)+(ok?1:-1);if(ok)G.ok++;else G.mist.push(q);save();G.i++;pracNext()});
 }
+const LEES={cyc:['De statistische cyclus','Een goede vraag'],var:['Variabelen en waarden','Kwalitatief: nominaal of ordinaal','Kwantitatief: discreet of continu'],gmm:['Het gemiddelde','De mediaan','De modus','Welke kies je?'],
+ freq:['Frequentietabel'],klas:['Klassen en histogram'],rel:['Frequentietabel'],weeg:['Het gemiddelde'],kw:['Kwartielen','Spreiding'],box:['Vijf getallen','De boxplot'],cum:['Cumulatief: optellen','Aflezen uit een cumulatieve grafiek'],
+ norm:['De normale verdeling','De vuistregels'],sd:['De standaardafwijking'],shape:['De vorm van data','Scheef','Andere vormen']};
+/* nalezen: per foute vraag het leerpad-kaartje met die stof (via th of de soort som), anders de theorie zelf */
+function leesKaarten(mist){const out=[],seen=new Set();
+ for(const q of mist){const k=q.th||q.gen;if(!k||seen.has(k))continue;seen.add(k);let found=false;
+  for(const t of LEES[k]||[])for(const s in LP){const c=LP[s].find(c=>c[0]===t);if(c){found=true;if(!out.includes(c))out.push(c)}}
+  if(!found&&typeof TH!=='undefined'&&TH[k])out.push([TH[k].t,TH[k].h])}
+ return out}
+function leesStart(sec,cards){G={m:'lp',sec,i:0,cards,redo:[],ok:0,asked:0,answered:{},sel:1};show('play');lpDraw()}
 function endScreen(){
-  const t=G.items.length,pct=G.ok/t;if(pct>=.8)confetti();if(!S.pr)S.pr={};S.pr[G.sec]=Math.max(S.pr[G.sec]||0,pct);save();const sec=G.sec;
+  const t=G.items.length,pct=G.ok/t;if(pct>=.8)confetti();if(!S.pr)S.pr={};S.pr[G.sec]=Math.max(S.pr[G.sec]||0,pct);save();const sec=G.sec,lees=leesKaarten(G.mist);
   P.innerHTML=`<div class="slide">${head('Paragraaf '+sec,'Klaar')}<div class="slide-body"><div><div class="q">Goed</div><div class="big">${G.ok}<span style="font-size:.45em;color:var(--muted)"> / ${t}</span></div></div>
    <div>${pct>=.9?'Uitstekend, deze paragraaf zit erin.':pct>=.6?'Goed bezig. Nog een ronde en het zit vast.':'Lees de uitleg nog eens en probeer het dan opnieuw.'}</div>
    ${G.mist.length?`<div><div class="q" style="margin-bottom:6px">Kijk hier nog even naar</div><ul class="mist">${G.mist.map(q=>`<li><b>${q.mc?q.q.replace(/<svg[\s\S]*?<\/svg>/g,'[figuur]').replace(/<div class="tw">[\s\S]*?<\/div>/g,'[tabel]'):q.q.replace(/<svg[\s\S]*?<\/svg>/g,'[figuur]').replace(/<div class="tw">[\s\S]*?<\/div>/g,'[tabel]')}</b><span>Antwoord: ${q.mc?q.a:nf(q.a,2)} · ${q.w||''}</span></li>`).join('')}</ul></div>`:''}
-   <div class="acts"><button class="btn primary" id="again">Nog een ronde</button><button class="btn ghost" id="uit">Uitleg</button><button class="btn ghost" id="home2">Naar start</button></div></div></div>`;
-  $('#again').onclick=()=>practice(sec);$('#uit').onclick=()=>uitleg(sec);$('#home2').onclick=goHome;$('#again').focus();
+   ${lees.length?`<div class="fb warn"><div class="t">Lees dit nog eens</div><div class="tip">${lees.map(c=>c[0]).join(' · ')}</div><div class="acts" style="margin-top:8px"><button class="btn primary" id="lees">Nalezen (${lees.length} ${lees.length===1?'kaartje':'kaartjes'}) →</button></div></div>`:''}<div class="acts"><button class="btn ${lees.length&&pct<.8?'ghost':'primary'}" id="again">Nog een ronde</button><button class="btn ghost" id="uit">Uitleg</button><button class="btn ghost" id="home2">Naar start</button></div></div></div>`;
+  $('#again').onclick=()=>practice(sec);$('#uit').onclick=()=>uitleg(sec);$('#home2').onclick=goHome;const lb=$('#lees');if(lb){lb.onclick=()=>leesStart(sec,lees);if(pct<.8){lb.focus();return}}$('#again').focus();
 }
 function trainer(k,goal){
   G={m:'tr',k,n:0,ok:0,streak:0,goal};show('play');trNext();
