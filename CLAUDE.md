@@ -18,6 +18,13 @@ bouwt het samen met Claude; hij wil ook zelf kunnen meeleren (scheikunde: hij be
   eigen voortgang heeft. Pagina's gebruiken gewoon hun KEY (alleen `getItem`/`setItem`/`removeItem`; ga niet zelf door
   `localStorage.key(i)` lopen). Oude sleutels zonder `@` (van vóór de splitsing) krijgt elke persoon één keer als
   beginstand; wissen kan per persoon via "Zo pak je het aan" → Voortgang wissen.
+- **Synchroniseren tussen apparaten** (ook in `leerlog.js`): elke wijziging krijgt een tijdstempel (`leren-tijd@<wie>`,
+  alleen als de waarde echt verandert) en gaat 15 s later (en bij weggaan) naar het Apps Script (`actie=bewaar`, tabblad
+  'Leerhoek opslag'). Bij openen haalt de pagina `?actie=stand&naam=..` op (pagina tot max. 3 s half doorzichtig en niet
+  aan te raken, `html.leren-laden`), neemt nieuwere standen over (vergelijk met de tijd van vóór het openen, `tijd0`) en
+  herlaadt één keer. Oude standen zonder tijdstempel: de grootste wint. Laatste wijziging wint per pagina-sleutel.
+- Het leerlogboek zet in de stand ook `afgerond: 0, 1.1, ...` (delen van `ROUTE` waarvan alle stappen met gewicht
+  gehaald zijn, via `rDone`) en in "wat gedaan" `deel X afgerond ✓`.
 - `sw.js`: service worker (eerst netwerk, anders bewaarde kopie). **Hoog `leerhoek-vN` op bij elke wijziging.**
 - Elke pagina begint zijn `<style>` met `*{touch-action:manipulation}`: anders zoomt de iPad in bij twee keer snel
   tikken. Tekenvlakken e.d. houden hun eigen `touch-action:none` (specifieker).

@@ -4,18 +4,62 @@
    Ouder ("alles") wordt ook bijgehouden, als 'Ouder'. Werkt voor elke pagina die dit script laadt: het kijkt mee met wat de pagina zelf al in localStorage zet. */
 /* Voortgang per persoon: elke sleutel in localStorage (behalve leren-*) krijgt stil '@<wie>' erachter, zodat Ben, Dana
    en Ouder op hetzelfde apparaat elk hun eigen voortgang hebben. De pagina's merken daar niets van (zelfde KEY).
-   Oude voortgang van vóór deze splitsing (sleutel zonder '@') krijgt iedereen één keer als beginstand mee. */
+   Oude voortgang van vóór deze splitsing (sleutel zonder '@') krijgt iedereen één keer als beginstand mee.
+   Synchroniseren: elke stand gaat met een tijdstempel (leren-tijd@<wie>) naar het tabblad 'Leerhoek opslag' van het
+   Apps Script (actie=bewaar); bij openen haalt de pagina de stand van die persoon op (actie=stand) en neemt nieuwere
+   standen over (daarna één keer herladen). Tot het antwoord er is (max 3 s) is de pagina even niet aan te raken. */
 (function(){
+const URL='https://script.google.com/macros/s/AKfycbzo6b4TQRiL2j1ZhEtBa6xpbNcBxmL7IIIB6e1FdYWnswDIxJ1MphWAlAjm12aK_J9U/exec';
 let wie=null;try{wie=localStorage.getItem('leren-wie')}catch(e){}
 if(!/^(ben|dana|alle)$/.test(wie||''))return;
+const naam={ben:'ben',dana:'dana',alle:'ouder'}[wie];
 try{const P=Storage.prototype,get=P.getItem,set=P.setItem,del=P.removeItem,key=P.key;
  const eigen=k=>typeof k==='string'&&!/^leren-/.test(k);
  const ls=window.localStorage,raw=[];for(let i=0;i<ls.length;i++)raw.push(key.call(ls,i));
  raw.forEach(k=>{if(eigen(k)&&!k.includes('@')&&get.call(ls,k+'@'+wie)===null)set.call(ls,k+'@'+wie,get.call(ls,k))});
+ const TK='leren-tijd@'+wie;let tijd={};try{tijd=JSON.parse(get.call(ls,TK)||'{}')||{}}catch(e){}
+ const tijd0=Object.assign({},tijd),vuil=new Set();let wacht=null; // tijd0: zoals bij openen (de pagina kan meteen al opslaan)
+ const zetTijd=(k,t)=>{tijd[k]=t;try{set.call(ls,TK,JSON.stringify(tijd))}catch(e){}};
  P.getItem=function(k){return get.call(this,this===ls&&eigen(k)?k+'@'+wie:k)};
- P.setItem=function(k,v){return set.call(this,this===ls&&eigen(k)?k+'@'+wie:k,v)};
+ P.setItem=function(k,v){if(this!==ls||!eigen(k))return set.call(this,k,v);const oud=get.call(this,k+'@'+wie),r=set.call(this,k+'@'+wie,v);if(oud!==String(v)){zetTijd(k,Date.now());vuil.add(k);plan()}return r};
  P.removeItem=function(k){return del.call(this,this===ls&&eigen(k)?k+'@'+wie:k)};
- window.lerenSleutels=()=>{const r=[];for(let i=0;i<ls.length;i++){const k=key.call(ls,i);if(k&&k.endsWith('@'+wie))r.push(k.slice(0,-1-wie.length))}return r};
+ const mijn=()=>{const r=[];for(let i=0;i<ls.length;i++){const k=key.call(ls,i);if(k&&eigen(k)&&k.endsWith('@'+wie))r.push(k.slice(0,-1-wie.length))}return r};
+ window.lerenSleutels=mijn;
+
+ /* ---- versturen: 15 s na de laatste wijziging, en bij weggaan ---- */
+ const vak=(location.pathname.split('/').pop()||'').replace(/\.html$/,'');
+ if(!vak||vak==='index')return;
+ const body=k=>new URLSearchParams({actie:'bewaar',naam,sleutel:k,tijd:String(tijd[k]||Date.now()),data:get.call(ls,k+'@'+wie)||''});
+ function stuur(viaBaken){if(navigator.onLine===false)return;vuil.forEach(k=>{const b=body(k);let ok=false;
+   if(viaBaken){try{ok=navigator.sendBeacon(URL,b)}catch(e){}}
+   if(!ok){try{fetch(URL,{method:'POST',body:b,mode:'no-cors',keepalive:b.toString().length<60000}).catch(()=>{})}catch(e){}}});
+  vuil.clear()}
+ function plan(){clearTimeout(wacht);wacht=setTimeout(()=>stuur(false),15000)}
+ document.addEventListener('visibilitychange',()=>{if(document.visibilityState==='hidden'){clearTimeout(wacht);stuur(true)}});
+ addEventListener('pagehide',()=>{clearTimeout(wacht);stuur(true)});
+
+ /* ---- ophalen bij openen ---- */
+ if(navigator.onLine===false||!window.fetch)return;
+ const html=document.documentElement;html.classList.add('leren-laden');
+ const st=document.createElement('style');st.textContent='html.leren-laden body{opacity:.35;pointer-events:none;transition:opacity .2s}';
+ document.head.appendChild(st);
+ let klaar=false;const af=()=>{if(!klaar){klaar=true;html.classList.remove('leren-laden')}};
+ setTimeout(af,3000);
+ fetch(URL+'?actie=stand&naam='+naam,{cache:'no-store'}).then(r=>r.json()).then(o=>{
+  if(klaar||!o||typeof o.stand!=='object')return af();
+  let nieuw=false;const lokaal=mijn();
+  for(const [k,v] of Object.entries(o.stand)){if(!eigen(k)||!v||typeof v.d!=='string')continue;
+   const hier=get.call(ls,k+'@'+wie),th=tijd0[k];
+   // oude stand zonder tijdstempel: de grootste (= meeste voortgang) wint
+   const neem=th?Number(v.t)>th:(hier===null||v.d.length>hier.length);
+   if(neem&&v.d!==hier){set.call(ls,k+'@'+wie,v.d);zetTijd(k,Number(v.t));nieuw=true}
+   else if(!th&&hier!==null){zetTijd(k,Date.now());vuil.add(k)}}
+  // standen die online nog niet bestaan meteen versturen
+  lokaal.forEach(k=>{if(!o.stand[k]){if(!tijd[k])zetTijd(k,Date.now());vuil.add(k)}});
+  if(vuil.size)plan();
+  if(nieuw&&!sessionStorage.getItem('leren-herlaad')){try{sessionStorage.setItem('leren-herlaad','1')}catch(e){}location.reload();return}
+  try{sessionStorage.removeItem('leren-herlaad')}catch(e){}
+  af()}).catch(af);
 }catch(e){}
 })();
 (function(){
@@ -58,6 +102,10 @@ function verstuur(params){const q=Object.entries(params).map(([k,v])=>k+'='+enco
 // wat de vorige keer (zonder internet) bleef liggen, alsnog versturen
 try{const a=JSON.parse(localStorage.getItem(QK)||'[]');if(a.length&&navigator.onLine!==false){localStorage.removeItem(QK);a.forEach(q=>{try{navigator.sendBeacon(URL+'?'+q)}catch(e){}})}}catch(e){}
 
+/* ---- welke delen van de leerroute helemaal af zijn (alle stappen met gewicht gehaald) ---- */
+function afgerond(){try{if(typeof ROUTE==='undefined'||typeof rDone!=='function')return null;
+ const delen=[...new Set(ROUTE.map(r=>r[1]))];return delen.filter(d=>{const l=ROUTE.filter(r=>r[1]===d&&r[4]>0);return l.length&&l.every(rDone)})}catch(e){return null}}
+let afBegin=[];addEventListener('load',()=>{afBegin=afgerond()||[]});
 function regel(){const min=actief/60000;
  const nu={},wat=[],st=[];
  keys.forEach(k=>{const a=stand(begStand?begStand[k]:begin[k]),b=stand(read(k));
@@ -65,6 +113,7 @@ function regel(){const min=actief/60000;
    st.push(`${NAAM[f]} ${fmt(b[f])}`)}
   nu[k]=read(k)});
  try{if(typeof window.leerVoortgang==='function')st.push(`leerroute ${window.leerVoortgang()}%`)}catch(e){}
+ const af=afgerond();if(af){st.push(`afgerond: ${af.length?af.join(', '):'nog niets'}`);af.filter(d=>!afBegin.includes(d)).forEach(d=>wat.push(`deel ${d} afgerond ✓`));afBegin=af}
  if(min<0.3&&!wat.length)return;
  verstuur({actie:'leer',naam,vak,min:fmt(min).replace(',','.'),wat:wat.join(' · ')||'alleen gekeken',stand:st.join(' · ')});
  begStand=Object.assign({},begStand||begin,nu);actief=0}
