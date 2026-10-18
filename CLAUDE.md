@@ -51,7 +51,9 @@ schermen `show('home'|'play')`, `goHome()`, `ask()`, `practice(sec)` (oefenronde
   leerpad 1.1 heeft "Molecuulmassa: tel de steentjes op". Plaatjes zijn inline SVG met de helpers `zoomFig()`,
   `legoFig()`, `elementFig()`, `massaFig()`, `steen()`, `h2o()` (scheikunde-h1.html). In 1.2-1.4 hangen plaatjes
   aan bestaande kaartjes via `voegToe(sec, titel, fig)` (`figDozijn`, `figWeeg`, `figDicht`, `figTaart`, `figPpm`,
-  `figMolair`, `figBehoud`, `figTosti`; klasse `.lpfig`). Voorbeeldkaartjes met goud in 1.2 ("Voorbeeld: goud tellen",
+  `figMolair`, `figBehoud`, `figTosti`; klasse `.lpfig`). De mol is een **telwoord, net als een dozijn** (niet "de mol is
+  een dozijn"); kaartje "De mol: een telwoord, net als een dozijn" (titel komt ook voor in `legBij`, `voegToe`, `naKaart`
+  en `LEES`: wijzig alle vijf samen). Voorbeeldkaartjes met goud in 1.2 ("Voorbeeld: goud tellen",
   "Voorbeeld: de gouden ketting", `figKetting`): gram → mol → atomen, en de notatie 12,04·10²³ = 1,204·10²⁴. Formules en N_A instampen: de **Formuleblitz**
   (`BLITZ.form`), ook als routestap in 1.2. Formules moet je kennen; N_A staat in Binas (tabel 7) maar is handig om
   te weten. Onder elke formule staat "Wat betekent wat?" (`leg(keys)`, `SYM`: symbool,
