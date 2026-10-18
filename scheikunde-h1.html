@@ -112,6 +112,8 @@ details.tips ul{margin:10px 0 4px;padding-left:20px;display:grid;gap:6px}
 .zoomfig figcaption{font-size:13px;line-height:1.3;text-align:center}
 .massafig{background:var(--chip);border-radius:12px;padding:8px;margin:8px 0}
 .massafig svg{display:block;width:100%;max-width:420px;margin:0 auto;height:auto;color:var(--ink)}
+.lpfig{background:var(--chip);border-radius:12px;padding:8px;margin:10px 0}
+.lpfig svg{display:block;width:100%;max-width:460px;height:auto;margin:0 auto;color:var(--ink)}
 /* spel */
 .playbar{display:flex;align-items:center;gap:12px;margin-bottom:16px}
 .playbar .bar{flex:1;height:10px;border-radius:5px}
@@ -811,6 +813,20 @@ function keukenNext(){if(G.r>=G.total){if(G.ok>=5)confetti();S.keuken=Math.max(S
 
 /* ================= Blitz (60 s meerkeuze) ================= */
 const BLITZ={
+ form:{t:'Formuleblitz',d:'De formules en het getal van Avogadro erin stampen.',make(){const F=[
+   ['n = ?','m ÷ M',['m × M','M ÷ m'],'Van gram naar mol: delen door M.'],['m = ?','n × M',['n ÷ M','M ÷ n'],'Van mol naar gram: keer M.'],
+   ['ρ = ?','m ÷ V',['V ÷ m','m × V'],'Dichtheid = massa per volume.'],['V = ?','m ÷ ρ',['m × ρ','ρ ÷ m'],'Uit ρ = m ÷ V volgt V = m ÷ ρ.'],
+   ['m = ? (met dichtheid)','ρ × V',['ρ ÷ V','V ÷ ρ'],'Uit ρ = m ÷ V volgt m = ρ × V.'],
+   ['N (aantal deeltjes) = ?','n × N<sub>A</sub>',['n ÷ N<sub>A</sub>','N<sub>A</sub> ÷ n'],'Van mol naar deeltjes: keer het getal van Avogadro.'],
+   ['n = ? (uit aantal deeltjes)','N ÷ N<sub>A</sub>',['N × N<sub>A</sub>','N<sub>A</sub> ÷ N'],'Van deeltjes naar mol: delen door N<sub>A</sub>.'],
+   ['N<sub>A</sub> (getal van Avogadro) = ?','6,02·10<sup>23</sup>',['6,02·10<sup>22</sup>','6,02·10<sup>32</sup>'],'1 mol = 6,02·10<sup>23</sup> deeltjes.'],
+   ['Molariteit [A] = ?','n ÷ V',['n × V','V ÷ n'],'Mol per liter oplossing.'],
+   ['massa% = ?','m(stof) ÷ m(totaal) × 100%','m(totaal) ÷ m(stof) × 100%|m(stof) × m(totaal) × 100%'.split('|'),'Deel ÷ geheel × 100%.'],
+   ['massa-ppm = m(stof) ÷ m(totaal) × ?','10<sup>6</sup>',['10<sup>3</sup>','10<sup>9</sup>'],'ppm = per miljoen = × 10<sup>6</sup>. ppb = × 10<sup>9</sup>.'],
+   ['1 massa-ppm = ?','1 mg per kg',['1 g per kg','1 µg per kg'],'Een miljoenste: 1 mg per 1 000 000 mg (= 1 kg).'],
+   ['1 mol water (M = 18,02) weegt…','18,02 g',['1 g','6,02 g'],'1 mol weegt de molaire massa in gram.'],
+   ['De molaire massa M heeft als eenheid…','g/mol',['mol/g','g/L'],'M = gram per mol.']];
+  const f=pick(F);return {q:`<b>${f[0]}</b>`,opts:shuffle([f[1],...f[2]]),a:f[1],w:`${f[0].replace(' = ?','')} = ${f[1]}. ${f[3]}`}}},
  sym:{t:'Symbolenblitz',d:'Naam ↔ symbool van alle elementen die je moet kennen.',make(){const s=pick(KENNEN);const dir=Math.random()<.5;const others=shuffle(KENNEN.filter(x=>x!==s));
    if(dir)return {q:`Symbool van <b>${ELS[s][0]}</b>?`,opts:shuffle([s,...others.slice(0,3)]),a:s,w:`${ELS[s][0]} = ${s}`};
    return {q:`Welk element is <b>${s}</b>?`,opts:shuffle([ELS[s][0],...others.slice(0,3).map(x=>ELS[x][0])]),a:ELS[s][0],w:`${s} = ${ELS[s][0]}`}}},
@@ -942,6 +958,7 @@ const ROUTE=[
  ['mn','1.2','Snel oefenen: gram ↔ mol ↔ deeltjes','Het rekenschema stap voor stap.',2,'tr','mn',5],
  ['mach','1.2','Molmachine','Dezelfde route, maar nu kies jij de stappen en rekent de machine.',3,'spel','mach',5],
  ['rho','1.2','Snel oefenen: dichtheid','Van volume naar massa en terug.',2,'tr','rho',5],
+ ['fb','1.2','Formuleblitz','De formules en het getal van Avogadro moet je kennen. Stamp ze erin: 60 seconden, zo vaak als je wilt.',1,'blitz','form',15],
  ['pr1.2','1.2','Oefenronde 1.2','Alles van 1.2 door elkaar.',3,'pr','1.2'],
  ['k2','1.2','Molberg: Kamp 2','Eindcheck van 1.2.',3,'klim',2],
  ['lp1.3','1.3','Leerpad 1.3: gehaltes','Significante cijfers, procenten, ppm en molariteit.',3,'lp','1.3'],
@@ -961,7 +978,7 @@ const ROUTE=[
  ['pr1.4','1.4','Oefenronde 1.4','Alles van 1.4 door elkaar.',3,'pr','1.4'],
  ['k4','1.4','Molberg: de Top','De laatste klim: haal de top en je weet alles van dit hoofdstuk.',3,'klim',4],
  ['flits','af','Begrippen','Alle begrippen nog één keer langs als flitskaarten.',1,'flits'],
- ['toets','af','Proeftoets','De generale repetitie. Haal je een 7, dan ben je klaar voor de echte toets.',3,'toets',null,7],
+ ['toets','af','Proeftoets','De generale repetitie. Haal je een 7, dan ben je klaar voor de echte toets.',2,'toets',null,7],
  ['samen','af','Samenvatting: ochtend voor de toets','Alles nog één keer doorlezen, zonder vragen. Ongeveer 10 minuten.',0,'samen',null,1]
 ];
 const RDEEL={'0':'0 · Basis','1.1':'1.1 · Atoombouw','1.2':'1.2 · De mol','1.3':'1.3 · Gehaltes','1.4':'1.4 · Reacties','af':'Afronden'};
@@ -1281,6 +1298,37 @@ function massaFig(){const t=(x,y,txt,b)=>`<text x="${x}" y="${y}" font-size="${b
  return `<div class="massafig"><svg viewBox="0 0 270 100" role="img" aria-label="H + H + O = 1,008 + 1,008 + 16,00 = 18,02 u">${svg}</svg></div>`}
 {const i=LP['1.1'].findIndex(c=>c[0]==='Atoommassa');LP['1.1'].splice(i+1,0,
  ['Molecuulmassa: tel de steentjes op',(()=>`<p>Een molecuul is een bouwwerkje van atomen. De massa van het molecuul is dus gewoon <b>alle atoommassa's bij elkaar opgeteld</b>.</p>${massaFig()}<p><b>Zo doe je het:</b></p><ol style="padding-left:20px;margin:4px 0"><li><b>Formule lezen:</b> welke atomen, en hoeveel van elk? (het kleine getal hoort bij het atoom ervóór)</li><li><b>Opzoeken:</b> de atoommassa van elke soort (periodiek systeem, Binas 99).</li><li><b>Vermenigvuldigen:</b> aantal × atoommassa, per soort.</li><li><b>Optellen:</b> dat is de molecuulmassa, in <b>u</b>.</li></ol><div class="ex"><b>CO<sub>2</sub></b>: 1 C en 2 O<br>1 × 12,01 + 2 × 16,00 = 12,01 + 32,00 = <b>44,01 u</b></div><p>Straks in 1.2 heet hetzelfde getal de <b>molaire massa</b>: 44,01 g per mol. Daarom is dit sommetje zo belangrijk.</p>`),['Wat is de molecuulmassa van CH<sub>4</sub> (methaan)? C = 12,01 u en H = 1,008 u','16,04 u','13,02 u|48,04 u','1 × 12,01 + 4 × 1,008 = 12,01 + 4,03 = 16,04 u. Het kleine 4 hoort bij de H: vier waterstofatomen.']])}
+/* ---------- plaatjes bij leerpad 1.2-1.4 ---------- */
+const svgBox=(w,h,inner,label)=>`<div class="lpfig"><svg viewBox="0 0 ${w} ${h}" role="img" aria-label="${label}">${inner}</svg></div>`;
+const tx=(x,y,t,o={})=>`<text x="${x}" y="${y}" font-size="${o.s||12}" text-anchor="${o.a||'middle'}" fill="${o.c||'currentColor'}" font-weight="${o.b?800:500}">${t}</text>`;
+function figDozijn(){let eieren='';for(let i=0;i<6;i++)for(let j=0;j<2;j++)eieren+=`<ellipse cx="${30+i*22}" cy="${44+j*24}" rx="9" ry="11" fill="#F5E6C8" stroke="#B89B6A"/>`;
+ return svgBox(320,130,`<rect x="14" y="28" width="140" height="56" rx="8" fill="#C9B79A" opacity=".45" stroke="#8C7A5B"/>${eieren}${tx(84,108,'1 dozijn = 12',{b:1,s:14})}
+  <circle cx="234" cy="56" r="34" fill="#DCEEFB" stroke="currentColor"/>${[[218,44],[244,40],[230,62],[256,60],[214,70]].map(([x,y])=>h2o(x,y,.55)).join('')}${tx(234,108,'1 mol = 6,02·10²³',{b:1,s:14})}${tx(234,124,'602 000 000 000 000 000 000 000',{s:9})}`,'Een doos met 12 eieren is een dozijn; 1 mol is 6,02 keer 10 tot de 23e deeltjes')}
+function figWeeg(){const stapel=[[150,71],[178,71],[206,71],[164,53],[192,53],[178,35]].map(([x,y])=>`<g transform="translate(${x} ${y}) scale(.5)">${watermol(0,0)}</g>`).join('');
+ return svgBox(320,140,`<line x1="160" y1="96" x2="160" y2="122" stroke="currentColor" stroke-width="3"/><rect x="110" y="122" width="100" height="8" rx="3" fill="currentColor"/>
+  <rect x="120" y="82" width="140" height="10" rx="4" fill="#9AA3AD"/><rect x="128" y="70" width="124" height="12" rx="3" fill="none"/>${stapel}
+  <rect x="22" y="40" width="74" height="40" rx="8" fill="var(--surface)" stroke="currentColor" stroke-width="2"/>${tx(59,66,'18,02 g',{b:1,s:15})}${tx(59,100,'op de weegschaal',{s:11})}
+  ${tx(190,14,'= 1 mol watermoleculen',{b:1,s:13})}`,'18,02 gram water is 1 mol watermoleculen')}
+function figDicht(){const blok=(x,kl,naam,m)=>`<rect x="${x}" y="30" width="60" height="60" rx="6" fill="${kl}" stroke="rgba(0,0,0,.35)"/>${tx(x+30,108,naam,{b:1})}${tx(x+30,124,m,{s:11})}`;
+ return svgBox(320,134,`${blok(20,'#F4F4F2','piepschuim','0,03 g')}${blok(130,'#8EC5F0','water','1,0 g')}${blok(240,'#7D858F','ijzer','7,9 g')}${tx(160,16,'Elk blokje is 1 cm³, maar ze wegen anders',{s:12})}`,'Drie even grote blokjes van 1 kubieke centimeter wegen verschillend')}
+function figTaart(){return svgBox(320,130,`<circle cx="80" cy="64" r="48" fill="#F2C679" stroke="#B5843B" stroke-width="2"/><path d="M80 64 L80 16 A48 48 0 0 1 121.6 40 Z" fill="#E0483E" stroke="#B5843B" stroke-width="2"/>
+  ${tx(220,46,'stukje ÷ hele taart × 100%',{b:1,s:13})}${tx(220,70,'1/6 van de taart ≈ 17%',{s:12})}${tx(220,94,'massa% = m(stof) ÷ m(totaal) × 100%',{s:11})}`,'Een taart met een stukje eruit: een gehalte is een deel van het geheel')}
+function figPpm(){let d='';let k=0;for(let i=0;i<22;i++)for(let j=0;j<9;j++){k++;d+=`<circle cx="${18+i*13}" cy="${18+j*12}" r="4.6" fill="${k===97?'#E0483E':'#E6E6E6'}" stroke="rgba(0,0,0,.2)"/>`}
+ return svgBox(320,150,`${d}${tx(160,136,'1 rode tussen 1 000 000 = 1 ppm (hier zie je er maar 198)',{s:11})}`,'Eén rode knikker tussen een miljoen witte is 1 ppm')}
+function figMolair(){const beker=(x,n,lbl)=>{let dd='';for(let i=0;i<n;i++)dd+=`<circle cx="${x+18+(i%3)*22+(Math.floor(i/3)%2)*8}" cy="${92-Math.floor(i/3)*16}" r="6" fill="#5B4FC4"/>`;
+  return `<path d="M${x} 30 L${x+80} 30 L${x+74} 112 L${x+6} 112 Z" fill="#DCEEFB" stroke="currentColor" stroke-width="2"/>${dd}${tx(x+40,128,lbl,{s:11})}`};
+ return svgBox(320,142,`${beker(40,3,'1 L met 3 deeltjes')}${beker(200,9,'1 L met 9 deeltjes')}${tx(160,16,'zelfde volume, 3× zoveel mol = 3× zo hoge molariteit',{s:11})}`,'Twee bekers met evenveel water, de rechter heeft drie keer zoveel opgeloste deeltjes')}
+function figBehoud(){const h2=(x,y)=>`${steen(x,y,'#FFFFFF')}${steen(x+30,y,'#FFFFFF')}`,o2=(x,y)=>`${steen(x,y,'#D9443A')}${steen(x+30,y,'#D9443A')}`;
+ return svgBox(330,130,`${h2(6,30)}${h2(6,64)}${tx(76,56,'+',{b:1,s:18})}${o2(86,46)}${tx(166,56,'→',{b:1,s:20})}${watermol(186,58)}${watermol(260,58)}
+  ${tx(76,112,'2 H₂ + O₂',{b:1})}${tx(255,112,'2 H₂O',{b:1})}${tx(165,128,'links 4 wit + 2 rood = rechts 4 wit + 2 rood',{s:11})}`,'Twee waterstofmoleculen en een zuurstofmolecuul worden twee watermoleculen: dezelfde steentjes, anders vastgeklikt')}
+function figTosti(){const brood=(x,y)=>`<rect x="${x}" y="${y}" width="26" height="26" rx="6" fill="#E3B873" stroke="#A97A35"/>`,kaas=(x,y)=>`<rect x="${x+3}" y="${y+8}" width="20" height="10" rx="2" fill="#F7D74A" stroke="#C9A417"/>`;
+ let l='';for(let i=0;i<6;i++)l+=brood(10+(i%3)*30,22+Math.floor(i/3)*32);for(let i=0;i<4;i++)l+=kaas(10+i*24,86);
+ let r='';for(let i=0;i<3;i++){r+=brood(196+i*38,30)+kaas(196+i*38,30)}r+=kaas(234,78);
+ return svgBox(330,140,`${l}${tx(166,56,'→',{b:1,s:20})}${r}${tx(55,130,'6 brood + 4 kaas',{s:11})}${tx(250,72,'3 tosti’s',{b:1,s:12})}${tx(250,112,'1 plak kaas over',{s:11})}${tx(250,130,'brood = ondermaat',{b:1,s:11})}`,'Met 6 sneetjes brood en 4 plakken kaas maak je 3 tosti\'s: het brood is op (ondermaat), er blijft 1 plak kaas over (overmaat)')}
+{const voegToe=(sec,titel,fig)=>{const c=(LP[sec]||[]).find(c=>c[0]===titel);if(!c)return;const t=c[1];c[1]=()=>(typeof t==='function'?t():t)+fig()};
+ voegToe('1.2','De mol is een dozijn',figDozijn);voegToe('1.2','Van gram naar mol',figWeeg);voegToe('1.2','Dichtheid',figDicht);
+ voegToe('1.3','Gehaltes',figTaart);voegToe('1.3','Ppm in de klas',figPpm);voegToe('1.3','Molariteit',figMolair);
+ voegToe('1.4','Er gaat niets verloren',figBehoud);voegToe('1.4','Overmaat en ondermaat',(()=>`<p>Vergelijk het met <b>tosti's</b> maken: per tosti 2 sneetjes brood en 1 plak kaas.</p>${figTosti()}`));}
 LP['0'].push(['Fasen',`<p>Achter een formule staat vaak een letter tussen haakjes: de <b>fase</b>.</p><table class="gt"><tr><td>(s)</td><td>vast (solid)</td></tr><tr><td>(l)</td><td>vloeibaar (liquid)</td></tr><tr><td>(g)</td><td>gas</td></tr><tr><td>(aq)</td><td>opgelost in water (aqua)</td></tr></table><p>Overgangen: smelten s→l, stollen l→s, verdampen l→g, condenseren g→l, sublimeren s→g, rijpen g→s.</p>`,['Wat betekent NaCl(aq)?','zout opgelost in water','vast zout|gesmolten zout','aq = aqua = water.']]);
 LP['0b'].push(
  ['Procenten en verhoudingen',`<p>Procent = "per honderd". Deel het deel door het geheel en doe × 100%.</p><div class="ex">15 van de 60 leerlingen = 15 ÷ 60 × 100% = <b>25%</b></div><p>Een <b>verhouding</b> is een recept. 2 eieren op 250 g meel. Voor 750 g meel (3 × zoveel) heb je 3 × 2 = <b>6 eieren</b>. Scheikunde doet precies dit met mol.</p>`,['Een recept: 3 eieren op 200 g meel. Hoeveel eieren voor 600 g meel?','9','6|4','600 is 3 × 200, dus 3 × 3 = 9.']],
