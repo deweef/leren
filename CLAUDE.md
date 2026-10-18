@@ -46,6 +46,11 @@ schermen `show('home'|'play')`, `goHome()`, `ask()`, `practice(sec)` (oefenronde
   `samen` met gewicht 0 (telt niet mee voor het %). Biologie en Frans hebben een eigen Samenvatting
   (`sumView`), ook met een inleiding bovenaan. Leerpad-eindscherm (`lpKlaar`): "Kijk hier nog even naar" toont
   alleen dat ene kaartje (`G.sel===2`) en gaat dan terug naar het eindscherm (✓ bij nagekeken kaartjes).
+- **Uitleg voor beginners**: Marcel leert scheikunde zonder voorkennis. Leerpad 0 (H1) begint daarom met "Wat is een
+  atoom?" en "Atoom, molecuul en stof" (Lego: atoom = steentje, molecuul = bouwwerkje, stof = bak vol dezelfde),
+  leerpad 1.1 heeft "Molecuulmassa: tel de steentjes op". Plaatjes zijn inline SVG met de helpers `zoomFig()`,
+  `legoFig()`, `elementFig()`, `massaFig()`, `steen()`, `h2o()` (scheikunde-h1.html). Stel bij een vraag van Marcel
+  over de stof eerst vast of het al ergens uitgelegd staat; ontbreekt het, stel dan een kaartje voor.
 - Opgeslagen voor de route: `S.tr[gen]` (beste reeks), `S.pr[sec]` (beste oefenronde, fractie), `S.flits`.
 - **Frans versie 5** (`frans-5.html`): kopie van de combi (zelfde opslag `frans-ch1-combi`) met woordjespad en
   blok Spelletjes. Spelletjes openen `frans-spel.html#v5=<spel>&set=<pagina's>`; die gaat daarna terug naar
@@ -66,6 +71,8 @@ schermen `show('home'|'play')`, `goHome()`, `ask()`, `practice(sec)` (oefenronde
   dan verandert de URL). Zet de volledige code dan in de chat.
 
 ## Werkwijze
+- **Werk deze CLAUDE.md bij in dezelfde commit als de wijziging** (nieuw onderdeel, nieuwe afspraak, of een les uit
+  een fout), zodat een nieuwe sessie altijd de laatste stand kent.
 - Wijzigingen direct op `main` (dan staat het binnen een minuut live), maar pas na een test in de browser.
 - Testen: start een `http.server.ThreadingHTTPServer` (met `request_queue_size = 128`) in de map en gebruik
   Playwright met Chromium (`executablePath: '/opt/pw-browsers/chromium-1194/chrome-linux/chrome'`,
@@ -76,3 +83,16 @@ schermen `show('home'|'play')`, `goHome()`, `ask()`, `practice(sec)` (oefenronde
 - Lesstof voor een nieuw vak: Marcel zet foto's of pdf's van het boek in OneDrive onder
   `Documenten/Claude Code/Leren/<vak>/`. Haal ze daar zelf op met de Microsoft 365-connector
   (`sharepoint_folder_search` / `read_resource`) in plaats van om uploads te vragen.
+
+## Valkuilen (uit eerdere fouten)
+- Meerkeuze-opties altijd husselen. `opt4()` zet het goede antwoord vooraan; `ask()` husselt zelf, maar wie opties
+  rechtstreeks met `mcButtons()` toont moet `shuffle()` gebruiken (de Kolommentabel had altijd het goede antwoord
+  bovenaan).
+- Code die midden in het script draait mag nog geen `$`, `S` of andere `const`'s van verderop gebruiken (dan stopt
+  het hele script: "Cannot access '$' before initialization"). Koppel knoppen in `renderHome`/`routeBox`, of zet
+  de code onderaan.
+- Controleer of een klassenaam al bestaat voordat je hem gebruikt (`.drie`, `.kc` en `.bk` waren al bezet in H1).
+  In `engels.html` heeft `.gt` een `min-width:480px`: gebruik voor smalle tabellen een eigen klasse.
+- Tabellen in een smalle kolom: de algemene regel `overflow-wrap:anywhere` breekt woorden middendoor; zet hem lokaal
+  uit, of zet de tabel buiten de lijst op volle breedte.
+- Bekijk nieuwe schermen altijd op telefoonbreedte (390 px), in licht én donker, voordat je ze live zet.
