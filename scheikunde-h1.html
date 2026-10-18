@@ -210,6 +210,11 @@ canvas#conf{position:fixed;inset:0;pointer-events:none;z-index:9}
 .uitleg{background:var(--surface);border:1px solid var(--line);border-left:6px solid var(--pink);border-radius:12px;padding:14px 18px}
 .uitleg h3{font-size:20px;margin:16px 0 6px}.uitleg h3:first-child{margin-top:0}
 .uitleg p,.uitleg li{max-width:72ch}.uitleg ul{padding-left:20px}
+.frm{border-collapse:collapse;width:100%;margin:8px 0;font-size:15px}
+.frm th,.frm td{padding:6px 8px;border-bottom:1px solid var(--line);text-align:left;overflow-wrap:normal;word-break:normal}
+.frm th{font-size:12.5px;color:var(--muted);font-weight:700}
+.frm td:first-child{font-weight:800;color:var(--accent);width:1%}
+.frm td:nth-child(2){white-space:nowrap}
 .rule{background:var(--pink-soft);border-radius:10px;padding:10px 14px;margin:8px 0;font-weight:500}
 .ex{background:var(--bg);border-left:4px solid var(--green);border-radius:6px;padding:9px 12px}
 .gt{border-collapse:collapse;font-size:15px;margin:6px 0}.gt th,.gt td{border:1px solid var(--line);padding:6px 9px;text-align:left;vertical-align:top}.gt th{background:var(--chip)}
@@ -1387,6 +1392,16 @@ function figKetting(){let ket='';for(let i=0;i<9;i++){const a=Math.PI*(i/8);ket+
   <li><b>Gram → mol:</b> n = m ÷ M = 20 ÷ 197 = <b>0,102 mol</b>.</li><li><b>Mol → atomen:</b> N = n × N<sub>A</sub> = 0,102 × 6,02·10<sup>23</sup> = <b>6,1·10<sup>22</sup></b> goudatomen.</li></ol>
   <p>Andersom kan ook: hoeveel weegt 2 mol goud? m = n × M = 2 × 197 = <b>394 g</b>.</p>`),
   ['Een gouden ring weegt 5,0 g (M = 197 g/mol). Hoeveel mol goud is dat?','0,025 mol','985 mol|39 mol','n = m ÷ M = 5,0 ÷ 197 = 0,025 mol. Dat zijn 0,025 × 6,02·10<sup>23</sup> = 1,5·10<sup>22</sup> goudatomen.']]);}
+/* leerpad 1.2 eindigt met de drie formules op een rij */
+LP['1.2'].push(['De drie formules op een rij',()=>`<p>Dit zijn de drie formules van 1.2. Die moet je kennen (ze staan niet in Binas).</p>
+  <table class="frm"><tr><th></th><th>Formule</th><th>Van … naar …</th></tr>
+  <tr><td>1</td><td><b>N = n × N<sub>A</sub></b></td><td>mol ⇄ aantal deeltjes</td></tr>
+  <tr><td>2</td><td><b>m = n × M</b></td><td>mol ⇄ gram</td></tr>
+  <tr><td>3</td><td><b>ρ = m ÷ V</b></td><td>volume ⇄ gram</td></tr></table>
+  <div class="rule"><b>Ze haken in elkaar.</b> Formule 1 en 2 delen de <b>n</b>, formule 2 en 3 delen de <b>m</b>. Zo schakel je ze aan elkaar: <b>V → m → n → N</b>. Dat is precies het rekenschema.</div>
+  <p><b>Ombouwen</b> (zie 0b): n = N ÷ N<sub>A</sub> · n = m ÷ M · m = ρ × V en V = m ÷ ρ.</p>
+  <p>Instampen? Doe de <b>Formuleblitz</b>.</p>${leg(['N','n','NA','m','M','rho','V'])}`,
+  ['Je hebt 25 mL water en wilt weten hoeveel gram het is. Welke formule heb je nodig?','ρ = m ÷ V (formule 3)','m = n × M (formule 2)|N = n × N<sub>A</sub> (formule 1)','Van volume naar gram gaat met de dichtheid: m = ρ × V.']]);
 {const legBij=(sec,titel,keys,noot)=>{const c=(LP[sec]||[]).find(c=>c[0]===titel);if(!c)return;const t=c[1];c[1]=()=>(typeof t==='function'?t():t)+leg(keys,noot)};
  legBij('1.2','De mol: een telwoord, net als een dozijn',['N','n','NA']);legBij('1.2','Het mooie van de mol',['m','n','M']);legBij('1.2','Van gram naar mol',['m','n','M','N','NA']);
  legBij('1.2','Dichtheid',['rho','m','V']);
@@ -1511,7 +1526,7 @@ function pracNext(){
 }
 const LEES={element:['Wat is een atoom?','Atoom, molecuul en stof','Element of verbinding'],kloppend:['Kloppend maken'],notatie:['Grote en kleine getallen','Machten van 10'],eenheden:['Eenheden','De eenhedentrap'],
  atoom:['Het atoom','Wie weegt wat?'],nummers:['Atoomnummer','Massagetal en neutronen'],schillen:['Schillen'],isotoop:['Isotopen'],atoommassa:['Atoommassa','Molecuulmassa: tel de steentjes op'],ps:['Het periodiek systeem'],edelgas:['Edelgassen en ionen'],
- mol:['De mol: een telwoord, net als een dozijn','Voorbeeld: goud tellen','Het mooie van de mol'],molmassa:['Van gram naar mol','Voorbeeld: de gouden ketting'],dichtheid:['Dichtheid'],schema:['Het rekenschema'],sig:['Significante cijfers tellen'],afronden:['Afronden'],gehalte:['Gehaltes','Ppm in de klas'],
+ mol:['De mol: een telwoord, net als een dozijn','Voorbeeld: goud tellen','Het mooie van de mol'],molmassa:['Van gram naar mol','Voorbeeld: de gouden ketting'],dichtheid:['Dichtheid'],schema:['Het rekenschema','De drie formules op een rij'],sig:['Significante cijfers tellen'],afronden:['Afronden'],gehalte:['Gehaltes','Ppm in de klas'],
  molariteit:['Molariteit'],behoud:['Er gaat niets verloren'],molverh:['Coëfficiënten = mol'],stappen:['Het stappenplan','Voorbeeld uitgewerkt'],overmaat:['Overmaat en ondermaat'],
  machten:['Machten van 10','Min-machten','Komma schuiven'],trap:['Trucje 2: de trap van 10','Treden tellen']};
 /* nalezen: per foute vraag het leerpad-kaartje met die stof (via th of de soort som), anders de theorie zelf */
