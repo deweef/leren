@@ -1164,7 +1164,7 @@ function kolDraw(msg){const K=G.k,u=K.T.u;const steps=['Tik de kolom aan waar he
  const z=$('#kz');if(z)z.onclick=()=>{kolZeros(K.cells,K.ti);K.step=3;kolDraw();kolAsk()};
  if(K.step===3)kolAsk()}
 function kolAsk(){const K=G.k,u=K.T.u;const ans=kolRead(K.cells,K.ti);const x=parseFloat(K.v.replace(',','.'))*10**(K.ti-K.gi);
- const opts=opt4(ans,[numStr(x*10),numStr(x/10),numStr(x*100),numStr(x/100)].filter(s=>s!==ans));
+ const opts=shuffle(opt4(ans,[numStr(x*10),numStr(x/10),numStr(x*100),numStr(x/100)].filter(s=>s!==ans)));
  $('#kmc').innerHTML=mcButtons(opts.map(o=>o+' '+u[K.ti]));
  P.querySelectorAll('#kmc .opt').forEach((b,i)=>b.onclick=()=>{const ok=opts[i]===ans;markOpts(opts.indexOf(ans),i);if(!ok)K.fails++;G.r++;if(K.fails===0)G.ok++;
   const st=Math.abs(K.ti-K.gi);
