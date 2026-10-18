@@ -891,7 +891,7 @@ function lpDraw(){const {sec,cards}=G;const i=G.i;const c=cards[i];const s=SECS.
  <div class="slide lpcard">${head('Leerpad · '+(sec==='0'?'basis':sec),esc(s?s.t:''))}<div class="slide-body">
   <h2 class="lpt">${c[0]}</h2><div class="lpb">${body}</div>
   ${qz?`<div class="lpq"><div class="q">Even checken</div><div class="prompt" style="font-size:19px">${qz[0]}</div><div id="lpo"></div><div id="fbox"></div></div>`:''}
-  <div class="lpnav"><button class="btn ghost" id="lpprev" ${i===0?'disabled':''}>← Terug</button><button class="btn primary" id="lpnext" ${qz&&!done?'disabled':''}>${i===cards.length-1?'Afronden ✓':'Verder →'}</button></div>
+  <div class="lpnav"><button class="btn ghost" id="lpprev" ${i===0?'disabled':''}>← Terug</button><button class="btn primary" id="lpnext" ${qz&&!done?'disabled':''}>${G.sel===2?'Terug naar het overzicht':i===cards.length-1?'Afronden ✓':'Verder →'}</button></div>
  </div></div>`;
  $('#quit').onclick=()=>{save();goHome()};$('#lpprev').onclick=()=>{G.i--;lpDraw()};$('#lpnext').onclick=lpNext;
  if(qz){const opts=shuffle([qz[1],...qz[2].split('|')]);$('#lpo').innerHTML=mcButtons(opts);
@@ -900,16 +900,19 @@ function lpDraw(){const {sec,cards}=G;const i=G.i;const c=cards[i];const s=SECS.
    $('#fbox').innerHTML=`<div class="fb ${ok?'good':'bad'}"><div class="t">${ok?pick(['Goed!','Klopt!','Precies!']):'Niet helemaal.'}</div><div class="tip">${qz[3]}</div></div>`;const n=$('#lpnext');n.disabled=false;n.focus()})}
  if(!G.sel)S.lp[sec]=i;save();window.scrollTo(0,0)}
 function lpNext(){const {cards}=G;if(G.i<cards.length-1){G.i++;lpDraw();return}
+ if(G.sel===2)return G.terug();
  if(G.sel){const sec=G.sec;P.innerHTML=`<div class="slide">${head('Nalezen','Klaar')}<div class="slide-body"><div class="q">Goed gelezen</div><div>Nu het weer vers is: probeer de oefenronde nog een keer.</div><div class="acts"><button class="btn primary" id="lpprac">Nog een oefenronde</button><button class="btn ghost" id="lphome">Terug</button></div></div></div>`;
   $('#lpprac').onclick=()=>practice(sec);$('#lphome').onclick=goHome;$('#lpprac').focus();return}
- lpState();S.lpd[G.sec]=1;S.lp[G.sec]=0;markDay();save();confetti();const sec=G.sec;const nxt=SECS[SECS.findIndex(x=>x.id===sec)+1];
- const redo=[...new Set(G.redo)];
- P.innerHTML=`<div class="slide">${head('Leerpad '+(sec==='0'?'basis':sec),'Klaar')}<div class="slide-body"><div class="q">Controlevragen in één keer goed</div><div class="big">${G.ok}<span style="font-size:.45em;color:var(--muted)"> / ${G.asked}</span></div>
-  ${redo.length?`<div class="fb bad"><div class="t">Kijk hier nog even naar</div><div class="tip">${redo.map(i=>`<button class="btn small ghost" data-go="${i}" style="margin:3px">${cards[i][0]}</button>`).join('')}</div></div>`:'<div>Alles in één keer goed. Mooi!</div>'}
+ lpState();S.lpd[G.sec]=1;S.lp[G.sec]=0;markDay();save();confetti();lpKlaar(G.sec,cards,G.ok,G.asked,[...new Set(G.redo)],new Set())}
+/* eindscherm van een leerpad; "Kijk hier nog even naar" opent alleen dat ene kaartje en komt daarna hier terug */
+function lpKlaar(sec,cards,ok,asked,redo,gezien){const nxt=SECS[SECS.findIndex(x=>x.id===sec)+1];show('play');
+ P.innerHTML=`<div class="slide">${head('Leerpad '+(sec==='0'?'basis':sec),'Klaar')}<div class="slide-body"><div class="q">Controlevragen in één keer goed</div><div class="big">${ok}<span style="font-size:.45em;color:var(--muted)"> / ${asked}</span></div>
+  ${redo.length?`<div class="fb bad"><div class="t">Kijk hier nog even naar</div><div class="tip">${redo.map(i=>`<button class="btn small ghost" data-go="${i}" style="margin:3px">${gezien.has(i)?'✓ ':''}${cards[i][0]}</button>`).join('')}</div></div>`:'<div>Alles in één keer goed. Mooi!</div>'}
   <div class="nextbox"><h3>Wat nu?</h3>${RT.on?'<div class="choice"><button class="btn primary" id="lprt">Verder in de leerroute →</button><span>Daar staat de volgende stap al klaar.</span></div>':''}<div class="choice"><button class="btn ${RT.on?'ghost':'primary'}" id="lpprac">Oefenronde ${sec==='0'?'basis':sec}</button><span>Test of het blijft hangen. Fouten komen terug met uitleg.</span></div>
   ${nxt&&LP[nxt.id]?`<div class="choice"><button class="btn ghost" id="lpnxt">Leerpad ${nxt.id}: ${esc(nxt.t)} →</button><span>Of leer eerst door.</span></div>`:''}
   <div class="choice"><button class="btn ghost" id="lphome">Naar start</button></div></div></div></div>`;
- P.querySelectorAll('[data-go]').forEach(b=>b.onclick=()=>lpStart(sec,+b.dataset.go));$('#lpprac').onclick=()=>practice(sec);const n=$('#lpnxt');if(n)n.onclick=()=>lpStart(nxt.id);$('#lphome').onclick=()=>{RT.on=false;goHome()};const rt=$('#lprt');if(rt){rt.onclick=goHome;rt.focus()}else $('#lpprac').focus()}
+ P.querySelectorAll('[data-go]').forEach(b=>b.onclick=()=>{const i=+b.dataset.go;G={m:'lp',sec,i:0,cards:[cards[i]],redo:[],ok:0,asked:0,answered:{},sel:2,terug:()=>{gezien.add(i);lpKlaar(sec,cards,ok,asked,redo,gezien)}};lpDraw()});
+ $('#lpprac').onclick=()=>practice(sec);const n=$('#lpnxt');if(n)n.onclick=()=>lpStart(nxt.id);$('#lphome').onclick=()=>{RT.on=false;goHome()};const rt=$('#lprt');if(rt){rt.onclick=goHome;rt.focus()}else $('#lpprac').focus()}
 function lpBox(){const el=$('#lpbox');if(!el)return;lpState();const todo=SECS.find(s=>LP[s.id]&&!S.lpd[s.id]);const nDone=SECS.filter(s=>S.lpd[s.id]).length;
  el.innerHTML=`<button class="mode main lpmode" id="lpgo"><span class="lab">Leren</span><span class="tag" style="text-transform:none">${nDone} van ${SECS.length} paragrafen geleerd</span><h3>${todo?(S.lp[todo.id]?'Ga verder: ':'Begin: ')+esc(todo.t):'Alles doorlopen. Herhalen?'}</h3><p>Geen boek nodig: de theorie in korte kaartjes, één idee per kaart, met af en toe een controlevraag. Ongeveer 10 minuten per paragraaf.</p></button>`;
  $('#lpgo').onclick=()=>lpStart((todo||SECS[0]).id)}
