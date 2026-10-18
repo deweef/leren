@@ -6,7 +6,10 @@ Doel: leren makkelijker en leuker maken. Alles in het Nederlands, kort en vriend
 bouwt het samen met Claude; hij wil ook zelf kunnen meeleren (scheikunde: hij begon met 0 voorkennis).
 
 - `index.html`: wachtwoord (SHA-256 in `H`, alleen een drempel: de repo is openbaar), daarna "Wie ben jij?"
-  (`leren-wie` = `ben`, `dana` of `alle` = Ouder) en per persoon kaarten naar de vakken. Elke vakpagina stuurt
+  (`leren-wie` = `ben`, `dana`, `marcel`, `anja` of `gast`) en per persoon kaarten naar de vakken. Marcel en Anja zien
+  alles en zitten achter een pincode (SHA-256 in `PIN`, drempel). "Ik ben een vriend(in)" = gast: naam + klas in
+  `leren-gast` ({naam, klas: 'havo4' = vakken van Ben, 'vwo3' = vakken van Dana}). Het oude `alle` (Ouder) wordt
+  overal één keer `marcel`, met de opslag `@alle` → `@marcel` (`wie()` in index.html, `lerenWie()` in leerlog.js). Elke vakpagina stuurt
   zonder `leren-ok` terug naar `index.html`.
 - Elk vak is één los HTML-bestand (geen build, geen CDN behalve Google Fonts), met voortgang in localStorage:
   `engels.html` (Ben, `unit3-trainer-v1`), `biologie.html` (Ben, `bio-thema1-v1`), `wiskunde.html` (Ben, H2
@@ -14,11 +17,11 @@ bouwt het samen met Claude; hij wil ook zelf kunnen meeleren (scheikunde: hij be
   bindingen, `chem-h2-v1`), Frans voor Dana: `frans.html`, `frans-copilot.html`, `frans-combi.html`,
   `frans-spel.html` (spelletjes), `frans-5.html` (versie 5, zie onder).
 - **Voortgang per persoon**: `leerlog.js` (eerste script in de head van elke vakpagina) zet stil `@<wie>` achter elke
-  localStorage-sleutel behalve `leren-*` (`chem-h1-v1@ben`, `@dana`, `@alle`), zodat iedereen op hetzelfde apparaat
+  localStorage-sleutel behalve `leren-*` (`chem-h1-v1@ben`, `@dana`, `@marcel`, `@anja`, `@gast-<naam>`), zodat iedereen op hetzelfde apparaat
   eigen voortgang heeft. Pagina's gebruiken gewoon hun KEY (alleen `getItem`/`setItem`/`removeItem`; ga niet zelf door
-  `localStorage.key(i)` lopen). Oude sleutels zonder `@` (van vóór de splitsing) krijgt elke persoon één keer als
-  beginstand; wissen kan per persoon via "Zo pak je het aan" → Voortgang wissen.
-- **Synchroniseren tussen apparaten** (ook in `leerlog.js`): elke wijziging krijgt een tijdstempel (`leren-tijd@<wie>`,
+  `localStorage.key(i)` lopen). Oude sleutels zonder `@` (van vóór de splitsing) krijgen Ben, Dana en Marcel één keer als
+  beginstand (Anja en gasten beginnen leeg); wissen kan per persoon via "Zo pak je het aan" → Voortgang wissen.
+- **Synchroniseren tussen apparaten** (ook in `leerlog.js`; niet voor gasten, en gasten komen ook niet in het logboek): elke wijziging krijgt een tijdstempel (`leren-tijd@<wie>`,
   alleen als de waarde echt verandert) en gaat 15 s later (en bij weggaan) naar het Apps Script (`actie=bewaar`, tabblad
   'Leerhoek opslag'). Bij openen haalt de pagina `?actie=stand&naam=..` op (pagina tot max. 3 s half doorzichtig en niet
   aan te raken, `html.leren-laden`), neemt nieuwere standen over (vergelijk met de tijd van vóór het openen, `tijd0`) en

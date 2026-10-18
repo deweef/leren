@@ -1,40 +1,49 @@
 /* Leerlog: houdt per bezoek bij wat Ben of Dana deed (vak, actieve minuten, wat er bijkwam) en stuurt dat
    stil naar het tabblad 'Leerhoek' van de scorebord-spreadsheet (Apps Script uit deweef/spelletjes,
    extra/scorebord.gs). Dat tabblad wordt nooit teruggegeven aan de site. Geen meldingen, niets op het scherm.
-   Ouder ("alles") wordt ook bijgehouden, als 'Ouder'. Werkt voor elke pagina die dit script laadt: het kijkt mee met wat de pagina zelf al in localStorage zet. */
+   Marcel en Anja worden ook bijgehouden; gasten (vrienden) niet. Werkt voor elke pagina die dit script laadt: het kijkt mee met wat de pagina zelf al in localStorage zet. */
 /* Voortgang per persoon: elke sleutel in localStorage (behalve leren-*) krijgt stil '@<wie>' erachter, zodat Ben, Dana
    en Ouder op hetzelfde apparaat elk hun eigen voortgang hebben. De pagina's merken daar niets van (zelfde KEY).
    Oude voortgang van vóór deze splitsing (sleutel zonder '@') krijgt iedereen één keer als beginstand mee.
    Synchroniseren: elke stand gaat met een tijdstempel (leren-tijd@<wie>) naar het tabblad 'Leerhoek opslag' van het
    Apps Script (actie=bewaar); bij openen haalt de pagina de stand van die persoon op (actie=stand) en neemt nieuwere
    standen over (daarna één keer herladen). Tot het antwoord er is (max 3 s) is de pagina even niet aan te raken. */
+/* 'Ouder · alles' heet nu Marcel: zet een oude keuze en opslag ('@alle') één keer over. Ook in index.html. */
+function lerenWie(){let w=null;try{w=localStorage.getItem('leren-wie');if(w==='alle'){const ls=localStorage,ks=[];for(let i=0;i<ls.length;i++)ks.push(ls.key(i));
+ ks.forEach(k=>{if(k&&k.endsWith('@alle')){const n=k.slice(0,-5)+'@marcel';if(ls.getItem(n)===null)ls.setItem(n,ls.getItem(k))}});
+ ls.setItem('leren-wie','marcel');w='marcel'}}catch(e){}return w}
 (function(){
 const URL='https://script.google.com/macros/s/AKfycbzo6b4TQRiL2j1ZhEtBa6xpbNcBxmL7IIIB6e1FdYWnswDIxJ1MphWAlAjm12aK_J9U/exec';
-let wie=null;try{wie=localStorage.getItem('leren-wie')}catch(e){}
-if(!/^(ben|dana|alle)$/.test(wie||''))return;
-const naam={ben:'ben',dana:'dana',alle:'ouder'}[wie];
+// Wie: ben, dana, marcel, anja (Marcel en Anja zien alles), of gast = een vriend(in) (leren-gast = {naam, klas}).
+// Gasten krijgen eigen opslag ('@gast-<naam>'), maar gaan niet in het logboek en niet in de synchronisatie.
+let wie=lerenWie();
+let opslag=wie,naam=wie;
+if(wie==='gast'){let g={};try{g=JSON.parse(localStorage.getItem('leren-gast')||'{}')||{}}catch(e){}
+ opslag='gast-'+(String(g.naam||'').toLowerCase().replace(/[^a-z0-9]+/g,'').slice(0,20)||'x');naam=null}
+else if(!/^(ben|dana|marcel|anja)$/.test(wie||''))return;
 try{const P=Storage.prototype,get=P.getItem,set=P.setItem,del=P.removeItem,key=P.key;
  const eigen=k=>typeof k==='string'&&!/^leren-/.test(k);
  const ls=window.localStorage,raw=[];for(let i=0;i<ls.length;i++)raw.push(key.call(ls,i));
- raw.forEach(k=>{if(eigen(k)&&!k.includes('@')&&get.call(ls,k+'@'+wie)===null)set.call(ls,k+'@'+wie,get.call(ls,k))});
- const TK='leren-tijd@'+wie;let tijd={};try{tijd=JSON.parse(get.call(ls,TK)||'{}')||{}}catch(e){}
+ if(/^(ben|dana|marcel)$/.test(opslag))raw.forEach(k=>{if(eigen(k)&&!k.includes('@')&&get.call(ls,k+'@'+opslag)===null)set.call(ls,k+'@'+opslag,get.call(ls,k))});
+ const TK='leren-tijd@'+opslag;let tijd={};try{tijd=JSON.parse(get.call(ls,TK)||'{}')||{}}catch(e){}
  const tijd0=Object.assign({},tijd),vuil=new Set();let wacht=null; // tijd0: zoals bij openen (de pagina kan meteen al opslaan)
  const zetTijd=(k,t)=>{tijd[k]=t;try{set.call(ls,TK,JSON.stringify(tijd))}catch(e){}};
- P.getItem=function(k){return get.call(this,this===ls&&eigen(k)?k+'@'+wie:k)};
- P.setItem=function(k,v){if(this!==ls||!eigen(k))return set.call(this,k,v);const oud=get.call(this,k+'@'+wie),r=set.call(this,k+'@'+wie,v);if(oud!==String(v)){zetTijd(k,Date.now());vuil.add(k);plan()}return r};
- P.removeItem=function(k){return del.call(this,this===ls&&eigen(k)?k+'@'+wie:k)};
- const mijn=()=>{const r=[];for(let i=0;i<ls.length;i++){const k=key.call(ls,i);if(k&&eigen(k)&&k.endsWith('@'+wie))r.push(k.slice(0,-1-wie.length))}return r};
+ P.getItem=function(k){return get.call(this,this===ls&&eigen(k)?k+'@'+opslag:k)};
+ P.setItem=function(k,v){if(this!==ls||!eigen(k))return set.call(this,k,v);const oud=get.call(this,k+'@'+opslag),r=set.call(this,k+'@'+opslag,v);if(oud!==String(v)){zetTijd(k,Date.now());vuil.add(k);plan()}return r};
+ P.removeItem=function(k){return del.call(this,this===ls&&eigen(k)?k+'@'+opslag:k)};
+ const mijn=()=>{const r=[];for(let i=0;i<ls.length;i++){const k=key.call(ls,i);if(k&&eigen(k)&&k.endsWith('@'+opslag))r.push(k.slice(0,-1-opslag.length))}return r};
  window.lerenSleutels=mijn;
 
+ if(!naam)return; // gast: alleen eigen opslag
  /* ---- versturen: 15 s na de laatste wijziging, en bij weggaan ---- */
  const vak=(location.pathname.split('/').pop()||'').replace(/\.html$/,'');
  if(!vak||vak==='index')return;
- const body=k=>new URLSearchParams({actie:'bewaar',naam,sleutel:k,tijd:String(tijd[k]||Date.now()),data:get.call(ls,k+'@'+wie)||''});
+ const body=k=>new URLSearchParams({actie:'bewaar',naam,sleutel:k,tijd:String(tijd[k]||Date.now()),data:get.call(ls,k+'@'+opslag)||''});
  function stuur(viaBaken){if(navigator.onLine===false)return;vuil.forEach(k=>{const b=body(k);let ok=false;
    if(viaBaken){try{ok=navigator.sendBeacon(URL,b)}catch(e){}}
    if(!ok){try{fetch(URL,{method:'POST',body:b,mode:'no-cors',keepalive:b.toString().length<60000}).catch(()=>{})}catch(e){}}});
   vuil.clear()}
- function plan(){clearTimeout(wacht);wacht=setTimeout(()=>stuur(false),15000)}
+ function plan(){if(!naam)return;clearTimeout(wacht);wacht=setTimeout(()=>stuur(false),15000)}
  document.addEventListener('visibilitychange',()=>{if(document.visibilityState==='hidden'){clearTimeout(wacht);stuur(true)}});
  addEventListener('pagehide',()=>{clearTimeout(wacht);stuur(true)});
 
@@ -49,10 +58,10 @@ try{const P=Storage.prototype,get=P.getItem,set=P.setItem,del=P.removeItem,key=P
   if(klaar||!o||typeof o.stand!=='object')return af();
   let nieuw=false;const lokaal=mijn();
   for(const [k,v] of Object.entries(o.stand)){if(!eigen(k)||!v||typeof v.d!=='string')continue;
-   const hier=get.call(ls,k+'@'+wie),th=tijd0[k];
+   const hier=get.call(ls,k+'@'+opslag),th=tijd0[k];
    // oude stand zonder tijdstempel: de grootste (= meeste voortgang) wint
    const neem=th?Number(v.t)>th:(hier===null||v.d.length>hier.length);
-   if(neem&&v.d!==hier){set.call(ls,k+'@'+wie,v.d);zetTijd(k,Number(v.t));nieuw=true}
+   if(neem&&v.d!==hier){set.call(ls,k+'@'+opslag,v.d);zetTijd(k,Number(v.t));nieuw=true}
    else if(!th&&hier!==null){zetTijd(k,Date.now());vuil.add(k)}}
   // standen die online nog niet bestaan meteen versturen
   lokaal.forEach(k=>{if(!o.stand[k]){if(!tijd[k])zetTijd(k,Date.now());vuil.add(k)}});
@@ -65,8 +74,8 @@ try{const P=Storage.prototype,get=P.getItem,set=P.setItem,del=P.removeItem,key=P
 (function(){
 const URL='https://script.google.com/macros/s/AKfycbzo6b4TQRiL2j1ZhEtBa6xpbNcBxmL7IIIB6e1FdYWnswDIxJ1MphWAlAjm12aK_J9U/exec';
 const QK='leren-logq';
-let wie=null;try{wie=localStorage.getItem('leren-wie')}catch(e){}
-const naam={ben:'ben',dana:'dana',alle:'ouder'}[wie];if(!naam)return; // nog niet gekozen: niets bijhouden
+const wie=lerenWie();
+const naam=/^(ben|dana|marcel|anja)$/.test(wie||'')?wie:null;if(!naam)return; // nog niet gekozen of gast: niets bijhouden
 const vak=(location.pathname.split('/').pop()||'index').replace(/\.html$/,'')||'index';
 if(vak==='index')return;
 

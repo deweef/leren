@@ -27,12 +27,23 @@ a.card{display:flex;gap:14px;align-items:center;text-decoration:none;color:inher
 [hidden]{display:none!important}
 .whos{display:grid;grid-template-columns:repeat(auto-fit,minmax(140px,1fr));gap:12px;max-width:520px}
 .whos button{font:700 24px Fredoka,system-ui,sans-serif;padding:22px 12px;border-radius:16px;border:2px solid var(--ink);background:var(--surface);color:var(--ink);cursor:pointer}
-.whos button.ouder{font-size:17px;color:var(--muted);border-color:var(--line)}
+.whos button.ouder{font-size:18px;color:var(--muted);border-color:var(--line)}
+.whos button.gast{grid-column:1/-1;font-size:18px;border-style:dashed;border-color:var(--muted);color:var(--muted)}
+.vak{background:var(--surface);border:2px solid var(--ink);border-radius:16px;padding:18px;display:grid;gap:10px;max-width:420px;margin-top:6px}
+.vak input{font:inherit;font-size:18px;padding:10px 12px;border-radius:10px;border:2px solid var(--line);background:var(--bg);color:var(--ink)}
+.vak .rijk{display:flex;gap:10px;flex-wrap:wrap}
+.vak button{font:700 16px system-ui;padding:11px 14px;border-radius:10px;border:2px solid var(--ink);background:var(--ink);color:var(--bg);cursor:pointer}
+.vak button.licht{background:none;color:var(--ink)}
+.vak button.licht[aria-pressed="true"]{background:var(--ink);color:var(--bg)}
+.vak .klein{color:var(--muted);font-size:14px;margin:0}
 .foot{display:flex;gap:18px;flex-wrap:wrap}
 </style></head><body><div class="wrap">
 <h1>Leerhoek</h1><p class="sub">Oefenen voor de toetsen. Je voortgang wordt bewaard op je eigen telefoon of laptop.</p>
 <form id="gate" hidden><label for="pw"><b>Wachtwoord</b></label><input id="pw" type="password" autocomplete="current-password"><button type="submit">Naar binnen</button><div class="err" id="err"></div></form>
-<div id="who" hidden><h2>Wie ben jij?</h2><div class="whos"><button data-w="ben">Ben</button><button data-w="dana">Dana</button><button data-w="alle" class="ouder">Ouder · alles</button></div><p class="sub" style="margin-top:12px">Dit onthoudt de telefoon of laptop. Je kunt onderaan altijd wisselen.</p></div>
+<div id="who" hidden><h2>Wie ben jij?</h2><div class="whos" id="whos"><button data-w="ben">Ben</button><button data-w="dana">Dana</button><button data-w="marcel" class="ouder">🔒 Marcel</button><button data-w="anja" class="ouder">🔒 Anja</button><button id="gastknop" class="gast">Ik ben een vriend(in)</button></div>
+<form class="vak" id="pinform" hidden><label for="pin"><b id="pintitel">Pincode</b></label><input id="pin" type="password" inputmode="numeric" autocomplete="off"><div class="rijk"><button type="submit">Verder</button><button type="button" class="licht" data-terug>Terug</button></div><div class="err" id="pinerr"></div></form>
+<form class="vak" id="gastform" hidden><label for="gnaam"><b>Hoe heet je?</b></label><input id="gnaam" maxlength="20" autocomplete="given-name"><b>In welke klas zit je?</b><div class="rijk"><button type="button" class="licht" data-klas="havo4">4 havo</button><button type="button" class="licht" data-klas="vwo3">3 vwo</button></div><p class="klein">Je voortgang wordt alleen op je eigen telefoon of laptop bewaard.</p><div class="rijk"><button type="submit">Starten</button><button type="button" class="licht" data-terug>Terug</button></div><div class="err" id="gasterr"></div></form>
+<p class="sub" style="margin-top:12px">Dit onthoudt de telefoon of laptop. Je kunt onderaan altijd wisselen.</p></div>
 <div id="menu" hidden>
 <section data-who="ben"><h2>Ben</h2><div class="grid">
 <a class="card" style="--c:var(--en)" href="engels.html"><span class="ic">EN</span><div><b>Engels · Unit 2 &amp; 3</b><span>Woordjes, grammatica, Blitz, Stroomdraad, Vliegroute, Schiettent</span></div></a>
@@ -54,14 +65,36 @@ a.card{display:flex;gap:14px;align-items:center;text-decoration:none;color:inher
 const H='53a39a231246354922d1b5f7242c1639ebdc75da84bde2e766eed704f5a89cf8';
 async function sha(s){const b=await crypto.subtle.digest('SHA-256',new TextEncoder().encode(s));return [...new Uint8Array(b)].map(x=>x.toString(16).padStart(2,'0')).join('')}
 function ok(){try{return localStorage.getItem('leren-ok')===H}catch(e){return false}}
-function wie(){try{return localStorage.getItem('leren-wie')}catch(e){return null}}
-function show(){const o=ok(),w=wie();document.getElementById('gate').hidden=o;document.getElementById('who').hidden=!o||!!w;document.getElementById('menu').hidden=!o||!w;
- document.querySelectorAll('[data-who]').forEach(x=>x.hidden=!(w==='alle'||x.dataset.who===w));
- document.querySelectorAll('[data-who] h2').forEach(h=>h.hidden=w!=='alle');
- const t=document.querySelector('.sub');if(o&&w&&w!=='alle')t.textContent='Hoi '+(w==='ben'?'Ben':'Dana')+'! Kies een vak. Je voortgang wordt bewaard op dit apparaat.';
- if(!o)document.getElementById('pw').focus()}
-document.querySelectorAll('[data-w]').forEach(b=>b.onclick=()=>{try{localStorage.setItem('leren-wie',b.dataset.w)}catch(e){}show()});
-document.getElementById('wissel').onclick=()=>{try{localStorage.removeItem('leren-wie')}catch(e){}show()};
+const PIN='c1d584fb558cee49d5c132cfe421cfbc222e96a7b889ec9d0467f001f98c97a9'; // pincode voor Marcel en Anja (alleen een drempel)
+// 'Ouder · alles' heet nu Marcel: zelfde overstap als in leerlog.js
+function wie(){let w=null;try{w=localStorage.getItem('leren-wie');if(w==='alle'){const ls=localStorage,ks=[];for(let i=0;i<ls.length;i++)ks.push(ls.key(i));
+ ks.forEach(k=>{if(k&&k.endsWith('@alle')){const n=k.slice(0,-5)+'@marcel';if(ls.getItem(n)===null)ls.setItem(n,ls.getItem(k))}});
+ ls.setItem('leren-wie','marcel');w='marcel'}}catch(e){}return w}
+function gast(){try{return JSON.parse(localStorage.getItem('leren-gast')||'null')}catch(e){return null}}
+const NAAM={ben:'Ben',dana:'Dana',marcel:'Marcel',anja:'Anja'},ALLES=w=>w==='marcel'||w==='anja';
+let klas=null,pinVoor=null;
+const $=id=>document.getElementById(id);
+function kies(w){try{localStorage.setItem('leren-wie',w)}catch(e){}scherm(null);show()}
+function scherm(f){$('whos').hidden=!!f;$('pinform').hidden=f!=='pin';$('gastform').hidden=f!=='gast'}
+function show(){const o=ok(),w=wie(),g=gast();$('gate').hidden=o;$('who').hidden=!o||!!w;$('menu').hidden=!o||!w;
+ // gast: 4 havo = de vakken van Ben, 3 vwo = die van Dana
+ const deel=w==='gast'?(g&&g.klas==='vwo3'?'dana':'ben'):w;
+ document.querySelectorAll('[data-who]').forEach(x=>x.hidden=!(ALLES(w)||x.dataset.who===deel));
+ document.querySelectorAll('[data-who] h2').forEach(h=>h.hidden=!ALLES(w));
+ const t=document.querySelector('.sub'),n=w==='gast'?(g&&g.naam)||'':NAAM[w];
+ t.dataset.std=t.dataset.std||t.textContent;t.textContent=o&&w?'Hoi '+n+'! Kies een vak. Je voortgang wordt bewaard op dit apparaat.':t.dataset.std;
+ if(!o)$('pw').focus()}
+document.querySelectorAll('[data-w]').forEach(b=>b.onclick=()=>{const w=b.dataset.w;if(!ALLES(w))return kies(w);
+ pinVoor=w;$('pintitel').textContent='Pincode voor '+NAAM[w];$('pin').value='';$('pinerr').textContent='';scherm('pin');$('pin').focus()});
+$('pinform').onsubmit=async e=>{e.preventDefault();if(await sha($('pin').value.trim())===PIN)kies(pinVoor);else $('pinerr').textContent='Die pincode klopt niet.'};
+$('gastknop').onclick=()=>{const g=gast();$('gnaam').value=(g&&g.naam)||'';klas=(g&&g.klas)||null;markKlas();$('gasterr').textContent='';scherm('gast');$('gnaam').focus()};
+function markKlas(){document.querySelectorAll('[data-klas]').forEach(b=>b.setAttribute('aria-pressed',b.dataset.klas===klas))}
+document.querySelectorAll('[data-klas]').forEach(b=>b.onclick=()=>{klas=b.dataset.klas;markKlas()});
+$('gastform').onsubmit=e=>{e.preventDefault();const n=$('gnaam').value.trim().replace(/[<>]/g,'').slice(0,20);
+ if(!n)return $('gasterr').textContent='Vul je naam in.';if(!klas)return $('gasterr').textContent='Kies je klas.';
+ try{localStorage.setItem('leren-gast',JSON.stringify({naam:n,klas}))}catch(e){}kies('gast')};
+document.querySelectorAll('[data-terug]').forEach(b=>b.onclick=()=>scherm(null));
+$('wissel').onclick=()=>{try{localStorage.removeItem('leren-wie')}catch(e){}scherm(null);show()};
 document.getElementById('gate').onsubmit=async e=>{e.preventDefault();const h=await sha(document.getElementById('pw').value.trim());if(h===H){try{localStorage.setItem('leren-ok',H)}catch(e){}show()}else document.getElementById('err').textContent='Dat wachtwoord klopt niet.'};
 document.getElementById('out').onclick=()=>{try{localStorage.removeItem('leren-ok');localStorage.removeItem('leren-wie')}catch(e){}show()};
 show();
