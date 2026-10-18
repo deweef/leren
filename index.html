@@ -59,7 +59,8 @@ a.card{display:flex;gap:14px;align-items:center;text-decoration:none;color:inher
 <a class="card" style="--c:#7C3AED" href="frans-combi.html"><span class="ic">FR</span><div><b>Frans · combi</b><span>Beide versies gecombineerd + boek 1 ch. 5: 200 woorden, luistertoets, ontkenning en vragen</span></div></a>
 <a class="card" style="--c:#DB2777" href="frans-spel.html"><span class="ic">🎮</span><div><b>Frans · spelletjes</b><span>Vliegroute, Schiettent, Stroomdraad en Blitz met de woorden van de combi</span></div></a>
 </div></section>
-<div class="foot"><button class="out" id="wissel">Wissel van persoon</button><button class="out" id="out">Uitloggen</button></div></div>
+<div class="foot"><button class="out" id="wissel">Wissel van persoon</button><button class="out" id="out">Uitloggen</button><button class="out" id="synk" hidden>Synchronisatie controleren</button></div>
+<pre id="synkuit" hidden style="white-space:pre-wrap;background:var(--surface);border:2px solid var(--line);border-radius:12px;padding:12px;font:13px/1.5 ui-monospace,Menlo,monospace;color:var(--ink)"></pre></div>
 </div>
 <script>
 const H='53a39a231246354922d1b5f7242c1639ebdc75da84bde2e766eed704f5a89cf8';
@@ -83,6 +84,7 @@ function show(){const o=ok(),w=wie(),g=gast();$('gate').hidden=o;$('who').hidden
  document.querySelectorAll('[data-who] h2').forEach(h=>h.hidden=!ALLES(w));
  const t=document.querySelector('.sub'),n=w==='gast'?(g&&g.naam)||'':NAAM[w];
  t.dataset.std=t.dataset.std||t.textContent;t.textContent=o&&w?'Hoi '+n+'! Kies een vak. Je voortgang wordt bewaard op dit apparaat.':t.dataset.std;
+ $('synk').hidden=!ALLES(w);if(!ALLES(w))$('synkuit').hidden=true;
  if(!o)$('pw').focus()}
 document.querySelectorAll('[data-w]').forEach(b=>b.onclick=()=>{const w=b.dataset.w;if(!ALLES(w))return kies(w);
  pinVoor=w;$('pintitel').textContent='Pincode voor '+NAAM[w];$('pin').value='';$('pinerr').textContent='';scherm('pin');$('pin').focus()});
@@ -94,6 +96,18 @@ $('gastform').onsubmit=e=>{e.preventDefault();const n=$('gnaam').value.trim().re
  if(!n)return $('gasterr').textContent='Vul je naam in.';if(!klas)return $('gasterr').textContent='Kies je klas.';
  try{localStorage.setItem('leren-gast',JSON.stringify({naam:n,klas}))}catch(e){}kies('gast')};
 document.querySelectorAll('[data-terug]').forEach(b=>b.onclick=()=>scherm(null));
+// Voor Marcel en Anja: laat zien wat er online staat (tabblad 'Leerhoek opslag') en wat er op dit apparaat staat
+const SCRIPT='https://script.google.com/macros/s/AKfycbzo6b4TQRiL2j1ZhEtBa6xpbNcBxmL7IIIB6e1FdYWnswDIxJ1MphWAlAjm12aK_J9U/exec';
+$('synk').onclick=async()=>{const w=wie(),u=$('synkuit');u.hidden=false;u.textContent='Bezig met vragen aan Google…';const t0=performance.now();
+ const tijdTekst=t=>t>1e12?'bijgewerkt '+new Date(t).toLocaleString('nl-NL',{day:'numeric',month:'short',hour:'2-digit',minute:'2-digit'}):'eerste keer, voortgang '+(t-1);
+ let lokaal={};try{lokaal=JSON.parse(localStorage.getItem('leren-tijd2@'+w)||'{}')}catch(e){}
+ let r=[];try{const res=await fetch(SCRIPT+'?actie=stand&naam='+w,{cache:'no-store'});const o=await res.json();const sec=((performance.now()-t0)/1000).toFixed(1).replace('.',',');
+  r.push('Antwoord van Google na '+sec+' s.');
+  if(!o||typeof o.stand!=='object')r.push('Het script geeft geen voortgang terug. Is de nieuwe versie geïmplementeerd (Implementaties beheren → potlood → Nieuwe versie)?');
+  else{const v2=Object.entries(o.stand).filter(([k])=>k.startsWith('v2-'));r.push('','Online voor '+NAAM[w]+': '+(v2.length?'':'nog niets'));v2.forEach(([k,v])=>r.push('  '+k.slice(3)+': '+tijdTekst(Number(v.t))))}
+ }catch(e){r.push('Geen verbinding met het script ('+e.message+').')}
+ const lk=Object.keys(lokaal);r.push('','Op dit apparaat: '+(lk.length?'':'nog niets (open eerst een vak)'));lk.forEach(k=>r.push('  '+k+': '+tijdTekst(lokaal[k])));
+ u.textContent=r.join('\n')};
 $('wissel').onclick=()=>{try{localStorage.removeItem('leren-wie')}catch(e){}scherm(null);show()};
 document.getElementById('gate').onsubmit=async e=>{e.preventDefault();const h=await sha(document.getElementById('pw').value.trim());if(h===H){try{localStorage.setItem('leren-ok',H)}catch(e){}show()}else document.getElementById('err').textContent='Dat wachtwoord klopt niet.'};
 document.getElementById('out').onclick=()=>{try{localStorage.removeItem('leren-ok');localStorage.removeItem('leren-wie')}catch(e){}show()};

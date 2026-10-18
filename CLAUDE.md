@@ -30,6 +30,10 @@ bouwt het samen met Claude; hij wil ook zelf kunnen meeleren (scheikunde: hij be
   per sleutel alleen een hogere tijd. Bij openen: `?actie=stand&naam=..` (pagina tot max. 3 s half doorzichtig en niet aan
   te raken, `html.leren-laden`), nieuwere standen overnemen (vergelijk met `tijd0` = vóór het openen) en één keer herladen;
   wat online ontbreekt of ouder is gaat meteen mee (niet pas bij weggaan: `sendBeacon` mag maar ~64 kB).
+  Google antwoordt vaak pas na 2-10 s: een laat antwoord wordt nog verwerkt (versturen altijd; overnemen alleen als er
+  nog niets aangeraakt is). Na overnemen is de oude pagina `bevroren` (mag niets meer opslaan) tot het herladen, anders
+  overschrijft zijn laatste `save()` de nieuwe stand. Marcel/Anja hebben op index.html "Synchronisatie controleren"
+  (`#synk`): antwoordtijd, wat er online staat en wat er op het apparaat staat.
 - Het leerlogboek zet in de stand ook `afgerond: 0, 1.1, ...` (delen van `ROUTE` waarvan alle stappen met gewicht
   gehaald zijn, via `rDone`) en in "wat gedaan" `deel X afgerond ✓`.
 - `sw.js`: service worker (eerst netwerk, anders bewaarde kopie). **Hoog `leerhoek-vN` op bij elke wijziging.**

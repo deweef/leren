@@ -29,7 +29,7 @@ try{const P=Storage.prototype,get=P.getItem,set=P.setItem,del=P.removeItem,key=P
     voortgang zelf: tijd = 1 + score (opgaven, leerpaden, reeksen, toetsen, woordjes; zie score). Zo wint de eerste keer de stand met de meeste
     voortgang, en wint daarna altijd een echte wijziging. Online staan ze als 'v2-<sleutel>' (oude regels tellen niet). */
  const TK='leren-tijd2@'+opslag;let tijd={};try{tijd=JSON.parse(get.call(ls,TK)||'{}')||{}}catch(e){}
- const tijd0=Object.assign({},tijd),vuil=new Set();let wacht=null,klaar=false,aangeraakt=false; // echt = na het ophalen én na een tik of toets (niet wat de pagina zelf bij het openen opslaat)
+ const tijd0=Object.assign({},tijd),vuil=new Set();let wacht=null,klaar=false,aangeraakt=false,bevroren=false; // echt = na het ophalen én na een tik of toets (niet wat de pagina zelf bij het openen opslaat)
  ['pointerdown','keydown'].forEach(t=>addEventListener(t,()=>{aangeraakt=true},{capture:true,passive:true}));
  const zetTijd=(k,t)=>{tijd[k]=t;try{set.call(ls,TK,JSON.stringify(tijd))}catch(e){}};
  // voortgang van een opgeslagen stand: opgaven, XP, leerpaden, reeksen, oefenrondes, toetsen, bergkampen, woordjes
@@ -40,7 +40,8 @@ try{const P=Storage.prototype,get=P.getItem,set=P.setItem,del=P.removeItem,key=P
   return Math.min(Math.round(n),1e9)};
  const eerst=d=>1+score(d||'');
  P.getItem=function(k){return get.call(this,this===ls&&eigen(k)?k+'@'+opslag:k)};
- P.setItem=function(k,v){if(this!==ls||!eigen(k))return set.call(this,k,v);const oud=get.call(this,k+'@'+opslag),r=set.call(this,k+'@'+opslag,v);if(oud!==String(v)){if(klaar&&aangeraakt)zetTijd(k,Date.now());vuil.add(k);plan()}return r};
+ P.setItem=function(k,v){if(this!==ls||!eigen(k))return set.call(this,k,v);if(bevroren)return; // nieuwere stand overgenomen: de oude pagina mag hem niet meer overschrijven
+ const oud=get.call(this,k+'@'+opslag),r=set.call(this,k+'@'+opslag,v);if(oud!==String(v)){if(klaar&&aangeraakt)zetTijd(k,Date.now());vuil.add(k);plan()}return r};
  P.removeItem=function(k){return del.call(this,this===ls&&eigen(k)?k+'@'+opslag:k)};
  const mijn=()=>{const r=[];for(let i=0;i<ls.length;i++){const k=key.call(ls,i);if(k&&eigen(k)&&k.endsWith('@'+opslag))r.push(k.slice(0,-1-opslag.length))}return r};
  window.lerenSleutels=mijn;
@@ -64,17 +65,19 @@ try{const P=Storage.prototype,get=P.getItem,set=P.setItem,del=P.removeItem,key=P
  const st=document.createElement('style');st.textContent='html.leren-laden body{opacity:.35;pointer-events:none;transition:opacity .2s}';
  document.head.appendChild(st);
  const af=()=>{if(!klaar){klaar=true;html.classList.remove('leren-laden');if(vuil.size)plan()}};
- setTimeout(af,3000);
+ setTimeout(af,4000); // langer wachten we niet; een later antwoord wordt toch nog verwerkt
+ // Google antwoordt soms pas na 5-10 s (script wordt wakker): ook dan nog versturen, en ophalen als er nog niets aangeraakt is
  fetch(URL+'?actie=stand&naam='+naam,{cache:'no-store'}).then(r=>r.json()).then(o=>{
-  if(klaar||!o||typeof o.stand!=='object')return af();
+  if(!o||typeof o.stand!=='object')return af();
+  const laat=klaar,magNemen=!laat||!aangeraakt;
   const online={};for(const [k,v] of Object.entries(o.stand))if(k.startsWith('v2-')&&v&&typeof v.d==='string')online[k.slice(3)]=v;
   let nieuw=false;
   new Set([...mijn(),...Object.keys(online)]).forEach(k=>{if(!eigen(k))return;
    const v=online[k],hier=get.call(ls,k+'@'+opslag),th=tijd0[k]||(hier===null?0:eerst(hier)),tv=v?Number(v.t)||0:0;
-   if(v&&tv>th&&v.d!==hier){set.call(ls,k+'@'+opslag,v.d);zetTijd(k,tv);nieuw=true}
+   if(v&&tv>th&&v.d!==hier){if(magNemen){set.call(ls,k+'@'+opslag,v.d);zetTijd(k,tv);nieuw=true}}
    else if(hier!==null){if(v&&v.d===hier)zetTijd(k,Math.max(th,tv));else if(!tijd[k]||!tijd0[k])zetTijd(k,th);if(!v||th>tv||vuil.has(k))vuil.add(k)}});
   klaar=true;
-  if(nieuw&&!sessionStorage.getItem('leren-herlaad')){try{sessionStorage.setItem('leren-herlaad','1')}catch(e){}stuur(true);location.reload();return}
+  if(nieuw&&!sessionStorage.getItem('leren-herlaad')){bevroren=true;try{sessionStorage.setItem('leren-herlaad','1')}catch(e){}stuur(true);location.reload();return}
   try{sessionStorage.removeItem('leren-herlaad')}catch(e){}
   html.classList.remove('leren-laden');stuur(false)}).catch(af);
 }catch(e){}
