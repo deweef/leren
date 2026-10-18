@@ -21,11 +21,15 @@ bouwt het samen met Claude; hij wil ook zelf kunnen meeleren (scheikunde: hij be
   eigen voortgang heeft. Pagina's gebruiken gewoon hun KEY (alleen `getItem`/`setItem`/`removeItem`; ga niet zelf door
   `localStorage.key(i)` lopen). Oude sleutels zonder `@` (van vóór de splitsing) krijgen Ben, Dana en Marcel één keer als
   beginstand (Anja en gasten beginnen leeg); wissen kan per persoon via "Zo pak je het aan" → Voortgang wissen.
-- **Synchroniseren tussen apparaten** (ook in `leerlog.js`; niet voor gasten, en gasten komen ook niet in het logboek): elke wijziging krijgt een tijdstempel (`leren-tijd@<wie>`,
-  alleen als de waarde echt verandert) en gaat 15 s later (en bij weggaan) naar het Apps Script (`actie=bewaar`, tabblad
-  'Leerhoek opslag'). Bij openen haalt de pagina `?actie=stand&naam=..` op (pagina tot max. 3 s half doorzichtig en niet
-  aan te raken, `html.leren-laden`), neemt nieuwere standen over (vergelijk met de tijd van vóór het openen, `tijd0`) en
-  herlaadt één keer. Oude standen zonder tijdstempel: de grootste wint. Laatste wijziging wint per pagina-sleutel.
+- **Synchroniseren tussen apparaten** (ook in `leerlog.js`; niet voor gasten, en gasten komen ook niet in het logboek):
+  online als `v2-<sleutel>` (tabblad 'Leerhoek opslag'; oudere regels zonder `v2-` tellen niet). Tijdstempels in
+  `leren-tijd2@<wie>`: een **echte wijziging** (na het ophalen én na een tik/toets, `aangeraakt`) krijgt `Date.now()`; wat
+  de pagina zelf bij het openen opslaat telt niet als echt. Een stand die nog nooit gesynchroniseerd is krijgt als tijd
+  `1 + score` (`score`: opgaven, XP/10, leerpaden, reeksen `tr`, oefenrondes `pr`, toetsen, bergkampen `klim.m`,
+  woordniveaus `.l`), dus de eerste keer wint de meeste voortgang en daarna altijd een echte wijziging. Het script bewaart
+  per sleutel alleen een hogere tijd. Bij openen: `?actie=stand&naam=..` (pagina tot max. 3 s half doorzichtig en niet aan
+  te raken, `html.leren-laden`), nieuwere standen overnemen (vergelijk met `tijd0` = vóór het openen) en één keer herladen;
+  wat online ontbreekt of ouder is gaat meteen mee (niet pas bij weggaan: `sendBeacon` mag maar ~64 kB).
 - Het leerlogboek zet in de stand ook `afgerond: 0, 1.1, ...` (delen van `ROUTE` waarvan alle stappen met gewicht
   gehaald zijn, via `rDone`) en in "wat gedaan" `deel X afgerond ✓`.
 - `sw.js`: service worker (eerst netwerk, anders bewaarde kopie). **Hoog `leerhoek-vN` op bij elke wijziging.**
