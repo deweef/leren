@@ -211,6 +211,16 @@ canvas#conf{position:fixed;inset:0;pointer-events:none;z-index:9}
 @media (hover:hover){.rt-step:hover{border-color:var(--ink)}}
 .nextbox{border:2px dashed var(--line);border-radius:12px;padding:12px 14px}
 .nextbox h3{margin:0}
+.mode{position:relative}
+.mode.gehaald{background:var(--good-bg)!important;border-color:var(--good)!important;color:var(--ink)!important}
+.mode.gehaald h3{color:var(--ink)!important}
+.mode.gehaald p{color:var(--muted)!important;opacity:1!important}
+.mode.gehaald::after{content:"✓ gehaald";position:absolute;top:8px;right:10px;font:700 11px ui-monospace,Menlo,monospace;letter-spacing:.04em;color:var(--good)}
+.sec.gehaald{border-color:var(--good)!important;background:var(--good-bg)!important}
+.btn.gehaald{border-color:var(--good)!important;color:var(--good)!important;background:var(--good-bg)!important}
+.btn.gehaald:not([data-lp])::before{content:"✓ "}
+.par.gehaald,.gate.gehaald,.gcard.gehaald{position:relative;background:var(--good-bg)!important;border-color:var(--good)!important}
+.par.gehaald::after,.gate.gehaald::after,.gcard.gehaald::after{content:"✓";position:absolute;top:6px;right:9px;font-weight:800;color:var(--good)}
 </style>
 </head>
 <body>
@@ -249,7 +259,7 @@ canvas#conf{position:fixed;inset:0;pointer-events:none;z-index:9}
     <div class="sec-head" style="margin-top:12px"><span class="src" id="selLine"></span>
       <div class="dir" id="dirSeg"><button data-d="nlfr">NL → FR</button><button data-d="mix">Gemengd</button><button data-d="frnl">FR → NL</button></div></div>
     <div class="modes">
-      <button class="mode main" data-m="learn"><span class="lab">Leren</span><span class="tag">Hiermee leer je het snelst</span><h3>Woorden inprenten</h3><p>Eerst kiezen, daarna zelf typen, met accenten. Fouten komen terug tot je ze kent.</p></button>
+      <button class="mode" data-m="learn"><span class="lab">Leren</span><span class="tag">Hiermee leer je het snelst</span><h3>Woorden inprenten</h3><p>Eerst kiezen, daarna zelf typen, met accenten. Fouten komen terug tot je ze kent.</p></button>
       <button class="mode" data-m="flash"><span class="lab">Kaart</span><h3>Flitskaarten</h3><p>Woord zien, bedenken, omdraaien en horen hoe je het uitspreekt.</p></button>
       <button class="mode" data-m="blitz"><span class="lab">60 s</span><h3>Blitz 60</h3><p>Zoveel mogelijk woorden goed in 60 seconden. Fout kost 3 seconden. <span id="bestBlitz"></span></p></button>
     </div>
@@ -258,7 +268,7 @@ canvas#conf{position:fixed;inset:0;pointer-events:none;z-index:9}
   <section>
     <div class="sec-head"><h2>2. Luisteren</h2><span class="src">Zet je geluid aan</span></div>
     <div class="modes">
-      <button class="mode main" data-m="listen"><span class="lab">Écouter</span><span class="tag">Luistertoets</span><h3>Luistertoets</h3><p>Vijf fragmenten met meerkeuze- en invulvragen. Maximaal twee keer luisteren, daarna nakijken met tekst en vertaling.</p></button>
+      <button class="mode" data-m="listen"><span class="lab">Écouter</span><span class="tag">Luistertoets</span><h3>Luistertoets</h3><p>Vijf fragmenten met meerkeuze- en invulvragen. Maximaal twee keer luisteren, daarna nakijken met tekst en vertaling.</p></button>
       <button class="mode" data-m="dict"><span class="lab">Dictee</span><h3>Verstaan en schrijven</h3><p>Je hoort een woord of zin in het Frans. Typ wat je hoort.</p></button>
     </div>
   </section>
@@ -280,7 +290,7 @@ canvas#conf{position:fixed;inset:0;pointer-events:none;z-index:9}
   <section>
     <div class="sec-head"><h2>4. Toets</h2></div>
     <div class="modes">
-      <button class="mode main" data-m="toets"><span class="lab">Cijfer</span><h3>Proeftoets</h3><p>25 gemengde vragen over de gekozen woordblokken: woorden, zinnen, grammatica en cultuur. Je krijgt een cijfer. <span id="bestToets"></span></p></button>
+      <button class="mode" data-m="toets"><span class="lab">Cijfer</span><h3>Proeftoets</h3><p>25 gemengde vragen over de gekozen woordblokken: woorden, zinnen, grammatica en cultuur. Je krijgt een cijfer. <span id="bestToets"></span></p></button>
     </div>
   </section>
 
@@ -1249,6 +1259,18 @@ const ROUTE=[
 const RDEEL={w1:'Woorden chapitre 1',w5:'Woorden chapitre 5',lu:'Luisteren',le:'Lezen en zinnen',gr:'Grammatica en cultuur',af:'Afronden'};
 const SPAGE={A:1,B:2,E:3,F:4,X:5,'5A':201,'5B':202,'5E':203,'5F':204};
 const SPELNAAM={vlucht:'Vliegroute',schiet:'Schiettent',stroom:'Stroomdraad',blitz:'Blitz 60'};
+
+/* ---------- Gehaald: groen met ✓ op het hoofdscherm, met hetzelfde doel als in de leerroute ---------- */
+function stp(ty,a){return ROUTE.filter(r=>r[5]===ty&&(a===undefined||JSON.stringify(r[6])===JSON.stringify(a)))}
+function alleKlaar(l){return l.length>0&&l.every(rDone)}
+function zetG(el,ok){if(el)el.classList.toggle('gehaald',!!ok)}
+function markeer(){try{GEHAALD()}catch(e){}}
+function GEHAALD(){
+ document.querySelectorAll('.par[data-p]').forEach(b=>{const s=b.dataset.p;zetG(b,alleKlaar(stp('learn',s).concat(stp('game',s))))});
+ zetG($('.mode[data-m="listen"]'),alleKlaar(stp('lis','L')));zetG($('.mode[data-m="read"]'),alleKlaar(stp('lis','R')));
+ ['dict','phr','adj','re','neg','cult'].forEach(m=>zetG($(`.mode[data-m="${m}"]`),alleKlaar(stp('mode',m))));
+ zetG($('.mode[data-m="toets"]'),alleKlaar(stp('toets')));zetG($('.mode[data-m="blitz"]'),alleKlaar(stp('blitz')));
+}
 let RT={on:false,before:null};
 // een woord telt in beide versies: in deze pagina (S.w) en in de spelletjes (frans-spel-v1, op Franse tekst)
 function spelW(){try{return (JSON.parse(localStorage.getItem('frans-spel-v1')||'{}').w)||{}}catch(e){return {}}}
@@ -1301,7 +1323,7 @@ function routeScreen(){const before=RT.before;RT={on:false,before:null};show('pl
   <div class="rt-list">${rows}</div>
  </div></div>`;
  $('#quit').onclick=goHome;P.querySelectorAll('[data-r]').forEach(b=>b.onclick=()=>rGo(ROUTE[+b.dataset.r]));const g=$('#rtgo');if(g){g.onclick=()=>rGo(nxt);g.focus()}}
-function routeBox(){const el=$('#lpbox');if(!el)return;const pct=rPct(),nxt=ROUTE.find(r=>!rDone(r));
+function routeBox(){setTimeout(markeer,0);const el=$('#lpbox');if(!el)return;const pct=rPct(),nxt=ROUTE.find(r=>!rDone(r));
  el.innerHTML=`<button class="mode main" id="rtbox"><span class="lab">Pad</span><span class="tag" style="text-transform:none">${pct}% · ${gekend()} van ${WORDS.length} woorden gekend</span><h3>${nxt?(pct?'Ga verder: ':'Begin: ')+nxt[2]:'Woordjespad klaar. Herhalen?'}</h3><p>${nxt?nxt[3]:'Alle stappen gehaald.'}</p><span class="bar" style="margin-top:6px;background:rgba(255,255,255,.2)"><i style="width:${pct}%"></i></span></button>`;
  $('#rtbox').onclick=routeScreen}
 // balkjes per blok op het beginscherm: ook wat in de spelletjes geleerd is telt mee (deze declaratie wint van die bovenaan)

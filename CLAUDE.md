@@ -51,11 +51,16 @@ schermen `show('home'|'play')`, `goHome()`, `ask()`, `practice(sec)` (oefenronde
   leerpad 1.1 heeft "Molecuulmassa: tel de steentjes op". Plaatjes zijn inline SVG met de helpers `zoomFig()`,
   `legoFig()`, `elementFig()`, `massaFig()`, `steen()`, `h2o()` (scheikunde-h1.html). In 1.2-1.4 hangen plaatjes
   aan bestaande kaartjes via `voegToe(sec, titel, fig)` (`figDozijn`, `figWeeg`, `figDicht`, `figTaart`, `figPpm`,
-  `figMolair`, `figBehoud`, `figTosti`; klasse `.lpfig`). Formules en N_A instampen: de **Formuleblitz**
+  `figMolair`, `figBehoud`, `figTosti`; klasse `.lpfig`). Voorbeeldkaartjes met goud in 1.2 ("Voorbeeld: goud tellen",
+  "Voorbeeld: de gouden ketting", `figKetting`): gram → mol → atomen, en de notatie 12,04·10²³ = 1,204·10²⁴. Formules en N_A instampen: de **Formuleblitz**
   (`BLITZ.form`), ook als routestap in 1.2. Formules moet je kennen; N_A staat in Binas (tabel 7) maar is handig om
   te weten. Onder elke formule staat "Wat betekent wat?" (`leg(keys)`, `SYM`: symbool,
   betekenis, eenheid), op de theorie (`TH.*.h`) en via `legBij` op leerpad-kaartjes. Stel bij een vraag van Marcel
   over de stof eerst vast of het al ergens uitgelegd staat; ontbreekt het, stel dan een kaartje voor.
+- **Kleuren op het hoofdscherm** (alle vakken met een route): **donker** (`mode main`) alleen voor de kaart van de
+  leerroute; **wit** = nog te doen; **groen met "✓ gehaald"** (klasse `gehaald`) = gehaald volgens hetzelfde doel als
+  in de route. `GEHAALD()` per pagina (helpers `stp`, `alleKlaar`, `zetG`), aangeroepen via `markeer` vanuit
+  `routeBox`. Nieuwe knop op het hoofdscherm? Zet hem in `GEHAALD()`, en geef hem geen `main`.
 - Opgeslagen voor de route: `S.tr[gen]` (beste reeks), `S.pr[sec]` (beste oefenronde, fractie), `S.flits`.
 - **Frans versie 5** (`frans-5.html`): kopie van de combi (zelfde opslag `frans-ch1-combi`) met woordjespad en
   blok Spelletjes. Spelletjes openen `frans-spel.html#v5=<spel>&set=<pagina's>`; die gaat daarna terug naar

@@ -298,6 +298,16 @@ td.okc{background:var(--good-bg);font-weight:700}td.badc{background:var(--bad-bg
 .svp .gt{margin:6px 0}
 .sv .gt td,.sv .gt th{overflow-wrap:normal;word-break:normal;hyphens:manual;-webkit-hyphens:manual}
 .sv .gt td:first-child{white-space:nowrap}
+.mode{position:relative}
+.mode.gehaald{background:var(--good-bg)!important;border-color:var(--good)!important;color:var(--ink)!important}
+.mode.gehaald h3{color:var(--ink)!important}
+.mode.gehaald p{color:var(--muted)!important;opacity:1!important}
+.mode.gehaald::after{content:"✓ gehaald";position:absolute;top:8px;right:10px;font:700 11px ui-monospace,Menlo,monospace;letter-spacing:.04em;color:var(--good)}
+.sec.gehaald{border-color:var(--good)!important;background:var(--good-bg)!important}
+.btn.gehaald{border-color:var(--good)!important;color:var(--good)!important;background:var(--good-bg)!important}
+.btn.gehaald:not([data-lp])::before{content:"✓ "}
+.par.gehaald,.gate.gehaald,.gcard.gehaald{position:relative;background:var(--good-bg)!important;border-color:var(--good)!important}
+.par.gehaald::after,.gate.gehaald::after,.gcard.gehaald::after{content:"✓";position:absolute;top:6px;right:9px;font-weight:800;color:var(--good)}
 </style>
 
 </head>
@@ -322,9 +332,9 @@ td.okc{background:var(--good-bg);font-weight:700}td.badc{background:var(--bad-bg
   <section><div id="lpbox"></div></section>
   <section>
     <div class="sec-head"><h2>Spellen</h2><span class="src">Leren door te doen</span></div>
-<div class="modes" style="margin-bottom:12px"><button class="mode main" id="klim"><span class="lab">Berg</span><h3>Beklim de Bindingsberg</h3><p>Alle vragen van het hoofdstuk, kamp voor kamp. Elke goede vraag brengt je hoger. Sta je op de top (100%), dan weet je alles.</p><span class="tag" id="klimTag" style="text-transform:none">0 m</span></button></div>
+<div class="modes" style="margin-bottom:12px"><button class="mode" id="klim"><span class="lab">Berg</span><h3>Beklim de Bindingsberg</h3><p>Alle vragen van het hoofdstuk, kamp voor kamp. Elke goede vraag brengt je hoger. Sta je op de top (100%), dan weet je alles.</p><span class="tag" id="klimTag" style="text-transform:none">0 m</span></button></div>
     <div class="modes">
-      <button class="mode main" id="bouw"><span class="lab">Spel</span><h3>Molecuulbouwer</h3><p>Bouw moleculen uit losse atomen. Elk atoom heeft een vast aantal armen. Van H<sub>2</sub> tot azijnzuur: vul de hele kast.</p><span class="tag" id="bouwTag">0 moleculen</span></button>
+      <button class="mode" id="bouw"><span class="lab">Spel</span><h3>Molecuulbouwer</h3><p>Bouw moleculen uit losse atomen. Elk atoom heeft een vast aantal armen. Van H<sub>2</sub> tot azijnzuur: vul de hele kast.</p><span class="tag" id="bouwTag">0 moleculen</span></button>
       <button class="mode" id="lab"><span class="lab">Lab</span><h3>Het Lab</h3><p>Reageerbuis-puzzels: oplossen, zoutfabriek, stroomtest, metalenrace, weegschaal en kookpuntladder.</p></button>
       <button class="mode" id="band"><span class="lab">60 s</span><h3>Sorteerband</h3><p>Metaal, zout of moleculaire stof? Sorteer zoveel mogelijk formules in 60 seconden.</p><span class="tag" id="bandTag"></span></button>
     </div>
@@ -343,9 +353,9 @@ td.okc{background:var(--good-bg);font-weight:700}td.badc{background:var(--bad-bg
   <section>
     <div class="sec-head"><h2>3. Toets</h2></div>
     <div class="modes">
-      <button class="mode main" id="toets"><span class="lab">Cijfer</span><h3>Proeftoets</h3><p>20 gemengde vragen over het hele hoofdstuk, met uitwerkingen en theorie aan het eind.</p></button>
+      <button class="mode" id="toets"><span class="lab">Cijfer</span><h3>Proeftoets</h3><p>20 gemengde vragen over het hele hoofdstuk, met uitwerkingen en theorie aan het eind.</p></button>
       <button class="mode" id="flits"><span class="lab">Kaart</span><h3>Begrippen</h3><p>Alle begrippen uit het leerstofoverzicht als flitskaarten.</p></button>
-      <button class="mode main" id="samen"><span class="lab">Lezen</span><h3>Samenvatting voor de toets</h3><p>Ochtend voor de toets: alles nog één keer doorlezen, zonder vragen. Ongeveer 10 minuten.</p></button>
+      <button class="mode" id="samen"><span class="lab">Lezen</span><h3>Samenvatting voor de toets</h3><p>Ochtend voor de toets: alles nog één keer doorlezen, zonder vragen. Ongeveer 10 minuten.</p></button>
       <button class="mode" id="spiek"><span class="lab">Blad</span><h3>Spiekbriefje</h3><p>Alle regels op één scherm.</p></button>
     </div>
   </section>
@@ -1109,6 +1119,20 @@ function samenvatting(){show('play');G={m:'samen',mode:'samen'};S.samen=1;save()
  </div></div>`;
  $('#quit').onclick=goHome;$('#svklaar').onclick=()=>{confetti();goHome()};window.scrollTo(0,0)}
 
+
+/* ---------- Gehaald: groen met ✓ op het hoofdscherm, met hetzelfde doel als in de leerroute ---------- */
+function stp(ty,a){return ROUTE.filter(r=>r[5]===ty&&(a===undefined||JSON.stringify(r[6])===JSON.stringify(a)))}
+function alleKlaar(l){return l.length>0&&l.every(rDone)}
+function zetG(el,ok){if(el)el.classList.toggle('gehaald',!!ok)}
+function markeer(){try{GEHAALD()}catch(e){}}
+function GEHAALD(){
+ document.querySelectorAll('[data-lp]').forEach(b=>{const sec=b.dataset.lp,lp=stp('lp',sec),pr=stp('pr',sec);zetG(b,alleKlaar(lp));
+  const row=b.closest('.sec');if(row){zetG(row.querySelector('[data-o]'),alleKlaar(pr));zetG(row,alleKlaar(lp.concat(pr)))}});
+ document.querySelectorAll('#tools [data-g]').forEach(b=>{const k=b.dataset.g,l=stp('tr',k);zetG(b,l.length?alleKlaar(l):((S.tr||{})[k]||0)>=5)});
+ zetG($('#klim'),alleKlaar(stp('klim')));zetG($('#toets'),alleKlaar(stp('toets')));zetG($('#samen'),!!S.samen);zetG($('#flits'),!!S.flits);
+
+ zetG($('#bouw'),alleKlaar(stp('bouw')));zetG($('#lab'),alleKlaar(stp('lab')));zetG($('#band'),alleKlaar(stp('band')));
+}
 let RT={on:false,before:null};
 function rVal(r){if(r[5]==='samen')return S.samen?1:0;const ty=r[5],a=r[6];
  if(ty==='lp')return S.lpd&&S.lpd[a]?1:0;
@@ -1150,7 +1174,7 @@ function routeScreen(){const before=RT.before;RT={on:false,before:null};show('pl
   <div class="rt-list">${rows}</div>
  </div></div>`;
  $('#quit').onclick=goHome;P.querySelectorAll('[data-r]').forEach(b=>b.onclick=()=>rGo(ROUTE[+b.dataset.r]));const g=$('#rtgo');if(g){g.onclick=()=>rGo(nxt);g.focus()}}
-function routeBox(){const sb=$('#samen');if(sb)sb.onclick=samenvatting;const el=$('#lpbox');if(!el)return;const pct=rPct(),nxt=ROUTE.find(r=>!rDone(r));
+function routeBox(){setTimeout(markeer,0);const sb=$('#samen');if(sb)sb.onclick=samenvatting;const el=$('#lpbox');if(!el)return;const pct=rPct(),nxt=ROUTE.find(r=>!rDone(r));
  el.innerHTML=`<button class="mode main lpmode" id="rtbox"><span class="lab">Route</span><span class="tag" style="text-transform:none">${pct}% van de leerroute</span><h3>${nxt?(pct?'Ga verder: ':'Begin: ')+nxt[2]:'Leerroute klaar. Herhalen?'}</h3><p>${nxt?nxt[3]:'Alle stappen beheerst.'}</p><span class="bar" style="margin-top:6px;background:rgba(255,255,255,.2)"><i style="width:${pct}%"></i></span></button>`;
  $('#rtbox').onclick=routeScreen}
 

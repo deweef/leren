@@ -318,6 +318,16 @@ canvas#conf{position:fixed;inset:0;pointer-events:none;z-index:9}
 .pass-body.sv>*{min-width:0;max-width:100%}
 .sv table.svw{width:100%;table-layout:fixed;border-collapse:collapse}
 .sv table.svw td{overflow-wrap:anywhere;padding:5px 8px;border-bottom:1px solid var(--line);vertical-align:top}
+.mode{position:relative}
+.mode.gehaald{background:var(--good-bg)!important;border-color:var(--good)!important;color:var(--ink)!important}
+.mode.gehaald h3{color:var(--ink)!important}
+.mode.gehaald p{color:var(--muted)!important;opacity:1!important}
+.mode.gehaald::after{content:"✓ gehaald";position:absolute;top:8px;right:10px;font:700 11px ui-monospace,Menlo,monospace;letter-spacing:.04em;color:var(--good)}
+.sec.gehaald{border-color:var(--good)!important;background:var(--good-bg)!important}
+.btn.gehaald{border-color:var(--good)!important;color:var(--good)!important;background:var(--good-bg)!important}
+.btn.gehaald:not([data-lp])::before{content:"✓ "}
+.par.gehaald,.gate.gehaald,.gcard.gehaald{position:relative;background:var(--good-bg)!important;border-color:var(--good)!important}
+.par.gehaald::after,.gate.gehaald::after,.gcard.gehaald::after{content:"✓";position:absolute;top:6px;right:9px;font-weight:800;color:var(--good)}
 </style>
 </head>
 <body>
@@ -365,7 +375,7 @@ canvas#conf{position:fixed;inset:0;pointer-events:none;z-index:9}
     <section>
       <div class="sec-head"><h2>3. Kies een spel</h2></div>
       <div class="modes">
-        <button class="mode main" data-mode="learn">
+        <button class="mode" data-mode="learn">
           <span class="tag">Hiermee leer je het snelst</span>
           <h3>Inprenten</h3>
           <p>Eerst meerkeuze, daarna zelf het Engels typen. Fout? Dan komt het woord een paar vragen later terug tot je het kent.</p>
@@ -1820,6 +1830,17 @@ function samenvatting(){show('play');G={m:'samen',mode:'samen'};S.samen=1;save()
  </div></div>`;
  $('#quit').onclick=goHome;$('#svklaar').onclick=()=>{confetti();goHome()};window.scrollTo(0,0)}
 
+
+/* ---------- Gehaald: groen met ✓ op het hoofdscherm, met hetzelfde doel als in de leerroute ---------- */
+function stp(ty,a){return ROUTE.filter(r=>r[5]===ty&&(a===undefined||JSON.stringify(r[6])===JSON.stringify(a)))}
+function alleKlaar(l){return l.length>0&&l.every(rDone)}
+function zetG(el,ok){if(el)el.classList.toggle('gehaald',!!ok)}
+function markeer(){try{GEHAALD()}catch(e){}}
+function GEHAALD(){
+ zetG($('#klim'),alleKlaar(stp('klim')));zetG($('#samen'),!!S.samen);
+ document.querySelectorAll('.gate[data-p]').forEach(b=>{const p=+b.dataset.p;const i=BLOKKEN.findIndex(x=>x.p.includes(p));zetG(b,i>=0&&alleKlaar(stp('game',i)))});
+ document.querySelectorAll('.gcard[data-g]').forEach(b=>{const g=b.dataset.g;zetG(b,g==='all'?alleKlaar(stp('gram')):alleKlaar(stp('gram',g)))});
+}
 let RT={on:false,before:null};
 function rVal(r){if(r[5]==='samen')return S.samen?1:0;const ty=r[5],a=r[6];
  if(ty==='learn')return mastery(blokW(BLOKKEN[a]));
@@ -1862,7 +1883,7 @@ function routeScreen(){const before=RT.before;RT={on:false,before:null};show('pl
   <div class="rt-list">${rows}</div>
  </div></div>`;
  $('#quit').onclick=goHome;P.querySelectorAll('[data-r]').forEach(b=>b.onclick=()=>rGo(ROUTE[+b.dataset.r]));const g=$('#rtgo');if(g){g.onclick=()=>rGo(nxt);g.focus()}}
-function routeBox(){const sb=$('#samen');if(sb)sb.onclick=samenvatting;const el=$('#lpbox');if(!el)return;const pct=rPct(),nxt=ROUTE.find(r=>!rDone(r));
+function routeBox(){setTimeout(markeer,0);const sb=$('#samen');if(sb)sb.onclick=samenvatting;const el=$('#lpbox');if(!el)return;const pct=rPct(),nxt=ROUTE.find(r=>!rDone(r));
  el.innerHTML=`<button class="mode main" id="rtbox"><span class="tag" style="text-transform:none">${pct}% van het woordjespad</span><h3>${nxt?(pct?'Ga verder':'Begin hier'):'Woordjespad klaar'}</h3><p>${nxt?esc(nxt[2])+'. '+esc(nxt[3]):'Alle stappen gehaald. Herhalen?'}</p><span class="bar" style="margin-top:6px;background:rgba(255,255,255,.2)"><i style="width:${pct}%;background:var(--accent)"></i></span></button>`;
  $('#rtbox').onclick=routeScreen;
  const t=klimTotal(),kt=$('#klimTag');if(kt)kt.textContent=Math.round(t.p*KTOP).toLocaleString('nl-NL')+' m · '+Math.round(t.p*100)+'%'}
