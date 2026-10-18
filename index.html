@@ -3,6 +3,9 @@
 <title>Leerhoek</title>
 <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Fredoka:wght@500..700&family=Atkinson+Hyperlegible:wght@400;700&display=swap">
 <style>
+/* iPad: twee keer snel tikken mag niet inzoomen (knijpen om te zoomen blijft werken) */
+*{touch-action:manipulation}
+
 :root{--bg:#F3F1EC;--surface:#fff;--ink:#1D2433;--muted:#5E6577;--line:#DCD8CF;--en:#F2B400;--bio:#2E8B4E;--fr:#E0483E;--accent:#2E5AAC}
 @media (prefers-color-scheme:dark){:root{--bg:#12151C;--surface:#1B2030;--ink:#E8EAF0;--muted:#9AA1B2;--line:#2C3346;color-scheme:dark}}
 *{box-sizing:border-box}body{margin:0;background:var(--bg);color:var(--ink);font-family:"Atkinson Hyperlegible",system-ui,sans-serif}

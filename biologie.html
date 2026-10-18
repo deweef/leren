@@ -9,6 +9,9 @@
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,500..800&family=Atkinson+Hyperlegible:wght@400;700&family=IBM+Plex+Mono:wght@500&display=swap">
 <style>
+/* iPad: twee keer snel tikken mag niet inzoomen (knijpen om te zoomen blijft werken) */
+*{touch-action:manipulation}
+
 /* Layout: microscopie-tafel. Elke kaart is een objectglaasje met een gekleurd etiket. */
 :root{
   --bg:#F1F4EE; --surface:#FFFFFF; --ink:#16261D; --muted:#5C6B61; --line:#D4DDD3; --chip:#E4EAE2;
