@@ -2,6 +2,22 @@
    stil naar het tabblad 'Leerhoek' van de scorebord-spreadsheet (Apps Script uit deweef/spelletjes,
    extra/scorebord.gs). Dat tabblad wordt nooit teruggegeven aan de site. Geen meldingen, niets op het scherm.
    Ouder ("alles") wordt ook bijgehouden, als 'Ouder'. Werkt voor elke pagina die dit script laadt: het kijkt mee met wat de pagina zelf al in localStorage zet. */
+/* Voortgang per persoon: elke sleutel in localStorage (behalve leren-*) krijgt stil '@<wie>' erachter, zodat Ben, Dana
+   en Ouder op hetzelfde apparaat elk hun eigen voortgang hebben. De pagina's merken daar niets van (zelfde KEY).
+   Oude voortgang van vóór deze splitsing (sleutel zonder '@') krijgt iedereen één keer als beginstand mee. */
+(function(){
+let wie=null;try{wie=localStorage.getItem('leren-wie')}catch(e){}
+if(!/^(ben|dana|alle)$/.test(wie||''))return;
+try{const P=Storage.prototype,get=P.getItem,set=P.setItem,del=P.removeItem,key=P.key;
+ const eigen=k=>typeof k==='string'&&!/^leren-/.test(k);
+ const ls=window.localStorage,raw=[];for(let i=0;i<ls.length;i++)raw.push(key.call(ls,i));
+ raw.forEach(k=>{if(eigen(k)&&!k.includes('@')&&get.call(ls,k+'@'+wie)===null)set.call(ls,k+'@'+wie,get.call(ls,k))});
+ P.getItem=function(k){return get.call(this,this===ls&&eigen(k)?k+'@'+wie:k)};
+ P.setItem=function(k,v){return set.call(this,this===ls&&eigen(k)?k+'@'+wie:k,v)};
+ P.removeItem=function(k){return del.call(this,this===ls&&eigen(k)?k+'@'+wie:k)};
+ window.lerenSleutels=()=>{const r=[];for(let i=0;i<ls.length;i++){const k=key.call(ls,i);if(k&&k.endsWith('@'+wie))r.push(k.slice(0,-1-wie.length))}return r};
+}catch(e){}
+})();
 (function(){
 const URL='https://script.google.com/macros/s/AKfycbzo6b4TQRiL2j1ZhEtBa6xpbNcBxmL7IIIB6e1FdYWnswDIxJ1MphWAlAjm12aK_J9U/exec';
 const QK='leren-logq';
@@ -14,7 +30,7 @@ if(vak==='index')return;
 const keys=new Set();
 try{const orig=Storage.prototype.setItem;Storage.prototype.setItem=function(k,v){if(this===window.localStorage&&!/^leren-/.test(k))keys.add(k);return orig.apply(this,arguments)}}catch(e){}
 const read=k=>{try{return JSON.parse(localStorage.getItem(k)||'null')}catch(e){return null}};
-const begin={};try{for(let i=0;i<localStorage.length;i++){const k=localStorage.key(i);if(!/^leren-/.test(k))begin[k]=read(k)}}catch(e){}
+const begin={};try{(window.lerenSleutels?window.lerenSleutels():[]).forEach(k=>{begin[k]=read(k)})}catch(e){}
 
 /* ---- samenvatting van een opgeslagen stand: XP, opgaven, gekende woorden/begrippen, toetsen, leerpaden ---- */
 function stand(o){const r={};if(!o||typeof o!=='object')return r;

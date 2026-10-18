@@ -13,6 +13,11 @@ bouwt het samen met Claude; hij wil ook zelf kunnen meeleren (scheikunde: hij be
   statistiek, `wis-h2-v1`), `scheikunde-h1.html` (H1 chemisch rekenen, `chem-h1-v1`), `scheikunde.html` (H2
   bindingen, `chem-h2-v1`), Frans voor Dana: `frans.html`, `frans-copilot.html`, `frans-combi.html`,
   `frans-spel.html` (spelletjes), `frans-5.html` (versie 5, zie onder).
+- **Voortgang per persoon**: `leerlog.js` (eerste script in de head van elke vakpagina) zet stil `@<wie>` achter elke
+  localStorage-sleutel behalve `leren-*` (`chem-h1-v1@ben`, `@dana`, `@alle`), zodat iedereen op hetzelfde apparaat
+  eigen voortgang heeft. Pagina's gebruiken gewoon hun KEY (alleen `getItem`/`setItem`/`removeItem`; ga niet zelf door
+  `localStorage.key(i)` lopen). Oude sleutels zonder `@` (van vóór de splitsing) krijgt elke persoon één keer als
+  beginstand; wissen kan per persoon via "Zo pak je het aan" → Voortgang wissen.
 - `sw.js`: service worker (eerst netwerk, anders bewaarde kopie). **Hoog `leerhoek-vN` op bij elke wijziging.**
 - Elke pagina begint zijn `<style>` met `*{touch-action:manipulation}`: anders zoomt de iPad in bij twee keer snel
   tikken. Tekenvlakken e.d. houden hun eigen `touch-action:none` (specifieker).
