@@ -41,6 +41,9 @@ schermen `show('home'|'play')`, `goHome()`, `ask()`, `practice(sec)` (oefenronde
   Kolommentabel in H1).
 - **Nalezen** na een oefenronde: `LEES` koppelt `th`/`gen` aan leerpad-kaartjes; de knop "Nalezen" toont alleen
   die kaartjes (`leesStart`, `G.sel`), daarna "Nog een oefenronde". Nieuwe kaartjes of vragen: houd `LEES` bij.
+- **Samenvatting voor de toets** (`samenvatting()`, inhoud in `SAMENV()`): leespagina zonder vragen, met inleiding
+  (waar gaat het over) en per paragraaf "Hier leer je" + kernpunten. Knop `#samen` bij Toets; laatste routestap
+  `samen` met gewicht 0 (telt niet mee voor het %). Biologie en Frans hebben al een eigen Samenvatting.
 - Opgeslagen voor de route: `S.tr[gen]` (beste reeks), `S.pr[sec]` (beste oefenronde, fractie), `S.flits`.
 - **Frans versie 5** (`frans-5.html`): kopie van de combi (zelfde opslag `frans-ch1-combi`) met woordjespad en
   blok Spelletjes. Spelletjes openen `frans-spel.html#v5=<spel>&set=<pagina's>`; die gaat daarna terug naar

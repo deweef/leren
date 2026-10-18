@@ -349,6 +349,16 @@ td.okc{background:var(--good-bg);font-weight:700}td.badc{background:var(--bad-bg
 .ktab .kc:disabled{opacity:1;color:var(--ink);-webkit-text-fill-color:var(--ink)}.ktab .kc.f{background:var(--pink-soft)}.ktab .kc.z,.ktab .kc.z:disabled{color:var(--accent);-webkit-text-fill-color:var(--accent)}
 .ktab .kc.cm::after{content:",";position:absolute;right:-5px;bottom:4px;font-size:34px;color:var(--bad);z-index:2}
 .kstep{background:var(--bg);border-radius:10px;padding:10px 12px}.kstep span{display:block;font-family:var(--f-mono);font-size:12px;color:var(--muted)}
+.sv{gap:14px}
+.sv .intro{background:var(--chip);border-radius:12px;padding:12px 14px}
+.sv .intro p{margin:6px 0}
+.sv .intro ul{margin:6px 0 0;padding-left:20px;display:grid;gap:4px}
+.svp h3{margin:6px 0 2px;font-size:20px}
+.svp .wat{margin:0 0 8px;color:var(--muted);font-style:italic}
+.svp ul{margin:0;padding-left:20px;display:grid;gap:6px}
+.svp .gt{margin:6px 0}
+.sv .gt td,.sv .gt th{overflow-wrap:normal;word-break:normal;hyphens:manual;-webkit-hyphens:manual}
+.sv .gt td:first-child{white-space:nowrap}
 </style>
 
 </head>
@@ -402,6 +412,7 @@ td.okc{background:var(--good-bg);font-weight:700}td.badc{background:var(--bad-bg
     <div class="modes">
       <button class="mode main" id="toets"><span class="lab">Cijfer</span><h3>Proeftoets</h3><p>20 gemengde vragen over het hele hoofdstuk, met uitwerkingen en theorie aan het eind.</p></button>
       <button class="mode" id="flits"><span class="lab">Kaart</span><h3>Begrippen</h3><p>Alle begrippen uit het leerstofoverzicht als flitskaarten.</p></button>
+      <button class="mode main" id="samen"><span class="lab">Lezen</span><h3>Samenvatting voor de toets</h3><p>Ochtend voor de toets: alles nog één keer doorlezen, zonder vragen. Ongeveer 10 minuten.</p></button>
       <button class="mode" id="spiek"><span class="lab">Blad</span><h3>Spiekbriefje</h3><p>Formules en regels op één scherm.</p></button>
     </div>
   </section>
@@ -947,11 +958,59 @@ const ROUTE=[
  ['pr1.4','1.4','Oefenronde 1.4','Alles van 1.4 door elkaar.',3,'pr','1.4'],
  ['k4','1.4','Molberg: de Top','De laatste klim: haal de top en je weet alles van dit hoofdstuk.',3,'klim',4],
  ['flits','af','Begrippen','Alle begrippen nog één keer langs als flitskaarten.',1,'flits'],
- ['toets','af','Proeftoets','De generale repetitie. Haal je een 7, dan ben je klaar voor de echte toets.',3,'toets',null,7]
+ ['toets','af','Proeftoets','De generale repetitie. Haal je een 7, dan ben je klaar voor de echte toets.',3,'toets',null,7],
+ ['samen','af','Samenvatting: ochtend voor de toets','Alles nog één keer doorlezen, zonder vragen. Ongeveer 10 minuten.',0,'samen',null,1]
 ];
 const RDEEL={'0':'0 · Basis','1.1':'1.1 · Atoombouw','1.2':'1.2 · De mol','1.3':'1.3 · Gehaltes','1.4':'1.4 · Reacties','af':'Afronden'};
+
+function SAMENV(){return {
+ intro:'In dit hoofdstuk leer je <b>rekenen met stoffen</b>. Stoffen reageren in vaste verhoudingen, net als in een recept. Om dat uit te rekenen moet je weten waaruit stoffen bestaan (atomen en moleculen), hoe je heel veel deeltjes telt (de mol) en hoe je rekent aan gehaltes en reacties.',
+ delen:[
+ {t:'0 · Basis',leer:'wat atomen, moleculen en elementen zijn, formules lezen, kloppend maken, en rekenen met machten van 10 en eenheden.',fig:zoomFig,kern:[
+  '<b>Atoom</b> = kleinste deeltje van een element (ongeveer 118 soorten). <b>Molecuul</b> = atomen die vastzitten: het kleinste deeltje van een stof. <b>Stof</b> = heel veel dezelfde moleculen.',
+  '<b>Element</b>: één soort atoom (Fe, O<sub>2</sub>). <b>Verbinding</b>: meer soorten (H<sub>2</sub>O, CO<sub>2</sub>). Per twee: H<sub>2</sub>, N<sub>2</sub>, O<sub>2</sub>, F<sub>2</sub>, Cl<sub>2</sub>, Br<sub>2</sub>, I<sub>2</sub>.',
+  '<b>Formule</b>: het kleine getal hoort bij het atoom ervóór, het grote getal telt de moleculen. 3 H<sub>2</sub>O = 6 H en 3 O.',
+  '<b>Kloppend maken</b>: links en rechts evenveel atomen van elke soort. Alleen de grote getallen veranderen.',
+  '<b>Wetenschappelijke notatie</b>: één cijfer voor de komma × 10<sup>macht</sup>. 0,0054 = 5,4·10<sup>−3</sup>.',
+  '<b>Eenheden</b>: 1 kg = 1000 g · 1 L = 1000 mL = 1 dm<sup>3</sup> · 1 m<sup>3</sup> = 1000 L · 1 mL = 1 cm<sup>3</sup>. Fasen: (s) vast, (l) vloeibaar, (g) gas, (aq) opgelost in water.']},
+ {t:'1.1 · Atoombouw en periodiek systeem',leer:'waaruit een atoom bestaat, wat isotopen zijn, hoe je molecuulmassa uitrekent en hoe het periodiek systeem in elkaar zit.',fig:massaFig,kern:[
+  'Kern: <b>protonen</b> (+, 1 u) en <b>neutronen</b> (geen lading, 1 u). Daaromheen <b>elektronen</b> (−, bijna 0 u) in schillen K 2, L 8, M 8 (18).',
+  '<b>Atoomnummer</b> = aantal protonen: dat bepaalt het element. Neutraal atoom: elektronen = protonen. <b>Massagetal</b> = protonen + neutronen, dus neutronen = massagetal − atoomnummer.',
+  '<b>Isotopen</b>: zelfde element, ander aantal neutronen (Cl-35 en Cl-37).',
+  '<b>Atoommassa</b> = gemiddelde van de isotopen (Cl 35,45 u). <b>Molecuulmassa</b> = alle atoommassa\'s optellen (H<sub>2</sub>O = 18,02 u).',
+  '<b>Periodiek systeem</b>: op atoomnummer. Kolom = groep (zelfde aantal valentie-elektronen): 1 alkalimetalen, 2 aardalkalimetalen, 17 halogenen, 18 edelgassen. Metalen links, niet-metalen rechts.',
+  'Metalen staan elektronen af (positief ion), niet-metalen nemen op (negatief ion) of delen. Covalentie: H 1, O 2, N 3, C 4.']},
+ {t:'1.2 · De chemische hoeveelheid',leer:'deeltjes tellen in mol, en omrekenen tussen volume, massa, mol en aantal deeltjes.',kern:[
+  '<b>1 mol</b> = 6,02·10<sup>23</sup> deeltjes (het getal van Avogadro, N<sub>A</sub>). Net als 1 dozijn = 12.',
+  '<b>Molaire massa</b> M (g/mol) = molecuulmassa in u. <b>m = n × M</b>, dus n = m ÷ M.',
+  '<b>Dichtheid</b>: ρ = m ÷ V.',
+  '<b>Rekenschema</b>: '+TH.schema.h+' Je gaat altijd via <b>mol</b>.']},
+ {t:'1.3 · Rekenen aan gehaltes',leer:'hoe nauwkeurig je antwoord mag zijn, en uitrekenen hoeveel van een stof in een mengsel zit.',kern:[
+  '<b>Significante cijfers</b>: tel vanaf het eerste cijfer dat geen 0 is. Nullen achteraan tellen wél mee (0,00230 → 3).',
+  '<b>× en ÷</b>: antwoord in het kleinste aantal significante cijfers. <b>+ en −</b>: het kleinste aantal decimalen. Tussenantwoorden niet afronden.',
+  '<b>massa%</b> = m(stof) ÷ m(totaal) × 100%. <b>ppm</b>: × 10<sup>6</sup> (1 mg per kg). <b>ppb</b>: × 10<sup>9</sup> (1 µg per kg). Boven en onder dezelfde eenheid!',
+  '<b>Concentratie</b> in g/L. <b>Molariteit</b> [A] = n ÷ V<sub>oplossing</sub> in mol/L (= M).']},
+ {t:'1.4 · Rekenen aan reacties',leer:'uitrekenen hoeveel stof er reageert of ontstaat.',kern:[
+  '<b>Wet van behoud van massa</b>: massa beginstoffen = massa reactieproducten.',
+  'De getallen vóór de formules (coëfficiënten) geven de <b>molverhouding</b>, niet de massaverhouding.',
+  '<b>Stappenplan</b>: 1) kloppende reactievergelijking, 2) gegeven stof naar mol, 3) via de molverhouding naar mol van de gevraagde stof, 4) naar de gevraagde eenheid, 5) significantie checken.',
+  '<b>Ondermaat</b> = de stof die als eerste op is: die bepaalt hoeveel product er ontstaat. Wat overblijft is in <b>overmaat</b>. Deel het aantal mol door de coëfficiënt: de kleinste is de ondermaat.']}],
+ slot:['Je mag het Binas (of informatieboek) gebruiken: atoommassa\'s en het periodiek systeem zoek je op.','Schrijf je berekening op, met eenheden. Ook bij een rekenfout krijg je dan punten voor de aanpak.','Let op significantie in het eindantwoord.']}}
+
+/* ---------- Samenvatting voor de toets: alles nog één keer doorlezen, zonder vragen ---------- */
+function samenvatting(){show('play');G={m:'samen',mode:'samen'};S.samen=1;save();const Z=SAMENV();
+ const blok=p=>`<section class="svp"><h3>${p.t}</h3><p class="wat">Hier leer je: ${p.leer}</p>${p.fig?p.fig():''}<ul>${p.kern.map(k=>`<li>${k}</li>`).join('')}</ul></section>`;
+ P.innerHTML=`<div class="playbar"><button class="btn small ghost" id="quit">Terug</button></div>
+ <div class="slide">${head('Samenvatting','voor de toets')}<div class="slide-body sv">
+  <div class="intro"><b>Waar gaat dit over?</b><p>${Z.intro}</p><p class="src" style="margin:0">Lees rustig van boven naar beneden. Geen vragen, alleen even alles opfrissen. Ongeveer 10 minuten.</p></div>
+  ${Z.delen.map(blok).join('')}
+  ${Z.slot?`<div class="intro"><b>Op de toets</b><ul>${Z.slot.map(k=>`<li>${k}</li>`).join('')}</ul></div>`:''}
+  <div class="acts"><button class="btn primary" id="svklaar">Klaar. Succes!</button></div>
+ </div></div>`;
+ $('#quit').onclick=goHome;$('#svklaar').onclick=()=>{confetti();goHome()};window.scrollTo(0,0)}
+
 let RT={on:false,before:null};
-function rVal(r){const [,, ,,,ty,a]=r;
+function rVal(r){if(r[5]==='samen')return S.samen?1:0;const [,, ,,,ty,a]=r;
  if(ty==='lp')return S.lpd&&S.lpd[a]?1:0;
  if(ty==='spel')return S[a]||0;
  if(ty==='pr')return (S.pr||{})[a]||0;
@@ -966,7 +1025,7 @@ function rGoal(r){const ty=r[5];return ty==='lp'||ty==='flits'||ty==='klim'?1:ty
 function rDone(r){return rVal(r)>=rGoal(r)}
 function rPct(){return sum(ROUTE.filter(rDone).map(r=>r[4]))}
 window.leerVoortgang=rPct;
-function rProg(r){const ty=r[5],v=rVal(r),g=rGoal(r);
+function rProg(r){if(r[5]==='samen')return rVal(r)?'gelezen':'lees dit op de ochtend van de toets';const ty=r[5],v=rVal(r),g=rGoal(r);
  if(ty==='lp'||ty==='flits')return v?'gedaan':'nog niet gedaan';
  if(ty==='pr'||ty==='vt')return v?`beste: ${Math.round(v*100)}% in één keer goed · doel 80%`:'doel: 80% in één keer goed';
  if(ty==='tr')return `beste reeks: ${v} · doel ${g} goed op rij`;
@@ -975,14 +1034,14 @@ function rProg(r){const ty=r[5],v=rVal(r),g=rGoal(r);
  if(ty==='toets')return v?`beste cijfer: ${nf(v)} · doel ${g}`:`doel: een ${g}`;
  if(ty==='klim')return `${Math.round(v*100)}% van dit kamp gehaald`;
  return `beste: ${v} van ${({mach:6,keuken:6})[r[6]]||8} goed · doel ${g}`}
-function rGo(r){RT={on:true,before:new Set(ROUTE.filter(rDone).map(x=>x[0]))};const [,, ,,,ty,a]=r;
+function rGo(r){RT={on:true,before:new Set(ROUTE.filter(rDone).map(x=>x[0]))};if(r[5]==='samen')return samenvatting();const [,, ,,,ty,a]=r;
  if(ty==='lp')return lpStart(a);if(ty==='pr')return practice(a);if(ty==='tr')return trainer(a,r[7]);if(ty==='blitz')return blitzStart(a);if(ty==='vt')return vtStart();if(ty==='flits')return flits();if(ty==='toets')return toets();if(ty==='klim')return klimPlay(a);
  if(ty==='atoom'){const b=S.atoom||{};let i=a[0];while(i<a[1]-1&&b[i])i++;return atoomPlay(i)}
  ({komma:kommaHome,trapb:trapHome,kol:kolHome,mach:machHome,keuken:keukenHome})[a]()}
 function routeScreen(){const before=RT.before;RT={on:false,before:null};show('play');G={m:'route'};
  const pct=rPct(),nxt=ROUTE.find(r=>!rDone(r));const fresh=before?ROUTE.filter(r=>rDone(r)&&!before.has(r[0])):[];if(fresh.length)confetti();
  let deel='';const rows=ROUTE.map((r,i)=>{const d=rDone(r),cur=r===nxt;let h='';if(r[1]!==deel){deel=r[1];h=`<h3 class="rt-deel">${RDEEL[deel]}</h3>`}
-  return h+`<button class="rt-step${d?' done':''}${cur?' cur':''}" data-r="${i}"><span class="rt-ic">${d?'✓':cur?'▶':i+1}</span><span class="rt-tx"><b>${r[2]}</b><span>${cur?r[3]+'<br>':''}${rProg(r)}</span></span><span class="rt-w">${d?'':'+'}${r[4]}%</span></button>`}).join('');
+  return h+`<button class="rt-step${d?' done':''}${cur?' cur':''}" data-r="${i}"><span class="rt-ic">${d?'✓':cur?'▶':i+1}</span><span class="rt-tx"><b>${r[2]}</b><span>${cur?r[3]+'<br>':''}${rProg(r)}</span></span><span class="rt-w">${r[4]?(d?'':'+')+r[4]+'%':''}</span></button>`}).join('');
  P.innerHTML=`<div class="playbar"><button class="btn small ghost" id="quit">Naar start</button><span class="bar"><i style="width:${pct}%"></i></span><span class="count">${pct}%</span></div>
  <div class="slide">${head('Leerroute','Scheikunde H1')}<div class="slide-body">
   ${fresh.length?`<div class="fb good"><div class="t">Gehaald: ${fresh.map(r=>r[2]).join(', ')}</div><div class="tip">+${sum(fresh.map(r=>r[4]))}% · je staat nu op ${pct}%</div></div>`:''}
@@ -992,7 +1051,7 @@ function routeScreen(){const before=RT.before;RT={on:false,before:null};show('pl
   <div class="rt-list">${rows}</div>
  </div></div>`;
  $('#quit').onclick=goHome;P.querySelectorAll('[data-r]').forEach(b=>b.onclick=()=>rGo(ROUTE[+b.dataset.r]));const g=$('#rtgo');if(g){g.onclick=()=>rGo(nxt);g.focus()}}
-function routeBox(){const el=$('#lpbox');if(!el)return;const pct=rPct(),nxt=ROUTE.find(r=>!rDone(r));
+function routeBox(){const sb=$('#samen');if(sb)sb.onclick=samenvatting;const el=$('#lpbox');if(!el)return;const pct=rPct(),nxt=ROUTE.find(r=>!rDone(r));
  el.innerHTML=`<button class="mode main lpmode" id="rtbox"><span class="lab">Route</span><span class="tag" style="text-transform:none">${pct}% van de leerroute</span><h3>${nxt?(pct?'Ga verder: ':'Begin: ')+nxt[2]:'Leerroute klaar. Herhalen?'}</h3><p>${nxt?nxt[3]:'Alle stappen beheerst.'}</p><span class="bar" style="margin-top:6px;background:rgba(255,255,255,.2)"><i style="width:${pct}%"></i></span></button>`;
  $('#rtbox').onclick=routeScreen}
 

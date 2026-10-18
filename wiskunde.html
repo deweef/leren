@@ -240,6 +240,16 @@ ol.steps li{animation:fadein .3s ease}
 .lpnav{display:flex;justify-content:space-between;gap:10px;margin-top:6px}
 .lpmode{width:100%}
 .sec .acts .btn.lp{background:var(--accent);border-color:var(--accent);color:#fff}
+.sv{gap:14px}
+.sv .intro{background:var(--chip);border-radius:12px;padding:12px 14px}
+.sv .intro p{margin:6px 0}
+.sv .intro ul{margin:6px 0 0;padding-left:20px;display:grid;gap:4px}
+.svp h3{margin:6px 0 2px;font-size:20px}
+.svp .wat{margin:0 0 8px;color:var(--muted);font-style:italic}
+.svp ul{margin:0;padding-left:20px;display:grid;gap:6px}
+.svp .gt{margin:6px 0}
+.sv .gt td,.sv .gt th{overflow-wrap:normal;word-break:normal;hyphens:manual;-webkit-hyphens:manual}
+.sv .gt td:first-child{white-space:nowrap}
 </style>
 
 </head>
@@ -285,6 +295,7 @@ ol.steps li{animation:fadein .3s ease}
     <div class="sec-head"><h2>4. Toets</h2></div>
     <div class="modes">
       <button class="mode main" id="toets"><span class="lab">Cijfer</span><h3>Proeftoets</h3><p>20 gemengde vragen over het hele hoofdstuk, met uitwerkingen aan het eind en een cijfer.</p></button>
+      <button class="mode main" id="samen"><span class="lab">Lezen</span><h3>Samenvatting voor de toets</h3><p>Ochtend voor de toets: alles nog één keer doorlezen, zonder vragen. Ongeveer 10 minuten.</p></button>
       <button class="mode" id="spiek"><span class="lab">Kaart</span><h3>Spiekbriefje</h3><p>Alle regels en formules op één scherm.</p></button>
     </div>
   </section>
@@ -955,11 +966,54 @@ const ROUTE=[
  ['sd','2.5','Snel oefenen: standaardafwijking met de hand','De lastigste: drie goed op rij is genoeg.',2,'tr','sd',3],
  ['pr2.5','2.5','Oefenronde 2.5','Alles van 2.5 door elkaar.',4,'pr','2.5'],
  ['k4','2.5','Statistiekberg: de Top','De laatste klim: haal de top en je hebt het hele hoofdstuk één keer goed gedaan.',4,'klim',4],
- ['toets','af','Proeftoets','De generale repetitie. Haal je een 7, dan ben je klaar voor de echte toets.',7,'toets',null,7]
+ ['toets','af','Proeftoets','De generale repetitie. Haal je een 7, dan ben je klaar voor de echte toets.',7,'toets',null,7],
+ ['samen','af','Samenvatting: ochtend voor de toets','Alles nog één keer doorlezen, zonder vragen. Ongeveer 10 minuten.',0,'samen',null,1]
 ];
 const RDEEL={'2.1':'2.1 · De onderzoeksvraag','2.2':'2.2 · Data verzamelen','2.3':'2.3 · Data analyseren','2.4':'2.4 · Kwartielen en spreiding','2.5':'2.5 · Verdelingen','af':'Afronden'};
+
+function SAMENV(){return {
+ intro:'Statistiek gaat over <b>gegevens verzamelen en begrijpen</b>. Je leert hoe een onderzoek werkt, welke soorten gegevens er zijn, hoe je ze samenvat met getallen (gemiddelde, mediaan, kwartielen) en plaatjes (histogram, boxplot), en hoe je een verdeling herkent.',
+ delen:[
+ {t:'2.1 · De onderzoeksvraag',leer:'hoe een statistisch onderzoek verloopt en wat een goede steekproef is.',kern:[
+  '<b>Statistische cyclus</b>: 1) onderzoeksvraag, 2) data verzamelen, 3) data analyseren, 4) conclusies trekken.',
+  '<b>Populatie</b> = de hele groep waar je iets over wilt weten. <b>Steekproef</b> = het deel dat je onderzoekt.',
+  '<b>Representatief</b> = een goede afspiegeling van de populatie. <b>Aselect</b> = iedereen heeft evenveel kans om gekozen te worden.',
+  'Een goede vraag is duidelijk, meetbaar en niet sturend.']},
+ {t:'2.2 · Data verzamelen',leer:'welke soorten variabelen er zijn.',kern:[
+  '<b>Kwalitatief</b> (geen hoeveelheid): <b>nominaal</b> zonder volgorde (kleur, merk), <b>ordinaal</b> met volgorde (slecht – goed – heel goed).',
+  '<b>Kwantitatief</b> (een hoeveelheid): <b>discreet</b> = tellen (aantal broers), <b>continu</b> = meten (lengte, tijd).',
+  'Trucje: kun je er zinvol mee rekenen? Dan is het kwantitatief.']},
+ {t:'2.3 · Data analyseren',leer:'centrummaten, frequentietabellen, klassen en het histogram.',kern:[
+  '<b>Gemiddelde</b> = som ÷ aantal. <b>Mediaan</b> = het middelste getal (eerst op volgorde zetten; bij een even aantal het gemiddelde van de middelste twee). <b>Modus</b> = wat het vaakst voorkomt.',
+  'Uitschieters? Neem de mediaan. Kwalitatieve data? Alleen de modus kan.',
+  '<b>Relatieve frequentie</b> = frequentie ÷ totaal × 100%.',
+  '<b>Klassen</b>: [20, 30) betekent 20 wel, 30 niet. Klassenmidden = 25. Het gemiddelde schat je met de klassenmiddens. Modale klasse = de klasse met de hoogste frequentie.',
+  '<b>Gewogen gemiddelde</b> = (waarde × frequentie, alles opgeteld) ÷ totale frequentie.']},
+ {t:'2.4 · Kwartielen en spreiding',leer:'hoe ver de getallen uit elkaar liggen, en de boxplot.',kern:[
+  '<b>Cumulatieve frequentie</b>: steeds optellen. In een cumulatieve grafiek zet je de punten bij de rechtergrens van de klasse.',
+  '<b>Kwartielen</b>: Q1 = mediaan van de eerste helft, Q3 = mediaan van de tweede helft. Vijfgetallensamenvatting: min, Q1, mediaan, Q3, max.',
+  '<b>Spreidingsbreedte</b> = max − min. <b>Interkwartielafstand</b> = Q3 − Q1.',
+  '<b>Boxplot</b>: elk stuk is ongeveer 25%, de box samen 50%.']},
+ {t:'2.5 · Statistische verdelingen',leer:'de vorm van een verdeling herkennen, de standaardafwijking en de normale verdeling.',fig:()=>`<div style="max-width:420px;margin:0 auto">${svgNormal(null,1,'')}</div>`,kern:[
+  'Vormen: <b>symmetrisch</b>, <b>rechtsscheef</b> (staart rechts: modus &lt; mediaan &lt; gemiddelde), <b>linksscheef</b> (andersom), <b>uniform</b> (alles even hoog), <b>twee toppen</b> (twee groepen).',
+  '<b>Standaardafwijking</b> σ: hoe ver de getallen gemiddeld van het gemiddelde af liggen. Groter = meer spreiding.',
+  '<b>Normale verdeling</b>: klokvorm. 68% ligt binnen 1σ van het gemiddelde, 95% binnen 2σ, bijna alles binnen 3σ.']}],
+ slot:['Zet getallen eerst op volgorde voordat je de mediaan of kwartielen zoekt.','Schrijf erbij welke formule je gebruikt, en rond pas aan het eind af.']}}
+
+/* ---------- Samenvatting voor de toets: alles nog één keer doorlezen, zonder vragen ---------- */
+function samenvatting(){show('play');G={m:'samen',mode:'samen'};S.samen=1;save();const Z=SAMENV();
+ const blok=p=>`<section class="svp"><h3>${p.t}</h3><p class="wat">Hier leer je: ${p.leer}</p>${p.fig?p.fig():''}<ul>${p.kern.map(k=>`<li>${k}</li>`).join('')}</ul></section>`;
+ P.innerHTML=`<div class="playbar"><button class="btn small ghost" id="quit">Terug</button></div>
+ <div class="slide">${head('Samenvatting','voor de toets')}<div class="slide-body sv">
+  <div class="intro"><b>Waar gaat dit over?</b><p>${Z.intro}</p><p class="src" style="margin:0">Lees rustig van boven naar beneden. Geen vragen, alleen even alles opfrissen. Ongeveer 10 minuten.</p></div>
+  ${Z.delen.map(blok).join('')}
+  ${Z.slot?`<div class="intro"><b>Op de toets</b><ul>${Z.slot.map(k=>`<li>${k}</li>`).join('')}</ul></div>`:''}
+  <div class="acts"><button class="btn primary" id="svklaar">Klaar. Succes!</button></div>
+ </div></div>`;
+ $('#quit').onclick=goHome;$('#svklaar').onclick=()=>{confetti();goHome()};window.scrollTo(0,0)}
+
 let RT={on:false,before:null};
-function rVal(r){const ty=r[5],a=r[6];
+function rVal(r){if(r[5]==='samen')return S.samen?1:0;const ty=r[5],a=r[6];
  if(ty==='lp')return S.lpd&&S.lpd[a]?1:0;
  if(ty==='pr')return (S.pr||{})[a]||0;
  if(ty==='tr')return (S.tr||{})[a]||0;
@@ -973,7 +1027,7 @@ function rGoal(r){const ty=r[5];return ty==='lp'||ty==='flits'||ty==='klim'?1:ty
 function rDone(r){return rVal(r)>=rGoal(r)}
 function rPct(){return sum(ROUTE.filter(rDone).map(r=>r[4]))}
 window.leerVoortgang=rPct;
-function rProg(r){const ty=r[5],v=rVal(r),g=rGoal(r);
+function rProg(r){if(r[5]==='samen')return rVal(r)?'gelezen':'lees dit op de ochtend van de toets';const ty=r[5],v=rVal(r),g=rGoal(r);
  if(ty==='lp'||ty==='flits')return v?'gedaan':'nog niet gedaan';
  if(ty==='pr')return v?`beste: ${Math.round(v*100)}% in één keer goed · doel 80%`:'doel: 80% in één keer goed';
  if(ty==='tr')return `beste reeks: ${v} · doel ${g} goed op rij`;
@@ -982,14 +1036,14 @@ function rProg(r){const ty=r[5],v=rVal(r),g=rGoal(r);
  if(ty==='bouw')return `${v} van ${g} gebouwd`;
  if(ty==='klim')return `${Math.round(v*100)}% van dit kamp gehaald`;
  if(ty==='toets')return v?`beste cijfer: ${nf(v)} · doel ${g}`:`doel: een ${g}`;return ''}
-function rGo(r){RT={on:true,before:new Set(ROUTE.filter(rDone).map(x=>x[0]))};const ty=r[5],a=r[6];
+function rGo(r){RT={on:true,before:new Set(ROUTE.filter(rDone).map(x=>x[0]))};if(r[5]==='samen')return samenvatting();const ty=r[5],a=r[6];
  if(ty==='lp')return lpStart(a);if(ty==='pr')return practice(a);if(ty==='tr')return trainer(a,r[7]);if(ty==='flits')return flits();if(ty==='toets')return toets();
  if(ty==='lab')return labRun(a);if(ty==='band')return bandStart();if(ty==='klim')return klimPlay(a);
  if(ty==='bouw'){const b=S.bouw||{};let i=a[0];while(i<a[1]-1&&b[BLEVELS[i].f])i++;return bouwPlay(i)}}
 function routeScreen(){const before=RT.before;RT={on:false,before:null};show('play');G={m:'route'};
  const pct=rPct(),nxt=ROUTE.find(r=>!rDone(r));const fresh=before?ROUTE.filter(r=>rDone(r)&&!before.has(r[0])):[];if(fresh.length)confetti();
  let deel='';const rows=ROUTE.map((r,i)=>{const d=rDone(r),cur=r===nxt;let h='';if(r[1]!==deel){deel=r[1];h=`<h3 class="rt-deel">${RDEEL[deel]}</h3>`}
-  return h+`<button class="rt-step${d?' done':''}${cur?' cur':''}" data-r="${i}"><span class="rt-ic">${d?'✓':cur?'▶':i+1}</span><span class="rt-tx"><b>${r[2]}</b><span>${cur?r[3]+'<br>':''}${rProg(r)}</span></span><span class="rt-w">${d?'':'+'}${r[4]}%</span></button>`}).join('');
+  return h+`<button class="rt-step${d?' done':''}${cur?' cur':''}" data-r="${i}"><span class="rt-ic">${d?'✓':cur?'▶':i+1}</span><span class="rt-tx"><b>${r[2]}</b><span>${cur?r[3]+'<br>':''}${rProg(r)}</span></span><span class="rt-w">${r[4]?(d?'':'+')+r[4]+'%':''}</span></button>`}).join('');
  P.innerHTML=`<div class="playbar"><button class="btn small ghost" id="quit">Naar start</button><span class="bar"><i style="width:${pct}%"></i></span><span class="count">${pct}%</span></div>
  <div class="slide">${head('Leerroute','Wiskunde H2')}<div class="slide-body">
   ${fresh.length?`<div class="fb good"><div class="t">Gehaald: ${fresh.map(r=>r[2]).join(', ')}</div><div class="tip">+${sum(fresh.map(r=>r[4]))}% · je staat nu op ${pct}%</div></div>`:''}
@@ -999,7 +1053,7 @@ function routeScreen(){const before=RT.before;RT={on:false,before:null};show('pl
   <div class="rt-list">${rows}</div>
  </div></div>`;
  $('#quit').onclick=goHome;P.querySelectorAll('[data-r]').forEach(b=>b.onclick=()=>rGo(ROUTE[+b.dataset.r]));const g=$('#rtgo');if(g){g.onclick=()=>rGo(nxt);g.focus()}}
-function routeBox(){const el=$('#lpbox');if(!el)return;const pct=rPct(),nxt=ROUTE.find(r=>!rDone(r));
+function routeBox(){const sb=$('#samen');if(sb)sb.onclick=samenvatting;const el=$('#lpbox');if(!el)return;const pct=rPct(),nxt=ROUTE.find(r=>!rDone(r));
  el.innerHTML=`<button class="mode main lpmode" id="rtbox"><span class="lab">Route</span><span class="tag" style="text-transform:none">${pct}% van de leerroute</span><h3>${nxt?(pct?'Ga verder: ':'Begin: ')+nxt[2]:'Leerroute klaar. Herhalen?'}</h3><p>${nxt?nxt[3]:'Alle stappen beheerst.'}</p><span class="bar" style="margin-top:6px;background:rgba(255,255,255,.2)"><i style="width:${pct}%"></i></span></button>`;
  $('#rtbox').onclick=routeScreen}
 

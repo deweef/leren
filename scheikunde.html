@@ -288,6 +288,16 @@ td.okc{background:var(--good-bg);font-weight:700}td.badc{background:var(--bad-bg
 .lpnav{display:flex;justify-content:space-between;gap:10px;margin-top:6px}
 .lpmode{width:100%}
 .sec .acts .btn.lp{background:var(--accent);border-color:var(--accent);color:#fff}
+.sv{gap:14px}
+.sv .intro{background:var(--chip);border-radius:12px;padding:12px 14px}
+.sv .intro p{margin:6px 0}
+.sv .intro ul{margin:6px 0 0;padding-left:20px;display:grid;gap:4px}
+.svp h3{margin:6px 0 2px;font-size:20px}
+.svp .wat{margin:0 0 8px;color:var(--muted);font-style:italic}
+.svp ul{margin:0;padding-left:20px;display:grid;gap:6px}
+.svp .gt{margin:6px 0}
+.sv .gt td,.sv .gt th{overflow-wrap:normal;word-break:normal;hyphens:manual;-webkit-hyphens:manual}
+.sv .gt td:first-child{white-space:nowrap}
 </style>
 
 </head>
@@ -335,6 +345,7 @@ td.okc{background:var(--good-bg);font-weight:700}td.badc{background:var(--bad-bg
     <div class="modes">
       <button class="mode main" id="toets"><span class="lab">Cijfer</span><h3>Proeftoets</h3><p>20 gemengde vragen over het hele hoofdstuk, met uitwerkingen en theorie aan het eind.</p></button>
       <button class="mode" id="flits"><span class="lab">Kaart</span><h3>Begrippen</h3><p>Alle begrippen uit het leerstofoverzicht als flitskaarten.</p></button>
+      <button class="mode main" id="samen"><span class="lab">Lezen</span><h3>Samenvatting voor de toets</h3><p>Ochtend voor de toets: alles nog één keer doorlezen, zonder vragen. Ongeveer 10 minuten.</p></button>
       <button class="mode" id="spiek"><span class="lab">Blad</span><h3>Spiekbriefje</h3><p>Alle regels op één scherm.</p></button>
     </div>
   </section>
@@ -1046,11 +1057,57 @@ const ROUTE=[
  ['k4','2.4','Bindingsberg: de Top','De laatste klim: haal de top en je weet alles van dit hoofdstuk.',3,'klim',4],
  ['band','af','Sorteerband','Metaal, zout of moleculaire stof? Nu alles door elkaar, op tijd.',2,'band',null,15],
  ['flits','af','Begrippen','Alle begrippen nog één keer langs als flitskaarten.',1,'flits'],
- ['toets','af','Proeftoets','De generale repetitie. Haal je een 7, dan ben je klaar voor de echte toets.',4,'toets',null,7]
+ ['toets','af','Proeftoets','De generale repetitie. Haal je een 7, dan ben je klaar voor de echte toets.',4,'toets',null,7],
+ ['samen','af','Samenvatting: ochtend voor de toets','Alles nog één keer doorlezen, zonder vragen. Ongeveer 10 minuten.',0,'samen',null,1]
 ];
 const RDEEL={'0':'0 · Basis','2.1':'2.1 · Atoombinding','2.2':'2.2 · Tussen moleculen','2.3':'2.3 · Metaalbinding','2.4':'2.4 · Ionbinding','af':'Afronden'};
+
+function SAMENV(){return {
+ intro:'Waarom is water vloeibaar, geleidt koper stroom en is keukenzout bros? Dat komt door de manier waarop deeltjes aan elkaar vastzitten: <b>de bindingen</b>. Je leert drie soorten stoffen kennen (moleculaire stoffen, metalen en zouten) en welke binding bij welke soort hoort.',
+ delen:[
+ {t:'0 · Basis',leer:'atoombouw, het periodiek systeem, formules lezen en kloppend maken, en de drie soorten stoffen.',fig:()=>'<p style="margin:0"><b>Drie soorten stoffen</b></p>'+TH.drie.h,kern:[
+  'Een atoom: kern met protonen (+) en neutronen, elektronen (−) in schillen. De elektronen in de buitenste schil heten <b>valentie-elektronen</b>.',
+  'Periodiek systeem: zelfde groep = evenveel valentie-elektronen. Groep 18 (edelgassen) heeft een volle buitenste schil en is heel stabiel. Metalen links, niet-metalen rechts.',
+  'Formule: H<sub>2</sub>O = 2 H + 1 O; 3 H<sub>2</sub>O = 6 H + 3 O. Kloppend maken: alleen de grote getallen veranderen.']},
+ {t:'2.1 · Atoombinding',leer:'hoe niet-metaalatomen samen moleculen vormen, en hoe je die tekent en noemt.',kern:[
+  '<b>Atoombinding</b> = een gedeeld elektronenpaar tussen twee niet-metaalatomen. Heel sterk. Zo krijgen beide een volle buitenste schil.',
+  '<b>Covalentie</b> (aantal bindingen): H, F, Cl, Br, I 1 · O, S 2 · N, P 3 · C, Si 4. Ezelsbrug HONC 1234.',
+  '<b>Structuurformule</b>: elk atoom heeft precies zoveel streepjes als zijn covalentie. Dubbel: O=O, drievoudig: N≡N.',
+  '<b>Namen</b>: mono, di, tri, tetra, penta, hexa + -ide (CO<sub>2</sub> = koolstofdioxide). Triviale namen uit je hoofd: water H<sub>2</sub>O, ammoniak NH<sub>3</sub>, glucose C<sub>6</sub>H<sub>12</sub>O<sub>6</sub>, alcohol C<sub>2</sub>H<sub>6</sub>O, zwavelzuur H<sub>2</sub>SO<sub>4</sub> …',
+  'Per twee atomen: H<sub>2</sub>, N<sub>2</sub>, O<sub>2</sub>, F<sub>2</sub>, Cl<sub>2</sub>, Br<sub>2</sub>, I<sub>2</sub> (HONClBrIF).',
+  '<b>Reactie</b>: bindingen ín moleculen breken, er ontstaan nieuwe stoffen. <b>Faseovergang</b> of oplossen: de moleculen blijven heel.']},
+ {t:'2.2 · Bindingen tussen moleculen',leer:'waarom de ene stof eerder kookt dan de andere, en wat er oplost in water.',kern:[
+  '<b>Vanderwaalsbinding</b> houdt moleculen bij elkaar. Sterker bij een grotere molecuulmassa en een groter contactoppervlak → hoger kookpunt.',
+  '<b>Waterstofbrug</b>: tussen een H aan O of N (δ+) en een O of N van een ander molecuul (δ−). Veel sterker → hoger kookpunt. Daarom is water vloeibaar.',
+  '<b>Hydrofiel</b> (met –OH of –NH, lost op in water) en <b>hydrofoob</b> (lost niet op). Soort zoekt soort.',
+  'Moleculaire stoffen geleiden <b>nooit</b> stroom: er zijn geen vrij bewegende geladen deeltjes.']},
+ {t:'2.3 · Metaalbinding',leer:'hoe metalen in elkaar zitten en waarom ze zich zo gedragen.',kern:[
+  '<b>Metaalrooster</b>: positieve atoomresten met daartussen <b>vrije elektronen</b>. De aantrekking daartussen is de metaalbinding.',
+  'Metalen geleiden stroom en warmte (vrije elektronen), glanzen en zijn vervormbaar (lagen schuiven langs elkaar).',
+  '<b>Legering</b> (mengsel van metalen, zoals staal of brons): harder, minder vervormbaar.',
+  '<b>Edelheid</b>: zeer onedel Na, K · onedel Ca, Mg, Al, Zn, Fe, Pb · edel Cu, Ag, Au, Pt.']},
+ {t:'2.4 · Ionbinding',leer:'wat zouten zijn, welke lading ionen krijgen en hoe je de formule van een zout maakt.',kern:[
+  'Een <b>zout</b> bestaat uit metaal + niet-metaal en is opgebouwd uit <b>ionen</b> (atomen met lading).',
+  '<b>Lading</b>: groep 1 → 1+, groep 2 → 2+, groep 13 → 3+ · groep 17 → 1−, groep 16 → 2−.',
+  '<b>Formule</b>: totale plus = totale min. Mg<sup>2+</sup> + 2 Cl<sup>−</sup> → MgCl<sub>2</sub>. Al<sup>3+</sup> en O<sup>2−</sup> → Al<sub>2</sub>O<sub>3</sub>. Naam: metaal + niet-metaal-ide.',
+  '<b>Ionrooster</b> met sterke ionbinding → hoog smeltpunt.',
+  'Zouten geleiden niet als ze vast zijn, wel als ze gesmolten of opgelost zijn. Ze zijn bros.']}],
+ slot:['Kijk bij elke stof eerst: alleen niet-metalen (moleculair), alleen metaal (metaal) of metaal + niet-metaal (zout)? Dan weet je de binding.','Je mag het Binas (of informatieboek) gebruiken voor het periodiek systeem.']}}
+
+/* ---------- Samenvatting voor de toets: alles nog één keer doorlezen, zonder vragen ---------- */
+function samenvatting(){show('play');G={m:'samen',mode:'samen'};S.samen=1;save();const Z=SAMENV();
+ const blok=p=>`<section class="svp"><h3>${p.t}</h3><p class="wat">Hier leer je: ${p.leer}</p>${p.fig?p.fig():''}<ul>${p.kern.map(k=>`<li>${k}</li>`).join('')}</ul></section>`;
+ P.innerHTML=`<div class="playbar"><button class="btn small ghost" id="quit">Terug</button></div>
+ <div class="slide">${head('Samenvatting','voor de toets')}<div class="slide-body sv">
+  <div class="intro"><b>Waar gaat dit over?</b><p>${Z.intro}</p><p class="src" style="margin:0">Lees rustig van boven naar beneden. Geen vragen, alleen even alles opfrissen. Ongeveer 10 minuten.</p></div>
+  ${Z.delen.map(blok).join('')}
+  ${Z.slot?`<div class="intro"><b>Op de toets</b><ul>${Z.slot.map(k=>`<li>${k}</li>`).join('')}</ul></div>`:''}
+  <div class="acts"><button class="btn primary" id="svklaar">Klaar. Succes!</button></div>
+ </div></div>`;
+ $('#quit').onclick=goHome;$('#svklaar').onclick=()=>{confetti();goHome()};window.scrollTo(0,0)}
+
 let RT={on:false,before:null};
-function rVal(r){const ty=r[5],a=r[6];
+function rVal(r){if(r[5]==='samen')return S.samen?1:0;const ty=r[5],a=r[6];
  if(ty==='lp')return S.lpd&&S.lpd[a]?1:0;
  if(ty==='pr')return (S.pr||{})[a]||0;
  if(ty==='tr')return (S.tr||{})[a]||0;
@@ -1064,7 +1121,7 @@ function rGoal(r){const ty=r[5];return ty==='lp'||ty==='flits'||ty==='klim'?1:ty
 function rDone(r){return rVal(r)>=rGoal(r)}
 function rPct(){return sum(ROUTE.filter(rDone).map(r=>r[4]))}
 window.leerVoortgang=rPct;
-function rProg(r){const ty=r[5],v=rVal(r),g=rGoal(r);
+function rProg(r){if(r[5]==='samen')return rVal(r)?'gelezen':'lees dit op de ochtend van de toets';const ty=r[5],v=rVal(r),g=rGoal(r);
  if(ty==='lp'||ty==='flits')return v?'gedaan':'nog niet gedaan';
  if(ty==='pr')return v?`beste: ${Math.round(v*100)}% in één keer goed · doel 80%`:'doel: 80% in één keer goed';
  if(ty==='tr')return `beste reeks: ${v} · doel ${g} goed op rij`;
@@ -1073,14 +1130,14 @@ function rProg(r){const ty=r[5],v=rVal(r),g=rGoal(r);
  if(ty==='bouw')return `${v} van ${g} gebouwd`;
  if(ty==='klim')return `${Math.round(v*100)}% van dit kamp gehaald`;
  if(ty==='toets')return v?`beste cijfer: ${nf(v)} · doel ${g}`:`doel: een ${g}`;return ''}
-function rGo(r){RT={on:true,before:new Set(ROUTE.filter(rDone).map(x=>x[0]))};const ty=r[5],a=r[6];
+function rGo(r){RT={on:true,before:new Set(ROUTE.filter(rDone).map(x=>x[0]))};if(r[5]==='samen')return samenvatting();const ty=r[5],a=r[6];
  if(ty==='lp')return lpStart(a);if(ty==='pr')return practice(a);if(ty==='tr')return trainer(a,r[7]);if(ty==='flits')return flits();if(ty==='toets')return toets();
  if(ty==='lab')return labRun(a);if(ty==='band')return bandStart();if(ty==='klim')return klimPlay(a);
  if(ty==='bouw'){const b=S.bouw||{};let i=a[0];while(i<a[1]-1&&b[BLEVELS[i].f])i++;return bouwPlay(i)}}
 function routeScreen(){const before=RT.before;RT={on:false,before:null};show('play');G={m:'route'};
  const pct=rPct(),nxt=ROUTE.find(r=>!rDone(r));const fresh=before?ROUTE.filter(r=>rDone(r)&&!before.has(r[0])):[];if(fresh.length)confetti();
  let deel='';const rows=ROUTE.map((r,i)=>{const d=rDone(r),cur=r===nxt;let h='';if(r[1]!==deel){deel=r[1];h=`<h3 class="rt-deel">${RDEEL[deel]}</h3>`}
-  return h+`<button class="rt-step${d?' done':''}${cur?' cur':''}" data-r="${i}"><span class="rt-ic">${d?'✓':cur?'▶':i+1}</span><span class="rt-tx"><b>${r[2]}</b><span>${cur?r[3]+'<br>':''}${rProg(r)}</span></span><span class="rt-w">${d?'':'+'}${r[4]}%</span></button>`}).join('');
+  return h+`<button class="rt-step${d?' done':''}${cur?' cur':''}" data-r="${i}"><span class="rt-ic">${d?'✓':cur?'▶':i+1}</span><span class="rt-tx"><b>${r[2]}</b><span>${cur?r[3]+'<br>':''}${rProg(r)}</span></span><span class="rt-w">${r[4]?(d?'':'+')+r[4]+'%':''}</span></button>`}).join('');
  P.innerHTML=`<div class="playbar"><button class="btn small ghost" id="quit">Naar start</button><span class="bar"><i style="width:${pct}%"></i></span><span class="count">${pct}%</span></div>
  <div class="slide">${head('Leerroute','Scheikunde H2')}<div class="slide-body">
   ${fresh.length?`<div class="fb good"><div class="t">Gehaald: ${fresh.map(r=>r[2]).join(', ')}</div><div class="tip">+${sum(fresh.map(r=>r[4]))}% · je staat nu op ${pct}%</div></div>`:''}
@@ -1090,7 +1147,7 @@ function routeScreen(){const before=RT.before;RT={on:false,before:null};show('pl
   <div class="rt-list">${rows}</div>
  </div></div>`;
  $('#quit').onclick=goHome;P.querySelectorAll('[data-r]').forEach(b=>b.onclick=()=>rGo(ROUTE[+b.dataset.r]));const g=$('#rtgo');if(g){g.onclick=()=>rGo(nxt);g.focus()}}
-function routeBox(){const el=$('#lpbox');if(!el)return;const pct=rPct(),nxt=ROUTE.find(r=>!rDone(r));
+function routeBox(){const sb=$('#samen');if(sb)sb.onclick=samenvatting;const el=$('#lpbox');if(!el)return;const pct=rPct(),nxt=ROUTE.find(r=>!rDone(r));
  el.innerHTML=`<button class="mode main lpmode" id="rtbox"><span class="lab">Route</span><span class="tag" style="text-transform:none">${pct}% van de leerroute</span><h3>${nxt?(pct?'Ga verder: ':'Begin: ')+nxt[2]:'Leerroute klaar. Herhalen?'}</h3><p>${nxt?nxt[3]:'Alle stappen beheerst.'}</p><span class="bar" style="margin-top:6px;background:rgba(255,255,255,.2)"><i style="width:${pct}%"></i></span></button>`;
  $('#rtbox').onclick=routeScreen}
 

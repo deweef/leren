@@ -304,6 +304,20 @@ canvas#conf{position:fixed;inset:0;pointer-events:none;z-index:9}
 .bkamp .bar{grid-column:1;display:block;align-self:center}.bkamp .count{grid-column:2;grid-row:3}
 .bkamp:disabled{opacity:.5;cursor:not-allowed;border-style:dashed}
 .bkamp.done{border-color:var(--good);background:var(--good-bg)}
+.sv{gap:14px}
+.sv .intro{background:var(--chip);border-radius:12px;padding:12px 14px}
+.sv .intro p{margin:6px 0}
+.sv .intro ul{margin:6px 0 0;padding-left:20px;display:grid;gap:4px}
+.svp h3{margin:6px 0 2px;font-size:20px}
+.svp .wat{margin:0 0 8px;color:var(--muted);font-style:italic}
+.svp ul{margin:0;padding-left:20px;display:grid;gap:6px}
+.svp .gt{margin:6px 0}
+.svrules{overflow-x:auto;max-width:100%}
+.svrules table{width:100%}
+.pass-body.sv{min-width:0}
+.pass-body.sv>*{min-width:0;max-width:100%}
+.sv table.svw{width:100%;table-layout:fixed;border-collapse:collapse}
+.sv table.svw td{overflow-wrap:anywhere;padding:5px 8px;border-bottom:1px solid var(--line);vertical-align:top}
 </style>
 </head>
 <body>
@@ -325,7 +339,8 @@ canvas#conf{position:fixed;inset:0;pointer-events:none;z-index:9}
     </header>
 
     <section><div id="lpbox"></div>
-      <div class="modes" style="margin-top:12px"><button class="mode" id="klim"><span class="tag" id="klimTag" style="text-transform:none">0 m</span><h3>Beklim de Woordenberg</h3><p>Alle woorden van Unit 2 en 3, kamp voor kamp. Sta je op de top (100%), dan ken je alle woorden.</p></button></div>
+      <div class="modes" style="margin-top:12px"><button class="mode" id="samen"><span class="tag">Lezen</span><h3>Samenvatting voor de toets</h3><p>Ochtend voor de toets: lastige woorden, woorden die je nog niet kent en de grammaticaregels. Geen vragen.</p></button>
+      <button class="mode" id="klim"><span class="tag" id="klimTag" style="text-transform:none">0 m</span><h3>Beklim de Woordenberg</h3><p>Alle woorden van Unit 2 en 3, kamp voor kamp. Sta je op de top (100%), dan ken je alle woorden.</p></button></div>
     </section>
 
     <section>
@@ -1779,10 +1794,34 @@ BLOKKEN.forEach((b,i)=>{const d=i<5?'u3':'u2',eerste=i===0;
  ROUTE.push(['k'+i,d,'Woordenberg: '+KCAMPS[i].n,'Eindcheck: elk woord van dit blok één keer goed.',3,'klim',i])});
 GTOP.forEach(t=>ROUTE.push(['gr'+t.id,'gr',t.title,t.sub,3,'gram',t.id]));
 ROUTE.push(['hard','af','Lastige woorden','De woorden die je moeilijk vond, en die vaak fout gaan.',4,'hard']);
+ROUTE.push(['samen','af','Samenvatting: ochtend voor de toets','Alles nog één keer doorlezen, zonder vragen. Ongeveer 10 minuten.',0,'samen',null,1]);
 const RDEEL={u3:'Unit 3 · On the go',u2:'Unit 2 · It\'s just a game',gr:'Grammatica',af:'Afronden'};
 const SPELNAAM={vlucht:'Vliegroute',schiet:'Schiettent',stroom:'Stroomdraad',blitz:'Blitz 60'};
+
+function SAMENV(){const fout=WORDS.filter(w=>((S.w[w.en]||{}).l||0)<3);const lastig=WORDS.filter(w=>HARD.includes(w.en));
+ const lijst=l=>`<table class="svw">${l.map(w=>`<tr><td><b>${esc(w.en)}</b></td><td>${esc(w.nl)}</td></tr>`).join('')}</table>`;
+ return {
+ intro:'Twee units: <b>Unit 2 · It\'s just a game</b> (sport en spel) en <b>Unit 3 · On the go</b> (reizen en vervoer). Daarnaast vijf grammatica-onderwerpen. Hieronder eerst de lastige woorden, dan de woorden die je nog niet helemaal kent, en dan de grammaticaregels.',
+ delen:[
+ {t:'Lastige woorden',leer:'de woorden die je moeilijk vond.',fig:()=>lijst(lastig),kern:['Former = de eerste (van twee), latter = de laatste (van twee).']},
+ {t:'Nog niet helemaal gekend',leer:`de ${Math.min(fout.length,40)} woorden die je het minst vaak goed had${fout.length>40?' (van de '+fout.length+')':''}.`,fig:()=>fout.length?lijst(fout.sort((a,b)=>((S.w[b.en]||{}).x||0)-((S.w[a.en]||{}).x||0)).slice(0,40)):'<p>Je kent alle woorden. Top!</p>',kern:[]},
+ ...GTOP.map(t=>({t:'Grammatica · '+t.title,leer:t.sub+'.',fig:()=>`<div class="svrules">${t.rules}</div>`,kern:[]}))],
+ slot:['Lees de vraag goed: Nederlands → Engels of Engels → Nederlands?','Bij de grammatica: kijk eerst naar het signaalwoord of het hulpwerkwoord in de zin.']}}
+
+/* ---------- Samenvatting voor de toets: alles nog één keer doorlezen, zonder vragen ---------- */
+function samenvatting(){show('play');G={m:'samen',mode:'samen'};S.samen=1;save();const Z=SAMENV();
+ const blok=p=>`<section class="svp"><h3>${p.t}</h3><p class="wat">Hier leer je: ${p.leer}</p>${p.fig?p.fig():''}<ul>${p.kern.map(k=>`<li>${k}</li>`).join('')}</ul></section>`;
+ P.innerHTML=`<div class="playbar"><button class="btn small ghost" id="quit">Terug</button></div>
+ <div class="pass">${headHtml('Samenvatting','voor de toets')}<div class="pass-body sv">
+  <div class="intro"><b>Waar gaat dit over?</b><p>${Z.intro}</p><p class="src" style="margin:0">Lees rustig van boven naar beneden. Geen vragen, alleen even alles opfrissen. Ongeveer 10 minuten.</p></div>
+  ${Z.delen.map(blok).join('')}
+  ${Z.slot?`<div class="intro"><b>Op de toets</b><ul>${Z.slot.map(k=>`<li>${k}</li>`).join('')}</ul></div>`:''}
+  <div class="acts"><button class="btn primary" id="svklaar">Klaar. Succes!</button></div>
+ </div></div>`;
+ $('#quit').onclick=goHome;$('#svklaar').onclick=()=>{confetti();goHome()};window.scrollTo(0,0)}
+
 let RT={on:false,before:null};
-function rVal(r){const ty=r[5],a=r[6];
+function rVal(r){if(r[5]==='samen')return S.samen?1:0;const ty=r[5],a=r[6];
  if(ty==='learn')return mastery(blokW(BLOKKEN[a]));
  if(ty==='game'){const l=blokW(BLOKKEN[a]);return l.length?l.filter(w=>((S.w[w.en]||{}).l||0)>=3).length/l.length:0}
  if(ty==='klim')return klimPct(a);
@@ -1792,7 +1831,7 @@ function rGoal(r){const ty=r[5];return ty==='learn'?.5:ty==='game'||ty==='hard'?
 function rDone(r){return rVal(r)>=rGoal(r)}
 function rPct(){return ROUTE.filter(rDone).reduce((a,r)=>a+r[4],0)}
 window.leerVoortgang=rPct;
-function rProg(r){const ty=r[5],v=Math.round(rVal(r)*100);
+function rProg(r){if(r[5]==='samen')return rVal(r)?'gelezen':'lees dit op de ochtend van de toets';const ty=r[5],v=Math.round(rVal(r)*100);
  if(ty==='learn')return `${v}% geoefend · doel 50%`;
  if(ty==='game'||ty==='hard')return `${v}% van de woorden gekend · doel 80%`;
  if(ty==='klim')return `${v}% van dit kamp gehaald`;
@@ -1803,7 +1842,7 @@ function kiesSpel(i){show('play');G={mode:'kies'};const b=BLOKKEN[i];
   <div class="modes">${Object.entries(SPELNAAM).map(([g,n])=>`<button class="mode" data-sp="${g}"><h3>${n}</h3></button>`).join('')}</div>
   <p class="src" style="margin:0">Elk goed woord telt mee voor "gekend". Na het spel kom je terug in het woordjespad.</p></div></div>`;
  $('#quit').onclick=goHome;P.querySelectorAll('[data-sp]').forEach(x=>x.onclick=()=>{S.sel=[...b.p];save();start(x.dataset.sp)})}
-function rGo(r){RT={on:true,before:new Set(ROUTE.filter(rDone).map(x=>x[0]))};const ty=r[5],a=r[6];
+function rGo(r){RT={on:true,before:new Set(ROUTE.filter(rDone).map(x=>x[0]))};if(r[5]==='samen')return samenvatting();const ty=r[5],a=r[6];
  if(ty==='learn'){S.sel=[...BLOKKEN[a].p];save();return start('learn')}
  if(ty==='game')return kiesSpel(a);
  if(ty==='klim')return klimPlay(a);
@@ -1813,7 +1852,7 @@ function routeScreen(){const before=RT.before;RT={on:false,before:null};show('pl
  const pct=rPct(),nxt=ROUTE.find(r=>!rDone(r));const fresh=before?ROUTE.filter(r=>rDone(r)&&!before.has(r[0])):[];if(fresh.length)confetti();
  const gek=WORDS.filter(w=>((S.w[w.en]||{}).l||0)>=3).length;
  let deel='';const rows=ROUTE.map((r,i)=>{const d=rDone(r),cur=r===nxt;let h='';if(r[1]!==deel){deel=r[1];h=`<h3 class="rt-deel">${RDEEL[deel]}</h3>`}
-  return h+`<button class="rt-step${d?' done':''}${cur?' cur':''}" data-r="${i}"><span class="rt-ic">${d?'✓':cur?'▶':i+1}</span><span class="rt-tx"><b>${esc(r[2])}</b><span>${cur?esc(r[3])+'<br>':''}${rProg(r)}</span></span><span class="rt-w">${d?'':'+'}${r[4]}%</span></button>`}).join('');
+  return h+`<button class="rt-step${d?' done':''}${cur?' cur':''}" data-r="${i}"><span class="rt-ic">${d?'✓':cur?'▶':i+1}</span><span class="rt-tx"><b>${esc(r[2])}</b><span>${cur?esc(r[3])+'<br>':''}${rProg(r)}</span></span><span class="rt-w">${r[4]?(d?'':'+')+r[4]+'%':''}</span></button>`}).join('');
  P.innerHTML=`<div class="playbar"><button class="btn small ghost" id="quit">Naar start</button><span class="bar"><i style="width:${pct}%"></i></span><span class="count">${pct}%</span></div>
  <div class="pass">${headHtml('Woordjespad','Engels Unit 2 & 3')}<div class="pass-body">
   ${fresh.length?`<div class="fb good"><div class="t">Gehaald: ${fresh.map(r=>esc(r[2])).join(', ')}</div><div class="tip">+${fresh.reduce((a,r)=>a+r[4],0)}% · je staat nu op ${pct}%</div></div>`:''}
@@ -1823,7 +1862,7 @@ function routeScreen(){const before=RT.before;RT={on:false,before:null};show('pl
   <div class="rt-list">${rows}</div>
  </div></div>`;
  $('#quit').onclick=goHome;P.querySelectorAll('[data-r]').forEach(b=>b.onclick=()=>rGo(ROUTE[+b.dataset.r]));const g=$('#rtgo');if(g){g.onclick=()=>rGo(nxt);g.focus()}}
-function routeBox(){const el=$('#lpbox');if(!el)return;const pct=rPct(),nxt=ROUTE.find(r=>!rDone(r));
+function routeBox(){const sb=$('#samen');if(sb)sb.onclick=samenvatting;const el=$('#lpbox');if(!el)return;const pct=rPct(),nxt=ROUTE.find(r=>!rDone(r));
  el.innerHTML=`<button class="mode main" id="rtbox"><span class="tag" style="text-transform:none">${pct}% van het woordjespad</span><h3>${nxt?(pct?'Ga verder':'Begin hier'):'Woordjespad klaar'}</h3><p>${nxt?esc(nxt[2])+'. '+esc(nxt[3]):'Alle stappen gehaald. Herhalen?'}</p><span class="bar" style="margin-top:6px;background:rgba(255,255,255,.2)"><i style="width:${pct}%;background:var(--accent)"></i></span></button>`;
  $('#rtbox').onclick=routeScreen;
  const t=klimTotal(),kt=$('#klimTag');if(kt)kt.textContent=Math.round(t.p*KTOP).toLocaleString('nl-NL')+' m · '+Math.round(t.p*100)+'%'}
