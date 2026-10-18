@@ -114,6 +114,12 @@ details.tips ul{margin:10px 0 4px;padding-left:20px;display:grid;gap:6px}
 .massafig svg{display:block;width:100%;max-width:420px;margin:0 auto;height:auto;color:var(--ink)}
 .lpfig{background:var(--chip);border-radius:12px;padding:8px;margin:10px 0}
 .lpfig svg{display:block;width:100%;max-width:460px;height:auto;margin:0 auto;color:var(--ink)}
+.leg{background:var(--chip);border-radius:10px;padding:8px 12px;margin:10px 0;font-size:14px}
+.leg table{border-collapse:collapse;width:100%;margin-top:4px}
+.leg td{padding:3px 6px;vertical-align:top;overflow-wrap:normal;word-break:normal;border-top:1px solid var(--line)}
+.leg td:first-child{font-weight:800;white-space:nowrap;width:1%}
+.leg td:last-child{color:var(--muted);white-space:nowrap;width:1%}
+.leg p{margin:6px 0 0;font-size:13.5px}
 /* spel */
 .playbar{display:flex;align-items:center;gap:12px;margin-bottom:16px}
 .playbar .bar{flex:1;height:10px;border-radius:5px}
@@ -470,6 +476,14 @@ const TH={
  stappen:{t:'Stappenplan rekenen aan reacties',h:`<ol style="margin:0;padding-left:20px"><li>Geef de kloppende reactievergelijking.</li><li>Reken de gegeven stof om naar <b>mol</b>.</li><li>Reken via de <b>molverhouding</b> om naar mol van de gevraagde stof.</li><li>Reken om naar de gevraagde grootheid en eenheid.</li><li>Controleer de significantie.</li></ol>`},
  overmaat:{t:'Overmaat en ondermaat',h:`De beginstof die als eerste <b>op</b> is, is in <b>ondermaat</b>: die bepaalt hoeveel product er ontstaat. De stof die <b>over</b> blijft is in <b>overmaat</b>. Reken beide beginstoffen om naar mol en deel door hun coëfficiënt: de kleinste uitkomst is de ondermaat.`}
 };
+/* ---------- "Wat betekent wat?": uitleg van de letters in een formule ---------- */
+const SYM={N:['N','aantal deeltjes (moleculen of atomen)','gewoon een getal'],n:['n','chemische hoeveelheid: hoeveel mol','mol'],
+ NA:['N<sub>A</sub>','getal van Avogadro: 6,02·10<sup>23</sup> deeltjes in 1 mol','per mol'],m:['m','massa','g'],M:['M','molaire massa: de massa van 1 mol','g/mol'],
+ rho:['ρ','dichtheid: massa per volume','g/mL'],V:['V','volume','mL of L'],A:['[A]','molariteit van stof A: mol per liter oplossing','mol/L (= M)'],
+ Vopl:['V<sub>opl</sub>','volume van de oplossing','L'],mst:['m(stof)','massa van de stof waar het om gaat','g'],mtot:['m(totaal)','massa van het hele mengsel','g (zelfde eenheid!)']};
+function leg(keys,noot){return `<div class="leg"><b>Wat betekent wat?</b><table>${keys.map(k=>{const r=SYM[k];return `<tr><td>${r[0]}</td><td>${r[1]}</td><td>${r[2]}</td></tr>`}).join('')}</table>${noot?`<p>${noot}</p>`:''}</div>`}
+TH.mol.h+=leg(['N','n','NA']);TH.molmassa.h+=leg(['m','n','M']);TH.dichtheid.h+=leg(['rho','m','V']);
+TH.schema.h+=leg(['V','rho','m','M','n','NA','N']);TH.gehalte.h+=leg(['mst','mtot']);TH.molariteit.h+=leg(['A','n','Vopl']);
 const UITLEG={
 '0':`<h3>Waarom chemisch rekenen?</h3><p>Een apotheker die een medicijn maakt, moet de stoffen in precies de goede hoeveelheden mengen. Stoffen reageren op microniveau in vaste verhoudingen. Dit hoofdstuk leert je die verhoudingen te gebruiken. Eerst de basis uit klas 3.</p>
 <h3>Element of verbinding</h3>${TH.element.h}
@@ -1325,6 +1339,13 @@ function figTosti(){const brood=(x,y)=>`<rect x="${x}" y="${y}" width="26" heigh
  let l='';for(let i=0;i<6;i++)l+=brood(10+(i%3)*30,22+Math.floor(i/3)*32);for(let i=0;i<4;i++)l+=kaas(10+i*24,86);
  let r='';for(let i=0;i<3;i++){r+=brood(196+i*38,30)+kaas(196+i*38,30)}r+=kaas(234,78);
  return svgBox(330,140,`${l}${tx(166,56,'→',{b:1,s:20})}${r}${tx(55,130,'6 brood + 4 kaas',{s:11})}${tx(250,72,'3 tosti’s',{b:1,s:12})}${tx(250,112,'1 plak kaas over',{s:11})}${tx(250,130,'brood = ondermaat',{b:1,s:11})}`,'Met 6 sneetjes brood en 4 plakken kaas maak je 3 tosti\'s: het brood is op (ondermaat), er blijft 1 plak kaas over (overmaat)')}
+{const legBij=(sec,titel,keys,noot)=>{const c=(LP[sec]||[]).find(c=>c[0]===titel);if(!c)return;const t=c[1];c[1]=()=>(typeof t==='function'?t():t)+leg(keys,noot)};
+ legBij('1.2','De mol is een dozijn',['N','n','NA']);legBij('1.2','Het mooie van de mol',['m','n','M']);legBij('1.2','Van gram naar mol',['n','m','M']);
+ legBij('1.2','Dichtheid',['rho','m','V']);
+ legBij('1.3','Molariteit',['A','n','Vopl']);
+ legBij('0b','Formules ombouwen',['m','n','M','rho','V']);
+ legBij('0b','En M (molair)',['A','n','Vopl'],'Let op: de hoofdletter M wordt voor twee dingen gebruikt. Als <b>eenheid</b> betekent M "molair" = mol per liter. In een <b>formule</b> is M de molaire massa in g/mol.');
+ if(TH.ombouw)TH.ombouw.h+=leg(['m','n','M','rho','V']);}
 {const voegToe=(sec,titel,fig)=>{const c=(LP[sec]||[]).find(c=>c[0]===titel);if(!c)return;const t=c[1];c[1]=()=>(typeof t==='function'?t():t)+fig()};
  voegToe('1.2','De mol is een dozijn',figDozijn);voegToe('1.2','Van gram naar mol',figWeeg);voegToe('1.2','Dichtheid',figDicht);
  voegToe('1.3','Gehaltes',figTaart);voegToe('1.3','Ppm in de klas',figPpm);voegToe('1.3','Molariteit',figMolair);

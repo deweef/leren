@@ -53,7 +53,8 @@ schermen `show('home'|'play')`, `goHome()`, `ask()`, `practice(sec)` (oefenronde
   aan bestaande kaartjes via `voegToe(sec, titel, fig)` (`figDozijn`, `figWeeg`, `figDicht`, `figTaart`, `figPpm`,
   `figMolair`, `figBehoud`, `figTosti`; klasse `.lpfig`). Formules en N_A instampen: de **Formuleblitz**
   (`BLITZ.form`), ook als routestap in 1.2. Formules moet je kennen; N_A staat in Binas (tabel 7) maar is handig om
-  te weten. Stel bij een vraag van Marcel
+  te weten. Onder elke formule staat "Wat betekent wat?" (`leg(keys)`, `SYM`: symbool,
+  betekenis, eenheid), op de theorie (`TH.*.h`) en via `legBij` op leerpad-kaartjes. Stel bij een vraag van Marcel
   over de stof eerst vast of het al ergens uitgelegd staat; ontbreekt het, stel dan een kaartje voor.
 - Opgeslagen voor de route: `S.tr[gen]` (beste reeks), `S.pr[sec]` (beste oefenronde, fractie), `S.flits`.
 - **Frans versie 5** (`frans-5.html`): kopie van de combi (zelfde opslag `frans-ch1-combi`) met woordjespad en
@@ -99,4 +100,6 @@ schermen `show('home'|'play')`, `goHome()`, `ask()`, `practice(sec)` (oefenronde
   In `engels.html` heeft `.gt` een `min-width:480px`: gebruik voor smalle tabellen een eigen klasse.
 - Tabellen in een smalle kolom: de algemene regel `overflow-wrap:anywhere` breekt woorden middendoor; zet hem lokaal
   uit, of zet de tabel buiten de lijst op volle breedte.
+- Iets toevoegen aan `TH.*.h` komt ook terecht in kaartjes die die theorie al overnemen (`${TH.schema.h}` in
+  "Het rekenschema", `TH.gehalte.h` in "Gehaltes"): voeg het daar dan niet nog eens toe (dubbel).
 - Bekijk nieuwe schermen altijd op telefoonbreedte (390 px), in licht én donker, voordat je ze live zet.
