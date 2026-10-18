@@ -104,6 +104,12 @@ details.tips ul{margin:10px 0 4px;padding-left:20px;display:grid;gap:6px}
 .bkamp .bar{grid-column:1;display:block;align-self:center}.bkamp .count{grid-column:2;grid-row:3}
 .bkamp:disabled{opacity:.5;cursor:not-allowed;border-style:dashed}
 .bkamp.done{border-color:var(--good);background:var(--good-bg)}
+.zoomfig{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:10px;margin:10px 0}
+.zoomfig.z3{grid-template-columns:repeat(3,minmax(0,1fr))}
+@media (min-width:640px){.zoomfig{grid-template-columns:repeat(4,minmax(0,1fr))}.zoomfig.z3{grid-template-columns:repeat(3,minmax(0,1fr))}}
+.zoomfig figure{margin:0;background:var(--chip);border-radius:12px;padding:8px;display:flex;flex-direction:column;align-items:center;gap:4px;min-width:0}
+.zoomfig svg{width:100%;max-width:150px;height:auto;color:var(--ink)}
+.zoomfig figcaption{font-size:13px;line-height:1.3;text-align:center}
 /* spel */
 .playbar{display:flex;align-items:center;gap:12px;margin-bottom:16px}
 .playbar .bar{flex:1;height:10px;border-radius:5px}
@@ -1177,6 +1183,34 @@ LP['0b'].splice(LP['0b'].findIndex(c=>c[0]==='Ook voor gram en meter'),0,['De ko
 
 /* ---------- Voorkennistoets: wat mis je nog? ---------- */
 TH.ombouw={t:'Formules ombouwen',h:`<p>De driehoek-truc: zet de formule in een driehoek. Wat <b>alleen</b> staat, komt bovenaan.</p><div class="drie"><div class="top">m</div><div class="bot"><span>n</span><span>×</span><span>M</span></div></div><p>Dek af wat je zoekt: m = n × M &nbsp;·&nbsp; n = m ÷ M &nbsp;·&nbsp; M = m ÷ n</p><p>Zelfde truc voor ρ = m ÷ V: m bovenaan, ρ en V onderaan. Dus m = ρ × V en V = m ÷ ρ.</p>`};
+/* ---------- Leerpad 0: wat is een atoom, molecuul, stof en element (met plaatjes) ---------- */
+const AKL={H:['#FFFFFF','#8A8A8A'],O:['#D9443A','rgba(0,0,0,.3)'],Fe:['#9AA3AD','rgba(0,0,0,.3)']};
+const bol=(x,y,r,el)=>`<circle cx="${x}" cy="${y}" r="${r}" fill="${AKL[el][0]}" stroke="${AKL[el][1]}" stroke-width="1.2"/>`;
+const h2o=(x,y,sc=1,rot=0)=>`<g transform="translate(${x} ${y}) rotate(${rot}) scale(${sc})">${bol(-13,9,8,'H')}${bol(13,9,8,'H')}${bol(0,0,12,'O')}</g>`;
+const o2=(x,y,sc=1,rot=0)=>`<g transform="translate(${x} ${y}) rotate(${rot}) scale(${sc})">${bol(-9,0,11,'O')}${bol(9,0,11,'O')}</g>`;
+const fig=(svg,cap)=>`<figure><svg viewBox="0 0 120 120" role="img" aria-label="${cap.replace(/<[^>]*>/g,'')}">${svg}</svg><figcaption>${cap}</figcaption></figure>`;
+const steen=(x,y,kl)=>`<g transform="translate(${x} ${y})"><rect x="0" y="5" width="30" height="16" rx="2" fill="${kl}" stroke="rgba(0,0,0,.35)"/><rect x="5" y="1" width="7" height="5" rx="1" fill="${kl}" stroke="rgba(0,0,0,.35)"/><rect x="18" y="1" width="7" height="5" rx="1" fill="${kl}" stroke="rgba(0,0,0,.35)"/></g>`;
+const watermol=(x,y)=>`${steen(x,y,'#FFFFFF')}${steen(x+30,y,'#FFFFFF')}${steen(x+15,y-16,'#D9443A')}`;
+function zoomFig(){
+ const glas=`<path d="M30 18 L90 18 L82 108 L38 108 Z" fill="none" stroke="currentColor" stroke-width="2.5"/><path d="M33 48 L87 48 L82 106 L38 106 Z" fill="#8EC5F0" opacity=".85"/><circle cx="60" cy="78" r="13" fill="none" stroke="currentColor" stroke-width="2.5"/><line x1="69" y1="87" x2="80" y2="98" stroke="currentColor" stroke-width="3.5" stroke-linecap="round"/>`;
+ const veel=`<circle cx="60" cy="60" r="56" fill="#DCEEFB" stroke="currentColor" stroke-width="2"/>`+[[38,32,0],[74,30,40],[30,64,-30],[60,56,90],[90,62,15],[44,92,60],[78,90,-50],[60,20,-80]].map(([x,y,r])=>h2o(x,y,.75,r)).join('');
+ const een=`${h2o(60,52,2.6)}<text x="26" y="81" font-size="15" text-anchor="middle" fill="#333" font-weight="700">H</text><text x="94" y="81" font-size="15" text-anchor="middle" fill="#333" font-weight="700">H</text><text x="60" y="58" font-size="17" text-anchor="middle" fill="#fff" font-weight="700">O</text>`;
+ const atoom=atoomSvg(8,8,8).replace('<svg viewBox="0 0 300 300" class="asvg">','<g transform="translate(-12 -12) scale(.48)">').replace('</svg>','</g>');
+ return `<div class="zoomfig">${fig(glas,'<b>1. Stof:</b> een glas water')}${fig(veel,'<b>2. Inzoomen:</b> heel veel watermoleculen, allemaal hetzelfde')}${fig(een,'<b>3. Eén molecuul</b> H<sub>2</sub>O: 2 waterstofatomen en 1 zuurstofatoom')}${fig(atoom,'<b>4. Eén atoom</b> zuurstof: kern met 8 <span style="color:#3C6FD6">protonen</span> en 8 <span style="color:#7FB56A">neutronen</span>, 8 <span style="color:#D9443A">elektronen</span> eromheen')}</div>`}
+function legoFig(){
+ const los=[steen(10,20,'#FFFFFF'),steen(66,14,'#D9443A'),steen(24,58,'#9AA3AD'),steen(74,62,'#FFFFFF'),steen(44,92,'#2F9E59')].join('');
+ const bouw=watermol(30,64);
+ const bak=`<rect x="8" y="30" width="104" height="80" rx="6" fill="none" stroke="currentColor" stroke-width="2"/>`+[[14,58],[62,58],[14,98],[62,98]].map(([x,y])=>`<g transform="translate(${x} ${y}) scale(.62)">${watermol(0,0)}</g>`).join('');
+ return `<div class="zoomfig z3">${fig(los,'<b>Atomen</b> = losse steentjes, elke kleur een element')}${fig(bouw,'<b>Molecuul</b> = een bouwwerkje: 2 wit + 1 rood = water')}${fig(bak,'<b>Stof</b> = een bak vol precies dezelfde bouwwerkjes')}</div>`}
+function elementFig(){
+ const zuurstof=`<rect x="6" y="6" width="108" height="108" rx="10" fill="none" stroke="currentColor" stroke-width="1.5"/>`+[[32,34,20],[82,30,-30],[40,82,70],[86,84,10]].map(([x,y,r])=>o2(x,y,.9,r)).join('');
+ let ijzer=`<rect x="6" y="6" width="108" height="108" rx="10" fill="none" stroke="currentColor" stroke-width="1.5"/>`;for(let i=0;i<4;i++)for(let j=0;j<4;j++)ijzer+=bol(24+i*24,24+j*24,11,'Fe');
+ const water=`<rect x="6" y="6" width="108" height="108" rx="10" fill="none" stroke="currentColor" stroke-width="1.5"/>`+[[34,36,10],[84,34,-40],[36,86,50],[86,86,-10]].map(([x,y,r])=>h2o(x,y,.95,r)).join('');
+ return `<div class="zoomfig z3">${fig(zuurstof,'<b>Element</b> zuurstof (O<sub>2</sub>): alleen rode atomen')}${fig(ijzer,'<b>Element</b> ijzer (Fe): alleen ijzeratomen')}${fig(water,'<b>Verbinding</b> water (H<sub>2</sub>O): twee soorten atomen')}</div>`}
+LP['0'].splice(1,0,
+ ['Wat is een atoom?',(()=>`<p>Alles om je heen bestaat uit piepkleine deeltjes: <b>atomen</b>. Een atoom is het <b>kleinste deeltje van een element</b>. Er zijn ongeveer 118 soorten atomen; die staan in het periodiek systeem.</p>${zoomFig()}<p>In een atoom zitten nog kleinere deeltjes: <b>protonen</b> en <b>neutronen</b> in de kern, <b>elektronen</b> eromheen. Het aantal <b>protonen</b> bepaalt welk element het is: 1 = waterstof, 8 = zuurstof, 17 = chloor.</p><p>Hoe klein? In de punt aan het eind van deze zin passen zo'n 10 miljoen atomen op een rij.</p>`),['Wat bepaalt welk element een atoom is?','het aantal protonen','het aantal neutronen|hoe groot het atoom is','Het aantal protonen (het atoomnummer). 17 protonen = altijd chloor, ook als het aantal neutronen of elektronen anders is.']],
+ ['Atoom, molecuul en stof',(()=>`<p>Denk aan <b>Lego</b>:</p>${legoFig()}<div class="rule"><b>atoom</b> = één steentje: het kleinste deeltje van een element<br><b>molecuul</b> = een bouwwerkje van atomen die vastzitten: het kleinste deeltje van een stof<br><b>stof</b> = heel veel dezelfde moleculen bij elkaar</div><p>Eén molecuul is nog net water, maar niet nat. Nat zijn, vloeibaar zijn en koken bij 100 °C horen bij heel veel moleculen samen.</p><p>Met maar 118 soorten steentjes bouw je miljoenen verschillende stoffen.</p>`),['Eén watermolecuul is…','het kleinste deeltje van de stof water','een atoom|een element','Het is gebouwd uit 3 atomen (2 H en 1 O). Eén molecuul is het kleinste stukje dat nog water is.']]);
+{const c=LP['0'].find(c=>c[0]==='Element of verbinding');if(c){const t=c[1];c[1]=(()=>t.replace(/^<p>[\s\S]*?<\/p>/,'<p>Een stof kan uit <b>één soort</b> of uit <b>meer soorten</b> atomen bestaan.</p>')+elementFig()+'<p>Een <b>element</b> is dus een stof met maar één soort atomen. Het woord gebruik je ook voor de atoomsoort zelf: "het element chloor" = alle atomen met 17 protonen.</p>')}}
 LP['0'].push(['Fasen',`<p>Achter een formule staat vaak een letter tussen haakjes: de <b>fase</b>.</p><table class="gt"><tr><td>(s)</td><td>vast (solid)</td></tr><tr><td>(l)</td><td>vloeibaar (liquid)</td></tr><tr><td>(g)</td><td>gas</td></tr><tr><td>(aq)</td><td>opgelost in water (aqua)</td></tr></table><p>Overgangen: smelten s→l, stollen l→s, verdampen l→g, condenseren g→l, sublimeren s→g, rijpen g→s.</p>`,['Wat betekent NaCl(aq)?','zout opgelost in water','vast zout|gesmolten zout','aq = aqua = water.']]);
 LP['0b'].push(
  ['Procenten en verhoudingen',`<p>Procent = "per honderd". Deel het deel door het geheel en doe × 100%.</p><div class="ex">15 van de 60 leerlingen = 15 ÷ 60 × 100% = <b>25%</b></div><p>Een <b>verhouding</b> is een recept. 2 eieren op 250 g meel. Voor 750 g meel (3 × zoveel) heb je 3 × 2 = <b>6 eieren</b>. Scheikunde doet precies dit met mol.</p>`,['Een recept: 3 eieren op 200 g meel. Hoeveel eieren voor 600 g meel?','9','6|4','600 is 3 × 200, dus 3 × 3 = 9.']],
@@ -1288,7 +1322,7 @@ function pracNext(){
     if(ok||it.tries>=2)G.done++;else{it.tries++;const nq=q.gen?Object.assign({sec:q.sec,gen:q.gen},GENS[q.gen].f()):q;G.queue.splice(Math.min(3,G.queue.length),0,{q:nq,tries:it.tries})}
     save();pracNext()},{again:it.tries>0});
 }
-const LEES={element:['Element of verbinding'],kloppend:['Kloppend maken'],notatie:['Grote en kleine getallen','Machten van 10'],eenheden:['Eenheden','De eenhedentrap'],
+const LEES={element:['Wat is een atoom?','Atoom, molecuul en stof','Element of verbinding'],kloppend:['Kloppend maken'],notatie:['Grote en kleine getallen','Machten van 10'],eenheden:['Eenheden','De eenhedentrap'],
  atoom:['Het atoom','Wie weegt wat?'],nummers:['Atoomnummer','Massagetal en neutronen'],schillen:['Schillen'],isotoop:['Isotopen'],atoommassa:['Atoommassa'],ps:['Het periodiek systeem'],edelgas:['Edelgassen en ionen'],
  mol:['De mol is een dozijn','Het mooie van de mol'],molmassa:['Van gram naar mol'],dichtheid:['Dichtheid'],schema:['Het rekenschema'],sig:['Significante cijfers tellen'],afronden:['Afronden'],gehalte:['Gehaltes','Ppm in de klas'],
  molariteit:['Molariteit'],behoud:['Er gaat niets verloren'],molverh:['Coëfficiënten = mol'],stappen:['Het stappenplan','Voorbeeld uitgewerkt'],overmaat:['Overmaat en ondermaat'],
