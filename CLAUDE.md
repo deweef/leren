@@ -121,4 +121,7 @@ schermen `show('home'|'play')`, `goHome()`, `ask()`, `practice(sec)` (oefenronde
   uit, of zet de tabel buiten de lijst op volle breedte.
 - Iets toevoegen aan `TH.*.h` komt ook terecht in kaartjes die die theorie al overnemen (`${TH.schema.h}` in
   "Het rekenschema", `TH.gehalte.h` in "Gehaltes"): voeg het daar dan niet nog eens toe (dubbel).
+- Gebruik in een kaartje geen begrip dat pas later uitgelegd wordt ("En M (molair)" in 0b rekende met mol, die pas in
+  1.2 komt; Ben snapte het niet). Noem het dan kort ("leer je in 1.2") en houd het bij het rekentrucje. Voorbeelden in
+  genummerde stappen met wat je uitrekent ("mL naar liter", "per liter"), plus een "snap je het zo?"-check in gewone taal.
 - Bekijk nieuwe schermen altijd op telefoonbreedte (390 px), in licht én donker, voordat je ze live zet.
