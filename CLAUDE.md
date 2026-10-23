@@ -14,7 +14,7 @@ bouwt het samen met Claude; hij wil ook zelf kunnen meeleren (scheikunde: hij be
 - Elk vak is één los HTML-bestand (geen build, geen CDN behalve Google Fonts), met voortgang in localStorage:
   `engels.html` (Ben, `unit3-trainer-v1`), `biologie.html` (Ben, `bio-thema1-v1`), `wiskunde.html` (Ben, H2
   statistiek, `wis-h2-v1`), `scheikunde-h1.html` (H1 chemisch rekenen, `chem-h1-v1`), `scheikunde.html` (H2
-  bindingen, `chem-h2-v1`), `duits.html` (Ben, Duits op 5 havo-niveau: Briefhelfer, `duits-brief-v1`), Frans voor Dana: `frans.html`, `frans-copilot.html`, `frans-combi.html`,
+  bindingen, `chem-h2-v1`), `duits.html` (Ben, Duits op 5 havo-niveau: Briefhelfer, `duits-brief-v1`), `natuurkunde.html` (Dana, Newton 3 vwo H1 Elektrische apparaten, `nat-h1-v1`), Frans voor Dana: `frans.html`, `frans-copilot.html`, `frans-combi.html`,
   `frans-spel.html` (spelletjes), `frans-5.html` (versie 5, zie onder).
 - **Voortgang per persoon**: `leerlog.js` (eerste script in de head van elke vakpagina) zet stil `@<wie>` achter elke
   localStorage-sleutel behalve `leren-*` (`chem-h1-v1@ben`, `@dana`, `@marcel`, `@anja`, `@gast-<naam>`), zodat iedereen op hetzelfde apparaat
@@ -92,6 +92,16 @@ schermen `show('home'|'play')`, `goHome()`, `ask()`, `practice(sec)` (oefenronde
   `frans-5.html` (via `sessionStorage['v5-rt']` weer naar het pad). "Gekend" = niveau ≥ 3 in de combi (`S.w[id]`)
   óf in de spelletjes (`frans-spel-v1`, `S.w[Franse tekst]`). Wijzig je de combi, kijk of versie 5 mee moet.
 
+- **Natuurkunde H1** (`natuurkunde.html`, Dana, Newton 3 vwo deel A): zelfde opbouw als wiskunde (SECS 1.2-1.5, `GENS`, `MC` met
+  theorie-sleutel als 6e veld voor `LEES`, `LP`, `ROUTE`). Toetsstof volgens Marcel: § 1.1 t/m 1.5 plus de **verdieping van 1.2, 1.4 en 1.5**
+  (rendementsformule; super-/halfgeleiders en R = ρ·l/A; combinatieschakelingen en wetenschappelijke notatie). § 1.1 Starten zit in het eerste
+  kaartje van 1.2, § 1.6 Veiligheid hoort er niet bij. "De tabel van 1.4 hoeft ze niet te leren": geef ρ-waarden altijd in de vraag, vraag nooit
+  naar de weerstanden uit de apparatentabel; bij kleurcodevragen staat de kleurentabel erbij (`kleurTabel()`). Uitleg per paragraaf = alle
+  leerpad-kaartjes onder elkaar (geen aparte `UITLEG`). Schakelschema's met `kring(spec, sw, opt)` (batterij links, `rail` = onderdelen vóór de
+  splitsing, `br` = takken; 'LA' lampje, 'S1' schakelaar, 'A'/'V'/'?' meters, 'R1' weerstand) en `stroom()` (welke lampjes branden, kortsluiting).
+  Spellen: **Lampjespuzzel** (`LAMP`, `S.lampj`, routestap type `lamp`), blitzes `BLITZ` (form, kleur, voor; `S.blitz`, type `blitz`) en de berg
+  is hier **Beklim de hoogspanningsmast** (`KCAMPS` 4 verdiepingen, `KTOP` 60 m). De berg bewaart per som alleen een zaadje (`seeded`, `RNG`),
+  niet de som zelf, want de sommen bevatten plaatjes. Toets waarschijnlijk wo 28 oktober (proefwerkweek).
 - **Duits Briefhelfer** (`duits.html`): schrijfhulp, geen hoofdstuk, dus geen leerroute of berg. Opdracht (zelf verzonnen,
   `OPDRACHT`): brief aan Jonas uit Keulen (uitwisseling), 60-80 woorden, 5 inhoudspunten, du-vorm, weil/dass. `DELEN` = de
   onderdelen (aanhef, 1-5, groet) met tip en bouwstenen (tik = invoegen); tekst per onderdeel in `S.t`. `checks()` kijkt

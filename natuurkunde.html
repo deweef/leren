@@ -1,0 +1,1092 @@
+<!doctype html>
+<html lang="nl">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<meta name="robots" content="noindex">
+<script src="leerlog.js"></script><script>(function(){try{if(localStorage.getItem('leren-ok')!=='53a39a231246354922d1b5f7242c1639ebdc75da84bde2e766eed704f5a89cf8'){location.replace('index.html')}}catch(e){location.replace('index.html')}})();</script>
+<title>Natuurkunde H1</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,500..800&family=JetBrains+Mono:wght@500&family=Atkinson+Hyperlegible:wght@400;700&family=IBM+Plex+Mono:wght@500&display=swap">
+<style>
+/* iPad: twee keer snel tikken mag niet inzoomen (knijpen om te zoomen blijft werken) */
+*{touch-action:manipulation}
+
+/* Layout: ruitjespapier. Kaarten met een oranje kantlijn, zoals het boek. */
+:root{
+  --bg:#F6F3EE; --surface:#FFFFFF; --ink:#1E2230; --muted:#5D6375; --line:#DDD6CB; --chip:#EEE8DE; --accent:#E8742A;
+  --green:#2F7D5B; --green-soft:#DDF0E6; --pink:#E8742A; --pink-soft:#FCE8DA; --amber:#A86A12; --amber-soft:#FBEFD9;
+  --good:#2E8B4E; --good-bg:#DDF0E2; --bad:#C2413A; --bad-bg:#FADFDD;
+  --c-wall:#7BAA6A; --c-cyto:#EEF6E4; --c-vac:#E4D9F2; --c-nuc:#C9B4E0; --c-chl:#3E9B48; --c-mito:#C98A4B; --c-er:#7A93C9; --c-golgi:#D07AA0; --c-lys:#E0A93C; --c-ani:#FBE9E4;
+  --f-display:"Bricolage Grotesque",system-ui,sans-serif;
+  --f-body:"Atkinson Hyperlegible",system-ui,-apple-system,"Segoe UI",sans-serif;
+  --f-mono:"IBM Plex Mono",ui-monospace,Menlo,Consolas,monospace;
+}
+@media (prefers-color-scheme: dark){:root:not([data-theme="light"]){
+  --bg:#14161D; --surface:#1D2029; --ink:#E9EAF0; --muted:#A0A5B5; --line:#30343F; --chip:#272A35; --accent:#F08A45;
+  --green:#5CC394; --green-soft:#183025; --pink:#F08A45; --pink-soft:#3A2618; --amber:#E9B25A; --amber-soft:#33281A;
+  --good:#5CC383; --good-bg:#183020; --bad:#F07870; --bad-bg:#3A1C1B;
+  --c-wall:#5E8F4E; --c-cyto:#20321F; --c-vac:#3A3150; --c-nuc:#5E4A7E; --c-chl:#56B55F; --c-mito:#B47A40; --c-er:#6C84BE; --c-golgi:#C26E94; --c-lys:#C99230; --c-ani:#3A2622; color-scheme:dark}}
+:root[data-theme="dark"]{
+  --bg:#14161D; --surface:#1D2029; --ink:#E9EAF0; --muted:#A0A5B5; --line:#30343F; --chip:#272A35; --accent:#F08A45;
+  --green:#5CC394; --green-soft:#183025; --pink:#F08A45; --pink-soft:#3A2618; --amber:#E9B25A; --amber-soft:#33281A;
+  --good:#5CC383; --good-bg:#183020; --bad:#F07870; --bad-bg:#3A1C1B;
+  --c-wall:#5E8F4E; --c-cyto:#20321F; --c-vac:#3A3150; --c-nuc:#5E4A7E; --c-chl:#56B55F; --c-mito:#B47A40; --c-er:#6C84BE; --c-golgi:#C26E94; --c-lys:#C99230; --c-ani:#3A2622; color-scheme:dark}
+*{box-sizing:border-box}
+body{background-color:var(--bg);background-image:linear-gradient(var(--line) 1px,transparent 1px),linear-gradient(90deg,var(--line) 1px,transparent 1px);background-size:24px 24px;background-attachment:fixed;color:var(--ink);font-family:var(--f-body);font-size:16px;line-height:1.5;margin:0}
+.wrap{max-width:880px;margin:0 auto;padding-inline:16px;padding-block:20px 56px}
+button{font:inherit;color:inherit;cursor:pointer}
+button:focus-visible,input:focus-visible{outline:3px solid var(--pink);outline-offset:2px}
+h1,h2,h3{font-family:var(--f-display);margin:0;text-wrap:balance}
+.eyebrow{font-family:var(--f-mono);font-size:12px;letter-spacing:.12em;text-transform:uppercase;color:var(--muted)}
+.top{display:flex;flex-wrap:wrap;gap:16px;align-items:flex-end;justify-content:space-between;padding-bottom:16px;border-bottom:2px solid var(--ink)}
+h1{font-size:clamp(30px,6.5vw,48px);font-weight:800;line-height:1;letter-spacing:-.02em}
+h1 em{font-style:normal;color:var(--green)}
+.stats{display:flex;gap:8px;flex-wrap:wrap}
+.stat{background:var(--surface);border:1px solid var(--line);border-radius:10px;padding:6px 12px;min-width:86px}
+.stat b{display:block;font-family:var(--f-display);font-size:22px;font-weight:800;line-height:1.15;font-variant-numeric:tabular-nums}
+.stat small{font-family:var(--f-mono);font-size:10.5px;color:var(--muted);text-transform:uppercase;letter-spacing:.08em}
+.banner{margin-top:14px;display:flex;gap:8px;flex-wrap:wrap}
+.pill{font-size:13.5px;font-weight:700;padding:4px 12px;border-radius:999px;background:var(--pink-soft);color:var(--pink)}
+.pill.g{background:var(--green-soft);color:var(--green)}
+section{margin-top:26px}
+.sec-head{display:flex;flex-wrap:wrap;align-items:baseline;justify-content:space-between;gap:8px;margin-bottom:12px}
+h2{font-size:21px;font-weight:800}
+.acts{display:flex;gap:8px;flex-wrap:wrap;align-items:center}
+.btn{border:2px solid var(--ink);background:var(--surface);border-radius:10px;padding:10px 16px;font-weight:700}
+.btn.primary{background:var(--green);border-color:var(--green);color:var(--surface)}
+.btn.dark{background:var(--ink);border-color:var(--ink);color:var(--bg)}
+.btn.ghost{border-color:var(--line)}
+.btn.small{padding:6px 12px;font-size:14px}
+.btn:disabled{opacity:.4;cursor:not-allowed}
+/* paragraaf-chips */
+.pars{display:grid;grid-template-columns:repeat(auto-fill,minmax(190px,1fr));gap:10px}
+.par{position:relative;text-align:left;background:var(--surface);border:2px solid var(--line);border-radius:12px;padding:10px 12px 12px 18px;display:flex;flex-direction:column;gap:4px;min-width:0;overflow:hidden}
+.par::before{content:"";position:absolute;left:0;top:0;bottom:0;width:7px;background:var(--line)}
+.par[aria-pressed="true"]{border-color:var(--ink)}
+.par[aria-pressed="true"]::before{background:var(--pink)}
+.par .no{font-family:var(--f-mono);font-size:12px;color:var(--muted)}
+.par .no b{font-family:var(--f-display);font-size:22px;color:var(--ink);margin-right:4px}
+.par .nm{font-weight:700;font-size:14.5px;line-height:1.25}
+.bar{height:6px;border-radius:3px;background:var(--chip);overflow:hidden}
+.bar i{display:block;height:100%;background:var(--green);border-radius:3px;transition:width .4s}
+.par .src{font-size:12px}
+.src{font-size:13px;color:var(--muted)}
+/* modus-kaarten als objectglaasjes */
+.modes{display:grid;grid-template-columns:repeat(auto-fill,minmax(250px,1fr));gap:12px}
+.mode{position:relative;text-align:left;background:var(--surface);border:2px solid var(--ink);border-radius:14px;padding:14px 16px 14px 58px;min-width:0;display:flex;flex-direction:column;gap:4px}
+.mode .lab{position:absolute;left:0;top:0;bottom:0;width:44px;background:var(--chip);border-right:2px dashed var(--line);display:grid;place-items:center;font-family:var(--f-mono);font-size:12px;color:var(--muted);writing-mode:vertical-rl;transform:rotate(180deg);letter-spacing:.12em;text-transform:uppercase}
+.mode.main{background:var(--ink);color:var(--bg)}
+.mode.main .lab{background:var(--pink);color:#fff;border-color:transparent}
+.mode.main p{color:var(--bg);opacity:.8}
+.mode h3{font-size:19px;font-weight:800}
+.mode p{margin:0;font-size:14px;color:var(--muted)}
+.mode .tag{align-self:flex-start;font-family:var(--f-mono);font-size:10.5px;text-transform:uppercase;letter-spacing:.08em;background:var(--amber-soft);color:var(--amber);padding:2px 7px;border-radius:5px}
+@media (hover:hover){.mode:hover{transform:translateY(-2px)}}
+details.tips{background:var(--surface);border:1px solid var(--line);border-radius:12px;padding:12px 16px}
+details.tips summary{font-weight:700;cursor:pointer}
+details.tips ul{margin:10px 0 4px;padding-left:20px;display:grid;gap:6px}
+.rt-list{display:grid;gap:8px}
+.rt-deel{font-size:15px;font-family:var(--f-mono);text-transform:uppercase;letter-spacing:.08em;color:var(--muted);margin:14px 0 2px}
+.rt-step{display:grid;grid-template-columns:34px minmax(0,1fr) auto;gap:12px;align-items:center;text-align:left;font:inherit;color:inherit;background:var(--surface);border:2px solid var(--line);border-radius:12px;padding:10px 12px;cursor:pointer}
+.rt-step .rt-ic{width:34px;height:34px;border-radius:50%;display:grid;place-items:center;background:var(--chip);color:var(--muted);font:700 14px var(--f-mono)}
+.rt-step .rt-tx{display:flex;flex-direction:column;gap:2px;min-width:0}
+.rt-step .rt-tx span{font-size:13.5px;color:var(--muted)}
+.rt-step .rt-w{font:600 13px var(--f-mono);color:var(--muted)}
+.rt-step.done{border-color:var(--green-soft)}
+.rt-step.done .rt-ic{background:var(--green);color:#fff}
+.rt-step.cur{border-color:var(--ink)}
+.rt-step.cur .rt-ic{background:var(--pink);color:#fff}
+@media (hover:hover){.rt-step:hover{border-color:var(--ink)}}
+/* spel */
+.playbar{display:flex;align-items:center;gap:12px;margin-bottom:16px}
+.playbar .bar{flex:1;height:10px;border-radius:5px}
+.playbar .bar i{background:var(--pink)}
+.count{font-family:var(--f-mono);font-size:13px;color:var(--muted);font-variant-numeric:tabular-nums;white-space:nowrap}
+.slide{background:var(--surface);border:2px solid var(--ink);border-radius:18px;overflow:hidden}
+.slide-head{display:flex;justify-content:space-between;gap:8px;flex-wrap:wrap;padding:9px 18px;background:var(--pink);color:#fff;font-family:var(--f-mono);font-size:12px;letter-spacing:.1em;text-transform:uppercase}
+.slide-body{padding:20px 18px;display:flex;flex-direction:column;gap:14px}
+.q{font-size:15px;color:var(--muted);font-weight:700}
+.prompt{font-family:var(--f-display);font-weight:700;font-size:clamp(20px,4.6vw,27px);line-height:1.25;overflow-wrap:anywhere}
+.prompt.big{font-size:clamp(28px,7vw,42px);font-weight:800}
+.opts{display:grid;gap:10px}
+.opt{display:flex;align-items:center;gap:12px;text-align:left;border:2px solid var(--line);background:var(--bg);border-radius:12px;padding:12px 14px;font-size:16.5px;font-weight:700;min-width:0}
+.opt .k{flex:none;width:28px;height:28px;border-radius:8px;display:grid;place-items:center;font-family:var(--f-mono);font-size:13px;background:var(--chip);color:var(--muted)}
+@media (hover:hover){.opt:hover:not(:disabled){border-color:var(--ink)}}
+.opt:disabled{cursor:default}
+.opt.good{background:var(--good-bg);border-color:var(--good)}.opt.good .k{background:var(--good);color:var(--surface)}
+.opt.bad{background:var(--bad-bg);border-color:var(--bad)}.opt.bad .k{background:var(--bad);color:var(--surface)}
+.opt.dim{opacity:.5}
+.typerow{display:flex;gap:8px;flex-wrap:wrap}
+.typerow input{flex:1 1 220px;min-width:0;font:inherit;font-size:19px;font-weight:700;padding:12px 14px;border-radius:12px;border:2px solid var(--line);background:var(--bg);color:var(--ink)}
+.typerow input.okay{border-color:var(--good)}
+.pattern{font-family:var(--f-mono);font-size:17px;letter-spacing:.16em;color:var(--amber);overflow-wrap:anywhere}
+.fb{border-radius:12px;padding:12px 14px;display:flex;flex-direction:column;gap:4px}
+.fb.good{background:var(--good-bg)}.fb.bad{background:var(--bad-bg)}.fb.warn{background:var(--amber-soft)}
+.fb .t{font-weight:700}.fb.good .t{color:var(--good)}.fb.bad .t{color:var(--bad)}.fb.warn .t{color:var(--amber)}
+.fb .ans{font-family:var(--f-display);font-size:21px;font-weight:800}
+.tip{font-size:14.5px}
+.foot{display:flex;justify-content:flex-end}
+.big{font-family:var(--f-display);font-size:clamp(48px,12vw,80px);font-weight:800;line-height:1}
+.mist{display:grid;gap:6px;margin:0;padding:0;list-style:none}
+.mist li{display:flex;flex-direction:column;gap:2px;border-bottom:1px solid var(--line);padding:6px 0}
+.mist li span{color:var(--muted);font-size:14px}
+/* flip */
+.flip{perspective:1200px;cursor:pointer}
+.flip-in{position:relative;min-height:220px;transition:transform .45s;transform-style:preserve-3d}
+.flip.on .flip-in{transform:rotateY(180deg)}
+.face{position:absolute;inset:0;backface-visibility:hidden;-webkit-backface-visibility:hidden;display:flex;flex-direction:column;justify-content:center;gap:10px}
+.face.back{transform:rotateY(180deg)}
+/* volgorde */
+.seq-done{display:grid;gap:6px;counter-reset:s;margin:0;padding:0;list-style:none}
+.seq-done li{counter-increment:s;display:flex;gap:10px;align-items:center;background:var(--good-bg);border-radius:10px;padding:8px 12px;font-weight:700}
+.seq-done li::before{content:counter(s);flex:none;width:26px;height:26px;border-radius:50%;background:var(--good);color:var(--surface);display:grid;place-items:center;font-family:var(--f-mono);font-size:12px}
+.seq-pool{display:flex;flex-wrap:wrap;gap:8px}
+.seq-pool button{border:2px solid var(--line);background:var(--bg);border-radius:10px;padding:9px 12px;font-weight:700;text-align:left}
+@media (hover:hover){.seq-pool button:hover{border-color:var(--ink)}}
+.seq-list{display:grid;gap:8px}
+.seq-list button{text-align:left}
+/* buckets */
+.buckets{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:8px}
+.buckets button{border:2px solid var(--ink);border-radius:12px;padding:14px 6px;font-weight:800;font-size:16px;background:var(--surface)}
+.buckets button.good{background:var(--good-bg);border-color:var(--good)}
+.buckets button.bad{background:var(--bad-bg);border-color:var(--bad)}
+/* osmose */
+.osmo{display:flex;gap:14px;align-items:center;flex-wrap:wrap}
+.osmo svg{flex:none;width:120px;height:90px}
+.chipline{display:flex;gap:8px;flex-wrap:wrap}
+/* cel */
+.cellfig{background:var(--bg);border-radius:12px;padding:8px}
+.cellfig svg{display:block;width:100%;height:auto;max-height:340px}
+.marker circle{fill:var(--pink)}
+.marker text{fill:#fff;font-family:var(--f-mono);font-size:15px;font-weight:700}
+.marker line{stroke:var(--pink);stroke-width:2.5}
+.pulse{animation:pulse 1.2s ease-in-out infinite}
+@keyframes pulse{50%{opacity:.35}}
+/* samenvatting */
+.sum{background:var(--surface);border:1px solid var(--line);border-left:6px solid var(--green);border-radius:12px;padding:14px 16px}
+.sum h3{font-size:19px;margin-bottom:6px}
+.sum p{margin:0 0 8px;max-width:72ch}
+.exam{background:var(--surface);border:1px solid var(--line);border-radius:12px;padding:14px 16px;display:flex;flex-direction:column;gap:10px}
+.exam .ctx{background:var(--bg);border-radius:8px;padding:10px 12px;font-size:14.5px}
+.exq{border-top:1px dashed var(--line);padding-top:10px;display:flex;flex-direction:column;gap:8px}
+.exq .pt{font-family:var(--f-mono);font-size:12px;color:var(--pink)}
+.shake{animation:shake .35s}@keyframes shake{25%{transform:translateX(-6px)}75%{transform:translateX(6px)}}
+.pop{animation:pop .3s}@keyframes pop{50%{transform:scale(1.25)}}
+.timer{font-family:var(--f-display);font-size:32px;font-weight:800;font-variant-numeric:tabular-nums;min-width:56px;text-align:right}
+.timer.low{color:var(--bad)}
+.combo{font-family:var(--f-mono);font-size:12px;background:var(--amber);color:var(--surface);padding:2px 8px;border-radius:6px}
+canvas#conf{position:fixed;inset:0;pointer-events:none;z-index:9}
+@media (prefers-reduced-motion: reduce){*{transition:none!important;animation:none!important}}
+.nums{font-family:"JetBrains Mono",var(--f-mono);font-size:20px;font-weight:500;background:var(--bg);border-radius:10px;padding:10px 12px;margin:8px 0;overflow-wrap:anywhere;letter-spacing:.02em}
+.tw{overflow-x:auto;margin:8px 0}
+.ft{border-collapse:collapse;font-variant-numeric:tabular-nums;font-size:15.5px;background:var(--surface)}
+.ft th,.ft td{border:1px solid var(--line);padding:5px 10px;text-align:center}
+.ft th{background:var(--chip);text-align:left;font-weight:700}
+.ft.v td:first-child{font-family:var(--f-mono);font-size:14px}
+.chart{display:block;width:100%;max-width:420px;height:auto;color:var(--ink);margin:6px 0}
+.uitleg{background:var(--surface);border:1px solid var(--line);border-left:6px solid var(--pink);border-radius:12px;padding:14px 18px}
+.uitleg h3{font-size:20px;margin:16px 0 6px}.uitleg h3:first-child{margin-top:0}
+.uitleg p,.uitleg li{max-width:72ch}.uitleg ul{padding-left:20px}
+.rule{background:var(--pink-soft);border-radius:10px;padding:10px 14px;margin:8px 0;font-weight:500}
+.ex{background:var(--bg);border-left:4px solid var(--green);border-radius:6px;padding:9px 12px}
+.gt{border-collapse:collapse;font-size:15px;margin:6px 0}.gt th,.gt td{border:1px solid var(--line);padding:6px 9px;text-align:left;vertical-align:top}.gt th{background:var(--chip)}
+.cycle{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:6px;max-width:460px;margin:10px 0}
+.cycle span{border-radius:10px;padding:10px;font-weight:700;color:#1E2230;text-align:center}
+.cycle .c1{background:#F5B37A}.cycle .c2{background:#F7DB5E}.cycle .c3{background:#7FB0EA}.cycle .c4{background:#8FD18F}
+.cycle .c3{order:4}.cycle .c4{order:3}
+.flow{display:grid;grid-template-columns:minmax(0,1fr) minmax(0,1.3fr);gap:6px 10px;margin:10px 0}
+.flow .fq{background:var(--chip);border-radius:8px;padding:8px 10px;font-weight:700}.flow .fa{background:var(--bg);border-radius:8px;padding:8px 10px}
+@media (max-width:560px){.flow{grid-template-columns:1fr}}
+.distgrid{display:grid;grid-template-columns:repeat(auto-fill,minmax(150px,1fr));gap:8px}
+.distgrid figure{margin:0;background:var(--bg);border-radius:10px;padding:6px}.distgrid figcaption{text-align:center;font-weight:700;font-size:13.5px}
+.secs{display:grid;gap:10px}
+.sec{display:grid;grid-template-columns:auto minmax(0,1fr) auto;gap:6px 14px;align-items:center;background:var(--surface);border:2px solid var(--line);border-radius:14px;padding:12px 14px}
+.sec .num{font-family:var(--f-display);font-size:30px;font-weight:800;color:var(--pink);line-height:1}
+.sec h3{font-size:18px}.sec p{margin:2px 0 6px;font-size:14px;color:var(--muted)}
+.sec .acts{grid-column:3;grid-row:1}
+@media (max-width:560px){.sec{grid-template-columns:auto minmax(0,1fr)}.sec .acts{grid-column:1/-1;grid-row:auto}}
+.tools{display:flex;flex-wrap:wrap;gap:8px}
+.chart.big{max-width:520px}
+.gt td,.gt th{overflow-wrap:anywhere;hyphens:auto;-webkit-hyphens:auto}
+.draw{touch-action:none;cursor:crosshair;-webkit-user-select:none;user-select:none}
+.fb.warn{background:var(--pink-soft);border-color:var(--accent)}
+details.verdiep{margin-top:18px;border:2px dashed var(--accent);border-radius:12px;padding:10px 14px;background:var(--bg)}
+details.verdiep>summary{font-weight:700;font-size:17px;cursor:pointer}
+details.verdiep>summary .src{font-weight:400;margin-left:6px}
+details.vd{border-top:1px solid var(--line);padding:8px 0}
+details.vd:first-of-type{margin-top:8px}
+details.vd>summary{font-weight:600;cursor:pointer}
+details.vd>div{padding-top:6px}
+ul.fout{padding-left:0;list-style:none;display:grid;gap:6px}
+ul.fout li{padding-left:24px;position:relative}ul.fout li:before{content:"✗";position:absolute;left:4px;color:var(--bad);font-weight:700}
+ol.steps{padding-left:22px;display:grid;gap:8px;margin:8px 0}
+ol.steps li{animation:fadein .3s ease}
+@keyframes fadein{from{opacity:0;transform:translateY(4px)}to{opacity:1}}
+.nextbox{margin-top:18px;border-top:2px solid var(--line);padding-top:12px;display:grid;gap:12px}
+.nextbox h3{margin:0}
+.choice{display:grid;gap:4px}.choice>span{font-size:14px;color:var(--muted)}
+.choice>.btn{justify-self:start}
+.kcamps{display:grid;gap:8px}
+.bkamp{display:grid;grid-template-columns:minmax(0,1fr) auto;gap:2px 10px;text-align:left;background:var(--surface);border:2px solid var(--ink);border-radius:12px;padding:10px 12px;color:var(--ink);font:inherit;cursor:pointer}
+.bkamp b{grid-column:1/-1;font-size:16px}.bkamp span{font-size:13px;color:var(--muted)}
+.bkamp .bar{grid-column:1;display:block;align-self:center}.bkamp .count{grid-column:2;grid-row:3}
+.bkamp:disabled{opacity:.5;cursor:not-allowed;border-style:dashed}
+.bkamp.done{border-color:var(--good);background:var(--good-bg)}
+
+.lpcard .lpt{font-size:clamp(22px,5.5vw,28px);margin:0}
+.lpb{font-size:17px;line-height:1.55}.lpb p{margin:6px 0}
+.lpq{border-top:2px dashed var(--line);padding-top:12px;display:grid;gap:10px}
+.lpnav{display:flex;justify-content:space-between;gap:10px;margin-top:6px}
+.lpmode{width:100%}
+.sec .acts .btn.lp{background:var(--accent);border-color:var(--accent);color:#fff}
+.sv{gap:14px}
+.sv .intro{background:var(--chip);border-radius:12px;padding:12px 14px}
+.sv .intro p{margin:6px 0}
+.sv .intro ul{margin:6px 0 0;padding-left:20px;display:grid;gap:4px}
+.svp h3{margin:6px 0 2px;font-size:20px}
+.svp .wat{margin:0 0 8px;color:var(--muted);font-style:italic}
+.svp ul{margin:0;padding-left:20px;display:grid;gap:6px}
+.svp .gt{margin:6px 0}
+.sv .gt td,.sv .gt th{overflow-wrap:normal;word-break:normal;hyphens:manual;-webkit-hyphens:manual}
+.sv .gt td:first-child{white-space:nowrap}
+.mode{position:relative}
+.mode.gehaald{background:var(--good-bg)!important;border-color:var(--good)!important;color:var(--ink)!important}
+.mode.gehaald h3{color:var(--ink)!important}
+.mode.gehaald p{color:var(--muted)!important;opacity:1!important}
+.mode.gehaald::after{content:"✓ gehaald";position:absolute;top:8px;right:10px;font:700 11px ui-monospace,Menlo,monospace;letter-spacing:.04em;color:var(--good)}
+.sec.gehaald{border-color:var(--good)!important;background:var(--good-bg)!important}
+.btn.gehaald{border-color:var(--good)!important;color:var(--good)!important;background:var(--good-bg)!important}
+.btn.gehaald:not([data-lp])::before{content:"✓ "}
+.par.gehaald,.gate.gehaald,.gcard.gehaald{position:relative;background:var(--good-bg)!important;border-color:var(--good)!important}
+.par.gehaald::after,.gate.gehaald::after,.gcard.gehaald::after{content:"✓";position:absolute;top:6px;right:9px;font-weight:800;color:var(--good)}
+.leg{background:var(--chip);border-radius:10px;padding:8px 12px;margin:10px 0;font-size:14px}
+.leg table{border-collapse:collapse;width:100%;margin-top:4px}
+.leg td{padding:3px 6px;vertical-align:top;overflow-wrap:normal;word-break:normal;border-top:1px solid var(--line)}
+.leg td:first-child{font-weight:800;white-space:nowrap;width:1%}
+.leg td:last-child{color:var(--muted);white-space:nowrap;width:1%}
+.leg p{margin:6px 0 0;font-size:13.5px}
+.frm{border-collapse:collapse;width:100%;margin:8px 0;font-size:15px}
+.frm th,.frm td{padding:6px 8px;border-bottom:1px solid var(--line);text-align:left;overflow-wrap:normal;word-break:normal}
+.frm th{font-size:12.5px;color:var(--muted);font-weight:700}
+.frm td:first-child{font-weight:800;color:var(--accent);width:1%}
+.frm td:nth-child(2){white-space:nowrap}
+.frm.lang td:nth-child(2){white-space:normal;min-width:9em}
+.kring{display:block;width:100%;max-width:400px;height:auto;color:var(--ink);margin:8px auto}
+.kringbox{background:var(--bg);border-radius:12px;padding:4px}
+.duo{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:10px}
+.duo figure{margin:0;background:var(--bg);border-radius:10px;padding:4px 6px 8px}.duo figcaption{font-size:13.5px;text-align:center}
+@media (max-width:560px){.duo{grid-template-columns:1fr}}
+.symgrid{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:6px;margin:8px 0}
+.symgrid figure{margin:0;background:var(--bg);border-radius:8px;padding:4px;text-align:center}.symgrid svg{width:100%;height:auto;color:var(--ink)}.symgrid figcaption{font-size:12px;line-height:1.2}
+@media (max-width:560px){.symgrid{grid-template-columns:repeat(2,minmax(0,1fr))}}
+.kleurtab{display:grid;grid-template-columns:repeat(5,minmax(0,1fr));gap:4px 8px;font-size:13px;margin:8px 0;font-weight:400}
+.kleurtab span,.kchip{display:inline-flex;align-items:center;gap:5px;white-space:nowrap}
+.kleurtab i,.kchip i{display:inline-block;width:14px;height:14px;border-radius:3px;border:1px solid var(--muted);flex:none}
+@media (max-width:560px){.kleurtab{grid-template-columns:repeat(2,minmax(0,1fr))}}
+.lampdoel{display:flex;gap:8px;flex-wrap:wrap}.lampdoel span{border-radius:8px;padding:4px 10px;font-weight:700;background:var(--chip)}.lampdoel .aan{background:#FFE88A;color:#1E2230}
+.lampkies{display:flex;gap:6px;flex-wrap:wrap}
+.vgl th,.vgl td{font-size:14px;overflow-wrap:normal!important;word-break:normal!important;hyphens:manual!important}.vgl th:first-child{white-space:nowrap}
+.blitzes{display:grid;grid-template-columns:repeat(auto-fit,minmax(200px,1fr));gap:10px}
+</style>
+
+</head>
+<body>
+
+<canvas id="conf"></canvas>
+<div class="wrap">
+<main id="home"><a href="index.html" style="display:inline-block;margin:0 0 10px;color:inherit;opacity:.7;text-decoration:none;font:700 14px system-ui,sans-serif">‹ Alle vakken</a>
+  <header class="top">
+    <div>
+      <div class="eyebrow">Natuurkunde · Hoofdstuk 1</div>
+      <h1>Elektrische <em>apparaten</em></h1>
+    </div>
+    <div class="stats">
+      <div class="stat"><b id="stDone">0</b><small>opgaven</small></div>
+      <div class="stat"><b id="stStreak">0</b><small>dagen op rij</small></div>
+      <div class="stat"><b id="stBest">–</b><small>beste toets</small></div>
+    </div>
+  </header>
+  <div class="banner"><span class="pill">Toets: § 1.1 t/m 1.5</span><span class="pill g">Met de verdieping van 1.2, 1.4 en 1.5</span></div>
+
+  <section><div id="lpbox"></div></section>
+  <section>
+    <div class="modes">
+      <button class="mode" id="klim"><span class="lab">Spel</span><h3>Beklim de hoogspanningsmast</h3><p>Elke goede vraag brengt je hoger. Foute vragen komen terug tot je ze goed hebt. Haal de top: 60 meter.</p><span class="tag" id="klimTag" style="text-transform:none">0 m</span></button>
+      <button class="mode" id="lamp"><span class="lab">Spel</span><h3>Lampjespuzzel</h3><p>Tik op de schakelaars en laat de goede lampjes branden. Pas op voor kortsluiting!</p><span class="tag" id="lampTag" style="text-transform:none">0 opgelost</span></button>
+    </div>
+  </section>
+
+  <section>
+    <div class="sec-head"><h2>1. Per paragraaf</h2><span class="src">Begin bij 1.2 en werk naar beneden</span></div>
+    <div class="secs" id="secs"></div>
+  </section>
+
+  <section>
+    <div class="sec-head"><h2>2. Snelle spelletjes</h2><span class="src">60 seconden, zo vaak als je wilt</span></div>
+    <div class="blitzes" id="blitzes"></div>
+  </section>
+
+  <section>
+    <div class="sec-head"><h2>3. Rekentrainer</h2><span class="src">Kies een soort som en oefen zo lang je wilt</span></div>
+    <div class="tools" id="tools"></div>
+  </section>
+
+  <section>
+    <div class="sec-head"><h2>4. Toets</h2></div>
+    <div class="modes">
+      <button class="mode" id="toets"><span class="lab">Cijfer</span><h3>Proeftoets</h3><p>20 gemengde vragen over het hele hoofdstuk, met uitwerkingen aan het eind en een cijfer.</p></button>
+      <button class="mode" id="samen"><span class="lab">Lezen</span><h3>Samenvatting voor de toets</h3><p>Ochtend voor de toets: alles nog één keer doorlezen, zonder vragen. Ongeveer 10 minuten.</p></button>
+      <button class="mode" id="spiek"><span class="lab">Kaart</span><h3>Spiekbriefje</h3><p>Alle formules, eenheden en regels op één scherm.</p></button>
+    </div>
+  </section>
+
+  <section>
+    <details class="tips">
+      <summary>Zo pak je het aan</summary>
+      <ul>
+        <li>Volg de <b>Leerroute</b> bovenaan: theorie, dan meteen oefenen met precies dat stukje, en per paragraaf een check in de hoogspanningsmast.</li>
+        <li>Planning tot de toets: elke dag één paragraaf (1.2, 1.3, 1.4, 1.5), en op de laatste dag de proeftoets en de Formuleblitz.</li>
+        <li>Paragraaf 1.1 (Starten) is de inleiding: die zit in het eerste kaartje van 1.2. Paragraaf 1.6 (Veiligheid) hoort niet bij de toets.</li>
+        <li>Pak er pen, papier en je rekenmachine bij. Schrijf bij sommen op: gegeven, gevraagd, formule, invullen, antwoord met eenheid.</li>
+        <li>Getallen typ je met een komma of punt, allebei goed (2,5 of 2.5). Grote getallen mag je met of zonder spaties typen.</li>
+        <li>Toetsen: <b>Enter</b> = controleren/verder, <b>1 2 3 4</b> = antwoord kiezen.</li>
+      </ul>
+      <div class="acts" id="resetBox" style="margin-top:10px"><button class="btn ghost small" id="resetBtn">Voortgang wissen</button></div>
+    </details>
+  </section>
+</main>
+<main id="play" hidden></main>
+</div>
+
+<script>
+const SECS=[
+ {id:'1.2',t:'Elektrische energie',s:'Energie omzetten, rendement, vermogen, kWh, E = P × t, voorvoegsels'},
+ {id:'1.3',t:'Spanning en stroomsterkte',s:'Stroomkring, ampèremeter, voltmeter, schakelschema, P = U × I'},
+ {id:'1.4',t:'Weerstand',s:'Weerstand, wet van Ohm, kleurcode, soortelijke weerstand'},
+ {id:'1.5',t:'Elektrische schakelingen',s:'Serie, parallel, combinaties, wetenschappelijke notatie'}
+];
+
+/* ---------- hulpjes ---------- */
+let RNG=Math.random;
+const shuffle=a=>{a=[...a];for(let i=a.length-1;i>0;i--){const j=RNG()*(i+1)|0;[a[i],a[j]]=[a[j],a[i]]}return a};
+const pick=a=>a[RNG()*a.length|0];
+const R=(a,b)=>a+Math.floor(RNG()*(b-a+1));
+/* getallen met een komma; vanaf 10 000 met smalle spaties (3 600 000) */
+const nf=(x,d=1)=>{const r=Math.round(x*Math.pow(10,d))/Math.pow(10,d);let [a,b]=String(Math.abs(r)).split('.');if(a.length>4)a=a.replace(/\B(?=(\d{3})+(?!\d))/g,' ');return (r<0?'-':'')+a+(b?','+b:'')};
+const sum=a=>a.reduce((s,x)=>s+x,0);
+const rnd=(x,d)=>Math.round(x*Math.pow(10,d))/Math.pow(10,d);
+/* vraag met een getal als antwoord; tolerantie 1% (afronden mag) */
+const NQ=(q,a,w,u,tol)=>({q,a,w,u,tol:tol??Math.max(Math.abs(a)*0.01,0.006)});
+const MQ=(q,a,fout,w)=>({q,mc:true,opts:[a,...fout],a,w});
+/* een vaste reeks toevalsgetallen, zodat de berg dezelfde sommen houdt zonder de plaatjes op te slaan */
+function seeded(seed,fn){const old=RNG;let a=seed>>>0;RNG=()=>{a|=0;a=a+0x6D2B79F5|0;let t=Math.imul(a^a>>>15,1|a);t=t+Math.imul(t^t>>>7,61|t)^t;return((t^t>>>14)>>>0)/4294967296};try{return fn()}finally{RNG=old}}
+const SUP={'-':'⁻','0':'⁰','1':'¹','2':'²','3':'³','4':'⁴','5':'⁵','6':'⁶','7':'⁷','8':'⁸','9':'⁹'};
+const tien=e=>'10'+String(e).split('').map(c=>SUP[c]).join('');
+const sci=(m,e,u='')=>`${nf(m,3)}·${tien(e)}${u?' '+u:''}`;
+
+/* Wat betekent wat? */
+const SYM={E:['E','energie','J of kWh'],P:['P','vermogen','W of kW'],t:['t','tijd','s of h'],U:['U','spanning','V'],I:['I','stroomsterkte','A'],
+ R:['R','weerstand','Ω'],eta:['η','rendement (spreek uit: èta)','%'],En:['E<sub>nuttig</sub>','de energie die je wilt hebben','J of kWh'],Et:['E<sub>toegevoerd</sub>','de elektrische energie die erin gaat','J of kWh'],
+ rho:['ρ','soortelijke weerstand van het metaal (spreek uit: rho)','Ω·mm²/m'],l:['l','lengte van de draad','m'],A:['A','oppervlakte van de doorsnede (de dikte)','mm²']};
+function leg(keys,noot){return `<div class="leg"><b>Wat betekent wat?</b><table>${keys.map(k=>{const r=SYM[k];return `<tr><td>${r[0]}</td><td>${r[1]}</td><td>${r[2]}</td></tr>`}).join('')}</table>${noot?`<p>${noot}</p>`:''}</div>`}
+
+/* ---------- plaatjes ---------- */
+/* schakelschema: batterij links, bovenste en onderste draad, takken naast elkaar.
+   spec = {rail:[onderdelen vóór de splitsing], br:[[onderdelen in tak 1], [tak 2], ...]}
+   onderdeel: 'LA' lampje A, 'S1' schakelaar 1, 'A' ampèremeter, 'V' voltmeter, '?' meter, 'R1' weerstand */
+function stroom(spec,sw={}){const dicht=l=>l.every(c=>c[0]!=='S'||sw[c.slice(1)])&&!l.some(c=>c[0]==='V'||c[0]==='?');
+ const last=l=>l.some(c=>c[0]==='L'||c[0]==='R');
+ const railOK=dicht(spec.rail),cond=spec.br.map(dicht),kortT=spec.br.map((b,i)=>cond[i]&&!last(b));
+ const uit={railOn:false,brOn:spec.br.map(()=>false),kort:false,on:{}};
+ if(!railOK||!cond.some(x=>x))return uit;
+ const ks=kortT.some(x=>x),kort=ks&&!last(spec.rail),brOn=ks?kortT:cond,on={};
+ if(!kort){spec.rail.forEach(c=>{if(c[0]==='L')on[c.slice(1)]=1});spec.br.forEach((b,i)=>{if(brOn[i])b.forEach(c=>{if(c[0]==='L')on[c.slice(1)]=1})})}
+ return {railOn:true,brOn,kort,on}}
+function kring(spec,sw={},opt={}){const st=opt.uit?{railOn:false,brOn:spec.br.map(()=>false),kort:false,on:{}}:stroom(spec,sw);
+ const y0=34,y1=196,xb=30,k=spec.rail.length,n=spec.br.length;
+ const x0=k?30+k*62+34:(n===1?210:120),xs=n===1?[x0]:spec.br.map((_,i)=>x0+i*(290-x0)/(n-1)),xL=xs[n-1];
+ const kl=on=>st.kort&&on?'var(--bad)':on?'var(--accent)':'var(--muted)';
+ const HALF={S:15,L:12,A:13,V:13,'?':13,R:15};
+ let w='',c='';
+ const lijn=(a,b,col)=>{w+=`<line x1="${a[0]}" y1="${a[1]}" x2="${b[0]}" y2="${b[1]}" stroke="${col}" stroke-width="2.5" stroke-linecap="round"/>`};
+ const deel=(cx,cy,o,s)=>{const t=s[0],lab=s.slice(1),v=o==='v';const lx=v?cx+17:cx,ly=v?cy+5:cy-19,anc=v?'start':'middle';
+  if(t==='L'){const aan=st.on[lab];c+=(aan?`<circle cx="${cx}" cy="${cy}" r="19" fill="#FFD84D" opacity=".38"/>`:'')+`<circle cx="${cx}" cy="${cy}" r="11" fill="${aan?'#FFD84D':'var(--surface)'}" stroke="currentColor" stroke-width="2"/><path d="M${cx-7.8},${cy-7.8}L${cx+7.8},${cy+7.8}M${cx+7.8},${cy-7.8}L${cx-7.8},${cy+7.8}" stroke="currentColor" stroke-width="1.6"/>`;if(lab)c+=`<text x="${lx}" y="${ly}" font-size="13" font-weight="700" text-anchor="${anc}" fill="currentColor">${lab}</text>`}
+  else if(t==='S'){const d=!!sw[lab];const p1=v?[cx,cy-15]:[cx-15,cy],p2=v?[cx,cy+15]:[cx+15,cy],op=v?[cx+12,cy+9]:[cx+9,cy-12];
+   c+=`<line x1="${p1[0]}" y1="${p1[1]}" x2="${d?p2[0]:op[0]}" y2="${d?p2[1]:op[1]}" stroke="currentColor" stroke-width="2.5" stroke-linecap="round"/><circle cx="${p1[0]}" cy="${p1[1]}" r="3" fill="var(--surface)" stroke="currentColor" stroke-width="1.6"/><circle cx="${p2[0]}" cy="${p2[1]}" r="3" fill="var(--surface)" stroke="currentColor" stroke-width="1.6"/>`;
+   if(opt.tik)c+=`<rect data-s="${lab}" x="${cx-22}" y="${cy-22}" width="44" height="44" rx="8" fill="var(--accent)" fill-opacity=".08" stroke="var(--accent)" stroke-opacity=".5" stroke-dasharray="3 3" style="cursor:pointer"/>`;
+   c+=`<text x="${v?cx-17:cx}" y="${v?cy+5:cy+28}" font-size="12" text-anchor="${v?'end':'middle'}" fill="currentColor">S${lab}</text>`}
+  else if(t==='R'){c+=v?`<rect x="${cx-7}" y="${cy-15}" width="14" height="30" fill="var(--surface)" stroke="currentColor" stroke-width="2"/>`:`<rect x="${cx-15}" y="${cy-7}" width="30" height="14" fill="var(--surface)" stroke="currentColor" stroke-width="2"/>`;if(lab)c+=`<text x="${lx}" y="${ly}" font-size="12" text-anchor="${anc}" fill="currentColor">R${lab}</text>`}
+  else{c+=`<circle cx="${cx}" cy="${cy}" r="13" fill="var(--surface)" stroke="${t==='?'?'var(--accent)':'currentColor'}" stroke-width="2"/><text x="${cx}" y="${cy+5}" font-size="14" font-weight="800" text-anchor="middle" fill="${t==='?'?'var(--accent)':'currentColor'}">${t}</text>`}};
+ /* een draad met onderdelen erin: stukjes draad tussen de onderdelen */
+ const draad=(a,b,lst,o,col)=>{const L=o==='v'?b[1]-a[1]:b[0]-a[0];let p=o==='v'?a[1]:a[0];const pts=lst.map((s,i)=>(o==='v'?a[1]:a[0])+(i+1)*L/(lst.length+1));
+  pts.forEach((m,i)=>{const h=HALF[lst[i][0]]||13;const q=o==='v'?[[a[0],p],[a[0],m-h]]:[[p,a[1]],[m-h,a[1]]];lijn(q[0],q[1],col);p=m+h;deel(o==='v'?a[0]:m,o==='v'?m:a[1],o,lst[i])});
+  lijn(o==='v'?[a[0],p]:[p,a[1]],b,col)};
+ const rc=kl(st.railOn),ym=(y0+y1)/2;
+ lijn([xb,y0],[xb,ym-6],rc);lijn([xb,ym+6],[xb,y1],rc);
+ c+=`<line x1="${xb-15}" y1="${ym-6}" x2="${xb+15}" y2="${ym-6}" stroke="currentColor" stroke-width="2.5"/><line x1="${xb-8}" y1="${ym+6}" x2="${xb+8}" y2="${ym+6}" stroke="currentColor" stroke-width="5"/><text x="${xb-24}" y="${ym-9}" font-size="13" fill="currentColor">+</text><text x="${xb-24}" y="${ym+18}" font-size="14" fill="currentColor">−</text>`;
+ draad([xb,y0],[x0,y0],spec.rail,'h',rc);if(n>1)lijn([x0,y0],[xL,y0],rc);lijn([xb,y1],[xL,y1],rc);
+ spec.br.forEach((b,i)=>{draad([xs[i],y0],[xs[i],y1],b,'v',kl(st.brOn[i]));if(i<n-1&&n>1)c+=`<circle cx="${xs[i]}" cy="${y0}" r="3.5" fill="currentColor"/><circle cx="${xs[i]}" cy="${y1}" r="3.5" fill="currentColor"/>`});
+ return `<svg class="kring" viewBox="0 0 340 222" role="img" aria-label="schakelschema">${w}${c}${st.kort?`<text x="175" y="216" font-size="13" font-weight="800" text-anchor="middle" fill="var(--bad)">⚡ Kortsluiting!</text>`:''}</svg>`}
+/* symbolen van het schakelschema */
+function symFig(){const it=[['lampje',s=>`<circle cx="${s}" cy="30" r="11" fill="var(--surface)" stroke="currentColor" stroke-width="2"/><path d="M${s-7.8},22.2L${s+7.8},37.8M${s+7.8},22.2L${s-7.8},37.8" stroke="currentColor" stroke-width="1.6"/>`,12],
+ ['batterij',s=>`<line x1="${s-5}" y1="15" x2="${s-5}" y2="45" stroke="currentColor" stroke-width="2.5"/><line x1="${s+5}" y1="22" x2="${s+5}" y2="38" stroke="currentColor" stroke-width="5"/>`,6],
+ ['schakelaar open',s=>`<line x1="${s-14}" y1="30" x2="${s+9}" y2="18" stroke="currentColor" stroke-width="2.5"/><circle cx="${s-14}" cy="30" r="3" fill="var(--surface)" stroke="currentColor"/><circle cx="${s+14}" cy="30" r="3" fill="var(--surface)" stroke="currentColor"/>`,15],
+ ['weerstand',s=>`<rect x="${s-15}" y="23" width="30" height="14" fill="var(--surface)" stroke="currentColor" stroke-width="2"/>`,15],
+ ['ampèremeter',s=>`<circle cx="${s}" cy="30" r="13" fill="var(--surface)" stroke="currentColor" stroke-width="2"/><text x="${s}" y="35" font-size="14" font-weight="800" text-anchor="middle" fill="currentColor">A</text>`,13],
+ ['voltmeter',s=>`<circle cx="${s}" cy="30" r="13" fill="var(--surface)" stroke="currentColor" stroke-width="2"/><text x="${s}" y="35" font-size="14" font-weight="800" text-anchor="middle" fill="currentColor">V</text>`,13],
+ ['wisselspanning',s=>`<circle cx="${s}" cy="30" r="13" fill="var(--surface)" stroke="currentColor" stroke-width="2"/><path d="M${s-7},30 q3.5,-7 7,0 t7,0" fill="none" stroke="currentColor" stroke-width="2"/>`,13],
+ ['gesloten schakelaar',s=>`<line x1="${s-14}" y1="30" x2="${s+14}" y2="30" stroke="currentColor" stroke-width="2.5"/><circle cx="${s-14}" cy="30" r="3" fill="var(--surface)" stroke="currentColor"/><circle cx="${s+14}" cy="30" r="3" fill="var(--surface)" stroke="currentColor"/>`,15]];
+ return `<div class="symgrid">${it.map(([n,f,h])=>`<figure><svg viewBox="0 0 110 60"><line x1="5" y1="30" x2="${55-h}" y2="30" stroke="var(--muted)" stroke-width="2.5"/><line x1="${55+h}" y1="30" x2="105" y2="30" stroke="var(--muted)" stroke-width="2.5"/>${f(55)}</svg><figcaption>${n}</figcaption></figure>`).join('')}</div>`}
+/* kleurcode */
+const KLR=[['zwart','#1d1d1d'],['bruin','#7B4A1E'],['rood','#D0342C'],['oranje','#F28C1C'],['geel','#F5D40F'],['groen','#2E9E48'],['blauw','#2F6BD8'],['paars','#8A3FB8'],['grijs','#8C8C8C'],['wit','#F7F7F7']];
+function weerstandFig(d){return `<svg class="chart" viewBox="0 0 340 90" style="max-width:380px" role="img" aria-label="weerstand met ringen ${d.map(x=>KLR[x][0]).join(', ')}"><line x1="8" y1="45" x2="332" y2="45" stroke="var(--muted)" stroke-width="4"/><rect x="80" y="22" width="180" height="46" rx="18" fill="#E7CFA0" stroke="#9C7B45" stroke-width="2"/>
+ ${d.map((x,i)=>`<rect x="${108+i*30}" y="22" width="16" height="46" fill="${KLR[x][1]}" stroke="rgba(0,0,0,.25)"/>`).join('')}<rect x="222" y="22" width="12" height="46" fill="#C9A227" stroke="rgba(0,0,0,.25)"/>
+ ${d.map((x,i)=>`<text x="${116+i*30}" y="84" font-size="11" text-anchor="middle" fill="currentColor">${i+1}</text>`).join('')}<text x="228" y="84" font-size="11" text-anchor="middle" fill="currentColor">goud</text></svg>`}
+function kleurTabel(){return `<div class="kleurtab">${KLR.map(([n,c],i)=>`<span><i style="background:${c}"></i>${n} = ${i}</span>`).join('')}</div>`}
+const chip=d=>d.map(x=>`<span class="kchip"><i style="background:${KLR[x][1]}"></i>${KLR[x][0]}</span>`).join(' ');
+/* rendement als balk: wat erin gaat, wat nuttig is, wat verloren gaat */
+function rendFig(p,nut,verl,inTxt){return `<svg class="chart" viewBox="0 0 340 92" role="img" aria-label="rendement ${p} procent"><text x="0" y="14" font-size="12" fill="currentColor">${inTxt||'erin: elektrische energie (100%)'}</text>
+ <rect x="0" y="22" width="${3.4*p}" height="30" rx="4" fill="var(--green)"/><rect x="${3.4*p}" y="22" width="${340-3.4*p}" height="30" rx="4" fill="var(--accent)" opacity=".75"/>
+ <text x="4" y="70" font-size="12" font-weight="700" fill="var(--green)">${nut} (${p}%)</text><text x="336" y="86" font-size="12" font-weight="700" text-anchor="end" fill="var(--accent)">${verl} (${100-p}%)</text></svg>`}
+/* formuledriehoek van de wet van Ohm */
+function driehoek(top,l,r){return `<svg class="chart" viewBox="0 0 200 130" style="max-width:220px" role="img" aria-label="formuledriehoek"><path d="M100,8 L192,122 L8,122Z" fill="var(--pink-soft)" stroke="var(--accent)" stroke-width="2.5"/><line x1="52" y1="70" x2="148" y2="70" stroke="var(--accent)" stroke-width="2"/><line x1="100" y1="70" x2="100" y2="122" stroke="var(--accent)" stroke-width="2"/>
+ <text x="100" y="58" font-size="26" font-weight="800" text-anchor="middle" fill="currentColor">${top}</text><text x="64" y="108" font-size="24" font-weight="800" text-anchor="middle" fill="currentColor">${l}</text><text x="136" y="108" font-size="24" font-weight="800" text-anchor="middle" fill="currentColor">${r}</text></svg>`}
+/* twee draden naast elkaar */
+function draadFig(){return `<svg class="chart" viewBox="0 0 340 120" role="img" aria-label="dikke en dunne draad"><rect x="20" y="18" width="300" height="22" rx="11" fill="#C97B3A"/><text x="20" y="58" font-size="12" fill="currentColor">dik en kort stuk: kleine weerstand</text>
+ <rect x="20" y="78" width="300" height="6" rx="3" fill="#C97B3A"/><text x="20" y="104" font-size="12" fill="currentColor">dun: grote weerstand (en hoe langer, hoe groter)</text></svg>`}
+
+/* ---------- generatoren ---------- */
+const APP=[['waterkoker',2000],['föhn',1200],['tv',100],['laptop',60],['ledlamp',8],['magnetron',800],['stofzuiger',900],['wasdroger',2500],['gameconsole',150],['koelkast',150],['strijkijzer',2200]];
+const VV={'μ':1e-6,'m':1e-3,'':1,'k':1e3,'M':1e6,'G':1e9};
+const VVN={'μ':'micro','m':'milli','':'','k':'kilo','M':'mega','G':'giga'};
+const fx=x=>Number(x.toPrecision(12));
+const GENS={
+ ept:{sec:'1.2',t:'E = P × t',f(){const k=R(0,3);const [n,p]=pick(APP);
+  if(k===0){const t=pick([0.5,1.5,2,3,4,5,8]);const E=fx(p/1000*t);return NQ(`Een ${n} van <b>${nf(p,0)} W</b> staat <b>${nf(t)} uur</b> aan. Hoeveel energie gebruikt hij? Geef het antwoord in kWh.`,E,`P = ${nf(p,0)} W = ${nf(p/1000,3)} kW. E = P × t = ${nf(p/1000,3)} kW × ${nf(t)} h = <b>${nf(E,3)} kWh</b>.`,'kWh')}
+  if(k===1){const m=pick([2,5,10,15,30]);const E=p*m*60;return NQ(`Een ${n} van <b>${nf(p,0)} W</b> staat <b>${m} minuten</b> aan. Hoeveel joule elektrische energie gebruikt hij?`,E,`Voor joule: P in W en t in seconden. t = ${m} × 60 = ${m*60} s. E = P × t = ${nf(p,0)} W × ${m*60} s = <b>${nf(E,0)} J</b>.`,'J')}
+  if(k===2){const P=pick([25,40,50,100,200,500,1000]),m=pick([5,10,20,30]);const E=P*m*60/1000;return NQ(`Een apparaat gebruikt <b>${nf(E)} kJ</b> in <b>${m} minuten</b>. Hoe groot is het vermogen in W?`,P,`E = ${nf(E)} kJ = ${nf(E*1000,0)} J. t = ${m} × 60 = ${m*60} s. P = E ÷ t = ${nf(E*1000,0)} ÷ ${m*60} = <b>${P} W</b>.`,'W')}
+  const P=pick([0.5,1.2,2,2.5]),t=pick([2,3,4,6]);const E=fx(P*t);return NQ(`Een apparaat van <b>${nf(P)} kW</b> heeft <b>${nf(E)} kWh</b> gebruikt. Hoeveel uur stond het aan?`,t,`E = P × t, dus t = E ÷ P = ${nf(E)} kWh ÷ ${nf(P)} kW = <b>${t} h</b>.`,'h')}},
+ kwh:{sec:'1.2',t:'kWh, joule en kosten',f(){const k=R(0,3);
+  if(k===0){const x=pick([2,0.5,5,1.5,3,10]);return NQ(`Hoeveel MJ (megajoule) is <b>${nf(x)} kWh</b>?`,fx(x*3.6),`1 kWh = 3&#8239;600&#8239;000 J = 3,6 MJ. ${nf(x)} × 3,6 = <b>${nf(x*3.6,2)} MJ</b>.`,'MJ')}
+  if(k===1){const x=pick([2,5,10,4,25]);return NQ(`Een apparaat gebruikt <b>${nf(x*3.6)} MJ</b>. Hoeveel kWh is dat?`,x,`1 kWh = 3,6 MJ, dus ${nf(x*3.6)} ÷ 3,6 = <b>${x} kWh</b>.`,'kWh')}
+  if(k===2){const p=pick([200,300,400,150]),h=pick([2,3,4]),d=pick([7,30,10]),pr=pick([0.20,0.25,0.30]);const E=fx(p/1000*h*d),eu=rnd(E*pr,2);
+   return NQ(`Je gamet ${d} dagen lang <b>${h} uur per dag</b> met een console en tv van samen <b>${p} W</b>. 1 kWh kost € ${nf(pr,2)}. Wat kost dat? (in euro)`,eu,`E = P × t = ${nf(p/1000,2)} kW × ${h*d} h = ${nf(E,2)} kWh. Kosten: ${nf(E,2)} × € ${nf(pr,2)} = <b>€ ${nf(eu,2)}</b>.`,'euro',0.011)}
+  const [n,p]=pick([['ledlamp',8],['ledlamp',6],['koelkast (gemiddeld)',40],['router',10]]),h=pick([4,5,24]);const E=fx(p/1000*h*365);return NQ(`Een ${n} van <b>${p} W</b> staat elke dag <b>${h} uur</b> aan. Hoeveel kWh is dat in een jaar (365 dagen)?`,E,`t = ${h} × 365 = ${h*365} h. E = ${nf(p/1000,3)} kW × ${h*365} h = <b>${nf(E,1)} kWh</b>.`,'kWh')}},
+ voor:{sec:'1.2',t:'Voorvoegsels',f(){const P=[['k',''],['','k'],['m',''],['','m'],['M','k'],['M',''],['G','M'],['μ','m'],['k','M'],['m','μ']];const [a,b]=pick(P);const u=pick(['W','J','V','A','Ω']);
+  const v=a==='k'&&b==='M'||(a===''&&b!=='m'&&b!=='μ')?pick([450,2500,750,120,3600]):a==='m'&&b===''?pick([450,25,750,80,5]):pick([2.5,1.2,0.8,3,4.5,0.25]);
+  const f=VV[a]/VV[b],ans=fx(v*f);const st=f>=1?`1 ${a}${u} = ${nf(f,6)} ${b}${u}, dus keer ${nf(f,6)}`:`1 ${b}${u} = ${nf(1/f,6)} ${a}${u}, dus delen door ${nf(1/f,6)}`;
+  return NQ(`<b>${nf(v,3)} ${a}${u}</b> = hoeveel ${b}${u}?`,ans,`${a?VVN[a]+' = × '+nf(VV[a],6).replace('0,000001','0,000&#8239;001')+'. ':''}${st}: ${nf(v,3)} → <b>${nf(ans,6)} ${b}${u}</b>.`,b+u)}},
+ rend:{sec:'1.2',t:'Rendement',f(){const k=R(0,3);
+  if(k===0){const t=pick([10,20,40,50,60,100]),p=pick([5,10,20,25,30,40,45,60,80]);const n=t*p/100;return NQ(`Een lamp krijgt <b>${t} J</b> elektrische energie per seconde en geeft <b>${nf(n)} J</b> licht. Wat is het rendement in %?`,p,`η = E<sub>nuttig</sub> ÷ E<sub>toegevoerd</sub> × 100% = ${nf(n)} ÷ ${t} × 100% = <b>${p}%</b>. Met een verhoudingstabel: ${t} J ↔ 100%, dus 1 J ↔ ${nf(100/t,2)}%.`,'%',0.6)}
+  if(k===1){const [n,e]=pick([['magnetron',2000],['waterkoker',500],['ventilator',300],['boormachine',800]]),p=pick([40,42,60,75,85]);const a=fx(e*p/100);return NQ(`Een ${n} krijgt <b>${e} kJ</b> elektrische energie. Het rendement is <b>${p}%</b>. Hoeveel kJ is nuttige energie?`,a,`Verhoudingstabel: 100% ↔ ${e} kJ, dus 1% ↔ ${nf(e/100,2)} kJ, en ${p}% ↔ ${p} × ${nf(e/100,2)} = <b>${nf(a,1)} kJ</b>.`,'kJ')}
+  if(k===2){const e=pick([200,500,1000,60]),p=pick([5,20,30,45,70]);const a=fx(e*(100-p)/100);return NQ(`Een apparaat krijgt <b>${e} J</b> en heeft een rendement van <b>${p}%</b>. Hoeveel joule gaat er verloren (energieverlies)?`,a,`Nuttig is ${p}%, dus ${100-p}% gaat verloren: ${100-p}% van ${e} J = <b>${nf(a,1)} J</b>.`,'J')}
+  const n=pick([36,24,60,18]),p=pick([48,40,60,80]);const a=fx(n*100/p);return NQ(`<span class="src">Verdieping</span> Een lamp moet <b>${n} kWh</b> licht geven. Het rendement is <b>${p}%</b>. Hoeveel kWh elektrische energie is er nodig?`,a,`η = E<sub>nuttig</sub> ÷ E<sub>toegevoerd</sub> × 100%, dus E<sub>toegevoerd</sub> = E<sub>nuttig</sub> × 100% ÷ η = ${n} × 100 ÷ ${p} = <b>${nf(a,1)} kWh</b>. (Of met de tabel: ${p}% ↔ ${n} kWh, 1% ↔ ${nf(n/p,3)}, 100% ↔ ${nf(a,1)}.)`,'kWh')}},
+ omz:{sec:'1.2',t:'Welke energie?',f(){const L=[['ledlamp','licht'],['speaker','geluid'],['stofzuiger','beweging'],['waterkoker','warmte'],['ventilator','beweging'],['broodrooster','warmte'],['elektrische tandenborstel','beweging'],['koptelefoon','geluid'],['tv-scherm','licht'],['elektrische kachel','warmte']];const [n,a]=pick(L);
+  if(RNG()<.7)return Object.assign(MQ(`Een <b>${n}</b> zet elektrische energie vooral om in …`,a,['licht','geluid','warmte','beweging'].filter(x=>x!==a),`Bij een ${n} is ${a} de nuttige energie. Wat er verder ontstaat (meestal warmte) is energieverlies.`),{keep:0});
+  const [m]=pick(L.filter(x=>x[1]!=='warmte'));return MQ(`Een <b>${m}</b> wordt na een tijdje een beetje warm. Wat is die warmte?`,'energieverlies','nuttige energie|vermogen|rendement'.split('|'),`De ${m} is er niet om warm te worden, dus de warmte is verlies. Bij een kachel is warmte juist nuttig.`)}},
+ pui:{sec:'1.3',t:'P = U × I',f(){const k=R(0,3);
+  if(k===0){const [n,U,I]=pick([['föhn',230,5],['laptop',19,3.4],['startmotor van een auto',12,250],['waterkoker',230,9],['koplamp',12,4.5],['elektrische fiets',36,10]]);const P=fx(U*I);return NQ(`Een ${n} werkt op <b>${U} V</b>. De stroomsterkte is <b>${nf(I)} A</b>. Hoe groot is het vermogen in W?`,P,`P = U × I = ${U} V × ${nf(I)} A = <b>${nf(P,1)} W</b>.`,'W')}
+  if(k===1){const I=pick([0.5,2,4,5,8,10]);const P=230*I;return NQ(`Een apparaat van <b>${nf(P,0)} W</b> zit in het stopcontact (230 V). Hoe groot is de stroomsterkte?`,I,`P = U × I, dus I = P ÷ U = ${nf(P,0)} W ÷ 230 V = <b>${nf(I)} A</b>.`,'A')}
+  if(k===2){const U=pick([6,9,12,24]),I=pick([0.5,1.5,2,3]);const P=fx(U*I);return NQ(`Een lampje heeft een vermogen van <b>${nf(P)} W</b>. Er loopt <b>${nf(I)} A</b> doorheen. Op welke spanning werkt het?`,U,`P = U × I, dus U = P ÷ I = ${nf(P)} ÷ ${nf(I)} = <b>${U} V</b>.`,'V')}
+  const I=pick([0.2,0.5,0.25]),U=pick([5,12]);const P=fx(U*I);return NQ(`Een telefoonlader levert <b>${U} V</b> en <b>${nf(I*1000,0)} mA</b>. Hoeveel watt is dat?`,P,`Eerst mA naar A: ${nf(I*1000,0)} mA = ${nf(I,2)} A. P = U × I = ${U} × ${nf(I,2)} = <b>${nf(P,2)} W</b>.`,'W')}},
+ meter:{sec:'1.3',t:'Meters aansluiten',f(){const k=R(0,4);
+  if(k===0)return MQ(`${kring({rail:['?'],br:[['L']]},{},{uit:1})}Welke meter kan op de plek van het vraagteken?`,'een ampèremeter',['een voltmeter','allebei'],'De meter zit ín de stroomkring (in serie): alle stroom gaat erdoorheen. Daar hoort een ampèremeter. Een voltmeter laat bijna geen stroom door: dan gaat het lampje uit.');
+  if(k===1)return MQ(`${kring({rail:[],br:[['L'],['?']]},{},{uit:1})}Welke meter kan op de plek van het vraagteken?`,'een voltmeter',['een ampèremeter','allebei'],'De meter staat parallel, over het lampje heen. Daar hoort een voltmeter: die meet de spanning over het lampje. Een ampèremeter op die plek geeft kortsluiting.');
+  if(k===2)return MQ(`${kring({rail:['A'],br:[['L']]})}Is deze ampèremeter goed aangesloten?`,'ja, hij zit in de kring',['nee, hij moet parallel over het lampje','nee, hij moet vlak bij de min-pool'],'Een ampèremeter hoort ín de kring, zodat de stroom erdoorheen gaat. Waar precies in de kring maakt niet uit: de stroom is overal even groot.');
+  if(k===3)return MQ(`${kring({rail:[],br:[['L'],['A']]})}Wat gaat hier mis?`,'de ampèremeter staat parallel: kortsluiting',['niets, zo meet je de spanning','het lampje brandt extra fel'],'Een ampèremeter heeft bijna geen weerstand. Parallel over het lampje is hij een kortsluitdraadje: de stroom neemt die makkelijke weg en het lampje gaat uit.');
+  return MQ(`${kring({rail:['V'],br:[['L']]})}De voltmeter zit in de kring. Brandt het lampje?`,'nee, een voltmeter laat bijna geen stroom door',['ja, gewoon','ja, maar zwakker'],'Een voltmeter heeft een heel grote weerstand. In serie onderbreekt hij de kring bijna helemaal. Een voltmeter zet je daarom parallel, over het apparaat.')}},
+ ptc:{sec:'1.3',t:'Formules combineren',f(){const k=R(0,1);
+  if(k===0){const I=pick([2,4,5]),m=pick([6,12,15,30]);const P=230*I,E=fx(P/1000*m/60);return NQ(`Een stofzuiger werkt op 230 V met <b>${I} A</b>. Hij gebruikt <b>${nf(E,3)} kWh</b>. Hoeveel <b>minuten</b> stond hij aan?`,m,`Stap 1: P = U × I = 230 × ${I} = ${P} W = ${nf(P/1000,2)} kW.<br>Stap 2: t = E ÷ P = ${nf(E,3)} ÷ ${nf(P/1000,2)} = ${nf(m/60,3)} h.<br>Stap 3: ${nf(m/60,3)} × 60 = <b>${m} min</b>.`,'min')}
+  const U=pick([12,230]),I=U===12?pick([5,10,20]):pick([2,4,8]),t=pick([2,3,5]);const E=fx(U*I/1000*t);return NQ(`Een apparaat werkt op <b>${U} V</b> met <b>${I} A</b> en staat <b>${t} uur</b> aan. Hoeveel kWh gebruikt het?`,E,`Stap 1: P = U × I = ${U} × ${I} = ${U*I} W = ${nf(U*I/1000,3)} kW.<br>Stap 2: E = P × t = ${nf(U*I/1000,3)} × ${t} = <b>${nf(E,3)} kWh</b>.`,'kWh')}},
+ ohm:{sec:'1.4',t:'Wet van Ohm',f(){const k=R(0,4);
+  if(k===0){const [n,U,I]=pick([['koplamp van een auto',12,3],['boormachine',230,2.3],['lampje',6,0.5],['waterkoker',230,10],['föhn',230,4.6]]);const r=fx(U/I);return NQ(`Een ${n} werkt op <b>${U} V</b>. De stroomsterkte is <b>${nf(I)} A</b>. Hoe groot is de weerstand?`,r,`R = U ÷ I = ${U} V ÷ ${nf(I)} A = <b>${nf(r,1)} Ω</b>.`,'Ω')}
+  if(k===1){const I=pick([0.4,0.2,1.5,2]),r=pick([4,8,10,6]);const U=fx(I*r);return NQ(`Door een luidspreker van <b>${r} Ω</b> loopt <b>${nf(I)} A</b>. Hoe groot is de spanning over de luidspreker?`,U,`U = I × R = ${nf(I)} A × ${r} Ω = <b>${nf(U,2)} V</b>.`,'V')}
+  if(k===2){const [U,r]=pick([[12,0.01],[230,46],[230,23],[9,4.5],[12,2]]);const I=fx(U/r);return NQ(`Een weerstand van <b>${nf(r,2)} Ω</b> wordt aangesloten op <b>${U} V</b>. Hoe groot wordt de stroomsterkte?`,I,`I = U ÷ R = ${U} V ÷ ${nf(r,2)} Ω = <b>${nf(I,2)} A</b>.${r<0.1?' Zo groot! Dat is kortsluiting: de draad wordt gloeiend heet.':''}`,'A')}
+  if(k===3){const I=pick([20,50,10,30]),r=pick([100,300,200,150]);const U=fx(I/1000*r);return NQ(`Door een weerstand van <b>${r} Ω</b> loopt <b>${I} mA</b>. Hoe groot is de spanning?`,U,`Eerst mA naar A: ${I} mA = ${nf(I/1000,3)} A. U = I × R = ${nf(I/1000,3)} × ${r} = <b>${nf(U,2)} V</b>.`,'V')}
+  const [U,kr]=pick([[9,4.5],[12,2],[6,3],[230,11.5]]);const I=fx(U/(kr*1000)*1000);return NQ(`Een weerstand van <b>${nf(kr)} kΩ</b> zit op <b>${U} V</b>. Hoe groot is de stroomsterkte in <b>mA</b>?`,I,`${nf(kr)} kΩ = ${nf(kr*1000,0)} Ω. I = U ÷ R = ${U} ÷ ${nf(kr*1000,0)} = ${nf(I/1000,4)} A = <b>${nf(I,2)} mA</b>.`,'mA')}},
+ kleur:{sec:'1.4',t:'Kleurcode',f(){const d=[R(1,9),R(0,9),R(0,4)];const v=(10*d[0]+d[1])*Math.pow(10,d[2]);
+  if(RNG()<.65)return NQ(`${weerstandFig(d)}Hoeveel ohm is deze weerstand? <span class="src">(ringen: ${d.map(x=>KLR[x][0]).join(' – ')})</span>${kleurTabel()}`,v,`Ring 1 = ${d[0]}, ring 2 = ${d[1]}, ring 3 = ${d[2]} ${d[2]===1?'nul':'nullen'}. Dus ${d[0]}${d[1]}${'0'.repeat(d[2])} = <b>${nf(v,0)} Ω</b>.`,'Ω',0.5);
+  const alt=[[d[1]||1,d[0],d[2]],[d[0],d[1],(d[2]+1)%5],[d[0],(d[1]+1)%10,d[2]]];return Object.assign(MQ(`Welke kleuren horen bij <b>${nf(v,0)} Ω</b>?${kleurTabel()}`,chip(d),[...new Set(alt.map(chip))].filter(x=>x!==chip(d)),`${nf(v,0)} = ${d[0]}, ${d[1]} en dan ${d[2]} ${d[2]===1?'nul':'nullen'}: ${d.map(x=>KLR[x][0]).join(' – ')}.`))}},
+ draad:{sec:'1.4',t:'Lengte, dikte, warmte',f(){const k=R(0,2);
+  if(k===0){const r=pick([2,4,5,8,12]),f=pick([2,3,4,5]);return NQ(`Een koperdraad heeft een weerstand van <b>${r} Ω</b>. Een andere koperdraad is even dik maar <b>${f} keer zo lang</b>. Hoe groot is zijn weerstand?`,r*f,`De weerstand is evenredig met de lengte: ${f}× zo lang = ${f}× zo grote weerstand. ${r} × ${f} = <b>${r*f} Ω</b>.`,'Ω')}
+  if(k===1){const r=pick([8,12,20,6]),f=pick([2,4]);return NQ(`Een draad heeft een weerstand van <b>${r} Ω</b>. Een draad van hetzelfde metaal en even lang heeft een <b>${f} keer zo grote doorsnede</b> (dikker). Hoe groot is zijn weerstand?`,r/f,`Dikker = makkelijker voor de stroom. De weerstand is omgekeerd evenredig met de doorsnede: ${r} ÷ ${f} = <b>${nf(r/f)} Ω</b>.`,'Ω')}
+  const L=[['Een gloeidraad wordt heet. Wat doet zijn weerstand?','die wordt groter',['die wordt kleiner','die blijft gelijk'],'Bij metalen: heter = grotere weerstand. De atomen trillen harder, dus de elektronen komen er moeilijker tussendoor.'],
+   ['Welke draad heeft de kleinste weerstand?','een korte, dikke draad',['een lange, dunne draad','een korte, dunne draad'],'Kort én dik: weinig afstand en een brede doorgang.'],
+   ['Een föhn staat op de hoogste stand (grootste vermogen). Hoe is de weerstand dan?','het kleinst',['het grootst','hetzelfde als op de laagste stand'],'Zelfde spanning, grootste stroomsterkte, dus de kleinste weerstand (R = U ÷ I).']];const q=pick(L);return MQ(q[0],q[1],q[2],q[3])}},
+ rho:{sec:'1.4',t:'R = ρ × l ÷ A',f(){const M=[['koper',0.017],['aluminium',0.027],['ijzer',0.105],['zilver',0.016],['goud',0.022]];const [m,p]=pick(M);const k=R(0,2);const gv=`(ρ van ${m} = ${nf(p,3)} Ω·mm²/m)`;
+  if(k===0){const lk=pick([2,5,10,20]),A=pick([500,1000,250]);const r=fx(p*lk*1000/A);return NQ(`<span class="src">Verdieping</span> Een kabel van ${m} is <b>${lk} km</b> lang en heeft een doorsnede van <b>${A} mm²</b>. Hoe groot is de weerstand? ${gv}`,r,`Eerst km naar m: ${lk} km = ${nf(lk*1000,0)} m.<br>R = ρ × l ÷ A = ${nf(p,3)} × ${nf(lk*1000,0)} ÷ ${A} = <b>${nf(r,3)} Ω</b>.`,'Ω')}
+  if(k===1){const l=pick([2,5,10,20]),A=pick([0.5,1.5,2.5,1]);const r=fx(p*l/A);return NQ(`<span class="src">Verdieping</span> Een draad van ${m} is <b>${l} m</b> lang en heeft een doorsnede van <b>${nf(A)} mm²</b>. Hoe groot is de weerstand? ${gv}`,r,`R = ρ × l ÷ A = ${nf(p,3)} × ${l} ÷ ${nf(A)} = <b>${nf(r,3)} Ω</b>.`,'Ω')}
+  const U=6,I=pick([0.75,0.5,1.5]),lc=pick([50,40,25]),A=pick([0.028,0.02,0.05]);const r=U/I,rr=fx(r*A/(lc/100));return NQ(`<span class="src">Verdieping</span> Een draadje van een onbekend metaal is <b>${lc} cm</b> lang, met een doorsnede van <b>${nf(A,3)} mm²</b>. Op 6,0 V loopt er <b>${nf(I,2)} A</b>. Bereken de soortelijke weerstand ρ (in Ω·mm²/m).`,rr,`Stap 1: R = U ÷ I = 6,0 ÷ ${nf(I,2)} = ${nf(r,2)} Ω.<br>Stap 2: l = ${lc} cm = ${nf(lc/100,2)} m.<br>Stap 3: R = ρ × l ÷ A, dus ρ = R × A ÷ l = ${nf(r,2)} × ${nf(A,3)} ÷ ${nf(lc/100,2)} = <b>${nf(rr,3)} Ω·mm²/m</b>.`,'Ω·mm²/m')}},
+ ser:{sec:'1.5',t:'Serieschakeling',f(){const k=R(0,4);
+  if(k===0){const r=[pick([100,200,47,10]),pick([300,150,68,20]),pick([0,0,50,100])].filter(x=>x);return NQ(`Weerstanden van ${r.map(x=>'<b>'+x+' Ω</b>').join(' en ')} staan <b>in serie</b>. Hoe groot is de totale weerstand?`,sum(r),`In serie tel je de weerstanden op: R<sub>totaal</sub> = ${r.join(' + ')} = <b>${sum(r)} Ω</b>.`,'Ω')}
+  if(k===1){const [U,a,b]=pick([[10,200,300],[12,100,500],[9,150,300],[6,100,200]]);const I=fx(U/(a+b)*1000);return NQ(`${kring({rail:[],br:[['R1','R2']]})}R<sub>1</sub> = <b>${a} Ω</b> en R<sub>2</sub> = <b>${b} Ω</b> staan in serie op <b>${U} V</b>. Hoe groot is de stroomsterkte in <b>mA</b>?`,I,`Stap 1: R<sub>totaal</sub> = ${a} + ${b} = ${a+b} Ω.<br>Stap 2: I = U ÷ R<sub>totaal</sub> = ${U} ÷ ${a+b} = ${nf(I/1000,4)} A = <b>${nf(I,1)} mA</b>.`,'mA')}
+  if(k===2){const [U,a,b]=pick([[10,200,300],[12,100,500],[9,150,300],[6,100,200]]);const I=U/(a+b),U2=fx(I*b);return NQ(`R<sub>1</sub> = <b>${a} Ω</b> en R<sub>2</sub> = <b>${b} Ω</b> staan in serie op <b>${U} V</b>. Hoe groot is de spanning over R<sub>2</sub>?`,U2,`Stap 1: R<sub>totaal</sub> = ${a} + ${b} = ${a+b} Ω.<br>Stap 2: I = ${U} ÷ ${a+b} = ${nf(I,4)} A (overal even groot).<br>Stap 3: U<sub>2</sub> = I × R<sub>2</sub> = ${nf(I,4)} × ${b} = <b>${nf(U2,2)} V</b>. Check: U<sub>1</sub> = ${nf(U-U2,2)} V, samen ${U} V.`,'V')}
+  if(k===3){const [n,U]=pick([[23,230],[10,230],[4,12],[20,230],[3,4.5]]);return NQ(`<b>${n}</b> gelijke lampjes staan in serie op <b>${nf(U)} V</b>. Hoe groot is de spanning over één lampje?`,fx(U/n),`In serie wordt de spanning verdeeld: ${nf(U)} ÷ ${n} = <b>${nf(U/n,2)} V</b>.`,'V')}
+  const U=pick([9,12,6,4.5]),U1=pick([2,3,1.5]);return NQ(`Twee lampjes staan in serie op een batterij van <b>${nf(U)} V</b>. Over lampje 1 staat <b>${nf(U1)} V</b>. Hoeveel spanning staat er over lampje 2?`,fx(U-U1),`U<sub>totaal</sub> = U<sub>1</sub> + U<sub>2</sub>, dus U<sub>2</sub> = ${nf(U)} − ${nf(U1)} = <b>${nf(U-U1)} V</b>.`,'V')}},
+ par:{sec:'1.5',t:'Parallelschakeling',f(){const k=R(0,4);
+  if(k===0){const I=[pick([2.3,0.5,4]),pick([0.9,1.2,3.5]),pick([0,0.4,2])].filter(x=>x);return NQ(`${I.length} apparaten staan <b>parallel</b>. Er loopt ${I.map(x=>'<b>'+nf(x)+' A</b>').join(', ')} doorheen. Hoe groot is de totale stroomsterkte?`,fx(sum(I)),`Parallel tel je de stromen op: I<sub>totaal</sub> = ${I.map(x=>nf(x)).join(' + ')} = <b>${nf(sum(I),2)} A</b>.`,'A')}
+  if(k===1){const t=pick([3.2,5,8.5,2]),a=pick([0.9,1.5,0.8]);return NQ(`Twee lampjes staan parallel. De totale stroomsterkte is <b>${nf(t)} A</b>. Door lampje 1 gaat <b>${nf(a)} A</b>. Hoeveel gaat er door lampje 2?`,fx(t-a),`I<sub>totaal</sub> = I<sub>1</sub> + I<sub>2</sub>, dus I<sub>2</sub> = ${nf(t)} − ${nf(a)} = <b>${nf(t-a,2)} A</b>.`,'A')}
+  if(k===2){const r=pick([100,46,230,115]);const I=fx(230/r);return NQ(`Een oven van <b>${r} Ω</b> zit in het stopcontact, parallel aan andere apparaten. Hoe groot is de stroomsterkte door de oven?`,I,`Parallel: de oven krijgt de volle 230 V. I = U ÷ R = 230 ÷ ${r} = <b>${nf(I,2)} A</b>.`,'A')}
+  if(k===3){const U=pick([6,9,12,4.5]);return NQ(`${kring({rail:[],br:[['L1'],['L2'],['L3']]})}Drie lampjes staan parallel op een batterij van <b>${nf(U)} V</b>. Hoeveel spanning staat er over lampje 2?`,U,`Parallel: elk lampje zit rechtstreeks op de bron, dus over elk lampje staat <b>${nf(U)} V</b>.`,'V')}
+  const [a,b]=pick([[100,50],[60,30],[200,200],[460,230]]);const I=fx(230/a+230/b);return NQ(`Twee apparaten van <b>${a} Ω</b> en <b>${b} Ω</b> zitten parallel op 230 V. Hoe groot is de totale stroomsterkte?`,I,`Stap 1: I<sub>1</sub> = 230 ÷ ${a} = ${nf(230/a,2)} A.<br>Stap 2: I<sub>2</sub> = 230 ÷ ${b} = ${nf(230/b,2)} A.<br>Stap 3: I<sub>totaal</sub> = ${nf(230/a,2)} + ${nf(230/b,2)} = <b>${nf(I,2)} A</b>.`,'A')}},
+ schak:{sec:'1.5',t:'Serie of parallel?',f(){const k=R(0,5);const ser=RNG()<.5;const sp=ser?{rail:[],br:[['LA','LB','LC'].slice(0,R(2,3))]}:{rail:[],br:['LA','LB','LC'].slice(0,R(2,3)).map(x=>[x])};const fig=kring(sp);
+  if(k===0)return MQ(`${fig}Hoe zijn deze lampjes geschakeld?`,ser?'in serie':'parallel',[ser?'parallel':'in serie','gemengd'],ser?'Er is maar één route: de stroom gaat door alle lampjes achter elkaar.':'Elk lampje heeft een eigen tak naar de bron: parallel.');
+  if(k===1)return MQ(`${fig}Lampje A gaat kapot. Wat gebeurt er met lampje B?`,ser?'B gaat ook uit':'B blijft gewoon branden',[ser?'B blijft gewoon branden':'B gaat ook uit','B gaat feller branden'],ser?'In serie is er één route. Is die onderbroken, dan stopt de stroom overal.':'Parallel heeft B een eigen kring, die blijft gesloten.');
+  if(k===2)return MQ(`${fig}Je zet er nog een lampje bij, op dezelfde manier geschakeld. Wat gebeurt er met de lampjes die er al waren?`,ser?'ze branden minder fel':'ze branden even fel',[ser?'ze branden even fel':'ze branden minder fel','ze branden feller'],ser?'In serie: de totale weerstand wordt groter, de stroom kleiner, en elk lampje krijgt minder spanning.':'Parallel: elk lampje houdt de volle spanning. Alleen de totale stroom uit de bron wordt groter.');
+  if(k===3)return MQ(`${kring({rail:['L1'],br:[['L2'],['L3']]})}<span class="src">Verdieping</span> Alle lampjes zijn gelijk. Welk lampje brandt het felst?`,'lampje 1',['lampje 2','ze branden alle drie even fel'],'Alle stroom gaat door lampje 1. Daarna splitst de stroom: lampje 2 en 3 krijgen elk de helft.');
+  if(k===4)return MQ(`${kring({rail:[],br:[['L1'],['L2','L3']]})}<span class="src">Verdieping</span> Alle lampjes zijn gelijk. Lampje 2 wordt losgedraaid. Wat gebeurt er?`,'lampje 3 gaat uit, lampje 1 blijft even fel branden',['alle lampjes gaan uit','lampje 1 gaat uit, lampje 3 blijft branden'],'Lampje 2 en 3 zitten in serie in één tak: die tak is nu onderbroken. Lampje 1 heeft een eigen tak op de bron.');
+  return MQ(`${kring({rail:[],br:[['L1'],['L2','L3']]})}<span class="src">Verdieping</span> Alle lampjes zijn gelijk. Welk lampje brandt het felst?`,'lampje 1',['lampje 2','lampje 2 en 3 even fel als 1'],'Lampje 1 krijgt de volle spanning van de bron. Lampje 2 en 3 moeten die spanning delen (U = U₂ + U₃), dus daar loopt minder stroom.')}},
+ sci:{sec:'1.5',t:'Wetenschappelijke notatie',f(){const k=R(0,2);
+  if(k===0){const m=pick([3,2.5,4.7,1.2,6.8,3.4]),e=pick([3,4,5,6,-3,-4,-2]);const v=fx(m*Math.pow(10,e));const ds=e>0?nf(v,0):String(v).replace('.',',');
+   return MQ(`Schrijf <b>${ds}</b> in de wetenschappelijke notatie.`,sci(m,e),[sci(m,e+1),sci(m,e-1),sci(m,-e)].filter((x,i,a)=>x!==sci(m,e)&&a.indexOf(x)===i).slice(0,3),`Schuif de komma tot er één cijfer vóór de komma staat (${nf(m,3)}). ${e>0?`Je schuift ${e} plaatsen naar links: × ${tien(e)}.`:`Je schuift ${-e} plaatsen naar rechts: × ${tien(e)} (een negatieve macht = delen).`}`)}
+  if(k===1){const [p,e]=pick([['k',3],['M',6],['G',9],['m',-3],['μ',-6]]),u=pick(['W','V','A','J']),m=pick([2.5,5.8,3.8,6.78,1.5]);
+   return MQ(`<b>${nf(m,3)} ${p}${u}</b> = ?`,sci(m,e,u),[sci(m,e+3,u),sci(m,-e,u),sci(m,e===3?6:3,u)].filter((x,i,a)=>x!==sci(m,e,u)&&a.indexOf(x)===i).slice(0,3),`${VVN[p]} = ${tien(e)}. Dus ${nf(m,3)} ${p}${u} = <b>${sci(m,e,u)}</b>.`)}
+  const [a,b,c,d]=pick([[2,3,3,4],[1.5,6,2,2],[4,5,2,-3],[3,8,2,3]]);const pm=a*c,pe=b+d;const [m,e]=pm>=10?[pm/10,pe+1]:[pm,pe];
+  return MQ(`<b>${sci(a,b)} × ${sci(c,d)}</b> = ?`,sci(m,e),[sci(m,b*d),sci(a+c,pe),sci(m,e+1)].filter((x,i,a)=>x!==sci(m,e)&&a.indexOf(x)===i).slice(0,3),`Getallen vooraan vermenigvuldigen: ${nf(a)} × ${nf(c)} = ${nf(pm)}. Machten optellen: ${tien(b)} × ${tien(d)} = ${tien(pe)}.${pm>=10?` ${nf(pm)}·${tien(pe)} = ${sci(m,e)} (vooraan moet tussen 1 en 10).`:''} Op je rekenmachine gaat dit met de EXP- of ×10ˣ-knop.`)}}
+};
+const SECGENS={'1.2':['ept','kwh','voor','rend','omz'],'1.3':['pui','meter','ptc','pui'],'1.4':['ohm','kleur','draad','rho'],'1.5':['ser','par','schak','sci']};
+
+/* MC: [sec, vraag, goed, 'fout|fout|fout', uitleg, theorie] */
+const MC=[
+['1.2','Wat doet een elektrisch apparaat met elektrische energie?','het zet die om in andere soorten energie, zoals licht, warmte of beweging','het maakt er nieuwe energie bij|het verbruikt de energie, zodat er niets meer van over is|het slaat de energie op','Energie verdwijnt nooit en ontstaat ook niet uit het niets. Een apparaat is een energieomzetter: "verbruiken" betekent eigenlijk omzetten.','omzet'],
+['1.2','Een ledlamp wordt een beetje warm. Wat is die warmte?','energieverlies: energie die niet nuttig gebruikt wordt','nuttige energie|het vermogen van de lamp|kortsluiting','Een lamp moet licht geven. De warmte is niet de bedoeling, dus die telt als verlies.','omzet'],
+['1.2','Wat zegt het rendement van een apparaat?','welk deel (in %) van de energie nuttig gebruikt wordt','hoeveel energie het apparaat per seconde gebruikt|hoeveel het apparaat kost|hoe lang het apparaat meegaat','Rendement = nuttige energie als deel van de toegevoerde energie. Energie per seconde is het vermogen.','rend'],
+['1.2','Een apparaat heeft energielabel A. Wat betekent dat?','het gaat zuinig om met energie, vergeleken met andere apparaten van dezelfde soort','het heeft een rendement van 100%|het heeft het grootste vermogen|het werkt op zonne-energie','Label A = zuinig. Een rendement van 100% bestaat in de praktijk niet: er gaat altijd wat energie verloren.','label'],
+['1.2','Wat is vermogen?','de energie die een apparaat per seconde omzet','de energie die een apparaat in een jaar gebruikt|hoe sterk de spanning is|het rendement in procent','Vermogen = joule per seconde. Het totaal in een jaar is energie (E = P × t).','verm'],
+['1.2','1 W is gelijk aan …','1 joule per seconde','1 joule per uur|1000 joule per seconde|1 kWh','Watt is joule per seconde. 1000 J per seconde is 1 kW. kWh is een eenheid van energie, niet van vermogen.','verm'],
+['1.2','Waarvan hangt het energieverbruik van een apparaat af?','van het vermogen én van hoe lang het aan staat','alleen van het vermogen|alleen van de tijd|alleen van het energielabel','E = P × t. Een zuinige lamp die heel lang brandt kan meer gebruiken dan een waterkoker die even aan staat.','ept'],
+['1.2','Hoeveel joule is 1 kWh?','3 600 000 J','1000 J|3600 J|60 000 J','1 kWh = 1000 W × 3600 s = 3 600 000 J = 3,6·10⁶ J. (1000 J is 1 kJ, 3600 J is 1 Wh.)','kwh'],
+['1.2','Welk vermogen is het grootst?','2 kW','1500 W|0,0015 MW|800 000 mW','2 kW = 2000 W. 0,0015 MW = 1500 W en 800 000 mW = 800 W.','voor'],
+['1.2','Wat betekent het voorvoegsel mega (M)?','× 1 000 000','× 1000|× 1 000 000 000|÷ 1000','kilo = duizend, mega = miljoen, giga = miljard, milli = een duizendste, micro = een miljoenste.','voor'],
+['1.2','Je vult in E = P × t het vermogen in kW in en de tijd in uren. Welke eenheid krijgt E?','kWh','J|W|kW','kW × h = kWh. Wil je joule, dan vul je P in W en t in seconden in.','ept'],
+['1.2','Kan het rendement groter zijn dan 100%?','nee, dan zou er energie uit het niets ontstaan','ja, bij heel zuinige apparaten|ja, bij label A|alleen bij ledlampen','De nuttige energie kan nooit meer zijn dan wat erin gaat. Het rendement ligt dus tussen 0% en 100%.','rend'],
+['1.2','Een elektrische kachel zet bijna alle energie om in warmte. Het rendement is dus …','heel hoog, bijna 100%','heel laag, want warmte is verlies|precies 50%|niet te zeggen','Bij een kachel is warmte juist het nuttige. Wat nuttig is hangt af van waar het apparaat voor is.','rend'],
+['1.2','Verdieping: in η = E(nuttig) ÷ E(toegevoerd) × 100% moet je …','beide energieën in dezelfde eenheid invullen','de energie altijd in kWh invullen|de energie altijd in joule invullen|de toegevoerde energie boven de streep zetten','Kies zelf J of kWh, als het maar voor allebei hetzelfde is. De nuttige energie staat boven de streep.','rendf'],
+['1.3','Wanneer loopt er een elektrische stroom?','alleen als de stroomkring gesloten is','ook als de kring ergens open is|alleen bij wisselspanning|alleen als er een ampèremeter in zit','De elektronen moeten rond kunnen: van de bron door het apparaat en terug naar de bron. Een open schakelaar onderbreekt de kring.','kring'],
+['1.3','Wat beweegt er eigenlijk door een metaaldraad als er stroom loopt?','elektronen','protonen|hele atomen|de spanning','In een metaal bewegen elektronen door de draad. Spanning beweegt niet: dat is de "duw" van de bron.','kring'],
+['1.3','Wat geeft de stroomsterkte aan?','hoeveel lading (elektronen) er per seconde door de draad gaat','hoe hard de bron duwt|hoeveel energie het apparaat per uur gebruikt|hoe dik de draad is','Stroomsterkte = hoeveel lading per seconde. Hoe hard de bron duwt is de spanning.','stroom'],
+['1.3','In welke eenheid meet je stroomsterkte?','ampère (A)','volt (V)|watt (W)|ohm (Ω)','I in ampère. Spanning in volt, vermogen in watt, weerstand in ohm.','stroom'],
+['1.3','Hoe sluit je een ampèremeter aan?','in de stroomkring, zodat alle stroom erdoorheen gaat (in serie)','parallel, over het apparaat heen|los naast de schakeling|alleen aan de pluspool','Een ampèremeter meet de stroom die erdoorheen gaat, dus hij moet ín de kring. Parallel geeft kortsluiting.','meter'],
+['1.3','Hoe sluit je een voltmeter aan?','parallel, over het apparaat heen','in de stroomkring, in serie|tussen twee lampjes in de kring|het maakt niet uit','Een voltmeter vergelijkt de punten vóór en na het apparaat. Hij laat bijna geen stroom door: in serie zou alles uitgaan.','meter'],
+['1.3','Wat geeft de spanning van een bron aan?','hoe "sterk" de bron de elektronen duwt','hoeveel elektronen er per seconde stromen|hoeveel energie er nog in de batterij zit|hoe groot de weerstand is','Spanning (in volt) is de duw. Hoeveel er per seconde stroomt is de stroomsterkte.','span'],
+['1.3','Waar komt de energie van een batterij vandaan?','uit chemische energie (stoffen in de batterij)','uit de lucht|uit de elektronen zelf, die raken op|uit het stopcontact','In een batterij reageren stoffen met elkaar: chemische energie wordt elektrische energie. Een dynamo gebruikt bewegingsenergie, een zonnepaneel zonne-energie. De elektronen raken niet op: ze gaan rond.','span'],
+['1.3','Een laptop werkt op 19 V, een föhn op 230 V. Stel dat ze hetzelfde vermogen hebben. Welke heeft de grootste stroomsterkte?','de laptop','de föhn|allebei even groot|dat kun je niet zeggen','P = U × I. Bij een lage spanning heb je een grotere stroomsterkte nodig voor hetzelfde vermogen.','pui'],
+['1.3','Welke spanning heeft het stopcontact in Nederland?','230 V','12 V|1,5 V|1500 V','Het lichtnet is 230 V. Een auto-accu is 12 V, een penlite-batterij 1,5 V, de bovenleiding van de trein 1500 V.','span'],
+['1.3','Bij een batterij duwt de spanning altijd dezelfde kant op. Dat heet …','gelijkspanning','wisselspanning|hoogspanning|kortsluiting','Batterij en accu geven gelijkspanning. Het stopcontact geeft wisselspanning: die keert steeds om.','span'],
+['1.3','Welke formule hoort bij vermogen, spanning en stroomsterkte?','P = U × I','P = U ÷ I|P = I ÷ U|U = P × I','Vermogen = spanning × stroomsterkte: hoe harder de duw en hoe meer stroom, hoe meer energie per seconde.','pui'],
+['1.3','Wat is het symbool van een lampje in een schakelschema?','een rondje met een kruis erin','een rechthoekje|een lange en een korte streep|een rondje met een A erin','Rechthoekje = weerstand, lange + korte streep = batterij, rondje met een A = ampèremeter.','schema'],
+['1.4','Wat geeft de weerstand aan?','hoeveel een draad of apparaat de stroom tegenhoudt','hoe snel de stroom gaat|hoeveel energie het apparaat per seconde omzet|hoe hard de bron duwt','Grote weerstand = kleine stroomsterkte. Energie per seconde is het vermogen, de duw is de spanning.','weer'],
+['1.4','In welke eenheid meet je weerstand?','ohm (Ω)','ampère (A)|volt (V)|watt (W)','R in ohm, symbool Ω. 1 kΩ = 1000 Ω, 1 MΩ = 1 000 000 Ω.','weer'],
+['1.4','Twee koperdraden zijn even lang. Draad A is dikker dan draad B. Welke heeft de grootste weerstand?','draad B (de dunne)','draad A (de dikke)|allebei even groot|dat hangt af van de spanning','Een dikke draad is een bredere doorgang: de stroom gaat er makkelijker door. Dun = grotere weerstand.','draad'],
+['1.4','Wat gebeurt er met de weerstand van een metaaldraad als hij heter wordt?','die wordt groter','die wordt kleiner|die blijft gelijk|die wordt nul','De atomen trillen harder, dus de elektronen komen er moeilijker tussendoor.','warm'],
+['1.4','Een draad wordt twee keer zo lang (even dik). De weerstand wordt …','twee keer zo groot','twee keer zo klein|vier keer zo groot|niet anders','De weerstand is evenredig met de lengte: 2× zo lang = 2× zo grote weerstand.','draad'],
+['1.4','Welke formule is de wet van Ohm?','U = I × R','U = I ÷ R|R = U × I|I = U × R','U = I × R, ook te schrijven als R = U ÷ I en I = U ÷ R. Let op: U × I is het vermogen P, niet R.','ohm'],
+['1.4','Alle apparaten in huis werken op 230 V. Welk apparaat heeft de kleinste weerstand?','het apparaat met de grootste stroomsterkte','het apparaat met de kleinste stroomsterkte|het zuinigste apparaat|ze hebben allemaal dezelfde weerstand','R = U ÷ I. Bij dezelfde U hoort een grote I bij een kleine R. Daarom hebben apparaten die veel stroom gebruiken, zoals een wasmachine, een kleine weerstand.','ohm'],
+['1.4','Wat gebeurt er bij kortsluiting?','de weerstand wordt heel klein, dus de stroomsterkte heel groot','de weerstand wordt heel groot|de stroom stopt meteen|de spanning wordt groter','Bijna geen weerstand → enorme stroom (I = U ÷ R) → de draden worden heet: brandgevaar.','kort'],
+['1.4','Waarvoor gebruik je een weerstandje in een elektronische schakeling?','om de stroomsterkte te regelen','om de spanning van de bron te verhogen|om energie op te slaan|om het apparaat aan en uit te zetten','Een weerstand bepaalt hoeveel stroom er loopt. Aan en uit doe je met een schakelaar.','kleur'],
+['1.4','Hoe lees je de kleurcode van een weerstand?','ring 1 en 2 zijn cijfers, ring 3 is het aantal nullen','alle drie de ringen zijn cijfers|ring 1 is het aantal nullen|de gouden ring is het eerste cijfer','Leg de goud- of zilverkleurige ring rechts. Geel-groen-rood = 4, 5 en 2 nullen = 4500 Ω.','kleur'],
+['1.4','De weerstand blijft gelijk en je maakt de spanning twee keer zo groot. De stroomsterkte wordt …','twee keer zo groot','twee keer zo klein|niet anders|vier keer zo groot','I = U ÷ R: met R gelijk is I evenredig met U.','ohm'],
+['1.4','Verdieping: wat is de soortelijke weerstand van een metaal?','de weerstand van een draad van 1 m lang en 1 mm² doorsnede (bij 20 °C)','de weerstand van 1 kg van dat metaal|de weerstand van elke draad van dat metaal|hoe zwaar het metaal is','Zo kun je metalen eerlijk vergelijken: allemaal dezelfde lengte, dikte en temperatuur. Een kilogram heeft er niets mee te maken.','rho'],
+['1.4','Verdieping: wat is bijzonder aan een supergeleider?','onder een bepaalde temperatuur is de weerstand nul','de weerstand is heel groot|hij werkt alleen als hij heet is|hij geeft licht','Geen weerstand: de draad wordt niet warm en er kunnen enorme stromen lopen. Dat gebruik je voor heel sterke magneten, zoals in een MRI-scanner.','halfg'],
+['1.4','Verdieping: waarvoor gebruik je een halfgeleider zoals silicium?','voor chips in moderne elektronica','voor hoogspanningskabels|voor de gloeidraad van een lamp|als supergeleider in een MRI-scanner','Een halfgeleider heeft een grote weerstand, maar met een beetje van een andere stof erdoor kun je de geleiding regelen. Daarvan maak je chips.','halfg'],
+['1.4','Verdieping: in R = ρ × l ÷ A wordt A (de doorsnede) 10 keer zo groot. Wat doet R?','R wordt 10 keer zo klein','R wordt 10 keer zo groot|R blijft gelijk|R wordt 100 keer zo klein','A staat onder de streep: R is omgekeerd evenredig met de doorsnede. Dikker = kleinere weerstand.','rho'],
+['1.5','Wat is een serieschakeling?','alle apparaten zitten achter elkaar in één stroomkring','elk apparaat heeft een eigen stroomkring|de apparaten zitten elk apart op de bron|een schakeling zonder schakelaar','Serie = achter elkaar, één route. Parallel = elk een eigen route naar de bron.','twee'],
+['1.5','In een serieschakeling gaat één lampje kapot. Wat gebeurt er met de andere lampjes?','die gaan ook uit','die blijven gewoon branden|die gaan feller branden|alleen het lampje ernaast gaat uit','Er is maar één route. Is die ergens onderbroken, dan loopt er nergens meer stroom.','serie'],
+['1.5','Hoe zijn de stopcontacten in huis geschakeld?','parallel','in serie|om en om in serie en parallel|ze zijn niet met elkaar verbonden','Zo krijgt elk apparaat 230 V en werkt het los van de andere. Zet je de tv uit, dan blijft de lamp aan.','par'],
+['1.5','Wat geldt voor de spanning in een parallelschakeling?','over elk apparaat staat dezelfde spanning als die van de bron','de spanning wordt verdeeld over de apparaten|de spanning is overal nul|alleen het eerste apparaat krijgt spanning','Elk apparaat zit rechtstreeks op de bron. Het verdelen van de spanning gebeurt bij serie.','par'],
+['1.5','In een parallelschakeling sluit je een extra apparaat aan. Wat gebeurt er met de totale stroomsterkte?','die wordt groter','die wordt kleiner|die blijft gelijk|die wordt nul','I(totaal) = I₁ + I₂ + I₃: er komt een tak bij, dus er komt stroom bij. De andere apparaten werken gewoon door.','pari'],
+['1.5','Wat geldt voor de stroomsterkte in een serieschakeling?','die is overal even groot','die is bij het eerste lampje het grootst|die wordt verdeeld over de lampjes|die is bij het laatste lampje nul','Er is één route: alle stroom gaat door elk lampje. Stroom raakt onderweg niet op.','serie'],
+['1.5','Je zet een extra lampje in een serieschakeling. Wat gebeurt er?','de stroomsterkte wordt kleiner en de lampjes branden minder fel','de stroomsterkte wordt groter|de lampjes branden feller|er verandert niets','De totale weerstand wordt groter (R = R₁ + R₂ + R₃), dus I = U ÷ R wordt kleiner. Elk lampje krijgt ook minder spanning.','sreken'],
+['1.5','Welke formule hoort bij de spanning in een serieschakeling?','U(totaal) = U₁ + U₂ + U₃','U(totaal) = U₁ = U₂ = U₃|U(totaal) = U₁ × U₂ × U₃|I(totaal) = I₁ + I₂ + I₃','De spanning van de bron wordt verdeeld. Overal dezelfde spanning hoort bij parallel, en I(totaal) = I₁ + I₂ + I₃ ook.','sreken'],
+['1.5','Welke formule hoort bij de stroomsterkte in een parallelschakeling?','I(totaal) = I₁ + I₂ + I₃','I(totaal) = I₁ = I₂ = I₃|R(totaal) = R₁ + R₂ + R₃|U(totaal) = U₁ + U₂ + U₃','De stroom splitst in takken en komt daarna weer samen. Overal dezelfde stroom, weerstanden optellen en spanningen optellen horen bij serie.','pari'],
+['1.5','Vier batterijen van 1,5 V zitten achter elkaar (in serie). De totale spanning is …','6 V','1,5 V|3 V|0,375 V','In serie tellen de spanningen op: 4 × 1,5 V = 6 V.','kerst'],
+['1.5','Kerstverlichting: 23 gelijke lampjes in serie op 230 V. Hoeveel spanning staat er over één lampje?','10 V','230 V|23 V|5290 V','De 230 V wordt verdeeld over 23 lampjes: 230 ÷ 23 = 10 V.','kerst'],
+['1.5','Verdieping: lampje 1 staat in serie met lampje 2 en 3, die parallel staan. Alle lampjes zijn gelijk. Welk lampje brandt het felst?','lampje 1','lampje 2|lampje 3|ze branden alle drie even fel','Alle stroom gaat door lampje 1 en splitst daarna: lampje 2 en 3 krijgen elk de helft.','comb'],
+['1.5','Verdieping: lampje 1 heeft een eigen tak. Parallel daaraan zit een tak met lampje 2 en 3 in serie. Lampje 2 wordt losgedraaid. Wat gebeurt er?','lampje 3 gaat uit, lampje 1 blijft branden','alle lampjes gaan uit|lampje 1 gaat uit, lampje 3 blijft branden|lampje 3 gaat feller branden','De tak van 2 en 3 is onderbroken. Lampje 1 heeft een eigen tak op de bron en merkt er niets van.','comb'],
+['1.5','Verdieping: hoe schrijf je 2,5 MW in de wetenschappelijke notatie?','2,5·10⁶ W','2,5·10³ W|2,5·10⁹ W|25·10⁵ W','Mega = 10⁶ (kilo = 10³, giga = 10⁹). 25·10⁵ is wel even groot, maar het getal vooraan moet tussen 1 en 10 liggen.','sci'],
+['1.5','Verdieping: wat is 10⁻³?','0,001 (een duizendste)','−1000|0,0001|1000','Een negatieve macht betekent delen: 10⁻³ = 1 ÷ 1000 = 0,001. Dat is milli.','sci']
+];
+
+/* ---------- Leerpaden: [titel, html|fn, [vraag, goed, 'fout|fout', uitleg]?] ---------- */
+const LP={
+'1.2':[
+ ['Waar gaat dit hoofdstuk over?',`<p>Je telefoon, de waterkoker, de tv: allemaal <b>elektrische apparaten</b>. In dit hoofdstuk leer je</p><ul><li>hoeveel energie een apparaat gebruikt en wat dat kost (1.2),</li><li>wat <b>spanning</b> en <b>stroomsterkte</b> zijn (1.3),</li><li>wat <b>weerstand</b> is (1.4),</li><li>hoe je lampjes en apparaten aan elkaar knoopt: <b>serie</b> en <b>parallel</b> (1.5).</li></ul><p>Pak er een kladblaadje en je rekenmachine bij. We beginnen bij energie.</p>`],
+ ['Apparaten zetten energie om',()=>`<p>Een apparaat maakt geen energie en laat ook geen energie verdwijnen. Het <b>zet energie om</b>: elektrische energie wordt licht, warmte, geluid of beweging. Een apparaat is dus een <b>energieomzetter</b>.</p><div class="ex">Lamp → licht · Speaker → geluid · Ventilator → beweging · Waterkoker → warmte</div><p>"Energie verbruiken" zeggen we wel, maar eigenlijk bedoelen we: omzetten.</p>`,['Een speaker zet elektrische energie vooral om in …','geluid','licht|warmte','Een speaker is er om geluid te maken. Er ontstaat ook een beetje warmte, maar dat is niet de bedoeling.']],
+ ['Nuttig en verloren',()=>`<p>Bijna elk apparaat wordt ook een beetje warm. Bij een lamp is die warmte niet de bedoeling: dat is <b>energieverlies</b>. Het licht is de <b>nuttige energie</b>.</p>${rendFig(30,'licht: nuttig','warmte: verlies','100 J elektrische energie in een lamp')}<p>Een ouderwetse gloeilamp maakte vooral warmte en maar een beetje licht. Een ledlamp geeft veel meer licht voor dezelfde energie.</p>`,['Bij welk apparaat is warmte juist nuttige energie?','een elektrische kachel','een ledlamp|een speaker','Een kachel moet warm worden. Bij een lamp of speaker is warmte verlies.']],
+ ['Rendement',`<div class="rule">Het <b>rendement</b> zegt welk deel (in %) van de energie <b>nuttig</b> gebruikt wordt.</div><p>Een lamp krijgt 100 J en geeft 30 J licht: het rendement is <b>30%</b>. De andere 70 J wordt warmte.</p><p>Rekenen gaat met een <b>verhoudingstabel</b>. Een magnetron krijgt 2000 kJ en heeft een rendement van 42%. Hoeveel energie gaat naar het eten?</p><table class="gt"><tr><th>%</th><td>100</td><td>1</td><td>42</td></tr><tr><th>kJ</th><td>2000</td><td>20</td><td><b>840</b></td></tr></table><p>Eerst naar 1% (delen door 100), dan naar 42% (keer 42).</p>`,['Een apparaat krijgt 500 J en heeft een rendement van 20%. Hoeveel J is nuttig?','100 J','20 J|400 J','1% van 500 J is 5 J, dus 20% is 20 × 5 = 100 J. (400 J is juist het verlies.)']],
+ ['Het energielabel',`<p>Op nieuwe apparaten zit een <b>energielabel</b>, van A (groen, zuinig) tot G (rood, onzuinig).</p><div class="rule">Label A betekent: zuinig, vergeleken met andere apparaten van dezelfde soort.</div><p>Het betekent niet dat het rendement 100% is. Dat kan niet: er gaat altijd een beetje energie verloren.</p>`,['Een koelkast met label A …','is zuinig vergeleken met andere koelkasten','heeft een rendement van 100%|gebruikt helemaal geen energie','Label A = zuiniger dan de rest. 100% rendement bestaat niet.']],
+ ['Vermogen: energie per seconde',()=>`<p>Het <b>vermogen</b> zegt hoeveel energie een apparaat <b>per seconde</b> omzet. Je meet het in <b>watt</b> (W).</p><div class="rule">1 W = 1 joule per seconde<br>1 kW (kilowatt) = 1000 W</div><div class="ex">Een ledlamp van 8 W zet elke seconde 8 J om. Een waterkoker van 2000 W (= 2 kW) zet elke seconde 2000 J om.</div>${leg(['P','E'])}`,['Een föhn van 1200 W zet per seconde om …','1200 J','1,2 J|1200 kWh','Watt = joule per seconde: 1200 W is 1200 J per seconde.']],
+ ['De energieformule: E = P × t',()=>`<p>Hoeveel energie een apparaat gebruikt, hangt af van twee dingen: het <b>vermogen</b> en <b>hoe lang</b> het aan staat.</p><div class="rule" style="font-size:20px">E = P × t</div>${leg(['E','P','t'])}<p>Er zijn twee setjes eenheden. Kies er één en houd je eraan:</p><table class="frm"><tr><th>P in</th><th>t in</th><th>dan E in</th></tr><tr><td>W</td><td>seconden (s)</td><td>joule (J)</td></tr><tr><td>kW</td><td>uren (h)</td><td>kilowattuur (kWh)</td></tr></table><div class="ex">Een apparaat gebruikt 60 kJ in 20 minuten. Vermogen?<br>1. 60 kJ = 60&#8239;000 J<br>2. 20 min = 20 × 60 = 1200 s<br>3. P = E ÷ t = 60&#8239;000 ÷ 1200 = <b>50 W</b></div>`,['Een lamp van 10 W brandt 100 s. Hoeveel energie?','1000 J','10 J|110 J','E = P × t = 10 W × 100 s = 1000 J.']],
+ ['De kilowattuur',`<p>Joules worden thuis enorme getallen. Daarom rekent het energiebedrijf in <b>kilowattuur</b> (kWh): 1 kW, een uur lang.</p><div class="rule">1 kWh = 1000 W × 3600 s = 3&#8239;600&#8239;000 J = 3,6 MJ</div><div class="ex">Een kachel van 2,5 kW staat 2 uur aan.<br>E = P × t = 2,5 kW × 2 h = <b>5 kWh</b> (= 18&#8239;000&#8239;000 J)</div><p>Let op: kWh is <b>energie</b>, kW is <b>vermogen</b>. Niet door elkaar halen.</p>`,['Hoeveel kWh is 3 kW, 4 uur lang?','12 kWh','0,75 kWh|7 kWh','E = P × t = 3 × 4 = 12 kWh.']],
+ ['Wat kost het?',`<p>Je betaalt per kWh. In de sommen kost 1 kWh vaak <b>€ 0,20</b> (dat staat er dan bij).</p><div class="ex">Gamen: console en tv samen 300 W, 3 uur.<br>1. 300 W = 0,3 kW<br>2. E = 0,3 kW × 3 h = 0,9 kWh<br>3. Kosten: 0,9 × € 0,20 = <b>€ 0,18</b></div><p>Voor een heel jaar: reken eerst het aantal uren uit. Een ledlamp van 8 W die elke dag 5 uur brandt: 5 × 365 = 1825 h, dus 0,008 kW × 1825 h = 14,6 kWh.</p>`,['Je gebruikt 10 kWh. 1 kWh kost € 0,20. Wat betaal je?','€ 2,00','€ 0,02|€ 20,00','10 × € 0,20 = € 2,00.']],
+ ['Grote en kleine getallen',`<p>Met een <b>voorvoegsel</b> maak je grote of kleine getallen handig:</p><table class="frm"><tr><th>voorvoegsel</th><th>betekent</th><th>voorbeeld</th></tr><tr><td>μ micro</td><td>÷ 1&#8239;000&#8239;000</td><td>1 μA = 0,000001 A</td></tr><tr><td>m milli</td><td>÷ 1000</td><td>1 mA = 0,001 A</td></tr><tr><td>k kilo</td><td>× 1000</td><td>1 kW = 1000 W</td></tr><tr><td>M mega</td><td>× 1&#8239;000&#8239;000</td><td>1 MJ = 1&#8239;000&#8239;000 J</td></tr><tr><td>G giga</td><td>× 1&#8239;000&#8239;000&#8239;000</td><td>1 GW = 1000 MW</td></tr></table><p>Elke stap is 1000. Van kW naar W: keer 1000. Van mA naar A: delen door 1000.</p>`,['450 mA = … A','0,45 A','450 000 A|4,5 A','Milli = een duizendste: 450 ÷ 1000 = 0,45 A.']],
+ ['Verdieping: de rendementsformule',()=>`<p class="src">Verdieping, hoort bij de toets</p><p>Je kunt het rendement ook met een formule uitrekenen:</p><div class="rule" style="font-size:19px">η = E<sub>nuttig</sub> ÷ E<sub>toegevoerd</sub> × 100%</div>${leg(['eta','En','Et'],'Vul beide energieën in <b>dezelfde eenheid</b> in (allebei J of allebei kWh). η ligt altijd tussen 0% en 100%.')}<div class="ex">Lamp van 11 W geeft 5 W licht. Per seconde: 11 J erin, 5 J nuttig.<br>η = 5 ÷ 11 × 100% = <b>45%</b></div><div class="ex">Oude spotjes: rendement 8%, 450 kWh per jaar. Nieuwe ledlampen: 48%, evenveel licht.<br>1. Licht = 8% van 450 kWh = 36 kWh<br>2. Nieuw: 48% = 36 ÷ E<sub>toegevoerd</sub> × 100%, dus E<sub>toegevoerd</sub> = 36 × 100 ÷ 48 = 75 kWh<br>3. Besparing: 450 − 75 = <b>375 kWh</b></div><p>Slimme, zuinige apparaten (ledlampen, een wasdroger met warmtepomp) zijn duurder in de winkel, maar besparen veel energie. Kijk eerst naar de grootste energieslurpers.</p>`,['Een motor krijgt 200 J en levert 150 J beweging. Rendement?','75%','150%|25%','η = 150 ÷ 200 × 100% = 75%. (25% is het verlies.)']],
+ ['De formules van 1.2 op een rij',`<table class="frm lang"><tr><th></th><th>formule</th><th>wanneer</th></tr><tr><td>1</td><td>E = P × t</td><td>energie uit vermogen en tijd (W en s → J, of kW en h → kWh)</td></tr><tr><td>2</td><td>1 kWh = 3,6·10⁶ J</td><td>omrekenen tussen kWh en joule</td></tr><tr><td>3</td><td>η = E<sub>nuttig</sub> ÷ E<sub>toegevoerd</sub> × 100%</td><td>rendement (of met een verhoudingstabel)</td></tr><tr><td>4</td><td>kosten = kWh × prijs</td><td>wat je betaalt</td></tr></table><p>Uit E = P × t volgen ook P = E ÷ t en t = E ÷ P.</p>`]],
+'1.3':[
+ ['Een gesloten stroomkring',()=>`<p>Een lampje brandt alleen als de stroom <b>rond</b> kan: van de batterij, door het lampje, en weer terug naar de batterij. Dat heet een <b>gesloten stroomkring</b>.</p>${kring({rail:['S1'],br:[['L']]},{1:1})}<p>Zet je de schakelaar open, dan is de kring onderbroken en gaat het lampje uit.</p>${kring({rail:['S1'],br:[['L']]},{})}`,['Waarom gaat het lampje uit als je de schakelaar opent?','de kring is niet meer gesloten','de batterij is leeg|het lampje is kapot','Stroom loopt alleen in een gesloten kring.']],
+ ['Wat stroomt er?',`<p>In een metaaldraad zitten <b>elektronen</b> die vrij kunnen bewegen. De batterij duwt ze rond. Die beweging van elektronen is de <b>elektrische stroom</b>.</p><p>Vergelijk het met water in een buizenstelsel: de batterij is de <b>pomp</b>, de draden zijn de <b>buizen</b> en het lampje is een <b>waterrad</b> dat gaat draaien.</p><p>De elektronen raken niet op: ze gaan rond. Wat opraakt is de energie in de batterij.</p>`],
+ ['Stroomsterkte',()=>`<p>De <b>stroomsterkte</b> zegt hoeveel lading (elektronen) er <b>per seconde</b> door de draad gaat. Hoe meer per seconde, hoe sterker de stroom.</p>${leg(['I'],'Kleine stroompjes in mA: 1 mA = 0,001 A. Een ledje: 20 mA. Een waterkoker: 10 A.')}`,['Wat meet je in ampère?','de stroomsterkte','de spanning|het vermogen','Ampère (A) hoort bij de stroomsterkte I.']],
+ ['De ampèremeter',()=>`<p>Stroomsterkte meet je met een <b>ampèremeter</b>. Die moet de stroom tellen die <b>erdoorheen</b> gaat, dus je zet hem <b>in de kring</b> (in serie).</p>${kring({rail:['A'],br:[['L']]})}<div class="rule">Ampèremeter: ín de kring, in serie.</div><p>Waar in de kring maakt niet uit: in een kring zonder splitsing is de stroom overal even groot.</p>`,['Hoe zet je een ampèremeter in de schakeling?','in de kring, in serie','parallel over het lampje|los naast de schakeling','De stroom moet door de meter heen.']],
+ ['Spanning',()=>`<p>De batterij duwt de elektronen rond. Hoe hard ze duwt, heet de <b>spanning</b>. Je meet spanning in <b>volt</b> (V).</p>${leg(['U'])}<table class="gt"><tr><th>bron</th><th>spanning</th></tr><tr><td>penlite-batterij</td><td>1,5 V</td></tr><tr><td>auto-accu</td><td>12 V</td></tr><tr><td>stopcontact (lichtnet)</td><td>230 V</td></tr><tr><td>bovenleiding trein</td><td>1500 V</td></tr></table><p>Een batterij geeft <b>gelijkspanning</b> (duwt steeds dezelfde kant op). Het stopcontact geeft <b>wisselspanning</b> (die keert steeds om).</p>`,['Welke spanning heeft het stopcontact?','230 V','12 V|1,5 V','Het lichtnet in Nederland is 230 V.']],
+ ['De voltmeter',()=>`<p>Spanning meet je met een <b>voltmeter</b>. Die vergelijkt het punt vóór het lampje met het punt erna. Je zet hem daarom <b>over het lampje heen</b>: parallel.</p>${kring({rail:[],br:[['L'],['V']]})}<div class="rule">Voltmeter: parallel, over het apparaat.<br>Ampèremeter: in serie, in de kring.</div><p>Een voltmeter laat bijna geen stroom door. Zet je hem toch in de kring, dan gaat het lampje uit.</p>`,['Hoe sluit je een voltmeter aan?','parallel, over het apparaat','in serie, in de kring|aan één kant van de batterij','De voltmeter meet het verschil tussen de punten vóór en na het apparaat.']],
+ ['Het schakelschema',()=>`<p>In een <b>schakelschema</b> teken je een schakeling met vaste symbolen en rechte lijnen. Zo kan iedereen hem lezen.</p>${symFig()}<p>Bij de batterij is de <b>lange streep de pluspool</b> en de korte dikke streep de minpool.</p>`,['Welk symbool is een weerstand?','een rechthoekje','een rondje met een kruis|een lange en een korte streep','Rondje met kruis = lampje, lange + korte streep = batterij.']],
+ ['Waar komt de energie vandaan?',`<p>Een spanningsbron maakt geen energie: hij zet ook iets om.</p><ul><li><b>Batterij en accu</b>: chemische energie (stoffen die reageren).</li><li><b>Dynamo</b> en elektriciteitscentrale: bewegingsenergie.</li><li><b>Zonnepaneel</b>: zonne-energie.</li></ul><p>De spanning zegt hoe "sterk" de bron is: hoeveel energie hij aan de elektronen meegeeft.</p>`,['Waar komt de energie van een fietsdynamo vandaan?','bewegingsenergie','chemische energie|zonne-energie','Je trapt, het wiel draait, de dynamo draait mee.']],
+ ['Vermogen = spanning × stroomsterkte',()=>`<p>Hoeveel energie per seconde een apparaat krijgt, hangt af van de duw (U) én van hoeveel er stroomt (I):</p><div class="rule" style="font-size:20px">P = U × I</div>${leg(['P','U','I'])}<div class="ex">Startmotor van een auto: 12 V en 250 A.<br>P = U × I = 12 × 250 = <b>3000 W</b> = 3 kW</div><p>Een laptop werkt op een lage spanning (19 V). Voor hetzelfde vermogen is dan een <b>grotere stroomsterkte</b> nodig dan bij 230 V.</p>`,['Een föhn: 230 V en 5 A. Vermogen?','1150 W','46 W|235 W','P = U × I = 230 × 5 = 1150 W.']],
+ ['Formules combineren',`<p>Soms heb je twee formules na elkaar nodig. Eerst P = U × I, dan E = P × t.</p><div class="ex">Een stofzuiger op 230 V met 4,00 A gebruikt 0,092 kWh. Hoe lang stond hij aan?<br>1. P = U × I = 230 × 4,00 = 920 W = 0,92 kW<br>2. t = E ÷ P = 0,092 ÷ 0,92 = 0,1 h<br>3. 0,1 h × 60 = <b>6 minuten</b></div><p>Tip: schrijf eerst op wat je weet (U, I, E) en wat je zoekt (t). Zoek dan de formule die de brug maakt (hier P).</p>`],
+ ['De formules van 1.3 op een rij',`<table class="frm"><tr><th></th><th>formule</th><th>wanneer</th></tr><tr><td>1</td><td>P = U × I</td><td>vermogen uit spanning en stroom</td></tr><tr><td>2</td><td>I = P ÷ U</td><td>stroom als je P en U weet</td></tr><tr><td>3</td><td>U = P ÷ I</td><td>spanning als je P en I weet</td></tr><tr><td>4</td><td>E = P × t</td><td>uit 1.2, vaak de tweede stap</td></tr></table><div class="rule">Ampèremeter: in serie · Voltmeter: parallel</div>`]],
+'1.4':[
+ ['Weerstand: de stroom tegenhouden',()=>`<p>Een douchekop met kleine gaatjes laat minder water door dan een open slang: hij biedt <b>weerstand</b>. Een dun draadje in een lamp doet dat met elektrische stroom.</p><div class="rule">Grote weerstand → kleine stroomsterkte<br>Kleine weerstand → grote stroomsterkte</div>${leg(['R'],'Grote weerstanden in kΩ (1 kΩ = 1000 Ω) of MΩ (1 MΩ = 1&#8239;000&#8239;000 Ω).')}`,['Hoe groter de weerstand, …','hoe kleiner de stroomsterkte','hoe groter de stroomsterkte|hoe groter de spanning van de bron','De weerstand houdt de stroom tegen.']],
+ ['Dik, dun, lang, kort',()=>`${draadFig()}<div class="rule">Dikkere draad → <b>kleinere</b> weerstand<br>Langere draad → <b>grotere</b> weerstand</div><p>Een dikke draad is een brede doorgang. Een lange draad is een lange weg. Precies: 2× zo lang = 2× zo grote weerstand. 2× zo dik (doorsnede) = 2× zo kleine weerstand.</p><p>Een wasmachine heeft een dik verwarmingselement (kleine weerstand, veel stroom), een lampje een dun gloeidraadje.</p>`,['Welke draad heeft de grootste weerstand?','lang en dun','kort en dik|lang en dik','Lang én dun is voor de stroom het moeilijkst.']],
+ ['Warm metaal',`<p>De weerstand hangt ook af van de <b>temperatuur</b> en van het soort metaal.</p><div class="rule">Metaal heter → weerstand groter</div><p>Waarom? In een metaal bewegen elektronen tussen de atomen door. Als het metaal heter wordt, trillen de atomen harder. Dan komen de elektronen er moeilijker langs.</p><p>Een gloeidraad die net aan gaat is nog koud: dan is de weerstand nog klein.</p>`,['Een metaaldraad wordt heter. De weerstand …','wordt groter','wordt kleiner|blijft gelijk','De atomen trillen harder, de elektronen komen er moeilijker door.']],
+ ['De wet van Ohm',()=>`<p>Spanning duwt, weerstand remt. Samen bepalen ze hoeveel stroom er loopt:</p><div class="rule" style="font-size:20px">U = I × R</div>${leg(['U','I','R'])}<p>Handig: de <b>formuledriehoek</b>. Hou je vinger op wat je zoekt, dan zie je de formule.</p>${driehoek('U','I','R')}<div class="ex">Zoek R: vinger op R → U boven I → <b>R = U ÷ I</b><br>Zoek I: vinger op I → <b>I = U ÷ R</b><br>Zoek U: vinger op U → <b>U = I × R</b></div>`,['Je weet U en I. Hoe vind je R?','R = U ÷ I','R = U × I|R = I ÷ U','Vinger op R: U staat boven I.']],
+ ['Voorbeeld: de koplampen',`<div class="ex">Een auto-accu: 12 V. Met de lampen aan loopt er 3,0 A. Hoe groot is de weerstand van de lampen?<br>1. Wat weet je? U = 12 V, I = 3,0 A<br>2. Wat zoek je? R<br>3. R = U ÷ I = 12 ÷ 3,0 = <b>4,0 Ω</b></div><p>Werk altijd zo: <b>gegeven</b>, <b>gevraagd</b>, <b>formule</b>, <b>invullen</b>, <b>antwoord met eenheid</b>.</p>`,['230 V en 2,3 A. Weerstand?','100 Ω','529 Ω|0,01 Ω','R = U ÷ I = 230 ÷ 2,3 = 100 Ω.']],
+ ['Zelfde spanning, andere stroom',`<p>In huis werkt alles op <b>230 V</b>. Dan geldt: veel stroom ↔ kleine weerstand.</p><table class="gt"><tr><th>apparaat</th><th>stroom</th><th>weerstand</th></tr><tr><td>wasmachine (verwarmen)</td><td>groot</td><td>klein</td></tr><tr><td>ledlampje</td><td>heel klein</td><td>heel groot</td></tr></table><p>Een föhn heeft standen. Op de hoogste stand (grootste vermogen) loopt de meeste stroom, dus dan is de weerstand het <b>kleinst</b>.</p><p class="src">De getallen uit de tabel in het boek hoef je niet te leren: het gaat om het idee.</p>`,['Een apparaat op 230 V heeft een grote weerstand. De stroomsterkte is dan …','klein','groot|230 A','I = U ÷ R: grote R, kleine I.']],
+ ['Kortsluiting',`<p>Een monteur laat een ringsleutel op de polen van een auto-accu vallen. De sleutel heeft bijna geen weerstand: 0,01 Ω.</p><div class="ex">I = U ÷ R = 12 ÷ 0,01 = <b>1200 A</b><br>P = U × I = 12 × 1200 = 14&#8239;400 W = 14,4 kW</div><p>Dat is genoeg om de sleutel te laten smelten. Dit heet <b>kortsluiting</b>: de stroom vindt een weg met bijna geen weerstand. De stroomsterkte wordt enorm en de draden worden heet: brandgevaar.</p>`,['Bij kortsluiting is de weerstand …','heel klein','heel groot|precies 230 Ω','Bijna geen weerstand, dus een enorme stroom.']],
+ ['Weerstandjes en de kleurcode',()=>`<p>In elektronica zitten kleine onderdeeltjes die ook <b>weerstand</b> heten. Ze regelen de stroomsterkte. Hoeveel ohm ze hebben, lees je af aan gekleurde ringen.</p>${weerstandFig([4,5,2])}<div class="rule">Leg de goud- of zilverkleurige ring rechts.<br>Ring 1 = cijfer · ring 2 = cijfer · ring 3 = <b>aantal nullen</b></div>${kleurTabel()}<div class="ex">geel – groen – rood = 4, 5 en 2 nullen = <b>4500 Ω</b></div>`,['bruin – zwart – oranje = …','10 000 Ω','103 Ω|1000 Ω','1, 0 en 3 nullen: 10 000 Ω.']],
+ ['Verdieping: super- en halfgeleiders',`<p class="src">Verdieping, hoort bij de toets</p><p>Niet elk metaal geleidt even goed: koper beter dan ijzer, zilver en goud nog beter.</p><ul><li><b>Supergeleider</b>: onder een bepaalde (heel lage) temperatuur is de weerstand <b>nul</b>. De draad wordt niet warm en er kunnen duizenden ampères door. Gebruikt voor heel sterke magneten, bijvoorbeeld in een MRI-scanner.</li><li><b>Halfgeleider</b> (zoals silicium): een heel grote weerstand, wel een miljard keer zo groot als van metaal. Door er een beetje van een andere stof doorheen te mengen kun je de geleiding regelen. Alle chips in moderne elektronica zijn van halfgeleiders.</li></ul>`,['Wat is de weerstand van een supergeleider (koud genoeg)?','nul','heel groot|een miljard ohm','Geen weerstand: daarom wordt hij niet warm.']],
+ ['Verdieping: de soortelijke weerstand',()=>`<p class="src">Verdieping, hoort bij de toets</p><p>Om metalen eerlijk te vergelijken, neem je van elk metaal een draad van <b>1 m</b> lang, <b>1 mm²</b> doorsnede, bij <b>20 °C</b>. De weerstand daarvan heet de <b>soortelijke weerstand ρ</b>. Koper: 0,017 Ω·mm²/m, ijzer: 0,105.</p><div class="rule" style="font-size:19px">R = ρ × l ÷ A</div>${leg(['R','rho','l','A'],'De tabel met de waarden van ρ hoef je niet te leren: die krijg je erbij. Zet de lengte wel eerst in meter!')}<div class="ex">Een aluminium kabel van 20 km, doorsnede 1000 mm². (ρ = 0,027)<br>1. l = 20 km = 20&#8239;000 m<br>2. R = 0,027 × 20&#8239;000 ÷ 1000 = <b>0,54 Ω</b></div><p>In de formule zie je het: l boven de streep (langer = meer weerstand), A eronder (dikker = minder weerstand).</p>`,['Een koperdraad: l = 10 m, A = 1 mm², ρ = 0,017. R = …','0,17 Ω','1,7 Ω|0,0017 Ω','R = 0,017 × 10 ÷ 1 = 0,17 Ω.']],
+ ['Verdieping: ρ terugrekenen',`<p>Je kunt ook uitzoeken van welk metaal een draad is.</p><div class="ex">Een draadje van 50 cm, doorsnede 0,028 mm². Op 6,0 V loopt er 0,75 A.<br>1. R = U ÷ I = 6,0 ÷ 0,75 = 8,0 Ω<br>2. l = 50 cm = 0,50 m<br>3. R = ρ × l ÷ A, dus ρ = R × A ÷ l<br>4. ρ = 8,0 × 0,028 ÷ 0,50 = <b>0,45 Ω·mm²/m</b></div><p>Twee stappen dus: eerst de wet van Ohm, dan de draadformule.</p>`],
+ ['De formules van 1.4 op een rij',`<table class="frm"><tr><th></th><th>formule</th><th>wanneer</th></tr><tr><td>1</td><td>U = I × R</td><td>wet van Ohm</td></tr><tr><td>2</td><td>R = U ÷ I</td><td>weerstand uit spanning en stroom</td></tr><tr><td>3</td><td>I = U ÷ R</td><td>stroom uit spanning en weerstand</td></tr><tr><td>4</td><td>R = ρ × l ÷ A</td><td>verdieping: weerstand van een draad</td></tr></table><div class="rule">Dik → kleine R · lang → grote R · heet metaal → grote R</div>`]],
+'1.5':[
+ ['Twee manieren om aan te sluiten',()=>`<p>Twee lampjes op één batterij kun je op twee manieren aansluiten.</p><div class="duo"><figure>${kring({rail:[],br:[['LA','LB']]})}<figcaption><b>Serie</b>: achter elkaar, één route</figcaption></figure><figure>${kring({rail:[],br:[['LA'],['LB']]})}<figcaption><b>Parallel</b>: naast elkaar, elk een eigen route</figcaption></figure></div>`,['Bij welke schakeling heeft elk lampje een eigen route naar de bron?','parallel','serie|allebei','Parallel = elk een eigen tak.']],
+ ['Parallel: in huis',`<p>Alle stopcontacten en lampen in huis zijn <b>parallel</b> geschakeld. Daardoor:</p><ul><li>krijgt elk apparaat de volle <b>230 V</b>;</li><li>heeft elk apparaat zijn eigen kring: zet je de tv uit, dan blijft de lamp aan;</li><li>werkt een apparaat gewoon door als er een ander bij komt.</li></ul><div class="rule">Parallel: over elk apparaat staat dezelfde spanning als die van de bron.</div><p>Ook treinen staan parallel op de bovenleiding (1500 V).</p>`,['Je zet de waterkoker aan. Wat merkt de lamp in de kamer ernaast?','niets, die brandt gewoon','die gaat zwakker branden|die gaat uit','Parallel: elk apparaat heeft zijn eigen kring met 230 V.']],
+ ['Parallel: de stroom splitst',()=>`${kring({rail:['A'],br:[['L1'],['L2'],['L3']]})}<p>Bij een splitsing verdeelt de stroom zich over de takken. Daarna komt hij weer samen. Er raakt niets kwijt:</p><div class="rule" style="font-size:19px">I<sub>totaal</sub> = I<sub>1</sub> + I<sub>2</sub> + I<sub>3</sub></div><div class="ex">Een oven van 100 Ω op 230 V: I = 230 ÷ 100 = 2,3 A.<br>Een waterkoker ernaast: 0,9 A.<br>Totaal: 2,3 + 0,9 = <b>3,2 A</b></div><p>Elk apparaat erbij = meer stroom uit de bron.</p>`,['Twee takken: 1,5 A en 2,5 A. Totale stroom?','4 A','1 A|2 A','Optellen: 1,5 + 2,5 = 4 A.']],
+ ['Serie: één route',()=>`${kring({rail:[],br:[['LA','LB','LC']]})}<p>In een <b>serieschakeling</b> gaat alle stroom door elk lampje, de een na de ander.</p><div class="rule">Serie: de stroomsterkte is overal even groot.<br>Is één lampje kapot, dan gaan ze <b>allemaal</b> uit.</div><p>Zet je er een lampje bij, dan wordt de stroom kleiner en branden ze allemaal minder fel.</p>`,['In serie gaat lampje B kapot. Wat doet lampje A?','gaat ook uit','blijft branden|gaat feller branden','Er is maar één route: die is onderbroken.']],
+ ['Serie: optellen',()=>`<p>In serie tel je de weerstanden op en ook de spanningen:</p><table class="frm"><tr><td>I</td><td>I = I<sub>1</sub> = I<sub>2</sub> = I<sub>3</sub></td></tr><tr><td>R</td><td>R<sub>totaal</sub> = R<sub>1</sub> + R<sub>2</sub> + R<sub>3</sub></td></tr><tr><td>U</td><td>U<sub>totaal</sub> = U<sub>1</sub> + U<sub>2</sub> + U<sub>3</sub></td></tr></table>${kring({rail:[],br:[['R1','R2']]})}<div class="ex">R<sub>1</sub> = 200 Ω en R<sub>2</sub> = 300 Ω op 10 V.<br>1. R<sub>totaal</sub> = 200 + 300 = 500 Ω<br>2. I = U ÷ R<sub>totaal</sub> = 10 ÷ 500 = 0,02 A = 20 mA<br>3. U<sub>2</sub> = I × R<sub>2</sub> = 0,02 × 300 = <b>6 V</b> (en U<sub>1</sub> = 4 V: samen 10 V ✓)</div>`,['100 Ω en 50 Ω in serie. R totaal?','150 Ω','50 Ω|5000 Ω','In serie optellen: 100 + 50 = 150 Ω.']],
+ ['Kerstverlichting en batterijen',`<p>Een snoer met 23 lampjes in serie op 230 V: de spanning wordt verdeeld. Elk lampje krijgt 230 ÷ 23 = <b>10 V</b>.</p><p>Batterijen in serie tellen op: 4 penlites van 1,5 V achter elkaar geven 4 × 1,5 = <b>6 V</b>. Een sidderaal doet hetzelfde met duizenden cellen achter elkaar: tot 600 V!</p>`,['3 batterijen van 1,5 V in serie geven …','4,5 V','1,5 V|0,5 V','In serie optellen: 3 × 1,5 = 4,5 V.']],
+ ['Serie of parallel: het overzicht',`<table class="gt vgl"><tr><th></th><th>serie</th><th>parallel</th></tr><tr><th>route</th><td>één route</td><td>elk een eigen tak</td></tr><tr><th>stroom I</td><td>overal gelijk</td><td>optellen: I<sub>tot</sub> = I<sub>1</sub> + I<sub>2</sub> + …</td></tr><tr><th>spanning U</td><td>optellen: U<sub>tot</sub> = U<sub>1</sub> + U<sub>2</sub> + …</td><td>overal gelijk aan de bron</td></tr><tr><th>weerstand R</td><td>optellen: R<sub>tot</sub> = R<sub>1</sub> + R<sub>2</sub> + …</td><td>(niet nodig)</td></tr><tr><th>één kapot</th><td>alles uit</td><td>de rest blijft aan</td></tr><tr><th>één erbij</th><td>alles minder fel</td><td>rest even fel, I<sub>tot</sub> groter</td></tr></table><p>De wet van Ohm (U = I × R) mag je gebruiken voor de hele schakeling én voor elk apparaat apart.</p>`],
+ ['Verdieping: combinatieschakelingen',()=>`<p class="src">Verdieping, hoort bij de toets</p><p>Soms is een schakeling half serie, half parallel. Alle lampjes hieronder zijn gelijk.</p><div class="duo"><figure>${kring({rail:['L1'],br:[['L2'],['L3']]})}<figcaption><b>A</b>: lampje 1 in serie met 2 en 3 (die parallel staan)</figcaption></figure><figure>${kring({rail:[],br:[['L1'],['L2','L3']]})}<figcaption><b>B</b>: lampje 1 parallel aan een tak met 2 en 3 in serie</figcaption></figure></div><ul><li><b>A</b>: alle stroom gaat door lampje 1 en splitst daarna. 2 en 3 krijgen elk de helft. Lampje 1 brandt het felst.</li><li><b>B</b>: lampje 1 zit rechtstreeks op de bron. 2 en 3 delen de spanning (U<sub>bron</sub> = U<sub>2</sub> + U<sub>3</sub>), dus er loopt minder stroom. Lampje 1 brandt het felst.</li></ul><p>Draai je in B lampje 2 los, dan gaat 3 uit en blijft 1 gewoon branden.</p>`,['Schakeling A: door welk lampje gaat de grootste stroom?','lampje 1','lampje 2|lampje 3','Alle stroom gaat eerst door lampje 1.']],
+ ['Verdieping: wetenschappelijke notatie',`<p class="src">Verdieping, hoort bij de toets</p><p>Grote en kleine getallen schrijf je kort met <b>machten van 10</b>. Vooraan een getal tussen 1 en 10.</p><div class="ex">30&#8239;000 = 3·10⁴ (komma 4 plaatsen naar links)<br>2,5 MW = 2,5·10⁶ W<br>380 kV = 3,8·10⁵ V</div><p>Kleine getallen krijgen een <b>negatieve</b> macht: 10⁻³ = 1 ÷ 1000 = 0,001.</p><div class="ex">0,00034 = 3,4·10⁻⁴<br>5,8 mA = 5,8·10⁻³ A<br>6,78 μW = 6,78·10⁻⁶ W</div><p>Op je rekenmachine typ je dit met de knop <b>EXP</b> of <b>×10ˣ</b>. Dan hoef je geen nullen te tellen. Vermenigvuldigen: getallen vooraan keer elkaar, machten optellen: 2·10³ × 3·10⁴ = 6·10⁷.</p>`,['Hoe schrijf je 0,005 in wetenschappelijke notatie?','5·10⁻³','5·10³|0,5·10⁻²','Komma 3 plaatsen naar rechts: 5·10⁻³.']],
+ ['De formules van 1.5 op een rij',`<table class="frm"><tr><th></th><th>formule</th><th>wanneer</th></tr><tr><td>1</td><td>I<sub>tot</sub> = I<sub>1</sub> + I<sub>2</sub> + I<sub>3</sub></td><td>parallel: stromen optellen</td></tr><tr><td>2</td><td>U<sub>tot</sub> = U<sub>1</sub> + U<sub>2</sub> + U<sub>3</sub></td><td>serie: spanningen optellen</td></tr><tr><td>3</td><td>R<sub>tot</sub> = R<sub>1</sub> + R<sub>2</sub> + R<sub>3</sub></td><td>serie: weerstanden optellen</td></tr><tr><td>4</td><td>U = I × R</td><td>voor het geheel en voor elk apparaat apart</td></tr></table><p>Speel daarna de <b>Lampjespuzzel</b>: daar zie je meteen wat serie en parallel doen.</p>`]]
+};
+/* nalezen: welke kaartjes horen bij een soort vraag (th uit MC of de generator) */
+const LEES={omzet:['Apparaten zetten energie om','Nuttig en verloren'],omz:['Apparaten zetten energie om','Nuttig en verloren'],rend:['Rendement','Nuttig en verloren'],rendf:['Verdieping: de rendementsformule'],label:['Het energielabel'],
+ verm:['Vermogen: energie per seconde'],ept:['De energieformule: E = P × t','De kilowattuur'],kwh:['De kilowattuur','Wat kost het?'],voor:['Grote en kleine getallen'],
+ kring:['Een gesloten stroomkring','Wat stroomt er?'],stroom:['Stroomsterkte'],meter:['De ampèremeter','De voltmeter'],span:['Spanning','Waar komt de energie vandaan?'],pui:['Vermogen = spanning × stroomsterkte'],ptc:['Formules combineren'],schema:['Het schakelschema'],
+ weer:['Weerstand: de stroom tegenhouden'],draad:['Dik, dun, lang, kort','Warm metaal'],warm:['Warm metaal'],ohm:['De wet van Ohm','Voorbeeld: de koplampen','Zelfde spanning, andere stroom'],kort:['Kortsluiting'],kleur:['Weerstandjes en de kleurcode'],
+ rho:['Verdieping: de soortelijke weerstand','Verdieping: ρ terugrekenen'],halfg:['Verdieping: super- en halfgeleiders'],
+ twee:['Twee manieren om aan te sluiten'],serie:['Serie: één route'],ser:['Serie: optellen','Kerstverlichting en batterijen'],sreken:['Serie: optellen'],par:['Parallel: in huis','Parallel: de stroom splitst'],pari:['Parallel: de stroom splitst'],
+ kerst:['Kerstverlichting en batterijen'],schak:['Serie of parallel: het overzicht','Verdieping: combinatieschakelingen'],comb:['Verdieping: combinatieschakelingen'],sci:['Verdieping: wetenschappelijke notatie']};
+
+/* ---------- Spel: Lampjespuzzel (tik op de schakelaars) ---------- */
+const LAMP=[
+ {spec:{rail:[],br:[['S1','LA']]},doel:{A:1},t:'Laat lampje A branden.',u:'De stroom loopt pas als de kring gesloten is: van de batterij, door het lampje en weer terug.'},
+ {spec:{rail:['S1'],br:[['LA','S2']]},doel:{A:1},t:'Laat lampje A branden.',u:'Alles zit achter elkaar in één route (serie). Dan moeten álle schakelaars dicht.'},
+ {spec:{rail:[],br:[['S1','LA'],['S2','LB']]},doel:{A:0,B:1},t:'Laat alleen lampje B branden.',u:'Parallel: elk lampje heeft een eigen tak met een eigen schakelaar. Zo werkt het in huis ook.'},
+ {spec:{rail:['S1'],br:[['S2','LA'],['S3','LB']]},doel:{A:1,B:1},t:'Laat A en B allebei branden.',u:'S1 zit vóór de splitsing: een hoofdschakelaar. Staat die open, dan is alles uit.'},
+ {spec:{rail:['LA'],br:[['S1','LB'],['S2','LC']]},doel:{A:1,B:0,C:1},t:'Laat A en C branden, maar B niet.',u:'Lampje A zit vóór de splitsing: alle stroom gaat erdoor. Dat is een combinatie van serie en parallel.'},
+ {spec:{rail:[],br:[['S1','LA'],['S2']]},doel:{A:1},t:'Laat lampje A branden. Pas op!',u:'Een tak zonder lampje is een kortsluiting: de stroom neemt de makkelijke weg en A gaat uit. Bij een echte kortsluiting wordt de draad gloeiend heet.'},
+ {spec:{rail:['S1'],br:[['LA','LB'],['S2','LC']]},doel:{A:1,B:1,C:0},t:'Laat A en B branden, maar C niet.',u:'A en B zitten in serie in dezelfde tak: die gaan altijd samen aan of samen uit.'},
+ {spec:{rail:['S1'],br:[['S2','LA'],['S3'],['S4','LB']]},start:{3:1},doel:{A:1,B:1},t:'Laat A en B branden.',u:'Met S3 dicht is er een kortsluiting: de stroom gaat door de lege tak en A en B blijven uit. Eerst S3 open!'}
+];
+function lampStart(i){if(i==null){i=LAMP.findIndex((_,j)=>!(S.lampj||{})[j]);if(i<0)i=0}const L=LAMP[i];G={m:'lamp',i,sw:Object.assign({},L.start||{}),tik:0,klaar:false};show('play');lampDraw()}
+function lampDraw(){const L=LAMP[G.i],st=stroom(L.spec,G.sw);const lamps=Object.keys(L.doel);
+ const ok=!st.kort&&lamps.every(k=>!!st.on[k]===!!L.doel[k]);
+ if(ok&&!G.klaar){G.klaar=true;if(!S.lampj)S.lampj={};const nieuw=!S.lampj[G.i];S.lampj[G.i]=1;markDay();save();if(nieuw||G.i===LAMP.length-1)confetti()}
+ const n=Object.keys(S.lampj||{}).length;
+ P.innerHTML=`<div class="playbar"><button class="btn small ghost" id="quit">Stoppen</button><span class="bar"><i style="width:${Math.round(n/LAMP.length*100)}%"></i></span><span class="count">${n}/${LAMP.length}</span></div>
+ <div class="slide">${head('Lampjespuzzel','Puzzel '+(G.i+1)+' van '+LAMP.length)}<div class="slide-body">
+  <div class="prompt" style="font-size:20px;font-weight:700">${L.t}</div>
+  <div class="lampdoel">${lamps.map(k=>`<span class="${L.doel[k]?'aan':'uit'}">${k}: ${L.doel[k]?'aan 💡':'uit'}</span>`).join('')}</div>
+  <div class="kringbox">${kring(L.spec,G.sw,{tik:!G.klaar})}</div>
+  <p class="src" style="margin:0">${G.klaar?'':'Tik op een schakelaar (S) om hem open of dicht te zetten.'}</p>
+  ${G.klaar?`<div class="fb good"><div class="t">Gelukt!</div><div class="tip">${L.u}</div></div><div class="acts">${G.i<LAMP.length-1?'<button class="btn primary" id="lnext">Volgende puzzel →</button>':'<button class="btn primary" id="lhome">Alle puzzels klaar!</button>'}<button class="btn ghost" id="lopn">Opnieuw</button></div>`:st.kort?`<div class="fb bad"><div class="t">Kortsluiting!</div><div class="tip">Er is een tak zonder lampje dicht. De stroom gaat daar met bijna geen weerstand doorheen.</div></div>`:''}
+  <div class="lampkies">${LAMP.map((_,j)=>`<button class="btn small ${j===G.i?'dark':'ghost'}${(S.lampj||{})[j]?' gehaald':''}" data-lv="${j}">${j+1}</button>`).join('')}</div>
+ </div></div>`;
+ $('#quit').onclick=goHome;P.querySelectorAll('[data-s]').forEach(r=>r.onclick=()=>{const s=r.dataset.s;G.sw[s]=!G.sw[s];G.tik++;lampDraw()});
+ P.querySelectorAll('[data-lv]').forEach(b=>b.onclick=()=>lampStart(+b.dataset.lv));
+ const nx=$('#lnext');if(nx){nx.onclick=()=>lampStart(G.i+1);nx.focus()}const lh=$('#lhome');if(lh){lh.onclick=goHome;lh.focus()}const lo=$('#lopn');if(lo)lo.onclick=()=>lampStart(G.i)}
+
+/* ================= Blitz (60 s meerkeuze) ================= */
+const BLITZ={
+ form:{t:'Formuleblitz',d:'Formules, grootheden en eenheden erin stampen. 60 seconden.',make(){const F=[
+   ['E = ?','P × t',['P ÷ t','U × I'],'Energie = vermogen × tijd.'],['P = ? (met energie en tijd)','E ÷ t',['E × t','t ÷ E'],'Uit E = P × t volgt P = E ÷ t.'],['t = ?','E ÷ P',['E × P','P ÷ E'],'Uit E = P × t volgt t = E ÷ P.'],
+   ['P = ? (met spanning)','U × I',['U ÷ I','I ÷ U'],'Vermogen = spanning × stroomsterkte.'],['I = ? (met vermogen)','P ÷ U',['P × U','U ÷ P'],'Uit P = U × I volgt I = P ÷ U.'],
+   ['U = ? (wet van Ohm)','I × R',['I ÷ R','R ÷ I'],'Wet van Ohm: U = I × R.'],['R = ?','U ÷ I',['U × I','I ÷ U'],'R = U ÷ I. (U × I is het vermogen!)'],['I = ? (wet van Ohm)','U ÷ R',['U × R','R ÷ U'],'I = U ÷ R.'],
+   ['1 kWh = ?','3 600 000 J','1000 J|3600 J'.split('|'),'1 kW × 1 h = 1000 W × 3600 s = 3,6·10⁶ J.'],['1 W = ?','1 J per seconde',['1 J per uur','1 kWh'],'Watt = joule per seconde.'],
+   ['Eenheid van spanning?','volt (V)',['ampère (A)','ohm (Ω)'],'Spanning U in volt.'],['Eenheid van stroomsterkte?','ampère (A)',['volt (V)','watt (W)'],'Stroomsterkte I in ampère.'],['Eenheid van weerstand?','ohm (Ω)',['watt (W)','volt (V)'],'Weerstand R in ohm.'],
+   ['Eenheid van vermogen?','watt (W)',['joule (J)','kWh'],'Vermogen P in watt. Joule en kWh zijn energie.'],['Eenheid van energie?','joule of kWh',['watt','ampère'],'Energie E in J of kWh.'],
+   ['Symbool voor spanning?','U',['V','S'],'Grootheid U, eenheid V (volt).'],['Symbool voor stroomsterkte?','I',['A','S'],'Grootheid I, eenheid A (ampère).'],
+   ['Serie: stroomsterkte?','overal gelijk',['optellen','verdeeld over de lampjes'],'In serie is er één route: I overal gelijk.'],['Serie: spanning?','optellen (verdeeld)',['overal gelijk','altijd 230 V'],'U<sub>tot</sub> = U<sub>1</sub> + U<sub>2</sub> + …'],
+   ['Parallel: spanning?','overal gelijk',['optellen','nul'],'Parallel: elk apparaat krijgt de spanning van de bron.'],['Parallel: stroomsterkte?','optellen',['overal gelijk','nul'],'I<sub>tot</sub> = I<sub>1</sub> + I<sub>2</sub> + …'],
+   ['Ampèremeter: hoe aansluiten?','in serie',['parallel','maakt niet uit'],'Ampèremeter in de kring, in serie.'],['Voltmeter: hoe aansluiten?','parallel',['in serie','maakt niet uit'],'Voltmeter over het apparaat, parallel.'],
+   ['η = ?','E<sub>nuttig</sub> ÷ E<sub>toegevoerd</sub> × 100%',['E<sub>toegevoerd</sub> ÷ E<sub>nuttig</sub> × 100%','E<sub>nuttig</sub> × E<sub>toegevoerd</sub>'],'Nuttig boven de streep.'],
+   ['R = ? (draad, verdieping)','ρ × l ÷ A',['ρ × A ÷ l','A × l ÷ ρ'],'Langer = meer weerstand (l boven), dikker = minder (A onder).'],
+   ['kilo (k) = ?','× 1000',['÷ 1000','× 1 000 000'],'kilo = duizend.'],['milli (m) = ?','÷ 1000',['× 1000','÷ 1 000 000'],'milli = een duizendste.'],['mega (M) = ?','× 1 000 000',['× 1000','× 10⁹'],'mega = miljoen.'],['micro (μ) = ?','÷ 1 000 000',['÷ 1000','× 1 000 000'],'micro = een miljoenste.']];
+  const f=pick(F);return {q:`<b>${f[0]}</b>`,opts:shuffle([f[1],...f[2]]),a:f[1],w:`${f[0]} → ${f[1]}. ${f[3]}`}}},
+ kleur:{t:'Kleurcodesprint',d:'Weerstandjes aflezen: hoeveel ohm? 60 seconden.',make(){const d=[R(1,9),R(0,9),R(0,3)];const v=(10*d[0]+d[1])*Math.pow(10,d[2]);const f=x=>nf(x,0)+' Ω';
+   const alt=[...new Set([(10*d[1]+d[0])*Math.pow(10,d[2]),(10*d[0]+d[1])*Math.pow(10,d[2]+1),(10*d[0]+d[1])*Math.pow(10,Math.max(0,d[2]-1)),(10*d[0]+d[2])*Math.pow(10,d[1]%4),10*d[0]+d[1]+d[2]])].filter(x=>x!==v&&x>0).slice(0,3);
+   return {q:`${weerstandFig(d)}<div class="src">${d.map(x=>KLR[x][0]).join(' – ')}</div>`,opts:shuffle([f(v),...alt.map(f)]),a:f(v),w:`${d.map(x=>KLR[x][0]).join('-')}: ${d[0]}, ${d[1]} en ${d[2]} ${d[2]===1?'nul':'nullen'} = ${f(v)}`}}},
+ voor:{t:'Voorvoegselrace',d:'k, M, G, m en μ omrekenen. 60 seconden.',make(){const q=GENS.voor.f();const a=q.a;const u=q.u;const f=x=>nf(x,6)+' '+u;const opts=shuffle([f(a),f(fx(a*1000)),f(fx(a/1000))]);return {q:q.q,opts,a:f(a),w:q.w.replace(/<[^>]+>/g,'')}}}
+};
+function blitzStart(k){const B=BLITZ[k];show('play');G={m:'blitz',k,score:0,combo:0,n:0,ok:0,end:performance.now()+60000,mist:[]};
+ P.innerHTML=`<div class="playbar"><button class="btn small ghost" id="quit">Stoppen</button><span class="count" id="bsc">0 punten</span><span class="timer" id="btm">60</span></div><div class="slide">${head(B.t,'60 seconden')}<div class="slide-body"><div class="prompt" id="bq" style="text-align:center"></div><span class="combo" id="bcb" hidden></span><div id="bo"></div><div class="src" id="bfb">&nbsp;</div></div></div>`;
+ $('#quit').onclick=()=>{clearInterval(G.timer);goHome()};blitzNext();G.timer=setInterval(()=>{const l=Math.max(0,(G.end-performance.now())/1000);const t=$('#btm');if(!t)return;t.textContent=Math.ceil(l);t.classList.toggle('low',l<10);if(l<=0)blitzEnd()},100)}
+function blitzNext(){const q=BLITZ[G.k].make();G.q=q;$('#bq').innerHTML=q.q;$('#bo').innerHTML=mcButtons(q.opts);
+ P.querySelectorAll('.opt').forEach((b,i)=>b.onclick=()=>{if(G.over)return;const ok=q.opts[i]===q.a;G.n++;if(ok){G.ok++;G.combo++;G.score+=1+Math.floor(G.combo/5);b.classList.add('good')}else{G.combo=0;G.end-=3000;b.classList.add('bad');G.mist.push(q.w)}
+  $('#bsc').textContent=G.score+' punten';const cb=$('#bcb');cb.hidden=G.combo<5;cb.textContent=`combo ×${1+Math.floor(G.combo/5)}`;$('#bfb').innerHTML=ok?'&nbsp;':q.w+' (−3 s)';P.querySelectorAll('.opt').forEach(x=>x.disabled=true);setTimeout(()=>{if(G&&G.m==='blitz'&&!G.over)blitzNext()},ok?160:900)})}
+function blitzEnd(){clearInterval(G.timer);G.over=true;if(!S.blitz)S.blitz={};const best=S.blitz[G.k]||0;const nr=G.score>best;if(nr){S.blitz[G.k]=G.score;confetti()}markDay();save();const k=G.k;
+ P.innerHTML=`<div class="slide">${head(BLITZ[k].t,'Klaar')}<div class="slide-body"><div class="q">${nr?'Nieuw record!':'Score'}</div><div class="big">${G.score}</div><div class="count">${G.ok} van ${G.n} goed · record ${Math.max(best,G.score)}</div>${G.mist.length?`<div class="fb bad"><div class="t">Even onthouden</div><div class="tip">${[...new Set(G.mist)].join('<br>')}</div></div>`:''}<div class="acts"><button class="btn primary" id="again">Nog een keer</button><button class="btn ghost" id="home2">Naar start</button></div></div></div>`;
+ $('#again').onclick=()=>blitzStart(k);$('#home2').onclick=goHome;$('#again').focus()}
+
+/* ---------- Spel: Beklim de hoogspanningsmast (de "berg" van natuurkunde) ---------- */
+const KCAMPS=[{sec:'1.2',n:'Onderste ligger'},{sec:'1.3',n:'Eerste arm'},{sec:'1.4',n:'Tweede arm'},{sec:'1.5',n:'De top'}];
+const KTOP=60;
+const KGEN={'1.2':['ept','kwh','voor','rend','omz','ept','rend'],'1.3':['pui','meter','ptc','pui','meter','ptc'],'1.4':['ohm','kleur','draad','rho','ohm','kleur','rho'],'1.5':['ser','par','schak','sci','ser','par','schak']};
+function klimInit(){if(!S.klim)S.klim={gen:{},m:{},best:0};const K=S.klim;
+  KCAMPS.forEach(c=>{if(!K.gen[c.sec])K.gen[c.sec]=KGEN[c.sec].map(k=>({gen:k,seed:Math.random()*1e9|0}))});return K}
+function klimItems(sec){const K=klimInit();
+  return [...MC.filter(m=>m[0]===sec).map(m=>Object.assign(mcItem(m),{kid:'m:'+m[1]})),...K.gen[sec].map((g,i)=>Object.assign({sec,gen:g.gen},seeded(g.seed,()=>GENS[g.gen].f()),{kid:'g:'+sec+':'+i}))]}
+function klimPct(sec){const K=klimInit();const it=klimItems(sec);return it.filter(q=>K.m[q.kid]).length/it.length}
+function klimTotal(){const K=klimInit();let a=0,b=0;KCAMPS.forEach(c=>{const it=klimItems(c.sec);a+=it.filter(q=>K.m[q.kid]).length;b+=it.length});return {a,b,p:a/b}}
+function klimOpen(i){return i===0||klimPct(KCAMPS[i-1].sec)>=1}
+/* de mast: vier verdiepingen, het mannetje klimt langs de middenlijn */
+function klimMtn(){const t=klimTotal();const W=340,H=260,yb=248,yt=24;const ys=[200,150,100,yt];
+ const lx=y=>118+(y-yt)/(yb-yt)*(-40)+40,rx=y=>222-(y-yt)/(yb-yt)*(-40)-40;
+ const L=y=>150-(y-yt)/(yb-yt)*48,Rr=y=>190+(y-yt)/(yb-yt)*48;
+ let s=`<path d="M${L(yb)},${yb} L${L(yt)},${yt} L${Rr(yt)},${yt} L${Rr(yb)},${yb}" fill="none" stroke="var(--muted)" stroke-width="3"/>`;
+ for(let y=yb;y>yt+10;y-=28){const y2=y-28;s+=`<path d="M${L(y)},${y} L${Rr(y2)},${y2} M${Rr(y)},${y} L${L(y2)},${y2} M${L(y2)},${y2} L${Rr(y2)},${y2}" stroke="var(--muted)" stroke-width="1.3" opacity=".8"/>`}
+ [ys[2],ys[1],ys[0]].forEach((y,i)=>{const w=[96,118,104][i];s+=`<path d="M${170-w},${y} L${170+w},${y} L${Rr(y)},${y+16} M${170-w},${y} L${L(y)},${y+16}" fill="none" stroke="var(--muted)" stroke-width="2.5"/>`;
+  [170-w+8,170+w-8].forEach(x=>{s+=`<line x1="${x}" y1="${y}" x2="${x}" y2="${y+18}" stroke="var(--muted)" stroke-width="2"/><circle cx="${x}" cy="${y+20}" r="3" fill="var(--accent)"/><path d="M${x},${y+20} Q${x<170?x-60:x+60},${y+44} ${x<170?0:340},${y+30}" fill="none" stroke="var(--muted)" stroke-width="1" opacity=".6"/>`})});
+ s+=`<path d="M170,${yt-14} L178,${yt} L162,${yt}Z" fill="var(--muted)"/><line x1="0" y1="${yb}" x2="${W}" y2="${yb}" stroke="var(--green)" stroke-width="3"/><text x="256" y="${yb-6}" font-size="10" fill="var(--muted)">⚡ niet echt doen!</text>`;
+ KCAMPS.forEach((c,i)=>{const y=ys[i],x=Rr(y)+(i===3?6:0);const done=klimPct(c.sec)>=1;s+=`<path d="M${x+2},${y-18} L${x+16},${y-13} L${x+2},${y-8}Z" fill="${done?'var(--accent)':'var(--chip)'}" stroke="currentColor" stroke-width="1"/><line x1="${x+2}" y1="${y}" x2="${x+2}" y2="${y-18}" stroke="currentColor" stroke-width="1.5"/><text x="${x+19}" y="${y-8}" font-size="10" fill="currentColor">${c.sec}</text>`});
+ const pts=[yb,...ys];const seg=t.p*4,i=Math.min(3,Math.floor(seg)),f=seg-i;const cy=pts[i]+(pts[i+1]-pts[i])*f;
+ s+=`<circle cx="170" cy="${cy-8}" r="9" fill="var(--accent)" stroke="var(--surface)" stroke-width="2.5"/><text x="170" y="${cy-4.5}" font-size="10" text-anchor="middle" fill="#fff" font-weight="700">D</text>`;
+ return `<svg class="chart" viewBox="0 0 ${W} ${H}" style="max-width:460px">${s}</svg>`}
+function klimHome(){const t=klimTotal();show('play');const h=Math.round(t.p*KTOP);
+  P.innerHTML=`<div class="playbar"><button class="btn small ghost" id="quit">Terug</button><span class="bar"><i style="width:${Math.round(t.p*100)}%"></i></span><span class="count">${Math.round(t.p*100)}%</span></div>
+  <div class="slide">${head('Spel','Beklim de hoogspanningsmast')}<div class="slide-body">
+   <div style="display:flex;gap:16px;flex-wrap:wrap;align-items:baseline"><div><div class="q">Hoogte</div><div class="big" style="font-size:44px">${h} m</div></div><div class="count">${t.a} van ${t.b} vragen veroverd</div></div>
+   ${klimMtn()}
+   <p style="margin:0">Elke goede vraag brengt je hoger. Fout? Dan komt die vraag terug tot je hem wel goed hebt. Pas als een verdieping op 100% staat, gaat de volgende open. Haal jij de top op 60 meter?</p>
+   <div class="kcamps">${KCAMPS.map((c,i)=>{const p=klimPct(c.sec),o=klimOpen(i);return `<button class="bkamp${p>=1?' done':''}" data-k="${i}" ${o?'':'disabled'}><b>${o?(p>=1?'★':'⚡'):'🔒'} ${c.n}</b><span>${c.sec} ${esc(SECS.find(x=>x.id===c.sec).t)}</span><span class="bar"><i style="width:${Math.round(p*100)}%"></i></span><span class="count">${Math.round(p*100)}%</span></button>`}).join('')}</div>
+   <div class="acts"><button class="btn ghost small" id="kreset">Opnieuw beginnen</button></div>
+  </div></div>`;
+  $('#quit').onclick=goHome;P.querySelectorAll('[data-k]').forEach(b=>b.onclick=()=>klimPlay(+b.dataset.k));
+  $('#kreset').onclick=()=>{$('#kreset').parentNode.innerHTML='<span>Alle hoogte kwijt en nieuwe sommen?</span><button class="btn small dark" id="kY">Ja</button><button class="btn small ghost" id="kN">Nee</button>';
+    $('#kY').onclick=()=>{S.klim=null;klimInit();save();klimHome()};$('#kN').onclick=klimHome}}
+function klimPlay(ci){const c=KCAMPS[ci];const K=klimInit();save();
+  const open=shuffle(klimItems(c.sec).filter(q=>!K.m[q.kid]));
+  if(!open.length){klimHome();return}
+  G={m:'klim',ci,queue:open.slice(0,12),n0:Math.min(12,open.length),done:0,combo:0,maxc:0,fout:0};show('play');klimNext()}
+function klimNext(){const K=S.klim,c=KCAMPS[G.ci],last=KCAMPS.length-1;
+  if(!G.queue.length){const p=klimPct(c.sec);if(p>=1)confetti();save();
+    const top=klimTotal().p>=1;
+    P.innerHTML=`<div class="slide">${head('Spel',c.n)}<div class="slide-body">
+     <div class="q">${top?'Je staat op de top!':p>=1?c.n+' bereikt!':'Rondje klaar'}</div><div class="big">${Math.round(p*100)}%</div>
+     <div>${top?'Alle vragen van het hoofdstuk goed. Dit hoofdstuk zit erin. (In het echt: blijf van hoogspanningsmasten af!)':p>=1?(G.ci<last?'De volgende verdieping is open.':''):`Nog ${klimItems(c.sec).filter(q=>!K.m[q.kid]).length} vragen te gaan op deze verdieping.`} Langste reeks: ${G.maxc}.</div>
+     ${klimMtn()}
+     <div class="acts">${p<1?'<button class="btn primary" id="kv">Verder klimmen</button>':G.ci<last?'<button class="btn primary" id="kn">Naar de volgende verdieping</button>':''}<button class="btn ghost" id="kh">Mast bekijken</button></div></div></div>`;
+    const kv=$('#kv'),kn=$('#kn');if(kv){kv.onclick=()=>klimPlay(G.ci);kv.focus()}if(kn){kn.onclick=()=>klimPlay(G.ci+1);kn.focus()}$('#kh').onclick=klimHome;return}
+  const q=G.queue[0];const tot=G.n0;
+  ask(q,`${c.n} · par. ${c.sec}`,G.combo>=3?`🔥 ${G.combo} op rij`:`Reeks: ${G.combo}`,topbar(G.done,tot,'Mast'),ok=>{
+    G.queue.shift();rec(c.sec,ok);
+    if(ok){K.m[q.kid]=1;G.done++;G.combo++;G.maxc=Math.max(G.maxc,G.combo);if(G.combo%5===0)confetti()}
+    else{G.combo=0;G.fout++;G.queue.splice(Math.min(3,G.queue.length),0,q)}
+    save();klimNext()},{onQuit:klimHome});}
+
+/* ---------- Leerroute: alles in een logische volgorde, met voortgang in % ---------- */
+/* stap: [id, deel, titel, waarom nu, gewicht (%), type, arg, doel]; de gewichten tellen op tot 100 */
+const ROUTE=[
+ ['lp1.2','1.2','Leerpad 1.2: elektrische energie','Begin hier. Energie omzetten, rendement, vermogen en de kilowattuur.',6,'lp','1.2'],
+ ['ept','1.2','Snel oefenen: E = P × t','De belangrijkste formule van 1.2.',3,'tr','ept',5],
+ ['kwh','1.2','Snel oefenen: kWh, joule en kosten','Omrekenen en uitrekenen wat het kost.',2,'tr','kwh',5],
+ ['voor','1.2','Snel oefenen: voorvoegsels','kilo, mega, giga, milli en micro.',2,'tr','voor',5],
+ ['rend','1.2','Snel oefenen: rendement','Met een verhoudingstabel of de formule.',2,'tr','rend',5],
+ ['pr1.2','1.2','Oefenronde 1.2','Alles van 1.2 door elkaar. Fout? Uitleg erbij.',4,'pr','1.2'],
+ ['k0','1.2','Hoogspanningsmast: onderste ligger','De mast is de eindcheck van de paragraaf: elke vraag één keer goed en je klimt een verdieping hoger.',4,'klim',0],
+ ['lp1.3','1.3','Leerpad 1.3: spanning en stroomsterkte','De stroomkring, de meters en P = U × I.',6,'lp','1.3'],
+ ['meter','1.3','Snel oefenen: meters aansluiten','Ampèremeter in serie, voltmeter parallel.',2,'tr','meter',5],
+ ['pui','1.3','Snel oefenen: P = U × I','Vermogen, spanning en stroomsterkte.',3,'tr','pui',5],
+ ['ptc','1.3','Snel oefenen: formules combineren','Twee formules na elkaar. Drie goed op rij is genoeg.',2,'tr','ptc',3],
+ ['pr1.3','1.3','Oefenronde 1.3','Alles van 1.3 door elkaar.',4,'pr','1.3'],
+ ['k1','1.3','Hoogspanningsmast: eerste arm','Eindcheck van 1.3.',4,'klim',1],
+ ['lp1.4','1.4','Leerpad 1.4: weerstand','Weerstand, de wet van Ohm, de kleurcode en de soortelijke weerstand.',6,'lp','1.4'],
+ ['ohm','1.4','Snel oefenen: wet van Ohm','U = I × R in alle richtingen.',3,'tr','ohm',5],
+ ['kleur','1.4','Snel oefenen: kleurcode','Hoeveel ohm is dit weerstandje?',2,'tr','kleur',5],
+ ['bkleur','1.4','Kleurcodesprint','En nu op tijd: 60 seconden.',1,'blitz','kleur',12],
+ ['rho','1.4','Snel oefenen: R = ρ × l ÷ A','De verdieping. Drie goed op rij is genoeg.',2,'tr','rho',3],
+ ['pr1.4','1.4','Oefenronde 1.4','Alles van 1.4 door elkaar.',4,'pr','1.4'],
+ ['k2','1.4','Hoogspanningsmast: tweede arm','Eindcheck van 1.4.',4,'klim',2],
+ ['lp1.5','1.5','Leerpad 1.5: schakelingen','Serie, parallel, combinaties en de wetenschappelijke notatie.',6,'lp','1.5'],
+ ['lamp','1.5','Lampjespuzzel','Tik op de schakelaars en zie wat serie en parallel doen. Alle 8 puzzels.',4,'lamp',null,8],
+ ['ser','1.5','Snel oefenen: serieschakeling','Weerstanden en spanningen optellen.',2,'tr','ser',5],
+ ['par','1.5','Snel oefenen: parallelschakeling','Stromen optellen, spanning overal gelijk.',2,'tr','par',5],
+ ['schak','1.5','Snel oefenen: serie of parallel?','Wat gebeurt er als een lampje kapotgaat?',1,'tr','schak',5],
+ ['pr1.5','1.5','Oefenronde 1.5','Alles van 1.5 door elkaar.',4,'pr','1.5'],
+ ['k3','1.5','Hoogspanningsmast: de top','De laatste klim: haal de top en je hebt het hele hoofdstuk één keer goed gedaan.',4,'klim',3],
+ ['bform','af','Formuleblitz','Alle formules en eenheden in 60 seconden. Doe hem gerust elke dag even.',2,'blitz','form',15],
+ ['toets','af','Proeftoets','De generale repetitie. Haal je een 7, dan ben je klaar voor de echte toets.',9,'toets',null,7],
+ ['samen','af','Samenvatting: ochtend voor de toets','Alles nog één keer doorlezen, zonder vragen. Ongeveer 10 minuten.',0,'samen',null,1]
+];
+const RDEEL={'1.2':'1.2 · Elektrische energie','1.3':'1.3 · Spanning en stroomsterkte','1.4':'1.4 · Weerstand','1.5':'1.5 · Schakelingen','af':'Afronden'};
+
+function SAMENV(){return {
+ intro:'Dit hoofdstuk gaat over <b>elektrische apparaten</b>: hoeveel energie ze gebruiken (en wat dat kost), wat <b>spanning</b>, <b>stroomsterkte</b> en <b>weerstand</b> zijn, en hoe je apparaten aansluit: in <b>serie</b> of <b>parallel</b>. De verdiepingen van 1.2, 1.4 en 1.5 horen er ook bij.',
+ delen:[
+ {t:'1.2 · Elektrische energie',leer:'hoeveel energie een apparaat gebruikt, wat rendement is en hoe je met kWh rekent.',kern:[
+  'Een apparaat <b>zet energie om</b> (in licht, warmte, geluid, beweging). Wat niet de bedoeling is, is <b>energieverlies</b> (meestal warmte).',
+  '<b>Rendement</b> = welk deel (%) nuttig is. Verhoudingstabel, of <b>η = E<sub>nuttig</sub> ÷ E<sub>toegevoerd</sub> × 100%</b> (zelfde eenheid!). Nooit meer dan 100%.',
+  '<b>Energielabel</b> A = zuinig vergeleken met dezelfde soort apparaten.',
+  '<b>Vermogen</b> P = energie per seconde: 1 W = 1 J/s, 1 kW = 1000 W.',
+  '<b>E = P × t</b>: W en s → J, of kW en h → kWh. <b>1 kWh = 3 600 000 J</b>. Kosten = kWh × prijs.',
+  'Voorvoegsels: μ ÷ 1 000 000 · m ÷ 1000 · k × 1000 · M × 1 000 000 · G × 1 000 000 000.']},
+ {t:'1.3 · Spanning en stroomsterkte',leer:'wat er in een stroomkring gebeurt en hoe je meet.',kern:[
+  'Stroom loopt alleen in een <b>gesloten</b> stroomkring. Er bewegen <b>elektronen</b>.',
+  '<b>Stroomsterkte I</b> (ampère, A) = hoeveel lading per seconde. Meten met een <b>ampèremeter in serie</b> (in de kring).',
+  '<b>Spanning U</b> (volt, V) = hoe hard de bron duwt. Meten met een <b>voltmeter parallel</b> (over het apparaat).',
+  'Batterij: chemische energie, gelijkspanning. Stopcontact: 230 V wisselspanning.',
+  '<b>P = U × I</b>. Lage spanning → grotere stroom nodig voor hetzelfde vermogen. Vaak combineren met E = P × t.']},
+ {t:'1.4 · Weerstand',leer:'wat weerstand is en hoe je rekent met de wet van Ohm.',kern:[
+  '<b>Weerstand R</b> (ohm, Ω) houdt de stroom tegen. Grote R → kleine I.',
+  'Dikkere draad → kleinere R. Langere draad → grotere R. Heter metaal → grotere R (atomen trillen harder).',
+  '<b>Wet van Ohm: U = I × R</b>, dus R = U ÷ I en I = U ÷ R (formuledriehoek).',
+  'Kortsluiting: bijna geen weerstand → enorme stroom → heet, brandgevaar.',
+  'Kleurcode: ring 1 en 2 = cijfers, ring 3 = aantal nullen (goud rechts).',
+  'Verdieping: supergeleider = weerstand nul (koud), halfgeleider (silicium) = chips. <b>R = ρ × l ÷ A</b> (ρ krijg je erbij; l in meter, A in mm²).']},
+ {t:'1.5 · Elektrische schakelingen',leer:'het verschil tussen serie en parallel.',kern:[
+  '<b>Serie</b>: één route. I overal gelijk. <b>U<sub>tot</sub> = U<sub>1</sub> + U<sub>2</sub> + …</b> en <b>R<sub>tot</sub> = R<sub>1</sub> + R<sub>2</sub> + …</b>. Eén kapot → alles uit. Eén erbij → alles minder fel.',
+  '<b>Parallel</b> (zo zit het in huis): elk een eigen tak. U overal gelijk aan de bron. <b>I<sub>tot</sub> = I<sub>1</sub> + I<sub>2</sub> + …</b>. Eén erbij → I<sub>tot</sub> groter, de rest werkt gewoon door.',
+  'Batterijen in serie: spanningen optellen (4 × 1,5 V = 6 V).',
+  'U = I × R geldt voor het geheel én voor elk apparaat apart.',
+  'Verdieping: combinatieschakelingen (het lampje waar alle stroom door gaat, of dat rechtstreeks op de bron zit, brandt het felst) en wetenschappelijke notatie (2,5 MW = 2,5·10⁶ W, 5,8 mA = 5,8·10⁻³ A).']}],
+ slot:['Schrijf bij elke som op: <b>gegeven</b>, <b>gevraagd</b>, <b>formule</b>, <b>invullen</b>, <b>antwoord met eenheid</b>.','Zet eenheden eerst goed: mA → A, km → m, minuten → seconden of uren.','Kijk bij een schakeling eerst: serie of parallel? Dan weet je wat optelt en wat gelijk blijft.']}}
+
+/* ---------- Gehaald: groen met ✓ op het hoofdscherm, met hetzelfde doel als in de leerroute ---------- */
+function stp(ty,a){return ROUTE.filter(r=>r[5]===ty&&(a===undefined||JSON.stringify(r[6])===JSON.stringify(a)))}
+function alleKlaar(l){return l.length>0&&l.every(rDone)}
+function zetG(el,ok){if(el)el.classList.toggle('gehaald',!!ok)}
+function markeer(){try{GEHAALD()}catch(e){}}
+function GEHAALD(){
+ document.querySelectorAll('[data-lp]').forEach(b=>{const sec=b.dataset.lp,lp=stp('lp',sec),pr=stp('pr',sec);zetG(b,alleKlaar(lp));
+  const row=b.closest('.sec');if(row){zetG(row.querySelector('[data-o]'),alleKlaar(pr));zetG(row,alleKlaar(lp.concat(pr)))}});
+ document.querySelectorAll('#tools [data-g]').forEach(b=>{const k=b.dataset.g,l=stp('tr',k);zetG(b,l.length?alleKlaar(l):((S.tr||{})[k]||0)>=5)});
+ document.querySelectorAll('[data-blitz]').forEach(b=>{const k=b.dataset.blitz,l=stp('blitz',k);zetG(b,l.length?alleKlaar(l):((S.blitz||{})[k]||0)>=15)});
+ zetG($('#klim'),alleKlaar(stp('klim')));zetG($('#lamp'),alleKlaar(stp('lamp')));zetG($('#toets'),alleKlaar(stp('toets')));zetG($('#samen'),!!S.samen);
+}
+let RT={on:false,before:null};
+function rVal(r){if(r[5]==='samen')return S.samen?1:0;const ty=r[5],a=r[6];
+ if(ty==='lp')return S.lpd&&S.lpd[a]?1:0;
+ if(ty==='pr')return (S.pr||{})[a]||0;
+ if(ty==='tr')return (S.tr||{})[a]||0;
+ if(ty==='blitz')return (S.blitz||{})[a]||0;
+ if(ty==='lamp')return Object.keys(S.lampj||{}).length;
+ if(ty==='klim')return klimPct(KCAMPS[a].sec);
+ if(ty==='toets')return S.best||0;return 0}
+function rGoal(r){const ty=r[5];return ty==='lp'||ty==='klim'?1:ty==='pr'?.8:r[7]}
+function rDone(r){return rVal(r)>=rGoal(r)}
+function rPct(){return sum(ROUTE.filter(rDone).map(r=>r[4]))}
+window.leerVoortgang=rPct;
+function rProg(r){if(r[5]==='samen')return rVal(r)?'gelezen':'lees dit op de ochtend van de toets';const ty=r[5],v=rVal(r),g=rGoal(r);
+ if(ty==='lp')return v?'gedaan':'nog niet gedaan';
+ if(ty==='pr')return v?`beste: ${Math.round(v*100)}% in één keer goed · doel 80%`:'doel: 80% in één keer goed';
+ if(ty==='tr')return `beste reeks: ${v} · doel ${g} goed op rij`;
+ if(ty==='blitz')return `record: ${v} · doel ${g} punten`;
+ if(ty==='lamp')return `${v} van ${g} puzzels opgelost`;
+ if(ty==='klim')return `${Math.round(v*100)}% van deze verdieping gehaald`;
+ if(ty==='toets')return v?`beste cijfer: ${nf(v)} · doel ${g}`:`doel: een ${g}`;return ''}
+function rGo(r){RT={on:true,before:new Set(ROUTE.filter(rDone).map(x=>x[0]))};if(r[5]==='samen')return samenvatting();const ty=r[5],a=r[6];
+ if(ty==='lp')return lpStart(a);if(ty==='pr')return practice(a);if(ty==='tr')return trainer(a,r[7]);if(ty==='toets')return toets();
+ if(ty==='blitz')return blitzStart(a);if(ty==='lamp')return lampStart();if(ty==='klim')return klimPlay(a)}
+function routeScreen(){const before=RT.before;RT={on:false,before:null};show('play');G={m:'route'};
+ const pct=rPct(),nxt=ROUTE.find(r=>!rDone(r));const fresh=before?ROUTE.filter(r=>rDone(r)&&!before.has(r[0])):[];if(fresh.length)confetti();
+ let deel='';const rows=ROUTE.map((r,i)=>{const d=rDone(r),cur=r===nxt;let h='';if(r[1]!==deel){deel=r[1];h=`<h3 class="rt-deel">${RDEEL[deel]}</h3>`}
+  return h+`<button class="rt-step${d?' done':''}${cur?' cur':''}" data-r="${i}"><span class="rt-ic">${d?'✓':cur?'▶':i+1}</span><span class="rt-tx"><b>${r[2]}</b><span>${cur?r[3]+'<br>':''}${rProg(r)}</span></span><span class="rt-w">${r[4]?(d?'':'+')+r[4]+'%':''}</span></button>`}).join('');
+ P.innerHTML=`<div class="playbar"><button class="btn small ghost" id="quit">Naar start</button><span class="bar"><i style="width:${pct}%"></i></span><span class="count">${pct}%</span></div>
+ <div class="slide">${head('Leerroute','Natuurkunde H1')}<div class="slide-body">
+  ${fresh.length?`<div class="fb good"><div class="t">Gehaald: ${fresh.map(r=>r[2]).join(', ')}</div><div class="tip">+${sum(fresh.map(r=>r[4]))}% · je staat nu op ${pct}%</div></div>`:''}
+  <div><div class="q">Hoe ver ben je?</div><div class="big">${pct}%</div><div class="count">${ROUTE.filter(rDone).length} van ${ROUTE.length} stappen beheerst</div></div>
+  ${nxt?`<div class="nextbox"><h3>Volgende stap: ${nxt[2]}</h3><p style="margin:4px 0 10px">${nxt[3]}</p><button class="btn primary" id="rtgo">Start ↵</button></div>`:'<div class="fb good"><div class="t">Alles beheerst!</div><div class="tip">Houd het warm met een proeftoets.</div></div>'}
+  <p class="src" style="margin:0">Zo werkt het: eerst de theorie (leerpad), dan korte oefeningen over precies dat stukje, een oefenronde, en als eindcheck van de paragraaf een verdieping hoger in de hoogspanningsmast. Een stap telt als <b>beheerst</b> als je het doel haalt, dan komen de procenten erbij. Je mag stappen overslaan of herhalen: tik er gewoon op. Planning: elke dag één paragraaf, de dag voor de toets de proeftoets.</p>
+  <div class="rt-list">${rows}</div>
+ </div></div>`;
+ $('#quit').onclick=goHome;P.querySelectorAll('[data-r]').forEach(b=>b.onclick=()=>rGo(ROUTE[+b.dataset.r]));const g=$('#rtgo');if(g){g.onclick=()=>rGo(nxt);g.focus()}}
+function routeBox(){setTimeout(markeer,0);const sb=$('#samen');if(sb)sb.onclick=samenvatting;const el=$('#lpbox');if(!el)return;const pct=rPct(),nxt=ROUTE.find(r=>!rDone(r));
+ el.innerHTML=`<button class="mode main lpmode" id="rtbox"><span class="lab">Route</span><span class="tag" style="text-transform:none">${pct}% van de leerroute</span><h3>${nxt?(pct?'Ga verder: ':'Begin: ')+nxt[2]:'Leerroute klaar. Herhalen?'}</h3><p>${nxt?nxt[3]:'Alle stappen beheerst.'}</p><span class="bar" style="margin-top:6px;background:rgba(255,255,255,.2)"><i style="width:${pct}%"></i></span></button>`;
+ $('#rtbox').onclick=routeScreen}
+
+/* uitleg per paragraaf: alle kaartjes van het leerpad onder elkaar, zonder vragen */
+function uitleg(sec){const s=SECS.find(x=>x.id===sec);show('play');
+  P.innerHTML=`<div class="playbar"><button class="btn small ghost" id="quit">Terug</button></div><div class="uitleg"><div class="eyebrow">Paragraaf ${sec}</div><h2 style="font-size:26px;margin-bottom:10px">${esc(s.t)}</h2>
+  ${LP[sec].map(c=>`<h3>${c[0]}</h3>${typeof c[1]==='function'?c[1]():c[1]}`).join('')}
+  <div class="nextbox"><h3>Wat nu?</h3>
+   <div class="choice"><button class="btn primary" id="go">Oefenronde ${sec}</button><span>10 gemengde vragen over deze paragraaf, met een score aan het eind. Telt mee voor de groene balk.</span></div>
+   <div class="choice"><div class="acts">${[...new Set(SECGENS[sec])].map(k=>`<button class="btn ghost small" data-g="${k}">${esc(GENS[k].t)}</button>`).join('')}</div><span>Eén soort som oefenen, zo lang als je wilt. Elke keer nieuwe getallen.</span></div>
+  </div></div>`;
+  $('#quit').onclick=goHome;$('#go').onclick=()=>practice(sec);P.querySelectorAll('[data-g]').forEach(b=>b.onclick=()=>trainer(b.dataset.g))}
+function spiek(){show('play');
+  P.innerHTML=`<div class="playbar"><button class="btn small ghost" id="quit">Terug</button></div><div class="uitleg"><h2 style="font-size:26px">Spiekbriefje H1</h2>
+  <h3>Grootheden en eenheden</h3><table class="gt"><tr><th>grootheid</th><th>symbool</th><th>eenheid</th></tr><tr><td>energie</td><td>E</td><td>J of kWh</td></tr><tr><td>vermogen</td><td>P</td><td>W of kW</td></tr><tr><td>tijd</td><td>t</td><td>s of h</td></tr><tr><td>spanning</td><td>U</td><td>V</td></tr><tr><td>stroomsterkte</td><td>I</td><td>A</td></tr><tr><td>weerstand</td><td>R</td><td>Ω</td></tr><tr><td>rendement</td><td>η</td><td>%</td></tr></table>
+  <h3>Formules</h3><p><b>E = P × t</b> · <b>P = U × I</b> · <b>U = I × R</b> · <b>η = E<sub>nuttig</sub> ÷ E<sub>toegevoerd</sub> × 100%</b> · <b>R = ρ × l ÷ A</b> · 1 kWh = 3 600 000 J</p>
+  <h3>Voorvoegsels</h3><p>μ ÷ 1 000 000 · m ÷ 1000 · k × 1000 · M × 1 000 000 · G × 1 000 000 000</p>
+  <h3>Meters</h3><p>Ampèremeter: <b>in serie</b> (in de kring). Voltmeter: <b>parallel</b> (over het apparaat).</p>
+  <h3>Weerstand</h3><p>Dik → klein. Lang → groot. Heet metaal → groot. Kleurcode: cijfer, cijfer, aantal nullen.</p>
+  <h3>Serie</h3><p>I overal gelijk · U<sub>tot</sub> = U<sub>1</sub> + U<sub>2</sub> + … · R<sub>tot</sub> = R<sub>1</sub> + R<sub>2</sub> + … · één kapot = alles uit</p>
+  <h3>Parallel</h3><p>U overal gelijk · I<sub>tot</sub> = I<sub>1</sub> + I<sub>2</sub> + … · elk een eigen kring (zo zit het in huis)</p>
+  <h3>Wetenschappelijke notatie</h3><p>30 000 = 3·10⁴ · 0,005 = 5·10⁻³ · keer: getallen vooraan vermenigvuldigen, machten optellen</p></div>`;
+  $('#quit').onclick=goHome}
+
+/* ---------- Leerpad: theorie in kleine kaartjes met controlevragen ---------- */
+/* LP = { sec: [ [titel, html|fn, [vraag, goed, 'fout|fout', uitleg]?], ... ] } */
+function lpState(){if(!S.lp)S.lp={};if(!S.lpd)S.lpd={};return S}
+function lpStart(sec,from){lpState();const cards=LP[sec];if(!cards)return;let i=from!=null?from:(S.lpd[sec]?0:Math.min(S.lp[sec]||0,cards.length-1));
+ G={m:'lp',sec,i,cards,redo:[],ok:0,asked:0,answered:{}};show('play');lpDraw()}
+function lpDraw(){const {sec,cards}=G;const i=G.i;const c=cards[i];const s=SECS.find(x=>x.id===sec);const qz=c[2];const done=G.answered[i];
+ const body=typeof c[1]==='function'?c[1]():c[1];
+ P.innerHTML=`<div class="playbar"><button class="btn small ghost" id="quit">Stoppen</button><span class="bar"><i style="width:${Math.round((i)/cards.length*100)}%"></i></span><span class="count">${i+1}/${cards.length}</span></div>
+ <div class="slide lpcard">${head('Leerpad · '+(sec==='0'?'basis':sec),esc(s?s.t:''))}<div class="slide-body">
+  <h2 class="lpt">${c[0]}</h2><div class="lpb">${body}</div>
+  ${qz?`<div class="lpq"><div class="q">Even checken</div><div class="prompt" style="font-size:19px">${qz[0]}</div><div id="lpo"></div><div id="fbox"></div></div>`:''}
+  <div class="lpnav"><button class="btn ghost" id="lpprev" ${i===0?'disabled':''}>← Terug</button><button class="btn primary" id="lpnext" ${qz&&!done?'disabled':''}>${G.sel===2?'Terug naar het overzicht':i===cards.length-1?'Afronden ✓':'Verder →'}</button></div>
+ </div></div>`;
+ $('#quit').onclick=()=>{save();goHome()};$('#lpprev').onclick=()=>{G.i--;lpDraw()};$('#lpnext').onclick=lpNext;
+ if(qz){const opts=shuffle([qz[1],...qz[2].split('|')]);$('#lpo').innerHTML=mcButtons(opts);
+  if(done){markOpts(opts.indexOf(qz[1]),opts.indexOf(qz[1]));$('#fbox').innerHTML=`<div class="fb good"><div class="tip">${qz[3]}</div></div>`}
+  else P.querySelectorAll('#lpo .opt').forEach((b,j)=>b.onclick=()=>{const ok=opts[j]===qz[1];markOpts(opts.indexOf(qz[1]),j);G.asked++;if(ok)G.ok++;else G.redo.push(i);G.answered[i]=1;
+   $('#fbox').innerHTML=`<div class="fb ${ok?'good':'bad'}"><div class="t">${ok?pick(['Goed!','Klopt!','Precies!']):'Niet helemaal.'}</div><div class="tip">${qz[3]}</div></div>`;const n=$('#lpnext');n.disabled=false;n.focus()})}
+ if(!G.sel)S.lp[sec]=i;save();window.scrollTo(0,0)}
+function lpNext(){const {cards}=G;if(G.i<cards.length-1){G.i++;lpDraw();return}
+ if(G.sel===2)return G.terug();
+ if(G.sel){const sec=G.sec;P.innerHTML=`<div class="slide">${head('Nalezen','Klaar')}<div class="slide-body"><div class="q">Goed gelezen</div><div>Nu het weer vers is: probeer de oefenronde nog een keer.</div><div class="acts"><button class="btn primary" id="lpprac">Nog een oefenronde</button><button class="btn ghost" id="lphome">Terug</button></div></div></div>`;
+  $('#lpprac').onclick=()=>practice(sec);$('#lphome').onclick=goHome;$('#lpprac').focus();return}
+ lpState();S.lpd[G.sec]=1;S.lp[G.sec]=0;markDay();save();confetti();lpKlaar(G.sec,cards,G.ok,G.asked,[...new Set(G.redo)],new Set())}
+/* eindscherm van een leerpad; "Kijk hier nog even naar" opent alleen dat ene kaartje en komt daarna hier terug */
+function lpKlaar(sec,cards,ok,asked,redo,gezien){const nxt=SECS[SECS.findIndex(x=>x.id===sec)+1];show('play');
+ P.innerHTML=`<div class="slide">${head('Leerpad '+(sec==='0'?'basis':sec),'Klaar')}<div class="slide-body"><div class="q">Controlevragen in één keer goed</div><div class="big">${ok}<span style="font-size:.45em;color:var(--muted)"> / ${asked}</span></div>
+  ${redo.length?`<div class="fb bad"><div class="t">Kijk hier nog even naar</div><div class="tip">${redo.map(i=>`<button class="btn small ghost" data-go="${i}" style="margin:3px">${gezien.has(i)?'✓ ':''}${cards[i][0]}</button>`).join('')}</div></div>`:'<div>Alles in één keer goed. Mooi!</div>'}
+  <div class="nextbox"><h3>Wat nu?</h3>${RT.on?'<div class="choice"><button class="btn primary" id="lprt">Verder in de leerroute →</button><span>Daar staat de volgende stap al klaar.</span></div>':''}<div class="choice"><button class="btn ${RT.on?'ghost':'primary'}" id="lpprac">Oefenronde ${sec==='0'?'basis':sec}</button><span>Test of het blijft hangen. Fouten komen terug met uitleg.</span></div>
+  ${nxt&&LP[nxt.id]?`<div class="choice"><button class="btn ghost" id="lpnxt">Leerpad ${nxt.id}: ${esc(nxt.t)} →</button><span>Of leer eerst door.</span></div>`:''}
+  <div class="choice"><button class="btn ghost" id="lphome">Naar start</button></div></div></div></div>`;
+ P.querySelectorAll('[data-go]').forEach(b=>b.onclick=()=>{const i=+b.dataset.go;G={m:'lp',sec,i:0,cards:[cards[i]],redo:[],ok:0,asked:0,answered:{},sel:2,terug:()=>{gezien.add(i);lpKlaar(sec,cards,ok,asked,redo,gezien)}};lpDraw()});
+ $('#lpprac').onclick=()=>practice(sec);const n=$('#lpnxt');if(n)n.onclick=()=>lpStart(nxt.id);$('#lphome').onclick=()=>{RT.on=false;goHome()};const rt=$('#lprt');if(rt){rt.onclick=goHome;rt.focus()}else $('#lpprac').focus()}
+function lpBox(){const el=$('#lpbox');if(!el)return;lpState();const todo=SECS.find(s=>LP[s.id]&&!S.lpd[s.id]);const nDone=SECS.filter(s=>S.lpd[s.id]).length;
+ el.innerHTML=`<button class="mode main lpmode" id="lpgo"><span class="lab">Leren</span><span class="tag" style="text-transform:none">${nDone} van ${SECS.length} paragrafen geleerd</span><h3>${todo?(S.lp[todo.id]?'Ga verder: ':'Begin: ')+esc(todo.t):'Alles doorlopen. Herhalen?'}</h3><p>Geen boek nodig: de theorie in korte kaartjes, één idee per kaart, met af en toe een controlevraag. Ongeveer 10 minuten per paragraaf.</p></button>`;
+ $('#lpgo').onclick=()=>lpStart((todo||SECS[0]).id)}
+
+/* ---------- Samenvatting voor de toets: alles nog één keer doorlezen, zonder vragen ---------- */
+function samenvatting(){show('play');G={m:'samen',mode:'samen'};S.samen=1;save();const Z=SAMENV();
+ const blok=p=>`<section class="svp"><h3>${p.t}</h3><p class="wat">Hier leer je: ${p.leer}</p>${p.fig?p.fig():''}<ul>${p.kern.map(k=>`<li>${k}</li>`).join('')}</ul></section>`;
+ P.innerHTML=`<div class="playbar"><button class="btn small ghost" id="quit">Terug</button></div>
+ <div class="slide">${head('Samenvatting','voor de toets')}<div class="slide-body sv">
+  <div class="intro"><b>Waar gaat dit over?</b><p>${Z.intro}</p><p class="src" style="margin:0">Lees rustig van boven naar beneden. Geen vragen, alleen even alles opfrissen. Ongeveer 10 minuten.</p></div>
+  ${Z.delen.map(blok).join('')}
+  ${Z.slot?`<div class="intro"><b>Op de toets</b><ul>${Z.slot.map(k=>`<li>${k}</li>`).join('')}</ul></div>`:''}
+  <div class="acts"><button class="btn primary" id="svklaar">Klaar. Succes!</button></div>
+ </div></div>`;
+ $('#quit').onclick=goHome;$('#svklaar').onclick=()=>{confetti();goHome()};window.scrollTo(0,0)}
+
+const $=s=>document.querySelector(s);
+const esc=s=>String(s).replace(/[&<>"]/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;'}[c]));
+const KEY='nat-h1-v1';
+let S={sec:{},mc:{},done:0,days:[],best:0};
+try{const r=localStorage.getItem(KEY);if(r)S=Object.assign(S,JSON.parse(r))}catch(e){}
+const save=()=>{try{localStorage.setItem(KEY,JSON.stringify(S))}catch(e){}};
+const today=()=>new Date().toISOString().slice(0,10);
+function markDay(){const t=today();if(!S.days.includes(t)){S.days.push(t);S.days=S.days.slice(-60)}}
+function streak(){const set=new Set(S.days);let d=new Date(),n=0;if(!set.has(d.toISOString().slice(0,10)))d.setDate(d.getDate()-1);while(set.has(d.toISOString().slice(0,10))){n++;d.setDate(d.getDate()-1)}return n}
+function rec(sec,ok){const a=S.sec[sec]||(S.sec[sec]=[]);a.push(ok?1:0);if(a.length>20)a.shift();S.done++;markDay()}
+const score=sec=>{const a=S.sec[sec]||[];return a.length?sum(a)/Math.max(a.length,10):0};
+const P=$('#play');let G=null;
+function show(v){$('#home').hidden=v!=='home';P.hidden=v!=='play';window.scrollTo(0,0)}
+function goHome(){G=null;save();if(RT.on)return routeScreen();renderHome();show('home')}
+function renderHome(){
+  $('#secs').innerHTML=SECS.map(s=>{const m=score(s.id);return `<div class="sec"><span class="num">${s.id}</span><div><h3>${esc(s.t)}</h3><p>${esc(s.s)}</p><span class="bar"><i style="width:${Math.round(m*100)}%"></i></span></div><div class="acts"><button class="btn small lp" data-lp="${s.id}">${S.lpd&&S.lpd[s.id]?'✓ Leerpad':'▶ Leerpad'}</button><button class="btn small ghost" data-u="${s.id}">Uitleg</button><button class="btn small primary" data-o="${s.id}">Oefenen</button></div></div>`}).join('');
+  $('#tools').innerHTML=Object.entries(GENS).map(([k,g])=>`<button class="btn small ghost" data-g="${k}"><span class="src">${g.sec}</span> ${esc(g.t)}</button>`).join('');
+  $('#blitzes').innerHTML=Object.entries(BLITZ).map(([k,b])=>`<button class="mode" data-blitz="${k}"><span class="lab">60 s</span><h3>${b.t}</h3><p>${b.d}</p><span class="tag" style="text-transform:none">${S.blitz&&S.blitz[k]?'record '+S.blitz[k]:'nog geen record'}</span></button>`).join('');
+  try{routeBox()}catch(e){}$('#stDone').textContent=S.done;try{const t=klimTotal();$('#klimTag').textContent=Math.round(t.p*KTOP)+' m · '+Math.round(t.p*100)+'%'}catch(e){}
+  $('#lampTag').textContent=Object.keys(S.lampj||{}).length+' van '+LAMP.length+' opgelost';$('#stStreak').textContent=streak();$('#stBest').textContent=S.best?nf(S.best):'–';
+}
+$('#secs').addEventListener('click',e=>{const u=e.target.closest('[data-u]'),o=e.target.closest('[data-o]');if(u)uitleg(u.dataset.u);if(o)practice(o.dataset.o);const l=e.target.closest('[data-lp]');if(l)lpStart(l.dataset.lp)});
+$('#tools').addEventListener('click',e=>{const b=e.target.closest('[data-g]');if(b)trainer(b.dataset.g)});
+$('#blitzes').addEventListener('click',e=>{const b=e.target.closest('[data-blitz]');if(b)blitzStart(b.dataset.blitz)});
+$('#toets').onclick=toets;$('#klim').onclick=klimHome;$('#lamp').onclick=()=>lampStart();$('#spiek').onclick=spiek;
+function askReset(){$('#resetBox').innerHTML='<span>Alle voortgang wissen?</span><button class="btn small dark" id="rsY">Ja, wissen</button><button class="btn small ghost" id="rsN">Annuleer</button>';
+  $('#rsY').onclick=()=>{S={sec:{},mc:{},done:0,days:[],best:0};save();location.reload()};$('#rsN').onclick=()=>{$('#resetBox').innerHTML='<button class="btn ghost small" id="resetBtn">Voortgang wissen</button>';$('#resetBtn').onclick=askReset}}
+$('#resetBtn').onclick=askReset;
+const head=(l,r)=>`<div class="slide-head"><span>${l}</span><span>${r}</span></div>`;
+function topbar(done,total,label='Stoppen'){return `<div class="playbar"><button class="btn small ghost" id="quit">${label}</button>${total?`<span class="bar"><i style="width:${Math.round(done/total*100)}%"></i></span><span class="count">${done}/${total}</span>`:`<span class="count" style="flex:1;text-align:right">${done}</span>`}</div>`}
+function mcButtons(labels){return `<div class="opts">${labels.map((o,i)=>`<button class="opt" data-i="${i}"><span class="k">${i+1}</span><span>${o}</span></button>`).join('')}</div>`}
+function markOpts(ci,chosen){P.querySelectorAll('.opt').forEach((b,i)=>{b.disabled=true;b.classList.add(i===ci?'good':i===chosen?'bad':'dim')})}
+function parseNum(v){const t=String(v).trim().replace(/\s/g,'').replace('%','').replace(',','.');if(!/^[-+]?\d*\.?\d+$/.test(t))return NaN;return parseFloat(t)}
+/* één vraag tonen: q = {q, mc, opts, a, tol, u, w} ; cb(ok) */
+function ask(q,title,right,top,cb,opts={}){
+  const isMC=!!q.mc;let labels;if(isMC){labels=q.keep?q.opts:shuffle(q.opts)}
+  P.innerHTML=top+`<div class="slide">${head(title,right)}<div class="slide-body"><div class="prompt" style="font-size:clamp(18px,4vw,22px);font-weight:600">${q.q}</div>
+   ${isMC?mcButtons(labels):`<form class="typerow" id="nf" autocomplete="off"><input id="ni" inputmode="decimal" placeholder="antwoord${q.u?' in '+q.u:''}" aria-label="Antwoord"><button class="btn dark" type="submit" id="nb">Controleer</button></form>`}
+   <div id="fbox"></div></div></div>`;
+  const qb=$('#quit');if(qb)qb.onclick=opts.onQuit||goHome;
+  const fin=(ok,given)=>{const fb=$('#fbox');
+    if(opts.silent){cb(ok,given);return}
+    fb.innerHTML=`<div class="fb ${ok?'good':'bad'}"><div class="t">${ok?pick(['Goed!','Klopt!','Top!','Netjes!']):'Niet goed. Het antwoord is '+(isMC?q.a:nf(q.a,2)+(q.u?' '+q.u:''))+'.'}</div>${q.w?`<div class="tip"><b>Uitwerking:</b> ${q.w}</div>`:''}</div><div class="foot" style="margin-top:12px"><button class="btn primary" id="next">Verder ↵</button></div>`;
+    const n=$('#next');n.onclick=()=>cb(ok,given);n.focus()};
+  if(isMC)P.querySelectorAll('.opt').forEach((b,i)=>b.onclick=()=>{const ok=labels[i]===q.a;if(!opts.silent)markOpts(labels.indexOf(q.a),i);fin(ok,labels[i])});
+  else{const inp=$('#ni');inp.focus();$('#nf').onsubmit=e=>{e.preventDefault();const v=parseNum(inp.value);if(isNaN(v)){inp.classList.remove('shake');void inp.offsetWidth;inp.classList.add('shake');return}
+    const ok=Math.abs(v-q.a)<=(q.tol??.051);inp.readOnly=true;if(ok)inp.classList.add('okay');$('#nb').hidden=true;fin(ok,inp.value)}}
+}
+function mcItem(m){return {sec:m[0],mc:true,q:esc(m[1]),opts:[m[2],...m[3].split('|')],a:m[2],w:esc(m[4]),id:m[1],th:m[5]}}
+function makeSet(sec,n){
+  const mcs=MC.filter(m=>m[0]===sec).sort((a,b)=>(S.mc[a[1]]||0)-(S.mc[b[1]]||0)||Math.random()-.5);
+  const gens=SECGENS[sec];const nG=5;const items=[];
+  shuffle(mcs).sort((a,b)=>(S.mc[a[1]]||0)-(S.mc[b[1]]||0)).slice(0,n-nG).forEach(m=>items.push(mcItem(m)));
+  for(let i=0;i<nG;i++){const k=gens[i%gens.length];items.push(Object.assign({sec,gen:k},GENS[k].f()))}
+  return shuffle(items);
+}
+function practice(sec){
+  G={m:'prac',sec,items:makeSet(sec,10),i:0,ok:0,mist:[]};show('play');pracNext();
+}
+function pracNext(){
+  if(G.i>=G.items.length)return endScreen();
+  const q=G.items[G.i];
+  ask(q,`Paragraaf ${G.sec}`,q.gen?GENS[q.gen].t:'Begrip',topbar(G.i,G.items.length),ok=>{rec(G.sec,ok);if(q.id)S.mc[q.id]=(S.mc[q.id]||0)+(ok?1:-1);if(ok)G.ok++;else G.mist.push(q);save();G.i++;pracNext()});
+}
+/* nalezen: per foute vraag het leerpad-kaartje met die stof (via th of de soort som), anders de theorie zelf */
+function leesKaarten(mist){const out=[],seen=new Set();
+ for(const q of mist){const k=q.th||q.gen;if(!k||seen.has(k))continue;seen.add(k);let found=false;
+  for(const t of LEES[k]||[])for(const s in LP){const c=LP[s].find(c=>c[0]===t);if(c){found=true;if(!out.includes(c))out.push(c)}}
+  if(!found&&typeof TH!=='undefined'&&TH[k])out.push([TH[k].t,TH[k].h])}
+ return out}
+function leesStart(sec,cards){G={m:'lp',sec,i:0,cards,redo:[],ok:0,asked:0,answered:{},sel:1};show('play');lpDraw()}
+function endScreen(){
+  const t=G.items.length,pct=G.ok/t;if(pct>=.8)confetti();if(!S.pr)S.pr={};S.pr[G.sec]=Math.max(S.pr[G.sec]||0,pct);save();const sec=G.sec,lees=leesKaarten(G.mist);
+  P.innerHTML=`<div class="slide">${head('Paragraaf '+sec,'Klaar')}<div class="slide-body"><div><div class="q">Goed</div><div class="big">${G.ok}<span style="font-size:.45em;color:var(--muted)"> / ${t}</span></div></div>
+   <div>${pct>=.9?'Uitstekend, deze paragraaf zit erin.':pct>=.6?'Goed bezig. Nog een ronde en het zit vast.':'Lees de uitleg nog eens en probeer het dan opnieuw.'}</div>
+   ${G.mist.length?`<div><div class="q" style="margin-bottom:6px">Kijk hier nog even naar</div><ul class="mist">${G.mist.map(q=>`<li><b>${q.mc?q.q.replace(/<svg[\s\S]*?<\/svg>/g,'[figuur]').replace(/<div class="tw">[\s\S]*?<\/div>/g,'[tabel]'):q.q.replace(/<svg[\s\S]*?<\/svg>/g,'[figuur]').replace(/<div class="tw">[\s\S]*?<\/div>/g,'[tabel]')}</b><span>Antwoord: ${q.mc?q.a:nf(q.a,2)} · ${q.w||''}</span></li>`).join('')}</ul></div>`:''}
+   ${lees.length?`<div class="fb warn"><div class="t">Lees dit nog eens</div><div class="tip">${lees.map(c=>c[0]).join(' · ')}</div><div class="acts" style="margin-top:8px"><button class="btn primary" id="lees">Nalezen (${lees.length} ${lees.length===1?'kaartje':'kaartjes'}) →</button></div></div>`:''}<div class="acts"><button class="btn ${lees.length&&pct<.8?'ghost':'primary'}" id="again">Nog een ronde</button><button class="btn ghost" id="uit">Uitleg</button><button class="btn ghost" id="home2">Naar start</button></div></div></div>`;
+  $('#again').onclick=()=>practice(sec);$('#uit').onclick=()=>uitleg(sec);$('#home2').onclick=goHome;const lb=$('#lees');if(lb){lb.onclick=()=>leesStart(sec,lees);if(pct<.8){lb.focus();return}}$('#again').focus();
+}
+function trainer(k,goal){
+  G={m:'tr',k,n:0,ok:0,streak:0,goal};show('play');trNext();
+}
+function trNext(){
+  const g=GENS[G.k];const q=GENS[G.k].f();
+  ask(q,g.t,`Reeks: ${G.streak}${G.goal?' · doel '+G.goal:''}`,topbar(`${G.ok} van ${G.n} goed`,0,'Klaar'),ok=>{G.n++;if(ok){G.ok++;G.streak++;if(G.streak%5===0||G.streak===G.goal)confetti()}else G.streak=0;if(!S.tr)S.tr={};S.tr[G.k]=Math.max(S.tr[G.k]||0,G.streak);rec(g.sec,ok);save();trNext()});
+}
+/* proeftoets */
+function toets(){
+  const items=[];SECS.forEach(s=>{const mcs=shuffle(MC.filter(m=>m[0]===s.id)).slice(0,3).map(mcItem);items.push(...mcs);const gs=SECGENS[s.id];for(let i=0;i<2;i++){const k=gs[(i+Math.random()*gs.length|0)%gs.length];items.push(Object.assign({sec:s.id,gen:k},GENS[k].f()))}});
+  G={m:'toets',items:shuffle(items),i:0,score:0,wrong:[]};show('play');toetsNext();
+}
+function toetsNext(){
+  if(G.i>=G.items.length){const n=G.items.length,c=Math.round((1+9*G.score/n)*10)/10;if(c>S.best)S.best=c;if(c>=7.5)confetti();save();
+    P.innerHTML=`<div class="slide">${head('Proeftoets','Uitslag')}<div class="slide-body"><div><div class="q">Je cijfer</div><div class="big" style="color:${c>=5.5?'var(--good)':'var(--bad)'}">${nf(c)}</div><div class="count">${G.score} van ${n} goed</div></div>
+    ${G.wrong.length?`<div><div class="q" style="margin-bottom:6px">Uitwerkingen van wat fout ging</div><div style="display:grid;gap:10px">${G.wrong.map(([q,g])=>`<div class="fb bad"><div>${q.q}</div><div class="t">Antwoord: ${q.mc?q.a:nf(q.a,2)+(q.u?' '+q.u:'')} · jij: ${esc(g)}</div><div class="tip">${q.w||''}</div></div>`).join('')}</div></div>`:''}
+    <div class="acts"><button class="btn primary" id="again">Nieuwe proeftoets</button><button class="btn ghost" id="home2">Naar start</button></div></div></div>`;
+    $('#again').onclick=toets;$('#home2').onclick=goHome;return}
+  const q=G.items[G.i];
+  ask(q,'Proeftoets','Vraag '+(G.i+1)+' · par. '+q.sec,topbar(G.i,G.items.length),(ok,given)=>{rec(q.sec,ok);if(ok)G.score++;else G.wrong.push([q,given]);G.i++;toetsNext()},{silent:true});
+}
+document.addEventListener('keydown',e=>{if(P.hidden||!G)return;if(e.target.tagName==='INPUT')return;if(/^[1-9]$/.test(e.key)){const b=P.querySelectorAll('.opt')[+e.key-1];if(b&&!b.disabled)b.click()}});
+function confetti(){
+  if(matchMedia('(prefers-reduced-motion: reduce)').matches)return;
+  const c=$('#conf'),x=c.getContext('2d');c.width=innerWidth;c.height=innerHeight;
+  const cols=['#E8742A','#2F7D5B','#7FB0EA','#F7DB5E','#1E2230'];
+  const ps=Array.from({length:110},()=>({x:c.width/2,y:c.height*.35,vx:(Math.random()-.5)*14,vy:-Math.random()*12-4,r:Math.random()*6+4,c:pick(cols),a:Math.random()*6}));
+  let f=0;(function loop(){x.clearRect(0,0,c.width,c.height);ps.forEach(p=>{p.x+=p.vx;p.y+=p.vy;p.vy+=.4;p.vx*=.99;p.a+=.2;x.save();x.translate(p.x,p.y);x.rotate(p.a);x.fillStyle=p.c;x.fillRect(-p.r/2,-p.r/4,p.r,p.r/2);x.restore()});if(++f<110)requestAnimationFrame(loop);else x.clearRect(0,0,c.width,c.height)})();
+}
+renderHome();
+
+
+</script>
+</body>
+</html>
