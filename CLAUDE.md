@@ -135,4 +135,7 @@ schermen `show('home'|'play')`, `goHome()`, `ask()`, `practice(sec)` (oefenronde
 - Gebruik in een kaartje geen begrip dat pas later uitgelegd wordt ("En M (molair)" in 0b rekende met mol, die pas in
   1.2 komt; Ben snapte het niet). Noem het dan kort ("leer je in 1.2") en houd het bij het rekentrucje. Voorbeelden in
   genummerde stappen met wat je uitrekent ("mL naar liter", "per liter"), plus een "snap je het zo?"-check in gewone taal.
+- Een uitleg bij een meerkeuzevraag moet ook zeggen waarom de foute opties fout zijn, vooral als een foute optie "ook
+  lijkt te kloppen" (NH₃ → N + H₃ telt goed, maar N en H komen alleen als N₂ en H₂ voor). Kloppend maken = eerst de goede
+  formules (de zeven per twee: H₂ N₂ O₂ F₂ Cl₂ Br₂ I₂), dan pas de grote getallen.
 - Bekijk nieuwe schermen altijd op telefoonbreedte (390 px), in licht én donker, voordat je ze live zet.
