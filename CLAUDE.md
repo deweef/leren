@@ -14,7 +14,7 @@ bouwt het samen met Claude; hij wil ook zelf kunnen meeleren (scheikunde: hij be
 - Elk vak is één los HTML-bestand (geen build, geen CDN behalve Google Fonts), met voortgang in localStorage:
   `engels.html` (Ben, `unit3-trainer-v1`), `biologie.html` (Ben, `bio-thema1-v1`), `wiskunde.html` (Ben, H2
   statistiek, `wis-h2-v1`), `scheikunde-h1.html` (H1 chemisch rekenen, `chem-h1-v1`), `scheikunde.html` (H2
-  bindingen, `chem-h2-v1`), Frans voor Dana: `frans.html`, `frans-copilot.html`, `frans-combi.html`,
+  bindingen, `chem-h2-v1`), `duits.html` (Ben, Duits op 5 havo-niveau: Briefhelfer, `duits-brief-v1`), Frans voor Dana: `frans.html`, `frans-copilot.html`, `frans-combi.html`,
   `frans-spel.html` (spelletjes), `frans-5.html` (versie 5, zie onder).
 - **Voortgang per persoon**: `leerlog.js` (eerste script in de head van elke vakpagina) zet stil `@<wie>` achter elke
   localStorage-sleutel behalve `leren-*` (`chem-h1-v1@ben`, `@dana`, `@marcel`, `@anja`, `@gast-<naam>`), zodat iedereen op hetzelfde apparaat
@@ -91,6 +91,15 @@ schermen `show('home'|'play')`, `goHome()`, `ask()`, `practice(sec)` (oefenronde
   blok Spelletjes. Spelletjes openen `frans-spel.html#v5=<spel>&set=<pagina's>`; die gaat daarna terug naar
   `frans-5.html` (via `sessionStorage['v5-rt']` weer naar het pad). "Gekend" = niveau ≥ 3 in de combi (`S.w[id]`)
   óf in de spelletjes (`frans-spel-v1`, `S.w[Franse tekst]`). Wijzig je de combi, kijk of versie 5 mee moet.
+
+- **Duits Briefhelfer** (`duits.html`): schrijfhulp, geen hoofdstuk, dus geen leerroute of berg. Opdracht (zelf verzonnen,
+  `OPDRACHT`): brief aan Jonas uit Keulen (uitwisseling), 60-80 woorden, 5 inhoudspunten, du-vorm, weil/dass. `DELEN` = de
+  onderdelen (aanhef, 1-5, groet) met tip en bouwstenen (tik = invoegen); tekst per onderdeel in `S.t`. `checks()` kijkt
+  automatisch na (lengte, aanhefkomma, kleine letter erna, Perfekt, weil + komma, 2 vragen, geen Sie, groet zonder komma,
+  zelfstandige naamwoorden uit `NOMEN` met kleine letter), `ZELF` = zelf afvinken. Spelletjes: Bouwstenen (NL → DE,
+  gehaald bij 10/12, `S.bs`) en Woordvolgorde (`ZINNEN`, tegels; `ook` = andere goede volgordes; gehaald bij 6/7, `S.wv`).
+  Voorbeeldbrief over een ander onderwerp (niet overschrijfbaar). We schrijven de brief niet voor Ben: tips, geen
+  verbeterde versie (ook niet als Marcel zijn tekst in de chat plakt).
 
 ## Leerlogboek en scores (gedeeld met deweef/spelletjes)
 - `leerlog.js` staat in de `<head>` van elke vakpagina (vóór de andere scripts). Per bezoek stuurt het stil één

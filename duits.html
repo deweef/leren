@@ -1,0 +1,273 @@
+<!doctype html>
+<html lang="nl">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<meta name="robots" content="noindex">
+<script src="leerlog.js"></script><script>(function(){try{if(localStorage.getItem('leren-ok')!=='53a39a231246354922d1b5f7242c1639ebdc75da84bde2e766eed704f5a89cf8'){location.replace('index.html')}}catch(e){location.replace('index.html')}})();</script>
+<title>Duits · Briefhelfer</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Archivo:wdth,wght@62..125,400..900&family=Atkinson+Hyperlegible:wght@400;700&family=JetBrains+Mono:wght@500;700&display=swap">
+<style>
+/* iPad: twee keer snel tikken mag niet inzoomen (knijpen om te zoomen blijft werken) */
+*{touch-action:manipulation}
+:root{--bg:#F5F2EC;--surface:#fff;--ink:#1E2230;--muted:#5D6375;--line:#DDD6CB;--chip:#EEE8DE;--accent:#C8102E;--gold:#B8860B;--good:#1E8E5A;--good-bg:#E3F4EA;--bad:#C0392B;--bad-bg:#FBE9E7;--tip:#FFF6DA}
+@media (prefers-color-scheme:dark){:root:not([data-theme="light"]){--bg:#14161D;--surface:#1D2029;--ink:#E9EAF0;--muted:#A0A5B5;--line:#30343F;--chip:#272A35;--accent:#FF5A6E;--gold:#E8B84A;--good:#4CD68A;--good-bg:#173226;--bad:#FF7B6B;--bad-bg:#3A1E1B;--tip:#2E2A1C;color-scheme:dark}}
+:root[data-theme="dark"]{--bg:#14161D;--surface:#1D2029;--ink:#E9EAF0;--muted:#A0A5B5;--line:#30343F;--chip:#272A35;--accent:#FF5A6E;--gold:#E8B84A;--good:#4CD68A;--good-bg:#173226;--bad:#FF7B6B;--bad-bg:#3A1E1B;--tip:#2E2A1C;color-scheme:dark}
+*{box-sizing:border-box}
+body{margin:0;background:var(--bg);color:var(--ink);font:17px/1.55 "Atkinson Hyperlegible",system-ui,sans-serif;overflow-wrap:break-word}
+main{max-width:720px;margin:0 auto;padding:20px 16px 60px}
+h1{font:800 clamp(30px,7vw,44px)/1.05 Archivo,system-ui,sans-serif;font-stretch:90%;margin:4px 0 6px}
+h2{font:800 22px/1.2 Archivo,system-ui,sans-serif;margin:22px 0 8px}
+h3{font:800 18px/1.25 Archivo,system-ui,sans-serif;margin:0 0 6px}
+.sub{color:var(--muted);margin:0 0 16px}
+.terug{display:inline-block;margin:0 0 10px;color:inherit;opacity:.7;text-decoration:none;font:700 14px system-ui,sans-serif}
+.vlag{display:inline-flex;height:10px;width:44px;border-radius:3px;overflow:hidden;vertical-align:middle;margin-right:8px}
+.vlag i{flex:1}.vlag i:nth-child(1){background:#111}.vlag i:nth-child(2){background:#DD0000}.vlag i:nth-child(3){background:#FFCE00}
+.kaart{background:var(--surface);border:2px solid var(--line);border-radius:16px;padding:16px;margin:12px 0}
+.opdracht{border-color:var(--ink)}
+.opdracht ol{padding-left:22px;margin:8px 0}.opdracht li{margin:4px 0}
+.label{font:700 12px/1 "JetBrains Mono",monospace;letter-spacing:.06em;text-transform:uppercase;color:var(--accent)}
+.modes{display:grid;grid-template-columns:repeat(auto-fit,minmax(200px,1fr));gap:12px;margin-top:12px}
+.mode{display:block;text-align:left;background:var(--surface);color:var(--ink);border:2px solid var(--line);border-radius:16px;padding:16px;cursor:pointer;font:inherit;position:relative}
+.mode h3{margin:0 0 4px}.mode p{margin:0;color:var(--muted);font-size:15px}
+.mode.main{background:var(--ink);color:var(--bg);border-color:var(--ink)}.mode.main p{color:var(--bg);opacity:.8}
+.mode.gehaald{background:var(--good-bg);border-color:var(--good)}
+.mode.gehaald::after{content:"✓ gehaald";position:absolute;top:8px;right:10px;font:700 11px "JetBrains Mono",monospace;color:var(--good)}
+.balk{height:10px;background:var(--chip);border-radius:6px;overflow:hidden;margin:8px 0 4px}.balk i{display:block;height:100%;background:var(--good);transition:width .3s}
+.btn{font:700 16px system-ui,sans-serif;padding:11px 16px;border-radius:12px;border:2px solid var(--ink);background:var(--ink);color:var(--bg);cursor:pointer}
+.btn.licht{background:none;color:var(--ink)}
+.btn.klein{font-size:14px;padding:7px 12px}
+.acts{display:flex;gap:10px;flex-wrap:wrap;margin-top:14px}
+.top{display:flex;justify-content:space-between;align-items:center;gap:10px;margin-bottom:10px}
+.top>*{white-space:nowrap}
+.teller{font:700 14px "JetBrains Mono",monospace;padding:6px 10px;border-radius:10px;background:var(--chip)}
+.teller.ok{background:var(--good-bg);color:var(--good)}.teller.te{background:var(--bad-bg);color:var(--bad)}
+.stap{font:700 13px "JetBrains Mono",monospace;color:var(--muted)}
+textarea{width:100%;min-height:120px;font:17px/1.5 "Atkinson Hyperlegible",system-ui,sans-serif;padding:12px;border-radius:12px;border:2px solid var(--line);background:var(--bg);color:var(--ink);resize:vertical}
+textarea:focus{outline:none;border-color:var(--accent)}
+.tip{background:var(--tip);border-radius:12px;padding:10px 14px;margin:10px 0;font-size:15.5px}
+.stenen{display:flex;flex-wrap:wrap;gap:8px;margin:8px 0}
+.steen{font:15px "Atkinson Hyperlegible",system-ui,sans-serif;padding:7px 11px;border-radius:10px;border:1.5px dashed var(--muted);background:var(--surface);color:var(--ink);cursor:pointer;text-align:left}
+.steen small{display:block;color:var(--muted);font-size:12.5px}
+.check{list-style:none;padding:0;margin:8px 0}
+.check li{padding:7px 0 7px 30px;position:relative;border-bottom:1px solid var(--line)}
+.check li::before{position:absolute;left:4px;top:7px;font-weight:800}
+.check li.ja::before{content:"✓";color:var(--good)}.check li.nee::before{content:"✗";color:var(--bad)}.check li.let::before{content:"!";color:var(--gold)}
+.check li small{display:block;color:var(--muted);font-size:14px}
+label.zelf{display:flex;gap:10px;align-items:flex-start;padding:8px 0;border-bottom:1px solid var(--line);cursor:pointer}
+label.zelf input{width:22px;height:22px;margin-top:2px;flex:none;accent-color:var(--good)}
+.brief{white-space:pre-wrap;font:17px/1.6 Georgia,"Times New Roman",serif;background:var(--surface);border:2px solid var(--line);border-radius:12px;padding:16px}
+.opts{display:grid;gap:10px;margin-top:12px}
+.opt{font:inherit;text-align:left;padding:12px 14px;border-radius:12px;border:2px solid var(--line);background:var(--surface);color:var(--ink);cursor:pointer}
+.opt.goed{border-color:var(--good);background:var(--good-bg)}.opt.fout{border-color:var(--bad);background:var(--bad-bg)}
+.uitleg{margin-top:10px;padding:10px 14px;border-radius:12px;background:var(--chip)}
+.tegels{display:flex;flex-wrap:wrap;gap:8px;min-height:52px;padding:8px;border-radius:12px;border:2px dashed var(--line);margin:10px 0}
+.tegel{font:700 17px "Atkinson Hyperlegible",system-ui,sans-serif;padding:8px 12px;border-radius:10px;border:2px solid var(--ink);background:var(--surface);color:var(--ink);cursor:pointer}
+.tegel.weg{visibility:hidden}
+.goed-t{color:var(--good);font-weight:700}.fout-t{color:var(--bad);font-weight:700}
+[hidden]{display:none!important}
+</style>
+</head>
+<body>
+<main id="home">
+  <a href="index.html" class="terug">‹ Alle vakken</a>
+  <h1><span class="vlag"><i></i><i></i><i></i></span>Briefhelfer</h1>
+  <p class="sub">Duits · schrijven. Je schrijft de brief zelf, stukje voor stukje. De helfer geeft tips, bouwstenen en een controlelijst.</p>
+  <div class="kaart opdracht" id="opdracht"></div>
+  <div class="kaart"><div class="top"><b>Jouw brief</b><span class="teller" id="hTeller">0 woorden</span></div>
+    <div class="balk"><i id="hBalk" style="width:0"></i></div><div class="sub" id="hStand" style="margin:0;font-size:15px"></div></div>
+  <div class="modes" id="modes">
+    <button class="mode main" data-m="schrijf"><h3>✍️ Schrijven</h3><p>Stap voor stap, met bouwstenen en tips per onderdeel.</p></button>
+    <button class="mode" data-m="check"><h3>✔ Controlelijst</h3><p>Klopt alles? Kijk je brief na voor je hem inlevert.</p></button>
+    <button class="mode" data-m="stenen"><h3>🧱 Bouwstenen oefenen</h3><p>De handigste briefzinnen: Nederlands → Duits.</p></button>
+    <button class="mode" data-m="volgorde"><h3>🔀 Woordvolgorde</h3><p>Zet de woorden in de goede volgorde. Waar staat het werkwoord?</p></button>
+    <button class="mode" data-m="voorbeeld"><h3>📄 Voorbeeldbrief</h3><p>Zo ziet een Duitse brief eruit (ander onderwerp).</p></button>
+    <button class="mode" data-m="brief"><h3>📋 Mijn brief</h3><p>Alles bij elkaar, om te kopiëren en in te leveren.</p></button>
+  </div>
+  <div class="acts"><button class="btn licht klein" id="wis">Brief wissen</button></div>
+</main>
+<main id="play" hidden></main>
+<script>
+const KEY='duits-brief-v1';
+const $=s=>document.querySelector(s);
+let S={t:{},zelf:{},bs:0,wv:0,done:0};
+try{const r=localStorage.getItem(KEY);if(r)S=Object.assign(S,JSON.parse(r))}catch(e){}
+const save=()=>{try{localStorage.setItem(KEY,JSON.stringify(S))}catch(e){}};
+const esc=s=>String(s).replace(/[&<>"]/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;'}[c]));
+const shuffle=a=>{a=a.slice();for(let i=a.length-1;i>0;i--){const j=Math.random()*(i+1)|0;[a[i],a[j]]=[a[j],a[i]]}return a};
+function show(id){$('#home').hidden=id!=='home';$('#play').hidden=id!=='play';scrollTo(0,0)}
+
+/* ---------- De opdracht ---------- */
+const OPDRACHT=`<div class="label">Schrijfopdracht</div><h2 style="margin-top:6px">Een brief aan Jonas</h2>
+<p>Je school heeft een uitwisseling met een school in Keulen. Volgende maand komt <b>Jonas (16)</b> een week bij jou logeren. Hij heeft je een mailtje gestuurd om kennis te maken. Jij schrijft hem terug.</p>
+<p><b>Schrijf een brief van 60 tot 80 woorden. Hierin moet je:</b></p>
+<ol><li>Jonas <b>bedanken</b> voor zijn mail en zeggen dat je je op zijn bezoek verheugt.</li>
+<li>Iets over <b>jezelf</b> vertellen: je familie, je hobby of je sport.</li>
+<li>Vertellen wat je <b>afgelopen weekend</b> gedaan hebt (verleden tijd: het <i>Perfekt</i>).</li>
+<li>Twee dingen voorstellen die jullie <b>samen gaan doen</b>, en zeggen <b>waarom</b> (met <i>weil</i>).</li>
+<li>Jonas <b>twee vragen</b> stellen.</li></ol>
+<p style="margin-bottom:0"><b>Let op:</b> goede aanhef en groet · <i>du</i> (informeel) · minstens één zin met <i>weil</i> of <i>dass</i> · zelfstandige naamwoorden met een hoofdletter.</p>`;
+
+/* ---------- Onderdelen van de brief, met tips en bouwstenen ---------- */
+const DELEN=[
+ {id:'a',titel:'Aanhef',kort:'aanhef',rijen:2,vraag:'Hoe begin je de brief?',
+  tip:'Een jongen: <b>Lieber</b> Jonas, · een meisje: <b>Liebe</b> Lena, · of gewoon <b>Hallo</b> Jonas,<br>Zet er een <b>komma</b> achter. De volgende zin begint daarna met een <b>kleine letter</b> (behalve een zelfstandig naamwoord of een naam).',
+  stenen:[['Lieber Jonas,','Beste Jonas, (aan een jongen)'],['Hallo Jonas,','Hoi Jonas,']]},
+ {id:'p1',titel:'1. Bedanken en verheugen',kort:'bedankt',vraag:'Bedank Jonas voor zijn mail en zeg dat je je op zijn bezoek verheugt.',
+  tip:'Begin met een kleine letter, want de aanhef eindigde met een komma: <i>vielen Dank …</i><br><b>sich freuen auf</b> = zich verheugen op (iets in de toekomst).',
+  stenen:[['vielen Dank für deine Mail!','heel erg bedankt voor je mail!'],['ich habe mich sehr über deine Mail gefreut.','ik was erg blij met je mail.'],['Ich freue mich schon sehr auf deinen Besuch!','Ik verheug me al erg op je bezoek!'],['Schön, dass du bald kommst.','Leuk dat je binnenkort komt.']]},
+ {id:'p2',titel:'2. Over jezelf',kort:'over jezelf',vraag:'Vertel iets over je familie, je hobby of je sport.',
+  tip:'Het werkwoord staat in een gewone zin altijd op <b>plek 2</b>: <i>In meiner Freizeit <b>spiele</b> ich Fußball.</i>',
+  stenen:[['Ich bin 16 Jahre alt.','Ik ben 16 jaar.'],['Ich wohne mit meinen Eltern und meiner Schwester in …','Ik woon met mijn ouders en mijn zus in …'],['Ich habe einen Bruder.','Ik heb een broer.'],['In meiner Freizeit spiele ich gern …','In mijn vrije tijd speel ik graag …'],['Mein Hobby ist …','Mijn hobby is …'],['Ich bin Mitglied in einem Fußballverein.','Ik zit op een voetbalclub.']]},
+ {id:'p3',titel:'3. Afgelopen weekend (Perfekt)',kort:'weekend',vraag:'Vertel wat je afgelopen weekend gedaan hebt.',
+  tip:'<b>Perfekt</b> = <i>haben</i> of <i>sein</i> op plek 2 + het voltooid deelwoord <b>achteraan</b>: <i>Am Samstag <b>habe</b> ich Fußball <b>gespielt</b>.</i><br>Bij bewegen (gehen, fahren, kommen) gebruik je <b>sein</b>: <i>Ich <b>bin</b> in die Stadt <b>gegangen</b>.</i>',
+  stenen:[['Am Wochenende habe ich … gespielt.','In het weekend heb ik … gespeeld.'],['Am Samstag bin ich mit Freunden in die Stadt gegangen.','Zaterdag ben ik met vrienden naar de stad gegaan.'],['Am Sonntag habe ich lange geschlafen.','Zondag heb ik lang geslapen.'],['Wir haben zusammen einen Film gesehen.','We hebben samen een film gekeken.'],['Ich habe für die Schule gelernt.','Ik heb voor school geleerd.']]},
+ {id:'p4',titel:'4. Samen doen, en waarom',kort:'samen doen',vraag:'Stel twee dingen voor die jullie samen gaan doen, en zeg waarom (met weil).',
+  tip:'Na <b>weil</b> (omdat) en <b>dass</b> (dat) gaat het werkwoord naar <b>het eind</b> van de zin: <i>…, weil das Wetter schön <b>ist</b>.</i> Zet een komma vóór weil.',
+  stenen:[['Wir können zusammen Rad fahren, weil …','We kunnen samen fietsen, omdat …'],['Ich möchte dir Amsterdam zeigen, weil …','Ik wil je Amsterdam laten zien, omdat …'],['Wir gehen vielleicht ins Kino, weil …','We gaan misschien naar de bioscoop, omdat …'],['…, weil es dort sehr schön ist.','…, omdat het daar heel mooi is.'],['…, weil ich gern Fußball spiele.','…, omdat ik graag voetbal.'],['Ich hoffe, dass du Spaß hast.','Ik hoop dat je het leuk hebt.']]},
+ {id:'p5',titel:'5. Twee vragen',kort:'twee vragen',vraag:'Stel Jonas twee vragen.',
+  tip:'Een ja/nee-vraag begint met het <b>werkwoord</b>: <i><b>Hast</b> du Haustiere?</i><br>Met een vraagwoord staat het werkwoord op plek 2: <i>Was <b>isst</b> du gern?</i> Vergeet het vraagteken niet.',
+  stenen:[['Was isst du gern?','Wat eet je graag?'],['Was möchtest du in den Niederlanden sehen?','Wat wil je in Nederland zien?'],['Hast du Haustiere?','Heb je huisdieren?'],['Spielst du ein Instrument?','Speel je een instrument?'],['Wann kommst du genau an?','Wanneer kom je precies aan?']]},
+ {id:'g',titel:'Afsluiting en groet',kort:'groet',rijen:3,vraag:'Sluit de brief af en zet je naam eronder.',
+  tip:'Een korte slotzin, dan de groet op een nieuwe regel en daaronder je naam. Na <i>Viele Grüße</i> komt in het Duits <b>geen komma</b>. Van een jongen: <i>Dein Ben</i>, van een meisje: <i>Deine …</i>',
+  stenen:[['Schreib mir bald zurück!','Schrijf me snel terug!'],['Bis bald!','Tot snel!'],['Viele Grüße','Groetjes'],['Liebe Grüße','Liefs / lieve groet'],['Dein Ben','Je Ben (van een jongen)']]}
+];
+const tekst=id=>(S.t[id]||'').trim();
+const woorden=t=>(t.match(/[A-Za-zÄÖÜäöüß0-9]+(?:['’-][A-Za-zÄÖÜäöüß]+)*/g)||[]).length;
+const heleBrief=()=>DELEN.map(d=>tekst(d.id)).filter(Boolean).join('\n\n');
+const aantal=()=>woorden(DELEN.map(d=>tekst(d.id)).join(' '));
+
+/* ---------- Automatische controle ---------- */
+// zelfstandige naamwoorden die vaak per ongeluk met een kleine letter worden geschreven
+const NOMEN=['Mail','Besuch','Wochenende','Samstag','Sonntag','Freunde','Freund','Freundin','Freizeit','Stadt','Film','Schule','Eltern','Schwester','Bruder','Familie','Hobby','Fußball','Verein','Kino','Wetter','Spaß','Haustiere','Instrument','Jahre','Woche','Strand','Museum','Fahrrad','Rad','Hause','Musik','Brief','Grüße','Dank','Niederlanden','Sport','Mutter','Vater','Hund','Katze'];
+function checks(){const r=[],a=tekst('a'),p1=tekst('p1'),p3=tekst('p3'),p4=tekst('p4'),p5=tekst('p5'),g=tekst('g'),alles=DELEN.map(d=>tekst(d.id)).join('\n'),n=aantal();
+ r.push({ok:n>=60&&n<=80,t:`Lengte: ${n} woorden`,u:n<60?`Nog ${60-n} woorden erbij (60 tot 80).`:n>80?`${n-80} woorden te veel: maak een paar zinnen korter.`:'Precies goed: tussen 60 en 80.'});
+ r.push({ok:/^(lieber|liebe|hallo|hi)\s+\S+.*,$/i.test(a),t:'Aanhef met komma',u:a?(/,$/.test(a)?'Goed.':'Zet een komma achter de aanhef: Lieber Jonas,'):'Nog geen aanhef.'});
+ if(p1&&/^(Ich|Vielen|Danke|Schön|Wie|Mir)\b/.test(p1))r.push({let:1,t:'Kleine letter na de aanhef',u:`Na "Lieber Jonas," begint de volgende zin met een kleine letter: ${esc(p1.split(/\s/)[0].toLowerCase())} …`});
+ r.push({ok:/\b(dank|danke)\b/i.test(p1)&&/freue/i.test(p1),t:'1. Bedankt en verheugt',u:/\b(dank|danke)\b/i.test(p1)?(/freue/i.test(p1)?'Goed.':'Zeg nog dat je je verheugt: Ich freue mich auf deinen Besuch!'):'Bedank Jonas voor zijn mail (Vielen Dank für …).'});
+ r.push({ok:woorden(tekst('p2'))>=6,t:'2. Iets over jezelf',u:woorden(tekst('p2'))>=6?'Goed.':'Vertel iets over je familie, hobby of sport (een paar zinnen).'});
+ const perf=/\b(habe|hast|hat|haben|habt|bin|bist|ist|sind|seid)\b/i.test(p3)&&/\bge[a-zäöüß]+(t|en)\b/i.test(p3);
+ r.push({ok:perf,t:'3. Weekend in het Perfekt',u:perf?'Goed: haben/sein + voltooid deelwoord.':'Gebruik haben/sein + een voltooid deelwoord (ge…t / ge…en): Ich habe … gespielt.'});
+ const weil=/\b(weil|dass)\b/i.test(alles);
+ r.push({ok:/\bweil\b/i.test(p4)&&woorden(p4)>=8,t:'4. Samen doen, met weil',u:/\bweil\b/i.test(p4)?(woorden(p4)>=8?'Goed. Staat het werkwoord achteraan in je weil-zin?':'Stel twee dingen voor.'):'Zeg waarom, met weil: …, weil es Spaß macht.'});
+ if(/\b(weil|dass)\b/i.test(alles)&&!/,\s*(weil|dass)\b/i.test(alles))r.push({let:1,t:'Komma vóór weil/dass',u:'In het Duits staat er altijd een komma vóór weil en dass.'});
+ const vr=(p5.match(/\?/g)||[]).length;
+ r.push({ok:vr>=2,t:'5. Twee vragen',u:vr>=2?'Goed.':`Nog ${2-vr} vraag${2-vr===1?'':'en'} met een vraagteken.`});
+ r.push({ok:weil,t:'Een zin met weil of dass',u:weil?'Goed.':'Gebruik minstens één keer weil of dass.'});
+ const sie=/[a-zäöüß,]\s+(Sie|Ihnen|Ihr|Ihre)\b/.test(alles);
+ r.push({ok:!sie,t:'Du-vorm volgehouden',u:sie?'Je schrijft ergens Sie/Ihnen/Ihr. Jonas is een vriend: gebruik du, dich, dir, dein.':'Goed: je zegt du tegen Jonas.'});
+ r.push({ok:/(grüße|grüßen|bis bald|tschüss)/i.test(g)&&g.split('\n').filter(x=>x.trim()).length>=2,t:'Groet en naam',u:/(grüße|bis bald|tschüss)/i.test(g)?(g.split('\n').filter(x=>x.trim()).length>=2?'Goed.':'Zet je naam op een nieuwe regel onder de groet.'):'Sluit af met bijvoorbeeld Viele Grüße, en je naam eronder.'});
+ if(/grüße\s*,/i.test(g))r.push({let:1,t:'Geen komma na de groet',u:'In het Duits: "Viele Grüße" zonder komma.'});
+ const klein=[...new Set(NOMEN.filter(w=>new RegExp('(^|[^A-Za-zÄÖÜäöüß])'+w.toLowerCase()+'(?![a-zäöüß])').test(alles)))];
+ if(klein.length)r.push({let:1,t:'Hoofdletters bij zelfstandige naamwoorden',u:'Schrijf met een hoofdletter: '+klein.join(', ')+'.'});
+ return r}
+const ZELF=['In elke gewone zin staat het werkwoord op plek 2.','In mijn weil-zin (en dass-zin) staat het werkwoord achteraan.','Alle zelfstandige naamwoorden hebben een hoofdletter.','Ik heb steeds du (dich, dir, dein) gebruikt, nooit Sie.','Ik heb de brief nog één keer helemaal (hardop) gelezen.'];
+const scoreAuto=()=>{if(!aantal())return 0;const c=checks().filter(x=>!x.let);return c.filter(x=>x.ok).length/c.length};
+window.leerVoortgang=()=>Math.round(scoreAuto()*100);
+
+/* ---------- Hoofdscherm ---------- */
+function renderHome(){show('home');$('#opdracht').innerHTML=OPDRACHT;
+ const n=aantal(),p=Math.round(scoreAuto()*100),t=$('#hTeller');t.textContent=n+' woorden';t.className='teller'+(n>=60&&n<=80?' ok':n>80?' te':'');
+ $('#hBalk').style.width=p+'%';const gevuld=DELEN.filter(d=>tekst(d.id)).length;
+ $('#hStand').textContent=gevuld?`${gevuld} van de ${DELEN.length} onderdelen ingevuld · ${p}% van de controlelijst klopt`:'Nog niets geschreven. Begin bij Schrijven.';
+ const g=(m,ok)=>{const b=document.querySelector(`.mode[data-m="${m}"]`);if(b)b.classList.toggle('gehaald',!!ok)};
+ g('check',p===100&&ZELF.every((z,i)=>S.zelf[i]));g('stenen',S.bs>=10);g('volgorde',S.wv>=6)}
+document.querySelectorAll('.mode').forEach(b=>b.onclick=()=>({schrijf:()=>schrijf(0),check:controle,stenen:stenenSpel,volgorde:volgordeSpel,voorbeeld:voorbeeld,brief:mijnBrief})[b.dataset.m]());
+$('#wis').onclick=()=>{if(confirm('Weet je zeker dat je je brief wilt wissen?')){S.t={};S.zelf={};save();renderHome()}};
+
+/* ---------- Schrijven, stap voor stap ---------- */
+function schrijf(i){const d=DELEN[i];show('play');
+ $('#play').innerHTML=`<div class="top"><button class="btn licht klein" id="stop">‹ Stoppen</button><span class="stap">Stap ${i+1}/${DELEN.length}</span><span class="teller" id="tel"></span></div>
+ <div class="kaart"><div class="label">${esc(d.titel)}</div><h2 style="margin-top:6px">${d.vraag}</h2>
+ <textarea id="txt" rows="${d.rijen||5}" spellcheck="true" lang="de" placeholder="Schrijf hier in het Duits …">${esc(S.t[d.id]||'')}</textarea>
+ <div class="tip">💡 ${d.tip}</div>
+ <b style="font-size:15px">Bouwstenen</b> <span class="sub" style="font-size:14px">(tik om toe te voegen, maak hem daarna af in je eigen woorden)</span>
+ <div class="stenen">${d.stenen.map((s,k)=>`<button class="steen" data-k="${k}">${esc(s[0])}<small>${esc(s[1])}</small></button>`).join('')}</div>
+ <div id="mini"></div>
+ <div class="acts">${i>0?'<button class="btn licht" id="vorig">← Vorige</button>':''}${i<DELEN.length-1?'<button class="btn" id="volg">Volgende →</button>':'<button class="btn" id="klaar">Naar de controlelijst ✔</button>'}</div></div>`;
+ const ta=$('#txt');
+ const bij=()=>{S.t[d.id]=ta.value;save();const n=aantal(),t=$('#tel');t.textContent=n+' woorden';t.className='teller'+(n>=60&&n<=80?' ok':n>80?' te':'');
+  const c=checks().filter(x=>x.t.toLowerCase().includes(d.kort)||/hoofdletters/i.test(x.t)||(d.id==='a'&&/aanhef|kleine letter/i.test(x.t))||(d.id==='g'&&/groet/i.test(x.t))||(d.id==='p4'&&/komma vóór/i.test(x.t)));
+  $('#mini').innerHTML=ta.value.trim()&&c.length?`<ul class="check">${c.map(x=>`<li class="${x.let?'let':x.ok?'ja':'nee'}">${esc(x.t)}<small>${esc(x.u)}</small></li>`).join('')}</ul>`:''};
+ ta.oninput=bij;bij();
+ document.querySelectorAll('.steen').forEach(b=>b.onclick=()=>{const s=d.stenen[+b.dataset.k][0],v=ta.value,p=ta.selectionStart??v.length,voor=v.slice(0,p),na=v.slice(p);
+  const sp=voor&&!/[\s\n]$/.test(voor)?(d.id==='g'?'\n':' '):'';ta.value=voor+sp+s+(na&&!/^\s/.test(na)?' ':'')+na;const q=(voor+sp+s).length;ta.focus();ta.setSelectionRange(q,q);bij()});
+ $('#stop').onclick=renderHome;if($('#vorig'))$('#vorig').onclick=()=>schrijf(i-1);if($('#volg'))$('#volg').onclick=()=>schrijf(i+1);if($('#klaar'))$('#klaar').onclick=controle}
+
+/* ---------- Controlelijst ---------- */
+function controle(){show('play');const c=checks();
+ $('#play').innerHTML=`<div class="top"><button class="btn licht klein" id="stop">‹ Terug</button><span class="teller ${aantal()>=60&&aantal()<=80?'ok':''}">${aantal()} woorden</span></div>
+ <div class="kaart"><div class="label">Controlelijst</div><h2 style="margin-top:6px">Klopt je brief?</h2>
+ <p class="sub" style="margin:0">Deze punten kijkt de helfer zelf na:</p><ul class="check">${c.map(x=>`<li class="${x.let?'let':x.ok?'ja':'nee'}">${esc(x.t)}<small>${esc(x.u)}</small></li>`).join('')}</ul>
+ <p class="sub" style="margin:14px 0 0">Deze kun jij het best zelf nakijken. Vink af als het klopt:</p>
+ ${ZELF.map((z,i)=>`<label class="zelf"><input type="checkbox" data-i="${i}" ${S.zelf[i]?'checked':''}><span>${esc(z)}</span></label>`).join('')}
+ <div class="acts"><button class="btn" id="naar">✍️ Verder schrijven</button><button class="btn licht" id="kijk">📋 Mijn brief</button></div></div>`;
+ document.querySelectorAll('.zelf input').forEach(b=>b.onchange=()=>{S.zelf[b.dataset.i]=b.checked;save()});
+ $('#stop').onclick=renderHome;$('#naar').onclick=()=>{const i=DELEN.findIndex(d=>!tekst(d.id));schrijf(i<0?0:i)};$('#kijk').onclick=mijnBrief}
+
+/* ---------- Mijn brief ---------- */
+function mijnBrief(){show('play');const b=heleBrief();
+ $('#play').innerHTML=`<div class="top"><button class="btn licht klein" id="stop">‹ Terug</button><span class="teller">${aantal()} woorden</span></div>
+ <div class="kaart"><div class="label">Mijn brief</div><h2 style="margin-top:6px">Alles bij elkaar</h2>
+ ${b?`<div class="brief" id="br">${esc(b)}</div>`:'<p>Nog niets geschreven.</p>'}
+ <div class="acts">${b?'<button class="btn" id="kopie">Kopiëren</button>':''}<button class="btn licht" id="naar">✍️ Verder schrijven</button><button class="btn licht" id="ch">✔ Controlelijst</button></div><div id="msg" class="sub" style="margin-top:8px"></div></div>`;
+ $('#stop').onclick=renderHome;$('#naar').onclick=()=>schrijf(0);$('#ch').onclick=controle;
+ if($('#kopie'))$('#kopie').onclick=async()=>{try{await navigator.clipboard.writeText(b);$('#msg').textContent='Gekopieerd! Plak hem in je document of mail.'}catch(e){const r=document.createRange();r.selectNodeContents($('#br'));const s=getSelection();s.removeAllRanges();s.addRange(r);$('#msg').textContent='Geselecteerd: kies nu Kopiëren.'}}}
+
+/* ---------- Voorbeeldbrief (ander onderwerp, zodat je hem niet overschrijft) ---------- */
+function voorbeeld(){show('play');
+ const V=[['Liebe Lena,','Aanhef met komma'],['vielen Dank für deinen Brief! Mir geht es gut.','Kleine letter na de aanhef'],['In den Ferien war ich mit meiner Familie in Spanien. Wir haben jeden Tag im Meer gebadet und abends Pizza gegessen.','Perfekt: haben … gebadet / gegessen'],['Das Wetter war super, weil die Sonne immer geschienen hat.','weil: werkwoord (hat) achteraan, komma ervoor'],['Und du? Was hast du in den Ferien gemacht? Kommst du im Sommer zu uns?','Vragen: werkwoord op plek 1 of 2'],['Schreib mir bald zurück!','Slotzin'],['Viele Grüße\nDeine Sanne','Groet zonder komma, naam eronder']];
+ $('#play').innerHTML=`<div class="top"><button class="btn licht klein" id="stop">‹ Terug</button></div>
+ <div class="kaart"><div class="label">Voorbeeldbrief</div><h2 style="margin-top:6px">Sanne schrijft aan Lena over de vakantie</h2>
+ <p class="sub">Een ander onderwerp dan jouw opdracht: kijk hoe de brief is opgebouwd, en schrijf je eigen brief zelf.</p>
+ ${V.map(([z,u])=>`<div style="margin:10px 0"><div class="brief" style="padding:10px 14px">${esc(z)}</div><div style="font-size:14px;color:var(--muted);margin-top:3px">↳ ${esc(u)}</div></div>`).join('')}</div>`;
+ $('#stop').onclick=renderHome}
+
+/* ---------- Spel: bouwstenen (Nederlands → Duits) ---------- */
+const BOUW=DELEN.flatMap(d=>d.stenen.filter(s=>!s[0].startsWith('…')).map(s=>({de:s[0],nl:s[1]})));
+function stenenSpel(){let rij=shuffle(BOUW).slice(0,12),i=0,goed=0;show('play');
+ const vraag=()=>{if(i>=rij.length){S.bs=Math.max(S.bs,goed);save();
+   $('#play').innerHTML=`<div class="kaart"><h2>${goed} van de ${rij.length} goed${goed>=10?' 🎉':''}</h2><p>${goed>=10?'Deze bouwstenen zitten erin. Gebruik ze in je brief!':'Nog een keer? Bij 10 goed is hij gehaald.'}</p><div class="acts"><button class="btn" id="nog">Nog een keer</button><button class="btn licht" id="stop">Terug</button></div></div>`;
+   $('#nog').onclick=stenenSpel;$('#stop').onclick=renderHome;return}
+  const q=rij[i],opts=shuffle([q.de,...shuffle(BOUW.filter(b=>b.de!==q.de)).slice(0,2).map(b=>b.de)]);
+  $('#play').innerHTML=`<div class="top"><button class="btn licht klein" id="stop">‹ Stoppen</button><span class="stap">${i+1} / ${rij.length} · ${goed} goed</span></div>
+  <div class="kaart"><div class="label">Hoe zeg je in het Duits:</div><h2 style="margin-top:6px">${esc(q.nl)}</h2><div class="opts">${opts.map(o=>`<button class="opt">${esc(o)}</button>`).join('')}</div><div id="fb"></div></div>`;
+  $('#stop').onclick=renderHome;
+  document.querySelectorAll('.opt').forEach(b=>b.onclick=()=>{const ok=b.textContent===q.de;document.querySelectorAll('.opt').forEach(x=>{x.disabled=true;if(x.textContent===q.de)x.classList.add('goed')});if(!ok)b.classList.add('fout');
+   if(ok){goed++;S.done++;save()}$('#fb').innerHTML=`<div class="uitleg">${ok?'<span class="goed-t">Goed!</span>':'<span class="fout-t">Net niet.</span> Het is: <b>'+esc(q.de)+'</b>'}</div><div class="acts"><button class="btn" id="vv">Verder →</button></div>`;$('#vv').onclick=()=>{i++;vraag()}})};
+ vraag()}
+
+/* ---------- Spel: woordvolgorde ---------- */
+const ZINNEN=[
+ {z:'Am Wochenende habe ich Fußball gespielt.',ook:['Ich habe am Wochenende Fußball gespielt.'],u:'Perfekt: <b>habe</b> op plek 2, <b>gespielt</b> helemaal achteraan.'},
+ {z:'Am Samstag bin ich in die Stadt gegangen.',ook:['Ich bin am Samstag in die Stadt gegangen.'],u:'Bewegen = <b>sein</b>: bin op plek 2, gegangen achteraan.'},
+ {z:'Wir gehen ins Kino, weil der Film gut ist.',ook:[],u:'Na <b>weil</b> gaat het werkwoord (<b>ist</b>) naar het eind.'},
+ {z:'Ich freue mich, dass du bald kommst.',ook:[],u:'Na <b>dass</b> staat het werkwoord (<b>kommst</b>) achteraan.'},
+ {z:'Ich möchte dir die Stadt zeigen.',ook:[],u:'<b>möchte</b> op plek 2, het tweede werkwoord (<b>zeigen</b>) achteraan.'},
+ {z:'Was möchtest du in Amsterdam sehen?',ook:[],u:'Vraagwoord eerst, dan het werkwoord (<b>möchtest</b>), sehen achteraan.'},
+ {z:'Hast du ein Haustier?',ook:[],u:'Ja/nee-vraag: het werkwoord (<b>Hast</b>) vooraan.'},
+ {z:'Wir können Rad fahren, weil das Wetter schön ist.',ook:[],u:'<b>können</b> op plek 2 en <b>fahren</b> achteraan; na weil staat <b>ist</b> achteraan.'},
+ {z:'In meiner Freizeit spiele ich gern Gitarre.',ook:['Ich spiele in meiner Freizeit gern Gitarre.'],u:'Begint de zin met "In meiner Freizeit", dan komt het werkwoord direct daarna: <b>spiele ich</b>.'}];
+function volgordeSpel(){let rij=shuffle(ZINNEN).slice(0,7),i=0,goed=0;show('play');
+ const zin=()=>{if(i>=rij.length){S.wv=Math.max(S.wv,goed);save();
+   $('#play').innerHTML=`<div class="kaart"><h2>${goed} van de ${rij.length} goed${goed>=6?' 🎉':''}</h2><p>${goed>=6?'Je weet waar het werkwoord moet staan!':'Nog een keer? Bij 6 goed is hij gehaald.'}</p><div class="acts"><button class="btn" id="nog">Nog een keer</button><button class="btn licht" id="stop">Terug</button></div></div>`;
+   $('#nog').onclick=volgordeSpel;$('#stop').onclick=renderHome;return}
+  const q=rij[i],woordjes=q.z.split(' '),hus=shuffle(woordjes.map((w,k)=>({w,k})));let gekozen=[];
+  $('#play').innerHTML=`<div class="top"><button class="btn licht klein" id="stop">‹ Stoppen</button><span class="stap">${i+1} / ${rij.length} · ${goed} goed</span></div>
+  <div class="kaart"><div class="label">Zet in de goede volgorde</div><p class="sub" style="margin:6px 0 0">Tik de woorden aan. Tik in je zin op een woord om het terug te zetten.</p>
+  <div class="tegels" id="zin"></div><div class="tegels" id="bak" style="border-style:solid">${hus.map((h,n)=>`<button class="tegel" data-n="${n}">${esc(h.w)}</button>`).join('')}</div><div id="fb"></div></div>`;
+  $('#stop').onclick=renderHome;
+  const teken=()=>{$('#zin').innerHTML=gekozen.map((n,p)=>`<button class="tegel" data-p="${p}">${esc(hus[n].w)}</button>`).join('');
+   document.querySelectorAll('#bak .tegel').forEach(b=>b.classList.toggle('weg',gekozen.includes(+b.dataset.n)));
+   document.querySelectorAll('#zin .tegel').forEach(b=>b.onclick=()=>{gekozen.splice(+b.dataset.p,1);teken()});
+   if(gekozen.length===woordjes.length){const z=gekozen.map(n=>hus[n].w).join(' '),ok=z===q.z||q.ook.includes(z);if(ok){goed++;S.done++;save()}
+    $('#fb').innerHTML=`<div class="uitleg">${ok?'<span class="goed-t">Goed!</span>':'<span class="fout-t">Net niet.</span> Zo is het: <b>'+esc(q.z)+'</b>'}<br>${q.u}</div><div class="acts"><button class="btn" id="vv">Verder →</button></div>`;
+    document.querySelectorAll('.tegel').forEach(b=>b.disabled=true);$('#vv').onclick=()=>{i++;zin()}}};
+  document.querySelectorAll('#bak .tegel').forEach(b=>b.onclick=()=>{if(!gekozen.includes(+b.dataset.n)){gekozen.push(+b.dataset.n);teken()}});teken()};
+ zin()}
+
+renderHome();
+</script>
+</body>
+</html>
