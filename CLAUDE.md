@@ -157,4 +157,6 @@ schermen `show('home'|'play')`, `goHome()`, `ask()`, `practice(sec)` (oefenronde
 - Een uitleg bij een meerkeuzevraag moet ook zeggen waarom de foute opties fout zijn, vooral als een foute optie "ook
   lijkt te kloppen" (NH₃ → N + H₃ telt goed, maar N en H komen alleen als N₂ en H₂ voor). Kloppend maken = eerst de goede
   formules (de zeven per twee: H₂ N₂ O₂ F₂ Cl₂ Br₂ I₂), dan pas de grote getallen.
+- Atoomnotatie zoals in het boek: massagetal en atoomnummer **recht boven elkaar** (³⁷₁₇Cl), niet met `<sup>`+`<sub>` (dat staat
+  schuin). Gebruik `isoGetal(A, Z)` / `isoNot(s, A, q)` met klasse `.iso` (scheikunde-h1.html).
 - Bekijk nieuwe schermen altijd op telefoonbreedte (390 px), in licht én donker, voordat je ze live zet.

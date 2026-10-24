@@ -112,6 +112,7 @@ details.tips ul{margin:10px 0 4px;padding-left:20px;display:grid;gap:6px}
 .zoomfig figcaption{font-size:13px;line-height:1.3;text-align:center}
 .massafig{background:var(--chip);border-radius:12px;padding:8px;margin:8px 0}
 .massafig svg{display:block;width:100%;max-width:420px;margin:0 auto;height:auto;color:var(--ink)}
+.iso{display:inline-flex;flex-direction:column;align-items:flex-end;vertical-align:middle;font-size:.62em;line-height:1.05;margin-right:1px;font-weight:inherit}
 .lpfig{background:var(--chip);border-radius:12px;padding:8px;margin:10px 0}
 .lpfig svg{display:block;width:100%;max-width:460px;height:auto;margin:0 auto;color:var(--ink)}
 .leg{background:var(--chip);border-radius:10px;padding:8px 12px;margin:10px 0;font-size:14px}
@@ -473,7 +474,7 @@ const TH={
  notatie:{t:'Wetenschappelijke notatie',h:`Eén cijfer (niet 0) vóór de komma, dan × een macht van 10. 40,8 = 4,08·10<sup>1</sup>. 0,0054 = 5,4·10<sup>−3</sup>. 0,002 30 = 2,30·10<sup>−3</sup> (de nul achteraan blijft staan: die is significant). Op je rekenmachine: de <i>scientific mode</i>.`},
  eenheden:{t:'Eenheden omrekenen',h:`1 kg = 10<sup>3</sup> g · 1 g = 10<sup>3</sup> mg · 1 mg = 10<sup>3</sup> µg<br>1 m<sup>3</sup> = 10<sup>3</sup> dm<sup>3</sup> = 10<sup>3</sup> L · 1 L = 1 dm<sup>3</sup> = 10<sup>3</sup> mL · 1 mL = 1 cm<sup>3</sup><br>Handig: 1 kg m<sup>−3</sup> = 1 g L<sup>−1</sup> = 10<sup>−3</sup> g mL<sup>−1</sup>. En kg kmol<sup>−1</sup> = g mol<sup>−1</sup>.`},
  atoom:{t:'Bouw van het atoom',h:`<table class="gt"><tr><th>deeltje</th><th>plaats</th><th>massa</th><th>lading</th></tr><tr><td>proton p<sup>+</sup></td><td>kern</td><td>1,0 u</td><td>1+</td></tr><tr><td>neutron n</td><td>kern</td><td>1,0 u</td><td>0</td></tr><tr><td>elektron e<sup>−</sup></td><td>schillen</td><td>0,0 u</td><td>1−</td></tr></table>Bijna alle massa zit in de kern. 1 u = 1,66·10<sup>−27</sup> kg.`},
- nummers:{t:'Atoomnummer en massagetal',h:`<b>Atoomnummer</b> = aantal protonen (bepaalt welk element). In een neutraal atoom ook = aantal elektronen.<br><b>Massagetal</b> = protonen + neutronen.<br>Dus <b>neutronen = massagetal − atoomnummer</b>.<br>Notaties: <sup>37</sup><sub>17</sub>Cl = Cl-37 = chlooratoom met massagetal 37.`},
+ nummers:{t:'Atoomnummer en massagetal',h:`<b>Atoomnummer</b> = aantal protonen (bepaalt welk element). In een neutraal atoom ook = aantal elektronen.<br><b>Massagetal</b> = protonen + neutronen.<br>Dus <b>neutronen = massagetal − atoomnummer</b>.<br>Notaties: <span class="iso"><span>37</span><span>17</span></span>Cl = Cl-37 = chlooratoom met massagetal 37.`},
  schillen:{t:'Elektronenschillen',h:`Schillen K, L, M, N … Maximaal: K 2, L 8, M 18 (tot calcium vult M tot 8, dan begint N). De verdeling heet de <b>elektronenconfiguratie</b>. Fosfor (15): K2 L8 M5. De elektronen in de buitenste schil zijn de <b>valentie-elektronen</b>: die doen mee bij reacties.`},
  isotoop:{t:'Isotopen',h:`<b>Isotopen</b> = atomen van hetzelfde element (zelfde aantal protonen) met een ander aantal neutronen. Cl-35 (18 n) en Cl-37 (20 n). N-14 en C-14 zijn géén isotopen van elkaar: ander atoomnummer, dus ander element.`},
  atoommassa:{t:'Relatieve atoom- en molecuulmassa',h:`De <b>relatieve atoommassa A<sub>r</sub></b> is het gewogen gemiddelde van alle isotopen in de natuur (chloor 35,45 u: vooral Cl-35). De <b>relatieve molecuulmassa M<sub>r</sub></b> = som van de atoommassa's. Glucose C<sub>6</sub>H<sub>12</sub>O<sub>6</sub>: 6 × 12,01 + 12 × 1,008 + 6 × 16,00 = 180,16 u.`},
@@ -646,7 +647,9 @@ const opt4=(a,pool)=>{const o=[a];for(const p of shuffle(pool))if(!o.includes(p)
 /* stoffen voor rekenen */
 const STOF=[['water','H2O',1.00],['ethanol','C2H6O',0.80],['koolstofdioxide','CO2'],['methaan','CH4'],['glucose','C6H12O6'],['ammoniak','NH3'],['zwavelzuur','H2SO4',1.83],['natriumchloride','NaCl'],['zuurstof','O2'],['stikstof','N2'],['chloor','Cl2'],['zwaveldioxide','SO2'],['glycerol','C3H8O3',1.26],['kopercarbonaat','CuCO3'],['kaliumfosfaat','K3PO4'],['butaan','C4H10'],['propaan','C3H8'],['ijzer','Fe'],['magnesium','Mg'],['calciumcarbonaat','CaCO3']];
 const ISO=[['H',1],['He',4],['Li',7],['C',12],['C',13],['C',14],['N',14],['O',16],['O',18],['F',19],['Ne',20],['Na',23],['Mg',24],['Al',27],['P',31],['S',32],['Cl',35],['Cl',37],['K',39],['Ca',40],['Fe',56],['Cu',63],['Br',79],['Br',81],['Ag',108],['Au',197],['Pb',207],['Ra',226],['U',235],['U',238]];
-const isoNot=(s,A,q)=>`<sup>${A}</sup><sub>${ELS[s][1]}</sub>${s}${q?`<sup>${Math.abs(q)>1?Math.abs(q):''}${q>0?'+':'−'}</sup>`:''}`;
+/* massagetal en atoomnummer recht boven elkaar, zoals in het boek */
+const isoGetal=(A,Z)=>`<span class="iso"><span>${A}</span><span>${Z}</span></span>`;
+const isoNot=(s,A,q)=>`${isoGetal(A,ELS[s][1])}${s}${q?`<sup>${Math.abs(q)>1?Math.abs(q):''}${q>0?'+':'−'}</sup>`:''}`;
 /* reacties voor rekenen: [[formule,coëff,kant]] */
 const RX=[
  {n:'de verbranding van methaan',r:[['CH4',1,0],['O2',2,0],['CO2',1,1],['H2O',2,1]]},
