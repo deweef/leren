@@ -601,7 +601,7 @@ const MC=[
 ['1.3','Massa-ppm betekent …','gram stof per miljoen gram mengsel','gram stof per 100 gram|milligram per liter altijd|deeltjes per miljard','× 10<sup>6</sup>. (ppb: × 10<sup>9</sup>)','gehalte'],
 ['1.3','1,0 g lood in 20 000 kg water. Hoeveel massa-ppb?','50 ppb','0,05 ppb|50 000 ppb|5,0 ppb','1,0 ÷ 2,0·10<sup>7</sup> g × 10<sup>9</sup> = 50.','gehalte'],
 ['1.3','Wat is de eenheid van molariteit?','mol L<sup>−1</sup> (M)','g L<sup>−1</sup>|mol g<sup>−1</sup>|g mol<sup>−1</sup>','[A] = n ÷ V in liter.','molariteit'],
-['1.3','Hoeveel massaprocent ijzer zit in Fe<sub>2</sub>O<sub>3</sub>?','69,94%','66,7%|40%|55,85%','2 × 55,85 ÷ 159,7 × 100%.','gehalte'],
+['1.3','Hoeveel massaprocent ijzer zit in Fe<sub>2</sub>O<sub>3</sub>?','69,94%','66,7%|40%|55,85%','Atoommassa\'s (Binas tabel 99): Fe 55,85 en O 16,00. Hele molecuul: 2 × 55,85 + 3 × 16,00 = 159,70 u. IJzer erin: 2 × 55,85 = 111,70 u. Massa% = 111,70 ÷ 159,70 × 100% = 69,94%. (55,85% vergeet de 2 voor Fe, 66,7% en 40% tellen atomen in plaats van massa.)','gehalte','Atoommassa\'s (u): Fe 55,85 · O 16,00'],
 ['1.4','Wat zegt de wet van behoud van massa?','massa beginstoffen = massa reactieproducten','de massa neemt toe bij verbranden|moleculen blijven hetzelfde|de massaverhouding is altijd 1 : 1','Atomen gaan niet verloren.','behoud'],
 ['1.4','9,0 g aluminium reageert met 8,0 g zuurstof. Hoeveel aluminiumoxide ontstaat?','17 g','9,0 g|1,0 g|72 g','9,0 + 8,0 = 17.','behoud'],
 ['1.4','Wat geven de coëfficiënten in een reactievergelijking aan?','de molverhouding','de massaverhouding|de volumeverhouding altijd|de dichtheid','Aantal deeltjes, dus mol. Niet gram.','molverh'],
@@ -706,8 +706,7 @@ const GENS={
    if(k==='vp'){const a=R(5,90),v=R(150,1000);const r=a/v*100;return {q:`${a} mL alcohol in ${v} mL drank. Bereken het volumepercentage alcohol.`,a:r,tol:r*.02,u:'%',w:`${a} ÷ ${v} × 100% = ${nf(r,2)}%.`,th:'gehalte'}}
    if(k==='ppm'){const a=R(2,90),kg=R(2,50);const r=a*1e-3/(kg*1e3)*1e6;return {q:`In ${kg} kg grond zit ${a} mg lood. Hoeveel massa-ppm is dat?`,a:r,tol:r*.02,u:'ppm',w:`${a} mg = ${a}·10<sup>−3</sup> g; ${kg} kg = ${kg}·10<sup>3</sup> g. ${a}·10<sup>−3</sup> ÷ ${kg}·10<sup>3</sup> × 10<sup>6</sup> = ${nf(r,2)} ppm. (Kort: mg per kg.)`,th:'gehalte'}}
    if(k==='ppb'){const ug=R(2,90)/10,g=pick([100,250,500,1000]);const r=ug*1e-6/g*1e9;return {q:`${g} g zalm bevat ${nf(ug,1)} µg vitamine B12. Hoeveel massa-ppb?`,a:r,tol:r*.02,u:'ppb',w:`${nf(ug,1)}·10<sup>−6</sup> g ÷ ${g} g × 10<sup>9</sup> = ${nf(r,1)} ppb.`,th:'gehalte'}}
-   const f=pick(['Fe2O3','CuCO3','H2O','CO2','NaCl','CaCO3','C6H12O6','NH3']);const p=parseF(f);const e=Object.keys(p)[0];const r=p[e]*ELS[e][2]/molMass(f)*100;
-   return {q:`Hoeveel massaprocent ${ELS[e][0]} zit er in ${fm(f)}?`,a:r,tol:.3,u:'%',w:`${p[e]} × ${nf(ELS[e][2],2)} ÷ ${nf(molMass(f),2)} × 100% = ${nf(r,2)}%.`,th:'gehalte'}}},
+   return massaProcVraag(pick(['Fe2O3','CuCO3','H2O','CO2','NaCl','CaCO3','C6H12O6','NH3']))}},
  mol:{sec:'1.3',t:'Molariteit',th:'molariteit',f(){const [n,f]=pick(STOF.filter(x=>['C6H12O6','NaCl','C2H6O','NH3','H2SO4','C3H8O3','CuCO3'].includes(x[1])));const M=molMass(f);const k=Math.random()<.6;
    if(k){const g=R(10,200)/10,mL=pick([100,250,500,750,1000]);const a=g/M/(mL/1000);return {q:`${nf(g,1)} g ${n} (${fm(f)}, M = ${nf(M,2)}) wordt opgelost tot ${mL} mL. Bereken de molariteit.`,a,tol:a*.02,u:'M',w:`n = ${nf(g,1)} ÷ ${nf(M,2)} = ${nf(g/M,4)} mol; ÷ ${nf(mL/1000,3)} L = ${nf(a,3)} M.`,th:'molariteit'}}
    const c=R(5,200)/100,mL=pick([100,250,500]);const a=c*mL/1000*M;return {q:`Hoeveel gram ${n} (M = ${nf(M,2)}) heb je nodig voor ${mL} mL van een ${nf(c,2)} M oplossing?`,a,tol:a*.02,u:'g',w:`n = [A] × V = ${nf(c,2)} × ${nf(mL/1000,3)} = ${nf(c*mL/1000,4)} mol; m = n × M = ${nf(a,2)} g.`,th:'molariteit'}}},
@@ -881,8 +880,13 @@ function blitzEnd(){clearInterval(G.timer);G.over=true;if(!S.blitz)S.blitz={};co
 const KCAMPS=[{sec:'0',n:'Basiskamp'},{sec:'1.1',n:'Kamp 1'},{sec:'1.2',n:'Kamp 2'},{sec:'1.3',n:'Kamp 3'},{sec:'1.4',n:'Top'}];
 const KTOP=4808;
 const KGEN={'0':['elver','eenh','sci','trap','elver','eenh'],'1.1':['ptn','conf','mr','ptn','conf','mr'],'1.2':['mn','rho','mn','rho','mn','rho'],'1.3':['sig','afr','geh','mol','sig','geh'],'1.4':['mverh','reac','over','behoud','mverh','reac']};
+/* massa% van het eerste element in een formule, met atoommassa's erbij en de uitleg in stappen */
+function massaProcVraag(f){const p=parseF(f);const e=Object.keys(p)[0];const r=p[e]*ELS[e][2]/molMass(f)*100;
+   const am=Object.keys(p).map(x=>`${x} ${ELS[x][2].toFixed(2).replace('.',',')}`).join(' · '),som=Object.entries(p).map(([x,k])=>`${k>1?k+' × ':''}${ELS[x][2].toFixed(2).replace('.',',')}`).join(' + ');
+   return {q:`Hoeveel massaprocent ${ELS[e][0]} zit er in ${fm(f)}?<br><span class="src">Atoommassa's (u): ${am} (die zoek je op in Binas tabel 99)</span>`,a:r,tol:.3,u:'%',w:`Stap 1, de massa van het hele molecuul: ${som} = ${nf(molMass(f),2)} u.<br>Stap 2, de massa van het ${ELS[e][0]} erin: ${p[e]>1?p[e]+' × ':''}${ELS[e][2].toFixed(2).replace('.',',')} = ${nf(p[e]*ELS[e][2],2)} u.<br>Stap 3, deel ÷ geheel × 100%: ${nf(p[e]*ELS[e][2],2)} ÷ ${nf(molMass(f),2)} × 100% = <b>${nf(r,2)}%</b>.`,th:'gehalte'}}
 function klimInit(){if(!S.klim)S.klim={gen:{},m:{},best:0};const K=S.klim;
-  KCAMPS.forEach(c=>{if(!K.gen[c.sec])K.gen[c.sec]=KGEN[c.sec].map(k=>Object.assign({gen:k},GENS[k].f()))});save();return K}
+  KCAMPS.forEach(c=>{if(!K.gen[c.sec])K.gen[c.sec]=KGEN[c.sec].map(k=>Object.assign({gen:k},GENS[k].f()))});
+  Object.values(K.gen).forEach(l=>l.forEach((g,i)=>{const m=/^Hoeveel massaprocent .* zit er in (.*)\?$/.exec(g.q||'');if(m)l[i]=Object.assign({},g,massaProcVraag(m[1].replace(/<[^>]+>/g,'')))}));save();return K}
 function klimItems(sec){const K=klimInit();
   return [...MC.filter(m=>m[0]===sec).map(m=>Object.assign(mcItem(m),{kid:'m:'+m[1]})),...K.gen[sec].map((g,i)=>Object.assign({sec},g,{kid:'g:'+sec+':'+i}))]}
 function klimPct(sec){const K=klimInit();const it=klimItems(sec);return it.filter(q=>K.m[q.kid]).length/it.length}
@@ -1532,7 +1536,7 @@ function ask(q,title,right,top,cb,opts={}){window.__last={mc:!!q.mc,a:q.a};
   else{const inp=$('#ni');inp.focus();$('#nf').onsubmit=e=>{e.preventDefault();const v=parseNum(inp.value);if(isNaN(v)){inp.classList.remove('shake');void inp.offsetWidth;inp.classList.add('shake');return}
     const ok=Math.abs(v-q.a)<=(q.tol??.051);inp.readOnly=true;if(ok)inp.classList.add('okay');$('#nb').hidden=true;fin(ok,inp.value)}}
 }
-function mcItem(m){return {sec:m[0],mc:true,q:m[1],opts:[m[2],...m[3].split('|')],a:m[2],w:m[4],th:m[5],id:m[1]}}
+function mcItem(m){return {sec:m[0],mc:true,q:m[1]+(m[6]?`<br><span class="src">${m[6]}</span>`:''),opts:[m[2],...m[3].split('|')],a:m[2],w:m[4],th:m[5],id:m[1]}}
 function makeSet(sec,n){
   const mcs=shuffle(MC.filter(m=>m[0]===sec)).sort((a,b)=>(S.mc[a[1]]||0)-(S.mc[b[1]]||0));
   const gens=SECGENS[sec];const nG=sec==='2.3'?2:4;const items=[];
