@@ -39,6 +39,9 @@ bouwt het samen met Claude; hij wil ook zelf kunnen meeleren (scheikunde: hij be
 - `sw.js`: service worker (eerst netwerk, anders bewaarde kopie). **Hoog `leerhoek-vN` op bij elke wijziging.**
 - Elke pagina begint zijn `<style>` met `*{touch-action:manipulation}`: anders zoomt de iPad in bij twee keer snel
   tikken. Tekenvlakken e.d. houden hun eigen `touch-action:none` (specifieker).
+- `rekenmachine.js` (in de head van scheikunde-h1, scheikunde, wiskunde en natuurkunde, `defer`): zet bij elke vraag met een
+  invulvak (`#nf`/`#ni`) een knop 🧮 met een rekenmachientje (×10ˣ, x², haakjes; "→ antwoord" zet de uitkomst in het vak).
+  Werkt vanzelf via een MutationObserver; open/dicht blijft gelijk tussen vragen. Nieuwe pagina met invulvragen: script erbij zetten.
 - "‹ Alle vakken" staat bovenaan het hoofdmenu (`<main id="home">`) van elk vak, niet zwevend: tijdens een spel
   ga je met Stoppen/Terug linksboven eerst naar het menu.
 
