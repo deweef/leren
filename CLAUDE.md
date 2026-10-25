@@ -113,7 +113,7 @@ schermen `show('home'|'play')`, `goHome()`, `ask()`, `practice(sec)` (oefenronde
   `LP`/`LEES` worden uit `POD` gemaakt (Nalezen toont het deel van het verhaal). **Strip** per paragraaf (`STRIP[sec]`, eigen SVG-poppetjes `pop()`,
   ballonnen `bal()`, jaartal linksonder). MC = checkvragen + `MCX` (6e veld = deel 0-2), `BEGR` (begrippen uit het boek), `EVT` (tijdlijn), `PERS`
   (Wie ben ik?), `KA`. De berg heet hier **de Tijdreis**: stations met een vervoermiddel uit die tijd (`KCAMPS`, `VOERTUIG`: tank, trein van Lenin,
-  stoomschip, T-Ford, tractor). Spellen: Tijdlijnpuzzel (`S.tl`, doel 3 op rij), Wie ben ik? (`S.wie`, doel 20), blitzes `beg` en `jaar`.
+  stoomschip, T-Ford, tractor; stations op volgorde van de tijd: Westfront 1916, Petrograd 1917, Versailles 1919, New York 1929, Moskou 1930). Spellen: Tijdlijnpuzzel (`S.tl`, doel 3 op rij), Wie ben ik? (`S.wie`, doel 20), blitzes `beg` en `jaar`.
   1.4 volgt het boek: vredesconferentie (Wilson, Clemenceau, Lloyd George; Duitsland mocht niet meepraten), Versailles, Volkenbond (geen lid:
   Duitsland, Sovjet-Unie, VS), zelfbeschikkingsrecht, "vastgebonden aan een lijk", Joegoslavië zelf weer multi-etnisch.
 - **Duits Briefhelfer** (`duits.html`): schrijfhulp, geen hoofdstuk, dus geen leerroute of berg. Opdracht (zelf verzonnen,
