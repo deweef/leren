@@ -269,6 +269,7 @@ ol.steps li{animation:fadein .3s ease}
 .speler{background:var(--chip);border-radius:12px;padding:10px}
 .transcript{display:grid;gap:4px}
 .vl{margin:0 0 6px;line-height:1.6}
+.vkop{margin:14px 0 4px;font-size:16px;color:var(--accent)}
 .wie{display:inline-block;font-size:12px;letter-spacing:.03em;padding:1px 8px;border-radius:999px;margin-right:4px;color:#fff;vertical-align:1px}
 .wie.E{background:#C2417A}.wie.D{background:#2F6BD8}
 .transcript.luis .z{cursor:pointer;border-radius:4px}
@@ -322,6 +323,7 @@ ol.steps li{animation:fadein .3s ease}
 
   <section>
     <div class="sec-head"><h2>1. Per paragraaf</h2><span class="src">Verhaal, strip, lezen en oefenen</span></div>
+    <button class="mode" id="alles" style="margin-bottom:10px"><span class="lab">🎧 Luisteren</span><h3>Het hele verhaal achter elkaar</h3><p>Alle vijf paragrafen: Eva en Daan lezen alles voor, zonder vragen tussendoor.</p></button>
     <div class="secs" id="secs"></div>
   </section>
 
@@ -869,23 +871,28 @@ function podKey(sec,i){return sec+':'+i}
 function podMenu(sec){stilte();show('play');const s=SECS.find(x=>x.id===sec);if(!S.pod)S.pod={};
  P.innerHTML=`<div class="playbar"><button class="btn small ghost" id="quit">Terug</button></div><div class="slide">${head('Verhaal · '+sec,esc(s.t))}<div class="slide-body">
   <p style="margin:0">Eva en Daan vertellen het verhaal in drie delen van een paar minuten. Luister of lees, en beantwoord daarna de checkvragen.</p>
+  <button class="btn primary" id="palles" style="align-self:flex-start">🎧 Alle drie delen achter elkaar luisteren</button>
   <div class="podlist">${POD[sec].map((p,i)=>`<button class="mode${S.pod[podKey(sec,i)]?' gehaald':''}" data-pi="${i}"><span class="lab">Deel ${i+1}</span><h3>${p.t}</h3><p>${p.s.length} fragmenten · ${p.q.length} checkvragen</p></button>`).join('')}
    <button class="mode${(S.strip||{})[sec]?' gehaald':''}" id="pstrip"><span class="lab">Strip</span><h3>Het verhaal in plaatjes</h3><p>Vijf plaatjes met tekstballonnen.</p></button></div>
  </div></div>`;
- $('#quit').onclick=goHome;P.querySelectorAll('[data-pi]').forEach(b=>b.onclick=()=>podStart(sec,+b.dataset.pi));$('#pstrip').onclick=()=>stripStart(sec)}
+ $('#quit').onclick=goHome;P.querySelectorAll('[data-pi]').forEach(b=>b.onclick=()=>podStart(sec,+b.dataset.pi));$('#pstrip').onclick=()=>stripStart(sec);$('#palles').onclick=()=>podAlles(POD[sec].map((p,i)=>[sec,i]),'Paragraaf '+sec+' helemaal')}
 function podStart(sec,i){stilte();const p=POD[sec][i];const items=[];p.s.forEach(([w,t],li)=>zinnen(t).forEach(z=>items.push({w,t:z.trim(),li})));
  G={m:'pod',sec,i,items,idx:0,playing:false,token:0,mode:kanPraten?(S.podMode||'luister'):'lees',klaar:false};show('play');podDraw()}
-function podDraw(){const p=POD[G.sec][G.i],st=stemmen(),tempo=S.tempo??1;let li=-1,html='';
- G.items.forEach((it,k)=>{if(it.li!==li){if(li>=0)html+='</p>';li=it.li;html+=`<p class="vl"><b class="wie ${it.w}">${SPK[it.w]}</b> `}html+=`<span class="z" data-k="${k}">${esc(it.t)} </span>`});html+='</p>';
- P.innerHTML=`<div class="playbar"><button class="btn small ghost" id="quit">Stoppen</button><span class="bar"><i style="width:${Math.round(G.i/3*100)}%"></i></span><span class="count">deel ${G.i+1}/3</span></div>
- <div class="slide">${head('Verhaal · '+G.sec,'Deel '+(G.i+1)+': '+p.t)}<div class="slide-body">
+/* het hele verhaal achter elkaar (alle delen van een paragraaf, of alle paragrafen): zelfde speler, zonder checkvragen tussendoor */
+function podAlles(parts,titel){stilte();const items=[];parts.forEach(([sec,i],pi)=>{const p=POD[sec][i];p.s.forEach(([w,t],li)=>zinnen(t).forEach((z,zi)=>items.push({w,t:z.trim(),li:pi*1000+li,pi,kop:li===0&&zi===0?`${sec} · Deel ${i+1}: ${p.t}`:''})))});
+ G={m:'pod',alles:{parts,titel},items,idx:0,playing:false,token:0,mode:kanPraten?(S.podMode||'luister'):'lees',klaar:false};show('play');podDraw()}
+function podDraw(){const A=G.alles,p=A?null:POD[G.sec][G.i],st=stemmen(),tempo=S.tempo??1;let li=-1,html='';
+ const nu=A?(G.items[Math.min(G.idx,G.items.length-1)]||{pi:0}).pi:G.i,nTot=A?A.parts.length:3;
+ G.items.forEach((it,k)=>{if(it.li!==li){if(li>=0)html+='</p>';li=it.li;if(it.kop)html+=`<h3 class="vkop">${it.kop}</h3>`;html+=`<p class="vl"><b class="wie ${it.w}">${SPK[it.w]}</b> `}html+=`<span class="z" data-k="${k}">${esc(it.t)} </span>`});html+='</p>';
+ P.innerHTML=`<div class="playbar"><button class="btn small ghost" id="quit">Stoppen</button><span class="bar"><i style="width:${Math.round(nu/nTot*100)}%"></i></span><span class="count">deel ${nu+1}/${nTot}</span></div>
+ <div class="slide">${A?head('Verhaal',A.titel):head('Verhaal · '+G.sec,'Deel '+(G.i+1)+': '+p.t)}<div class="slide-body">
   ${kanPraten?`<div class="podmode"><button class="btn small ${G.mode==='luister'?'dark':'ghost'}" id="mLuis">🎧 Luisteren</button><button class="btn small ${G.mode==='lees'?'dark':'ghost'}" id="mLees">📖 Lezen</button></div>`:''}
   ${G.mode==='luister'?`<div class="speler"><button class="btn primary" id="pPlay">${G.playing?'⏸ Pauze':(G.idx>0&&G.idx<G.items.length?'▶ Verder':'▶ Afspelen')}</button><button class="btn ghost small" id="pTerug" aria-label="Een zin terug">⏮</button>
    <div class="tempo">${TEMPO.map(([n,v],k)=>`<button class="btn small ${tempo===k?'dark':'ghost'}" data-t="${k}">${n}</button>`).join('')}</div></div>
    <details class="stemdet"${G.stemOpen?' open':''}><summary>🔊 Stemmen: <span id="stemnaam">${st?st.tekst:''}</span> <u>wijzigen</u></summary>${stemKiezer()}</details>
    <p class="src" style="margin:0">Tik op een zin om daar verder te luisteren.</p>`:''}
   <div class="transcript${G.mode==='luister'?' luis':''}">${html}</div>
-  <div class="acts"><button class="btn ${G.klaar||G.mode==='lees'?'primary':'ghost'}" id="pVraag">Klaar, naar de checkvragen →</button></div>
+  <div class="acts"><button class="btn ${G.klaar||G.mode==='lees'?'primary':'ghost'}" id="pVraag">${A?'Klaar ✓':'Klaar, naar de checkvragen →'}</button></div>
  </div></div>`;
  $('#quit').onclick=()=>{stilte();goHome()};
  const ml=$('#mLuis');if(ml){ml.onclick=()=>{S.podMode='luister';save();G.mode='luister';podDraw()};$('#mLees').onclick=()=>{stilte();S.podMode='lees';save();G.mode='lees';podDraw()}}
@@ -893,8 +900,8 @@ function podDraw(){const p=POD[G.sec][G.i],st=stemmen(),tempo=S.tempo??1;let li=
   $('#pTerug').onclick=()=>{G.idx=Math.max(0,G.idx-1);if(G.playing){stilte();G.playing=true;spreek()}else markZin()};
   P.querySelectorAll('[data-t]').forEach(b=>b.onclick=()=>{S.tempo=+b.dataset.t;save();const sp=G.playing;stilte();G.playing=sp;podDraw();if(sp)spreek()})}
  if(G.mode==='luister')P.querySelectorAll('.z').forEach(z=>z.onclick=()=>{G.idx=+z.dataset.k;const sp=G.playing;stilte();G.playing=true;podDraw();spreek()});
- $('#pVraag').onclick=()=>{stilte();podVragen()};const sd=P.querySelector('.stemdet');if(sd){sd.ontoggle=()=>{G.stemOpen=sd.open};stemKiezerKoppel()}markZin()}
-function markZin(){P.querySelectorAll('.z.nu').forEach(z=>z.classList.remove('nu'));if(G.mode!=='luister')return;const z=P.querySelector(`.z[data-k="${G.idx}"]`);if(z&&(G.playing||G.idx>0)){z.classList.add('nu');if(G.playing)z.scrollIntoView({block:'center',behavior:'smooth'})}}
+ $('#pVraag').onclick=()=>{stilte();if(A)goHome();else podVragen()};const sd=P.querySelector('.stemdet');if(sd){sd.ontoggle=()=>{G.stemOpen=sd.open};stemKiezerKoppel()}markZin()}
+function markZin(){P.querySelectorAll('.z.nu').forEach(z=>z.classList.remove('nu'));if(G.alles&&G.items[G.idx]){const pi=G.items[G.idx].pi,n=G.alles.parts.length,c=P.querySelector('.count'),i=P.querySelector('.bar i');if(c)c.textContent=`deel ${pi+1}/${n}`;if(i)i.style.width=Math.round(pi/n*100)+'%'}if(G.mode!=='luister')return;const z=P.querySelector(`.z[data-k="${G.idx}"]`);if(z&&(G.playing||G.idx>0)){z.classList.add('nu');if(G.playing)z.scrollIntoView({block:'center',behavior:'smooth'})}}
 function spreek(){if(!G||G.m!=='pod'||!G.playing)return;if(G.idx>=G.items.length){G.playing=false;G.klaar=true;podDraw();const b=$('#pVraag');if(b)b.scrollIntoView({block:'center',behavior:'smooth'});return}
  const it=G.items[G.idx],st=stemmen()||{},sv=st[it.w]||{},tok=++G.token;const u=new SpeechSynthesisUtterance(it.t);u.lang='nl-NL';if(sv.v)u.voice=sv.v;u.pitch=sv.p||1;u.rate=TEMPO[S.tempo??1][1];
  const door=()=>{if(!G||G.m!=='pod'||tok!==G.token||!G.playing)return;G.idx++;spreek()};u.onend=door;u.onerror=door;markZin();try{speechSynthesis.speak(u)}catch(e){G.playing=false;podDraw()}}
@@ -1116,7 +1123,7 @@ function routeScreen(){stilte();const before=RT.before;RT={on:false,before:null}
   <div class="rt-list">${rows}</div>
  </div></div>`;
  $('#quit').onclick=goHome;P.querySelectorAll('[data-r]').forEach(b=>b.onclick=()=>rGo(ROUTE[+b.dataset.r]));const g=$('#rtgo');if(g){g.onclick=()=>rGo(nxt);g.focus()}}
-function routeBox(){setTimeout(markeer,0);const sb=$('#samen');if(sb)sb.onclick=samenvatting;const el=$('#lpbox');if(!el)return;const pct=rPct(),nxt=ROUTE.find(r=>!rDone(r));
+function routeBox(){setTimeout(markeer,0);const al=$('#alles');if(al)al.onclick=()=>podAlles(SECS.flatMap(s=>POD[s.id].map((p,i)=>[s.id,i])),'Het hele verhaal (1.2 t/m 2.2)');const sb=$('#samen');if(sb)sb.onclick=samenvatting;const el=$('#lpbox');if(!el)return;const pct=rPct(),nxt=ROUTE.find(r=>!rDone(r));
  el.innerHTML=`<button class="mode main lpmode" id="rtbox"><span class="lab">Route</span><span class="tag" style="text-transform:none">${pct}% van de leerroute</span><h3>${nxt?(pct?'Ga verder: ':'Begin: ')+nxt[2]:'Leerroute klaar. Herhalen?'}</h3><p>${nxt?nxt[3]:'Alle stappen gehaald.'}</p><span class="bar" style="margin-top:6px;background:rgba(255,255,255,.2)"><i style="width:${pct}%"></i></span></button>`;
  $('#rtbox').onclick=routeScreen}
 
