@@ -288,7 +288,7 @@ ol.steps li{animation:fadein .3s ease}
 .gt.begr td,.gt.tl td{overflow-wrap:normal;word-break:normal;hyphens:manual}
 .begrl{margin:6px 0}.begrl dt{font-weight:800;margin-top:8px}.begrl dd{margin:0;color:var(--muted)}
 .stemkies{display:grid;grid-template-columns:1fr auto;gap:8px;align-items:center;margin-top:8px}.stemkies label{display:flex;gap:6px;align-items:center;min-width:0}.stemkies select{min-width:0;flex:1;font:inherit;padding:6px;border-radius:8px;border:1px solid var(--line);background:var(--surface);color:var(--ink)}
-.stemdet summary{cursor:pointer;font-weight:700;font-size:14px}
+.stemdet{background:var(--chip);border-radius:12px;padding:10px 12px}.stemdet summary{cursor:pointer;font-weight:700;font-size:15px;list-style:none}.stemdet summary::-webkit-details-marker{display:none}.stemdet summary u{color:var(--accent);white-space:nowrap}
 .sec .acts .btn.pod{background:var(--accent);border-color:var(--accent);color:#fff}
 </style>
 
@@ -882,8 +882,8 @@ function podDraw(){const p=POD[G.sec][G.i],st=stemmen(),tempo=S.tempo??1;let li=
   ${kanPraten?`<div class="podmode"><button class="btn small ${G.mode==='luister'?'dark':'ghost'}" id="mLuis">🎧 Luisteren</button><button class="btn small ${G.mode==='lees'?'dark':'ghost'}" id="mLees">📖 Lezen</button></div>`:''}
   ${G.mode==='luister'?`<div class="speler"><button class="btn primary" id="pPlay">${G.playing?'⏸ Pauze':(G.idx>0&&G.idx<G.items.length?'▶ Verder':'▶ Afspelen')}</button><button class="btn ghost small" id="pTerug" aria-label="Een zin terug">⏮</button>
    <div class="tempo">${TEMPO.map(([n,v],k)=>`<button class="btn small ${tempo===k?'dark':'ghost'}" data-t="${k}">${n}</button>`).join('')}</div></div>
-   <p class="src" style="margin:0">Stemmen: <span id="stemnaam">${st?st.tekst:''}</span>. Tik op een zin om daar verder te luisteren.</p>
-   <details class="stemdet"${G.stemOpen?' open':''}><summary>Stemmen kiezen</summary>${stemKiezer()}</details>`:''}
+   <details class="stemdet"${G.stemOpen?' open':''}><summary>🔊 Stemmen: <span id="stemnaam">${st?st.tekst:''}</span> <u>wijzigen</u></summary>${stemKiezer()}</details>
+   <p class="src" style="margin:0">Tik op een zin om daar verder te luisteren.</p>`:''}
   <div class="transcript${G.mode==='luister'?' luis':''}">${html}</div>
   <div class="acts"><button class="btn ${G.klaar||G.mode==='lees'?'primary':'ghost'}" id="pVraag">Klaar, naar de checkvragen →</button></div>
  </div></div>`;
