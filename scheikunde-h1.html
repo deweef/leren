@@ -828,7 +828,9 @@ const molIcon=f=>`<span class="mi" title="${f}">${fm(f)}</span>`;
 function keukenNext(){if(G.r>=G.total){if(G.ok>=5)confetti();S.keuken=Math.max(S.keuken||0,G.ok);save();
   P.innerHTML=`<div class="slide">${head('Reactiekeuken','Klaar')}<div class="slide-body"><div class="q">Goed</div><div class="big">${G.ok}<span style="font-size:.45em;color:var(--muted)"> / ${G.total}</span></div><div class="acts"><button class="btn primary" id="again">Nog een rondje</button><button class="btn ghost" id="home2">Naar start</button></div></div></div>`;
   $('#again').onclick=keukenHome;$('#home2').onclick=goHome;$('#again').focus();return}
- const x=pick(KRX);const [[A,a],[B,b]]=x.r;let nA,nB;do{nA=R(2,9);nB=R(1,8)}while(nA/a===nB/b);
+ const x=pick(KRX);const [[A,a],[B,b]]=x.r;let nA,nB;
+ /* de stof in ondermaat gaat precies op (anders blijven er van allebei over en is "als eerste op" niet te zien) */
+ do{const t=R(1,3),eA=Math.random()<.5;nA=eA?t*a:t*a+R(1,2*a);nB=eA?t*b+R(1,2*b):t*b}while(nA>12||nB>12||nA<1||nB<1);
  const times=Math.min(Math.floor(nA/a),Math.floor(nB/b));const prod=times*x.p[1];const und=nA/a<nB/b?A:B;const leftA=nA-times*a,leftB=nB-times*b;
  const eq=`${a>1?a+' ':''}${fm(A)} + ${b>1?b+' ':''}${fm(B)} → ${x.p[1]>1?x.p[1]+' ':''}${fm(x.p[0])}`;let pick1=null,cnt=0;
  const draw=()=>{P.innerHTML=topbar(G.r,G.total)+`<div class="slide">${head('Reactiekeuken','overmaat & ondermaat')}<div class="slide-body"><div class="prompt" style="font-size:21px">${eq}</div>
@@ -839,7 +841,7 @@ function keukenNext(){if(G.r>=G.total){if(G.ok>=5)confetti();S.keuken=Math.max(S
   P.querySelectorAll('[data-und]').forEach(btn=>{if(pick1){btn.disabled=true;btn.classList.add(btn.dataset.und===und?'good':btn.dataset.und===pick1?'bad':'dim')}btn.onclick=()=>{if(pick1)return;pick1=btn.dataset.und;draw()}});
   if(pick1){$('#km').onclick=()=>{cnt=Math.max(0,cnt-1);draw()};$('#kp').onclick=()=>{cnt=Math.min(30,cnt+1);draw()};$('#kok').onclick=()=>{const ok=pick1===und&&cnt===prod;G.r++;if(ok)G.ok++;rec('1.4',ok);save();
    $('#k2').innerHTML=`<div class="kpot"><div><div class="q">Ontstaan</div><div class="kmols">${Array(prod).fill(molIcon(x.p[0])).join('')}</div></div><div><div class="q">Over</div><div class="kmols">${Array(leftA).fill(molIcon(A)).join('')}${Array(leftB).fill(molIcon(B)).join('')}</div></div></div>`;
-   $('#fbox').innerHTML=`<div class="fb ${ok?'good':'bad'}"><div class="t">${ok?'Goed!':'Niet helemaal.'}</div><div class="tip">De reactie kan ${times} keer lopen (${fm(A)}: ${nA} ÷ ${a} = ${nf(nA/a,2)}; ${fm(B)}: ${nB} ÷ ${b} = ${nf(nB/b,2)}; de kleinste telt). <b>${fm(und)}</b> is in ondermaat. Er ontstaan ${times} × ${x.p[1]} = <b>${prod}</b> ${fm(x.p[0])} en er blijft ${leftA?leftA+' '+fm(A):leftB+' '+fm(B)} over.</div>${ok?'':thCard('overmaat')}</div><div class="foot" style="margin-top:12px"><button class="btn primary" id="next">Verder ↵</button></div>`;
+   $('#fbox').innerHTML=`<div class="fb ${ok?'good':'bad'}"><div class="t">${ok?'Goed!':'Niet helemaal.'}</div><div class="tip">Elke keer dat de reactie loopt, gaan er ${a} ${fm(A)} en ${b} ${fm(B)} op. Genoeg ${fm(A)} voor ${nA} ÷ ${a} = ${nf(nA/a,2)} keer, genoeg ${fm(B)} voor ${nB} ÷ ${b} = ${nf(nB/b,2)} keer. Na ${times} keer is <b>${fm(und)}</b> op: dat is de ondermaat. Het gaat dus niet om van welke stof je het minst hebt, maar om hoe vaak je ermee vooruit kunt. Er ontstaan ${times} × ${x.p[1]} = <b>${prod}</b> ${fm(x.p[0])} en er blijft ${leftA?leftA+' '+fm(A):leftB+' '+fm(B)} over.</div>${ok?'':thCard('overmaat')}</div><div class="foot" style="margin-top:12px"><button class="btn primary" id="next">Verder ↵</button></div>`;
    const n=$('#next');n.onclick=keukenNext;n.focus()}}};
  draw()}
 
