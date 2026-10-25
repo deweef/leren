@@ -85,6 +85,8 @@ schermen `show('home'|'play')`, `goHome()`, `ask()`, `practice(sec)` (oefenronde
   te weten. Onder elke formule staat "Wat betekent wat?" (`leg(keys)`, `SYM`: symbool,
   betekenis, eenheid), op de theorie (`TH.*.h`) en via `legBij` op leerpad-kaartjes. Stel bij een vraag van Marcel
   over de stof eerst vast of het al ergens uitgelegd staat; ontbreekt het, stel dan een kaartje voor.
+- **Hintknop** (scheikunde-h1): onder elke vraag "💡 Hoe pak ik dit aan?" (`hintVan(q)` = `q.hint` of anders `HINT[q.th]`): de aanpak,
+  nooit het antwoord. Niet in de proeftoets; verdwijnt na nakijken. Nieuwe generator of theorie-onderwerp: geef een `hint` mee of vul `HINT` aan.
 - **Kleuren op het hoofdscherm** (alle vakken met een route): **donker** (`mode main`) alleen voor de kaart van de
   leerroute; **wit** = nog te doen; **groen met "✓ gehaald"** (klasse `gehaald`) = gehaald volgens hetzelfde doel als
   in de route. `GEHAALD()` per pagina (helpers `stp`, `alleKlaar`, `zetG`), aangeroepen via `markeer` vanuit
@@ -179,4 +181,6 @@ schermen `show('home'|'play')`, `goHome()`, `ask()`, `practice(sec)` (oefenronde
 - Gebruik `·` nooit als scheidingsteken tussen getallen: in scheikunde betekent het **keer** (Marcel las "3 g · 10,74 g" als vermenigvuldigen).
   De behoud-van-massa-vragen (`GENS.behoud`) tonen daarom een tabel vóór/na de pijl en een uitleg in stappen (eerst de volle kant optellen,
   dan aftrekken wat er aan de kant van het vraagteken al staat); oude bergvragen met `·` worden in `klimInit` vervangen.
+  De helft van de behoud-vragen is een som in een zin (`behoudZin()`, namen in `STOFNAAM`, tabel `kolTab`): gewoon, gas ontsnapt/komt uit
+  de lucht (magnesium, kalksteen, roest, vergisting) of er blijft iets over. Kaartje "Een som in een zin: maak twee kolommen" (in `LEES`).
 - Bekijk nieuwe schermen altijd op telefoonbreedte (390 px), in licht én donker, voordat je ze live zet.

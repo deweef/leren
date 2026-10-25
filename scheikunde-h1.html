@@ -112,7 +112,8 @@ details.tips ul{margin:10px 0 4px;padding-left:20px;display:grid;gap:6px}
 .zoomfig figcaption{font-size:13px;line-height:1.3;text-align:center}
 .massafig{background:var(--chip);border-radius:12px;padding:8px;margin:8px 0}
 .massafig svg{display:block;width:100%;max-width:420px;margin:0 auto;height:auto;color:var(--ink)}
-.mtab{margin:8px 0;font-size:17px;font-weight:600}.mtab th{font-size:13px;font-weight:700}.mtab td div{white-space:nowrap}
+.mtab{margin:8px 0;font-size:17px;font-weight:600}.mtab th{font-size:13px;font-weight:700}.mtab td div{overflow-wrap:normal}
+.hintrij{margin-top:10px}.hintbox{background:var(--chip);border-left:4px solid #e0b100;border-radius:8px;padding:10px 12px;font-size:15px;line-height:1.5}
 .iso{display:inline-flex;flex-direction:column;align-items:flex-end;vertical-align:middle;font-size:.62em;line-height:1.05;margin-right:1px;font-weight:inherit}
 .rsteen{display:flex;flex-wrap:wrap;align-items:center;gap:6px 8px;margin:8px 0;background:var(--chip);border-radius:12px;padding:8px}
 .rgrp{display:flex;flex-direction:column;align-items:center;gap:3px}.rgrp span{font-size:13px;font-weight:700}
@@ -672,6 +673,29 @@ const RX=[
  {n:'het roesten van ijzer',r:[['Fe',4,0],['O2',3,0],['Fe2O3',2,1]]}];
 const eqStr=x=>[0,1].map(s=>x.r.filter(a=>a[2]===s).map(a=>(a[1]>1?a[1]+' ':'')+fm(a[0])).join(' + ')).join(' → ');
 const nice=v=>{const e=Math.floor(Math.log10(v));return Math.round(v/10**(e-1))*10**(e-1)};
+/* ---------- 💡 Hoe pak ik dit aan? (hint: de aanpak, niet het antwoord). Een vraag kan een eigen q.hint hebben, anders HINT[q.th] ---------- */
+const HINT={
+ element:'Tel hoeveel <b>soorten</b> atomen er in de formule staan (kijk naar de hoofdletters). Eén soort = element, meer soorten = verbinding. Het kleine getal onderaan telt niet als soort.',
+ eenheden:'Bedenk eerst hoeveel keer groter of kleiner de nieuwe eenheid is (1 L = 1000 mL, 1 m³ = 1000 L, 1 kg = 1000 g). Naar een <b>grotere</b> eenheid: delen. Naar een <b>kleinere</b>: keer.',
+ machten:'Schuif de komma tot er één cijfer (niet 0) vóór staat. Tel hoeveel plaatsen je schoof: dat is de macht. Schuif je naar links, dan is de macht positief; naar rechts negatief.',
+ trap:'Elke stap op de trap is × 1000 of ÷ 1000. Tel de stappen en kijk of je omhoog (delen) of omlaag (keer) gaat.',
+ nummers:'Atoomnummer = aantal protonen (= elektronen in een neutraal atoom). Massagetal = protonen + neutronen. Dus neutronen = massagetal − atoomnummer. Een lading + of − betekent elektronen eraf of erbij.',
+ schillen:'Vul de schillen van binnen naar buiten: K max 2, L max 8, M max 18 (op deze toets meestal 8). Begin met het aantal elektronen.',
+ atoommassa:'Zoek per atoomsoort de atoommassa op (staat erbij of in Binas tabel 99). Doe hem keer het aantal van dat atoom (het kleine getal onderaan) en tel alles op.',
+ molmassa:'De molaire massa M (g/mol) is hetzelfde getal als de molecuulmassa: tel de atoommassa\'s op. Daarna: m = n × M (gram ↔ mol).',
+ mol:'Mol ↔ deeltjes gaat met het getal van Avogadro: N = n × 6,02·10²³. Van deeltjes naar mol: delen.',
+ schema:'Gebruik het rekenschema: gram ⇄ mol met M (÷ M of × M), mol ⇄ deeltjes met N<sub>A</sub>. Schrijf op wat je hebt, wat je zoekt, en welke pijl(en) je volgt. Mol is altijd de brug in het midden.',
+ dichtheid:'ρ = m ÷ V. Zoek welke twee van de drie je weet. m zoeken: ρ × V. V zoeken: m ÷ ρ. Let op de eenheden (g, mL, L).',
+ sig:'Tel de cijfers vanaf het eerste cijfer dat geen 0 is. Nullen vóóraan tellen niet mee, nullen achteraan (na de komma) wel. Bij ×10ˣ tel je alleen het getal vóór de ×.',
+ afronden:'Bij keer en delen: het antwoord krijgt evenveel significante cijfers als het getal met de minste. Kijk dan naar het volgende cijfer: 5 of meer = naar boven.',
+ gehalte:'massa% = deel ÷ geheel × 100. ppm = deel ÷ geheel × 10⁶ (miljoen), ppb × 10⁹. Zorg dat deel en geheel dezelfde eenheid hebben.',
+ molariteit:'Molariteit = mol ÷ liter oplossing. Reken mL eerst om naar L (÷ 1000). Heb je gram? Eerst naar mol met ÷ M.',
+ behoud:'Massa links (vóór de pijl) = massa rechts (na de pijl). Zet alle stoffen in twee kolommen. Tel de kant op waar alles bekend is; trek aan de andere kant af wat er al staat.',
+ molverh:'De grote getallen vóór de formules (coëfficiënten) zijn de molverhouding. Zoek het getal bij de stof die je hebt en bij de stof die je zoekt. Reken eerst uit hoeveel mol er bij <b>1</b> hoort, dan pas bij wat gevraagd wordt.',
+ stappen:'Stappenplan: 1) gram van wat je hebt → mol (÷ M); 2) molverhouding uit de grote getallen; 3) mol → gram van wat je zoekt (× M).',
+ overmaat:'Reken beide beginstoffen om naar mol. Kijk met de molverhouding hoeveel je van de andere nodig hebt. Wat als eerste op is = ondermaat; daar reken je verder mee.',
+ kloppend:'Tel per atoomsoort links en rechts. Verander alleen de grote getallen vóór de formules, nooit de kleine getallen onderaan. Begin met het atoom dat in de minste stoffen zit.'
+};
 /* ---------- generatoren ---------- */
 const GENS={
  elver:{sec:'0',t:'Element of verbinding?',th:'element',f(){const f=pick(['Mg','SO2','I2','O2','H2O','Fe','NH3','N2','CO2','NaCl','He','Cl2','CH4','Cu','P4','S8','H2O2','C6H12O6']);const k=Object.keys(parseF(f)).length>1;
@@ -716,14 +740,14 @@ const GENS={
    if(k){const g=R(10,200)/10,mL=pick([100,250,500,750,1000]);const a=g/M/(mL/1000);return {q:`${nf(g,1)} g ${n} (${fm(f)}, M = ${nf(M,2)}) wordt opgelost tot ${mL} mL. Bereken de molariteit.`,a,tol:a*.02,u:'M',w:`n = ${nf(g,1)} ÷ ${nf(M,2)} = ${nf(g/M,4)} mol; ÷ ${nf(mL/1000,3)} L = ${nf(a,3)} M.`,th:'molariteit'}}
    const c=R(5,200)/100,mL=pick([100,250,500]);const a=c*mL/1000*M;return {q:`Hoeveel gram ${n} (M = ${nf(M,2)}) heb je nodig voor ${mL} mL van een ${nf(c,2)} M oplossing?`,a,tol:a*.02,u:'g',w:`n = [A] × V = ${nf(c,2)} × ${nf(mL/1000,3)} = ${nf(c*mL/1000,4)} mol; m = n × M = ${nf(a,2)} g.`,th:'molariteit'}}},
  mverh:{sec:'1.4',t:'Molverhouding',th:'molverh',f(){const x=pick(RX);const [A,B]=shuffle(x.r).slice(0,2);const nA=R(2,40)/10;const a=nA*B[1]/A[1];
-   return {q:`${eqStr(x)}<br>Hoeveel mol <b>${fm(B[0])}</b> hoort bij <b>${nf(nA,1)} mol ${fm(A[0])}</b>?`,a,tol:a*.01+.001,u:'mol',w:`Verhouding ${fm(A[0])} : ${fm(B[0])} = ${A[1]} : ${B[1]}. ${nf(nA,1)} × ${B[1]}/${A[1]} = ${nf(a,3)} mol.`,th:'molverh'}}},
+   return {q:`${eqStr(x)}<br>Hoeveel mol <b>${fm(B[0])}</b> hoort bij <b>${nf(nA,1)} mol ${fm(A[0])}</b>?`,a,hint:`Kijk naar de grote getallen: bij ${fm(A[0])} staat <b>${A[1]}</b>, bij ${fm(B[0])} staat <b>${B[1]}</b>. Dus ${A[1]} mol ${fm(A[0])} hoort bij ${B[1]} mol ${fm(B[0])}.<br>1. Hoeveel mol ${fm(B[0])} hoort dan bij <b>1</b> mol ${fm(A[0])}? (deel door ${A[1]})<br>2. Doe dat keer ${nf(nA,1)}.`,tol:a*.01+.001,u:'mol',w:`Verhouding ${fm(A[0])} : ${fm(B[0])} = ${A[1]} : ${B[1]}. ${nf(nA,1)} × ${B[1]}/${A[1]} = ${nf(a,3)} mol.`,th:'molverh'}}},
  reac:{sec:'1.4',t:'Rekenen aan reacties (stappenplan)',th:'stappen',f(){const x=pick(RX);const [A,B]=shuffle(x.r).slice(0,2);const MA=molMass(A[0]),MB=molMass(B[0]);const m=R(20,500)/10;const nA=m/MA,nB=nA*B[1]/A[1],a=nB*MB;
-   return {q:`Bij ${x.n}: ${eqStr(x)}<br>Hoeveel gram <b>${fm(B[0])}</b> hoort bij <b>${nf(m,1)} g ${fm(A[0])}</b>?<br><span class="src">M(${fm(A[0])}) = ${nf(MA,2)} · M(${fm(B[0])}) = ${nf(MB,2)} g mol<sup>−1</sup></span>`,a,tol:a*.02,u:'g',
+   return {q:`Bij ${x.n}: ${eqStr(x)}<br>Hoeveel gram <b>${fm(B[0])}</b> hoort bij <b>${nf(m,1)} g ${fm(A[0])}</b>?<br><span class="src">M(${fm(A[0])}) = ${nf(MA,2)} en M(${fm(B[0])}) = ${nf(MB,2)} g mol<sup>−1</sup></span>`,a,hint:`Je kunt gram niet direct omrekenen, dat gaat via mol:<br>1. Gram ${fm(A[0])} → mol: deel door ${nf(MA,2)}.<br>2. Molverhouding: ${A[1]} ${fm(A[0])} hoort bij ${B[1]} ${fm(B[0])} (de grote getallen). Deel door ${A[1]}, keer ${B[1]}.<br>3. Mol ${fm(B[0])} → gram: keer ${nf(MB,2)}.`,tol:a*.02,u:'g',
      w:`2: ${nf(m,1)} ÷ ${nf(MA,2)} = ${nf(nA,4)} mol. 3: × ${B[1]}/${A[1]} = ${nf(nB,4)} mol. 4: × ${nf(MB,2)} = ${nf(a,2)} g.`,th:'stappen'}}},
  over:{sec:'1.4',t:'Overmaat of ondermaat?',th:'overmaat',f(){const x=pick(RX.filter(r=>r.r.filter(a=>a[2]===0).length===2));const [A,B]=x.r.filter(a=>a[2]===0);let nA=R(2,30)/10,nB=R(2,30)/10;if(Math.abs(nA/A[1]-nB/B[1])<.05)nB+=.5;
    const und=nA/A[1]<nB/B[1]?A:B;const ans=`${fm(und[0])} is in ondermaat`;
    return {mc:true,keep:true,q:`${eqStr(x)}<br>Je hebt ${nf(nA,1)} mol ${fm(A[0])} en ${nf(nB,1)} mol ${fm(B[0])}. Welke stof is in ondermaat?`,opts:[`${fm(A[0])} is in ondermaat`,`${fm(B[0])} is in ondermaat`,'ze zijn precies op'],a:ans,w:`Deel door de coëfficiënt: ${fm(A[0])} ${nf(nA,1)} ÷ ${A[1]} = ${nf(nA/A[1],3)}; ${fm(B[0])} ${nf(nB,1)} ÷ ${B[1]} = ${nf(nB/B[1],3)}. Kleinste = ondermaat.`,th:'overmaat'}}},
- behoud:{sec:'1.4',t:'Wet van behoud van massa',th:'behoud',f(){const x=pick(RX);const ms=x.r.map(a=>a[1]*molMass(a[0]));const scale=R(5,40)/10/ms[0];
+ behoud:{sec:'1.4',t:'Wet van behoud van massa',th:'behoud',f(){if(Math.random()<.5)return behoudZin();const x=pick(RX);const ms=x.r.map(a=>a[1]*molMass(a[0]));const scale=R(5,40)/10/ms[0];
    /* afgeronde massa's: het antwoord volgt uit precies de getallen die op het scherm staan */
    const g=ms.map(v=>Math.round(v*scale*100)/100);const hide=R(0,x.r.length-1),kant=x.r[hide][2];
    const som=k=>x.r.map((a,i)=>a[2]===k&&i!==hide?g[i]:0).reduce((p,c)=>p+c,0);
@@ -733,9 +757,41 @@ const GENS={
    const naam=['links (beginstoffen)','rechts (reactieproducten)'];
    const reken=(l,t)=>l.length>1?l.join(' + ')+' = '+nf(t,2):nf(t,2);const st1=`Totaal ${naam[1-kant]}: ${reken(lijst(1-kant),andere)} g.`;
    const st2=lijst(kant).length?`${naam[kant][0].toUpperCase()+naam[kant].slice(1)} moet ook samen ${nf(andere,2)} g zijn. Daar staat al ${reken(lijst(kant),zelf)} g, dus ${fm(x.r[hide][0])} = ${nf(andere,2)} − ${nf(zelf,2)} = <b>${nf(ant,2)} g</b>.`:`${fm(x.r[hide][0])} is de enige stof ${naam[kant].split(' ')[0]}, dus die weegt ook <b>${nf(ant,2)} g</b>.`;
-   return {q:`${eqStr(x)}<table class="gt mtab"><tr><th>vóór de pijl</th><th>na de pijl</th></tr><tr>${kol(0)}${kol(1)}</tr></table>Hoeveel gram ${fm(x.r[hide][0])}?`,a:ant,tol:.02,u:'g',
+   return {q:`${eqStr(x)}<table class="gt mtab"><tr><th>vóór de pijl</th><th>na de pijl</th></tr><tr>${kol(0)}${kol(1)}</tr></table>Hoeveel gram ${fm(x.r[hide][0])}?`,a:ant,tol:.02,u:'g',hint:`Alles vóór de pijl samen weegt evenveel als alles na de pijl.<br>1. Tel de kolom op waar géén vraagteken staat.<br>2. `+(lijst(kant).length?`In de kolom met het vraagteken staat al iets: trek dat van je totaal af.`:`Het vraagteken staat alleen in zijn kolom: het totaal is je antwoord.`),
     w:`Massa links = massa rechts (er gaan geen atomen verloren).<br>1. ${st1}<br>2. ${st2}<br><span class="src">Optellen doe je voor alles aan één kant van de pijl. Aftrekken alleen als er aan de kant van het vraagteken al iets bekend is.</span>`,th:'behoud'}}}
 };
+/* behoud van massa als som in een zin (zoals op de toets): gewoon, gas ontsnapt / komt uit de lucht, of er blijft iets over */
+const STOFNAAM={CH4:'methaan',O2:'zuurstof',CO2:'koolstofdioxide',H2O:'water',C3H8:'propaan',C4H10:'butaan',C2H6O:'ethanol',AlCl3:'aluminiumchloride',Al:'aluminium',Cl2:'chloor',N2:'stikstof',H2:'waterstof',NH3:'ammoniak',Mg:'magnesium',Mg3N2:'magnesiumnitride',P:'fosfor',P2O5:'fosforoxide',Li:'lithium',Li2O:'lithiumoxide',C8H18:'octaan',H2O2:'waterstofperoxide',C6H12O6:'glucose',Fe:'ijzer',Fe2O3:'ijzeroxide (roest)'};
+const kolTab=(L,Rr)=>`<table class="gt mtab"><tr><th>vóór de pijl</th><th>na de pijl</th></tr><tr><td>${L.map(v=>`<div>${v}</div>`).join('')}</td><td>${Rr.map(v=>`<div>${v}</div>`).join('')}</td></tr></table>`;
+const r1=v=>Math.round(v*10)/10;
+const f1=v=>v.toFixed(1).replace('.',',');
+function behoudZin(){const soort=pick(['gewoon','gewoon','gas','over']);
+ const tip='<span class="src">Zet de stoffen uit de zin eerst in twee kolommen: vóór de pijl en na de pijl. Daarna is het optellen en aftrekken.</span>';
+ if(soort==='gas'){const t=pick([
+   ()=>{const a=r1(R(12,60)/10),b=r1(a*40.30/24.31),o=r1(b-a);return {q:`Je verbrandt ${f1(a)} g magnesium in een open schaaltje. Daarna weegt het witte poeder (magnesiumoxide) ${f1(b)} g. Hoeveel gram zuurstof uit de lucht heeft er gereageerd?`,a:o,
+     k:kolTab([f1(a)+' g magnesium','<b>? g zuurstof</b> (uit de lucht)'],[f1(b)+' g magnesiumoxide']),w:`Het poeder is zwaarder geworden: dat komt door de zuurstof uit de lucht, die je niet ziet.<br>1. Rechts: ${f1(b)} g.<br>2. Links moet ook ${f1(b)} g zijn, er staat al ${f1(a)} g magnesium, dus zuurstof = ${f1(b)} − ${f1(a)} = <b>${f1(o)} g</b>.`}},
+   ()=>{const a=r1(R(20,90)/10),b=r1(a*56.08/100.09),c=r1(a-b);return {q:`Je verhit ${f1(a)} g kalksteen (CaCO<sub>3</sub>) in een open buis. Er blijft ${f1(b)} g calciumoxide over; het koolstofdioxide ontsnapt als gas. Hoeveel gram koolstofdioxide is er ontsnapt?`,a:c,
+     k:kolTab([f1(a)+' g kalksteen'],[f1(b)+' g calciumoxide','<b>? g koolstofdioxide</b> (ontsnapt)']),w:`Het lijkt of er massa verdwijnt, maar het gas is weggegaan.<br>1. Links: ${f1(a)} g.<br>2. Rechts moet ook ${f1(a)} g zijn, er staat al ${f1(b)} g calciumoxide, dus koolstofdioxide = ${f1(a)} − ${f1(b)} = <b>${f1(c)} g</b>.`}},
+   ()=>{const a=r1(R(20,80)/10),b=r1(a*159.69/111.69),o=r1(b-a);return {q:`${f1(a)} g ijzerwol roest helemaal tot ${f1(b)} g roest (ijzeroxide). Hoeveel gram zuurstof uit de lucht is er opgenomen?`,a:o,
+     k:kolTab([f1(a)+' g ijzer','<b>? g zuurstof</b> (uit de lucht)'],[f1(b)+' g roest']),w:`De roest is zwaarder dan het ijzer: er is zuurstof uit de lucht bij gekomen.<br>1. Rechts: ${f1(b)} g.<br>2. Links staat al ${f1(a)} g ijzer, dus zuurstof = ${f1(b)} − ${f1(a)} = <b>${f1(o)} g</b>.`}},
+   ()=>{const a=r1(R(30,120)/10),b=r1(a*2*46.07/180.16),c=r1(a-b);return {q:`In een open fles vergist ${f1(a)} g glucose helemaal. Er ontstaat ${f1(b)} g ethanol; het koolstofdioxide borrelt weg. Hoeveel gram koolstofdioxide is er ontsnapt?`,a:c,
+     k:kolTab([f1(a)+' g glucose'],[f1(b)+' g ethanol','<b>? g koolstofdioxide</b> (ontsnapt)']),w:`De fles wordt lichter doordat het gas wegborrelt, niet doordat er massa verdwijnt.<br>1. Links: ${f1(a)} g.<br>2. Rechts staat al ${f1(b)} g ethanol, dus koolstofdioxide = ${f1(a)} − ${f1(b)} = <b>${f1(c)} g</b>.`}}])();
+   return {q:t.q,a:t.a,tol:.02,u:'g',hint:'Er gaat geen massa verloren: het verschil komt door een gas dat je niet ziet (ontsnapt, of uit de lucht erbij). Zet de stoffen in twee kolommen (vóór en na de pijl), met dat gas erbij als ?. Het verschil tussen de twee gewichten is het gas.',w:t.k+t.w+'<br>'+tip,th:'behoud'}}
+ if(soort==='over'){const x=pick(RX.filter(x=>x.r.length===3&&x.r.filter(a=>a[2]===0).length===2));
+   const ms=x.r.map(a=>a[1]*molMass(a[0])),sc=R(10,50)/10/ms[0],g=ms.map(v=>r1(v*sc));const w=r1(R(5,30)/10);
+   const [A,B,C]=x.r.map(a=>STOFNAAM[a[0]]),Bt=r1(g[1]+w),Bre=r1(Bt-w),Cg=r1(g[0]+Bre);
+   return {q:`Je laat ${f1(g[0])} g ${A} reageren met ${f1(Bt)} g ${B}. Na afloop is al het ${A} op en is er nog ${f1(w)} g ${B} over. Hoeveel gram ${C} is er ontstaan?`,a:Cg,tol:.02,u:'g',hint:`Wat overblijft heeft niet meegedaan.<br>1. Hoeveel ${B} heeft echt gereageerd? (begin − over)<br>2. Tel dat op bij het ${A}: samen weegt dat evenveel als het ${C}.`,
+     w:kolTab([f1(g[0])+' g '+A,f1(Bre)+' g '+B+' (wat echt reageerde)'],['<b>? g '+C+'</b>'])+`Wat overblijft heeft niet gereageerd, dat tel je niet mee.<br>1. Gereageerd ${B}: ${f1(Bt)} − ${f1(w)} = ${f1(Bre)} g.<br>2. ${C} = ${f1(g[0])} + ${f1(Bre)} = <b>${f1(Cg)} g</b>.<br>${tip}`,th:'behoud'}}
+ const x=pick(RX),ms=x.r.map(a=>a[1]*molMass(a[0])),sc=R(10,50)/10/ms[0],g=ms.map(v=>r1(v*sc)),hide=R(0,x.r.length-1),kant=x.r[hide][2];
+ const ken=k=>x.r.map((a,i)=>a[2]===k&&i!==hide?`${f1(g[i])} g ${STOFNAAM[a[0]]}`:null).filter(Boolean);
+ const L=ken(0),Rr=ken(1),nm=STOFNAAM[x.r[hide][0]];
+ let zin=`Bij ${x.n}`;if(L.length)zin+=` reageert ${L.join(' met ')}`;if(Rr.length)zin+=(L.length?' en daarbij '+(Rr.length>1?'ontstaan ':'ontstaat '):(Rr.length>1?' ontstaan ':' ontstaat '))+Rr.join(' en ');
+ zin+=`. Hoeveel gram ${nm} ${kant?'ontstaat er':'heeft er gereageerd'}?`;
+ const som=k=>r1(x.r.map((a,i)=>a[2]===k&&i!==hide?g[i]:0).reduce((p,c)=>p+c,0)),andere=som(1-kant),zelf=som(kant),ant=r1(andere-zelf);
+ const lst=k=>x.r.map((a,i)=>a[2]===k&&i!==hide?f1(g[i]):null).filter(v=>v!==null),rk=(l,t)=>l.length>1?l.join(' + ')+' = '+f1(t):f1(t);
+ const kol=k=>x.r.map((a,i)=>a[2]!==k?null:i===hide?`<b>? g ${STOFNAAM[a[0]]}</b>`:`${f1(g[i])} g ${STOFNAAM[a[0]]}`).filter(Boolean);
+ const nk=['links','rechts'];
+ return {q:zin,a:ant,tol:.02,u:'g',hint:'Zet de stoffen uit de zin in twee kolommen: wat reageert (vóór de pijl) en wat ontstaat (na de pijl), en zet een ? bij de stof die gevraagd wordt. Tel de kolom zonder ? op; trek in de kolom met het ? af wat er al staat.',w:kolTab(kol(0),kol(1))+`1. Totaal ${nk[1-kant]}: ${rk(lst(1-kant),andere)} g.<br>2. `+(lst(kant).length?`${nk[kant][0].toUpperCase()+nk[kant].slice(1)} staat al ${rk(lst(kant),zelf)} g, dus ${nm} = ${f1(andere)} − ${f1(zelf)} = <b>${f1(ant)} g</b>.`:`${nm} staat ${nk[kant]} alleen, dus <b>${f1(ant)} g</b>.`)+`<br>${tip}`,th:'behoud'}}
 const SECGENS={'0':['elver','eenh'],'1.1':['ptn','conf','mr'],'1.2':['mn','rho'],'1.3':['sig','afr','geh','mol'],'1.4':['mverh','reac','over','behoud']};
 
 function verdiepHtml(sec){const v=VERDIEP[sec];if(!v)return'';
@@ -1024,7 +1080,7 @@ const ROUTE=[
  ['pr1.3','1.3','Oefenronde 1.3','Alles van 1.3 door elkaar.',3,'pr','1.3'],
  ['k3','1.3','Molberg: Kamp 3','Eindcheck van 1.3.',3,'klim',3],
  ['lp1.4','1.4','Leerpad 1.4: rekenen aan reacties','Behoud van massa, molverhouding, het stappenplan en overmaat.',3,'lp','1.4'],
- ['behoud','1.4','Snel oefenen: behoud van massa','De makkelijkste reactiesom: optellen en aftrekken.',2,'tr','behoud',5],
+ ['behoud','1.4','Snel oefenen: behoud van massa','De makkelijkste reactiesom: optellen en aftrekken, ook als som in een zin.',2,'tr','behoud',5],
  ['mverh','1.4','Snel oefenen: molverhouding','De getallen voor de formules lezen.',2,'tr','mverh',5],
  ['reac','1.4','Snel oefenen: het stappenplan','Alles komt samen: gram → mol → mol → gram.',2,'tr','reac',3],
  ['over','1.4','Snel oefenen: overmaat of ondermaat','Welke stof is als eerste op?',2,'tr','over',5],
@@ -1187,6 +1243,7 @@ const LP={
  ['Molariteit',`<p>Bij oplossingen wil je weten hoeveel mol er per liter in zit: de <b>molariteit</b>.</p><div class="rule">[A] = n ÷ V &nbsp; in mol L<sup>−1</sup> = M (molair)</div><div class="ex">0,50 mol suiker in 2,0 L water → 0,25 M</div><p>Let op: volume altijd in <b>liter</b>.</p><div class="rule"><b>Weer de n.</b> Heb je gram in plaats van mol? Reken dan eerst om met <b>n = m ÷ M</b> (uit 1.2) en deel daarna door het volume.</div><div class="ex">9,0 g glucose in 500 mL. Molariteit?<br>1. M(C<sub>6</sub>H<sub>12</sub>O<sub>6</sub>) = 6 × 12,01 + 12 × 1,008 + 6 × 16,00 = 180,16 g/mol<br>2. n = m ÷ M = 9,0 ÷ 180,16 = 0,050 mol<br>3. [glucose] = n ÷ V = 0,050 ÷ 0,500 = <b>0,10 M</b></div>`,['0,20 mol zout in 500 mL. Molariteit?','0,40 M','0,10 M|100 M','500 mL = 0,500 L. 0,20 ÷ 0,500 = 0,40.']]],
 '1.4':[
  ['Er gaat niets verloren',`<p>Bij een reactie worden atomen anders gegroepeerd, maar er verdwijnt niets. Dat is de <b>wet van behoud van massa</b>:</p><div class="rule">massa beginstoffen = massa reactieproducten</div><div class="ex">9,0 g aluminium + 8,0 g zuurstof → 17 g aluminiumoxide</div>`,['10 g fosfor geeft 17,8 g P<sub>2</sub>O<sub>5</sub>. Hoeveel zuurstof reageerde?','7,8 g','27,8 g|10 g','17,8 − 10,0 = 7,8.']],
+ ['Een som in een zin: maak twee kolommen',`<p>Op de toets staat het meestal in een zin. Zet de stoffen dan eerst in twee kolommen: <b>vóór de pijl</b> (wat reageert) en <b>na de pijl</b> (wat ontstaat).</p><div class="ex"><b>Voorbeeld.</b> Bij de verbranding van 12 g koolstof ontstaat 44 g koolstofdioxide. Hoeveel zuurstof reageerde?<table class="gt mtab"><tr><th>vóór de pijl</th><th>na de pijl</th></tr><tr><td><div>12 g koolstof</div><div><b>? g zuurstof</b></div></td><td><div>44 g koolstofdioxide</div></td></tr></table>Links moet ook 44 g zijn: zuurstof = 44 − 12 = <b>32 g</b>.</div><p><b>Twee valkuilen:</b></p><ul><li><b>Een gas ontsnapt of komt uit de lucht.</b> In een open bakje lijkt er massa te verdwijnen (CO<sub>2</sub> borrelt weg) of bij te komen (zuurstof uit de lucht). Er verdwijnt niets: dat gas hoort gewoon in je kolommen.</li><li><b>Er blijft iets over.</b> Wat overblijft heeft niet gereageerd: trek het eerst af, dan pas optellen.</li></ul>`,['Je verbrandt 2,4 g magnesium in een open schaaltje. Het poeder weegt daarna 4,0 g. Hoeveel zuurstof reageerde?','1,6 g','6,4 g|0 g, er verdwijnt niets','Rechts 4,0 g, links staat al 2,4 g magnesium: zuurstof = 4,0 − 2,4 = 1,6 g (uit de lucht).']],
  ['Coëfficiënten = mol',`<p>2 H<sub>2</sub> + O<sub>2</sub> → 2 H<sub>2</sub>O betekent: 2 moleculen waterstof met 1 molecuul zuurstof. Maar ook 2 <b>mol</b> met 1 <b>mol</b>.</p><p>Dat komt doordat mol een <b>telwoord</b> is, net als dozijn: 2 moleculen op 1, 2 dozijn op 1 dozijn of 2 mol op 1 mol, de verhouding blijft 2 : 1.</p><div class="rule">De coëfficiënten zijn de <b>molverhouding</b>. Niet de verhouding in gram!</div>`,['N<sub>2</sub> + 3 H<sub>2</sub> → 2 NH<sub>3</sub>. Hoeveel mol NH<sub>3</sub> uit 3 mol N<sub>2</sub>?','6 mol','2 mol|9 mol','1 : 2, dus 3 × 2 = 6.']],
  ['Getal vóór of getal onderaan?',(()=>`<p>In een reactievergelijking staan twee soorten getallen:</p><div class="rule"><b>Getal vóór de stof</b> (coëfficiënt) = hoeveel moleculen (of atomen) je pakt. Staat er niets, dan is het 1.<br><b>Klein getal onderaan</b> (index) = hoeveel atomen er ín één molecuul zitten.</div><p>3 Mg + N<sub>2</sub> → Mg<sub>3</sub>N<sub>2</sub> betekent: <b>3</b> magnesiumatomen en <b>1</b> stikstofmolecuul. Dat ene N<sub>2</sub>-molecuul bestaat uit 2 N-atomen die aan elkaar vastzitten.</p>${reactieSteen({r:[['Mg',3],['N2',1]],p:['Mg3N2',1]})}<p>De verhouding Mg : N<sub>2</sub> is dus <b>3 : 1</b>, niet 3 : 2. De 2 in N<sub>2</sub> zegt alleen hoe één molecuul eruitziet.</p>`),['2 H<sub>2</sub> + O<sub>2</sub> → 2 H<sub>2</sub>O. Hoeveel O<sub>2</sub>-moleculen heb je nodig per 2 H<sub>2</sub>-moleculen?','1','2|4','Vóór O<sub>2</sub> staat niets, dus 1 molecuul. De 2 onderaan bij O<sub>2</sub> betekent dat dat ene molecuul uit 2 O-atomen bestaat. 2 is het aantal atomen, 4 telt alle H-atomen.']],
  ['Het stappenplan',`${TH.stappen.h}<p>Je gaat dus altijd: <b>gram → mol → (verhouding) → mol → gram</b>.</p>`],
@@ -1547,13 +1604,16 @@ function mcButtons(labels){return `<div class="opts">${labels.map((o,i)=>`<butto
 function markOpts(ci,chosen){P.querySelectorAll('.opt').forEach((b,i)=>{b.disabled=true;b.classList.add(i===ci?'good':i===chosen?'bad':'dim')})}
 function parseNum(v){let t=String(v).trim().replace(/\s/g,'').replace('%','').replace(',','.').replace(/[·x×\*]10\^?/i,'e').replace('−','-');if(!/^[-+]?\d*\.?\d+(e[-+]?\d+)?$/i.test(t))return NaN;return parseFloat(t)}
 /* één vraag: q = {q, mc, opts, a, tol, u, w, th} */
+function hintVan(q){return q.hint||HINT[q.th]||''}
 function ask(q,title,right,top,cb,opts={}){window.__last={mc:!!q.mc,a:q.a};
   const isMC=!!q.mc;let labels;if(isMC){labels=q.keep?q.opts:shuffle(q.opts)}
   P.innerHTML=top+`<div class="slide">${head(title,right)}<div class="slide-body">${opts.again?'<div class="pill" style="align-self:flex-start">Herkansing: deze ging eerder fout</div>':''}<div class="prompt" style="font-size:clamp(18px,4vw,22px);font-weight:600">${q.q}</div>
    ${isMC?mcButtons(labels):`<form class="typerow" id="nf" autocomplete="off"><input id="ni" inputmode="decimal" placeholder="antwoord${q.u?' in '+q.u:''}" aria-label="Antwoord"><button class="btn dark" type="submit" id="nb">Controleer</button></form>`}
+   ${hintVan(q)&&title!=='Proeftoets'?`<div class="hintrij"><button class="btn small ghost" type="button" id="hintb">💡 Hoe pak ik dit aan?</button><div id="hintbox" class="hintbox" hidden>${hintVan(q)}</div></div>`:''}
    <div id="fbox"></div></div></div>`;
   const qb=$('#quit');if(qb)qb.onclick=opts.onQuit||goHome;
-  const fin=(ok,given)=>{const fb=$('#fbox');
+  const hb=$('#hintb');if(hb)hb.onclick=()=>{$('#hintbox').hidden=false;hb.hidden=true;const i=$('#ni');if(i)i.focus()};
+  const fin=(ok,given)=>{const fb=$('#fbox');if(hb)hb.closest('.hintrij').hidden=true;
     if(opts.silent){cb(ok,given);return}
     fb.innerHTML=`<div class="fb ${ok?'good':'bad'}"><div class="t">${ok?pick(['Goed!','Klopt!','Top!','Netjes!']):'Niet goed. Het antwoord is '+(isMC?q.a:nf(q.a,2)+(q.u?' '+q.u:''))+'.'}</div>${q.w?`<div class="tip"><b>Uitleg:</b> ${q.w}</div>`:''}${!ok&&q.th?thCard(q.th):''}</div><div class="foot" style="margin-top:12px"><button class="btn primary" id="next">Verder ↵</button></div>`;
     const n=$('#next');n.onclick=()=>cb(ok,given);n.focus()};
@@ -1582,7 +1642,7 @@ function pracNext(){
 const LEES={element:['Wat is een atoom?','Atoom, molecuul en stof','Element of verbinding'],kloppend:['Kloppend maken'],notatie:['Grote en kleine getallen','Machten van 10'],eenheden:['Eenheden','De eenhedentrap'],
  atoom:['Het atoom','Wie weegt wat?'],nummers:['Atoomnummer','Massagetal en neutronen'],schillen:['Schillen'],isotoop:['Isotopen'],atoommassa:['Atoommassa','Molecuulmassa: tel de steentjes op'],ps:['Het periodiek systeem'],edelgas:['Edelgassen en ionen'],
  mol:['De mol: een telwoord, net als een dozijn','Voorbeeld: goud tellen','Het mooie van de mol'],molmassa:['Van gram naar mol','Voorbeeld: de gouden ketting'],dichtheid:['Dichtheid'],schema:['Het rekenschema','De drie formules op een rij'],sig:['Significante cijfers tellen'],afronden:['Afronden'],gehalte:['Gehaltes','Ppm in de klas','De formules van 1.3 op een rij'],
- molariteit:['Molariteit','De formules van 1.3 op een rij'],behoud:['Er gaat niets verloren'],molverh:['Getal vóór of getal onderaan?','Coëfficiënten = mol'],stappen:['Het stappenplan','Voorbeeld uitgewerkt','Alles samen: het stappenplan met formules'],overmaat:['Overmaat en ondermaat'],
+ molariteit:['Molariteit','De formules van 1.3 op een rij'],behoud:['Er gaat niets verloren','Een som in een zin: maak twee kolommen'],molverh:['Getal vóór of getal onderaan?','Coëfficiënten = mol'],stappen:['Het stappenplan','Voorbeeld uitgewerkt','Alles samen: het stappenplan met formules'],overmaat:['Overmaat en ondermaat'],
  machten:['Machten van 10','Min-machten','Komma schuiven'],trap:['Trucje 2: de trap van 10','Treden tellen']};
 /* nalezen: per foute vraag het leerpad-kaartje met die stof (via th of de soort som), anders de theorie zelf */
 function leesKaarten(mist){const out=[],seen=new Set();
