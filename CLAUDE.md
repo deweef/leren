@@ -194,4 +194,6 @@ schermen `show('home'|'play')`, `goHome()`, `ask()`, `practice(sec)` (oefenronde
   dan aftrekken wat er aan de kant van het vraagteken al staat); oude bergvragen met `·` worden in `klimInit` vervangen.
   De helft van de behoud-vragen is een som in een zin (`behoudZin()`, namen in `STOFNAAM`, tabel `kolTab`): gewoon, gas ontsnapt/komt uit
   de lucht (magnesium, kalksteen, roest, vergisting) of er blijft iets over. Kaartje "Een som in een zin: maak twee kolommen" (in `LEES`).
+- Edelheid (scheikunde H2): Ca is onedeler dan Mg. Na en Ca wisselen: in de proef met water Na heftiger, in Binas tabel 48 Ca onedeler.
+  Daarom staan Na en Ca nooit samen in de Metalenrace (Ben zag het verschil met Binas).
 - Bekijk nieuwe schermen altijd op telefoonbreedte (390 px), in licht én donker, voordat je ze live zet.
