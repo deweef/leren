@@ -108,7 +108,8 @@ schermen `show('home'|'play')`, `goHome()`, `ask()`, `practice(sec)` (oefenronde
 - **Geschiedenis H1-H2** (`geschiedenis.html`, Dana, Geschiedeniswerkplaats 3 vwo, Noordhoff): toetsstof 1.2, 1.3, 1.4, 2.1, 2.2 (1.1, 1.5 en 2.3-2.5
   niet). Geen leerpad maar een **verhaal met twee stemmen** (`POD[sec]` = 3 delen, regels `['E'|'D', tekst]`: Eva en Daan, met checkvragen `q`):
   luisteren via `speechSynthesis` (`stemmen()` kiest een Nederlandse vrouwen- en mannenstem, anders één stem op twee toonhoogtes; `TEMPO` =
-  langzaam t/m sneller, `S.tempo`; zin voor zin met `spreek()`, gemarkeerd met `.z.nu`; `stilte()` stopt, ook in `show()`) of lezen (`S.podMode`).
+  langzaam t/m sneller, `S.tempo`; gedownloade iPad-stemmen (voiceURI met premium/enhanced) gaan voor, `stemKw`; "Stemmen kiezen" in de speler
+  bewaart een eigen keuze per apparaat in `leren-stem` (niet per persoon, niet gesynchroniseerd); zin voor zin met `spreek()`, gemarkeerd met `.z.nu`; `stilte()` stopt, ook in `show()`) of lezen (`S.podMode`).
   `LP`/`LEES` worden uit `POD` gemaakt (Nalezen toont het deel van het verhaal). **Strip** per paragraaf (`STRIP[sec]`, eigen SVG-poppetjes `pop()`,
   ballonnen `bal()`, jaartal linksonder). MC = checkvragen + `MCX` (6e veld = deel 0-2), `BEGR` (begrippen uit het boek), `EVT` (tijdlijn), `PERS`
   (Wie ben ik?), `KA`. De berg heet hier **de Tijdreis**: stations met een vervoermiddel uit die tijd (`KCAMPS`, `VOERTUIG`: tank, trein van Lenin,

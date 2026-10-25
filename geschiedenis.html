@@ -287,6 +287,8 @@ ol.steps li{animation:fadein .3s ease}
 .gt.begr th{white-space:nowrap;overflow-wrap:normal;word-break:normal;hyphens:manual}
 .gt.begr td,.gt.tl td{overflow-wrap:normal;word-break:normal;hyphens:manual}
 .begrl{margin:6px 0}.begrl dt{font-weight:800;margin-top:8px}.begrl dd{margin:0;color:var(--muted)}
+.stemkies{display:grid;grid-template-columns:1fr auto;gap:8px;align-items:center;margin-top:8px}.stemkies label{display:flex;gap:6px;align-items:center;min-width:0}.stemkies select{min-width:0;flex:1;font:inherit;padding:6px;border-radius:8px;border:1px solid var(--line);background:var(--surface);color:var(--ink)}
+.stemdet summary{cursor:pointer;font-weight:700;font-size:14px}
 .sec .acts .btn.pod{background:var(--accent);border-color:var(--accent);color:#fff}
 </style>
 
@@ -840,12 +842,26 @@ const SECGENS={};SECS.forEach(s=>SECGENS[s.id]=['b'+s.id]);
 /* ---------- De verteller: twee stemmen met de voorleesstem van het apparaat ---------- */
 const TEMPO=[['langzaam',.8],['normaal',1],['snel',1.2],['sneller',1.45]];
 const kanPraten='speechSynthesis' in window&&typeof SpeechSynthesisUtterance!=='undefined';
-function stemmen(){if(!kanPraten)return null;const nl=speechSynthesis.getVoices().filter(v=>/^nl/i.test(v.lang));if(!nl.length)return {E:{v:null,p:1.15},D:{v:null,p:.82},tekst:'geen Nederlandse stem gevonden, de standaardstem leest voor'};
+/* kwaliteit van een stem: premium/verbeterd (gedownload op iPad/iPhone) gaat voor de gewone */
+const stemKw=v=>{const t=(v.voiceURI||'')+' '+v.name;return /premium/i.test(t)?3:/enhanced|verbeterd|neural|natural|online/i.test(t)?2:/compact/i.test(t)?0:1};
+const stemLabel=v=>`${v.name.replace(/\s*\((verbeterd|enhanced|premium)\)/i,'')}${stemKw(v)>=2?' (verbeterd)':''}${/BE/i.test(v.lang)?' · Vlaams':''}`;
+function nlStemmen(){return kanPraten?speechSynthesis.getVoices().filter(v=>/^nl/i.test(v.lang)):[]}
+function eigenKeuze(){try{return JSON.parse(localStorage.getItem('leren-stem')||'{}')}catch(e){return {}}}
+function stemmen(){if(!kanPraten)return null;const nl=nlStemmen();if(!nl.length)return {E:{v:null,p:1.15},D:{v:null,p:.82},tekst:'geen Nederlandse stem gevonden, de standaardstem leest voor'};
  const vr=/claire|ellen|fenna|colette|lotte|femke|anna|female|vrouw|google nederlands/i,mn=/xander|maarten|frank|arnaud|male|\bman\b/i;
- const voorkeur=l=>l.find(v=>/nl-NL/i.test(v.lang))||l[0];
- let e=voorkeur(nl.filter(v=>vr.test(v.name))),d=voorkeur(nl.filter(v=>mn.test(v.name)&&!vr.test(v.name)));
- if(e&&d&&e!==d)return {E:{v:e,p:1},D:{v:d,p:1},tekst:`Eva = ${e.name}, Daan = ${d.name}`};
- const een=e||d||voorkeur(nl);return {E:{v:een,p:1.18},D:{v:een,p:.8},tekst:`één stem (${een.name}) op twee toonhoogtes`}}
+ const beste=l=>[...l].sort((a,b)=>(stemKw(b)+(/nl-NL/i.test(b.lang)?.5:0))-(stemKw(a)+(/nl-NL/i.test(a.lang)?.5:0)))[0];
+ const k=eigenKeuze(),zoek=u=>nl.find(v=>v.voiceURI===u);
+ let e=zoek(k.E)||beste(nl.filter(v=>vr.test(v.name))),d=zoek(k.D)||beste(nl.filter(v=>mn.test(v.name)&&!vr.test(v.name)));
+ if(e&&d&&e!==d)return {E:{v:e,p:1},D:{v:d,p:1},tekst:`Eva = ${stemLabel(e)}, Daan = ${stemLabel(d)}`};
+ const een=e||d||beste(nl);return {E:{v:een,p:1.18},D:{v:een,p:.8},tekst:`één stem (${stemLabel(een)}) op twee toonhoogtes`}}
+/* zelf kiezen welke stem Eva en Daan krijgen (per apparaat, niet per persoon) */
+function stemKiezer(){const nl=nlStemmen(),st=stemmen()||{};if(!nl.length)return '<p class="src">Op dit apparaat zijn geen Nederlandse stemmen gevonden.</p>';
+ const opt=w=>nl.map(v=>`<option value="${esc(v.voiceURI)}"${st[w]&&st[w].v===v?' selected':''}>${esc(stemLabel(v))}</option>`).join('');
+ return `<div class="stemkies"><label><b class="wie E">Eva</b><select id="kE">${opt('E')}</select></label><button class="btn small ghost" data-test="E">▶ test</button>
+  <label><b class="wie D">Daan</b><select id="kD">${opt('D')}</select></label><button class="btn small ghost" data-test="D">▶ test</button></div>
+  <p class="src" style="margin:4px 0 0">Staat je gedownloade stem er niet bij? Sluit Safari helemaal af (omhoog vegen in het appoverzicht) en open de pagina opnieuw.</p>`}
+function stemKiezerKoppel(){const k=eigenKeuze();['E','D'].forEach(w=>{const s=document.getElementById('k'+w);if(s)s.onchange=()=>{k[w]=s.value;try{localStorage.setItem('leren-stem',JSON.stringify(k))}catch(e){}podDraw()}});
+ P.querySelectorAll('[data-test]').forEach(b=>b.onclick=()=>{stilte();const w=b.dataset.test,sv=(stemmen()||{})[w]||{};const u=new SpeechSynthesisUtterance(w==='E'?'Hoi, ik ben Eva.':'En ik ben Daan.');u.lang='nl-NL';if(sv.v)u.voice=sv.v;u.pitch=sv.p||1;u.rate=TEMPO[S.tempo??1][1];speechSynthesis.speak(u)})}
 if(kanPraten){try{speechSynthesis.getVoices();speechSynthesis.addEventListener('voiceschanged',()=>{const n=document.getElementById('stemnaam');const s=stemmen();if(n&&s)n.textContent=s.tekst})}catch(e){}}
 function stilte(){if(G&&G.m==='pod'){G.playing=false;G.token=(G.token||0)+1}if(kanPraten)try{speechSynthesis.cancel()}catch(e){}}
 function zinnen(t){return t.match(/[^.!?]+[.!?]+["”']?\s*|[^.!?]+$/g)||[t]}
@@ -866,7 +882,8 @@ function podDraw(){const p=POD[G.sec][G.i],st=stemmen(),tempo=S.tempo??1;let li=
   ${kanPraten?`<div class="podmode"><button class="btn small ${G.mode==='luister'?'dark':'ghost'}" id="mLuis">🎧 Luisteren</button><button class="btn small ${G.mode==='lees'?'dark':'ghost'}" id="mLees">📖 Lezen</button></div>`:''}
   ${G.mode==='luister'?`<div class="speler"><button class="btn primary" id="pPlay">${G.playing?'⏸ Pauze':(G.idx>0&&G.idx<G.items.length?'▶ Verder':'▶ Afspelen')}</button><button class="btn ghost small" id="pTerug" aria-label="Een zin terug">⏮</button>
    <div class="tempo">${TEMPO.map(([n,v],k)=>`<button class="btn small ${tempo===k?'dark':'ghost'}" data-t="${k}">${n}</button>`).join('')}</div></div>
-   <p class="src" style="margin:0">Stemmen: <span id="stemnaam">${st?st.tekst:''}</span>. Tik op een zin om daar verder te luisteren.</p>`:''}
+   <p class="src" style="margin:0">Stemmen: <span id="stemnaam">${st?st.tekst:''}</span>. Tik op een zin om daar verder te luisteren.</p>
+   <details class="stemdet"${G.stemOpen?' open':''}><summary>Stemmen kiezen</summary>${stemKiezer()}</details>`:''}
   <div class="transcript${G.mode==='luister'?' luis':''}">${html}</div>
   <div class="acts"><button class="btn ${G.klaar||G.mode==='lees'?'primary':'ghost'}" id="pVraag">Klaar, naar de checkvragen →</button></div>
  </div></div>`;
@@ -876,7 +893,7 @@ function podDraw(){const p=POD[G.sec][G.i],st=stemmen(),tempo=S.tempo??1;let li=
   $('#pTerug').onclick=()=>{G.idx=Math.max(0,G.idx-1);if(G.playing){stilte();G.playing=true;spreek()}else markZin()};
   P.querySelectorAll('[data-t]').forEach(b=>b.onclick=()=>{S.tempo=+b.dataset.t;save();const sp=G.playing;stilte();G.playing=sp;podDraw();if(sp)spreek()})}
  if(G.mode==='luister')P.querySelectorAll('.z').forEach(z=>z.onclick=()=>{G.idx=+z.dataset.k;const sp=G.playing;stilte();G.playing=true;podDraw();spreek()});
- $('#pVraag').onclick=()=>{stilte();podVragen()};markZin()}
+ $('#pVraag').onclick=()=>{stilte();podVragen()};const sd=P.querySelector('.stemdet');if(sd){sd.ontoggle=()=>{G.stemOpen=sd.open};stemKiezerKoppel()}markZin()}
 function markZin(){P.querySelectorAll('.z.nu').forEach(z=>z.classList.remove('nu'));if(G.mode!=='luister')return;const z=P.querySelector(`.z[data-k="${G.idx}"]`);if(z&&(G.playing||G.idx>0)){z.classList.add('nu');if(G.playing)z.scrollIntoView({block:'center',behavior:'smooth'})}}
 function spreek(){if(!G||G.m!=='pod'||!G.playing)return;if(G.idx>=G.items.length){G.playing=false;G.klaar=true;podDraw();const b=$('#pVraag');if(b)b.scrollIntoView({block:'center',behavior:'smooth'});return}
  const it=G.items[G.idx],st=stemmen()||{},sv=st[it.w]||{},tok=++G.token;const u=new SpeechSynthesisUtterance(it.t);u.lang='nl-NL';if(sv.v)u.voice=sv.v;u.pitch=sv.p||1;u.rate=TEMPO[S.tempo??1][1];
