@@ -176,4 +176,7 @@ schermen `show('home'|'play')`, `goHome()`, `ask()`, `practice(sec)` (oefenronde
 - Een rekenvraag geeft alles wat je nodig hebt of zegt waar het staat: atoommassa's erbij ("Atoommassa's (u): Cu 63,55 · O 16,00", Binas
   tabel 99), uitleg in stappen. Massa%-vragen via `massaProcVraag(f)`; `klimInit` werkt eerder opgeslagen bergvragen bij. Een MC-vraag kan
   een 7e veld hebben (extra regel onder de vraag, bijv. atoommassa's) zonder dat de vraag-id (`m[1]`) verandert.
+- Gebruik `·` nooit als scheidingsteken tussen getallen: in scheikunde betekent het **keer** (Marcel las "3 g · 10,74 g" als vermenigvuldigen).
+  De behoud-van-massa-vragen (`GENS.behoud`) tonen daarom een tabel vóór/na de pijl en een uitleg in stappen (eerst de volle kant optellen,
+  dan aftrekken wat er aan de kant van het vraagteken al staat); oude bergvragen met `·` worden in `klimInit` vervangen.
 - Bekijk nieuwe schermen altijd op telefoonbreedte (390 px), in licht én donker, voordat je ze live zet.
