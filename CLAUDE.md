@@ -127,6 +127,10 @@ schermen `show('home'|'play')`, `goHome()`, `ask()`, `practice(sec)` (oefenronde
   Voorbeeldbrief over een ander onderwerp (niet overschrijfbaar). We schrijven de brief niet voor Ben: tips, geen
   verbeterde versie (ook niet als Marcel zijn tekst in de chat plakt).
 
+- **Armpjes-plaatjes** (scheikunde.html, H2 leerpad 2.1): `figArmpjes()` (H, O, N, C met 1-4 armpjes), `molFig(mols, h, w)` met
+  `atoomBol` (kleuren `AKL`): moleculen waarin armpjes elkaar vasthouden (geel bolletje per binding), `figWaterEnz()` (H₂O, NH₃, CH₄) en
+  `figDubbel()` (O₂, N₂, CO₂). Op de kaartjes Armpjes: covalentie, Structuurformules en Dubbel en driedubbel.
+
 ## Leerlogboek en scores (gedeeld met deweef/spelletjes)
 - `leerlog.js` staat in de `<head>` van elke vakpagina (vóór de andere scripts). Per bezoek stuurt het stil één
   regel (wie, vak, actieve minuten, wat erbij kwam, stand) met `sendBeacon` naar het Apps Script van het
