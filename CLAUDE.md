@@ -198,4 +198,6 @@ schermen `show('home'|'play')`, `goHome()`, `ask()`, `practice(sec)` (oefenronde
   de lucht (magnesium, kalksteen, roest, vergisting) of er blijft iets over. Kaartje "Een som in een zin: maak twee kolommen" (in `LEES`).
 - Edelheid (scheikunde H2): Ca is onedeler dan Mg. Na en Ca wisselen: in de proef met water Na heftiger, in Binas tabel 48 Ca onedeler.
   Daarom staan Na en Ca nooit samen in de Metalenrace (Ben zag het verschil met Binas).
+- Zoutnamen zonder di/tri (aluminiumchloride, niet -trichloride): leg steeds uit **waarom** (ladingen leggen de verhouding vast; bij
+  moleculen niet, CO/CO₂). Staat in `TH.naam` en in de uitleg van de naamvraag (Ben vroeg "waarom geen trichloride?").
 - Bekijk nieuwe schermen altijd op telefoonbreedte (390 px), in licht én donker, voordat je ze live zet.
