@@ -113,7 +113,8 @@ schermen `show('home'|'play')`, `goHome()`, `ask()`, `practice(sec)` (oefenronde
   ballonnen `bal()`, jaartal linksonder). MC = checkvragen + `MCX` (6e veld = deel 0-2), `BEGR` (begrippen uit het boek), `EVT` (tijdlijn), `PERS`
   (Wie ben ik?), `KA`. De berg heet hier **de Tijdreis**: stations met een vervoermiddel uit die tijd (`KCAMPS`, `VOERTUIG`: tank, trein van Lenin,
   stoomschip, T-Ford, tractor). Spellen: Tijdlijnpuzzel (`S.tl`, doel 3 op rij), Wie ben ik? (`S.wie`, doel 20), blitzes `beg` en `jaar`.
-  Boekbladzijden 20-21 (begin 1.4: Versailles, Volkenbond) ontbraken bij het scannen; dat stuk is geschreven uit de samenvatting en de begrippenlijst.
+  1.4 volgt het boek: vredesconferentie (Wilson, Clemenceau, Lloyd George; Duitsland mocht niet meepraten), Versailles, Volkenbond (geen lid:
+  Duitsland, Sovjet-Unie, VS), zelfbeschikkingsrecht, "vastgebonden aan een lijk", Joegoslavië zelf weer multi-etnisch.
 - **Duits Briefhelfer** (`duits.html`): schrijfhulp, geen hoofdstuk, dus geen leerroute of berg. Opdracht (zelf verzonnen,
   `OPDRACHT`): brief aan Jonas uit Keulen (uitwisseling), 60-80 woorden, 5 inhoudspunten, du-vorm, weil/dass. `DELEN` = de
   onderdelen (aanhef, 1-5, groet) met tip en bouwstenen (tik = invoegen); tekst per onderdeel in `S.t`. `checks()` kijkt
