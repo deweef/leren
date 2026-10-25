@@ -14,7 +14,7 @@ bouwt het samen met Claude; hij wil ook zelf kunnen meeleren (scheikunde: hij be
 - Elk vak is één los HTML-bestand (geen build, geen CDN behalve Google Fonts), met voortgang in localStorage:
   `engels.html` (Ben, `unit3-trainer-v1`), `biologie.html` (Ben, `bio-thema1-v1`), `wiskunde.html` (Ben, H2
   statistiek, `wis-h2-v1`), `scheikunde-h1.html` (H1 chemisch rekenen, `chem-h1-v1`), `scheikunde.html` (H2
-  bindingen, `chem-h2-v1`), `duits.html` (Ben, Duits op 5 havo-niveau: Briefhelfer, `duits-brief-v1`), `natuurkunde.html` (Dana, Newton 3 vwo H1 Elektrische apparaten, `nat-h1-v1`), Frans voor Dana: `frans.html`, `frans-copilot.html`, `frans-combi.html`,
+  bindingen, `chem-h2-v1`), `duits.html` (Ben, Duits op 5 havo-niveau: Briefhelfer, `duits-brief-v1`), `natuurkunde.html` (Dana, Newton 3 vwo H1 Elektrische apparaten, `nat-h1-v1`), `geschiedenis.html` (Dana, Geschiedeniswerkplaats 3 vwo H1-H2, `gesch-h12-v1`), Frans voor Dana: `frans.html`, `frans-copilot.html`, `frans-combi.html`,
   `frans-spel.html` (spelletjes), `frans-5.html` (versie 5, zie onder).
 - **Voortgang per persoon**: `leerlog.js` (eerste script in de head van elke vakpagina) zet stil `@<wie>` achter elke
   localStorage-sleutel behalve `leren-*` (`chem-h1-v1@ben`, `@dana`, `@marcel`, `@anja`, `@gast-<naam>`), zodat iedereen op hetzelfde apparaat
@@ -105,6 +105,15 @@ schermen `show('home'|'play')`, `goHome()`, `ask()`, `practice(sec)` (oefenronde
   Spellen: **Lampjespuzzel** (`LAMP`, `S.lampj`, routestap type `lamp`), blitzes `BLITZ` (form, kleur, voor; `S.blitz`, type `blitz`) en de berg
   is hier **Beklim de hoogspanningsmast** (`KCAMPS` 4 verdiepingen, `KTOP` 60 m). De berg bewaart per som alleen een zaadje (`seeded`, `RNG`),
   niet de som zelf, want de sommen bevatten plaatjes. Toets waarschijnlijk wo 28 oktober (proefwerkweek).
+- **Geschiedenis H1-H2** (`geschiedenis.html`, Dana, Geschiedeniswerkplaats 3 vwo, Noordhoff): toetsstof 1.2, 1.3, 1.4, 2.1, 2.2 (1.1, 1.5 en 2.3-2.5
+  niet). Geen leerpad maar een **verhaal met twee stemmen** (`POD[sec]` = 3 delen, regels `['E'|'D', tekst]`: Eva en Daan, met checkvragen `q`):
+  luisteren via `speechSynthesis` (`stemmen()` kiest een Nederlandse vrouwen- en mannenstem, anders één stem op twee toonhoogtes; `TEMPO` =
+  langzaam t/m sneller, `S.tempo`; zin voor zin met `spreek()`, gemarkeerd met `.z.nu`; `stilte()` stopt, ook in `show()`) of lezen (`S.podMode`).
+  `LP`/`LEES` worden uit `POD` gemaakt (Nalezen toont het deel van het verhaal). **Strip** per paragraaf (`STRIP[sec]`, eigen SVG-poppetjes `pop()`,
+  ballonnen `bal()`, jaartal linksonder). MC = checkvragen + `MCX` (6e veld = deel 0-2), `BEGR` (begrippen uit het boek), `EVT` (tijdlijn), `PERS`
+  (Wie ben ik?), `KA`. De berg heet hier **de Tijdreis**: stations met een vervoermiddel uit die tijd (`KCAMPS`, `VOERTUIG`: tank, trein van Lenin,
+  stoomschip, T-Ford, tractor). Spellen: Tijdlijnpuzzel (`S.tl`, doel 3 op rij), Wie ben ik? (`S.wie`, doel 20), blitzes `beg` en `jaar`.
+  Boekbladzijden 20-21 (begin 1.4: Versailles, Volkenbond) ontbraken bij het scannen; dat stuk is geschreven uit de samenvatting en de begrippenlijst.
 - **Duits Briefhelfer** (`duits.html`): schrijfhulp, geen hoofdstuk, dus geen leerroute of berg. Opdracht (zelf verzonnen,
   `OPDRACHT`): brief aan Jonas uit Keulen (uitwisseling), 60-80 woorden, 5 inhoudspunten, du-vorm, weil/dass. `DELEN` = de
   onderdelen (aanhef, 1-5, groet) met tip en bouwstenen (tik = invoegen); tekst per onderdeel in `S.t`. `checks()` kijkt

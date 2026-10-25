@@ -1,0 +1,1275 @@
+<!doctype html>
+<html lang="nl">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<meta name="robots" content="noindex">
+<script src="leerlog.js"></script><script>(function(){try{if(localStorage.getItem('leren-ok')!=='53a39a231246354922d1b5f7242c1639ebdc75da84bde2e766eed704f5a89cf8'){location.replace('index.html')}}catch(e){location.replace('index.html')}})();</script>
+<title>Geschiedenis H1-H2</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,500..800&family=JetBrains+Mono:wght@500&family=Atkinson+Hyperlegible:wght@400;700&family=IBM+Plex+Mono:wght@500&display=swap">
+<style>
+/* iPad: twee keer snel tikken mag niet inzoomen (knijpen om te zoomen blijft werken) */
+*{touch-action:manipulation}
+
+/* Layout: ruitjespapier. Kaarten met een oranje kantlijn, zoals het boek. */
+:root{
+  --bg:#F6F3EE; --surface:#FFFFFF; --ink:#1E2230; --muted:#5D6375; --line:#DDD6CB; --chip:#EEE8DE; --accent:#E8742A;
+  --green:#2F7D5B; --green-soft:#DDF0E6; --pink:#E8742A; --pink-soft:#FCE8DA; --amber:#A86A12; --amber-soft:#FBEFD9;
+  --good:#2E8B4E; --good-bg:#DDF0E2; --bad:#C2413A; --bad-bg:#FADFDD;
+  --c-wall:#7BAA6A; --c-cyto:#EEF6E4; --c-vac:#E4D9F2; --c-nuc:#C9B4E0; --c-chl:#3E9B48; --c-mito:#C98A4B; --c-er:#7A93C9; --c-golgi:#D07AA0; --c-lys:#E0A93C; --c-ani:#FBE9E4;
+  --f-display:"Bricolage Grotesque",system-ui,sans-serif;
+  --f-body:"Atkinson Hyperlegible",system-ui,-apple-system,"Segoe UI",sans-serif;
+  --f-mono:"IBM Plex Mono",ui-monospace,Menlo,Consolas,monospace;
+}
+@media (prefers-color-scheme: dark){:root:not([data-theme="light"]){
+  --bg:#14161D; --surface:#1D2029; --ink:#E9EAF0; --muted:#A0A5B5; --line:#30343F; --chip:#272A35; --accent:#F08A45;
+  --green:#5CC394; --green-soft:#183025; --pink:#F08A45; --pink-soft:#3A2618; --amber:#E9B25A; --amber-soft:#33281A;
+  --good:#5CC383; --good-bg:#183020; --bad:#F07870; --bad-bg:#3A1C1B;
+  --c-wall:#5E8F4E; --c-cyto:#20321F; --c-vac:#3A3150; --c-nuc:#5E4A7E; --c-chl:#56B55F; --c-mito:#B47A40; --c-er:#6C84BE; --c-golgi:#C26E94; --c-lys:#C99230; --c-ani:#3A2622; color-scheme:dark}}
+:root[data-theme="dark"]{
+  --bg:#14161D; --surface:#1D2029; --ink:#E9EAF0; --muted:#A0A5B5; --line:#30343F; --chip:#272A35; --accent:#F08A45;
+  --green:#5CC394; --green-soft:#183025; --pink:#F08A45; --pink-soft:#3A2618; --amber:#E9B25A; --amber-soft:#33281A;
+  --good:#5CC383; --good-bg:#183020; --bad:#F07870; --bad-bg:#3A1C1B;
+  --c-wall:#5E8F4E; --c-cyto:#20321F; --c-vac:#3A3150; --c-nuc:#5E4A7E; --c-chl:#56B55F; --c-mito:#B47A40; --c-er:#6C84BE; --c-golgi:#C26E94; --c-lys:#C99230; --c-ani:#3A2622; color-scheme:dark}
+*{box-sizing:border-box}
+body{background-color:var(--bg);background-image:linear-gradient(var(--line) 1px,transparent 1px),linear-gradient(90deg,var(--line) 1px,transparent 1px);background-size:24px 24px;background-attachment:fixed;color:var(--ink);font-family:var(--f-body);font-size:16px;line-height:1.5;margin:0}
+.wrap{max-width:880px;margin:0 auto;padding-inline:16px;padding-block:20px 56px}
+button{font:inherit;color:inherit;cursor:pointer}
+button:focus-visible,input:focus-visible{outline:3px solid var(--pink);outline-offset:2px}
+h1,h2,h3{font-family:var(--f-display);margin:0;text-wrap:balance}
+.eyebrow{font-family:var(--f-mono);font-size:12px;letter-spacing:.12em;text-transform:uppercase;color:var(--muted)}
+.top{display:flex;flex-wrap:wrap;gap:16px;align-items:flex-end;justify-content:space-between;padding-bottom:16px;border-bottom:2px solid var(--ink)}
+h1{font-size:clamp(30px,6.5vw,48px);font-weight:800;line-height:1;letter-spacing:-.02em}
+h1 em{font-style:normal;color:var(--green)}
+.stats{display:flex;gap:8px;flex-wrap:wrap}
+.stat{background:var(--surface);border:1px solid var(--line);border-radius:10px;padding:6px 12px;min-width:86px}
+.stat b{display:block;font-family:var(--f-display);font-size:22px;font-weight:800;line-height:1.15;font-variant-numeric:tabular-nums}
+.stat small{font-family:var(--f-mono);font-size:10.5px;color:var(--muted);text-transform:uppercase;letter-spacing:.08em}
+.banner{margin-top:14px;display:flex;gap:8px;flex-wrap:wrap}
+.pill{font-size:13.5px;font-weight:700;padding:4px 12px;border-radius:999px;background:var(--pink-soft);color:var(--pink)}
+.pill.g{background:var(--green-soft);color:var(--green)}
+section{margin-top:26px}
+.sec-head{display:flex;flex-wrap:wrap;align-items:baseline;justify-content:space-between;gap:8px;margin-bottom:12px}
+h2{font-size:21px;font-weight:800}
+.acts{display:flex;gap:8px;flex-wrap:wrap;align-items:center}
+.btn{border:2px solid var(--ink);background:var(--surface);border-radius:10px;padding:10px 16px;font-weight:700}
+.btn.primary{background:var(--green);border-color:var(--green);color:var(--surface)}
+.btn.dark{background:var(--ink);border-color:var(--ink);color:var(--bg)}
+.btn.ghost{border-color:var(--line)}
+.btn.small{padding:6px 12px;font-size:14px}
+.btn:disabled{opacity:.4;cursor:not-allowed}
+/* paragraaf-chips */
+.pars{display:grid;grid-template-columns:repeat(auto-fill,minmax(190px,1fr));gap:10px}
+.par{position:relative;text-align:left;background:var(--surface);border:2px solid var(--line);border-radius:12px;padding:10px 12px 12px 18px;display:flex;flex-direction:column;gap:4px;min-width:0;overflow:hidden}
+.par::before{content:"";position:absolute;left:0;top:0;bottom:0;width:7px;background:var(--line)}
+.par[aria-pressed="true"]{border-color:var(--ink)}
+.par[aria-pressed="true"]::before{background:var(--pink)}
+.par .no{font-family:var(--f-mono);font-size:12px;color:var(--muted)}
+.par .no b{font-family:var(--f-display);font-size:22px;color:var(--ink);margin-right:4px}
+.par .nm{font-weight:700;font-size:14.5px;line-height:1.25}
+.bar{height:6px;border-radius:3px;background:var(--chip);overflow:hidden}
+.bar i{display:block;height:100%;background:var(--green);border-radius:3px;transition:width .4s}
+.par .src{font-size:12px}
+.src{font-size:13px;color:var(--muted)}
+/* modus-kaarten als objectglaasjes */
+.modes{display:grid;grid-template-columns:repeat(auto-fill,minmax(250px,1fr));gap:12px}
+.mode{position:relative;text-align:left;background:var(--surface);border:2px solid var(--ink);border-radius:14px;padding:14px 16px 14px 58px;min-width:0;display:flex;flex-direction:column;gap:4px}
+.mode .lab{position:absolute;left:0;top:0;bottom:0;width:44px;background:var(--chip);border-right:2px dashed var(--line);display:grid;place-items:center;font-family:var(--f-mono);font-size:12px;color:var(--muted);writing-mode:vertical-rl;transform:rotate(180deg);letter-spacing:.12em;text-transform:uppercase}
+.mode.main{background:var(--ink);color:var(--bg)}
+.mode.main .lab{background:var(--pink);color:#fff;border-color:transparent}
+.mode.main p{color:var(--bg);opacity:.8}
+.mode h3{font-size:19px;font-weight:800}
+.mode p{margin:0;font-size:14px;color:var(--muted)}
+.mode .tag{align-self:flex-start;font-family:var(--f-mono);font-size:10.5px;text-transform:uppercase;letter-spacing:.08em;background:var(--amber-soft);color:var(--amber);padding:2px 7px;border-radius:5px}
+@media (hover:hover){.mode:hover{transform:translateY(-2px)}}
+details.tips{background:var(--surface);border:1px solid var(--line);border-radius:12px;padding:12px 16px}
+details.tips summary{font-weight:700;cursor:pointer}
+details.tips ul{margin:10px 0 4px;padding-left:20px;display:grid;gap:6px}
+.rt-list{display:grid;gap:8px}
+.rt-deel{font-size:15px;font-family:var(--f-mono);text-transform:uppercase;letter-spacing:.08em;color:var(--muted);margin:14px 0 2px}
+.rt-step{display:grid;grid-template-columns:34px minmax(0,1fr) auto;gap:12px;align-items:center;text-align:left;font:inherit;color:inherit;background:var(--surface);border:2px solid var(--line);border-radius:12px;padding:10px 12px;cursor:pointer}
+.rt-step .rt-ic{width:34px;height:34px;border-radius:50%;display:grid;place-items:center;background:var(--chip);color:var(--muted);font:700 14px var(--f-mono)}
+.rt-step .rt-tx{display:flex;flex-direction:column;gap:2px;min-width:0}
+.rt-step .rt-tx span{font-size:13.5px;color:var(--muted)}
+.rt-step .rt-w{font:600 13px var(--f-mono);color:var(--muted)}
+.rt-step.done{border-color:var(--green-soft)}
+.rt-step.done .rt-ic{background:var(--green);color:#fff}
+.rt-step.cur{border-color:var(--ink)}
+.rt-step.cur .rt-ic{background:var(--pink);color:#fff}
+@media (hover:hover){.rt-step:hover{border-color:var(--ink)}}
+/* spel */
+.playbar{display:flex;align-items:center;gap:12px;margin-bottom:16px}
+.playbar .bar{flex:1;height:10px;border-radius:5px}
+.playbar .bar i{background:var(--pink)}
+.count{font-family:var(--f-mono);font-size:13px;color:var(--muted);font-variant-numeric:tabular-nums;white-space:nowrap}
+.slide{background:var(--surface);border:2px solid var(--ink);border-radius:18px;overflow:hidden}
+.slide-head{display:flex;justify-content:space-between;gap:8px;flex-wrap:wrap;padding:9px 18px;background:var(--pink);color:#fff;font-family:var(--f-mono);font-size:12px;letter-spacing:.1em;text-transform:uppercase}
+.slide-body{padding:20px 18px;display:flex;flex-direction:column;gap:14px}
+.q{font-size:15px;color:var(--muted);font-weight:700}
+.prompt{font-family:var(--f-display);font-weight:700;font-size:clamp(20px,4.6vw,27px);line-height:1.25;overflow-wrap:anywhere}
+.prompt.big{font-size:clamp(28px,7vw,42px);font-weight:800}
+.opts{display:grid;gap:10px}
+.opt{display:flex;align-items:center;gap:12px;text-align:left;border:2px solid var(--line);background:var(--bg);border-radius:12px;padding:12px 14px;font-size:16.5px;font-weight:700;min-width:0}
+.opt .k{flex:none;width:28px;height:28px;border-radius:8px;display:grid;place-items:center;font-family:var(--f-mono);font-size:13px;background:var(--chip);color:var(--muted)}
+@media (hover:hover){.opt:hover:not(:disabled){border-color:var(--ink)}}
+.opt:disabled{cursor:default}
+.opt.good{background:var(--good-bg);border-color:var(--good)}.opt.good .k{background:var(--good);color:var(--surface)}
+.opt.bad{background:var(--bad-bg);border-color:var(--bad)}.opt.bad .k{background:var(--bad);color:var(--surface)}
+.opt.dim{opacity:.5}
+.typerow{display:flex;gap:8px;flex-wrap:wrap}
+.typerow input{flex:1 1 220px;min-width:0;font:inherit;font-size:19px;font-weight:700;padding:12px 14px;border-radius:12px;border:2px solid var(--line);background:var(--bg);color:var(--ink)}
+.typerow input.okay{border-color:var(--good)}
+.pattern{font-family:var(--f-mono);font-size:17px;letter-spacing:.16em;color:var(--amber);overflow-wrap:anywhere}
+.fb{border-radius:12px;padding:12px 14px;display:flex;flex-direction:column;gap:4px}
+.fb.good{background:var(--good-bg)}.fb.bad{background:var(--bad-bg)}.fb.warn{background:var(--amber-soft)}
+.fb .t{font-weight:700}.fb.good .t{color:var(--good)}.fb.bad .t{color:var(--bad)}.fb.warn .t{color:var(--amber)}
+.fb .ans{font-family:var(--f-display);font-size:21px;font-weight:800}
+.tip{font-size:14.5px}
+.foot{display:flex;justify-content:flex-end}
+.big{font-family:var(--f-display);font-size:clamp(48px,12vw,80px);font-weight:800;line-height:1}
+.mist{display:grid;gap:6px;margin:0;padding:0;list-style:none}
+.mist li{display:flex;flex-direction:column;gap:2px;border-bottom:1px solid var(--line);padding:6px 0}
+.mist li span{color:var(--muted);font-size:14px}
+/* flip */
+.flip{perspective:1200px;cursor:pointer}
+.flip-in{position:relative;min-height:220px;transition:transform .45s;transform-style:preserve-3d}
+.flip.on .flip-in{transform:rotateY(180deg)}
+.face{position:absolute;inset:0;backface-visibility:hidden;-webkit-backface-visibility:hidden;display:flex;flex-direction:column;justify-content:center;gap:10px}
+.face.back{transform:rotateY(180deg)}
+/* volgorde */
+.seq-done{display:grid;gap:6px;counter-reset:s;margin:0;padding:0;list-style:none}
+.seq-done li{counter-increment:s;display:flex;gap:10px;align-items:center;background:var(--good-bg);border-radius:10px;padding:8px 12px;font-weight:700}
+.seq-done li::before{content:counter(s);flex:none;width:26px;height:26px;border-radius:50%;background:var(--good);color:var(--surface);display:grid;place-items:center;font-family:var(--f-mono);font-size:12px}
+.seq-pool{display:flex;flex-wrap:wrap;gap:8px}
+.seq-pool button{border:2px solid var(--line);background:var(--bg);border-radius:10px;padding:9px 12px;font-weight:700;text-align:left}
+@media (hover:hover){.seq-pool button:hover{border-color:var(--ink)}}
+.seq-list{display:grid;gap:8px}
+.seq-list button{text-align:left}
+/* buckets */
+.buckets{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:8px}
+.buckets button{border:2px solid var(--ink);border-radius:12px;padding:14px 6px;font-weight:800;font-size:16px;background:var(--surface)}
+.buckets button.good{background:var(--good-bg);border-color:var(--good)}
+.buckets button.bad{background:var(--bad-bg);border-color:var(--bad)}
+/* osmose */
+.osmo{display:flex;gap:14px;align-items:center;flex-wrap:wrap}
+.osmo svg{flex:none;width:120px;height:90px}
+.chipline{display:flex;gap:8px;flex-wrap:wrap}
+/* cel */
+.cellfig{background:var(--bg);border-radius:12px;padding:8px}
+.cellfig svg{display:block;width:100%;height:auto;max-height:340px}
+.marker circle{fill:var(--pink)}
+.marker text{fill:#fff;font-family:var(--f-mono);font-size:15px;font-weight:700}
+.marker line{stroke:var(--pink);stroke-width:2.5}
+.pulse{animation:pulse 1.2s ease-in-out infinite}
+@keyframes pulse{50%{opacity:.35}}
+/* samenvatting */
+.sum{background:var(--surface);border:1px solid var(--line);border-left:6px solid var(--green);border-radius:12px;padding:14px 16px}
+.sum h3{font-size:19px;margin-bottom:6px}
+.sum p{margin:0 0 8px;max-width:72ch}
+.exam{background:var(--surface);border:1px solid var(--line);border-radius:12px;padding:14px 16px;display:flex;flex-direction:column;gap:10px}
+.exam .ctx{background:var(--bg);border-radius:8px;padding:10px 12px;font-size:14.5px}
+.exq{border-top:1px dashed var(--line);padding-top:10px;display:flex;flex-direction:column;gap:8px}
+.exq .pt{font-family:var(--f-mono);font-size:12px;color:var(--pink)}
+.shake{animation:shake .35s}@keyframes shake{25%{transform:translateX(-6px)}75%{transform:translateX(6px)}}
+.pop{animation:pop .3s}@keyframes pop{50%{transform:scale(1.25)}}
+.timer{font-family:var(--f-display);font-size:32px;font-weight:800;font-variant-numeric:tabular-nums;min-width:56px;text-align:right}
+.timer.low{color:var(--bad)}
+.combo{font-family:var(--f-mono);font-size:12px;background:var(--amber);color:var(--surface);padding:2px 8px;border-radius:6px}
+canvas#conf{position:fixed;inset:0;pointer-events:none;z-index:9}
+@media (prefers-reduced-motion: reduce){*{transition:none!important;animation:none!important}}
+.nums{font-family:"JetBrains Mono",var(--f-mono);font-size:20px;font-weight:500;background:var(--bg);border-radius:10px;padding:10px 12px;margin:8px 0;overflow-wrap:anywhere;letter-spacing:.02em}
+.tw{overflow-x:auto;margin:8px 0}
+.ft{border-collapse:collapse;font-variant-numeric:tabular-nums;font-size:15.5px;background:var(--surface)}
+.ft th,.ft td{border:1px solid var(--line);padding:5px 10px;text-align:center}
+.ft th{background:var(--chip);text-align:left;font-weight:700}
+.ft.v td:first-child{font-family:var(--f-mono);font-size:14px}
+.chart{display:block;width:100%;max-width:420px;height:auto;color:var(--ink);margin:6px 0}
+.uitleg{background:var(--surface);border:1px solid var(--line);border-left:6px solid var(--pink);border-radius:12px;padding:14px 18px}
+.uitleg h3{font-size:20px;margin:16px 0 6px}.uitleg h3:first-child{margin-top:0}
+.uitleg p,.uitleg li{max-width:72ch}.uitleg ul{padding-left:20px}
+.rule{background:var(--pink-soft);border-radius:10px;padding:10px 14px;margin:8px 0;font-weight:500}
+.ex{background:var(--bg);border-left:4px solid var(--green);border-radius:6px;padding:9px 12px}
+.gt{border-collapse:collapse;font-size:15px;margin:6px 0}.gt th,.gt td{border:1px solid var(--line);padding:6px 9px;text-align:left;vertical-align:top}.gt th{background:var(--chip)}
+.cycle{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:6px;max-width:460px;margin:10px 0}
+.cycle span{border-radius:10px;padding:10px;font-weight:700;color:#1E2230;text-align:center}
+.cycle .c1{background:#F5B37A}.cycle .c2{background:#F7DB5E}.cycle .c3{background:#7FB0EA}.cycle .c4{background:#8FD18F}
+.cycle .c3{order:4}.cycle .c4{order:3}
+.flow{display:grid;grid-template-columns:minmax(0,1fr) minmax(0,1.3fr);gap:6px 10px;margin:10px 0}
+.flow .fq{background:var(--chip);border-radius:8px;padding:8px 10px;font-weight:700}.flow .fa{background:var(--bg);border-radius:8px;padding:8px 10px}
+@media (max-width:560px){.flow{grid-template-columns:1fr}}
+.distgrid{display:grid;grid-template-columns:repeat(auto-fill,minmax(150px,1fr));gap:8px}
+.distgrid figure{margin:0;background:var(--bg);border-radius:10px;padding:6px}.distgrid figcaption{text-align:center;font-weight:700;font-size:13.5px}
+.secs{display:grid;gap:10px}
+.sec{display:grid;grid-template-columns:auto minmax(0,1fr) auto;gap:6px 14px;align-items:center;background:var(--surface);border:2px solid var(--line);border-radius:14px;padding:12px 14px}
+.sec .num{font-family:var(--f-display);font-size:30px;font-weight:800;color:var(--pink);line-height:1}
+.sec h3{font-size:18px}.sec p{margin:2px 0 6px;font-size:14px;color:var(--muted)}
+.sec .acts{grid-column:3;grid-row:1}
+@media (max-width:560px){.sec{grid-template-columns:auto minmax(0,1fr)}.sec .acts{grid-column:1/-1;grid-row:auto}}
+.tools{display:flex;flex-wrap:wrap;gap:8px}
+.chart.big{max-width:520px}
+.gt td,.gt th{overflow-wrap:anywhere;hyphens:auto;-webkit-hyphens:auto}
+.draw{touch-action:none;cursor:crosshair;-webkit-user-select:none;user-select:none}
+.fb.warn{background:var(--pink-soft);border-color:var(--accent)}
+details.verdiep{margin-top:18px;border:2px dashed var(--accent);border-radius:12px;padding:10px 14px;background:var(--bg)}
+details.verdiep>summary{font-weight:700;font-size:17px;cursor:pointer}
+details.verdiep>summary .src{font-weight:400;margin-left:6px}
+details.vd{border-top:1px solid var(--line);padding:8px 0}
+details.vd:first-of-type{margin-top:8px}
+details.vd>summary{font-weight:600;cursor:pointer}
+details.vd>div{padding-top:6px}
+ul.fout{padding-left:0;list-style:none;display:grid;gap:6px}
+ul.fout li{padding-left:24px;position:relative}ul.fout li:before{content:"✗";position:absolute;left:4px;color:var(--bad);font-weight:700}
+ol.steps{padding-left:22px;display:grid;gap:8px;margin:8px 0}
+ol.steps li{animation:fadein .3s ease}
+@keyframes fadein{from{opacity:0;transform:translateY(4px)}to{opacity:1}}
+.nextbox{margin-top:18px;border-top:2px solid var(--line);padding-top:12px;display:grid;gap:12px}
+.nextbox h3{margin:0}
+.choice{display:grid;gap:4px}.choice>span{font-size:14px;color:var(--muted)}
+.choice>.btn{justify-self:start}
+.kcamps{display:grid;gap:8px}
+.bkamp{display:grid;grid-template-columns:minmax(0,1fr) auto;gap:2px 10px;text-align:left;background:var(--surface);border:2px solid var(--ink);border-radius:12px;padding:10px 12px;color:var(--ink);font:inherit;cursor:pointer}
+.bkamp b{grid-column:1/-1;font-size:16px}.bkamp span{font-size:13px;color:var(--muted)}
+.bkamp .bar{grid-column:1;display:block;align-self:center}.bkamp .count{grid-column:2;grid-row:3}
+.bkamp:disabled{opacity:.5;cursor:not-allowed;border-style:dashed}
+.bkamp.done{border-color:var(--good);background:var(--good-bg)}
+
+.lpcard .lpt{font-size:clamp(22px,5.5vw,28px);margin:0}
+.lpb{font-size:17px;line-height:1.55}.lpb p{margin:6px 0}
+.lpq{border-top:2px dashed var(--line);padding-top:12px;display:grid;gap:10px}
+.lpnav{display:flex;justify-content:space-between;gap:10px;margin-top:6px}
+.lpmode{width:100%}
+.sec .acts .btn.lp{background:var(--accent);border-color:var(--accent);color:#fff}
+.sv{gap:14px}
+.sv .intro{background:var(--chip);border-radius:12px;padding:12px 14px}
+.sv .intro p{margin:6px 0}
+.sv .intro ul{margin:6px 0 0;padding-left:20px;display:grid;gap:4px}
+.svp h3{margin:6px 0 2px;font-size:20px}
+.svp .wat{margin:0 0 8px;color:var(--muted);font-style:italic}
+.svp ul{margin:0;padding-left:20px;display:grid;gap:6px}
+.svp .gt{margin:6px 0}
+.sv .gt td,.sv .gt th{overflow-wrap:normal;word-break:normal;hyphens:manual;-webkit-hyphens:manual}
+.sv .gt td:first-child{white-space:nowrap}
+.mode{position:relative}
+.mode.gehaald{background:var(--good-bg)!important;border-color:var(--good)!important;color:var(--ink)!important}
+.mode.gehaald h3{color:var(--ink)!important}
+.mode.gehaald p{color:var(--muted)!important;opacity:1!important}
+.mode.gehaald::after{content:"✓ gehaald";position:absolute;top:8px;right:10px;font:700 11px ui-monospace,Menlo,monospace;letter-spacing:.04em;color:var(--good)}
+.sec.gehaald{border-color:var(--good)!important;background:var(--good-bg)!important}
+.btn.gehaald{border-color:var(--good)!important;color:var(--good)!important;background:var(--good-bg)!important}
+.btn.gehaald:not([data-lp])::before{content:"✓ "}
+.par.gehaald,.gate.gehaald,.gcard.gehaald{position:relative;background:var(--good-bg)!important;border-color:var(--good)!important}
+.par.gehaald::after,.gate.gehaald::after,.gcard.gehaald::after{content:"✓";position:absolute;top:6px;right:9px;font-weight:800;color:var(--good)}
+.timer{font-family:var(--f-display);font-size:32px;font-weight:800;font-variant-numeric:tabular-nums;min-width:56px;text-align:right}
+.timer.low{color:var(--bad)}
+.combo{font-family:var(--f-mono);font-size:12px;background:var(--amber);color:var(--surface);padding:2px 8px;border-radius:6px}
+.blitzes{display:grid;grid-template-columns:repeat(auto-fit,minmax(200px,1fr));gap:10px}
+.podlist{display:grid;gap:10px}
+.podmode,.speler,.tempo{display:flex;gap:8px;flex-wrap:wrap;align-items:center}
+.speler{background:var(--chip);border-radius:12px;padding:10px}
+.transcript{display:grid;gap:4px}
+.vl{margin:0 0 6px;line-height:1.6}
+.wie{display:inline-block;font-size:12px;letter-spacing:.03em;padding:1px 8px;border-radius:999px;margin-right:4px;color:#fff;vertical-align:1px}
+.wie.E{background:#C2417A}.wie.D{background:#2F6BD8}
+.transcript.luis .z{cursor:pointer;border-radius:4px}
+.z.nu{background:#FFE88A;color:#1E2230}
+.strip{display:grid;grid-template-columns:repeat(auto-fill,minmax(260px,1fr));gap:12px}
+.pnl{margin:0;background:var(--surface);border:2px solid var(--ink);border-radius:10px;overflow:hidden}
+.pnl svg{display:block;width:100%;height:auto}
+.pnl figcaption{padding:8px 10px;font-size:14px;border-top:2px solid var(--ink);background:var(--chip)}
+.defbox{margin-top:8px;background:var(--chip);border-radius:10px;padding:10px 12px;font-weight:500;font-size:.9em}
+.tlrij{margin:4px 0;padding-left:24px;display:grid;gap:6px}
+.tlrij li{background:var(--chip);border-radius:8px;padding:6px 10px}
+.tlrij li.goed{background:var(--good-bg)}.tlrij li.fout{background:var(--bad-bg)}
+.tlkies{display:grid;gap:8px}
+.hints{margin:0;padding-left:22px;display:grid;gap:6px;font-size:17px}
+.gt.tl th{min-width:5.5em;overflow-wrap:normal;word-break:normal}
+.gt.begr th{white-space:nowrap;overflow-wrap:normal;word-break:normal;hyphens:manual}
+.gt.begr td,.gt.tl td{overflow-wrap:normal;word-break:normal;hyphens:manual}
+.begrl{margin:6px 0}.begrl dt{font-weight:800;margin-top:8px}.begrl dd{margin:0;color:var(--muted)}
+.sec .acts .btn.pod{background:var(--accent);border-color:var(--accent);color:#fff}
+</style>
+
+</head>
+<body>
+
+<canvas id="conf"></canvas>
+<div class="wrap">
+<main id="home"><a href="index.html" style="display:inline-block;margin:0 0 10px;color:inherit;opacity:.7;text-decoration:none;font:700 14px system-ui,sans-serif">‹ Alle vakken</a>
+  <header class="top">
+    <div>
+      <div class="eyebrow">Geschiedenis · H1 en H2</div>
+      <h1>Tijd van de <em>wereldoorlogen</em></h1>
+    </div>
+    <div class="stats">
+      <div class="stat"><b id="stDone">0</b><small>vragen</small></div>
+      <div class="stat"><b id="stStreak">0</b><small>dagen op rij</small></div>
+      <div class="stat"><b id="stBest">–</b><small>beste toets</small></div>
+    </div>
+  </header>
+  <div class="banner"><span class="pill">Toets: 1.2, 1.3, 1.4, 2.1 en 2.2</span><span class="pill g">🎧 Luisteren of 📖 lezen</span></div>
+
+  <section><div id="lpbox"></div></section>
+  <section>
+    <div class="modes">
+      <button class="mode" id="klim"><span class="lab">Spel</span><h3>De Tijdreis</h3><p>Reis van station naar station: met een tank, de trein van Lenin, een stoomschip, een T-Ford en een tractor.</p><span class="tag" id="klimTag" style="text-transform:none">0%</span></button>
+      <button class="mode" id="tl"><span class="lab">Spel</span><h3>Tijdlijnpuzzel</h3><p>Zet vijf gebeurtenissen in de goede volgorde.</p><span class="tag" id="tlTag" style="text-transform:none"></span></button>
+      <button class="mode" id="wie"><span class="lab">Spel</span><h3>Wie ben ik?</h3><p>Raad de persoon met zo min mogelijk hints.</p><span class="tag" id="wieTag" style="text-transform:none"></span></button>
+    </div>
+  </section>
+
+  <section>
+    <div class="sec-head"><h2>1. Per paragraaf</h2><span class="src">Verhaal, strip, lezen en oefenen</span></div>
+    <div class="secs" id="secs"></div>
+  </section>
+
+  <section>
+    <div class="sec-head"><h2>2. Snelle spelletjes</h2><span class="src">60 seconden, zo vaak als je wilt</span></div>
+    <div class="blitzes" id="blitzes"></div>
+  </section>
+
+  <section>
+    <div class="sec-head"><h2>3. Begrippen en jaartallen</h2><span class="src">Oefen zo lang je wilt</span></div>
+    <div class="tools" id="tools"></div>
+  </section>
+
+  <section>
+    <div class="sec-head"><h2>4. Toets</h2></div>
+    <div class="modes">
+      <button class="mode" id="toets"><span class="lab">Cijfer</span><h3>Proeftoets</h3><p>25 gemengde vragen over alle vijf paragrafen, met uitleg aan het eind en een cijfer.</p></button>
+      <button class="mode" id="samen"><span class="lab">Lezen</span><h3>Samenvatting voor de toets</h3><p>Ochtend voor de toets: alles nog één keer doorlezen. Ongeveer 10 minuten.</p></button>
+      <button class="mode" id="spiek"><span class="lab">Kaart</span><h3>Spiekbriefje</h3><p>Kenmerkende aspecten, tijdlijn, personen en alle begrippen.</p></button>
+    </div>
+  </section>
+
+  <section>
+    <details class="tips">
+      <summary>Zo pak je het aan</summary>
+      <ul>
+        <li>Volg de <b>Leerroute</b> bovenaan: per paragraaf het verhaal, de strip, de begrippen, een oefenronde en een station op de Tijdreis.</li>
+        <li>Het verhaal kun je laten <b>voorlezen</b> (🎧) of zelf <b>lezen</b> (📖). Met de knopjes kies je langzamer of sneller.</li>
+        <li>De stemmen zijn de voorleesstemmen van je apparaat. Mooiere stemmen op de iPad of iPhone: Instellingen → Toegankelijkheid → Gesproken materiaal → Stemmen → Nederlands, en download daar bijvoorbeeld Claire en Xander. Hoor je niets? Zet het geluid aan en de stille modus uit.</li>
+        <li>1.1 en 1.5 (en 2.3 t/m 2.5) horen niet bij deze toets en staan er daarom niet in.</li>
+        <li>Toetsen: <b>Enter</b> = verder, <b>1 2 3 4</b> = antwoord kiezen.</li>
+      </ul>
+      <div class="acts" id="resetBox" style="margin-top:10px"><button class="btn ghost small" id="resetBtn">Voortgang wissen</button></div>
+    </details>
+  </section>
+</main>
+<main id="play" hidden></main>
+</div>
+
+<script>
+const SECS=[
+ {id:'1.2',t:'De Grote Oorlog',s:'Oorzaken, Sarajevo, loopgraven, oostfront, westfront, wapenstilstand',jaar:'1914-1918'},
+ {id:'1.3',t:'Revolutie in Rusland',s:'De tsaar, Februarirevolutie, Lenin, Oktoberrevolutie, Sovjet-Unie',jaar:'1905-1922'},
+ {id:'1.4',t:'De nieuwe kaart van Europa',s:'Vrede van Versailles, Volkenbond, zelfbeschikkingsrecht, nieuwe staten, Turkije',jaar:'1919-1923'},
+ {id:'2.1',t:'Welvaart en crisis in de VS',s:'Lopende band, consumptiemaatschappij, beurskrach, Grote Depressie, New Deal',jaar:'1920-1939'},
+ {id:'2.2',t:'Fascisme en communisme',s:'Mussolini, totalitaire dictatuur, Stalin, planeconomie, collectivisatie',jaar:'1919-1938'}
+];
+/* De podcast: per paragraaf drie delen. Eva (E, vrouw) en Daan (D, man) vertellen om de beurt.
+   q = checkvragen na het deel: [vraag, goed, 'fout|fout', uitleg] */
+const POD={
+'1.2':[
+ {t:'Een kruitvat',s:[
+  ['E','Welkom bij Tijdreis, de geschiedenispodcast. Ik ben Eva.'],
+  ['D','En ik ben Daan. Vandaag: de Eerste Wereldoorlog, van 1914 tot 1918. Toen noemden ze hem gewoon de Grote Oorlog.'],
+  ['E','Stel je Europa voor in 1914. In West-Europa is het al ruim veertig jaar vrede. Er zijn treinen, telefoons en bioscopen. Waarom gaat het dan toch mis?'],
+  ['D','Omdat Europa een kruitvat was. Overal lag buskruit, en er was maar één vonkje nodig.'],
+  ['E','Wat was dat buskruit dan?'],
+  ['D','Om te beginnen nationalisme. Mensen vonden hun eigen volk het allerbelangrijkst en keken neer op andere volken.'],
+  ['E','Dan militarisme: het leger werd verheerlijkt. Moed, discipline en strijdlust golden als de mooiste eigenschappen die er waren.'],
+  ['D','Daardoor kwam er een wapenwedloop. Landen probeerden elkaar te overtroeven met steeds meer en steeds sterkere wapens.'],
+  ['E','En er waren bondgenootschappen. Frankrijk en Rusland hadden afgesproken: valt Duitsland een van ons aan, dan helpen we elkaar.'],
+  ['D','Frankrijk wilde bovendien wraak, want het had in 1870 en 1871 een oorlog tegen Duitsland verloren.'],
+  ['E','En dan de Balkan, in het zuidoosten van Europa. Servië wilde groter worden en had zijn oog laten vallen op Bosnië, een Oostenrijkse provincie waar veel Serviërs woonden.'],
+  ['D','Er waren dus twee kampen. Aan de ene kant de geallieerden: Groot-Brittannië, Frankrijk en Rusland. Later kwamen Italië en de Verenigde Staten erbij.'],
+  ['E','Aan de andere kant de centralen: Duitsland en Oostenrijk, later ook het Ottomaanse Rijk. Ezelsbruggetje: de centralen liggen in het centrum van Europa.'],
+  ['D','Handig. En omdat er ook Afrikanen, Australiërs, Canadezen en Nieuw-Zeelanders meevochten, werd het een wereldoorlog.']],
+ q:[['Welke landen hoorden bij de centralen?','Duitsland en Oostenrijk','Frankrijk en Rusland|Groot-Brittannië en de VS','De centralen lagen in het centrum van Europa. Frankrijk, Rusland, Groot-Brittannië en de VS waren geallieerden.'],
+  ['Wat is militarisme?','het leger en alles wat ermee te maken heeft verheerlijken','een race om de meeste wapens|liefde voor het eigen volk','De race om wapens is de wapenwedloop. Het eigen volk het belangrijkst vinden is nationalisme.'],
+  ['Waarom heet het een wereldoorlog?','omdat volken uit een groot deel van de wereld meevochten','omdat in elk land ter wereld gevochten werd|omdat hij vier jaar duurde','Ook Afrikanen, Australiërs, Canadezen en Nieuw-Zeelanders vochten mee. Niet elk land deed mee: Nederland bleef bijvoorbeeld neutraal.']]},
+ {t:'De vonk en de kettingreactie',s:[
+  ['E','Zondag 28 juni 1914. De Oostenrijkse kroonprins Frans Ferdinand rijdt in een open auto door Sarajevo, de hoofdstad van Bosnië.'],
+  ['D','Een negentienjarige Serviër schiet hem dood. Hij hoorde bij een terreurgroep die door de Servische geheime dienst was gestuurd.'],
+  ['E','Dat is de vonk. Oostenrijk wil Servië straffen, en Duitsland belooft Oostenrijk te helpen.'],
+  ['D','Maar Servië krijgt steun van Rusland, en Rusland wordt aangemoedigd door Frankrijk. Zie je de dominostenen al vallen?'],
+  ['E','Op 28 juli verklaart Oostenrijk Servië de oorlog. Rusland maakt zijn leger klaar voor de strijd. Dat heet mobilisatie.'],
+  ['D','Duitsland verklaart Rusland de oorlog. Frankrijk mobiliseert, en dan verklaart Duitsland ook Frankrijk de oorlog.'],
+  ['E','Nu komt het Duitse plan: eerst Frankrijk verslaan in zeven weken, en daarna Rusland. Zo wil Duitsland een tweefrontenoorlog voorkomen, een oorlog aan twee kanten tegelijk.'],
+  ['D','Om snel bij Parijs te komen, trekt het Duitse leger op 3 augustus door het neutrale België. Dat pikken de Britten niet: Groot-Brittannië verklaart Duitsland de oorlog.'],
+  ['E','En weet je wat zo vreemd is? Overal vertrokken soldaten juichend. Op een Duitse trein stond: op naar het ontbijt in Parijs. Ze dachten dat het een kort avontuur zou worden.'],
+  ['D','Dat werd het niet. Door machinegeweren, granaten en andere wapens uit de fabriek vielen er in de eerste weken al honderdduizenden doden en gewonden.'],
+  ['E','Parijs werd op het nippertje gered. Daarna groeven de legers zich in.']],
+ q:[['Wat was de vonk die de oorlog liet beginnen?','de moord op kroonprins Frans Ferdinand in Sarajevo','de Duitse inval in België|de wapenwedloop','De moord op 28 juni 1914 was de vonk. De wapenwedloop was een oorzaak die er al lang was (het buskruit), en de inval in België kwam pas daarna.'],
+  ['Waarom trok Duitsland door België?','om snel Frankrijk te verslaan via de slechter verdedigde noordgrens','omdat België een bondgenoot van Rusland was|om Nederland te veroveren','Het plan: Frankrijk in zeven weken verslaan en daarna Rusland aanpakken.'],
+  ['Waarom verklaarde Groot-Brittannië Duitsland de oorlog?','omdat Duitsland het neutrale België binnenviel','omdat Frans Ferdinand een Brit was|omdat Duitsland de VS aanviel','De schending van de Belgische neutraliteit was voor de Britten de reden.'],
+  ['Wat betekent mobilisatie?','het leger gevechtsklaar maken','een oorlog aan twee kanten|een vredesverdrag sluiten','Een oorlog aan twee kanten heet een tweefrontenoorlog.']]},
+ {t:'Vast in de modder',s:[
+  ['E','Eind 1914 loopt er een front van zevenhonderd kilometer door Vlaanderen en Noord-Frankrijk. Aan beide kanten: loopgraven.'],
+  ['D','Diepe gangen in de grond, met zandzakken en prikkeldraad erboven. Daar woonden de soldaten, soms jarenlang, tussen de modder, de ratten en de doden.'],
+  ['E','Bij elke aanval werden honderdduizenden soldaten de dood in gejaagd voor een paar honderd meter grond. Steden als Ieper werden helemaal verwoest.'],
+  ['D','Ondertussen in het oosten vallen de Russen al in augustus 1914 aan. Dus toch die tweefrontenoorlog die Duitsland wilde voorkomen.'],
+  ['E','In 1915 verovert Duitsland grote stukken van Rusland, zoals Polen en de Baltische landen. Rusland raakt uitgeput.'],
+  ['D','Begin 1917 treedt de tsaar af, en begin 1918 sluit Rusland vrede met Duitsland. Daarover meer in de volgende aflevering.'],
+  ['E','Duitsland kan nu al zijn troepen naar het westen sturen, en rukt in het voorjaar van 1918 voor het eerst weer flink op.'],
+  ['D','Maar de geallieerden zijn sterker geworden. De Verenigde Staten doen sinds 1917 mee, en in 1918 komen er elke maand een kwart miljoen Amerikaanse soldaten bij.'],
+  ['E','Ze gebruiken ook nieuwe wapens beter, zoals tanks en vliegtuigen.'],
+  ['D','Vanaf augustus 1918 worden de Duitsers teruggedrongen en geven ze op. Op 11 november 1918, om 11 uur, zwijgen de kanonnen: de wapenstilstand.'],
+  ['E','Elf, elf, elf. Makkelijk te onthouden.'],
+  ['D','Maar de prijs was verschrikkelijk: tien miljoen gesneuvelde soldaten, en miljoenen mannen die hun leven lang verminkt bleven. Ook veel burgers kwamen om.'],
+  ['E','Het zwaarst getroffen werden de christelijke Armeniërs in het Ottomaanse Rijk. Vanaf 1915 moesten ze op dodenmarsen door de woestijn. Meer dan een miljoen Armeniërs kwamen om.']],
+ q:[['Wat is een tweefrontenoorlog?','een oorlog waarbij in twee gebieden tegelijk gevochten wordt','een oorlog tussen twee landen|een oorlog die twee keer begint','Duitsland moest vechten aan het westfront (Frankrijk) én aan het oostfront (Rusland).'],
+  ['Waardoor wonnen de geallieerden uiteindelijk?','de VS deden mee en ze zetten nieuwe wapens zoals tanks beter in','Rusland won aan het oostfront|Duitsland had geen loopgraven','Rusland had juist al vrede gesloten. De Amerikaanse soldaten en de nieuwe wapens gaven de doorslag.'],
+  ['Wanneer begon de wapenstilstand?','11 november 1918 om 11 uur','28 juni 1914|28 juni 1919','28 juni 1914 is de moord in Sarajevo, 28 juni 1919 de Vrede van Versailles.']]}],
+'1.3':[
+ {t:'De tsaar en zijn rijk',s:[
+  ['E','Welkom terug bij Tijdreis. Vandaag reizen we naar Rusland.'],
+  ['D','In 1914 het grootste land ter wereld. Veel mensen, veel steenkool en ijzererts. Klinkt sterk, toch?'],
+  ['E','Op papier wel. Maar de industrie kwam pas net op gang, en tachtig procent van de Russen was een arme boer. De meesten konden niet lezen of schrijven.'],
+  ['D','En aan de top stond de tsaar. Hij had absolute macht, en leunde op de orthodoxe kerk en op het leger.'],
+  ['E','Wie kritiek had, kreeg te maken met de geheime dienst. Die bespioneerde mensen, zette ze gevangen of stuurde ze naar Siberië.'],
+  ['D','Gematigde partijen kregen geen kans. Vooral studenten werden daardoor radicaal, en er werden duizenden aanslagen gepleegd. In 1881 werd tsaar Alexander de Tweede zelfs opgeblazen.'],
+  ['E','Rusland was ook een multi-etnische staat, een land met veel volken. Polen en Tsjetsjenen voelden zich helemaal geen Rus en verzetten zich.'],
+  ['D','In 1905 bleek hoe zwak Rusland was: het verloor een oorlog van Japan, en in de steden kwam honger.'],
+  ['E','Arbeiders liepen naar het Winterpaleis in Sint-Petersburg om tsaar Nicolaas de Tweede om hulp te vragen. Het leger schoot op ze. Een bloedbad.'],
+  ['D','Daarna kwamen er overal opstanden. Met tegenzin gaf de tsaar een parlement, de Doema. Maar dat had niets te zeggen, en het vertrouwen in de tsaar was weg.']],
+ q:[['Wat was een zwak punt van Rusland in 1914?','weinig industrie en vooral arme boeren die niet konden lezen','te weinig bodemschatten|een te klein leger','Rusland had juist veel bodemschatten en een groot leger. Maar 80% was arme boer en de industrie was pas net begonnen.'],
+  ['Hoeveel macht had de tsaar?','absolute macht: hij besliste alles alleen','hij deelde de macht met het parlement|hij had niets te zeggen','De Doema kwam pas in 1905 en had niets te zeggen.'],
+  ['Wat gebeurde er in 1905?','Rusland verloor van Japan, en het leger schoot op arbeiders bij het Winterpaleis','de tsaar trad af|Lenin kwam aan de macht','De tsaar trad pas in 1917 af, Lenin kwam eind 1917 aan de macht.']]},
+ {t:'Twee revoluties in één jaar',s:[
+  ['E','Dan komt de Eerste Wereldoorlog. En die wordt de ondergang van de tsaar.'],
+  ['D','Eind 1916 komt er te weinig eten in de steden. Begin 1917 gaan in Sint-Petersburg duizenden mensen staken en demonstreren. Op hun spandoeken: geef de kinderen te eten.'],
+  ['E','De tsaar stuurt het leger, maar de soldaten doen niet mee. Ze sluiten zich aan bij de demonstranten!'],
+  ['D','De tsaar treedt af. Rusland wordt een republiek en de Doema vormt een regering. Dit heet de Februarirevolutie, een democratische revolutie.'],
+  ['E','Maar het wordt chaos. Overal ontstaan sovjets, dat is Russisch voor raden. Arbeiders en soldaten kiezen ze uit hun eigen groep, en die raden gaan bedrijven en legereenheden besturen.'],
+  ['D','En de nieuwe regering gaat gewoon door met de oorlog. Soldaten weigeren en gaan terug naar hun dorp. Boeren pakken het land van de grootgrondbezitters af.'],
+  ['E','Dan doen de Duitsers iets slims. Ze brengen de radicale socialist Lenin in het geheim met de trein van Zwitserland naar Rusland. Ze hopen dat hij de chaos nog groter maakt.'],
+  ['D','Lenin noemt zijn aanhangers bolsjewieken. Dat betekent: zij die de meerderheid hebben. Klinkt groot, maar zo was het helemaal niet.'],
+  ['E','Lenin heeft populaire leuzen: meteen uit de oorlog, land voor de boeren, en alle macht aan de sovjets.'],
+  ['D','Terwijl hij eigenlijk wilde dat boeren op staatsboerderijen gingen werken, en dat zijn eigen partij alle macht kreeg.'],
+  ['E','Toch groeit zijn partij in een half jaar van drieëntwintigduizend naar driehonderdvijftigduizend leden.'],
+  ['D','Eind 1917 bezetten gewapende communisten de belangrijke gebouwen in Sint-Petersburg en zetten ze de regering gevangen. Een staatsgreep, die zij de Oktoberrevolutie noemden.']],
+ q:[['Wat gebeurde er bij de Februarirevolutie (begin 1917)?','de tsaar trad af en Rusland werd een republiek','Lenin pleegde een staatsgreep|de Sovjet-Unie werd opgericht','De staatsgreep van Lenin was eind 1917: de Oktoberrevolutie. De Sovjet-Unie kwam in 1922.'],
+  ['Wat zijn sovjets?','raden van arbeiders en soldaten die bedrijven en legereenheden bestuurden','aanhangers van de tsaar|Russische soldaten aan het front','Sovjet is Russisch voor raad. De aanhangers van de tsaar heetten later de witten.'],
+  ['Waarom brachten de Duitsers Lenin naar Rusland?','ze hoopten dat hij voor chaos zou zorgen, zodat Rusland uit de oorlog ging','Lenin was een Duitse generaal|Lenin wilde Duitsland laten winnen','De Duitsers wilden dat Rusland stopte met vechten, zodat ze alleen nog in het westen hoefden te vechten.']]},
+ {t:'Van Oktoberrevolutie tot Sovjet-Unie',s:[
+  ['E','Lenin is aan de macht. Wat doet hij?'],
+  ['D','Hij verbiedt alle andere partijen. Rusland wordt een eenpartijstaat, en een dictatuur: een alleenheerschappij. Lenin noemde het de dictatuur van het proletariaat, van de arbeiders.'],
+  ['E','De bolsjewieken noemden zich ook communisten. Ze wilden het kapitalisme afschaffen: fabrieken en grond mochten geen privébezit meer zijn.'],
+  ['D','Hun symbool: de hamer voor de arbeider, en de sikkel voor de boer.'],
+  ['E','Lenin regeert met angst. In december 1917 richt hij een geheime dienst op, de Tsjeka, later de KGB. Die vermoordt tienduizenden tegenstanders. Anderen verdwijnen in concentratiekampen.'],
+  ['D','In 1918 laat Lenin de tsaar en zijn hele gezin doodschieten.'],
+  ['E','Dan breekt er een burgeroorlog uit: de roden, de communisten, tegen de witten, de aanhangers van de tsaar. Wreedheden aan alle kanten, en miljoenen doden, vooral door honger.'],
+  ['D','Lenins voedselbrigades halen graan weg bij de boeren en branden hele dorpen plat. Daardoor wordt de honger alleen maar erger.'],
+  ['E','Het Rode Leger van de communisten wint in 1920. Dat leger wordt streng gecontroleerd door politieke commissarissen en heel veel ambtenaren. Zo groeit de bureaucratie: bestuur met veel ambtenaren en regels.'],
+  ['D','De communisten heroveren ook Oekraïne, Georgië en Armenië. In 1922 vormen ze samen met andere delen van het oude tsarenrijk de Sovjet-Unie.'],
+  ['E','Officieel een verbond van zelfstandige republieken. In werkelijkheid werd alles beslist in Moskou.'],
+  ['D','Leuk weetje: Sint-Petersburg heette in de oorlog Petrograd, na Lenins dood Leningrad, en sinds 1991 weer Sint-Petersburg.']],
+ q:[['Wat is een eenpartijstaat?','een staat waarin maar één partij is toegestaan','een staat met één leider zonder partij|een staat met twee grote partijen','Lenin verbood alle andere partijen.'],
+  ['Wie vochten er in de Russische Burgeroorlog?','de roden (communisten) tegen de witten (aanhangers van de tsaar)','Rusland tegen Duitsland|de tsaar tegen Japan','De roden wonnen in 1920.'],
+  ['Wanneer ontstond de Sovjet-Unie?','1922','1917|1905','1917 is het jaar van de twee revoluties, 1905 van de verloren oorlog tegen Japan.']]}],
+'1.4':[
+ {t:'De Vrede van Versailles',s:[
+  ['E','De oorlog is voorbij. Maar hoe maak je nu vrede?'],
+  ['D','In 1919 komen de winnaars samen bij Parijs. Op 28 juni 1919, precies vijf jaar na de moord in Sarajevo, wordt in het paleis van Versailles het vredesverdrag met Duitsland getekend: de Vrede van Versailles.'],
+  ['E','Duitsland werd schuldig verklaard aan de oorlog en kreeg een zware straf.'],
+  ['D','Het moest gebied afstaan, bijvoorbeeld Elzas-Lotharingen aan Frankrijk en een stuk in het oosten aan Polen. Alle koloniën was het kwijt, het leger moest heel klein worden, en het moest herstelbetalingen doen: geld om de schade te betalen.'],
+  ['E','Veel Duitsers vonden dat een schandvrede. In hoofdstuk 2 zie je wat dat later betekende.'],
+  ['D','Om een nieuwe oorlog te voorkomen werd in 1919 de Volkenbond opgericht: een organisatie van landen die ruzies moest oplossen door te praten in plaats van te vechten.'],
+  ['E','En er was een belangrijk idee: het zelfbeschikkingsrecht. Elk volk mag zelf bepalen bij welke staat zijn gebied hoort en hoe die staat bestuurd wordt.']],
+ q:[['Wat stond er in de Vrede van Versailles (1919)?','Duitsland werd schuldig verklaard, moest gebied afstaan en herstelbetalingen doen','Duitsland kreeg Elzas-Lotharingen|Duitsland en Frankrijk werden bondgenoten','Elzas-Lotharingen ging juist van Duitsland naar Frankrijk.'],
+  ['Waarvoor werd de Volkenbond opgericht?','om nieuwe oorlogen te voorkomen','om Duitsland te straffen|om de koloniën te verdelen','De Volkenbond moest ruzies tussen landen oplossen door overleg.'],
+  ['Wat is zelfbeschikkingsrecht?','het recht van een volk om zelf te bepalen bij welke staat het hoort en hoe die bestuurd wordt','het recht van een land om oorlog te voeren|het recht om in een ander land te wonen','Door dit idee vielen grote rijken met veel volken uit elkaar.']]},
+ {t:'Rijken vallen uiteen',s:[
+  ['E','Voor de oorlog bestond Oost-Europa vooral uit grote rijken met heel veel volken: multi-etnische staten. Denk aan Oostenrijk-Hongarije, Rusland en het Ottomaanse Rijk.'],
+  ['D','Door het nationalisme en het zelfbeschikkingsrecht vielen die na de oorlog uit elkaar. Er kwamen nieuwe staten, natiestaten, waarin één volk de baas wilde zijn.'],
+  ['E','Bijvoorbeeld Polen, Tsjecho-Slowakije en Joegoslavië. Joegoslavië werd eigenlijk een groot Servisch rijk onder de Servische koning. Zo werd Servië toch nog de winnaar.'],
+  ['D','Ook Hongarije werd een zelfstandig land. En van Oostenrijk bleef maar een klein, Duitstalig landje over.'],
+  ['E','En het Ottomaanse Rijk? Groot-Brittannië en Frankrijk hadden in 1916 al stiekem afgesproken hoe ze de Arabische delen zouden verdelen.'],
+  ['D','Officieel kwamen die gebieden onder de Volkenbond, en Frankrijk en Groot-Brittannië bestuurden ze namens de Volkenbond. Zo\'n gebied heet een mandaatgebied.'],
+  ['E','Ook het Turkse deel wilden de geallieerden verdelen. Griekenland zou het gebied rond Smyrna krijgen, waar al sinds de oudheid veel Grieken woonden.'],
+  ['D','De Turken waren woedend. Onder leiding van generaal Mustafa Kemal weigerden ze het verdrag.']],
+ q:[['Waarom vielen de multi-etnische rijken uit elkaar?','door nationalisme en het zelfbeschikkingsrecht wilden volken een eigen staat','omdat de Volkenbond dat beval|omdat ze te klein waren','In een multi-etnische staat woonden veel volken samen; na de oorlog wilde elk volk een eigen natiestaat.'],
+  ['Wat is een mandaatgebied?','een gebied dat in opdracht van de Volkenbond door een geallieerde staat werd bestuurd','een nieuw onafhankelijk land|een gebied zonder bewoners','Bijvoorbeeld Arabische delen van het Ottomaanse Rijk, bestuurd door Groot-Brittannië en Frankrijk.'],
+  ['Welk land werd na de oorlog eigenlijk een groot Servisch rijk?','Joegoslavië','Hongarije|Tsjecho-Slowakije','Joegoslavië kwam onder de Servische koning.']]},
+ {t:'Turkije en nieuwe spanningen',s:[
+  ['E','Griekse troepen vallen West-Anatolië binnen en rukken op tot vlak bij Ankara. Onderweg vermoorden en verdrijven ze Turkse bewoners.'],
+  ['D','Zulke acties heten etnische zuivering: het aantal mensen van een bepaalde etnische groep in een gebied verminderen, door ze weg te jagen of te vermoorden.'],
+  ['E','Maar de Turkse nationalisten slaan terug en verdrijven de Grieken. Ook de Grieken die in Anatolië woonden, moeten vluchten. In 1922 brandt een groot deel van Smyrna af en komen tienduizenden mensen om. De stad heet daarna Izmir.'],
+  ['D','In 1923 zetten de nationalisten de sultan af en roepen ze de republiek Turkije uit. Mustafa Kemal wordt president en krijgt de erenaam Atatürk: vader van de Turken.'],
+  ['E','Daarna spreken Griekenland en Turkije een volkenruil af: 1,2 miljoen Grieken moeten naar Griekenland, en een half miljoen Turken naar Turkije.'],
+  ['D','Zie je het patroon? In de oude rijken woonden volken door elkaar. In de nieuwe natiestaten verdroegen ze elkaar niet meer.'],
+  ['E','En het zelfbeschikkingsrecht werd niet overal toegepast. Arabieren kregen geen eigen staten, en Oostenrijk mocht zich niet bij Duitsland aansluiten.'],
+  ['D','In de nieuwe staten woonden bovendien weer minderheden. Zo werden drie miljoen Duitstaligen tegen hun zin inwoner van Tsjecho-Slowakije.'],
+  ['E','De nieuwe kaart van Europa loste dus problemen op, maar zorgde ook voor nieuwe spanningen.']],
+ q:[['Wat is etnische zuivering?','acties om het aantal mensen van een etnische groep in een gebied te verminderen','het opruimen van een stad na de oorlog|het samenvoegen van twee volken','Bijvoorbeeld Grieken die Turkse bewoners verdreven, en andersom.'],
+  ['Wie was Atatürk?','Mustafa Kemal, de eerste president van de republiek Turkije (1923)','de laatste sultan van het Ottomaanse Rijk|een Griekse generaal','Atatürk betekent vader van de Turken.'],
+  ['Waarom ontstonden er na 1919 nieuwe spanningen?','het zelfbeschikkingsrecht werd niet overal toegepast, en in de nieuwe staten woonden weer minderheden','omdat de Volkenbond oorlog verklaarde|omdat alle grenzen hetzelfde bleven','Bijvoorbeeld drie miljoen Duitstaligen in Tsjecho-Slowakije, en Oostenrijk mocht niet bij Duitsland.']]}],
+'2.1':[
+ {t:'De brullende jaren twintig',s:[
+  ['E','Welkom bij hoofdstuk 2 van Tijdreis: het interbellum, de tijd tussen de twee wereldoorlogen.'],
+  ['D','We beginnen in Amerika, in 1928. President Hoover belooft dat de armoede binnenkort helemaal verdwenen is.'],
+  ['E','Dat klinkt optimistisch. Maar de Verenigde Staten waren ook het rijkste land ter wereld, en de economie groeide hard.'],
+  ['D','Neem Henry Ford. In 1908 brengt hij de T-Ford op de markt, een auto voor de gewone man. Vanaf 1913 laat hij hem maken aan de lopende band.'],
+  ['E','Dat betekent: de auto komt langs de arbeiders, en iedereen zet er steeds hetzelfde onderdeeltje aan. Het maken van een motor werd opgeknipt in 84 kleine stapjes.'],
+  ['D','Daardoor ging alles sneller en goedkoper. Een T-Ford kostte in 1908 nog 850 dollar, in 1924 maar 290.'],
+  ['E','Lonen omhoog, prijzen omlaag. Mensen kochten koelkasten, stofzuigers, strijkijzers en radio\'s. Zo ontstond een consumptiemaatschappij: een samenleving waarin veel spullen worden gekocht.'],
+  ['D','In 1929 had zestig procent van de Amerikaanse gezinnen een auto. In Europa was dat ondenkbaar.'],
+  ['E','Ook de mentaliteit veranderde. In de roaring twenties, de roerige jaren twintig, gingen jongeren uit, luisterden ze naar jazz en dansten ze de charleston. Vrouwen droegen korte rokken en kort haar.'],
+  ['D','Niet iedereen vond dat leuk. Conservatieve Amerikanen verboden in 1920 de alcohol: de drooglegging. Maar mensen bleven stiekem drinken, en gangsters zoals Al Capone werden er steenrijk van. In 1933 stopte het verbod weer.']],
+ q:[['Wat is een lopende band?','een productiesysteem waarbij werknemers werken aan producten die langs hen komen','een band waarop arbeiders naar hun werk lopen|een rij mensen bij de soepkeuken','Ford liet de auto langs de arbeiders gaan, die elk één onderdeel deden.'],
+  ['Wat is een consumptiemaatschappij?','een samenleving waarin veel consumptiegoederen worden gekocht','een samenleving zonder fabrieken|een samenleving waarin iedereen boer is','In de jaren 1920 kochten Amerikanen auto\'s, koelkasten en stofzuigers.'],
+  ['Hoe werd de T-Ford zo goedkoop?','door de lopende band kon hij sneller en goedkoper gemaakt worden','de overheid betaalde mee|Ford gebruikte goedkoop hout','Van 850 dollar in 1908 naar 290 dollar in 1924.']]},
+ {t:'Zwarte donderdag',s:[
+  ['E','Door al dat optimisme werden aandelen steeds meer waard. Veel Amerikanen kochten aandelen op de beurs, het gebouw waar in aandelen wordt gehandeld. Vaak met geleend geld.'],
+  ['D','Op donderdag 24 oktober 1929 gaat het mis. Op Wall Street, de beurs van New York, zakken de koersen ineens heel snel. Een beurskrach.'],
+  ['E','Zwarte donderdag. Een keerpunt: een belangrijke, snelle verandering.'],
+  ['D','De koersen blijven dalen. In 1932 zijn de belangrijkste aandelen nog niet een kwart waard van wat ze in 1929 waard waren.'],
+  ['E','Duizenden banken en bedrijven en miljoenen boeren gaan failliet. In 1932 zijn er twaalf miljoen werklozen. Dit heet de Grote Depressie: een lange tijd van achteruitgang en werkloosheid.'],
+  ['D','Arme mensen staan in de rij voor brood en soep. Daklozen bouwen houten krotjes in de parken. Die noemen ze spottend hoovervilles, naar president Hoover.'],
+  ['E','Via de handel verspreidt de crisis zich over de hele wereld: de economische wereldcrisis. Dat is een kenmerkend aspect, dus goed onthouden!'],
+  ['D','Wat was nou de oorzaak? De directe oorzaak was de beurskrach. Maar de indirecte oorzaak was overproductie: er werd meer gemaakt dan er gekocht kon worden.'],
+  ['E','Boeren produceerden met machines enorme overschotten. En toen iedereen die een auto kon betalen er een had, raakte de markt verzadigd.'],
+  ['D','En omdat veel mensen op krediet hadden gekocht, dus met een lening, konden ze in de crisis hun schulden niet meer betalen.']],
+ q:[['Wat gebeurde er op 24 oktober 1929?','een beurskrach op Wall Street in New York','Roosevelt werd president|de Eerste Wereldoorlog eindigde','Dit heet Zwarte donderdag, het begin van de economische wereldcrisis.'],
+  ['Wat was de indirecte oorzaak van de crisis?','overproductie: er werd meer gemaakt dan er verkocht kon worden','de beurskrach|de drooglegging','De beurskrach was de directe oorzaak. De overproductie zat er al langer onder.'],
+  ['Wat waren hoovervilles?','krotjes van daklozen, spottend genoemd naar president Hoover','nieuwe fabrieken van Ford|dorpen voor rijke Amerikanen','Hoover zei dat het vanzelf beter zou worden, maar dat gebeurde niet.']]},
+ {t:'De New Deal',s:[
+  ['E','President Hoover deed weinig. Hij vond dat de overheid zich niet met de economie moest bemoeien. Zijn uitspraak: prosperity is just around the corner, de welvaart ligt om de hoek.'],
+  ['D','Maar die hoek kwam maar niet. In 1932 verloor Hoover de verkiezingen.'],
+  ['E','De nieuwe president werd Franklin Delano Roosevelt, in maart 1933. Hij pakte het heel anders aan, met de New Deal.'],
+  ['D','De overheid ging zich juist flink met de economie bemoeien, en gaf daarbij meer geld uit dan ze binnenkreeg.'],
+  ['E','Miljoenen mensen kregen werk bij openbare werken: wegen, overheidsgebouwen, stuwdammen en parken.'],
+  ['D','Boeren kregen subsidie, financiële steun van de overheid, als ze minder gingen produceren. Zo moest er een eind komen aan de overschotten.'],
+  ['E','De overheid ging toezicht houden op banken en bedrijven, en vakbonden kregen meer rechten.'],
+  ['D','Het werd beter, maar niet helemaal. In 1938 waren er nog negen miljoen werklozen. De crisis eindigde pas echt door de Tweede Wereldoorlog.'],
+  ['E','En in de crisisjaren bleven mensen massaal naar de bioscoop gaan. Er kwam de geluidsfilm, met westerns en tekenfilms van Walt Disney.'],
+  ['D','En Charlie Chaplin maakte Modern Times, over een arbeider die gek wordt van het werk aan de lopende band.']],
+ q:[['Wat was de New Deal?','het plan van Roosevelt waarbij de overheid zich met de economie bemoeide om de crisis te bestrijden','het plan van Hoover om af te wachten|een handelsverdrag met Europa','Hoover vond juist dat de overheid zich er niet mee moest bemoeien.'],
+  ['Wat is subsidie?','financiële steun van de overheid','een lening van de bank|een belasting op winst','Boeren kregen subsidie als ze minder produceerden.'],
+  ['Wanneer was de crisis echt voorbij?','pas door de Tweede Wereldoorlog','meteen in 1933|al in 1930','In 1938 waren er nog negen miljoen werklozen.']]}],
+'2.2':[
+ {t:'Mussolini, de duce',s:[
+  ['E','Tijdreis gaat naar Italië. In het eerste jaar van de Eerste Wereldoorlog was Italië neutraal.'],
+  ['D','Maar fanatieke nationalisten wilden meedoen, om stukken van Oostenrijk te veroveren. Een van hen was de journalist Benito Mussolini.'],
+  ['E','Hij had een strijdgroep: de fascisten. Die naam komt van fasces, de takkenbundels uit het Romeinse Rijk. Een bundel takken breek je niet: macht door eenheid.'],
+  ['D','In 1915 ging Italië aan de kant van de geallieerden vechten. Maar na de oorlog vonden de nationalisten dat Italië veel te weinig gebied kreeg.'],
+  ['E','Veteranen, dus oud-soldaten, en vechtlustige jongeren vormden knokploegen en vochten op straat met hun tegenstanders.'],
+  ['D','Tegelijk organiseerden radicale socialisten stakingen en bezettingen van bedrijven. Veel Italianen waren bang voor een communistische revolutie, zoals in Rusland.'],
+  ['E','En dan zegt Mussolini: ik ben de sterke man die Italië redt.'],
+  ['D','Het fascisme was antidemocratisch, gewelddadig, extreem nationalistisch en totalitair. Totalitair betekent: de overheid heerst volledig over de samenleving.'],
+  ['E','Mussolini had een hekel aan discussie, overleg en compromissen. Het land moest geleid worden door één krachtige leider: de duce. Zo liet hij zich noemen.'],
+  ['D','In oktober 1922 houden de fascisten de mars op Rome. Tienduizenden fascisten trekken naar de hoofdstad. De koning is bang voor een burgeroorlog en benoemt Mussolini tot premier.']],
+ q:[['Waar komt de naam fascisme vandaan?','van fasces: Romeinse takkenbundels, een symbool van macht door eenheid','van de naam van een Italiaanse stad|van het Italiaanse woord voor fabriek','Een bundel takken is sterker dan één takje.'],
+  ['Wat betekent totalitair?','de overheid heerst volledig over de samenleving','iedereen mag stemmen|de koning heeft de macht maar laat de mensen vrij','In een totalitaire staat bemoeit de overheid zich met alles, zelfs met wat je denkt.'],
+  ['Hoe kwam Mussolini in 1922 aan de macht?','na de mars op Rome benoemde de koning hem tot premier','hij won een eerlijke verkiezing|het leger zette de koning af','De koning was bang voor een burgeroorlog.']]},
+ {t:'Een totalitaire dictatuur',s:[
+  ['E','Eenmaal premier schakelt Mussolini met terreur zijn tegenstanders uit en verbiedt hij hun partijen. Italië wordt een eenpartijstaat.'],
+  ['D','Het fascisme wordt de staatsideologie. Via radio, kranten, films, school en grote bijeenkomsten krijgen Italianen steeds te horen hoe ze moeten denken en leven.'],
+  ['E','Dat systematisch opdringen van ideeën heet indoctrineren.'],
+  ['D','En overal zie je Mussolini. Op affiches, op gebouwen, zelfs op badpakken. Iedereen moet de grote leider prijzen. Dat heet persoonsverheerlijking.'],
+  ['E','En wie kritiek heeft, of zelfs alleen onverschillig blijft? Die krijgt te maken met de geheime politie. Zonder proces de gevangenis in, of verbannen naar een eiland.'],
+  ['D','Dus: één partij, één leider, propaganda, indoctrinatie en terreur. Dat zijn de kenmerken van een totalitaire dictatuur. Onthoud dit rijtje, want het komt zo terug bij Stalin.']],
+ q:[['Wat is indoctrineren?','systematisch ideeën opdringen','iemand vriendelijk overtuigen met argumenten|iemand opleiden tot dokter','Via school, radio, kranten en films kregen mensen steeds dezelfde ideeën te horen.'],
+  ['Wat is persoonsverheerlijking?','het uitbundig prijzen van een persoon, zoals de leider','het verheerlijken van het leger|het straffen van tegenstanders','Overal hingen portretten en stonden beelden van Mussolini, en later van Stalin.'],
+  ['Welke kenmerken hoorden bij het Italië van Mussolini?','één partij, één leider, propaganda en een geheime politie','vrije verkiezingen en veel partijen|een koning met alle macht en geen partijen','Italië werd een eenpartijstaat en een totalitaire dictatuur.']]},
+ {t:'Stalin, de man van staal',s:[
+  ['E','Terug naar de Sovjet-Unie. In 1924 sterft Lenin. Zijn opvolger wordt Josef Stalin, de man van staal. Nog meedogenlozer dan Lenin.'],
+  ['D','Stalin vindt dat de Sovjet-Unie te langzaam een industrieland wordt. In 1928 komt het eerste vijfjarenplan: de overheid bepaalt precies wat er geproduceerd moet worden. Dat heet een planeconomie.'],
+  ['E','En dat lukt, in zekere zin: er komen enorme fabrieken, mijnen, spoorlijnen en kanalen. Miljoenen boeren worden fabrieksarbeider.'],
+  ['D','Maar de boeren moeten hun land inleveren. Ze moeten samenwerken in kolchozen, grote gezamenlijke boerderijen. Dat samenvoegen heet collectivisatie.'],
+  ['E','De meeste boeren zijn ertegen. Ze verstoppen graan en slachten hun vee.'],
+  ['D','Stalin geeft de rijke boeren de schuld, de koelakken, en laat ze liquideren. Miljoenen boeren worden vermoord of weggevoerd. In Oekraïne laat hij hele gebieden uithongeren: miljoenen doden.'],
+  ['E','De Sovjet-Unie wordt een totalitaire dictatuur. Op school leren kinderen dat religie slecht is. Priesters en andere tegenstanders worden vermoord of naar werkkampen in Siberië gestuurd.'],
+  ['D','Zelfs eigen partijleden zijn niet veilig. Tussen 1936 en 1938 worden honderdduizenden communisten gearresteerd, gemarteld en vermoord.'],
+  ['E','Ondertussen laat de propaganda een land zien vol gelukkige arbeiders en boeren. En overal portretten en beelden van vadertje Stalin.'],
+  ['D','Communisme met zoveel onderdrukking en verering van de leider heet stalinisme. En dat is precies het kenmerkende aspect: het totalitaire karakter van het communistische politieke systeem.']],
+ q:[['Wat is een planeconomie?','een economie waarbij de overheid voorschrijft wat er geproduceerd moet worden','een economie waarin bedrijven vrij zijn|een economie zonder geld','Stalins vijfjarenplannen (vanaf 1928) zijn een voorbeeld.'],
+  ['Wat is collectivisatie?','privéboerderijen samenvoegen tot gemeenschappelijke landbouwbedrijven (kolchozen)','fabrieken bouwen in de stad|boeren meer eigen land geven','De boeren moesten hun land inleveren.'],
+  ['Wat is stalinisme?','communisme met extreme onderdrukking en extreme verering van de leider','het communisme van Lenin zonder geweld|het fascisme in Italië','Na Stalins dood (1953) verdween het, behalve in Noord-Korea.']]}]
+};
+
+/* extra meerkeuzevragen: [sec, vraag, goed, 'fout|fout', uitleg, deel (0-2) voor het nalezen] */
+const MCX=[
+['1.2','Welke landen waren de geallieerden?','Groot-Brittannië, Frankrijk en Rusland','Duitsland, Oostenrijk en het Ottomaanse Rijk|Nederland, Zwitserland en Spanje','Duitsland, Oostenrijk en het Ottomaanse Rijk waren centralen. Nederland, Zwitserland en Spanje bleven neutraal.',0],
+['1.2','Wat is een wapenwedloop?','een race tussen landen om de sterkste bewapening','een hardloopwedstrijd tussen soldaten|het verbieden van wapens','Militarisme en nationalisme leidden tot de wapenwedloop.',0],
+['1.2','Wat zijn loopgraven?','uitgegraven gangen waarin soldaten zich beschermen tegen de vijand','tunnels om de vijand te bespioneren|wegen om snel naar het front te gaan','Vanaf eind 1914 liep het westfront met loopgraven door Vlaanderen en Noord-Frankrijk.',2],
+['1.2','Hoe vertrokken de soldaten in augustus 1914?','enthousiast: ze dachten snel te winnen','bang: ze weigerden te gaan|somber: ze wisten dat het vier jaar zou duren','"Op naar het ontbijt in Parijs" stond er op een Duitse trein.',1],
+['1.2','Wat gebeurde er begin 1918 aan het oostfront?','Rusland sloot vrede met Duitsland','Rusland veroverde Berlijn|de VS vielen Rusland aan','Rusland was uitgeput en stond veel gebied af aan Duitsland.',2],
+['1.2','Welke groep burgers werd in de oorlog het zwaarst getroffen?','de christelijke Armeniërs in het Ottomaanse Rijk','de Nederlanders|de Amerikanen','Meer dan een miljoen Armeniërs kwamen om op dodenmarsen en door moordcommando\'s. Nederland was neutraal en de VS waren ver weg.',2],
+['1.2','Hoeveel soldaten sneuvelden er in de Eerste Wereldoorlog?','ongeveer tien miljoen','ongeveer tienduizend|ongeveer honderd miljoen','Daarnaast bleven miljoenen mannen hun leven lang verminkt.',2],
+['1.2','Wat was een oorzaak van de Eerste Wereldoorlog die er al lang was?','het nationalisme','de moord in Sarajevo|de inval in België','De moord en de inval waren gebeurtenissen in 1914 zelf. Nationalisme, militarisme en de wapenwedloop waren er al veel langer.',0],
+['1.3','Wat zijn bolsjewieken?','de aanhangers van Lenin (communisten)','de aanhangers van de tsaar|Russische boeren','Bolsjewiek betekent "zij die de meerderheid hebben", maar Lenin had helemaal niet de meeste socialisten achter zich.',1],
+['1.3','Wat was de Tsjeka?','de geheime dienst van Lenin, later de KGB','het leger van de tsaar|het parlement van Rusland','De Tsjeka vermoordde tienduizenden tegenstanders.',2],
+['1.3','Wat is bureaucratie?','bestuur met veel ambtenaren en regels','een regering zonder ambtenaren|een partij van boeren','Omdat het Rode Leger door veel ambtenaren werd gecontroleerd, groeide de bureaucratie.',2],
+['1.3','Wat was de Doema?','het Russische parlement dat de tsaar in 1905 met tegenzin instelde','de geheime dienst|het paleis van de tsaar','De Doema had eerst niets te zeggen. In 1917, na het aftreden van de tsaar, vormde ze een regering.',0],
+['1.3','Wat betekent het symbool hamer en sikkel?','de arbeider (hamer) en de boer (sikkel)','oorlog en vrede|de tsaar en de kerk','Het is het symbool van het communisme.',2],
+['1.3','Wat gebeurde er met tsaar Nicolaas II en zijn gezin?','ze werden in 1918 op bevel van Lenin doodgeschoten','ze vluchtten naar Nederland|ze gingen in ballingschap in Zwitserland','Naar Nederland vluchtte de Duitse keizer, in 1918. In Zwitserland woonde Lenin vóór 1917.',2],
+['1.3','Wat is een dictatuur?','een staat met een alleenheerschappij','een staat waarin het volk via verkiezingen regeert|een staat met een koning én een machtig parlement','Lenin noemde zijn bewind de dictatuur van het proletariaat.',2],
+['1.3','Wat is het verschil tussen de Februarirevolutie en de Oktoberrevolutie?','Februari: de tsaar treedt af (democratisch). Oktober: staatsgreep van de communisten','Februari: staatsgreep van Lenin. Oktober: de tsaar treedt af|het zijn twee namen voor dezelfde revolutie','Allebei in 1917: eerst (begin 1917) weg met de tsaar, daarna (eind 1917) de communisten aan de macht.',1],
+['1.4','Wanneer werd de Vrede van Versailles getekend?','1919','1918|1923','1918 was de wapenstilstand, 1923 de stichting van Turkije.',0],
+['1.4','Welke staten ontstonden na de Eerste Wereldoorlog?','onder andere Polen, Tsjecho-Slowakije en Joegoslavië','Frankrijk en Spanje|Duitsland en Italië','Frankrijk, Spanje, Duitsland en Italië bestonden al lang voor 1914.',1],
+['1.4','Wat was de volkenruil (1923)?','Grieken uit Turkije moesten naar Griekenland en Turken uit Griekenland naar Turkije','Griekenland en Turkije ruilden hun koningen|alle Armeniërs moesten naar Rusland','1,2 miljoen Grieken en een half miljoen Turken moesten verhuizen.',2],
+['1.4','Wat werd verboden, terwijl het volgens het zelfbeschikkingsrecht had gemogen?','de aansluiting van Oostenrijk bij Duitsland','het ontstaan van Polen|de onafhankelijkheid van Hongarije','Ook kregen Arabieren geen eigen staten. Polen en Hongarije werden wél zelfstandig.',2],
+['1.4','Wat is een natiestaat?','een staat waarin (vooral) één volk woont','een staat met heel veel volken|een staat zonder regering','Een staat met heel veel volken heet multi-etnisch. Na 1918 kwamen er natiestaten voor in de plaats.',1],
+['1.4','Wanneer werd de republiek Turkije uitgeroepen?','1923','1919|1914','In 1923 werd Mustafa Kemal (Atatürk) president.',2],
+['2.1','Wat is het interbellum?','de periode tussen de twee wereldoorlogen','de periode van de Eerste Wereldoorlog|de tijd na de Tweede Wereldoorlog','Ongeveer 1918 tot 1939. Inter = tussen, bellum = oorlog.',0],
+['2.1','Wat is een beurskrach?','een sterke en snelle daling van de aandelenkoersen','een overval op een bank|een staking op de beurs','De bekendste: Wall Street, 24 oktober 1929.',1],
+['2.1','Wat is krediet?','een lening','een spaarrekening|een belasting','Kopen op krediet maakte de crisis erger: in de crisis konden mensen hun leningen niet terugbetalen.',1],
+['2.1','Wat vond president Hoover van de crisis?','dat hij vanzelf over zou gaan en de overheid zich er niet mee moest bemoeien','dat de overheid veel geld moest uitgeven|dat alle banken van de staat moesten worden','Roosevelt deed het juist anders, met de New Deal.',2],
+['2.1','Wat was de drooglegging?','het verbod op alcohol in de VS (1920-1933)','het droogleggen van moerassen voor landbouw|een lange periode zonder regen','Gangsters zoals Al Capone verdienden er veel geld aan.',0],
+['2.1','Wat is een economische crisis (depressie)?','een lange tijd van economische achteruitgang en werkloosheid','een korte daling van de prijzen|een tijd van snelle groei','In de VS heette die van de jaren 1930 de Grote Depressie.',1],
+['2.1','Welk kenmerkend aspect hoort bij paragraaf 2.1?','de economische wereldcrisis','het totalitair karakter van het communistisch politiek systeem|het racistisch en totalitair karakter van het nationaalsocialisme','Het communistische systeem hoort bij 2.2, het nationaalsocialisme bij 2.3.',1],
+['2.2','Wie volgde Lenin op als dictator van de Sovjet-Unie?','Josef Stalin','Mussolini|Nicolaas II','Mussolini was de dictator van Italië, Nicolaas II de laatste tsaar.',2],
+['2.2','Wat is een kolchoz?','een groot landbouwbedrijf waarop boeren samenwerkten','een fabriek in de stad|een werkkamp in Siberië','Boeren moesten hun land inleveren en zich aansluiten bij een kolchoz.',2],
+['2.2','Wie waren volgens Stalin de koelakken?','rijke boeren (in de praktijk alle zelfstandige boeren)','Russische soldaten|communistische partijleden','Stalin liet ze liquideren: miljoenen werden vermoord of weggevoerd.',2],
+['2.2','Wat is een veteraan?','een oud-soldaat','een jonge soldaat|een fascistische leider','Veteranen vormden in Italië na de oorlog nationalistische knokploegen.',0],
+['2.2','Welk kenmerkend aspect hoort bij paragraaf 2.2?','het totalitair karakter van het communistisch politiek systeem','de economische wereldcrisis|het racistisch en totalitair karakter van het nationaalsocialisme','De economische wereldcrisis hoort bij 2.1, het nationaalsocialisme bij 2.3.',2],
+['2.2','Wat hadden het Italië van Mussolini en de Sovjet-Unie van Stalin gemeen?','het waren allebei totalitaire dictaturen met persoonsverheerlijking en terreur','het waren allebei democratieën|ze hadden allebei een koning met alle macht','Fascisten en communisten waren elkaars vijanden, maar hun manier van heersen leek op elkaar.',1],
+['2.2','Wat was het vijfjarenplan?','een plan van de overheid waarin precies stond wat er geproduceerd moest worden','een plan om in vijf jaar een oorlog te winnen|een plan voor vrije verkiezingen','Het eerste vijfjarenplan begon in 1928.',2]
+];
+/* begrippen uit het boek: [begrip, betekenis, sec] */
+const BEGR=[
+['centralen','Duitsland, Oostenrijk en hun bondgenoten in de Eerste Wereldoorlog','1.2'],
+['geallieerden','de VS, Groot-Brittannië, Frankrijk en Rusland met hun bondgenoten','1.2'],
+['loopgraaf','uitgegraven gang waarin soldaten zich beschermen tegen de vijand','1.2'],
+['militarisme','verheerlijking van alles wat met het leger te maken heeft','1.2'],
+['mobilisatie','het leger gevechtsklaar maken voor de oorlog','1.2'],
+['tweefrontenoorlog','oorlog waarbij in twee gebieden tegelijk gevochten wordt','1.2'],
+['wapenwedloop','race om de sterkste bewapening','1.2'],
+['wereldoorlog','oorlog waaraan veel volken uit een groot deel van de wereld meedoen','1.2'],
+['bolsjewiek','communist, aanhanger van Lenin','1.3'],
+['concentratiekamp','gevangenkamp voor tegenstanders','1.3'],
+['bureaucratie','bestuur met veel ambtenaren en regels','1.3'],
+['communist','radicale socialist, aanhanger van Lenin','1.3'],
+['dictatuur','(staat met een) alleenheerschappij','1.3'],
+['eenpartijstaat','staat met één partij die alle macht heeft','1.3'],
+['geheime dienst','overheidsdienst die in het geheim de staatsveiligheid bewaakt','1.3'],
+['Rode Leger','leger van communistisch Rusland','1.3'],
+['sovjet','raad: groep mensen die iets bestuurt','1.3'],
+['etnische zuivering','acties om etnische groepen in een gebied in aantal te verminderen','1.4'],
+['mandaatgebied','gebied dat in opdracht van de Volkenbond door een geallieerde staat werd bestuurd','1.4'],
+['Volkenbond','in 1919 opgerichte organisatie van landen om oorlog te voorkomen','1.4'],
+['Vrede van Versailles','vredesverdrag tussen de geallieerden en Duitsland (1919)','1.4'],
+['zelfbeschikkingsrecht','recht van een volk om zelf te bepalen bij welke staat zijn gebied hoort en hoe die bestuurd wordt','1.4'],
+['beurs','gebouw waar in aandelen wordt gehandeld','2.1'],
+['beurskrach','sterke en snelle daling van de aandelenkoersen op de beurs','2.1'],
+['consumptiemaatschappij','samenleving waarin veel consumptiegoederen worden gekocht','2.1'],
+['economische crisis','lange tijd van economische achteruitgang en werkloosheid (depressie)','2.1'],
+['interbellum','periode tussen de twee wereldoorlogen','2.1'],
+['keerpunt','belangrijke snelle verandering','2.1'],
+['krediet','lening','2.1'],
+['lopende band','productiesysteem waarbij werknemers werken aan voorbijkomende producten','2.1'],
+['subsidie','financiële steun van de overheid','2.1'],
+['collectivisatie','samenvoegen van privéboerderijen tot gemeenschappelijke landbouwbedrijven','2.2'],
+['fascisme','antidemocratische, gewelddadige, extreem nationalistische en totalitaire politieke beweging','2.2'],
+['indoctrineren','systematisch ideeën opdringen','2.2'],
+['kolchoz','groot landbouwbedrijf waarop boeren samenwerkten','2.2'],
+['persoonsverheerlijking','uitbundig prijzen van een persoon','2.2'],
+['planeconomie','economie waarbij de overheid voorschrijft wat er geproduceerd moet worden','2.2'],
+['stalinisme','variant van het communisme met extreme onderdrukking en extreme verering van een leider','2.2'],
+['totalitair','als de overheid volledig heerst over de samenleving','2.2'],
+['veteraan','oud-soldaat','2.2'],
+['welzijn','als het goed gaat met iemand','2.2']
+];
+/* gebeurtenissen voor de tijdlijn: [jaar (getal om te sorteren), jaar zoals je het zegt, wat, sec] */
+const EVT=[
+[1905,'1905','Rusland verliest een oorlog van Japan; bloedbad bij het Winterpaleis','1.3'],
+[1908,'1908','Henry Ford brengt de T-Ford op de markt','2.1'],
+[1913,'1913','Ford laat auto\'s maken aan de lopende band','2.1'],
+[1914.5,'28 juni 1914','Moord op Frans Ferdinand in Sarajevo','1.2'],
+[1914.6,'augustus 1914','Duitsland valt het neutrale België binnen','1.2'],
+[1915.3,'1915','Begin van de dodenmarsen van de Armeniërs','1.2'],
+[1917.1,'begin 1917','Februarirevolutie: de tsaar treedt af','1.3'],
+[1917.4,'1917','De VS gaan meedoen aan de oorlog','1.2'],
+[1917.9,'eind 1917','Oktoberrevolutie: Lenin pleegt een staatsgreep','1.3'],
+[1918.1,'begin 1918','Rusland sluit vrede met Duitsland','1.2'],
+[1918.86,'11 november 1918','Wapenstilstand: einde van de Eerste Wereldoorlog','1.2'],
+[1919.5,'1919','Vrede van Versailles en oprichting van de Volkenbond','1.4'],
+[1920.0,'1920','Verbod op alcohol in de VS (drooglegging)','2.1'],
+[1920.5,'1920','De roden winnen de Russische Burgeroorlog','1.3'],
+[1922.8,'oktober 1922','Mars op Rome: Mussolini wordt premier','2.2'],
+[1922.95,'1922','Oprichting van de Sovjet-Unie','1.3'],
+[1923.8,'1923','Republiek Turkije, met Atatürk als president','1.4'],
+[1924,'1924','Lenin sterft, Stalin wordt de nieuwe dictator','2.2'],
+[1928,'1928','Eerste vijfjarenplan van Stalin','2.2'],
+[1929.8,'24 oktober 1929','Beurskrach op Wall Street: Zwarte donderdag','2.1'],
+[1933.2,'maart 1933','Roosevelt wordt president en begint de New Deal','2.1'],
+[1936.5,'1936-1938','Stalin laat honderdduizenden partijleden arresteren en vermoorden','2.2']
+];
+/* Wie ben ik? [naam, hint1, hint2, hint3, sec] */
+const PERS=[
+['Frans Ferdinand','Ik was de kroonprins van Oostenrijk.','Ik reed in een open auto door Sarajevo.','Op 28 juni 1914 werd ik doodgeschoten.','1.2'],
+['Nicolaas II','Ik had absolute macht in het grootste land ter wereld.','In 1905 schoten mijn soldaten op arbeiders bij mijn Winterpaleis.','Begin 1917 trad ik af; in 1918 werd ik met mijn gezin doodgeschoten.','1.3'],
+['Lenin','Ik woonde jarenlang in ballingschap in West-Europa.','De Duitsers brachten mij in 1917 met de trein naar Rusland.','Ik leidde de Oktoberrevolutie en maakte Rusland een eenpartijstaat.','1.3'],
+['Atatürk','Ik was een Turkse generaal en weigerde het vredesverdrag.','Mijn troepen verdreven de Grieken uit Anatolië.','In 1923 werd ik de eerste president van de republiek Turkije.','1.4'],
+['Henry Ford','In 1904 reed ik een snelheidsrecord op een bevroren meer.','Ik maakte een auto voor de gewone man.','Mijn fabrieken werkten vanaf 1913 met de lopende band.','2.1'],
+['Hoover','Ik werd in 1928 president van de VS.','Ik vond dat de overheid zich niet met de economie moest bemoeien.','De krotjes van daklozen werden spottend naar mij genoemd.','2.1'],
+['Roosevelt','Ik won de verkiezingen van 1932.','Ik werd in maart 1933 president van de VS.','Met de New Deal liet ik de overheid de crisis bestrijden.','2.1'],
+['Al Capone','Ik was een Amerikaanse gangster.','Ik verdiende miljoenen aan illegale alcohol.','Ik werd steenrijk door de drooglegging.','2.1'],
+['Mussolini','Ik was journalist en eiste dat Italië ging meevechten in de oorlog.','Mijn aanhangers droegen zwarte uniformen.','Na de mars op Rome in 1922 werd ik premier en liet ik me duce noemen.','2.2'],
+['Stalin','Ze noemden mij de man van staal.','In 1928 begon ik met vijfjarenplannen.','Ik dwong de boeren in kolchozen en liet miljoenen mensen vermoorden.','2.2']
+];
+/* kenmerkende aspecten (tijdvak 9) */
+const KA=[['9A','het totalitair karakter van het communistisch politiek systeem','2.2'],['9B','de economische wereldcrisis','2.1'],['9C','het racistisch en totalitair karakter van het nationaalsocialisme','2.3 (niet voor deze toets)']];
+
+/* ---------- Strip: eenvoudige plaatjes in SVG (eigen stijl) ---------- */
+/* poppetje: x = midden, y = voeten. o = {c: jaskleur, h: hoed, snor, sik, baard, arm: 'op'|'wijs'|'neer'|'vuist', s: schaal, huid, vrouw} */
+function pop(x,y,o={}){const s=o.s||1,c=o.c||'#5B6B8C',hu=o.huid||'#F2C9A0',k='#1E2230';
+ let g=`<g transform="translate(${x} ${y}) scale(${s})">`;
+ g+=`<rect x="-7" y="-26" width="5" height="26" rx="2" fill="${o.broek||'#3A3F4A'}"/><rect x="2" y="-26" width="5" height="26" rx="2" fill="${o.broek||'#3A3F4A'}"/>`;
+ g+=o.vrouw?`<path d="M-11,-22 L11,-22 L8,-50 L-8,-50Z" fill="${c}" stroke="${k}" stroke-width="1"/>`:`<rect x="-10" y="-52" width="20" height="30" rx="5" fill="${c}" stroke="${k}" stroke-width="1"/>`;
+ const arm=(dx,a)=>{const sx=dx*9,sy=-48;let ex=sx+dx*6,ey=sy+20;if(a==='op'){ex=sx+dx*6;ey=sy-20}else if(a==='wijs'){ex=sx+dx*20;ey=sy-6}else if(a==='vuist'){ex=sx+dx*5;ey=sy-22}
+  return `<line x1="${sx}" y1="${sy}" x2="${ex}" y2="${ey}" stroke="${c}" stroke-width="5" stroke-linecap="round"/><circle cx="${ex}" cy="${ey}" r="3" fill="${hu}"/>`};
+ g+=arm(-1,o.armL||'neer')+arm(1,o.arm||'neer');
+ g+=`<circle cx="0" cy="-62" r="10" fill="${hu}" stroke="${k}" stroke-width="1"/><circle cx="-3.5" cy="-63" r="1.3" fill="${k}"/><circle cx="3.5" cy="-63" r="1.3" fill="${k}"/>`;
+ g+=o.boos?`<path d="M-4,-57 Q0,-59 4,-57" stroke="${k}" fill="none" stroke-width="1.2"/>`:`<path d="M-4,-58 Q0,-55 4,-58" stroke="${k}" fill="none" stroke-width="1.2"/>`;
+ if(o.snor)g+=`<path d="M-6,-59 Q-3,-61 0,-59 Q3,-61 6,-59" stroke="${k}" fill="none" stroke-width="2"/>`;
+ if(o.sik)g+=`<path d="M-3,-55 L0,-50 L3,-55Z" fill="#7A4A1E"/>`;
+ if(o.baard)g+=`<path d="M-9,-60 Q0,-46 9,-60 Q0,-54 -9,-60" fill="#5A3A1E"/>`;
+ if(o.vrouw)g+=`<path d="M-10,-63 Q-11,-74 0,-74 Q11,-74 10,-63 L12,-54 L8,-60 L-8,-60 L-12,-54Z" fill="#7A4A1E"/>`;
+ const h=o.h;
+ if(h==='kroon')g+=`<path d="M-9,-70 L-9,-80 L-5,-74 L0,-82 L5,-74 L9,-80 L9,-70Z" fill="#E8B923" stroke="${k}" stroke-width=".8"/>`;
+ else if(h==='helm')g+=`<path d="M-11,-66 Q0,-82 11,-66Z" fill="#6E7A55" stroke="${k}" stroke-width=".8"/><line x1="-14" y1="-66" x2="14" y2="-66" stroke="#6E7A55" stroke-width="2.5"/>`;
+ else if(h==='pickel')g+=`<path d="M-10,-66 Q0,-80 10,-66Z" fill="#2F3440"/><line x1="0" y1="-76" x2="0" y2="-84" stroke="#C9A227" stroke-width="2.5"/>`;
+ else if(h==='pluim')g+=`<path d="M-10,-67 Q0,-78 10,-67Z" fill="#2F6BD8"/><path d="M0,-76 Q8,-86 4,-74" fill="#7FB56A"/>`;
+ else if(h==='pet')g+=`<path d="M-10,-67 Q0,-77 10,-67Z" fill="#555"/><path d="M-2,-67 L14,-66" stroke="#555" stroke-width="3"/>`;
+ else if(h==='hoed')g+=`<rect x="-13" y="-70" width="26" height="3" rx="1" fill="#3A3F4A"/><rect x="-8" y="-79" width="16" height="10" rx="2" fill="#3A3F4A"/>`;
+ else if(h==='hogehoed')g+=`<rect x="-13" y="-70" width="26" height="3" fill="#1E2230"/><rect x="-8" y="-88" width="16" height="19" fill="#1E2230"/>`;
+ else if(h==='zwart')g+=`<path d="M-10,-67 Q0,-80 10,-67Z" fill="#111"/><circle cx="0" cy="-77" r="2" fill="#111"/>`;
+ else if(h==='kale')g+=`<path d="M-9,-66 Q0,-74 9,-66" fill="none" stroke="#C9A06A" stroke-width="2"/>`;
+ else if(h==='muts')g+=`<path d="M-10,-66 Q0,-80 10,-66Z" fill="#8A3324"/><rect x="-11" y="-68" width="22" height="4" fill="#5A2318"/>`;
+ return g+`</g>`}
+/* tekstballon: x,y = linksboven, w = breedte, regels gescheiden met | ; staart naar (tx,ty) */
+function bal(x,y,w,txt,tx,ty,o={}){const r=txt.split('|');const h=r.length*12+8;const cx=x+w/2;
+ return `<g><path d="M${cx-6},${y+h-1} L${tx},${ty} L${cx+6},${y+h-1}Z" fill="#fff" stroke="#1E2230" stroke-width="1.2"/><rect x="${x}" y="${y}" width="${w}" height="${h}" rx="${o.denk?h/2:7}" fill="#fff" stroke="#1E2230" stroke-width="1.2"/><rect x="${cx-5}" y="${y+h-3}" width="10" height="4" fill="#fff"/>
+ ${r.map((t,i)=>`<text x="${cx}" y="${y+15+i*12}" font-size="10.5" font-weight="${o.b?800:600}" text-anchor="middle" fill="#1E2230">${t}</text>`).join('')}</g>`}
+const lucht=(k1,k2)=>`<rect x="0" y="0" width="240" height="180" fill="${k1}"/><rect x="0" y="140" width="240" height="40" fill="${k2}"/>`;
+const vlag=(x,y,kl,sym)=>`<line x1="${x}" y1="${y}" x2="${x}" y2="${y-60}" stroke="#555" stroke-width="2"/><rect x="${x}" y="${y-60}" width="34" height="22" fill="${kl}"/>${sym||''}`;
+const huisje=(x,y,kl)=>`<rect x="${x}" y="${y-30}" width="30" height="30" fill="${kl}" stroke="#1E2230" stroke-width=".8"/><path d="M${x-3},${y-30} L${x+15},${y-44} L${x+33},${y-30}Z" fill="#8A3324"/><rect x="${x+11}" y="${y-14}" width="8" height="14" fill="#5A3A1E"/>`;
+const fabriek=(x,y)=>`<rect x="${x}" y="${y-36}" width="70" height="36" fill="#9A8478" stroke="#1E2230" stroke-width=".8"/><path d="M${x},${y-36} l12,-12 l0,12 l12,-12 l0,12 l12,-12 l0,12 l12,-12 l0,12" fill="#9A8478" stroke="#1E2230" stroke-width=".8"/><rect x="${x+56}" y="${y-70}" width="9" height="34" fill="#7A6458"/><circle cx="${x+62}" cy="${y-78}" r="6" fill="#bbb" opacity=".8"/><circle cx="${x+70}" cy="${y-88}" r="8" fill="#ccc" opacity=".7"/>`;
+const auto=(x,y,kl)=>`<rect x="${x}" y="${y-20}" width="64" height="14" rx="4" fill="${kl||'#2F3440'}"/><rect x="${x+12}" y="${y-32}" width="30" height="13" rx="3" fill="${kl||'#2F3440'}" opacity=".85"/><circle cx="${x+14}" cy="${y-5}" r="7" fill="#1E2230"/><circle cx="${x+50}" cy="${y-5}" r="7" fill="#1E2230"/><circle cx="${x+14}" cy="${y-5}" r="2.5" fill="#bbb"/><circle cx="${x+50}" cy="${y-5}" r="2.5" fill="#bbb"/>`;
+const trein=(x,y)=>`<rect x="${x}" y="${y-34}" width="70" height="26" rx="3" fill="#7A3B2E" stroke="#1E2230"/><rect x="${x+8}" y="${y-30}" width="14" height="10" fill="#FFE9A8"/><rect x="${x+28}" y="${y-30}" width="14" height="10" fill="#FFE9A8"/><rect x="${x+48}" y="${y-30}" width="14" height="10" fill="#FFE9A8"/>${[12,36,58].map(d=>`<circle cx="${x+d}" cy="${y-5}" r="6" fill="#1E2230"/>`).join('')}`;
+const klok=(x,y,r)=>`<circle cx="${x}" cy="${y}" r="${r}" fill="#fff" stroke="#1E2230" stroke-width="2"/>${[...Array(12)].map((_,i)=>{const a=i*Math.PI/6;return `<line x1="${x+Math.sin(a)*r*.8}" y1="${y-Math.cos(a)*r*.8}" x2="${x+Math.sin(a)*r*.92}" y2="${y-Math.cos(a)*r*.92}" stroke="#1E2230" stroke-width="1.5"/>`}).join('')}<line x1="${x}" y1="${y}" x2="${x}" y2="${y-r*.7}" stroke="#1E2230" stroke-width="2.5"/><line x1="${x}" y1="${y}" x2="${x-r*.32}" y2="${y-r*.42}" stroke="#1E2230" stroke-width="3.5"/>`;
+const domino=(x,y,lab,hoek,kl)=>`<g transform="translate(${x} ${y}) rotate(${hoek})"><rect x="-9" y="-58" width="18" height="58" rx="2" fill="${kl}" stroke="#1E2230"/><text transform="rotate(-90)" x="29" y="4" font-size="7.6" font-weight="800" text-anchor="middle" fill="#fff">${lab}</text></g>`;
+const zandzak=(x,y)=>`<ellipse cx="${x}" cy="${y}" rx="11" ry="6" fill="#B59A6A" stroke="#7A6440"/>`;
+const prikkel=(x1,x2,y)=>`<path d="M${x1},${y} ${[...Array(Math.floor((x2-x1)/8))].map((_,i)=>`l4,-4 l4,4`).join(' ')}" fill="none" stroke="#555" stroke-width="1.2"/>`;
+const grafiek=(x,y)=>`<rect x="${x}" y="${y-60}" width="90" height="60" fill="#fff" stroke="#1E2230"/><polyline points="${x+6},${y-46} ${x+20},${y-50} ${x+34},${y-44} ${x+46},${y-48} ${x+58},${y-26} ${x+70},${y-16} ${x+84},${y-8}" fill="none" stroke="#C2413A" stroke-width="3"/><path d="M${x+78},${y-14} l8,8 l-10,1Z" fill="#C2413A"/>`;
+const krot=(x,y)=>`<path d="M${x},${y} L${x},${y-22} L${x+16},${y-32} L${x+32},${y-22} L${x+32},${y}Z" fill="#9C7B55" stroke="#5A3A1E"/><line x1="${x+4}" y1="${y-14}" x2="${x+28}" y2="${y-16}" stroke="#5A3A1E"/>`;
+const tractor=(x,y)=>`<rect x="${x}" y="${y-26}" width="40" height="14" rx="2" fill="#C2413A"/><rect x="${x+22}" y="${y-44}" width="18" height="20" fill="#C2413A" stroke="#1E2230" stroke-width=".8"/><circle cx="${x+34}" cy="${y-10}" r="11" fill="#1E2230"/><circle cx="${x+6}" cy="${y-6}" r="6" fill="#1E2230"/><rect x="${x+4}" y="${y-38}" width="4" height="14" fill="#555"/>`;
+const affiche=(x,y,w,h,kop)=>`<rect x="${x}" y="${y}" width="${w}" height="${h}" fill="#F3E3B5" stroke="#1E2230"/><g transform="translate(${x+w/2} ${y+h-6}) scale(${h/95})">${pop(0,0,{c:'#111',h:'zwart',boos:1})}</g><text x="${x+w/2}" y="${y+10}" font-size="7.5" font-weight="800" text-anchor="middle" fill="#8A3324">${kop}</text>`;
+/* één paneel: o = {bg: svg, f: [svg], b: [balloon], cap: 'onderschrift'} */
+function paneel(p){return `<figure class="pnl"><svg viewBox="0 0 240 180" role="img" aria-label="${(p.cap||'').replace(/<[^>]+>/g,'')}">${p.bg}${(p.f||[]).join('')}${(p.b||[]).join('')}${p.jaar?`<rect x="0" y="162" width="${p.jaar.length*7+14}" height="18" fill="#1E2230"/><text x="7" y="175" font-size="11" font-weight="800" fill="#FFD84D">${p.jaar}</text>`:''}</svg><figcaption>${p.cap}</figcaption></figure>`}
+const STRIP={
+'1.2':()=>[
+ {jaar:'28 juni 1914',bg:lucht('#F6E7C8','#D8C9A8'),f:[`<path d="M180,140 L180,90 Q195,70 210,90 L210,140Z" fill="#E9DCC0" stroke="#9C8A68"/><circle cx="195" cy="66" r="3" fill="#9C8A68"/>`,pop(56,142,{c:'#2F6BD8',h:'pluim',snor:1,s:.8}),pop(78,142,{c:'#D07AA0',vrouw:1,s:.75}),auto(26,152,'#2F3440'),pop(150,150,{c:'#555',h:'pet',arm:'wijs',s:.9,boos:1})],b:[bal(118,34,70,'PANG!',150,78,{b:1})],cap:'Sarajevo: een Servische terrorist schiet de Oostenrijkse kroonprins Frans Ferdinand dood. Dat is de vonk.'},
+ {jaar:'juli-aug 1914',bg:lucht('#E7EEF7','#C9D3DF'),f:[domino(30,150,'OOSTENRIJK',-40,'#8A3FB8'),domino(62,150,'SERVIË',-32,'#E8742A'),domino(94,150,'RUSLAND',-22,'#E8742A'),domino(126,150,'DUITSLAND',-12,'#8A3FB8'),domino(158,150,'FRANKRIJK',-4,'#E8742A'),domino(196,150,'GR.-BRITT.',0,'#E8742A')],b:[],cap:'Door de bondgenootschappen vallen de landen om als dominostenen. Paars = centralen, oranje = geallieerden.'},
+ {jaar:'augustus 1914',bg:lucht('#DDEBF7','#B7A88A'),f:[pop(48,142,{c:'#5B6B8C',h:'pickel',arm:'op',s:.75}),pop(120,142,{c:'#5B6B8C',h:'pickel',armL:'op',s:.75}),trein(20,150),trein(92,150),pop(205,150,{c:'#D07AA0',vrouw:1,arm:'op',s:.8})],b:[bal(18,14,130,'Met kerst zijn we thuis!|Op naar Parijs!',60,62)],cap:'Overal vertrekken soldaten juichend. Iedereen denkt dat het een korte oorlog wordt.'},
+ {jaar:'1915-1917',bg:`<rect x="0" y="0" width="240" height="180" fill="#9AA3AD"/><rect x="0" y="92" width="240" height="88" fill="#6B5A40"/><rect x="0" y="118" width="240" height="62" fill="#4A3D2A"/>`+[20,42,64,150,172,194,216].map(x=>zandzak(x,92)).join('')+prikkel(0,240,78)+[...Array(14)].map((_,i)=>`<line x1="${i*18}" y1="0" x2="${i*18-10}" y2="40" stroke="#C9D3DF" stroke-width="1"/>`).join(''),f:[pop(80,170,{c:'#6E7A55',h:'helm',s:.9}),pop(150,170,{c:'#6E7A55',h:'helm',s:.9,boos:1})],b:[bal(20,10,110,'Al twee jaar|in de modder...',78,100),bal(130,30,96,'Voor 200 meter|grond.',150,100)],cap:'Het westfront zit vast: de loopgravenoorlog. Elke aanval kost duizenden levens.'},
+ {jaar:'11-11-1918',bg:lucht('#F6E7C8','#B7A88A'),f:[klok(196,52,30),pop(50,160,{c:'#6E7A55',h:'helm',arm:'op',armL:'op'}),pop(100,160,{c:'#6E7A55',h:'helm',arm:'op',s:.95}),pop(150,160,{c:'#6E7A55',h:'helm',armL:'op',s:.9})],b:[bal(30,20,110,'Het is voorbij!',80,82,{b:1})],cap:'Om 11 uur: wapenstilstand. Tien miljoen soldaten zijn gesneuveld.'}],
+'1.3':()=>[
+ {jaar:'Rusland, 1914',bg:lucht('#F2E6D9','#C9B79A'),f:[`<rect x="20" y="40" width="70" height="100" fill="#E8B923" opacity=".3"/>`,pop(55,140,{c:'#8A3324',h:'kroon',baard:1,snor:1,s:1.05}),pop(150,150,{c:'#8C7B60',h:'muts',baard:1,s:.85}),pop(195,150,{c:'#8C7B60',vrouw:1,s:.8})],b:[bal(10,10,100,'Ik heb alle|macht.',55,58),bal(128,30,104,'En wij hebben|honger.',165,78)],cap:'De tsaar heeft absolute macht. 80% van de Russen is een arme boer.'},
+ {jaar:'februari 1917',bg:lucht('#DCE3EC','#B0B6BF'),f:[`<rect x="40" y="62" width="120" height="22" fill="#fff" stroke="#1E2230"/><text x="100" y="78" font-size="13" font-weight="800" text-anchor="middle" fill="#C2413A">BROOD!</text><line x1="48" y1="84" x2="48" y2="120" stroke="#555" stroke-width="2"/><line x1="152" y1="84" x2="152" y2="120" stroke="#555" stroke-width="2"/>`,pop(40,160,{c:'#8C7B60',vrouw:1,s:.85,arm:'op'}),pop(80,160,{c:'#5B6B8C',h:'pet',s:.85}),pop(120,160,{c:'#8C7B60',vrouw:1,s:.85}),pop(200,160,{c:'#6E7A55',h:'helm',arm:'wijs',armL:'neer',s:.9})],b:[bal(160,24,76,'Ik doe mee!',200,76)],cap:'Februarirevolutie: soldaten sluiten zich aan bij de demonstranten. De tsaar treedt af.'},
+ {jaar:'april 1917',bg:lucht('#E5EEF5','#B7A88A'),f:[pop(60,142,{c:'#3A3F4A',h:'pet',sik:1,s:.8}),trein(20,150),trein(92,150),pop(200,150,{c:'#5B6B8C',h:'pickel',snor:1,arm:'wijs',s:.9})],b:[bal(120,20,112,'Gaat u maar lekker|onrust stoken!',190,72),bal(10,30,92,'Met plezier.',58,64)],cap:'De Duitsers brengen Lenin met de trein van Zwitserland naar Rusland.'},
+ {jaar:'oktober 1917',bg:lucht('#F1DADA','#C9B79A'),f:[vlag(190,140,'#C2413A',`<text x="207" y="95" font-size="13" text-anchor="middle" fill="#FFD84D">☭</text>`),`<rect x="40" y="110" width="50" height="30" fill="#8C7B60"/>`,pop(65,110,{c:'#3A3F4A',h:'pet',sik:1,arm:'wijs'}),pop(130,160,{c:'#5B6B8C',h:'pet',s:.8}),pop(160,160,{c:'#6E7A55',h:'helm',s:.8})],b:[bal(70,6,126,'Alle macht aan|de sovjets!',75,52)],cap:'Oktoberrevolutie: de communisten van Lenin plegen een staatsgreep. Rusland wordt een eenpartijstaat.'},
+ {jaar:'1922',bg:lucht('#F1DADA','#C9B79A'),f:[`<rect x="40" y="40" width="160" height="90" fill="#C2413A" stroke="#1E2230"/><text x="120" y="96" font-size="44" text-anchor="middle" fill="#FFD84D">☭</text><text x="120" y="122" font-size="14" font-weight="800" text-anchor="middle" fill="#FFD84D">SOVJET-UNIE</text>`],b:[],cap:'Na de burgeroorlog (roden tegen witten) ontstaat in 1922 de Sovjet-Unie. Alles wordt beslist in Moskou.'}],
+'1.4':()=>[
+ {jaar:'28 juni 1919',bg:`<rect x="0" y="0" width="240" height="180" fill="#EDE2C6"/>${[30,90,150,210].map(x=>`<rect x="${x-8}" y="0" width="16" height="120" fill="#D8C79A"/>`).join('')}`,f:[pop(60,150,{c:'#3A3F4A',h:'hogehoed',snor:1,s:.9}),pop(170,150,{c:'#3A3F4A',snor:1,s:.9,arm:'wijs'}),`<rect x="20" y="118" width="200" height="16" fill="#8A3324"/><rect x="30" y="134" width="8" height="40" fill="#5A2318"/><rect x="202" y="134" width="8" height="40" fill="#5A2318"/><rect x="100" y="112" width="30" height="6" fill="#fff"/>`],b:[bal(4,12,118,'Moeten wij alles|betalen?',60,46),bal(128,14,108,'Ja. Jullie zijn|schuldig.',170,46)],cap:'Vrede van Versailles: Duitsland wordt schuldig verklaard, verliest gebied en moet herstelbetalingen doen.'},
+ {jaar:'1919',bg:lucht('#E5EEF5','#C9D3DF'),f:[`<circle cx="170" cy="92" r="34" fill="#7FB0EA" stroke="#1E2230"/><path d="M150,80 q10,-10 22,-2 q8,8 -2,14 q-14,4 -20,-12Z M172,104 q10,-4 16,4 q-4,10 -14,6Z" fill="#7FB56A"/>`,pop(70,160,{c:'#3A3F4A',arm:'op'}),pop(115,160,{c:'#5B6B8C',arm:'wijs',s:.9})],b:[bal(6,20,118,'Elk volk mag zelf|beslissen!',70,90),bal(110,138,126,'We praten in plaats|van te vechten.',130,138)],cap:'Het zelfbeschikkingsrecht en de Volkenbond moeten een nieuwe oorlog voorkomen.'},
+ {jaar:'1918-1920',bg:lucht('#F2EFE6','#E2DCCB'),f:[`<path d="M20,40 L90,30 L100,70 L40,80Z" fill="#E8742A" stroke="#fff" stroke-width="3"/><path d="M95,30 L170,36 L160,70 L104,70Z" fill="#7FB0EA" stroke="#fff" stroke-width="3"/><path d="M40,84 L100,74 L120,120 L60,128Z" fill="#7FB56A" stroke="#fff" stroke-width="3"/><path d="M106,74 L162,74 L176,118 L124,120Z" fill="#E8B923" stroke="#fff" stroke-width="3"/><path d="M168,40 L220,52 L212,110 L180,110 L166,72Z" fill="#D07AA0" stroke="#fff" stroke-width="3"/><text x="60" y="58" font-size="10" font-weight="800">Polen</text><text x="104" y="54" font-size="8.5" font-weight="800">Tsjecho-Slow.</text><text x="62" y="106" font-size="9" font-weight="800">Oostenrijk</text><text x="128" y="100" font-size="9" font-weight="800">Hongarije</text><text x="172" y="84" font-size="8.5" font-weight="800">Joegoslavië</text>`],b:[],cap:'Grote rijken met veel volken vallen uiteen. Er komen nieuwe natiestaten.'},
+ {jaar:'1923',bg:lucht('#F6E0DA','#C9B79A'),f:[vlag(170,140,'#C2413A',`<circle cx="182" cy="91" r="6" fill="#fff"/><circle cx="184.5" cy="91" r="5" fill="#C2413A"/><text x="193" y="94" font-size="8" fill="#fff">★</text>`),pop(90,160,{c:'#6E7A55',h:'kale',arm:'op'})],b:[bal(12,20,130,'De republiek Turkije!',90,80,{b:1})],cap:'Mustafa Kemal verdrijft de Grieken en wordt in 1923 de eerste president van Turkije: Atatürk.'},
+ {jaar:'1923',bg:lucht('#DCEAF5','#5E9BC9'),f:[`<path d="M30,140 L210,140 L190,165 L50,165Z" fill="#5A3A1E"/><rect x="110" y="96" width="8" height="44" fill="#555"/><path d="M118,98 L160,126 L118,126Z" fill="#fff"/>`,pop(70,140,{c:'#8C7B60',vrouw:1,s:.7}),pop(90,140,{c:'#5B6B8C',h:'pet',s:.7}),pop(180,140,{c:'#8C7B60',h:'muts',s:.7})],b:[bal(20,10,200,'Volkenruil: Grieken naar Griekenland,|Turken naar Turkije.',110,80)],cap:'Nieuwe spanningen: etnische zuivering en volkenruil. In nieuwe staten wonen weer minderheden.'}],
+'2.1':()=>[
+ {jaar:'jaren 1920',bg:lucht('#EDF1F5','#9AA3AD'),f:[`<rect x="0" y="132" width="240" height="10" fill="#555"/>${[10,40,70,100,130,160,190,220].map(x=>`<circle cx="${x}" cy="137" r="3" fill="#888"/>`).join('')}`,auto(20,132,'#1E2230'),auto(130,132,'#1E2230'),pop(105,178,{c:'#2F6BD8',h:'pet',arm:'wijs',s:.8})],b:[bal(120,20,110,'Ik zet alleen|het wiel erop.',115,98)],cap:'De lopende band van Henry Ford: de T-Ford wordt goedkoop. Een auto voor de gewone man.'},
+ {jaar:'roaring twenties',bg:`<rect x="0" y="0" width="240" height="180" fill="#2A2140"/>${[30,90,150,210].map((x,i)=>`<circle cx="${x}" cy="20" r="6" fill="${['#FFD84D','#F08A45','#7FB0EA','#D07AA0'][i]}"/>`).join('')}<rect x="0" y="150" width="240" height="30" fill="#5A3A1E"/>`,f:[pop(80,165,{c:'#D07AA0',vrouw:1,arm:'op',armL:'wijs'}),pop(140,165,{c:'#1E2230',arm:'op',snor:1})],b:[bal(150,36,84,'Charleston!',145,90,{b:1})],cap:'Jazz, korte rokken en veel nieuwe spullen: de consumptiemaatschappij. (Alcohol is verboden.)'},
+ {jaar:'24 oktober 1929',bg:lucht('#E5E7EB','#B0B6BF'),f:[grafiek(140,96),`<rect x="10" y="40" width="90" height="100" fill="#D8D2C4" stroke="#1E2230"/><text x="55" y="58" font-size="9" font-weight="800" text-anchor="middle">WALL STREET</text>${[22,44,66,88].map(x=>`<rect x="${x-4}" y="64" width="8" height="76" fill="#ECE7DC"/>`).join('')}`,pop(118,172,{c:'#3A3F4A',h:'hoed',arm:'op',armL:'op',boos:1,s:.85})],b:[bal(146,112,88,'Mijn|aandelen!',132,108,{b:1})],cap:'Zwarte donderdag: de beurskrach op Wall Street. Het begin van de economische wereldcrisis.'},
+ {jaar:'1932',bg:lucht('#D9DEE5','#A8A08E'),f:[krot(16,150),krot(56,150),krot(200,150),pop(110,160,{c:'#8C7B60',h:'pet',s:.85}),pop(140,160,{c:'#8C7B60',vrouw:1,s:.8}),pop(170,160,{c:'#8C7B60',h:'pet',s:.8,boos:1})],b:[bal(70,14,160,'"De welvaart ligt om de hoek."|Welke hoek?',140,70)],cap:'De Grote Depressie: 12 miljoen werklozen en hoovervilles. Hoover wacht af.'},
+ {jaar:'1933',bg:lucht('#E3F0E6','#9C8A68'),f:[`<path d="M140,150 L160,70 L230,70 L230,150Z" fill="#B8B2A6" stroke="#1E2230"/><path d="M160,70 L230,70" stroke="#5E9BC9" stroke-width="6"/>`,pop(60,160,{c:'#3A3F4A',arm:'op'}),pop(180,150,{c:'#2F6BD8',h:'helm',s:.7}),pop(205,150,{c:'#2F6BD8',h:'helm',s:.7})],b:[bal(6,20,130,'New Deal: de overheid|gaat helpen!',60,82)],cap:'Roosevelt: openbare werken (wegen, stuwdammen) en subsidie. De crisis is pas echt voorbij door de Tweede Wereldoorlog.'}],
+'2.2':()=>[
+ {jaar:'1919-1922',bg:lucht('#EFE7DA','#C9B79A'),f:[pop(80,124,{c:'#111',h:'zwart',arm:'vuist',boos:1}),`<rect x="30" y="110" width="100" height="14" fill="#8A7A64"/><rect x="30" y="124" width="100" height="46" fill="#D8CCB4"/>`,pop(196,160,{c:'#6E7A55',h:'helm',s:.75,arm:'op'})],b:[bal(118,10,116,'Ik ben de duce!|Ik red Italië!',96,52)],cap:'Na de oorlog is het chaos in Italië. Mussolini presenteert zich als de sterke man. Zijn ideologie: het fascisme.'},
+ {jaar:'oktober 1922',bg:lucht('#EAE4D6','#B9A88A'),f:[pop(40,160,{c:'#111',h:'zwart',s:.8}),pop(75,160,{c:'#111',h:'zwart',s:.8}),pop(110,160,{c:'#111',h:'zwart',s:.8}),pop(145,160,{c:'#111',h:'zwart',s:.8}),`<rect x="182" y="60" width="44" height="80" fill="#E2D6BC" stroke="#1E2230"/><text x="204" y="56" font-size="10" font-weight="800" text-anchor="middle">ROME</text>`],b:[bal(30,16,110,'Naar Rome!',90,72,{b:1})],cap:'De mars op Rome: de koning is bang voor een burgeroorlog en maakt Mussolini premier.'},
+ {jaar:'jaren 1930',bg:lucht('#F2EFE6','#C9C2B0'),f:[affiche(14,30,52,76,'DUCE'),affiche(94,24,52,76,'DUCE'),affiche(174,30,52,76,'DUCE'),pop(120,170,{c:'#5B6B8C',h:'pet',s:.8})],b:[bal(130,112,104,'Ik mag niet eens|iets anders denken.',125,118,{denk:1})],cap:'Totalitair: één partij, propaganda, indoctrinatie, persoonsverheerlijking en een geheime politie.'},
+ {jaar:'1928',bg:lucht('#F1DADA','#B0A08A'),f:[fabriek(150,140),pop(70,160,{c:'#ECE7DC',snor:1,h:'kale',arm:'wijs'}),`<rect x="20" y="70" width="40" height="30" fill="#fff" stroke="#1E2230"/><text x="40" y="88" font-size="8" font-weight="800" text-anchor="middle">PLAN</text>`],b:[bal(80,14,104,'Vijfjarenplan!|Meer staal!',75,82)],cap:'Stalin: een planeconomie. De overheid bepaalt wat er gemaakt wordt.'},
+ {jaar:'jaren 1930',bg:lucht('#EAE7D4','#B59A6A'),f:[tractor(20,150),pop(130,160,{c:'#8C7B60',h:'muts',baard:1,boos:1}),`<rect x="160" y="70" width="70" height="50" fill="#C2413A"/><text x="195" y="100" font-size="10" font-weight="800" text-anchor="middle" fill="#fff">KOLCHOZ</text>`],b:[bal(64,20,120,'Mijn land is nu|van de kolchoz.',125,74)],cap:'Collectivisatie: boeren moeten in kolchozen. Miljoenen doden door terreur en honger (Oekraïne).'}]
+};
+function stripHtml(sec){return `<div class="strip">${STRIP[sec]().map(paneel).join('')}</div>`}
+
+/* ---------- hulpjes ---------- */
+let RNG=Math.random;
+const shuffle=a=>{a=[...a];for(let i=a.length-1;i>0;i--){const j=RNG()*(i+1)|0;[a[i],a[j]]=[a[j],a[i]]}return a};
+const pick=a=>a[RNG()*a.length|0];
+const R=(a,b)=>a+Math.floor(RNG()*(b-a+1));
+const nf=(x,d=1)=>{const r=Math.round(x*Math.pow(10,d))/Math.pow(10,d);return String(r).replace('.',',')};
+const sum=a=>a.reduce((s,x)=>s+x,0);
+function seeded(seed,fn){const old=RNG;let a=seed>>>0;RNG=()=>{a|=0;a=a+0x6D2B79F5|0;let t=Math.imul(a^a>>>15,1|a);t=t+Math.imul(t^t>>>7,61|t)^t;return((t^t>>>14)>>>0)/4294967296};try{return fn()}finally{RNG=old}}
+const SPK={E:'Eva',D:'Daan'};
+
+/* alle meerkeuzevragen: de checkvragen uit het verhaal + de extra vragen. th = deel van het verhaal (voor het nalezen) */
+const MC=[];
+SECS.forEach(s=>POD[s.id].forEach((p,i)=>p.q.forEach(q=>MC.push([s.id,q[0],q[1],q[2],q[3],s.id+':'+i]))));
+MCX.forEach(m=>MC.push([m[0],m[1],m[2],m[3],m[4],m[0]+':'+m[5]]));
+/* het verhaal als leeskaartjes (voor Lezen en Nalezen) */
+const verhaalHtml=p=>p.s.map(([w,t])=>`<p class="vl"><b class="wie ${w}">${SPK[w]}</b> ${t}</p>`).join('');
+const LP={},LEES={};
+SECS.forEach(s=>{LP[s.id]=POD[s.id].map((p,i)=>{LEES[s.id+':'+i]=[`Deel ${i+1}: ${p.t}`];return [`Deel ${i+1}: ${p.t}`,verhaalHtml(p)]})});
+
+/* ---------- generatoren (alles meerkeuze) ---------- */
+const GENS={};
+SECS.forEach(s=>{GENS['b'+s.id]={sec:s.id,t:'Begrippen '+s.id,f(){const eigen=BEGR.filter(b=>b[2]===s.id),b=pick(eigen);const rest=shuffle(BEGR.filter(x=>x!==b&&(x[2]===s.id||RNG()<.3))).slice(0,2);
+  if(RNG()<.5)return {q:`Welk begrip hoort hierbij?<div class="defbox">${b[1]}</div>`,mc:true,opts:[b[0],...rest.map(x=>x[0])],a:b[0],w:`<b>${b[0]}</b>: ${b[1]}.`};
+  return {q:`Wat betekent <b>${b[0]}</b>?`,mc:true,opts:[b[1],...rest.map(x=>x[1])],a:b[1],w:`<b>${b[0]}</b>: ${b[1]}.`}}}});
+GENS.jaar={sec:'af',t:'Jaartallen',f(){const e=pick(EVT);const jr=Math.floor(e[0]);const fout=shuffle([...new Set(EVT.map(x=>Math.floor(x[0])).filter(y=>y!==jr))]).slice(0,2);
+ return {q:`In welk jaar?<div class="defbox">${e[2]}</div>`,mc:true,opts:[String(jr),...fout.map(String)],a:String(jr),w:`${e[1]}: ${e[2]}.`}}};
+GENS.wie={sec:'af',t:'Wie ben ik?',f(){const p=pick(PERS);const fout=shuffle(PERS.filter(x=>x!==p)).slice(0,2).map(x=>x[0]);
+ return {q:`Wie ben ik?<div class="defbox">${p[1]}<br>${p[2]}<br>${p[3]}</div>`,mc:true,opts:[p[0],...fout],a:p[0],w:`Dat is <b>${p[0]}</b>.`}}};
+const SECGENS={};SECS.forEach(s=>SECGENS[s.id]=['b'+s.id]);
+
+/* ---------- De verteller: twee stemmen met de voorleesstem van het apparaat ---------- */
+const TEMPO=[['langzaam',.8],['normaal',1],['snel',1.2],['sneller',1.45]];
+const kanPraten='speechSynthesis' in window&&typeof SpeechSynthesisUtterance!=='undefined';
+function stemmen(){if(!kanPraten)return null;const nl=speechSynthesis.getVoices().filter(v=>/^nl/i.test(v.lang));if(!nl.length)return {E:{v:null,p:1.15},D:{v:null,p:.82},tekst:'geen Nederlandse stem gevonden, de standaardstem leest voor'};
+ const vr=/claire|ellen|fenna|colette|lotte|femke|anna|female|vrouw|google nederlands/i,mn=/xander|maarten|frank|arnaud|male|\bman\b/i;
+ const voorkeur=l=>l.find(v=>/nl-NL/i.test(v.lang))||l[0];
+ let e=voorkeur(nl.filter(v=>vr.test(v.name))),d=voorkeur(nl.filter(v=>mn.test(v.name)&&!vr.test(v.name)));
+ if(e&&d&&e!==d)return {E:{v:e,p:1},D:{v:d,p:1},tekst:`Eva = ${e.name}, Daan = ${d.name}`};
+ const een=e||d||voorkeur(nl);return {E:{v:een,p:1.18},D:{v:een,p:.8},tekst:`één stem (${een.name}) op twee toonhoogtes`}}
+if(kanPraten){try{speechSynthesis.getVoices();speechSynthesis.addEventListener('voiceschanged',()=>{const n=document.getElementById('stemnaam');const s=stemmen();if(n&&s)n.textContent=s.tekst})}catch(e){}}
+function stilte(){if(G&&G.m==='pod'){G.playing=false;G.token=(G.token||0)+1}if(kanPraten)try{speechSynthesis.cancel()}catch(e){}}
+function zinnen(t){return t.match(/[^.!?]+[.!?]+["”']?\s*|[^.!?]+$/g)||[t]}
+function podKey(sec,i){return sec+':'+i}
+function podMenu(sec){stilte();show('play');const s=SECS.find(x=>x.id===sec);if(!S.pod)S.pod={};
+ P.innerHTML=`<div class="playbar"><button class="btn small ghost" id="quit">Terug</button></div><div class="slide">${head('Verhaal · '+sec,esc(s.t))}<div class="slide-body">
+  <p style="margin:0">Eva en Daan vertellen het verhaal in drie delen van een paar minuten. Luister of lees, en beantwoord daarna de checkvragen.</p>
+  <div class="podlist">${POD[sec].map((p,i)=>`<button class="mode${S.pod[podKey(sec,i)]?' gehaald':''}" data-pi="${i}"><span class="lab">Deel ${i+1}</span><h3>${p.t}</h3><p>${p.s.length} fragmenten · ${p.q.length} checkvragen</p></button>`).join('')}
+   <button class="mode${(S.strip||{})[sec]?' gehaald':''}" id="pstrip"><span class="lab">Strip</span><h3>Het verhaal in plaatjes</h3><p>Vijf plaatjes met tekstballonnen.</p></button></div>
+ </div></div>`;
+ $('#quit').onclick=goHome;P.querySelectorAll('[data-pi]').forEach(b=>b.onclick=()=>podStart(sec,+b.dataset.pi));$('#pstrip').onclick=()=>stripStart(sec)}
+function podStart(sec,i){stilte();const p=POD[sec][i];const items=[];p.s.forEach(([w,t],li)=>zinnen(t).forEach(z=>items.push({w,t:z.trim(),li})));
+ G={m:'pod',sec,i,items,idx:0,playing:false,token:0,mode:kanPraten?(S.podMode||'luister'):'lees',klaar:false};show('play');podDraw()}
+function podDraw(){const p=POD[G.sec][G.i],st=stemmen(),tempo=S.tempo??1;let li=-1,html='';
+ G.items.forEach((it,k)=>{if(it.li!==li){if(li>=0)html+='</p>';li=it.li;html+=`<p class="vl"><b class="wie ${it.w}">${SPK[it.w]}</b> `}html+=`<span class="z" data-k="${k}">${esc(it.t)} </span>`});html+='</p>';
+ P.innerHTML=`<div class="playbar"><button class="btn small ghost" id="quit">Stoppen</button><span class="bar"><i style="width:${Math.round(G.i/3*100)}%"></i></span><span class="count">deel ${G.i+1}/3</span></div>
+ <div class="slide">${head('Verhaal · '+G.sec,'Deel '+(G.i+1)+': '+p.t)}<div class="slide-body">
+  ${kanPraten?`<div class="podmode"><button class="btn small ${G.mode==='luister'?'dark':'ghost'}" id="mLuis">🎧 Luisteren</button><button class="btn small ${G.mode==='lees'?'dark':'ghost'}" id="mLees">📖 Lezen</button></div>`:''}
+  ${G.mode==='luister'?`<div class="speler"><button class="btn primary" id="pPlay">${G.playing?'⏸ Pauze':(G.idx>0&&G.idx<G.items.length?'▶ Verder':'▶ Afspelen')}</button><button class="btn ghost small" id="pTerug" aria-label="Een zin terug">⏮</button>
+   <div class="tempo">${TEMPO.map(([n,v],k)=>`<button class="btn small ${tempo===k?'dark':'ghost'}" data-t="${k}">${n}</button>`).join('')}</div></div>
+   <p class="src" style="margin:0">Stemmen: <span id="stemnaam">${st?st.tekst:''}</span>. Tik op een zin om daar verder te luisteren.</p>`:''}
+  <div class="transcript${G.mode==='luister'?' luis':''}">${html}</div>
+  <div class="acts"><button class="btn ${G.klaar||G.mode==='lees'?'primary':'ghost'}" id="pVraag">Klaar, naar de checkvragen →</button></div>
+ </div></div>`;
+ $('#quit').onclick=()=>{stilte();goHome()};
+ const ml=$('#mLuis');if(ml){ml.onclick=()=>{S.podMode='luister';save();G.mode='luister';podDraw()};$('#mLees').onclick=()=>{stilte();S.podMode='lees';save();G.mode='lees';podDraw()}}
+ const pp=$('#pPlay');if(pp){pp.onclick=()=>{if(G.playing){stilte();podDraw()}else{if(G.idx>=G.items.length)G.idx=0;G.playing=true;podDraw();spreek()}};
+  $('#pTerug').onclick=()=>{G.idx=Math.max(0,G.idx-1);if(G.playing){stilte();G.playing=true;spreek()}else markZin()};
+  P.querySelectorAll('[data-t]').forEach(b=>b.onclick=()=>{S.tempo=+b.dataset.t;save();const sp=G.playing;stilte();G.playing=sp;podDraw();if(sp)spreek()})}
+ if(G.mode==='luister')P.querySelectorAll('.z').forEach(z=>z.onclick=()=>{G.idx=+z.dataset.k;const sp=G.playing;stilte();G.playing=true;podDraw();spreek()});
+ $('#pVraag').onclick=()=>{stilte();podVragen()};markZin()}
+function markZin(){P.querySelectorAll('.z.nu').forEach(z=>z.classList.remove('nu'));if(G.mode!=='luister')return;const z=P.querySelector(`.z[data-k="${G.idx}"]`);if(z&&(G.playing||G.idx>0)){z.classList.add('nu');if(G.playing)z.scrollIntoView({block:'center',behavior:'smooth'})}}
+function spreek(){if(!G||G.m!=='pod'||!G.playing)return;if(G.idx>=G.items.length){G.playing=false;G.klaar=true;podDraw();const b=$('#pVraag');if(b)b.scrollIntoView({block:'center',behavior:'smooth'});return}
+ const it=G.items[G.idx],st=stemmen()||{},sv=st[it.w]||{},tok=++G.token;const u=new SpeechSynthesisUtterance(it.t);u.lang='nl-NL';if(sv.v)u.voice=sv.v;u.pitch=sv.p||1;u.rate=TEMPO[S.tempo??1][1];
+ const door=()=>{if(!G||G.m!=='pod'||tok!==G.token||!G.playing)return;G.idx++;spreek()};u.onend=door;u.onerror=door;markZin();try{speechSynthesis.speak(u)}catch(e){G.playing=false;podDraw()}}
+function podVragen(){const sec=G.sec,i=G.i,p=POD[sec][i];const queue=shuffle(p.q.map(q=>mcItem([sec,q[0],q[1],q[2],q[3],sec+':'+i])));
+ G={m:'podq',sec,i,queue,n0:queue.length,done:0};podQNext()}
+function podQNext(){const {sec,i}=G;if(!G.queue.length){if(!S.pod)S.pod={};const nieuw=!S.pod[podKey(sec,i)];S.pod[podKey(sec,i)]=1;markDay();save();if(nieuw)confetti();
+  const volgend=i<2;P.innerHTML=`<div class="slide">${head('Verhaal · '+sec,'Deel '+(i+1)+' klaar')}<div class="slide-body"><div class="q">Alle checkvragen goed</div><div class="big">✓</div>
+   <div class="nextbox"><h3>Wat nu?</h3>${RT.on?'<div class="choice"><button class="btn primary" id="prt">Verder in de leerroute →</button></div>':''}
+   ${volgend?`<div class="choice"><button class="btn ${RT.on?'ghost':'primary'}" id="pnext">Deel ${i+2}: ${POD[sec][i+1].t} →</button></div>`:`<div class="choice"><button class="btn ${RT.on?'ghost':'primary'}" id="pstr">Bekijk de strip van ${sec} →</button></div>`}
+   <div class="choice"><button class="btn ghost" id="phome">Naar start</button></div></div></div></div>`;
+  const r=$('#prt');if(r){r.onclick=goHome;r.focus()}const n=$('#pnext');if(n)n.onclick=()=>podStart(sec,i+1);const s=$('#pstr');if(s)s.onclick=()=>stripStart(sec);$('#phome').onclick=()=>{RT.on=false;goHome()};return}
+ const q=G.queue[0];ask(q,'Checkvraag · deel '+(i+1),`${G.done}/${G.n0} goed`,topbar(G.done,G.n0,'Stoppen'),ok=>{G.queue.shift();rec(sec,ok);if(ok)G.done++;else G.queue.push(q);save();podQNext()})}
+
+/* ---------- Strip ---------- */
+function stripStart(sec){stilte();show('play');G={m:'strip',sec};const s=SECS.find(x=>x.id===sec);
+ P.innerHTML=`<div class="playbar"><button class="btn small ghost" id="quit">Terug</button></div><div class="slide">${head('Strip · '+sec,esc(s.t))}<div class="slide-body">${stripHtml(sec)}
+  <div class="acts"><button class="btn primary" id="sklaar">Gelezen ✓</button></div></div></div>`;
+ $('#quit').onclick=goHome;$('#sklaar').onclick=()=>{if(!S.strip)S.strip={};const nieuw=!S.strip[sec];S.strip[sec]=1;markDay();save();if(nieuw)confetti();goHome()}}
+
+/* ---------- Spel: Tijdlijnpuzzel (tik de gebeurtenissen in de goede volgorde) ---------- */
+function tlStart(){stilte();G={m:'tl',reeks:0,ronde:0};show('play');tlRonde()}
+function tlRonde(){let ev;do{ev=shuffle(EVT).slice(0,5)}while(new Set(ev.map(e=>Math.floor(e[0]))).size<5);
+ G.ev=ev;G.gekozen=[];G.klaar=false;tlDraw()}
+function tlDraw(){const goed=[...G.ev].sort((a,b)=>a[0]-b[0]);const ok=G.klaar&&G.gekozen.every((e,i)=>e===goed[i]);
+ P.innerHTML=`<div class="playbar"><button class="btn small ghost" id="quit">Stoppen</button><span class="count" style="flex:1;text-align:right">reeks: ${G.reeks} · record ${S.tl||0}</span></div>
+ <div class="slide">${head('Tijdlijnpuzzel','Ronde '+(G.ronde+1))}<div class="slide-body">
+  <div class="q">Tik de gebeurtenissen aan van <b>oud</b> naar <b>nieuw</b>.</div>
+  <ol class="tlrij">${G.gekozen.map((e,i)=>`<li class="${G.klaar?(e===goed[i]?'goed':'fout'):''}">${G.klaar?`<b>${e[1]}</b> `:''}${e[2]}</li>`).join('')}</ol>
+  ${G.klaar?'':`<div class="tlkies">${G.ev.filter(e=>!G.gekozen.includes(e)).map(e=>`<button class="opt" data-e="${G.ev.indexOf(e)}"><span>${e[2]}</span></button>`).join('')}</div>`}
+  ${G.klaar?`<div class="fb ${ok?'good':'bad'}"><div class="t">${ok?'Helemaal goed!':'Niet helemaal.'}</div>${ok?'':`<div class="tip"><b>Zo is het goed:</b><br>${goed.map(e=>`${e[1]}: ${e[2]}`).join('<br>')}</div>`}</div><div class="acts"><button class="btn primary" id="tlv">Volgende ronde ↵</button>${G.gekozen.length?'':''}</div>`:(G.gekozen.length?'<div class="acts"><button class="btn ghost small" id="tlu">↶ Terug</button></div>':'')}
+ </div></div>`;
+ $('#quit').onclick=goHome;P.querySelectorAll('[data-e]').forEach(b=>b.onclick=()=>{G.gekozen.push(G.ev[+b.dataset.e]);if(G.gekozen.length===5){G.klaar=true;const g=[...G.ev].sort((a,b)=>a[0]-b[0]);const ok=G.gekozen.every((e,i)=>e===g[i]);
+  G.reeks=ok?G.reeks+1:0;if(G.reeks>(S.tl||0)){S.tl=G.reeks;if(G.reeks===3)confetti()}markDay();save()}tlDraw()});
+ const u=$('#tlu');if(u)u.onclick=()=>{G.gekozen.pop();tlDraw()};const v=$('#tlv');if(v){v.onclick=()=>{G.ronde++;tlRonde()};v.focus()}}
+
+/* ---------- Spel: Wie ben ik? (hoe minder hints, hoe meer punten) ---------- */
+function wieStart(){stilte();G={m:'wie',lijst:shuffle(PERS),i:0,punten:0,hint:1};show('play');wieDraw()}
+function wieDraw(){if(G.i>=G.lijst.length){const best=S.wie||0;if(G.punten>best){S.wie=G.punten;confetti()}markDay();save();
+  P.innerHTML=`<div class="slide">${head('Wie ben ik?','Klaar')}<div class="slide-body"><div class="q">${G.punten>best?'Nieuw record!':'Score'}</div><div class="big">${G.punten}<span style="font-size:.45em;color:var(--muted)"> / ${G.lijst.length*3}</span></div><div class="count">record ${Math.max(best,G.punten)} · doel 20</div><div class="acts"><button class="btn primary" id="again">Nog een keer</button><button class="btn ghost" id="home2">Naar start</button></div></div></div>`;
+  $('#again').onclick=wieStart;$('#home2').onclick=goHome;$('#again').focus();return}
+ const p=G.lijst[G.i];if(!G.opts)G.opts=shuffle([p[0],...shuffle(PERS.filter(x=>x!==p)).slice(0,3).map(x=>x[0])]);
+ P.innerHTML=topbar(G.i,G.lijst.length)+`<div class="slide">${head('Wie ben ik?',G.punten+' punten')}<div class="slide-body">
+  <ol class="hints">${p.slice(1,1+G.hint).map(h=>`<li>${h}</li>`).join('')}</ol>
+  ${G.hint<3&&!G.af?`<div class="acts"><button class="btn ghost small" id="hint">Nog een hint (−1 punt)</button></div>`:''}
+  ${mcButtons(G.opts)}<div id="fbox"></div></div></div>`;
+ $('#quit').onclick=goHome;const h=$('#hint');if(h)h.onclick=()=>{G.hint++;wieDraw()};
+ P.querySelectorAll('.opt').forEach((b,j)=>b.onclick=()=>{const ok=G.opts[j]===p[0];markOpts(G.opts.indexOf(p[0]),j);const pt=ok?4-G.hint:0;G.punten+=pt;rec(p[4],ok);
+  $('#fbox').innerHTML=`<div class="fb ${ok?'good':'bad'}"><div class="t">${ok?`Goed! +${pt}`:'Het is '+p[0]+'.'}</div><div class="tip">${p.slice(1,4).join(' ')}</div></div><div class="foot" style="margin-top:12px"><button class="btn primary" id="next">Verder ↵</button></div>`;
+  const n=$('#next');n.onclick=()=>{G.i++;G.hint=1;G.opts=null;wieDraw()};n.focus()})}
+
+/* ================= Blitz (60 s meerkeuze) ================= */
+const BLITZ={
+ beg:{t:'Begrippenblitz',d:'Alle begrippen van de toets. 60 seconden.',make(){const b=pick(BEGR);const rest=shuffle(BEGR.filter(x=>x!==b)).slice(0,2);return {q:`<span style="font-size:.85em">${b[1]}</span>`,opts:shuffle([b[0],...rest.map(x=>x[0])]),a:b[0],w:`${b[0]}: ${b[1]}`}}},
+ jaar:{t:'Jaartallenblitz',d:'Wanneer gebeurde het? 60 seconden.',make(){const q=GENS.jaar.f();return {q:q.q,opts:shuffle(q.opts),a:q.a,w:q.w.replace(/<[^>]+>/g,'')}}}
+};
+function blitzStart(k){stilte();const B=BLITZ[k];show('play');G={m:'blitz',k,score:0,combo:0,n:0,ok:0,end:performance.now()+60000,mist:[]};
+ P.innerHTML=`<div class="playbar"><button class="btn small ghost" id="quit">Stoppen</button><span class="count" id="bsc">0 punten</span><span class="timer" id="btm">60</span></div><div class="slide">${head(B.t,'60 seconden')}<div class="slide-body"><div class="prompt" id="bq" style="text-align:center"></div><span class="combo" id="bcb" hidden></span><div id="bo"></div><div class="src" id="bfb">&nbsp;</div></div></div>`;
+ $('#quit').onclick=()=>{clearInterval(G.timer);goHome()};blitzNext();G.timer=setInterval(()=>{const l=Math.max(0,(G.end-performance.now())/1000);const t=$('#btm');if(!t)return;t.textContent=Math.ceil(l);t.classList.toggle('low',l<10);if(l<=0)blitzEnd()},100)}
+function blitzNext(){const q=BLITZ[G.k].make();G.q=q;$('#bq').innerHTML=q.q;$('#bo').innerHTML=mcButtons(q.opts);
+ P.querySelectorAll('.opt').forEach((b,i)=>b.onclick=()=>{if(G.over)return;const ok=q.opts[i]===q.a;G.n++;if(ok){G.ok++;G.combo++;G.score+=1+Math.floor(G.combo/5);b.classList.add('good')}else{G.combo=0;G.end-=3000;b.classList.add('bad');G.mist.push(q.w)}
+  $('#bsc').textContent=G.score+' punten';const cb=$('#bcb');cb.hidden=G.combo<5;cb.textContent=`combo ×${1+Math.floor(G.combo/5)}`;$('#bfb').innerHTML=ok?'&nbsp;':q.w+' (−3 s)';P.querySelectorAll('.opt').forEach(x=>x.disabled=true);setTimeout(()=>{if(G&&G.m==='blitz'&&!G.over)blitzNext()},ok?160:1100)})}
+function blitzEnd(){clearInterval(G.timer);G.over=true;if(!S.blitz)S.blitz={};const best=S.blitz[G.k]||0;const nr=G.score>best;if(nr){S.blitz[G.k]=G.score;confetti()}markDay();save();const k=G.k;
+ P.innerHTML=`<div class="slide">${head(BLITZ[k].t,'Klaar')}<div class="slide-body"><div class="q">${nr?'Nieuw record!':'Score'}</div><div class="big">${G.score}</div><div class="count">${G.ok} van ${G.n} goed · record ${Math.max(best,G.score)}</div>${G.mist.length?`<div class="fb bad"><div class="t">Even onthouden</div><div class="tip">${[...new Set(G.mist)].join('<br>')}</div></div>`:''}<div class="acts"><button class="btn primary" id="again">Nog een keer</button><button class="btn ghost" id="home2">Naar start</button></div></div></div>`;
+ $('#again').onclick=()=>blitzStart(k);$('#home2').onclick=goHome;$('#again').focus()}
+
+/* ---------- De Tijdreis (de "berg" van geschiedenis): per paragraaf een station, met een vervoermiddel uit die tijd ---------- */
+const KCAMPS=[{sec:'1.2',n:'Station Ieper 1918',v:'tank',vn:'een tank'},{sec:'1.3',n:'Station Petrograd 1917',v:'trein',vn:'de trein van Lenin'},{sec:'1.4',n:'Station Versailles 1919',v:'boot',vn:'een stoomschip'},{sec:'2.1',n:'Station New York 1929',v:'ford',vn:'een T-Ford'},{sec:'2.2',n:'Station Moskou 1930',v:'tractor',vn:'een tractor van de kolchoz'}];
+const KGEN={};SECS.forEach(s=>KGEN[s.id]=['b'+s.id,'b'+s.id,'b'+s.id,'b'+s.id]);
+function klimInit(){if(!S.klim)S.klim={gen:{},m:{},best:0};const K=S.klim;
+  KCAMPS.forEach(c=>{if(!K.gen[c.sec])K.gen[c.sec]=KGEN[c.sec].map(k=>({gen:k,seed:Math.random()*1e9|0}))});return K}
+function klimItems(sec){const K=klimInit();
+  return [...MC.filter(m=>m[0]===sec).map(m=>Object.assign(mcItem(m),{kid:'m:'+m[1]})),...K.gen[sec].map((g,i)=>Object.assign({sec,gen:g.gen},seeded(g.seed,()=>GENS[g.gen].f()),{kid:'g:'+sec+':'+i}))]}
+function klimPct(sec){const K=klimInit();const it=klimItems(sec);return it.filter(q=>K.m[q.kid]).length/it.length}
+function klimTotal(){const K=klimInit();let a=0,b=0;KCAMPS.forEach(c=>{const it=klimItems(c.sec);a+=it.filter(q=>K.m[q.kid]).length;b+=it.length});return {a,b,p:a/b}}
+function klimOpen(i){return i===0||klimPct(KCAMPS[i-1].sec)>=1}
+const VOERTUIG={
+ tank:`<path d="M-20,0 L20,0 L24,-8 L-24,-8Z" fill="#6E7A55" stroke="#1E2230"/><rect x="-12" y="-16" width="20" height="8" fill="#6E7A55" stroke="#1E2230"/><line x1="8" y1="-12" x2="24" y2="-14" stroke="#1E2230" stroke-width="3"/>${[-16,-6,4,14].map(x=>`<circle cx="${x}" cy="-3" r="3" fill="#1E2230"/>`).join('')}`,
+ trein:`<rect x="-24" y="-18" width="34" height="14" rx="2" fill="#7A3B2E" stroke="#1E2230"/><rect x="10" y="-14" width="14" height="10" fill="#3A3F4A"/><rect x="14" y="-22" width="5" height="8" fill="#3A3F4A"/>${[-18,-6,6,18].map(x=>`<circle cx="${x}" cy="-2" r="3.5" fill="#1E2230"/>`).join('')}<circle cx="22" cy="-28" r="4" fill="#ccc" opacity=".8"/>`,
+ boot:`<path d="M-26,-6 L26,-6 L18,4 L-20,4Z" fill="#3A3F4A"/><rect x="-14" y="-16" width="26" height="10" fill="#fff" stroke="#1E2230"/><rect x="-4" y="-26" width="7" height="10" fill="#C2413A"/><circle cx="2" cy="-31" r="4" fill="#ccc" opacity=".8"/>`,
+ ford:`<rect x="-22" y="-12" width="44" height="9" rx="3" fill="#1E2230"/><rect x="-10" y="-22" width="20" height="10" rx="2" fill="#1E2230"/><circle cx="-12" cy="-2" r="5" fill="#555"/><circle cx="12" cy="-2" r="5" fill="#555"/>`,
+ tractor:`<rect x="-20" y="-12" width="26" height="9" fill="#C2413A"/><rect x="-2" y="-24" width="12" height="12" fill="#C2413A" stroke="#1E2230" stroke-width=".8"/><circle cx="8" cy="-4" r="7" fill="#1E2230"/><circle cx="-15" cy="-2" r="4" fill="#1E2230"/>`};
+function klimMtn(){const t=klimTotal();const W=340,H=210;const pts=[[24,170],[86,128],[150,160],[206,96],[262,128],[316,50]];
+ let s=`<rect x="0" y="0" width="${W}" height="${H}" rx="12" fill="var(--chip)"/><path d="M${pts.map(p=>p.join(',')).join(' L')}" fill="none" stroke="var(--muted)" stroke-width="5" stroke-linecap="round" stroke-dasharray="1 11"/>`;
+ s+=`<text x="${pts[0][0]}" y="${pts[0][1]+22}" font-size="10" text-anchor="middle" fill="currentColor">vertrek</text>`;
+ KCAMPS.forEach((c,i)=>{const [x,y]=pts[i+1];const done=klimPct(c.sec)>=1;s+=`<circle cx="${x}" cy="${y}" r="9" fill="${done?'var(--accent)':'var(--surface)'}" stroke="currentColor" stroke-width="2"/><text x="${x}" y="${y+24}" font-size="10" font-weight="700" text-anchor="middle" fill="currentColor">${c.sec}</text>`});
+ const seg=Math.min(t.p*5,4.999),i=Math.floor(seg),f=seg-i;const x=pts[i][0]+(pts[i+1][0]-pts[i][0])*f,y=pts[i][1]+(pts[i+1][1]-pts[i][1])*f;const v=t.p>=1?KCAMPS[4].v:KCAMPS[i].v;
+ s+=`<g transform="translate(${x} ${y-8}) scale(1.5)">${VOERTUIG[v]}</g>`;
+ return `<svg class="chart" viewBox="0 0 ${W} ${H}" style="max-width:520px;color:var(--ink)">${s}</svg>`}
+function klimHome(){stilte();const t=klimTotal();show('play');const i=KCAMPS.findIndex(c=>klimPct(c.sec)<1);
+  P.innerHTML=`<div class="playbar"><button class="btn small ghost" id="quit">Terug</button><span class="bar"><i style="width:${Math.round(t.p*100)}%"></i></span><span class="count">${Math.round(t.p*100)}%</span></div>
+  <div class="slide">${head('Spel','De Tijdreis')}<div class="slide-body">
+   <div class="count">${t.a} van ${t.b} vragen goed beantwoord</div>
+   ${klimMtn()}
+   <p style="margin:0">Reis door de tijd van station naar station. ${i<0?'Je bent er: alle stations gehaald!':`Je reist nu met <b>${KCAMPS[i].vn}</b> naar <b>${KCAMPS[i].n}</b>.`} Elke goede vraag brengt je verder; een foute vraag komt terug tot je hem goed hebt. Pas als een station op 100% staat, gaat het volgende open.</p>
+   <div class="kcamps">${KCAMPS.map((c,i)=>{const p=klimPct(c.sec),o=klimOpen(i);return `<button class="bkamp${p>=1?' done':''}" data-k="${i}" ${o?'':'disabled'}><b>${o?(p>=1?'★':'🚉'):'🔒'} ${c.n}</b><span>${c.sec} ${esc(SECS.find(x=>x.id===c.sec).t)} · reis met ${c.vn}</span><span class="bar"><i style="width:${Math.round(p*100)}%"></i></span><span class="count">${Math.round(p*100)}%</span></button>`}).join('')}</div>
+   <div class="acts"><button class="btn ghost small" id="kreset">Opnieuw beginnen</button></div>
+  </div></div>`;
+  $('#quit').onclick=goHome;P.querySelectorAll('[data-k]').forEach(b=>b.onclick=()=>klimPlay(+b.dataset.k));
+  $('#kreset').onclick=()=>{$('#kreset').parentNode.innerHTML='<span>Weer vanaf het begin reizen?</span><button class="btn small dark" id="kY">Ja</button><button class="btn small ghost" id="kN">Nee</button>';
+    $('#kY').onclick=()=>{S.klim=null;klimInit();save();klimHome()};$('#kN').onclick=klimHome}}
+function klimPlay(ci){stilte();const c=KCAMPS[ci];const K=klimInit();save();
+  const open=shuffle(klimItems(c.sec).filter(q=>!K.m[q.kid]));
+  if(!open.length){klimHome();return}
+  G={m:'klim',ci,queue:open.slice(0,12),n0:Math.min(12,open.length),done:0,combo:0,maxc:0,fout:0};show('play');klimNext()}
+function klimNext(){const K=S.klim,c=KCAMPS[G.ci],last=KCAMPS.length-1;
+  if(!G.queue.length){const p=klimPct(c.sec);if(p>=1)confetti();save();
+    const top=klimTotal().p>=1;
+    P.innerHTML=`<div class="slide">${head('Tijdreis',c.n)}<div class="slide-body">
+     <div class="q">${top?'Eindstation bereikt!':p>=1?c.n+' bereikt!':'Rondje klaar'}</div><div class="big">${Math.round(p*100)}%</div>
+     <div>${top?'Alle vragen van de toetsstof goed. Goede reis gehad!':p>=1?(G.ci<last?'De reis gaat verder: '+KCAMPS[G.ci+1].vn+' staat klaar.':''):`Nog ${klimItems(c.sec).filter(q=>!K.m[q.kid]).length} vragen tot het station.`} Langste reeks: ${G.maxc}.</div>
+     ${klimMtn()}
+     <div class="acts">${p<1?'<button class="btn primary" id="kv">Verder reizen</button>':G.ci<last?'<button class="btn primary" id="kn">Naar het volgende station</button>':''}<button class="btn ghost" id="kh">Reiskaart</button></div></div></div>`;
+    const kv=$('#kv'),kn=$('#kn');if(kv){kv.onclick=()=>klimPlay(G.ci);kv.focus()}if(kn){kn.onclick=()=>klimPlay(G.ci+1);kn.focus()}$('#kh').onclick=klimHome;return}
+  const q=G.queue[0];const tot=G.n0;
+  ask(q,`${c.n} · par. ${c.sec}`,G.combo>=3?`🔥 ${G.combo} op rij`:`Reeks: ${G.combo}`,topbar(G.done,tot,'Reiskaart'),ok=>{
+    G.queue.shift();rec(c.sec,ok);
+    if(ok){K.m[q.kid]=1;G.done++;G.combo++;G.maxc=Math.max(G.maxc,G.combo);if(G.combo%5===0)confetti()}
+    else{G.combo=0;G.fout++;G.queue.splice(Math.min(3,G.queue.length),0,q)}
+    save();klimNext()},{onQuit:klimHome});}
+
+/* ---------- Leerroute: per paragraaf verhaal (3 delen), strip, begrippen, oefenronde, station ---------- */
+/* stap: [id, deel, titel, waarom nu, gewicht (%), type, arg, doel]; de gewichten tellen op tot 100 */
+const ROUTE=[];
+SECS.forEach((s,n)=>{POD[s.id].forEach((p,i)=>ROUTE.push([`pod${s.id}-${i}`,s.id,`Verhaal ${s.id} deel ${i+1}: ${p.t}`,i===0?`Luister of lees wat Eva en Daan vertellen over ${s.t.toLowerCase()}. Daarna een paar checkvragen.`:'Het verhaal gaat verder. Daarna weer checkvragen.',2,'pod',[s.id,i]]));
+ ROUTE.push([`strip${s.id}`,s.id,`Strip ${s.id}`,'Het hele verhaal nog eens in vijf plaatjes.',1,'strip',s.id]);
+ ROUTE.push([`b${s.id}`,s.id,`Begrippen ${s.id}`,'De begrippen uit het boek: vijf goed op rij.',3,'tr','b'+s.id,5]);
+ ROUTE.push([`pr${s.id}`,s.id,`Oefenronde ${s.id}`,'Alles van deze paragraaf door elkaar. Fout? Je krijgt uitleg en kunt het stukje nalezen.',4,'pr',s.id]);
+ ROUTE.push([`k${n}`,s.id,`Tijdreis: ${KCAMPS[n].n}`,`Reis met ${KCAMPS[n].vn} naar het station: elke vraag van de paragraaf één keer goed.`,4,'klim',n])});
+ROUTE.push(['tl','af','Tijdlijnpuzzel','Zet gebeurtenissen in de goede volgorde: drie rondes goed op rij.',2,'tl',null,3],
+ ['wie','af','Wie ben ik?','Raad de personen. Haal 20 punten.',2,'wie',null,20],
+ ['toets','af','Proeftoets','De generale repetitie. Haal je een 7, dan ben je klaar voor de echte toets.',6,'toets',null,7],
+ ['samen','af','Samenvatting: ochtend voor de toets','Alles nog één keer doorlezen. Ongeveer 10 minuten.',0,'samen',null,1]);
+const RDEEL={'1.2':'1.2 · De Grote Oorlog','1.3':'1.3 · Revolutie in Rusland','1.4':'1.4 · De nieuwe kaart van Europa','2.1':'2.1 · Welvaart en crisis in de VS','2.2':'2.2 · Fascisme en communisme','af':'Afronden'};
+
+function SAMENV(){return {
+ intro:'De toets gaat over de <b>tijd van de wereldoorlogen</b> (1900-1950): de Eerste Wereldoorlog (1914-1918), de revoluties in Rusland, de nieuwe kaart van Europa na de oorlog, en het <b>interbellum</b>: de crisis in de VS en de dictaturen van Mussolini en Stalin. Kenmerkende aspecten: <b>de economische wereldcrisis</b> (2.1) en <b>het totalitair karakter van het communistisch politiek systeem</b> (2.2).',
+ delen:[
+ {t:'1.2 · De Grote Oorlog (1914-1918)',leer:'waardoor de oorlog ontstond, hoe hij begon en hoe hij verliep.',kern:[
+  '<b>Geallieerden</b> (Groot-Brittannië, Frankrijk, Rusland, later Italië en de VS) tegen de <b>centralen</b> (Duitsland, Oostenrijk, Ottomaanse Rijk).',
+  'Oorzaken: <b>nationalisme</b>, <b>militarisme</b>, <b>wapenwedloop</b>, bondgenootschappen, Franse wraakgevoelens en de Balkan.',
+  'Vonk: <b>28 juni 1914</b> moord op Frans Ferdinand in Sarajevo. Kettingreactie: oorlogsverklaringen en <b>mobilisatie</b>. Duitsland valt via het neutrale <b>België</b> Frankrijk aan → Groot-Brittannië doet mee.',
+  'Westfront: <b>loopgraven</b>, het front zit vast. Oostfront: Duitsland moet een <b>tweefrontenoorlog</b> voeren; begin 1918 sluit Rusland vrede.',
+  'De VS (vanaf 1917) en tanks geven de doorslag. <b>11-11-1918 om 11 uur</b>: wapenstilstand. 10 miljoen soldaten dood; meer dan een miljoen Armeniërs vermoord.']},
+ {t:'1.3 · Revolutie in Rusland',leer:'hoe Rusland van tsarenrijk een communistische dictatuur werd.',kern:[
+  'Rusland 1914: grootste land, maar weinig industrie en 80% arme boeren. De tsaar heeft absolute macht; de <b>geheime dienst</b> onderdrukt kritiek.',
+  '1905: verloren oorlog tegen Japan, bloedbad bij het Winterpaleis, Doema zonder macht.',
+  'Begin 1917: <b>Februarirevolutie</b>: honger, soldaten doen mee, de tsaar treedt af, Rusland wordt republiek. Overal <b>sovjets</b> (raden).',
+  'Eind 1917: <b>Oktoberrevolutie</b>: staatsgreep van Lenin en de <b>bolsjewieken</b> (<b>communisten</b>). Rusland wordt een <b>eenpartijstaat</b> en <b>dictatuur</b>. Terreur door de Tsjeka, <b>concentratiekampen</b>; de tsaar en zijn gezin vermoord (1918).',
+  'Burgeroorlog roden tegen witten, het <b>Rode Leger</b> wint (1920), veel <b>bureaucratie</b>. <b>1922</b>: de Sovjet-Unie.']},
+ {t:'1.4 · De nieuwe kaart van Europa',leer:'hoe de vrede werd gesloten en welke nieuwe staten en spanningen er kwamen.',kern:[
+  '<b>1919: Vrede van Versailles</b>: Duitsland schuldig verklaard, zware straf (gebied kwijt, herstelbetalingen).',
+  '<b>Volkenbond</b> (1919) moet nieuwe oorlogen voorkomen.',
+  '<b>Zelfbeschikkingsrecht</b>: multi-etnische rijken vallen uiteen; nieuwe natiestaten zoals Polen, Tsjecho-Slowakije, Joegoslavië en Hongarije.',
+  'Arabische delen van het Ottomaanse Rijk worden <b>mandaatgebieden</b> van Groot-Brittannië en Frankrijk.',
+  '<b>1923: republiek Turkije</b>, president Kemal Atatürk. <b>Etnische zuivering</b> en volkenruil tussen Grieken en Turken.',
+  'Nieuwe spanningen: het zelfbeschikkingsrecht werd niet overal toegepast (geen Arabische staten, Oostenrijk mag niet bij Duitsland), en er woonden weer minderheden in de nieuwe staten.']},
+ {t:'2.1 · Welvaart en crisis in de VS',leer:'hoe de welvaart ontstond, hoe de economische wereldcrisis begon en hoe die werd bestreden.',kern:[
+  'Jaren 1920 (<b>interbellum</b>): de VS zijn het rijkste land. <b>Lopende band</b> (Ford, T-Ford) → goedkoper → <b>consumptiemaatschappij</b>. Roaring twenties, jazz, drooglegging (1920-1933).',
+  '<b>24 oktober 1929</b>: <b>beurskrach</b> op Wall Street (Zwarte donderdag) = een <b>keerpunt</b>. Begin van de Grote Depressie: een <b>economische crisis</b> met 12 miljoen werklozen (1932).',
+  'Directe oorzaak: de beurskrach. Indirecte oorzaak: <b>overproductie</b>. Erger door kopen op <b>krediet</b>. Via de handel wordt het de <b>economische wereldcrisis</b>.',
+  'Hoover wacht af ("de welvaart ligt om de hoek"). <b>Roosevelt</b> (1933): de <b>New Deal</b>: openbare werken, <b>subsidie</b>, toezicht op banken. Pas de Tweede Wereldoorlog maakt echt een eind aan de crisis.']},
+ {t:'2.2 · Fascisme en communisme',leer:'hoe Italië en de Sovjet-Unie totalitaire dictaturen werden.',kern:[
+  'Italië na de oorlog: onvrede en chaos, <b>veteranen</b> in knokploegen. Mussolini en het <b>fascisme</b>: antidemocratisch, gewelddadig, extreem nationalistisch en <b>totalitair</b>.',
+  '<b>1922: mars op Rome</b> → Mussolini premier; daarna eenpartijstaat met het fascisme als staatsideologie, <b>indoctrineren</b>, <b>persoonsverheerlijking</b> (de duce) en geheime politie.',
+  'Sovjet-Unie: Stalin volgt Lenin op (1924). <b>Planeconomie</b> met vijfjarenplannen (1928): snelle industrialisatie.',
+  '<b>Collectivisatie</b>: boeren moeten in <b>kolchozen</b>; koelakken geliquideerd, hongersnood in Oekraïne, miljoenen doden.',
+  'Terreur, werkkampen en propaganda maken de Sovjet-Unie een totalitaire dictatuur: het <b>stalinisme</b>.']}],
+ slot:['Kenmerkende aspecten: 9B <b>de economische wereldcrisis</b> (2.1) en 9A <b>het totalitair karakter van het communistisch politiek systeem</b> (2.2). Kun je bij elk een voorbeeld noemen?','Ken de jaartallen: 1914, 1917 (twee revoluties), 11-11-1918, 1919, 1922 (Sovjet-Unie en mars op Rome), 1923, 1928, 1929, 1933.','Leg bij een open vraag altijd uit wat de <b>oorzaak</b> en wat het <b>gevolg</b> is.']}}
+
+/* ---------- Gehaald: groen met ✓ op het hoofdscherm ---------- */
+function stp(ty,a){return ROUTE.filter(r=>r[5]===ty&&(a===undefined||JSON.stringify(r[6])===JSON.stringify(a)))}
+function alleKlaar(l){return l.length>0&&l.every(rDone)}
+function zetG(el,ok){if(el)el.classList.toggle('gehaald',!!ok)}
+function markeer(){try{GEHAALD()}catch(e){}}
+function GEHAALD(){
+ document.querySelectorAll('[data-pm]').forEach(b=>{const sec=b.dataset.pm;zetG(b,alleKlaar(stp('pod').filter(r=>r[6][0]===sec)))});
+ document.querySelectorAll('[data-st]').forEach(b=>zetG(b,alleKlaar(stp('strip',b.dataset.st))));
+ document.querySelectorAll('#secs [data-o]').forEach(b=>{const sec=b.dataset.o;zetG(b,alleKlaar(stp('pr',sec)));const row=b.closest('.sec');if(row)zetG(row,alleKlaar(ROUTE.filter(r=>r[1]===sec)))});
+ document.querySelectorAll('#tools [data-g]').forEach(b=>{const k=b.dataset.g,l=stp('tr',k);zetG(b,l.length?alleKlaar(l):((S.tr||{})[k]||0)>=5)});
+ document.querySelectorAll('[data-blitz]').forEach(b=>zetG(b,((S.blitz||{})[b.dataset.blitz]||0)>=15));
+ zetG($('#klim'),alleKlaar(stp('klim')));zetG($('#tl'),alleKlaar(stp('tl')));zetG($('#wie'),alleKlaar(stp('wie')));zetG($('#toets'),alleKlaar(stp('toets')));zetG($('#samen'),!!S.samen);
+}
+let RT={on:false,before:null};
+function rVal(r){if(r[5]==='samen')return S.samen?1:0;const ty=r[5],a=r[6];
+ if(ty==='pod')return (S.pod||{})[a[0]+':'+a[1]]?1:0;
+ if(ty==='strip')return (S.strip||{})[a]?1:0;
+ if(ty==='pr')return (S.pr||{})[a]||0;
+ if(ty==='tr')return (S.tr||{})[a]||0;
+ if(ty==='tl')return S.tl||0;
+ if(ty==='wie')return S.wie||0;
+ if(ty==='klim')return klimPct(KCAMPS[a].sec);
+ if(ty==='toets')return S.best||0;return 0}
+function rGoal(r){const ty=r[5];return ty==='pod'||ty==='strip'||ty==='klim'?1:ty==='pr'?.8:r[7]}
+function rDone(r){return rVal(r)>=rGoal(r)}
+function rPct(){return sum(ROUTE.filter(rDone).map(r=>r[4]))}
+window.leerVoortgang=rPct;
+function rProg(r){if(r[5]==='samen')return rVal(r)?'gelezen':'lees dit op de ochtend van de toets';const ty=r[5],v=rVal(r),g=rGoal(r);
+ if(ty==='pod')return v?'geluisterd en alle checkvragen goed':'nog niet gedaan';
+ if(ty==='strip')return v?'gelezen':'nog niet gelezen';
+ if(ty==='pr')return v?`beste: ${Math.round(v*100)}% in één keer goed · doel 80%`:'doel: 80% in één keer goed';
+ if(ty==='tr')return `beste reeks: ${v} · doel ${g} goed op rij`;
+ if(ty==='tl')return `beste reeks: ${v} · doel ${g} rondes goed op rij`;
+ if(ty==='wie')return `record: ${v} · doel ${g} punten`;
+ if(ty==='klim')return `${Math.round(v*100)}% van de reis naar dit station`;
+ if(ty==='toets')return v?`beste cijfer: ${nf(v)} · doel ${g}`:`doel: een ${g}`;return ''}
+function rGo(r){RT={on:true,before:new Set(ROUTE.filter(rDone).map(x=>x[0]))};if(r[5]==='samen')return samenvatting();const ty=r[5],a=r[6];
+ if(ty==='pod')return podStart(a[0],a[1]);if(ty==='strip')return stripStart(a);if(ty==='pr')return practice(a);if(ty==='tr')return trainer(a,r[7]);
+ if(ty==='tl')return tlStart();if(ty==='wie')return wieStart();if(ty==='toets')return toets();if(ty==='klim')return klimPlay(a)}
+function routeScreen(){stilte();const before=RT.before;RT={on:false,before:null};show('play');G={m:'route'};
+ const pct=rPct(),nxt=ROUTE.find(r=>!rDone(r));const fresh=before?ROUTE.filter(r=>rDone(r)&&!before.has(r[0])):[];if(fresh.length)confetti();
+ let deel='';const rows=ROUTE.map((r,i)=>{const d=rDone(r),cur=r===nxt;let h='';if(r[1]!==deel){deel=r[1];h=`<h3 class="rt-deel">${RDEEL[deel]}</h3>`}
+  return h+`<button class="rt-step${d?' done':''}${cur?' cur':''}" data-r="${i}"><span class="rt-ic">${d?'✓':cur?'▶':i+1}</span><span class="rt-tx"><b>${r[2]}</b><span>${cur?r[3]+'<br>':''}${rProg(r)}</span></span><span class="rt-w">${r[4]?(d?'':'+')+r[4]+'%':''}</span></button>`}).join('');
+ P.innerHTML=`<div class="playbar"><button class="btn small ghost" id="quit">Naar start</button><span class="bar"><i style="width:${pct}%"></i></span><span class="count">${pct}%</span></div>
+ <div class="slide">${head('Leerroute','Geschiedenis H1-H2')}<div class="slide-body">
+  ${fresh.length?`<div class="fb good"><div class="t">Gehaald: ${fresh.map(r=>r[2]).join(', ')}</div><div class="tip">+${sum(fresh.map(r=>r[4]))}% · je staat nu op ${pct}%</div></div>`:''}
+  <div><div class="q">Hoe ver ben je?</div><div class="big">${pct}%</div><div class="count">${ROUTE.filter(rDone).length} van ${ROUTE.length} stappen gehaald</div></div>
+  ${nxt?`<div class="nextbox"><h3>Volgende stap: ${nxt[2]}</h3><p style="margin:4px 0 10px">${nxt[3]}</p><button class="btn primary" id="rtgo">Start ↵</button></div>`:'<div class="fb good"><div class="t">Alles gehaald!</div><div class="tip">Houd het warm met een proeftoets.</div></div>'}
+  <p class="src" style="margin:0">Zo werkt het: per paragraaf eerst het verhaal (luisteren of lezen, met checkvragen), dan de strip, de begrippen, een oefenronde en als eindcheck een station op de Tijdreis. Planning: ongeveer één paragraaf per dag, en de laatste dag de proeftoets. Je mag stappen overslaan of herhalen: tik er gewoon op.</p>
+  <div class="rt-list">${rows}</div>
+ </div></div>`;
+ $('#quit').onclick=goHome;P.querySelectorAll('[data-r]').forEach(b=>b.onclick=()=>rGo(ROUTE[+b.dataset.r]));const g=$('#rtgo');if(g){g.onclick=()=>rGo(nxt);g.focus()}}
+function routeBox(){setTimeout(markeer,0);const sb=$('#samen');if(sb)sb.onclick=samenvatting;const el=$('#lpbox');if(!el)return;const pct=rPct(),nxt=ROUTE.find(r=>!rDone(r));
+ el.innerHTML=`<button class="mode main lpmode" id="rtbox"><span class="lab">Route</span><span class="tag" style="text-transform:none">${pct}% van de leerroute</span><h3>${nxt?(pct?'Ga verder: ':'Begin: ')+nxt[2]:'Leerroute klaar. Herhalen?'}</h3><p>${nxt?nxt[3]:'Alle stappen gehaald.'}</p><span class="bar" style="margin-top:6px;background:rgba(255,255,255,.2)"><i style="width:${pct}%"></i></span></button>`;
+ $('#rtbox').onclick=routeScreen}
+
+/* lezen: het hele verhaal van een paragraaf onder elkaar, met de begrippen */
+function uitleg(sec){stilte();const s=SECS.find(x=>x.id===sec);show('play');
+ P.innerHTML=`<div class="playbar"><button class="btn small ghost" id="quit">Terug</button></div><div class="uitleg"><div class="eyebrow">Paragraaf ${sec} · ${s.jaar}</div><h2 style="font-size:26px;margin-bottom:10px">${esc(s.t)}</h2>
+  ${POD[sec].map((p,i)=>`<h3>Deel ${i+1}: ${p.t}</h3>${verhaalHtml(p)}`).join('')}
+  <h3>Begrippen</h3><dl class="begrl">${BEGR.filter(b=>b[2]===sec).map(b=>`<dt>${b[0]}</dt><dd>${b[1]}</dd>`).join('')}</dl>
+  <div class="nextbox"><h3>Wat nu?</h3>
+   <div class="choice"><button class="btn primary" id="go">Oefenronde ${sec}</button><span>10 vragen over deze paragraaf. Telt mee voor de groene balk.</span></div>
+   <div class="choice"><button class="btn ghost" id="st">Strip ${sec}</button><button class="btn ghost" id="bg">Begrippen ${sec}</button></div>
+  </div></div>`;
+ $('#quit').onclick=goHome;$('#go').onclick=()=>practice(sec);$('#st').onclick=()=>stripStart(sec);$('#bg').onclick=()=>trainer('b'+sec)}
+function spiek(){stilte();show('play');
+ P.innerHTML=`<div class="playbar"><button class="btn small ghost" id="quit">Terug</button></div><div class="uitleg"><h2 style="font-size:26px">Spiekbriefje</h2>
+  <h3>Kenmerkende aspecten (tijdvak 9: tijd van de wereldoorlogen, 1900-1950)</h3><ul>${KA.map(k=>`<li><b>${k[0]}</b> ${k[1]} <span class="src">(${k[2]})</span></li>`).join('')}</ul>
+  <h3>Tijdlijn</h3><table class="gt tl">${EVT.map(e=>`<tr><th>${e[1]}</th><td>${e[2]}</td></tr>`).join('')}</table>
+  <h3>Personen</h3><ul>${PERS.map(p=>`<li><b>${p[0]}</b>: ${p[3]}</li>`).join('')}</ul>
+  ${SECS.map(s=>`<h3>Begrippen ${s.id} ${esc(s.t)}</h3><dl class="begrl">${BEGR.filter(b=>b[2]===s.id).map(b=>`<dt>${b[0]}</dt><dd>${b[1]}</dd>`).join('')}</dl>`).join('')}</div>`;
+ $('#quit').onclick=goHome}
+
+/* ---------- Leerpad: theorie in kleine kaartjes met controlevragen ---------- */
+/* LP = { sec: [ [titel, html|fn, [vraag, goed, 'fout|fout', uitleg]?], ... ] } */
+function lpState(){if(!S.lp)S.lp={};if(!S.lpd)S.lpd={};return S}
+function lpStart(sec,from){lpState();const cards=LP[sec];if(!cards)return;let i=from!=null?from:(S.lpd[sec]?0:Math.min(S.lp[sec]||0,cards.length-1));
+ G={m:'lp',sec,i,cards,redo:[],ok:0,asked:0,answered:{}};show('play');lpDraw()}
+function lpDraw(){const {sec,cards}=G;const i=G.i;const c=cards[i];const s=SECS.find(x=>x.id===sec);const qz=c[2];const done=G.answered[i];
+ const body=typeof c[1]==='function'?c[1]():c[1];
+ P.innerHTML=`<div class="playbar"><button class="btn small ghost" id="quit">Stoppen</button><span class="bar"><i style="width:${Math.round((i)/cards.length*100)}%"></i></span><span class="count">${i+1}/${cards.length}</span></div>
+ <div class="slide lpcard">${head('Leerpad · '+(sec==='0'?'basis':sec),esc(s?s.t:''))}<div class="slide-body">
+  <h2 class="lpt">${c[0]}</h2><div class="lpb">${body}</div>
+  ${qz?`<div class="lpq"><div class="q">Even checken</div><div class="prompt" style="font-size:19px">${qz[0]}</div><div id="lpo"></div><div id="fbox"></div></div>`:''}
+  <div class="lpnav"><button class="btn ghost" id="lpprev" ${i===0?'disabled':''}>← Terug</button><button class="btn primary" id="lpnext" ${qz&&!done?'disabled':''}>${G.sel===2?'Terug naar het overzicht':i===cards.length-1?'Afronden ✓':'Verder →'}</button></div>
+ </div></div>`;
+ $('#quit').onclick=()=>{save();goHome()};$('#lpprev').onclick=()=>{G.i--;lpDraw()};$('#lpnext').onclick=lpNext;
+ if(qz){const opts=shuffle([qz[1],...qz[2].split('|')]);$('#lpo').innerHTML=mcButtons(opts);
+  if(done){markOpts(opts.indexOf(qz[1]),opts.indexOf(qz[1]));$('#fbox').innerHTML=`<div class="fb good"><div class="tip">${qz[3]}</div></div>`}
+  else P.querySelectorAll('#lpo .opt').forEach((b,j)=>b.onclick=()=>{const ok=opts[j]===qz[1];markOpts(opts.indexOf(qz[1]),j);G.asked++;if(ok)G.ok++;else G.redo.push(i);G.answered[i]=1;
+   $('#fbox').innerHTML=`<div class="fb ${ok?'good':'bad'}"><div class="t">${ok?pick(['Goed!','Klopt!','Precies!']):'Niet helemaal.'}</div><div class="tip">${qz[3]}</div></div>`;const n=$('#lpnext');n.disabled=false;n.focus()})}
+ if(!G.sel)S.lp[sec]=i;save();window.scrollTo(0,0)}
+function lpNext(){const {cards}=G;if(G.i<cards.length-1){G.i++;lpDraw();return}
+ if(G.sel===2)return G.terug();
+ if(G.sel){const sec=G.sec;P.innerHTML=`<div class="slide">${head('Nalezen','Klaar')}<div class="slide-body"><div class="q">Goed gelezen</div><div>Nu het weer vers is: probeer de oefenronde nog een keer.</div><div class="acts"><button class="btn primary" id="lpprac">Nog een oefenronde</button><button class="btn ghost" id="lphome">Terug</button></div></div></div>`;
+  $('#lpprac').onclick=()=>practice(sec);$('#lphome').onclick=goHome;$('#lpprac').focus();return}
+ lpState();S.lpd[G.sec]=1;S.lp[G.sec]=0;markDay();save();confetti();lpKlaar(G.sec,cards,G.ok,G.asked,[...new Set(G.redo)],new Set())}
+/* eindscherm van een leerpad; "Kijk hier nog even naar" opent alleen dat ene kaartje en komt daarna hier terug */
+function lpKlaar(sec,cards,ok,asked,redo,gezien){const nxt=SECS[SECS.findIndex(x=>x.id===sec)+1];show('play');
+ P.innerHTML=`<div class="slide">${head('Leerpad '+(sec==='0'?'basis':sec),'Klaar')}<div class="slide-body"><div class="q">Controlevragen in één keer goed</div><div class="big">${ok}<span style="font-size:.45em;color:var(--muted)"> / ${asked}</span></div>
+  ${redo.length?`<div class="fb bad"><div class="t">Kijk hier nog even naar</div><div class="tip">${redo.map(i=>`<button class="btn small ghost" data-go="${i}" style="margin:3px">${gezien.has(i)?'✓ ':''}${cards[i][0]}</button>`).join('')}</div></div>`:'<div>Alles in één keer goed. Mooi!</div>'}
+  <div class="nextbox"><h3>Wat nu?</h3>${RT.on?'<div class="choice"><button class="btn primary" id="lprt">Verder in de leerroute →</button><span>Daar staat de volgende stap al klaar.</span></div>':''}<div class="choice"><button class="btn ${RT.on?'ghost':'primary'}" id="lpprac">Oefenronde ${sec==='0'?'basis':sec}</button><span>Test of het blijft hangen. Fouten komen terug met uitleg.</span></div>
+  ${nxt&&LP[nxt.id]?`<div class="choice"><button class="btn ghost" id="lpnxt">Leerpad ${nxt.id}: ${esc(nxt.t)} →</button><span>Of leer eerst door.</span></div>`:''}
+  <div class="choice"><button class="btn ghost" id="lphome">Naar start</button></div></div></div></div>`;
+ P.querySelectorAll('[data-go]').forEach(b=>b.onclick=()=>{const i=+b.dataset.go;G={m:'lp',sec,i:0,cards:[cards[i]],redo:[],ok:0,asked:0,answered:{},sel:2,terug:()=>{gezien.add(i);lpKlaar(sec,cards,ok,asked,redo,gezien)}};lpDraw()});
+ $('#lpprac').onclick=()=>practice(sec);const n=$('#lpnxt');if(n)n.onclick=()=>lpStart(nxt.id);$('#lphome').onclick=()=>{RT.on=false;goHome()};const rt=$('#lprt');if(rt){rt.onclick=goHome;rt.focus()}else $('#lpprac').focus()}
+function lpBox(){const el=$('#lpbox');if(!el)return;lpState();const todo=SECS.find(s=>LP[s.id]&&!S.lpd[s.id]);const nDone=SECS.filter(s=>S.lpd[s.id]).length;
+ el.innerHTML=`<button class="mode main lpmode" id="lpgo"><span class="lab">Leren</span><span class="tag" style="text-transform:none">${nDone} van ${SECS.length} paragrafen geleerd</span><h3>${todo?(S.lp[todo.id]?'Ga verder: ':'Begin: ')+esc(todo.t):'Alles doorlopen. Herhalen?'}</h3><p>Geen boek nodig: de theorie in korte kaartjes, één idee per kaart, met af en toe een controlevraag. Ongeveer 10 minuten per paragraaf.</p></button>`;
+ $('#lpgo').onclick=()=>lpStart((todo||SECS[0]).id)}
+
+/* ---------- Samenvatting voor de toets: alles nog één keer doorlezen, zonder vragen ---------- */
+function samenvatting(){show('play');G={m:'samen',mode:'samen'};S.samen=1;save();const Z=SAMENV();
+ const blok=p=>`<section class="svp"><h3>${p.t}</h3><p class="wat">Hier leer je: ${p.leer}</p>${p.fig?p.fig():''}<ul>${p.kern.map(k=>`<li>${k}</li>`).join('')}</ul></section>`;
+ P.innerHTML=`<div class="playbar"><button class="btn small ghost" id="quit">Terug</button></div>
+ <div class="slide">${head('Samenvatting','voor de toets')}<div class="slide-body sv">
+  <div class="intro"><b>Waar gaat dit over?</b><p>${Z.intro}</p><p class="src" style="margin:0">Lees rustig van boven naar beneden. Geen vragen, alleen even alles opfrissen. Ongeveer 10 minuten.</p></div>
+  ${Z.delen.map(blok).join('')}
+  ${Z.slot?`<div class="intro"><b>Op de toets</b><ul>${Z.slot.map(k=>`<li>${k}</li>`).join('')}</ul></div>`:''}
+  <div class="acts"><button class="btn primary" id="svklaar">Klaar. Succes!</button></div>
+ </div></div>`;
+ $('#quit').onclick=goHome;$('#svklaar').onclick=()=>{confetti();goHome()};window.scrollTo(0,0)}
+
+const $=s=>document.querySelector(s);
+const esc=s=>String(s).replace(/[&<>"]/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;'}[c]));
+const KEY='gesch-h12-v1';
+let S={sec:{},mc:{},done:0,days:[],best:0};
+try{const r=localStorage.getItem(KEY);if(r)S=Object.assign(S,JSON.parse(r))}catch(e){}
+const save=()=>{try{localStorage.setItem(KEY,JSON.stringify(S))}catch(e){}};
+const today=()=>new Date().toISOString().slice(0,10);
+function markDay(){const t=today();if(!S.days.includes(t)){S.days.push(t);S.days=S.days.slice(-60)}}
+function streak(){const set=new Set(S.days);let d=new Date(),n=0;if(!set.has(d.toISOString().slice(0,10)))d.setDate(d.getDate()-1);while(set.has(d.toISOString().slice(0,10))){n++;d.setDate(d.getDate()-1)}return n}
+function rec(sec,ok){const a=S.sec[sec]||(S.sec[sec]=[]);a.push(ok?1:0);if(a.length>20)a.shift();S.done++;markDay()}
+const score=sec=>{const a=S.sec[sec]||[];return a.length?sum(a)/Math.max(a.length,10):0};
+const P=$('#play');let G=null;
+function show(v){stilte();$('#home').hidden=v!=='home';P.hidden=v!=='play';window.scrollTo(0,0)}
+function goHome(){G=null;save();if(RT.on)return routeScreen();renderHome();show('home')}
+function renderHome(){
+  $('#secs').innerHTML=SECS.map(s=>{const m=score(s.id);return `<div class="sec"><span class="num">${s.id}</span><div><h3>${esc(s.t)}</h3><p>${s.jaar} · ${esc(s.s)}</p><span class="bar"><i style="width:${Math.round(m*100)}%"></i></span></div><div class="acts"><button class="btn small pod" data-pm="${s.id}">🎧 Verhaal</button><button class="btn small ghost" data-st="${s.id}">💬 Strip</button><button class="btn small ghost" data-u="${s.id}">📖 Lezen</button><button class="btn small primary" data-o="${s.id}">Oefenen</button></div></div>`}).join('');
+  $('#tools').innerHTML=Object.entries(GENS).map(([k,g])=>`<button class="btn small ghost" data-g="${k}">${esc(g.t)}</button>`).join('');
+  $('#blitzes').innerHTML=Object.entries(BLITZ).map(([k,b])=>`<button class="mode" data-blitz="${k}"><span class="lab">60 s</span><h3>${b.t}</h3><p>${b.d}</p><span class="tag" style="text-transform:none">${S.blitz&&S.blitz[k]?'record '+S.blitz[k]:'nog geen record'}</span></button>`).join('');
+  try{routeBox()}catch(e){}$('#stDone').textContent=S.done;try{const t=klimTotal();$('#klimTag').textContent=Math.round(t.p*100)+'% van de reis'}catch(e){}
+  $('#tlTag').textContent=S.tl?'record: '+S.tl+' op rij':'nog niet gespeeld';$('#wieTag').textContent=S.wie?'record: '+S.wie+' punten':'nog niet gespeeld';
+  $('#stStreak').textContent=streak();$('#stBest').textContent=S.best?nf(S.best):'–';
+}
+$('#secs').addEventListener('click',e=>{const t=e.target.closest('[data-u],[data-o],[data-pm],[data-st]');if(!t)return;const d=t.dataset;if(d.u)uitleg(d.u);else if(d.o)practice(d.o);else if(d.pm)podMenu(d.pm);else if(d.st)stripStart(d.st)});
+$('#tools').addEventListener('click',e=>{const b=e.target.closest('[data-g]');if(b)trainer(b.dataset.g)});
+$('#blitzes').addEventListener('click',e=>{const b=e.target.closest('[data-blitz]');if(b)blitzStart(b.dataset.blitz)});
+$('#toets').onclick=toets;$('#klim').onclick=klimHome;$('#tl').onclick=tlStart;$('#wie').onclick=wieStart;$('#spiek').onclick=spiek;
+function askReset(){$('#resetBox').innerHTML='<span>Alle voortgang wissen?</span><button class="btn small dark" id="rsY">Ja, wissen</button><button class="btn small ghost" id="rsN">Annuleer</button>';
+  $('#rsY').onclick=()=>{S={sec:{},mc:{},done:0,days:[],best:0};save();location.reload()};$('#rsN').onclick=()=>{$('#resetBox').innerHTML='<button class="btn ghost small" id="resetBtn">Voortgang wissen</button>';$('#resetBtn').onclick=askReset}}
+$('#resetBtn').onclick=askReset;
+const head=(l,r)=>`<div class="slide-head"><span>${l}</span><span>${r}</span></div>`;
+function topbar(done,total,label='Stoppen'){return `<div class="playbar"><button class="btn small ghost" id="quit">${label}</button>${total?`<span class="bar"><i style="width:${Math.round(done/total*100)}%"></i></span><span class="count">${done}/${total}</span>`:`<span class="count" style="flex:1;text-align:right">${done}</span>`}</div>`}
+function mcButtons(labels){return `<div class="opts">${labels.map((o,i)=>`<button class="opt" data-i="${i}"><span class="k">${i+1}</span><span>${o}</span></button>`).join('')}</div>`}
+function markOpts(ci,chosen){P.querySelectorAll('.opt').forEach((b,i)=>{b.disabled=true;b.classList.add(i===ci?'good':i===chosen?'bad':'dim')})}
+function parseNum(v){const t=String(v).trim().replace(/\s/g,'').replace('%','').replace(',','.');if(!/^[-+]?\d*\.?\d+$/.test(t))return NaN;return parseFloat(t)}
+/* één vraag tonen: q = {q, mc, opts, a, tol, u, w} ; cb(ok) */
+function ask(q,title,right,top,cb,opts={}){
+  const isMC=!!q.mc;let labels;if(isMC){labels=q.keep?q.opts:shuffle(q.opts)}
+  P.innerHTML=top+`<div class="slide">${head(title,right)}<div class="slide-body"><div class="prompt" style="font-size:clamp(18px,4vw,22px);font-weight:600">${q.q}</div>
+   ${isMC?mcButtons(labels):`<form class="typerow" id="nf" autocomplete="off"><input id="ni" inputmode="decimal" placeholder="antwoord${q.u?' in '+q.u:''}" aria-label="Antwoord"><button class="btn dark" type="submit" id="nb">Controleer</button></form>`}
+   <div id="fbox"></div></div></div>`;
+  const qb=$('#quit');if(qb)qb.onclick=opts.onQuit||goHome;
+  const fin=(ok,given)=>{const fb=$('#fbox');
+    if(opts.silent){cb(ok,given);return}
+    fb.innerHTML=`<div class="fb ${ok?'good':'bad'}"><div class="t">${ok?pick(['Goed!','Klopt!','Top!','Netjes!']):'Niet goed. Het antwoord is '+(isMC?q.a:nf(q.a,2)+(q.u?' '+q.u:''))+'.'}</div>${q.w?`<div class="tip"><b>Uitwerking:</b> ${q.w}</div>`:''}</div><div class="foot" style="margin-top:12px"><button class="btn primary" id="next">Verder ↵</button></div>`;
+    const n=$('#next');n.onclick=()=>cb(ok,given);n.focus()};
+  if(isMC)P.querySelectorAll('.opt').forEach((b,i)=>b.onclick=()=>{const ok=labels[i]===q.a;if(!opts.silent)markOpts(labels.indexOf(q.a),i);fin(ok,labels[i])});
+  else{const inp=$('#ni');inp.focus();$('#nf').onsubmit=e=>{e.preventDefault();const v=parseNum(inp.value);if(isNaN(v)){inp.classList.remove('shake');void inp.offsetWidth;inp.classList.add('shake');return}
+    const ok=Math.abs(v-q.a)<=(q.tol??.051);inp.readOnly=true;if(ok)inp.classList.add('okay');$('#nb').hidden=true;fin(ok,inp.value)}}
+}
+function mcItem(m){return {sec:m[0],mc:true,q:esc(m[1]),opts:[m[2],...m[3].split('|')],a:m[2],w:esc(m[4]),id:m[1],th:m[5]}}
+function makeSet(sec,n){
+  const mcs=MC.filter(m=>m[0]===sec).sort((a,b)=>(S.mc[a[1]]||0)-(S.mc[b[1]]||0)||Math.random()-.5);
+  const gens=SECGENS[sec];const nG=3;const items=[];
+  shuffle(mcs).sort((a,b)=>(S.mc[a[1]]||0)-(S.mc[b[1]]||0)).slice(0,n-nG).forEach(m=>items.push(mcItem(m)));
+  for(let i=0;i<nG;i++){const k=gens[i%gens.length];items.push(Object.assign({sec,gen:k},GENS[k].f()))}
+  return shuffle(items);
+}
+function practice(sec){
+  G={m:'prac',sec,items:makeSet(sec,10),i:0,ok:0,mist:[]};show('play');pracNext();
+}
+function pracNext(){
+  if(G.i>=G.items.length)return endScreen();
+  const q=G.items[G.i];
+  ask(q,`Paragraaf ${G.sec}`,q.gen?GENS[q.gen].t:'Begrip',topbar(G.i,G.items.length),ok=>{rec(G.sec,ok);if(q.id)S.mc[q.id]=(S.mc[q.id]||0)+(ok?1:-1);if(ok)G.ok++;else G.mist.push(q);save();G.i++;pracNext()});
+}
+/* nalezen: per foute vraag het leerpad-kaartje met die stof (via th of de soort som), anders de theorie zelf */
+function leesKaarten(mist){const out=[],seen=new Set();
+ for(const q of mist){const k=q.th||q.gen;if(!k||seen.has(k))continue;seen.add(k);let found=false;
+  for(const t of LEES[k]||[])for(const s in LP){const c=LP[s].find(c=>c[0]===t);if(c){found=true;if(!out.includes(c))out.push(c)}}
+  if(!found&&typeof TH!=='undefined'&&TH[k])out.push([TH[k].t,TH[k].h])}
+ return out}
+function leesStart(sec,cards){G={m:'lp',sec,i:0,cards,redo:[],ok:0,asked:0,answered:{},sel:1};show('play');lpDraw()}
+function endScreen(){
+  const t=G.items.length,pct=G.ok/t;if(pct>=.8)confetti();if(!S.pr)S.pr={};S.pr[G.sec]=Math.max(S.pr[G.sec]||0,pct);save();const sec=G.sec,lees=leesKaarten(G.mist);
+  P.innerHTML=`<div class="slide">${head('Paragraaf '+sec,'Klaar')}<div class="slide-body"><div><div class="q">Goed</div><div class="big">${G.ok}<span style="font-size:.45em;color:var(--muted)"> / ${t}</span></div></div>
+   <div>${pct>=.9?'Uitstekend, deze paragraaf zit erin.':pct>=.6?'Goed bezig. Nog een ronde en het zit vast.':'Lees de uitleg nog eens en probeer het dan opnieuw.'}</div>
+   ${G.mist.length?`<div><div class="q" style="margin-bottom:6px">Kijk hier nog even naar</div><ul class="mist">${G.mist.map(q=>`<li><b>${q.mc?q.q.replace(/<svg[\s\S]*?<\/svg>/g,'[figuur]').replace(/<div class="tw">[\s\S]*?<\/div>/g,'[tabel]'):q.q.replace(/<svg[\s\S]*?<\/svg>/g,'[figuur]').replace(/<div class="tw">[\s\S]*?<\/div>/g,'[tabel]')}</b><span>Antwoord: ${q.mc?q.a:nf(q.a,2)} · ${q.w||''}</span></li>`).join('')}</ul></div>`:''}
+   ${lees.length?`<div class="fb warn"><div class="t">Lees dit nog eens</div><div class="tip">${lees.map(c=>c[0]).join(' · ')}</div><div class="acts" style="margin-top:8px"><button class="btn primary" id="lees">Nalezen (${lees.length} ${lees.length===1?'kaartje':'kaartjes'}) →</button></div></div>`:''}<div class="acts"><button class="btn ${lees.length&&pct<.8?'ghost':'primary'}" id="again">Nog een ronde</button><button class="btn ghost" id="uit">Uitleg</button><button class="btn ghost" id="home2">Naar start</button></div></div></div>`;
+  $('#again').onclick=()=>practice(sec);$('#uit').onclick=()=>uitleg(sec);$('#home2').onclick=goHome;const lb=$('#lees');if(lb){lb.onclick=()=>leesStart(sec,lees);if(pct<.8){lb.focus();return}}$('#again').focus();
+}
+function trainer(k,goal){
+  G={m:'tr',k,n:0,ok:0,streak:0,goal};show('play');trNext();
+}
+function trNext(){
+  const g=GENS[G.k];const q=GENS[G.k].f();
+  ask(q,g.t,`Reeks: ${G.streak}${G.goal?' · doel '+G.goal:''}`,topbar(`${G.ok} van ${G.n} goed`,0,'Klaar'),ok=>{G.n++;if(ok){G.ok++;G.streak++;if(G.streak%5===0||G.streak===G.goal)confetti()}else G.streak=0;if(!S.tr)S.tr={};S.tr[G.k]=Math.max(S.tr[G.k]||0,G.streak);rec(g.sec,ok);save();trNext()});
+}
+/* proeftoets */
+function toets(){
+  const items=[];SECS.forEach(s=>{const mcs=shuffle(MC.filter(m=>m[0]===s.id)).slice(0,3).map(mcItem);items.push(...mcs);const gs=SECGENS[s.id];for(let i=0;i<2;i++){const k=gs[(i+Math.random()*gs.length|0)%gs.length];items.push(Object.assign({sec:s.id,gen:k},GENS[k].f()))}});
+  G={m:'toets',items:shuffle(items),i:0,score:0,wrong:[]};show('play');toetsNext();
+}
+function toetsNext(){
+  if(G.i>=G.items.length){const n=G.items.length,c=Math.round((1+9*G.score/n)*10)/10;if(c>S.best)S.best=c;if(c>=7.5)confetti();save();
+    P.innerHTML=`<div class="slide">${head('Proeftoets','Uitslag')}<div class="slide-body"><div><div class="q">Je cijfer</div><div class="big" style="color:${c>=5.5?'var(--good)':'var(--bad)'}">${nf(c)}</div><div class="count">${G.score} van ${n} goed</div></div>
+    ${G.wrong.length?`<div><div class="q" style="margin-bottom:6px">Uitwerkingen van wat fout ging</div><div style="display:grid;gap:10px">${G.wrong.map(([q,g])=>`<div class="fb bad"><div>${q.q}</div><div class="t">Antwoord: ${q.mc?q.a:nf(q.a,2)+(q.u?' '+q.u:'')} · jij: ${esc(g)}</div><div class="tip">${q.w||''}</div></div>`).join('')}</div></div>`:''}
+    <div class="acts"><button class="btn primary" id="again">Nieuwe proeftoets</button><button class="btn ghost" id="home2">Naar start</button></div></div></div>`;
+    $('#again').onclick=toets;$('#home2').onclick=goHome;return}
+  const q=G.items[G.i];
+  ask(q,'Proeftoets','Vraag '+(G.i+1)+' · par. '+q.sec,topbar(G.i,G.items.length),(ok,given)=>{rec(q.sec,ok);if(ok)G.score++;else G.wrong.push([q,given]);G.i++;toetsNext()},{silent:true});
+}
+document.addEventListener('keydown',e=>{if(P.hidden||!G)return;if(e.target.tagName==='INPUT')return;if(/^[1-9]$/.test(e.key)){const b=P.querySelectorAll('.opt')[+e.key-1];if(b&&!b.disabled)b.click()}});
+function confetti(){
+  if(matchMedia('(prefers-reduced-motion: reduce)').matches)return;
+  const c=$('#conf'),x=c.getContext('2d');c.width=innerWidth;c.height=innerHeight;
+  const cols=['#E8742A','#2F7D5B','#7FB0EA','#F7DB5E','#1E2230'];
+  const ps=Array.from({length:110},()=>({x:c.width/2,y:c.height*.35,vx:(Math.random()-.5)*14,vy:-Math.random()*12-4,r:Math.random()*6+4,c:pick(cols),a:Math.random()*6}));
+  let f=0;(function loop(){x.clearRect(0,0,c.width,c.height);ps.forEach(p=>{p.x+=p.vx;p.y+=p.vy;p.vy+=.4;p.vx*=.99;p.a+=.2;x.save();x.translate(p.x,p.y);x.rotate(p.a);x.fillStyle=p.c;x.fillRect(-p.r/2,-p.r/4,p.r,p.r/2);x.restore()});if(++f<110)requestAnimationFrame(loop);else x.clearRect(0,0,c.width,c.height)})();
+}
+renderHome();
+
+
+</script>
+</body>
+</html>
