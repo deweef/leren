@@ -14,7 +14,7 @@ bouwt het samen met Claude; hij wil ook zelf kunnen meeleren (scheikunde: hij be
 - Elk vak is één los HTML-bestand (geen build, geen CDN behalve Google Fonts), met voortgang in localStorage:
   `engels.html` (Ben, `unit3-trainer-v1`), `biologie.html` (Ben, `bio-thema1-v1`), `wiskunde.html` (Ben, H2
   statistiek, `wis-h2-v1`), `scheikunde-h1.html` (H1 chemisch rekenen, `chem-h1-v1`), `scheikunde.html` (H2
-  bindingen, `chem-h2-v1`), `duits.html` (Ben, Duits op 5 havo-niveau: Briefhelfer, `duits-brief-v1`), `natuurkunde.html` (Dana, Newton 3 vwo H1 Elektrische apparaten, `nat-h1-v1`), `geschiedenis.html` (Dana, Geschiedeniswerkplaats 3 vwo H1-H2, `gesch-h12-v1`), Frans voor Dana: `frans.html`, `frans-copilot.html`, `frans-combi.html`,
+  bindingen, `chem-h2-v1`), `duits.html` (Ben, Duits op 5 havo-niveau: Briefhelfer, `duits-brief-v1`), `nederlands.html` (Ben, Taalverzorging, `ned-taal-v1`), `natuurkunde.html` (Dana, Newton 3 vwo H1 Elektrische apparaten, `nat-h1-v1`), `geschiedenis.html` (Dana, Geschiedeniswerkplaats 3 vwo H1-H2, `gesch-h12-v1`), Frans voor Dana: `frans.html`, `frans-copilot.html`, `frans-combi.html`,
   `frans-spel.html` (spelletjes), `frans-5.html` (versie 5, zie onder).
 - **Voortgang per persoon**: `leerlog.js` (eerste script in de head van elke vakpagina) zet stil `@<wie>` achter elke
   localStorage-sleutel behalve `leren-*` (`chem-h1-v1@ben`, `@dana`, `@marcel`, `@anja`, `@gast-<naam>`), zodat iedereen op hetzelfde apparaat
@@ -138,6 +138,12 @@ schermen `show('home'|'play')`, `goHome()`, `ask()`, `practice(sec)` (oefenronde
   (twee pentaanketens met veel gele contactstreepjes, twee bolletjes met één). In 2.4: `figOvergeven(M, kleur, nE, X, kleur, k, regel)`
   (metaal geeft nE elektronen weg aan k niet-metaalatomen) bij "Elektronen overgeven" (Na/Cl) en "De formule van een zout" (Ca + 2 Cl,
   met uitleg waarom twee Cl: Ben snapte het weggeven niet).
+
+- **Nederlands Taalverzorging** (`nederlands.html`, Ben): oefenpagina zonder leerroute/berg (zoals Duits). Toetsstof: theorie 86-105 (spelling,
+  leestekens) plus de losse pagina's 112-113 (verwarde woorden, contaminatie), 123-131 (zinsbouwfouten) en 132 (verwijswoorden), scans in OneDrive
+  `Leren/Nederlands`. `T` = onderwerpen `{id, nr, t, ic, regel, q:[[vraag, goed, 'fout|fout', uitleg]]}`; regels in eigen woorden (geen boektekst).
+  Per onderwerp: regel → 10 vragen (fout = herkansing aan het eind), gehaald bij 8/10 (`S.b[id]`). Proeftoets 20 vragen met cijfer (`S.toets`),
+  snelle ronde 60 s (`S.blitz`), foutenlijst (`S.mis`), Alle regels. Voortgang = 90% onderwerpen + 10% proeftoets ≥ 7.
 
 ## Leerlogboek en scores (gedeeld met deweef/spelletjes)
 - `leerlog.js` staat in de `<head>` van elke vakpagina (vóór de andere scripts). Per bezoek stuurt het stil één

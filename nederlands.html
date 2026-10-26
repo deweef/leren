@@ -1,0 +1,424 @@
+<!doctype html>
+<html lang="nl">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<meta name="robots" content="noindex">
+<script src="leerlog.js"></script><script>(function(){try{if(localStorage.getItem('leren-ok')!=='53a39a231246354922d1b5f7242c1639ebdc75da84bde2e766eed704f5a89cf8'){location.replace('index.html')}}catch(e){location.replace('index.html')}})();</script>
+<title>Nederlands · Taalverzorging</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Archivo:wdth,wght@62..125,400..900&family=Atkinson+Hyperlegible:wght@400;700&family=JetBrains+Mono:wght@500;700&display=swap">
+<style>
+/* iPad: twee keer snel tikken mag niet inzoomen (knijpen om te zoomen blijft werken) */
+*{touch-action:manipulation}
+:root{--bg:#F5F2EC;--surface:#fff;--ink:#1E2230;--muted:#5D6375;--line:#DDD6CB;--chip:#EEE8DE;--accent:#E8742A;--gold:#B8860B;--good:#1E8E5A;--good-bg:#E3F4EA;--bad:#C0392B;--bad-bg:#FBE9E7;--tip:#FFF6DA}
+@media (prefers-color-scheme:dark){:root:not([data-theme="light"]){--bg:#14161D;--surface:#1D2029;--ink:#E9EAF0;--muted:#A0A5B5;--line:#30343F;--chip:#272A35;--accent:#FFA05A;--gold:#E8B84A;--good:#4CD68A;--good-bg:#173226;--bad:#FF7B6B;--bad-bg:#3A1E1B;--tip:#2E2A1C;color-scheme:dark}}
+:root[data-theme="dark"]{--bg:#14161D;--surface:#1D2029;--ink:#E9EAF0;--muted:#A0A5B5;--line:#30343F;--chip:#272A35;--accent:#FFA05A;--gold:#E8B84A;--good:#4CD68A;--good-bg:#173226;--bad:#FF7B6B;--bad-bg:#3A1E1B;--tip:#2E2A1C;color-scheme:dark}
+*{box-sizing:border-box}
+body{margin:0;background:var(--bg);color:var(--ink);font:17px/1.55 "Atkinson Hyperlegible",system-ui,sans-serif;overflow-wrap:break-word}
+main{max-width:720px;margin:0 auto;padding:20px 16px 60px}
+h1{font:800 clamp(30px,7vw,44px)/1.05 Archivo,system-ui,sans-serif;font-stretch:90%;margin:4px 0 6px}
+h2{font:800 22px/1.2 Archivo,system-ui,sans-serif;margin:22px 0 8px}
+h3{font:800 18px/1.25 Archivo,system-ui,sans-serif;margin:0 0 6px}
+.sub{color:var(--muted);margin:0 0 16px}
+.terug{display:inline-block;margin:0 0 10px;color:inherit;opacity:.7;text-decoration:none;font:700 14px system-ui,sans-serif}
+.vlag{display:inline-flex;height:10px;width:44px;border-radius:3px;overflow:hidden;vertical-align:middle;margin-right:8px}
+.vlag i{flex:1}.vlag i:nth-child(1){background:#111}.vlag i:nth-child(2){background:#DD0000}.vlag i:nth-child(3){background:#FFCE00}
+.kaart{background:var(--surface);border:2px solid var(--line);border-radius:16px;padding:16px;margin:12px 0}
+.opdracht{border-color:var(--ink)}
+.opdracht ol{padding-left:22px;margin:8px 0}.opdracht li{margin:4px 0}
+.label{font:700 12px/1 "JetBrains Mono",monospace;letter-spacing:.06em;text-transform:uppercase;color:var(--accent)}
+.modes{display:grid;grid-template-columns:repeat(auto-fit,minmax(200px,1fr));gap:12px;margin-top:12px}
+.mode{display:block;text-align:left;background:var(--surface);color:var(--ink);border:2px solid var(--line);border-radius:16px;padding:16px;cursor:pointer;font:inherit;position:relative}
+.mode h3{margin:0 0 4px}.mode p{margin:0;color:var(--muted);font-size:15px}
+.mode.main{background:var(--ink);color:var(--bg);border-color:var(--ink)}.mode.main p{color:var(--bg);opacity:.8}
+.mode.gehaald{background:var(--good-bg);border-color:var(--good)}
+.mode.gehaald::after{content:"✓ gehaald";position:absolute;top:8px;right:10px;font:700 11px "JetBrains Mono",monospace;color:var(--good)}
+.balk{height:10px;background:var(--chip);border-radius:6px;overflow:hidden;margin:8px 0 4px}.balk i{display:block;height:100%;background:var(--good);transition:width .3s}
+.btn{font:700 16px system-ui,sans-serif;padding:11px 16px;border-radius:12px;border:2px solid var(--ink);background:var(--ink);color:var(--bg);cursor:pointer}
+.btn.licht{background:none;color:var(--ink)}
+.btn.klein{font-size:14px;padding:7px 12px}
+.acts{display:flex;gap:10px;flex-wrap:wrap;margin-top:14px}
+.top{display:flex;justify-content:space-between;align-items:center;gap:10px;margin-bottom:10px}
+.top>*{white-space:nowrap}
+.teller{font:700 14px "JetBrains Mono",monospace;padding:6px 10px;border-radius:10px;background:var(--chip)}
+.teller.ok{background:var(--good-bg);color:var(--good)}.teller.te{background:var(--bad-bg);color:var(--bad)}
+.stap{font:700 13px "JetBrains Mono",monospace;color:var(--muted)}
+textarea{width:100%;min-height:120px;font:17px/1.5 "Atkinson Hyperlegible",system-ui,sans-serif;padding:12px;border-radius:12px;border:2px solid var(--line);background:var(--bg);color:var(--ink);resize:vertical}
+textarea:focus{outline:none;border-color:var(--accent)}
+.tip{background:var(--tip);border-radius:12px;padding:10px 14px;margin:10px 0;font-size:15.5px}
+.stenen{display:flex;flex-wrap:wrap;gap:8px;margin:8px 0}
+.steen{font:15px "Atkinson Hyperlegible",system-ui,sans-serif;padding:7px 11px;border-radius:10px;border:1.5px dashed var(--muted);background:var(--surface);color:var(--ink);cursor:pointer;text-align:left}
+.steen small{display:block;color:var(--muted);font-size:12.5px}
+.check{list-style:none;padding:0;margin:8px 0}
+.check li{padding:7px 0 7px 30px;position:relative;border-bottom:1px solid var(--line)}
+.check li::before{position:absolute;left:4px;top:7px;font-weight:800}
+.check li.ja::before{content:"✓";color:var(--good)}.check li.nee::before{content:"✗";color:var(--bad)}.check li.let::before{content:"!";color:var(--gold)}
+.check li small{display:block;color:var(--muted);font-size:14px}
+label.zelf{display:flex;gap:10px;align-items:flex-start;padding:8px 0;border-bottom:1px solid var(--line);cursor:pointer}
+label.zelf input{width:22px;height:22px;margin-top:2px;flex:none;accent-color:var(--good)}
+.brief{white-space:pre-wrap;font:17px/1.6 Georgia,"Times New Roman",serif;background:var(--surface);border:2px solid var(--line);border-radius:12px;padding:16px}
+.opts{display:grid;gap:10px;margin-top:12px}
+.opt{font:inherit;text-align:left;padding:12px 14px;border-radius:12px;border:2px solid var(--line);background:var(--surface);color:var(--ink);cursor:pointer}
+.opt.goed{border-color:var(--good);background:var(--good-bg)}.opt.fout{border-color:var(--bad);background:var(--bad-bg)}
+.uitleg{margin-top:10px;padding:10px 14px;border-radius:12px;background:var(--chip)}
+.tegels{display:flex;flex-wrap:wrap;gap:8px;min-height:52px;padding:8px;border-radius:12px;border:2px dashed var(--line);margin:10px 0}
+.tegel{font:700 17px "Atkinson Hyperlegible",system-ui,sans-serif;padding:8px 12px;border-radius:10px;border:2px solid var(--ink);background:var(--surface);color:var(--ink);cursor:pointer}
+.tegel.weg{visibility:hidden}
+.goed-t{color:var(--good);font-weight:700}.fout-t{color:var(--bad);font-weight:700}
+[hidden]{display:none!important}
+.kaart ul{padding-left:20px;margin:6px 0}.kaart li{margin:4px 0}
+.opt{font-size:17px;overflow-wrap:anywhere}
+.top .stap{white-space:normal;text-align:center;flex:1;min-width:0}
+#fouten{border-color:var(--gold)}
+</style>
+</style>
+</head>
+<body>
+<main id="home">
+  <a href="index.html" class="terug">‹ Alle vakken</a>
+  <h1>Nederlands · Taalverzorging</h1>
+  <p class="sub">Spelling, leestekens en zinsbouw: theorie 86 t/m 105, plus verwarde woorden, zinsbouwfouten en verwijswoorden. Per onderwerp eerst de regel, dan 10 vragen.</p>
+  <div class="kaart" id="stand"></div>
+  <div class="modes">
+    <button class="mode main" id="ptoets"><h3>🎯 Proeftoets</h3><p>20 gemengde vragen uit alle onderwerpen, met een cijfer. Doel: een 7.</p></button>
+    <button class="mode" id="pblitz"><h3>⚡ Snelle ronde</h3><p>60 seconden: welke van de twee is goed? Hoeveel haal jij?</p></button>
+    <button class="mode" id="fouten" hidden><h3>🔁 Mijn fouten</h3><p></p></button>
+    <button class="mode" id="pspiek"><h3>📄 Alle regels</h3><p>Spiekbriefje: alle regels onder elkaar, om nog even door te lezen.</p></button>
+  </div>
+  <h2>Per onderwerp</h2>
+  <div class="modes" id="onder"></div>
+  <div class="acts"><button class="btn licht klein" id="wis">Voortgang wissen</button></div>
+</main>
+<main id="play" hidden></main>
+<script>
+/* ---------- Onderwerpen: regel (eigen woorden, kort) + vragen [vraag, goed, 'fout|fout', uitleg] ---------- */
+const T=[
+{id:'ww',nr:'86',t:'Werkwoordspelling',ic:'✍️',regel:`<p><b>Stap 1: welke vorm is het?</b> Persoonsvorm (pv), voltooid deelwoord (vdw) of hele werkwoord?</p>
+<ul><li><b>pv tegenwoordige tijd:</b> ik-vorm (stam), +t bij jij/je, u, hij, zij, het. Staat <i>jij/je</i> <b>achter</b> de pv? Dan géén t: <i>word jij</i>, <i>vind je</i>. Bij <i>u</i> blijft de t: <i>wordt u</i>.</li>
+<li><b>pv verleden tijd (zwak):</b> eindigt de stam op een letter van <b>'t ex-kofschip</b> (t, x, k, f, s, ch, p)? Dan <b>-te(n)</b>, anders <b>-de(n)</b>. Kijk naar de letter in het hele werkwoord: verhui<b>z</b>en → verhuis<b>de</b>, le<b>v</b>en → leef<b>de</b>.</li>
+<li><b>vdw:</b> denk aan de verleden tijd. Hoor je <i>-te</i>, dan eindigt het vdw op <b>-t</b> (gefietst); hoor je <i>-de</i>, dan op <b>-d</b> (verhuisd, gebeurd).</li></ul>
+<p>Sterke werkwoorden veranderen van klank (breken, brak, gebroken): daar geldt 't ex-kofschip niet.</p>`,q:[
+['Gisteren <b>___</b> hij zijn hand aan de pan. <i>(verbranden)</i>','verbrandde','verbrande|verbrandt','Verleden tijd: stam <i>verbrand</i>, d zit niet in \'t ex-kofschip → stam + de = verbrand<b>de</b>. <i>Verbrande</i> mist de d van de stam; <i>verbrandt</i> is tegenwoordige tijd.'],
+['Het pakketje is gisteren <b>___</b>. <i>(bezorgen)</i>','bezorgd','bezorgt|bezorgdt','Voltooid deelwoord (na <i>is</i>). Verleden tijd is <i>bezorgde</i> → het vdw eindigt op <b>-d</b>. <i>Bezorgt</i> is een pv (hij bezorgt).'],
+['<b>___</b> jij later ook kok? <i>(worden)</i>','Word','Wordt|Worde','<i>Jij</i> staat achter de pv: dan geen t. <i>Word jij</i>, maar <i>jij wordt</i>.'],
+['Jij <b>___</b> steeds beter in wiskunde. <i>(worden)</i>','wordt','word|wort','<i>Jij</i> staat vóór de pv: ik-vorm (word) + t = word<b>t</b>.'],
+['Hij <b>___</b> gisteren niet op mijn appje. <i>(antwoorden)</i>','antwoordde','antwoorde|antwoordte','Stam <i>antwoord</i>, d zit niet in \'t ex-kofschip → antwoord + de = antwoord<b>de</b>.'],
+['Wij <b>___</b> vorige week naar Utrecht. <i>(fietsen)</i>','fietsten','fietsden|fietste','Stam <i>fiets</i> eindigt op s (\'t ex-kofschip) → -te, en meervoud (wij) → fiets<b>ten</b>.'],
+['Hij <b>___</b> vorig jaar naar Groningen. <i>(verhuizen)</i>','verhuisde','verhuiste|verhuisdde','Valkuil! Kijk naar het hele werkwoord: verhui<b>z</b>en. De z zit niet in \'t ex-kofschip → ik-vorm + de = verhuis<b>de</b>.'],
+['Zij <b>___</b> vroeger in Spanje. <i>(leven)</i>','leefde','leefte|leefdde','Kijk naar het hele werkwoord: le<b>v</b>en. De v zit niet in \'t ex-kofschip → leef<b>de</b>.'],
+['Ze heeft het hek groen <b>___</b>. <i>(verven)</i>','geverfd','geverft|geverfdt','Verleden tijd: ver<b>v</b>en → verfde (v niet in \'t ex-kofschip). Dus vdw op -d: geverf<b>d</b>.'],
+['Ik <b>___</b> het een goed plan. <i>(vinden)</i>','vind','vindt|vint','Bij <i>ik</i> alleen de stam: ik vind. Geen t.'],
+['<b>___</b> je het leuk om mee te gaan? <i>(vinden)</i>','Vind','Vindt|Vinde','<i>Je</i> staat achter de pv → geen t: <i>Vind je …?</i>'],
+['Wanneer <b>___</b> u mijn mail? <i>(beantwoorden)</i>','beantwoordt','beantwoord|beantwoorden','Bij <i>u</i> komt er altijd een t bij, ook als u achter de pv staat: <i>beantwoordt u</i>.'],
+['Het meisje <b>___</b> iedereen met haar stem. <i>(verbazen, nu)</i>','verbaast','verbaasd|verbaasdt','Pv tegenwoordige tijd: zij verbaas + t = verbaas<b>t</b>. <i>Verbaasd</i> is het voltooid deelwoord (ze is verbaasd).'],
+['Wat is er gisteren <b>___</b>? <i>(gebeuren)</i>','gebeurd','gebeurt|gebeurdt','Voltooid deelwoord (na <i>is</i>). Verleden tijd <i>gebeurde</i> → vdw op -d. <i>Het gebeurt</i> is tegenwoordige tijd.'],
+['De trein <b>___</b> elke dag om acht uur. <i>(vertrekken)</i>','vertrekt','vertrek|vertrekd','Hij/zij/het (de trein) → ik-vorm + t: vertrek<b>t</b>.'],
+['Ze <b>___</b> het pakket gisteren op. <i>(halen)</i>','haalde','haalte|haaldde','Stam <i>haal</i>: l zit niet in \'t ex-kofschip → haal<b>de</b>.']]},
+
+{id:'eng',nr:'87',t:'Engelse werkwoorden',ic:'🇬🇧',regel:`<p>Engelse werkwoorden vervoeg je <b>als Nederlandse zwakke werkwoorden</b>, met 't ex-kofschip.</p>
+<p>Let op: soms eindigt de stam op een <b>e</b> die je niet uitspreekt (time, race, skype). Dan kijk je naar de <b>klank</b> die je hoort, en de e blijft staan:</p>
+<ul><li>timen: je hoort ‘taim’, m niet in 't ex-kofschip → time<b>de</b>, getime<b>d</b></li><li>racen: je hoort ‘rees’, s wel in 't ex-kofschip → race<b>te</b>, gerace<b>t</b></li><li>relaxen: relax + te → relax<b>te</b>, gerelax<b>t</b></li></ul>`,q:[
+['De wedstrijd is gisteren <b>___</b>. <i>(racen)</i>','geracet','geraced|geracetd','Je hoort ‘rees’: de s zit in \'t ex-kofschip → -t. De e van race blijft staan: gerace<b>t</b>.'],
+['Zijn sprong was perfect <b>___</b>. <i>(timen)</i>','getimed','getimet|getimd','Je hoort ‘taim’: m zit niet in \'t ex-kofschip → -d. De e blijft: getime<b>d</b>.'],
+['Hij <b>___</b> de hele middag in de tuin. <i>(relaxen, verleden tijd)</i>','relaxte','relaxde|relaxtte','Stam <i>relax</i> eindigt op x (\'t ex-kofschip) → relax<b>te</b>.'],
+['Ik heb het bestand <b>___</b>. <i>(deleten)</i>','gedeletet','gedeleted|gedeletd','Je hoort ‘dielieet’: t zit in \'t ex-kofschip → -t, de e blijft: gedelete<b>t</b>.'],
+['Oma <b>___</b> elke zondag met haar kleinkinderen. <i>(skypen, verleden tijd)</i>','skypete','skypede|skypte','Je hoort ‘skaip’: p zit in \'t ex-kofschip → -te, en de e blijft: skype<b>te</b>.'],
+['We hebben de hele avond <b>___</b>. <i>(gamen)</i>','gegamed','gegamet|gegaamd','Je hoort ‘geem’: m zit niet in \'t ex-kofschip → -d, de e blijft: gegame<b>d</b>.'],
+['Jij <b>___</b> dat je ziek bent! <i>(faken, nu)</i>','faket','fakt|faakt','Tegenwoordige tijd: ik fake, jij fake + t = fake<b>t</b>. De e blijft staan.'],
+['Ik heb de foto\'s net <b>___</b>. <i>(uploaden)</i>','geüpload','geupload|geüploadt','Verleden tijd uploadde → vdw op -d. Trema op de u, anders lees je ‘geu’ als één klank.']]},
+
+{id:'samen',nr:'88',t:'Tussen-n en tussen-s',ic:'🧩',regel:`<p><b>-en-</b> schrijf je als het eerste deel een zelfstandig naamwoord is dat <b>alleen een meervoud op -en</b> heeft: pann<b>en</b>koek, paard<b>en</b>bloem, boek<b>en</b>kast.</p>
+<p><b>Geen n</b> als het eerste deel:</p><ul><li>een meervoud op -s heeft (scorekaart) of op -s én -n (groentesoep, gedachtegang);</li><li>geen meervoud heeft (tarwebrood);</li><li>een werkwoord of versterking is (huilebalk, beresterk);</li><li>maar één keer bestaat (zonnebrand, maneschijn).</li></ul>
+<p><b>Tussen-s</b>: schrijf hem als je hem hoort (stadsmuur). Begint het tweede deel met een s-klank, test dan met een ander woord: stad<b>s</b>muur → stad<b>s</b>centrum.</p>`,q:[
+['Welke is goed?','pannenkoek','pannekoek|pannenkoeck','Pan heeft alleen het meervoud pann<b>en</b> → met -en-.'],
+['Welke is goed?','paardenbloem','paardebloem|paardsbloem','Paard: meervoud alleen paard<b>en</b> → met -en-.'],
+['Welke is goed?','zonnebrand','zonnenbrand|zonsbrand','Er is maar één zon → geen n.'],
+['Welke is goed?','groentesoep','groentensoep|groentessoep','Groente heeft twee meervouden (groenten én groentes) → geen n.'],
+['Welke is goed?','tarwebrood','tarwenbrood|tarwesbrood','Tarwe heeft geen meervoud → geen n.'],
+['Welke is goed?','huilebalk','huilenbalk|huilbalk','Huilen is een werkwoord, geen zelfstandig naamwoord → geen n.'],
+['Welke is goed?','scorekaart','scorenkaart|scoreskaart','Score heeft alleen een meervoud op -s (scores) → geen n.'],
+['Welke is goed?','kippensoep','kippesoep|kipsoep','Kip: meervoud alleen kipp<b>en</b> → met -en-.'],
+['Welke is goed?','gedachtegang','gedachtengang|gedachtesgang','Gedachte heeft twee meervouden (gedachten én gedachtes) → geen n.'],
+['Welke is goed?','stadscentrum','stadcentrum|statscentrum','Test met een ander woord: stad<b>s</b>muur. Daar hoor je de s → ook stad<b>s</b>centrum.'],
+['Welke is goed?','liefdesverdriet','liefdeverdriet|liefdensverdriet','Test: liefd<b>es</b>brief, je hoort de s → liefdesverdriet.'],
+['Welke is goed?','boekenkast','boekekast|boekskast','Boek: meervoud alleen boek<b>en</b> → met -en-.']]},
+
+{id:'aaneen',nr:'89',t:'Aaneen of los?',ic:'🔗',regel:`<ul><li>Samenstellingen schrijf je <b>zo veel mogelijk aaneen</b>: asielzoekerscentrum, hogesnelheidstrein, alcoholvrij, koffiezetten.</li>
+<li>Woorden met <b>er, daar, hier, waar</b> aaneen: erin, daarvoor, waartegenover. Maar volgt er een zelfstandig naamwoord, dan los: <i>Het kind zit <b>voor op</b> de fiets</i>, maar <i>het zitje hangt <b>voorop</b></i>.</li>
+<li><b>Getallen</b> tot duizend aaneen (tweehonderdzesendertig). Ná duizend een spatie (zesduizend vierhonderd). Miljoen en miljard los (drie miljoen).</li>
+<li><b>Betekenis</b> verandert: <i>een teveel</i> (overschot) / <i>te veel</i> betaald; <i>tenslotte</i> (uiteindelijk) / <i>ten slotte</i> (aan het eind); <i>tekort</i> (schaarste) / <i>te kort</i>.</li>
+<li>Vaak fout: bijvoorbeeld, dankzij, tezamen, tweemaal, per se, van tevoren. Linker-/rechter- vast bij lichaamsdelen, kleding en voertuigen (linkerhand), anders los (linker ingang).</li></ul>`,q:[
+['Hij heeft veel <b>___</b> betaald.','te veel','teveel|te-veel','Hier betekent het ‘meer dan nodig’ → los: <i>te veel</i>. <i>Een teveel</i> (zelfstandig naamwoord) schrijf je aaneen.'],
+['Een <b>___</b> aan suiker is ongezond.','teveel','te veel|te-veel','Met <i>een</i> ervoor is het een zelfstandig naamwoord (een overschot) → aaneen.'],
+['We hebben er <b>___</b> hard voor gewerkt. <i>(= uiteindelijk)</i>','tenslotte','ten slotte|ten-slotte','Betekenis ‘uiteindelijk, per slot van rekening’ → aaneen.'],
+['<b>___</b> volgt nog een samenvatting. <i>(= aan het eind)</i>','Ten slotte','Tenslotte|Ten-slotte','Betekenis ‘aan het eind’ → los.'],
+['Het kinderzitje hangt <b>___</b>.','voorop','voor op|voor-op','Er volgt geen zelfstandig naamwoord → aaneen.'],
+['Het kind zit <b>___</b> de fiets.','voor op','voorop|voor-op','Er volgt een zelfstandig naamwoord (de fiets) → los.'],
+['Er kwamen <b>___</b> mensen. <i>(256)</i>','tweehonderdzesenvijftig','tweehonderd zesenvijftig|twee honderd zesenvijftig','Getallen tot duizend schrijf je aaneen.'],
+['Het huis kost <b>___</b> euro. <i>(3 miljoen)</i>','drie miljoen','driemiljoen|drie-miljoen','Miljoen en miljard staan los.'],
+['Dat hoeft niet <b>___</b>.','per se','perse|per-se','<i>Per se</i> (Latijn) schrijf je los.'],
+['Ik wist het al <b>___</b>.','van tevoren','van te voren|vantevoren','Vaste schrijfwijze: <i>van tevoren</i>.'],
+['<b>___</b> zijn goede start won hij.','Dankzij','Dank zij|Dankzei','Vaste schrijfwijze: <i>dankzij</i>, aaneen.'],
+['Hij brak zijn <b>___</b>.','linkerhand','linker hand|linker-hand','Lichaamsdeel → linker- vast aan het woord.'],
+['Gebruik de <b>___</b> van het station.','linker ingang','linkeringang|linker-ingang','Geen lichaamsdeel, kledingstuk of voertuigonderdeel → los.'],
+['Ik ga vanavond <b>___</b>.','televisiekijken','televisie kijken|televisie-kijken','Samengestelde werkwoorden schrijf je vaak aaneen: televisiekijken, koffiezetten, gebruikmaken.']]},
+
+{id:'mv',nr:'90',t:'Meervoud',ic:'➕',regel:`<ul><li>Meestal <b>-en</b>, vaak ook <b>-s</b> of <b>-'s</b>.</li><li><b>Apostrof</b> als je het anders verkeerd uitspreekt: woorden op -a, -i, -o, -u, -y: collega's, taxi's, foto's, menu's, party's. Geen uitspraakprobleem? Dan geen apostrof: douches, reparaties, cowboys.</li>
+<li><b>Trema</b> voor de leesbaarheid: strategieën, leliën, zeeën.</li><li>Soms mag allebei: gedachten/gedachtes, aardappelen/aardappels.</li><li>Latijnse woorden: historicus → historici, museum → musea of museums.</li>
+<li>Onbeklemtoonde <b>-ik, -es, -et</b>: geen dubbele medeklinker: perziken, dreumesen, lemmeten.</li></ul>`,q:[
+['Het meervoud van <i>collega</i>?','collega\'s','collegas|collegaas','Op -a: zonder apostrof zou je ‘collegas’ als ‘kollegás’ lezen → apostrof.'],
+['Het meervoud van <i>strategie</i>?','strategieën','strategiën|strategies','Trema op de nieuwe lettergreep: strategie-en → strategieën.'],
+['Het meervoud van <i>perzik</i>?','perziken','perzikken|perziks','Onbeklemtoonde uitgang -ik → geen dubbele k.'],
+['Het meervoud van <i>dreumes</i>?','dreumesen','dreumessen|dreumes\'en','Onbeklemtoonde uitgang -es → geen dubbele s.'],
+['Het meervoud van <i>douche</i>?','douches','douche\'s|douchen','Geen uitspraakprobleem → de s gewoon eraan vast, zonder apostrof.'],
+['Het meervoud van <i>taxi</i>?','taxi\'s','taxis|taxies','Op -i: zonder apostrof lees je het verkeerd → taxi\'s.'],
+['Het meervoud van <i>reparatie</i>?','reparaties','reparatie\'s|reparatiën','Geen uitspraakprobleem → gewoon -s, geen apostrof.'],
+['Het meervoud van <i>historicus</i>?','historici','historicussen|historicuzen','Latijns woord: -us wordt -i.'],
+['Het meervoud van <i>party</i>?','party\'s','partys|parties','Op -y met een medeklinker ervoor → apostrof (Engels <i>parties</i> is fout in het Nederlands).'],
+['Het meervoud van <i>zee</i>?','zeeën','zeen|zee\'s','Trema op de nieuwe lettergreep: zee-en → zeeën.'],
+['Het meervoud van <i>cowboy</i>?','cowboys','cowboy\'s|cowboyen','Klinker vóór de y (o) → geen uitspraakprobleem, geen apostrof.']]},
+
+{id:'verkl',nr:'91',t:'Verkleinwoorden',ic:'🔍',regel:`<ul><li>Achter het woord: -je, -tje, -etje of -pje.</li><li>Eindigt het op <b>-a, -é, -o, -u</b>: klinker verdubbelen (dramaatje, coupeetje, radiootje, menuutje). Op <b>-i</b>: wordt -ie (taxietje).</li>
+<li>Op <b>-y</b> met medeklinker ervoor, en bij afkortingen en letters: <b>apostrof</b>: baby'tje, pc'tje, A4'tje.</li><li>Lastig: karbonaadje, dinertje, souvenirtje, jongetje, repetitietje, koninkje.</li></ul>`,q:[
+['Verkleinwoord van <i>drama</i>?','dramaatje','dramatje|drama\'tje','Op -a: de klinker verdubbelen → dramaatje.'],
+['Verkleinwoord van <i>taxi</i>?','taxietje','taxi\'tje|taxitje','Op -i: de i wordt -ie → taxietje.'],
+['Verkleinwoord van <i>baby</i>?','baby\'tje','babytje|babietje','Op -y met een medeklinker ervoor → apostrof.'],
+['Verkleinwoord van <i>radio</i>?','radiootje','radiotje|radio\'tje','Op -o: klinker verdubbelen → radiootje.'],
+['Verkleinwoord van <i>menu</i>?','menuutje','menutje|menu\'tje','Op -u: klinker verdubbelen → menuutje.'],
+['Verkleinwoord van <i>jongen</i>?','jongetje','jongentje|jonkje','Vaste lastige vorm: jongetje.'],
+['Verkleinwoord van <i>koning</i>?','koninkje','koningetje|koningje','Vaste lastige vorm: koninkje.'],
+['Verkleinwoord van <i>pc</i>?','pc\'tje','pctje|pc-tje','Afkorting → apostrof.'],
+['Verkleinwoord van <i>karbonade</i>?','karbonaadje','karbonadetje|karbonadje','Lastige vorm: karbonaadje.'],
+['Verkleinwoord van <i>coupé</i>?','coupeetje','coupétje|coupé\'tje','Op -é: klinker verdubbelen, het accent verdwijnt → coupeetje.']]},
+
+{id:'bijv',nr:'92',t:'Bijvoeglijke naamwoorden',ic:'🎨',regel:`<ul><li>Afgeleid van een voltooid deelwoord: <b>zo kort mogelijk</b>: de vergrote foto's, de aangebrande aardappels (niet ‘vergrootte’, ‘aangebrandde’). Soms dubbele medeklinker voor de uitspraak: de geknotte wilg.</li>
+<li>Voltooid deelwoord op -en: die -en blijft: gezouten vis, gemalen koffie.</li><li>Van een stof: meestal <b>-(e)n</b>: kartonnen, zijden, betonnen. Moderne stoffen soms zonder: polyester, aluminium.</li>
+<li>Na <b>te</b>: het hele werkwoord: de te verwachten drukte.</li><li>Met <b>-loos</b>: geen tussen-n: kosteloos, grenzeloos.</li></ul>`,q:[
+['De <b>___</b> foto\'s hangen in de gang.','vergrote','vergrootte|vergrooten','Bijvoeglijk gebruikt voltooid deelwoord: zo kort mogelijk → vergrote.'],
+['Er lagen <b>___</b> aardappels in de pan.','aangebrande','aangebrandde|aangebrandden','Zo kort mogelijk: aangebrande (met één d).'],
+['Ik eet graag <b>___</b> pinda\'s.','gezouten','gezoute|gezoutten','Voltooid deelwoord op -en (gezouten): de -en blijft staan.'],
+['Het zit in een <b>___</b> doos.','kartonnen','karton|kartone','Stoffelijk bijvoeglijk naamwoord → -(e)n: kartonnen.'],
+['Hij draagt een <b>___</b> das.','zijden','zijde|zijen','Stoffelijk → -en: zijden.'],
+['We rekenen op de <b>___</b> drukte.','te verwachten','te verwachte|te verwacht','Na <i>te</i> komt het hele werkwoord: te verwachten.'],
+['Meedoen is <b>___</b>.','kosteloos','kostenloos|kostloos','Met -loos geen tussen-n: kosteloos.'],
+['Een <b>___</b> wilg.','geknotte','geknote|geknotten','Voor de uitspraak verdubbel je de t: geknotte (anders lees je ‘geknoote’).']]},
+
+{id:'alle',nr:'93',t:'Alle(n), beide(n), sommige(n)',ic:'👥',regel:`<p><b>Zonder -n:</b></p><ul><li>bij dingen en dieren: <i>De honden blaften. Beide gromden.</i></li><li>als er een zelfstandig naamwoord achter staat: <i>alle leerlingen</i>, <i>beide gemeenten</i>;</li><li>als je het zelfstandig naamwoord er nog achter kunt denken: <i>slechts enkele (kinderen)</i>.</li></ul>
+<p><b>Met -n:</b> als het woord zelfstandig gebruikt wordt én over <b>personen</b> gaat: <i>De makelaars verwachten <b>allen</b> een daling</i>, of als het zelfstandig naamwoord ver weg staat. Dit geldt ook voor andere(n), grote(n), jongere(n).</p>`,q:[
+['De honden blaften. <b>___</b> waren boos.','Beide','Beiden|Beidden','Dieren → nooit een -n.'],
+['Mijn ouders werken <b>___</b> in de zorg.','beiden','beide|beidde','Zelfstandig gebruikt en het gaat over personen (mijn ouders) → met -n.'],
+['<b>___</b> leerlingen moeten om acht uur aanwezig zijn.','Alle','Allen|Allle','Er staat een zelfstandig naamwoord achter (leerlingen) → geen -n.'],
+['De trainers waren het <b>___</b> eens.','allen','alle|allle','Zelfstandig gebruikt en het gaat over personen (de trainers) → met -n.'],
+['Ik heb twee fietsen; <b>___</b> zijn kapot.','beide','beiden|beidde','Dingen (fietsen) → geen -n.'],
+['De meeste kinderen kijken het Jeugdjournaal; slechts <b>___</b> niet.','enkele','enkelen|enkel','Je kunt ‘kinderen’ er nog achter denken (enkele kinderen) → geen -n.'],
+['De twee zussen kwamen binnen. <b>___</b> droegen een rode jas.','Beiden','Beide|Beidde','Zelfstandig gebruikt en het gaat over personen → met -n.']]},
+
+{id:'hoofd',nr:'95-96',t:'Hoofdletters en kleine letters',ic:'🔠',regel:`<p><b>Hoofdletter:</b> begin van de zin, eigennamen, bedrijven en gebouwen (voetbalclub Vitesse), merknamen (een Magnum), God, <b>feestdagen</b> (Pasen, Koningsdag), <b>aardrijkskundige namen</b> en afleidingen (Frankrijk, Fransman, Franse les, het Frans), belangrijke gebeurtenissen (de Tweede Wereldoorlog). Bij titels alleen het eerste woord (<i>Goede tijden, slechte tijden</i>).</p>
+<p><b>Kleine letter:</b> afleidingen van feestdagen (kerstvakantie, oudejaarsavond), godsdiensten en stromingen (een moslim, het communisme), <b>periodes</b> en maanden (de middeleeuwen, februari), de vakken (Duits en wiskunde!). Let op: de streek Bourgogne, maar een fles bourgogne.</p>`,q:[
+['We gaan in de <b>___</b> skiën.','kerstvakantie','Kerstvakantie|KerstVakantie','Afleiding van een feestdag → kleine letter.'],
+['Op <b>___</b> komt de hele familie.','Koningsdag','koningsdag|Konings dag','Naam van een feestdag → hoofdletter.'],
+['Ik heb morgen een toets <b>___</b>.','Duits','duits|DUITS','Aardrijkskundig afgeleid (Duitsland) → hoofdletter, ook als vak: Duits. (Wiskunde wel met een kleine letter.)'],
+['Hij heeft een <b>___</b> herder.','Duitse','duitse|Duitsche','Afgeleid van Duitsland → hoofdletter: Duitse herder.'],
+['In de <b>___</b> bouwden ze kastelen.','middeleeuwen','Middeleeuwen|Midden Eeuwen','Historische periode → kleine letter.'],
+['Mijn verjaardag is in <b>___</b>.','februari','Februari|FEBRUARI','Maanden schrijf je met een kleine letter.'],
+['De <b>___</b> begon in 1939.','Tweede Wereldoorlog','tweede wereldoorlog|Tweede wereldoorlog','Belangrijke historische gebeurtenis → hoofdletters.'],
+['Ze is <b>___</b>.','moslim','Moslim|MOSLIM','Aanhangers van een geloof → kleine letter.'],
+['Mijn favoriete serie is <b>___</b>.','Goede tijden, slechte tijden','Goede Tijden, Slechte Tijden|goede tijden, slechte tijden','Bij titels alleen het eerste woord met een hoofdletter (tenzij er een naam in staat).'],
+['We aten <b>___</b> kaas.','Franse','franse|Fransche','Afgeleid van Frankrijk → hoofdletter.']]},
+
+{id:'apo',nr:'97',t:'Apostrof',ic:'’',regel:`<ul><li><b>Meervoud</b> op -a, -i, -o, -u, -y (medeklinker ervoor): auto's, ski's, hobby's; ook bij afkortingen en letters: tv's, twee k's. Geen uitspraakprobleem? Dan geen apostrof: douches, cowboys.</li>
+<li><b>Verkleinwoord</b> op -y en van afkortingen: baby'tje, wc'tje.</li><li>Tussen afkorting en achtervoegsel: CDA'er, mbo'er. Bij samenstellingen een streepje: CDA-fractie, mbo-docent.</li>
+<li><b>Bezit</b>: Anja's fiets, Toni's broek (op -a, -i, -o, -u, -y). Anders de s eraan vast: Bens gedachten, Sofies kamer. Eindigt het op een sisklank: alleen een apostrof: Loes' boek, Rex' gitaar.</li><li><b>Weglating</b>: 's middags, 's-Gravenhage.</li></ul>`,q:[
+['De fiets van Anja:','Anja\'s fiets','Anjas fiets|Anja´s fiets','Eindigt op -a → apostrof + s: Anja\'s.'],
+['De gedachten van Ben:','Bens gedachten','Ben\'s gedachten|Bens\' gedachten','Geen uitspraakprobleem → s eraan vast: Bens (dus niet Engels Ben\'s!).'],
+['Het boek van Loes:','Loes\' boek','Loes\'s boek|Loess boek','Eindigt op een sisklank (s) → alleen een apostrof.'],
+['Wij hebben twee <b>___</b>.','tv\'s','tvs|tv-s','Meervoud van een afkorting → apostrof.'],
+['Hij is lid van het CDA, hij is een <b>___</b>.','CDA\'er','CDAer|CDA-er','Tussen afkorting en achtervoegsel (-er) → apostrof.'],
+['Ze werkt als <b>___</b>.','mbo-docent','mbo\'docent|mbodocent','Samenstelling met een afkorting → liggend streepje, geen apostrof.'],
+['<b>___</b> gaan we zwemmen.','\'s Middags','S\'middags|Smiddags','Weglating (des middags) → apostrof. Aan het begin van de zin krijgt het volgende woord de hoofdletter: \'s Middags.'],
+['In de winkel liggen veel <b>___</b>.','cavia\'s','cavias|caviaas','Meervoud op -a → apostrof.']]},
+
+{id:'trema',nr:'98-100',t:'Trema en streepjes',ic:'¨',regel:`<p><b>Trema</b> (¨) in een <b>niet-samengesteld</b> woord, waar een nieuwe lettergreep begint: beëindigen, reünie, financiële, geüpload, tweeëntwintig. Bij -iee- en -ii- niet nodig: financieel, kopieerde. Niet bij -eum, -eus, -ei, -ien: museum, elektricien.</p>
+<p><b>Liggend streepje</b> in een <b>samenstelling</b> als het anders verkeerd leest: zee-egel, auto-ongeluk, milieu-uitgave, video-installatie. Geen probleem? Geen streepje: massaontslag, milieuvriendelijk.</p>
+<p>Ook een streepje bij: gelijkwaardige delen (minister-president), afkortingen/letters/cijfers (e-mailen, A-merk, 24-jarige), Sint-Nicolaas, Amsterdam-Noord, ex-, oud-, adjunct- enz. (ex-vriend, oud-leerling). Anti alleen voor een hoofdletter, i of e: anti-Duits, maar antikapitalist.</p>
+<p><b>Weglatingsstreepje:</b> zomer- en winterseizoen. Maar bij losse woorden niet: hoge en lage cijfers.</p>`,q:[
+['Welke is goed?','beëindigen','beeindigen|be-eindigen','Niet-samengesteld woord, nieuwe lettergreep → trema.'],
+['Welke is goed?','auto-ongeluk','autoöngeluk|autoongeluk','Samenstelling (auto + ongeluk) waar o-o verkeerd leest → liggend streepje, geen trema.'],
+['Welke is goed?','financieel','financiëel|financi-eel','Bij -iee- is een trema overbodig.'],
+['Welke is goed?','museum','museüm|muséum','Leenwoord op -eum → geen trema.'],
+['Welke is goed?','tweeëntwintig','twee-entwintig|tweeentwintig','Samengestelde telwoorden krijgen een trema, geen streepje.'],
+['Welke is goed?','zee-egel','zeeëgel|zeeegel','Samenstelling met twee gelijke klinkers → liggend streepje.'],
+['Welke is goed?','massaontslag','massa-ontslag|massaöntslag','a-o geeft geen uitspraakprobleem → geen streepje.'],
+['Welke is goed?','oud-leerling','oudleerling|oud leerling','Met oud- schrijf je een streepje.'],
+['Welke is goed?','antikapitalist','anti-kapitalist|anti kapitalist','Anti- alleen met streepje voor een hoofdletter, i of e. Hier niet.'],
+['Welke is goed?','land- en tuinbouw','land en tuinbouw|land- en tuin- bouw','Een woorddeel dat twee keer voorkomt (bouw) laat je weg → weglatingsstreepje.'],
+['Welke is goed?','hoge en lage cijfers','hoge- en lage cijfers|hoge -en lage cijfers','Je laat een los woord weg (cijfers), geen woorddeel → geen streepje.'],
+['Welke is goed?','e-mailen','emailen|e mailen','Samenstelling met een letter → streepje.']]},
+
+{id:'getal',nr:'101-102',t:'Getallen en afkortingen',ic:'🔢',regel:`<p><b>In woorden:</b> getallen tot twintig (vijftien), ronde getallen tot en met tienduizend (dertig, vijfhonderd), miljoen/miljard (zeven miljard). Rangtelwoorden aaneen: honderdvierentwintigste.</p>
+<p><b>In cijfers:</b> grote en ‘onronde’ getallen (78.933, 5,18), maten, gewichten, data, afstanden, jaartallen, bedragen (72 gram, 17 februari, 87 euro).</p>
+<p><b>Afkortingen:</b> kleine letters met punten (enz., m.b.t., mevr.); uitgesproken als woord of letter voor letter: klein en zonder punten (wc, tv, havo); bedrijven en instellingen: hoofdletters zonder punten (KLM, EU, GGD). Onbekende afkorting? Eerst voluit, afkorting tussen haakjes. Geen sociale-media-afkortingen (ff, isg) in formele teksten.</p>`,q:[
+['In de klas zitten <b>___</b> leerlingen.','vijftien','15|vijf-tien','Getallen tot twintig schrijf je in woorden.'],
+['Het pakje weegt <b>___</b>.','72 gram','tweeënzeventig gram|72 Gram','Maten en gewichten in cijfers.'],
+['Hij werd <b>___</b> in de marathon.','honderdvierentwintigste','honderd vierentwintigste|honderd-vierentwintigste','Rangtelwoorden schrijf je helemaal aaneen.'],
+['Welke afkorting is goed?','enz.','enz|ENZ.','Gewone afkortingen: kleine letters met een punt.'],
+['Welke afkorting is goed?','havo','H.A.V.O.|Havo','Letter voor letter uitgesproken → klein en zonder punten.'],
+['Welke afkorting is goed?','KLM','k.l.m.|Klm','Naam van een bedrijf → hoofdletters zonder punten.'],
+['Welke afkorting is goed?','m.b.t.','mbt|M.B.T.','Gewone afkorting (met betrekking tot) → kleine letters met punten.'],
+['Welke zin past in een formele tekst?','Ik app je even terug.','Ik app je ff terug.|Ik app je efkes trug.','Geen sociale-media-afkortingen (ff) in formele teksten.']]},
+
+{id:'accent',nr:'103-104',t:'Accenten en afbreken',ic:'✓',regel:`<p><b>Klemtoonteken</b> (é) voor nadruk: hét automerk. Twee letters → twee accenten: móéten. Drie letters → alleen de eerste twee: móóie. <b>Op hoofdletters geen accent:</b> Eén patatje → hoofdletter E zonder accent.</p>
+<p>Alleen een accent als het anders verkeerd gelezen kan worden: <i>een van de beste</i> (geen accent), <i>eenrichtingsverkeer</i>.</p>
+<p><b>Afbreken</b> aan het eind van een lettergreep, en: samenstellingen tussen de delen (circus-act, vis-hengel); bij -achtig, -loos, -baar, -heid tussen woord en achtervoegsel (schaap-achtig, bereik-baar); niet voor of na één letter (ali-nea); niet zo dat het verkeerd leest (reser-vering); trema en extra letters verdwijnen (twee-entwintig, cola-tje).</p>`,q:[
+['Welke zin is goed?','Hij is een van de beste spelers.','Hij is één van de beste spelers.|Hij is éen van de beste spelers.','Hier kan <i>een</i> niet verkeerd gelezen worden → geen accent.'],
+['Welke is goed? <i>(begin van de zin)</i>','Eén ijsje, graag!','Één ijsje, graag!|Éen ijsje, graag!','Op een hoofdletter komt geen accent.'],
+['Nadruk op <i>moeten</i>:','móéten','moéten|mòèten','Klank met twee letters → twee accenten.'],
+['Hoe breek je <i>circusact</i> af?','circus-act','cir-cusact|circu-sact','Samenstelling → tussen de delen (circus + act).'],
+['Hoe breek je <i>schaapachtig</i> af?','schaap-achtig','schaapach-tig|schaa-pachtig','Bij -achtig breek je af tussen het woord en het achtervoegsel.'],
+['Hoe breek je <i>alinea</i> af?','ali-nea','a-linea|alin-ea','Niet afbreken voor of na een lettergreep van één letter.'],
+['Hoe breek je <i>reservering</i> af?','reser-vering','reserve-ring|re-servering','Afbreken mag niet zo dat je het verkeerd leest (reserve-ring).'],
+['Hoe breek je <i>tweeëntwintig</i> af?','twee-entwintig','tweeën-twintig|twee-ëntwintig','Het trema verdwijnt bij het afbreken.']]},
+
+{id:'lees',nr:'105',t:'Leestekens',ic:'❗',regel:`<ul><li><b>Punt</b> aan het eind van de zin; niet na ?, ! of een afkorting met punt (enz.). Eén ? of ! is genoeg.</li>
+<li><b>Komma</b>: in een opsomming (niet voor <i>en</i> bij twee delen), bij een aangesproken persoon (<i>Claudia, wil je …</i>), na een tussenwerpsel (<i>Ach, …</i>), om een bijstelling (<i>Mark, de buurman, …</i>), meestal voor voegwoorden (maar bijna nooit voor <i>dat</i> en <i>of</i>), <b>tussen twee persoonsvormen</b> (<i>Wie te laat <b>is</b>, <b>moet</b> nablijven</i>).</li>
+<li><b>Bijzin met <i>die/dat</i></b>: zonder komma's geldt het voor een deel (<i>de fietsers die zonder licht reden</i> = alleen die), met komma's voor iedereen.</li>
+<li><b>Dubbele punt</b> voor directe rede en voor een opsomming of uitleg.</li><li><b>Aanhalingstekens</b> bij directe rede: punt/vraagteken binnen het citaat; loopt de zin door, dan een komma <b>buiten</b> het citaat: <i>'Ik kom morgen', zei ze.</i> Bij gedachten geen aanhalingstekens.</li><li><b>Puntkomma</b> tussen twee zinnen die nauw samenhangen.</li></ul>`,q:[
+['Welke zin is goed?','Claudia, wil je het raam dichtdoen?','Claudia wil je het raam dichtdoen?|Claudia, wil je, het raam dichtdoen?','Aangesproken persoon → komma erachter.'],
+['Welke zin is goed?','Hij vroeg of ik mee wilde.','Hij vroeg, of ik mee wilde.|Hij vroeg of, ik mee wilde.','Voor <i>of</i> en <i>dat</i> zet je bijna nooit een komma.'],
+['Welke zin is goed?','Wie te laat komt, moet nablijven.','Wie te laat komt moet nablijven.|Wie, te laat komt, moet nablijven.','Twee persoonsvormen naast elkaar (komt, moet) → komma ertussen.'],
+['Welke zin is goed?','\'Ik kom morgen\', zei ze.','\'Ik kom morgen.\', zei ze.|\'Ik kom morgen,\' zei ze.','Loopt de zin door na het citaat: geen punt, maar een komma buiten het citaat. (In romans staat de komma soms binnen.)'],
+['Welke zin is goed?','Ze zei: \'Ik kom morgen.\'','Ze zei \'Ik kom morgen\'.|Ze zei: \'Ik kom morgen\'.','Dubbele punt voor de directe rede; de punt staat binnen het citaat.'],
+['Welke zin is goed?','Hoe laat vertrekt de trein?','Hoe laat vertrekt de trein?.|Hoe laat vertrekt de trein???','Na een vraagteken geen punt, en één vraagteken is genoeg.'],
+['Welke zin is goed?','Hij dacht: wat een goed idee!','Hij dacht: \'Wat een goed idee!\'|Hij dacht, wat een goed idee!','Bij gedachten zet je geen aanhalingstekens.'],
+['Welke zin is goed?','Ik koop appels, peren en bananen.','Ik koop appels, peren, en bananen.|Ik koop, appels, peren en bananen.','Komma\'s tussen de delen van een opsomming, maar niet voor <i>en</i>.'],
+['Alleen de fietsers zonder licht kregen een boete. Welke zin past?','De fietsers die zonder licht reden, kregen een boete.','De fietsers, die zonder licht reden, kregen een boete.|De fietsers die, zonder licht reden kregen een boete.','Geen komma vóór <i>die</i>: de bijzin zegt welke fietsers (alleen die zonder licht). Na de bijzin zet je een komma. Met komma\'s eromheen betekent het dat ze <b>allemaal</b> zonder licht reden.'],
+['Welke zin is goed?','Mark, de buurman, heeft een nieuwe auto.','Mark de buurman, heeft een nieuwe auto.|Mark, de buurman heeft een nieuwe auto.','Een bijstelling (de buurman = Mark) staat tussen twee komma\'s.']]},
+
+{id:'woord',nr:'112-113',t:'Verwarde woorden en contaminatie',ic:'🔀',regel:`<p><b>Verwarde woorden</b> lijken op elkaar maar betekenen iets anders:</p><ul><li>ovatie (applaus) – ovulatie (eisprong)</li><li>gedupeerd (benadeeld) – gedeputeerd (lid van de provincie)</li><li>verwijderen (weghalen) – verwijden (wijder maken)</li><li>gefuseerd (samengegaan) – gefusilleerd (doodgeschoten)</li><li>overlevering (oud verhaal) – overleving (in leven blijven)</li><li>curator (bij een faillissement) – conservator (in een museum)</li><li>koortsig (een beetje koorts) – koortsachtig (gehaast, druk)</li><li>gelegitimeerd (met legitimatie) – gelimiteerd (beperkt)</li></ul>
+<p>Soms bestaat een woord niet: <i>bedoezelen</i> → bezoedelen.</p>
+<p><b>Contaminatie</b> = twee uitdrukkingen met dezelfde betekenis door elkaar: <i>nachecken</i> (nakijken + checken), <i>volgens mijn mening</i> (volgens mij + naar mijn mening).</p>`,q:[
+['Na het concert kreeg de zangeres een staande <b>___</b>.','ovatie','ovulatie|ovaasie','Ovatie = applaus. Ovulatie = eisprong.'],
+['Door de staking waren duizenden reizigers <b>___</b>.','gedupeerd','gedeputeerd|gedepudeerd','Gedupeerd = benadeeld. Een gedeputeerde zit in het provinciebestuur.'],
+['De twee scholen zijn vorig jaar <b>___</b>.','gefuseerd','gefusilleerd|gefuuseerd','Gefuseerd = samengegaan. Gefusilleerd = doodgeschoten!'],
+['De <b>___</b> van het museum toont de nieuwe schilderijen.','conservator','curator|conservatie','Een conservator beheert een museumcollectie. Een curator regelt een faillissement.'],
+['Hij zocht <b>___</b> naar zijn sleutels.','koortsachtig','koortsig|koortsachtend','Koortsachtig = gehaast en druk. Koortsig = een beetje koorts hebben.'],
+['Het verhaal is via <b>___</b> bewaard gebleven.','overlevering','overleving|overleveren','Overlevering = oude verhalen die doorgegeven worden. Overleving = in leven blijven.'],
+['Welke zin is goed (geen contaminatie)?','Ik moet mijn auto even laten nakijken.','Ik moet mijn auto even laten nachecken.|Ik moet mijn auto even laten nagechecked.','<i>Nachecken</i> is een contaminatie van nakijken + checken.'],
+['Welke zin is goed?','Naar mijn mening is dit te duur.','Volgens mijn mening is dit te duur.|Volgens mijn mening is dit te dure.','<i>Volgens mijn mening</i> = volgens mij + naar mijn mening door elkaar.'],
+['Welke zin is goed?','Ik besef dat het laat is.','Ik besef me dat het laat is.|Ik besefte me dat het laat is.','<i>Ik besef me</i> = <i>ik besef</i> + <i>ik realiseer me</i> door elkaar (contaminatie).'],
+['Welk woord bestaat echt?','bezoedelen','bedoezelen|bezoezelen','<i>Bedoezelen</i> bestaat niet; het is <i>bezoedelen</i> (vuil maken, beschadigen).']]},
+
+{id:'zin',nr:'123-131',t:'Zinsbouwfouten',ic:'🛠️',regel:`<ul><li><b>Congruentie</b>: enkelvoudig onderwerp → enkelvoudige pv, meervoudig → meervoudig: <i>De media <b>maken</b></i>, <i>de lading boomstammen <b>werd</b></i>.</li>
+<li><b>Lijdende vorm</b> (de auto wordt door Bas gewassen) is omslachtig; de <b>bedrijvende vorm</b> (Bas wast de auto) leest prettiger.</li>
+<li><b>Tangconstructie</b>: niet te veel woorden tussen bij elkaar horende delen.</li>
+<li><b>Verkeerd aangesloten bijzin</b>: het verborgen onderwerp van de bijzin moet het onderwerp van de hoofdzin zijn. Fout: <i>Na uren in de file te hebben gestaan, vertrok de boot.</i> (De boot stond niet in de file!)</li>
+<li><b>Losstaand zinsdeel</b>: een bijzin los met een punt ervoor. Fout: <i>Het regende. Waardoor de wedstrijd niet doorging.</i></li>
+<li><b>Foutieve samentrekking</b>: je mag een woord alleen weglaten als het in beide delen dezelfde vorm en functie heeft. Fout: <i>Stijn ging met de auto en wij op de fiets</i> (ging/gingen).</li>
+<li><b>Symmetrie</b>: delen van een opsomming hebben dezelfde vorm: <i>het begin, het middenstuk en het einde</i> (niet: ‘en hoe het afloopt’).</li></ul>`,q:[
+['De media <b>___</b> melding van een aardbeving.','maken','maakt|maakten melding','<i>De media</i> is meervoud → meervoudige pv: maken.'],
+['De lading boomstammen <b>___</b> naar de werkplaats gebracht.','werd','werden|worden','Het onderwerp is <i>de lading</i> (enkelvoud) → werd.'],
+['Iedereen <b>___</b> blij met de uitslag.','was','waren|wazen','<i>Iedereen</i> is enkelvoud → was.'],
+['Welke zin is correct?','Nadat we uren in de file hadden gestaan, vertrok de boot eerder dan gepland.','Na uren in de file te hebben gestaan, vertrok de boot eerder dan gepland.|Na uren in de file gestaan te hebben, vertrok de boot eerder.','In de foute zinnen is <i>de boot</i> het onderwerp, maar die stond niet in de file. Met <i>nadat we</i> klopt het.'],
+['Welke is correct?','Het regende hard, waardoor de wedstrijd niet doorging.','Het regende hard. Waardoor de wedstrijd niet doorging.|Het regende hard; Waardoor de wedstrijd niet doorging.','<i>Waardoor…</i> is een bijzin en mag niet los staan met een punt ervoor.'],
+['Welke zin is correct?','Stijn ging met de auto en wij gingen op de fiets.','Stijn ging met de auto en wij op de fiets.|Stijn ging met de auto en wij ging op de fiets.','Foutieve samentrekking: <i>ging</i> (enkelvoud) kun je niet weglaten bij <i>wij</i> (gingen).'],
+['Welke zin is correct?','De pianiste stond op het podium en haar werd een bloemetje overhandigd.','De pianiste stond op het podium en werd een bloemetje overhandigd.|De pianiste stond op het podium en werd haar een bloemetje overhandigd.','In het tweede deel is de pianiste niet het onderwerp (het bloemetje wordt <i>haar</i> gegeven) → je moet <i>haar</i> herhalen.'],
+['Welke zin heeft symmetrie?','Gamen dwingt je snel te reageren en goed je verstand te gebruiken.','Gamen dwingt je tot snelle reacties en goed je verstand te gebruiken.|Gamen dwingt je snel reageren en je verstand te gebruiken.','Beide delen van de opsomming hebben dezelfde vorm: <i>te reageren … te gebruiken</i>.'],
+['Welke zin is bedrijvend (actief)?','Bas wast elke week de auto van de buurman.','De auto van de buurman wordt elke week door Bas gewassen.|De auto van de buurman is door Bas gewassen.','In de bedrijvende vorm doet het onderwerp (Bas) zelf de handeling. Die vorm leest levendiger.'],
+['Welke zin is correct?','Yasmin maakte eerst haar bed op en maakte daarna zichzelf op.','Yasmin maakte eerst haar bed op en daarna zichzelf.|Yasmin maakte eerst haar bed en zichzelf op.','<i>Bed opmaken</i> en <i>zich opmaken</i> hebben een andere betekenis → niet samentrekken.']]},
+
+{id:'verw',nr:'132',t:'Verwijswoorden',ic:'👉',regel:`<ul><li>Naar <b>het-woorden</b> verwijs je met <i>het, dit, dat</i> en <i>zijn</i>: <i>Het huis… Het is nu groen.</i> Veelgemaakte fout: <i>haar</i> in plaats van <i>zijn</i>: <i>Het bedrijf laat <b>zijn</b> medewerkers…</i></li>
+<li>Namen van <b>landen en steden</b> zijn het-woorden: <i>Frankrijk heeft <b>zijn</b> tarieven…</i></li><li>Alle <b>verkleinwoorden</b> zijn het-woorden: <i>Het vaatdoekje is vuil. Was <b>het</b> even.</i></li>
+<li>In zakelijke teksten: gebruik een verwijswoord pas als het noemende woord eerder genoemd is.</li></ul>`,q:[
+['Het bedrijf laat <b>___</b> medewerkers een cursus volgen.','zijn','haar|hun','<i>Het bedrijf</i> is een het-woord → zijn.'],
+['Frankrijk heeft <b>___</b> tarieven verlaagd.','zijn','haar|hun','Landen zijn het-woorden → zijn.'],
+['Het vaatdoekje is vuil. Doe <b>___</b> maar in de was.','het','hem|haar','Verkleinwoorden zijn het-woorden → het.'],
+['Het team speelde <b>___</b> beste wedstrijd.','zijn','haar|hun','<i>Het team</i> is een het-woord → zijn.'],
+['Delft is mooi. <b>___</b> heeft prachtige grachten.','Het','Zij|Hij','Steden zijn het-woorden → het.'],
+['Het boek <b>___</b> ik lees, is spannend.','dat','die|wat','Het boek is een het-woord → dat.'],
+['De gemeente heeft <b>___</b> plannen gepresenteerd.','haar','zijn|hun','<i>De gemeente</i> is een vrouwelijk de-woord (zoals woorden op -heid, -ing, -te) → haar.']]}
+];
+
+const KEY='ned-taal-v1';
+const $=s=>document.querySelector(s);
+let S={b:{},toets:0,blitz:0,mis:{}};
+try{const r=localStorage.getItem(KEY);if(r)S=Object.assign(S,JSON.parse(r))}catch(e){}
+const save=()=>{try{localStorage.setItem(KEY,JSON.stringify(S))}catch(e){}};
+const shuffle=a=>{a=a.slice();for(let i=a.length-1;i>0;i--){const j=Math.random()*(i+1)|0;[a[i],a[j]]=[a[j],a[i]]}return a};
+const P=$('#play');
+function show(id){$('#home').hidden=id!=='home';P.hidden=id!=='play';scrollTo(0,0)}
+const gehaald=id=>(S.b[id]||0)>=.8;
+const pct=()=>Math.round(T.filter(t=>gehaald(t.id)).length/T.length*90+(S.toets>=7?10:0));
+window.leerVoortgang=pct;
+const qid=q=>q[0]+'|'+q[1];
+
+/* ---------- hoofdscherm ---------- */
+function renderHome(){const n=T.filter(t=>gehaald(t.id)).length;
+ $('#stand').innerHTML=`<div class="top"><b>Jouw stand</b><span class="teller">${pct()}%</span></div><div class="balk"><i style="width:${pct()}%"></i></div>
+  <div class="sub" style="margin:0;font-size:15px">${n} van de ${T.length} onderwerpen gehaald (8 van de 10 goed).${S.toets?` Beste proeftoets: <b>${String(S.toets).replace('.',',')}</b>.`:''}${S.blitz?` Record snelle ronde: <b>${S.blitz}</b>.`:''}</div>`;
+ $('#onder').innerHTML=T.map(t=>`<button class="mode${gehaald(t.id)?' gehaald':''}" data-t="${t.id}"><h3>${t.ic} ${t.t}</h3><p>Theorie ${t.nr} · ${t.q.length} vragen${S.b[t.id]!=null?` · beste ${Math.round(S.b[t.id]*10)}/10`:''}</p></button>`).join('');
+ P.innerHTML='';const fm=Object.keys(S.mis).length;$('#fouten').hidden=!fm;$('#fouten p').textContent=`${fm} vraag${fm===1?'':'en'} die je eerder fout had. Zijn ze nu goed, dan verdwijnen ze uit de lijst.`;
+ $('#ptoets').classList.toggle('gehaald',S.toets>=7)}
+function goHome(){show('home');renderHome()}
+document.addEventListener('click',e=>{const b=e.target.closest('[data-t]');if(b&&!$('#home').hidden)regel(b.dataset.t)});
+$('#ptoets').onclick=()=>toets();$('#pblitz').onclick=()=>blitz();$('#pspiek').onclick=()=>spiek();$('#fouten').onclick=()=>foutRonde();
+$('#wis').onclick=()=>{if(confirm('Al je voortgang bij Nederlands wissen?')){S={b:{},toets:0,blitz:0,mis:{}};save();renderHome()}};
+
+/* ---------- regel lezen, dan oefenen ---------- */
+function regel(id){const t=T.find(x=>x.id===id);show('play');
+ P.innerHTML=`<div class="top"><button class="btn licht klein" id="terug">‹ Terug</button><span class="stap">Theorie ${t.nr}</span></div>
+ <div class="kaart"><div class="label">De regel</div><h2 style="margin-top:6px">${t.ic} ${t.t}</h2>${t.regel}</div>
+ <div class="acts"><button class="btn" id="go">Oefenen: 10 vragen →</button></div>`;
+ $('#terug').onclick=goHome;$('#go').onclick=()=>ronde(t);$('#go').focus()}
+function ronde(t){const qs=shuffle(t.q).slice(0,10).map(q=>({q,t}));
+ quiz(qs,{titel:t.t,klaar:(goed,n)=>{const f=goed/n;const nieuw=f>(S.b[t.id]||0);if(nieuw)S.b[t.id]=f;save();
+  return `<p>${f>=.8?'Gehaald! Dit onderwerp staat nu op groen.':'Nog niet gehaald: 8 van de 10 in één keer goed is het doel.'}</p><div class="acts"><button class="btn" id="opn">Nog een ronde</button><button class="btn licht" id="rg">Regel nog eens lezen</button><button class="btn licht" id="hm">Naar het overzicht</button></div>`},
+  na:()=>{$('#opn').onclick=()=>ronde(t);$('#rg').onclick=()=>regel(t.id);$('#hm').onclick=goHome}})}
+
+/* ---------- vragen stellen (meerkeuze), fout = aan het eind nog eens ---------- */
+function quiz(qs,o){let i=0,goed=0,eerst=qs.length,opnieuw=[];const n=qs.length;
+ const volgende=()=>{if(i>=qs.length){if(opnieuw.length){qs=qs.concat(opnieuw);opnieuw=[]}else return einde()}
+  const {q,t,her}=qs[i];const opts=shuffle([q[1],...q[2].split('|')]);
+  P.innerHTML=`<div class="top"><button class="btn licht klein" id="stop">Stoppen</button><span class="stap">${o.titel}</span><span class="teller">${Math.min(i+1,n)}/${n}${i>=n?' · herkansing':''}</span></div>
+  <div class="kaart">${her?'<div class="label" style="color:var(--gold)">Herkansing: deze ging eerder fout</div>':''}${o.toon?`<div class="label">${t.ic} ${t.t}</div>`:''}<h3 style="margin-top:6px;font-weight:700;font-family:inherit;font-size:19px;line-height:1.45">${q[0]}</h3>
+  <div class="opts">${opts.map((x,k)=>`<button class="opt" data-k="${k}">${x}</button>`).join('')}</div><div id="fb"></div></div>`;
+  $('#stop').onclick=goHome;
+  P.querySelectorAll('.opt').forEach(b=>b.onclick=()=>{if(P.querySelector('.opt.goed'))return;const ok=opts[+b.dataset.k]===q[1];
+   P.querySelectorAll('.opt').forEach((x,k)=>{if(opts[k]===q[1])x.classList.add('goed');else if(x===b)x.classList.add('fout')});
+   if(i<n&&ok)goed++;if(ok)delete S.mis[qid(q)];else{S.mis[qid(q)]=t.id;if(!her)opnieuw.push({q,t,her:1})}save();
+   $('#fb').innerHTML=`<div class="uitleg"><b class="${ok?'goed-t':'fout-t'}">${ok?'Goed!':'Niet goed.'}</b> ${q[3]}</div><div class="acts"><button class="btn" id="vd">Verder ↵</button></div>`;
+   i++;$('#vd').onclick=volgende;$('#vd').focus()})};
+ const einde=()=>{P.innerHTML=`<div class="kaart" style="text-align:center"><div class="label">${o.titel}</div><div style="font:800 54px Archivo,system-ui;margin:8px 0">${goed}<span style="font-size:.45em;color:var(--muted)"> / ${n}</span></div>${o.klaar(goed,n)}</div>`;o.na&&o.na()};
+ show('play');volgende()}
+
+/* ---------- proeftoets: 20 gemengde vragen, cijfer ---------- */
+function toets(){const pool=shuffle(T.flatMap(t=>shuffle(t.q).slice(0,2).map(q=>({q,t})))).slice(0,20);
+ quiz(pool,{titel:'Proeftoets',toon:1,klaar:(goed,n)=>{const c=Math.round((1+9*goed/n)*10)/10;if(c>S.toets)S.toets=c;save();
+  return `<p>Cijfer: <b style="font-size:22px">${String(c).replace('.',',')}</b>${c>=7?' 🎉':''}</p><p class="sub">Alleen de eerste poging telt voor het cijfer; foute vragen kwamen daarna nog een keer terug.</p><div class="acts" style="justify-content:center"><button class="btn" id="opn">Nog een proeftoets</button><button class="btn licht" id="hm">Naar het overzicht</button></div>`},
+  na:()=>{$('#opn').onclick=toets;$('#hm').onclick=goHome}})}
+function foutRonde(){const lijst=Object.entries(S.mis).map(([k,id])=>{const t=T.find(x=>x.id===id);const q=t&&t.q.find(q=>qid(q)===k);return q?{q,t}:null}).filter(Boolean);
+ if(!lijst.length)return goHome();quiz(shuffle(lijst).slice(0,15),{titel:'Mijn fouten',toon:1,klaar:(g,n)=>`<p>${Object.keys(S.mis).length?`Er staan nog ${Object.keys(S.mis).length} vragen in je foutenlijst.`:'Je foutenlijst is leeg. Top!'}</p><div class="acts" style="justify-content:center"><button class="btn licht" id="hm">Naar het overzicht</button></div>`,na:()=>{$('#hm').onclick=goHome}})}
+
+/* ---------- snelle ronde: 60 seconden, welke is goed? ---------- */
+function blitz(){const alle=T.flatMap(t=>t.q.map(q=>({q,t})));let punten=0,eind=Date.now()+60000,klok;show('play');
+ const vraag=()=>{if(Date.now()>=eind)return stop();const {q,t}=alle[Math.random()*alle.length|0];const fout=shuffle(q[2].split('|'))[0];const opts=shuffle([q[1],fout]);
+  P.innerHTML=`<div class="top"><button class="btn licht klein" id="stop">Stoppen</button><span class="teller ok" id="pt">${punten} punten</span><span class="teller" id="tijd">60 s</span></div>
+  <div class="kaart"><div class="label">${t.ic} ${t.t}</div><h3 style="margin-top:6px;font-weight:700;font-family:inherit;font-size:19px;line-height:1.45">${q[0]}</h3><div class="opts">${opts.map((x,k)=>`<button class="opt" data-k="${k}">${x}</button>`).join('')}</div><div id="fb"></div></div>`;
+  tik();$('#stop').onclick=()=>{clearInterval(klok);goHome()};
+  P.querySelectorAll('.opt').forEach(b=>b.onclick=()=>{if(P.querySelector('.opt.goed'))return;const ok=opts[+b.dataset.k]===q[1];P.querySelectorAll('.opt').forEach((x,k)=>{if(opts[k]===q[1])x.classList.add('goed');else if(x===b)x.classList.add('fout')});
+   if(ok){punten++;setTimeout(vraag,350)}else{S.mis[qid(q)]=t.id;save();eind+=0;$('#fb').innerHTML=`<div class="uitleg"><b class="fout-t">Fout.</b> ${q[3]}</div><div class="acts"><button class="btn" id="vd">Verder ↵</button></div>`;$('#vd').onclick=vraag;$('#vd').focus()}})};
+ const tik=()=>{const s=Math.max(0,Math.ceil((eind-Date.now())/1000));const e=$('#tijd');if(e)e.textContent=s+' s'};
+ const stop=()=>{clearInterval(klok);const rec=punten>S.blitz;if(rec)S.blitz=punten;save();
+  P.innerHTML=`<div class="kaart" style="text-align:center"><div class="label">Snelle ronde</div><div style="font:800 54px Archivo,system-ui;margin:8px 0">${punten}</div><p>${rec?'Nieuw record! 🎉':`Record: ${S.blitz}`}</p><p class="sub">Tip: bij een fout staat de klok niet stil, dus lees de uitleg rustig: die tijd telt mee.</p><div class="acts" style="justify-content:center"><button class="btn" id="opn">Nog een keer</button><button class="btn licht" id="hm">Naar het overzicht</button></div></div>`;
+  $('#opn').onclick=blitz;$('#hm').onclick=goHome};
+ klok=setInterval(()=>{tik();if(Date.now()>=eind&&!P.querySelector('#vd'))stop()},250);vraag()}
+
+/* ---------- spiekbriefje: alle regels onder elkaar ---------- */
+function spiek(){show('play');P.innerHTML=`<div class="top"><button class="btn licht klein" id="terug">‹ Terug</button><span class="stap">Alle regels</span></div>
+ ${T.map(t=>`<div class="kaart"><div class="label">Theorie ${t.nr}</div><h2 style="margin-top:6px">${t.ic} ${t.t}</h2>${t.regel}</div>`).join('')}
+ <div class="acts"><button class="btn licht" id="terug2">‹ Terug naar het overzicht</button></div>`;$('#terug').onclick=goHome;$('#terug2').onclick=goHome}
+
+renderHome();
+</script>
+</body>
+</html>
