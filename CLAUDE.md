@@ -139,11 +139,13 @@ schermen `show('home'|'play')`, `goHome()`, `ask()`, `practice(sec)` (oefenronde
   (metaal geeft nE elektronen weg aan k niet-metaalatomen) bij "Elektronen overgeven" (Na/Cl) en "De formule van een zout" (Ca + 2 Cl,
   met uitleg waarom twee Cl: Ben snapte het weggeven niet).
 
-- **Nederlands Taalverzorging** (`nederlands.html`, Ben): oefenpagina zonder leerroute/berg (zoals Duits). Toetsstof: theorie 86-105 (spelling,
+- **Nederlands Taalverzorging** (`nederlands.html`, Ben): oefenpagina met leerroute (geen berg). Toetsstof: theorie 86-105 (spelling,
   leestekens) plus de losse pagina's 112-113 (verwarde woorden, contaminatie), 123-131 (zinsbouwfouten) en 132 (verwijswoorden), scans in OneDrive
   `Leren/Nederlands`. `T` = onderwerpen `{id, nr, t, ic, regel, q:[[vraag, goed, 'fout|fout', uitleg]]}`; regels in eigen woorden (geen boektekst).
   Per onderwerp: regel → 10 vragen (fout = herkansing aan het eind), gehaald bij 8/10 (`S.b[id]`). Proeftoets 20 vragen met cijfer (`S.toets`),
-  snelle ronde 60 s (`S.blitz`), foutenlijst (`S.mis`), Alle regels. Voortgang = 90% onderwerpen + 10% proeftoets ≥ 7.
+  snelle ronde 60 s (`S.blitz`), foutenlijst (`S.mis`), Alle regels. **Leerroute** (`ROUTE`, `DELEN` A-E + Eindsprint F, `routeScreen`, `rGo`, `RT`):
+  17 onderwerpen × 5% (regel + 8/10), snelle ronde ≥ 15 punten 5%, proeftoets ≥ 7 10%; foutenlijst leeg en Alle regels (`S.spiek`) tellen niet mee.
+  Vanuit de route gaat `goHome()` terug naar de route met "Gehaald! +x%". Donkere routekaart bovenaan (`#rtbox`).
 
 ## Leerlogboek en scores (gedeeld met deweef/spelletjes)
 - `leerlog.js` staat in de `<head>` van elke vakpagina (vóór de andere scripts). Per bezoek stuurt het stil één
