@@ -14,7 +14,7 @@ bouwt het samen met Claude; hij wil ook zelf kunnen meeleren (scheikunde: hij be
 - Elk vak is één los HTML-bestand (geen build, geen CDN behalve Google Fonts), met voortgang in localStorage:
   `engels.html` (Ben, `unit3-trainer-v1`), `biologie.html` (Ben, `bio-thema1-v1`), `wiskunde.html` (Ben, H2
   statistiek, `wis-h2-v1`), `scheikunde-h1.html` (H1 chemisch rekenen, `chem-h1-v1`), `scheikunde.html` (H2
-  bindingen, `chem-h2-v1`), `duits.html` (Ben, Duits op 5 havo-niveau: Briefhelfer, `duits-brief-v1`), `nederlands.html` (Ben, Taalverzorging, `ned-taal-v1`), `natuurkunde.html` (Dana, Newton 3 vwo H1 Elektrische apparaten, `nat-h1-v1`), `geschiedenis.html` (Dana, Geschiedeniswerkplaats 3 vwo H1-H2, `gesch-h12-v1`), Frans voor Dana: `frans.html`, `frans-copilot.html`, `frans-combi.html`,
+  bindingen, `chem-h2-v1`), `duits.html` (Ben, Duits op 5 havo-niveau: Briefhelfer, `duits-brief-v1`), `nederlands.html` (Ben, Taalverzorging, `ned-taal-v1`), `nlt.html` (Ben, NLT Forensisch onderzoek, `nlt-foren-v1`), `natuurkunde.html` (Dana, Newton 3 vwo H1 Elektrische apparaten, `nat-h1-v1`), `geschiedenis.html` (Dana, Geschiedeniswerkplaats 3 vwo H1-H2, `gesch-h12-v1`), Frans voor Dana: `frans.html`, `frans-copilot.html`, `frans-combi.html`,
   `frans-spel.html` (spelletjes), `frans-5.html` (versie 5, zie onder).
 - **Voortgang per persoon**: `leerlog.js` (eerste script in de head van elke vakpagina) zet stil `@<wie>` achter elke
   localStorage-sleutel behalve `leren-*` (`chem-h1-v1@ben`, `@dana`, `@marcel`, `@anja`, `@gast-<naam>`), zodat iedereen op hetzelfde apparaat
@@ -146,6 +146,13 @@ schermen `show('home'|'play')`, `goHome()`, `ask()`, `practice(sec)` (oefenronde
   snelle ronde 60 s (`S.blitz`), foutenlijst (`S.mis`), Alle regels. **Leerroute** (`ROUTE`, `DELEN` A-E + Eindsprint F, `routeScreen`, `rGo`, `RT`):
   17 onderwerpen × 5% (regel + 8/10), snelle ronde ≥ 15 punten 5%, proeftoets ≥ 7 10%; foutenlijst leeg en Alle regels (`S.spiek`) tellen niet mee.
   Vanuit de route gaat `goHome()` terug naar de route met "Gehaald! +x%". Donkere routekaart bovenaan (`#rtbox`).
+
+- **NLT Forensisch onderzoek** (`nlt.html`, Ben, toets vr 30 okt): bron = NLT-module ‘Forensisch onderzoek’ (SLO, havo, pdf in OneDrive
+  `Leren/module forensisch onderzoek.pdf`), in eigen woorden. `H` = 7 hoofdstukken `{id, nr, t, ic, lp:[[titel, html, check?]], q:[[vraag, goed, 'fout|fout', uitleg]]}`
+  (fo 1-2, vs 3, ha 4, bl 5, dna 6, bay 7, sim 8-9). Spellen: Vingerafdruk-detective (`spel('min')`, SVG `ruggen(type)` minutiae en `patroon()`
+  boog/lus/kring, `S.sp`), Methodekiezer (`METH`), Rekenlab DNA en Bayes (`RG` generatoren: het 2pq, hom p², prof product, aantal, lr, apri 1/(M−1),
+  post, kans r/(1+r), leug; `LABS`, doel 5 op rij, `S.tr`, met hintknop en rekenmachine.js), Begrippenblitz (`BEGR`), proeftoets 14 MC + 6 rekenen.
+  Leerroute: per hoofdstuk leerpad 4% + oefenronde 6% (8/10), spellen 4 × 5%, blitz ≥ 15 3%, toets ≥ 7 7%; Alles nalezen (`samen`) 0%.
 
 ## Leerlogboek en scores (gedeeld met deweef/spelletjes)
 - `leerlog.js` staat in de `<head>` van elke vakpagina (vóór de andere scripts). Per bezoek stuurt het stil één

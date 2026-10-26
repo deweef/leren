@@ -1,0 +1,453 @@
+<!doctype html>
+<html lang="nl">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<meta name="robots" content="noindex">
+<script src="leerlog.js"></script><script src="rekenmachine.js" defer></script><script>(function(){try{if(localStorage.getItem('leren-ok')!=='53a39a231246354922d1b5f7242c1639ebdc75da84bde2e766eed704f5a89cf8'){location.replace('index.html')}}catch(e){location.replace('index.html')}})();</script>
+<title>NLT · Forensisch onderzoek</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Archivo:wdth,wght@62..125,400..900&family=Atkinson+Hyperlegible:wght@400;700&family=JetBrains+Mono:wght@500;700&display=swap">
+<style>
+/* iPad: twee keer snel tikken mag niet inzoomen (knijpen om te zoomen blijft werken) */
+*{touch-action:manipulation}
+:root{--bg:#F5F2EC;--surface:#fff;--ink:#1E2230;--muted:#5D6375;--line:#DDD6CB;--chip:#EEE8DE;--accent:#C0392B;--gold:#B8860B;--good:#1E8E5A;--good-bg:#E3F4EA;--bad:#C0392B;--bad-bg:#FBE9E7;--tip:#FFF6DA}
+@media (prefers-color-scheme:dark){:root:not([data-theme="light"]){--bg:#14161D;--surface:#1D2029;--ink:#E9EAF0;--muted:#A0A5B5;--line:#30343F;--chip:#272A35;--accent:#FF6B5B;--gold:#E8B84A;--good:#4CD68A;--good-bg:#173226;--bad:#FF7B6B;--bad-bg:#3A1E1B;--tip:#2E2A1C;color-scheme:dark}}
+:root[data-theme="dark"]{--bg:#14161D;--surface:#1D2029;--ink:#E9EAF0;--muted:#A0A5B5;--line:#30343F;--chip:#272A35;--accent:#FF6B5B;--gold:#E8B84A;--good:#4CD68A;--good-bg:#173226;--bad:#FF7B6B;--bad-bg:#3A1E1B;--tip:#2E2A1C;color-scheme:dark}
+*{box-sizing:border-box}
+body{margin:0;background:var(--bg);color:var(--ink);font:17px/1.55 "Atkinson Hyperlegible",system-ui,sans-serif;overflow-wrap:break-word}
+main{max-width:720px;margin:0 auto;padding:20px 16px 60px}
+h1{font:800 clamp(30px,7vw,44px)/1.05 Archivo,system-ui,sans-serif;font-stretch:90%;margin:4px 0 6px}
+h2{font:800 22px/1.2 Archivo,system-ui,sans-serif;margin:22px 0 8px}
+h3{font:800 18px/1.25 Archivo,system-ui,sans-serif;margin:0 0 6px}
+.sub{color:var(--muted);margin:0 0 16px}
+.terug{display:inline-block;margin:0 0 10px;color:inherit;opacity:.7;text-decoration:none;font:700 14px system-ui,sans-serif}
+.vlag{display:inline-flex;height:10px;width:44px;border-radius:3px;overflow:hidden;vertical-align:middle;margin-right:8px}
+.vlag i{flex:1}.vlag i:nth-child(1){background:#111}.vlag i:nth-child(2){background:#DD0000}.vlag i:nth-child(3){background:#FFCE00}
+.kaart{background:var(--surface);border:2px solid var(--line);border-radius:16px;padding:16px;margin:12px 0}
+.opdracht{border-color:var(--ink)}
+.opdracht ol{padding-left:22px;margin:8px 0}.opdracht li{margin:4px 0}
+.label{font:700 12px/1 "JetBrains Mono",monospace;letter-spacing:.06em;text-transform:uppercase;color:var(--accent)}
+.modes{display:grid;grid-template-columns:repeat(auto-fit,minmax(200px,1fr));gap:12px;margin-top:12px}
+.mode{display:block;text-align:left;background:var(--surface);color:var(--ink);border:2px solid var(--line);border-radius:16px;padding:16px;cursor:pointer;font:inherit;position:relative}
+.mode h3{margin:0 0 4px}.mode p{margin:0;color:var(--muted);font-size:15px}
+.mode.main{background:var(--ink);color:var(--bg);border-color:var(--ink)}.mode.main p{color:var(--bg);opacity:.8}
+.mode.gehaald{background:var(--good-bg);border-color:var(--good)}
+.mode.gehaald::after{content:"✓ gehaald";position:absolute;top:8px;right:10px;font:700 11px "JetBrains Mono",monospace;color:var(--good)}
+.balk{height:10px;background:var(--chip);border-radius:6px;overflow:hidden;margin:8px 0 4px}.balk i{display:block;height:100%;background:var(--good);transition:width .3s}
+.btn{font:700 16px system-ui,sans-serif;padding:11px 16px;border-radius:12px;border:2px solid var(--ink);background:var(--ink);color:var(--bg);cursor:pointer}
+.btn.licht{background:none;color:var(--ink)}
+.btn.klein{font-size:14px;padding:7px 12px}
+.acts{display:flex;gap:10px;flex-wrap:wrap;margin-top:14px}
+.top{display:flex;justify-content:space-between;align-items:center;gap:10px;margin-bottom:10px}
+.top>*{white-space:nowrap}
+.teller{font:700 14px "JetBrains Mono",monospace;padding:6px 10px;border-radius:10px;background:var(--chip)}
+.teller.ok{background:var(--good-bg);color:var(--good)}.teller.te{background:var(--bad-bg);color:var(--bad)}
+.stap{font:700 13px "JetBrains Mono",monospace;color:var(--muted)}
+textarea{width:100%;min-height:120px;font:17px/1.5 "Atkinson Hyperlegible",system-ui,sans-serif;padding:12px;border-radius:12px;border:2px solid var(--line);background:var(--bg);color:var(--ink);resize:vertical}
+textarea:focus{outline:none;border-color:var(--accent)}
+.tip{background:var(--tip);border-radius:12px;padding:10px 14px;margin:10px 0;font-size:15.5px}
+.stenen{display:flex;flex-wrap:wrap;gap:8px;margin:8px 0}
+.steen{font:15px "Atkinson Hyperlegible",system-ui,sans-serif;padding:7px 11px;border-radius:10px;border:1.5px dashed var(--muted);background:var(--surface);color:var(--ink);cursor:pointer;text-align:left}
+.steen small{display:block;color:var(--muted);font-size:12.5px}
+.check{list-style:none;padding:0;margin:8px 0}
+.check li{padding:7px 0 7px 30px;position:relative;border-bottom:1px solid var(--line)}
+.check li::before{position:absolute;left:4px;top:7px;font-weight:800}
+.check li.ja::before{content:"✓";color:var(--good)}.check li.nee::before{content:"✗";color:var(--bad)}.check li.let::before{content:"!";color:var(--gold)}
+.check li small{display:block;color:var(--muted);font-size:14px}
+label.zelf{display:flex;gap:10px;align-items:flex-start;padding:8px 0;border-bottom:1px solid var(--line);cursor:pointer}
+label.zelf input{width:22px;height:22px;margin-top:2px;flex:none;accent-color:var(--good)}
+.brief{white-space:pre-wrap;font:17px/1.6 Georgia,"Times New Roman",serif;background:var(--surface);border:2px solid var(--line);border-radius:12px;padding:16px}
+.opts{display:grid;gap:10px;margin-top:12px}
+.opt{font:inherit;text-align:left;padding:12px 14px;border-radius:12px;border:2px solid var(--line);background:var(--surface);color:var(--ink);cursor:pointer}
+.opt.goed{border-color:var(--good);background:var(--good-bg)}.opt.fout{border-color:var(--bad);background:var(--bad-bg)}
+.uitleg{margin-top:10px;padding:10px 14px;border-radius:12px;background:var(--chip)}
+.tegels{display:flex;flex-wrap:wrap;gap:8px;min-height:52px;padding:8px;border-radius:12px;border:2px dashed var(--line);margin:10px 0}
+.tegel{font:700 17px "Atkinson Hyperlegible",system-ui,sans-serif;padding:8px 12px;border-radius:10px;border:2px solid var(--ink);background:var(--surface);color:var(--ink);cursor:pointer}
+.tegel.weg{visibility:hidden}
+.goed-t{color:var(--good);font-weight:700}.fout-t{color:var(--bad);font-weight:700}
+[hidden]{display:none!important}
+.kaart ul{padding-left:20px;margin:6px 0}.kaart li{margin:4px 0}
+.opt{font-size:17px;overflow-wrap:anywhere}
+.top .stap{white-space:normal;text-align:center;flex:1;min-width:0}
+.vraag{margin:6px 0 0;font:700 19px/1.45 "Atkinson Hyperlegible",system-ui,sans-serif}
+.groot{font:800 54px Archivo,system-ui;margin:8px 0}.groot span{font-size:.45em;color:var(--muted)}
+.ex{background:var(--chip);border-left:4px solid var(--accent);border-radius:8px;padding:10px 12px;margin:10px 0}
+.src{color:var(--muted);font-size:14px}
+.gt{display:block;overflow-x:auto;border-collapse:collapse;font-size:14.5px;margin:8px 0}.gt th,.gt td{border:1px solid var(--line);padding:6px 8px;text-align:left;vertical-align:top;overflow-wrap:normal}.gt th{background:var(--chip)}
+.fig{display:block;width:100%;max-width:240px;margin:6px auto;color:var(--ink)}
+.figrij{display:grid;grid-template-columns:repeat(auto-fit,minmax(120px,1fr));gap:8px;margin:10px 0;text-align:center}.figrij small{display:block;color:var(--muted);font-size:13px;line-height:1.3}
+.check{margin-top:14px;padding-top:12px;border-top:2px dashed var(--line)}
+.typerow{display:flex;gap:10px;margin-top:12px}.typerow input{flex:1;min-width:0;font:700 18px "Atkinson Hyperlegible",system-ui;padding:11px 12px;border-radius:12px;border:2px solid var(--line);background:var(--bg);color:var(--ink)}
+.shake{animation:sh .3s}@keyframes sh{25%{transform:translateX(-6px)}75%{transform:translateX(6px)}}
+.btn.ok{background:var(--good-bg);color:var(--good);border-color:var(--good)}
+.hk h3{display:flex;justify-content:space-between;gap:8px;align-items:baseline}
+dl.begr{margin:0}.begr dt{font-weight:700;margin-top:8px}.begr dd{margin:0 0 0 12px;color:var(--muted)}
+</style>
+</style>
+</head>
+<body>
+<main id="home">
+  <a href="index.html" class="terug">‹ Alle vakken</a>
+  <h1>NLT · Forensisch onderzoek</h1>
+  <p class="sub">Every contact leaves a trace. Vingersporen, haren, bloed, DNA en Bayes: volg de leerroute, dan heb je alles gehad.</p>
+  <div id="stand"></div>
+  <h2>Spellen en oefenen</h2>
+  <div class="modes">
+    <button class="mode" id="pmin"><h3>🔎 Vingerafdruk-detective</h3><p>Boog, lus of kring? En welke minutia zie je?</p></button>
+    <button class="mode" id="pmeth"><h3>🧪 Methodekiezer</h3><p>Poeder, cyanoacrylaat, luminol of DNA? Kies de juiste aanpak.</p></button>
+    <button class="mode" id="prdna"><h3>🧮 Rekenlab DNA</h3><p>2pq, p², het hele profiel en hoeveel mensen matchen.</p></button>
+    <button class="mode" id="prbay"><h3>⚖️ Rekenlab Bayes</h3><p>A priori, likelihood ratio, a posteriori, en de leugendetector.</p></button>
+    <button class="mode" id="pblitz"><h3>⚡ Begrippenblitz</h3><p>60 seconden alle begrippen door elkaar.</p></button>
+    <button class="mode" id="ptoets"><h3>🎯 Proeftoets</h3><p>20 vragen met een cijfer, ook rekenen. Doel: een 7.</p></button>
+    <button class="mode" id="fouten" hidden><h3>🔁 Mijn fouten</h3><p></p></button>
+    <button class="mode" id="psamen"><h3>📄 Alles nog eens lezen</h3><p>Alle uitleg en begrippen onder elkaar.</p></button>
+  </div>
+  <h2>Per hoofdstuk</h2>
+  <div id="hst"></div>
+  <div class="acts"><button class="btn licht klein" id="wis">Voortgang wissen</button></div>
+</main>
+<main id="play" hidden></main>
+<script>
+/* ---------- plaatjes (inline SVG) ---------- */
+const SVG=(w,h,inh,lab)=>`<svg viewBox="0 0 ${w} ${h}" class="fig" role="img" aria-label="${lab||''}">${inh}</svg>`;
+function ruggen(type){/* huidlijnen met in het midden één minutia */
+ const L=(d,c)=>`<path d="${d}" fill="none" stroke="${c||'currentColor'}" stroke-width="3" stroke-linecap="round"/>`;let s='';
+ [28,42,98,112].forEach(y=>s+=L(`M8 ${y} Q60 ${y-6} 110 ${y} T212 ${y}`));
+ const y1=56,y2=84;s+=L(`M8 ${y1} Q60 ${y1-6} 110 ${y1} T212 ${y1}`)+L(`M8 ${y2} Q60 ${y2-6} 110 ${y2} T212 ${y2}`);
+ const m={eind:L('M8 70 Q60 64 110 70'),bif:L('M8 70 Q60 64 110 70')+L('M110 70 Q150 62 212 63')+L('M110 70 Q150 78 212 77'),
+  oog:L('M8 70 Q50 65 88 70')+L('M88 70 Q110 60 132 70')+L('M88 70 Q110 80 132 70')+L('M132 70 Q170 75 212 70'),
+  haak:L('M8 70 Q60 64 110 70 T212 70')+L('M110 70 Q122 63 134 63'),frag:L('M92 70 Q110 66 128 70'),
+  eiland:L('M8 70 Q50 65 94 70')+`<circle cx="110" cy="70" r="3.5" fill="currentColor"/>`+L('M126 70 Q170 75 212 70')}[type];
+ return s+m+`<circle cx="112" cy="70" r="24" fill="none" stroke="var(--accent)" stroke-width="2.5" stroke-dasharray="5 4"/>`}
+const MINNAAM={eind:'beginnende of eindigende lijn',bif:'bifurcatie (splitsing)',oog:'oog',haak:'haak',frag:'lijnfragment',eiland:'lijnunit (eilandje)'};
+function figMinutiae(){return `<div class="figrij">${Object.keys(MINNAAM).map(k=>`<div>${SVG(220,140,ruggen(k),MINNAAM[k])}<small>${MINNAAM[k]}</small></div>`).join('')}</div>`}
+function patroon(p){const L=d=>`<path d="${d}" fill="none" stroke="currentColor" stroke-width="2.6" stroke-linecap="round"/>`;let s='';
+ if(p==='boog')for(let i=0;i<7;i++){const y=118-i*13;s+=L(`M14 ${y} Q80 ${y-34-i*2} 146 ${y}`)}
+ if(p==='lus'){for(let i=0;i<5;i++){const a=42-i*7,b=88+i*7,r=46+i*12;s+=L(`M14 ${a} L${70+i*4} ${a} A${(b-a)/2} ${(b-a)/2} 0 0 1 ${70+i*4} ${b} L14 ${b}`)}s+=L('M14 18 Q90 0 150 30')+L('M14 128 Q90 146 150 118')}
+ if(p==='kring')for(let i=1;i<7;i++)s+=`<ellipse cx="80" cy="70" rx="${i*11}" ry="${i*9}" fill="none" stroke="currentColor" stroke-width="2.6"/>`;
+ return s}
+const PATNAAM={boog:'boog',lus:'lus',kring:'kring'};
+function figPatronen(){return `<div class="figrij">${Object.keys(PATNAAM).map(k=>`<div>${SVG(160,140,patroon(k),k)}<small>${k}</small></div>`).join('')}</div>`}
+function figSpat(){return `<div class="figrij"><div>${SVG(160,110,`<path d="M80 6 V40" stroke="currentColor" stroke-width="2" stroke-dasharray="4 4" marker-end="url(#pv)"/><defs><marker id="pv" viewBox="0 0 10 10" refX="5" refY="5" markerWidth="6" markerHeight="6" orient="auto"><path d="M0 0L10 5L0 10z" fill="currentColor"/></marker></defs><line x1="20" y1="80" x2="140" y2="80" stroke="currentColor"/><circle cx="80" cy="80" r="14" fill="#C0392B"/>`,'recht')}<small>recht (90°): rond, l/b ≈ 1</small></div>
+ <div>${SVG(160,110,`<path d="M14 20 L60 66" stroke="currentColor" stroke-width="2" stroke-dasharray="4 4" marker-end="url(#pv2)"/><defs><marker id="pv2" viewBox="0 0 10 10" refX="5" refY="5" markerWidth="6" markerHeight="6" orient="auto"><path d="M0 0L10 5L0 10z" fill="currentColor"/></marker></defs><line x1="20" y1="80" x2="150" y2="80" stroke="currentColor"/><ellipse cx="94" cy="80" rx="30" ry="11" fill="#C0392B"/><path d="M124 80 L142 80" stroke="#C0392B" stroke-width="3" stroke-linecap="round"/>`,'schuin')}<small>schuin: langgerekt, l/b groot; staart wijst de looprichting aan</small></div></div>`}
+function figSTR(){const blok=(x,y,n,k)=>{let s='';for(let i=0;i<n;i++)s+=`<rect x="${x+i*26}" y="${y}" width="24" height="20" rx="4" fill="${k}" opacity=".85"/><text x="${x+i*26+12}" y="${y+14}" text-anchor="middle" font-size="8" font-weight="700" fill="#fff">TCAT</text>`;return s};
+ return SVG(360,110,`<text x="4" y="24" font-size="12" fill="currentColor">vader</text>${blok(50,10,5,'#3E7BFA')}<text x="190" y="24" font-size="12" font-weight="700" fill="currentColor">5 keer → kenmerk 5</text>
+ <text x="4" y="64" font-size="12" fill="currentColor">moeder</text>${blok(50,50,8,'#E5484D')}<text x="262" y="64" font-size="12" font-weight="700" fill="currentColor">8 keer → 8</text>
+ <text x="180" y="100" text-anchor="middle" font-size="13" font-weight="700" fill="currentColor">op deze locus: 5/8 (heterozygoot)</text>`,'STR')}
+
+
+/* ---------- Hoofdstukken: leerpad (kaartjes met checkvraag) en meerkeuzevragen. Eigen woorden, gebaseerd op de NLT-module Forensisch onderzoek ---------- */
+/* kaartje: [titel, html, [vraag, goed, 'fout|fout', uitleg]?]   vraag: [vraag, goed, 'fout|fout', uitleg] */
+const H=[
+{id:'fo',nr:'1-2',t:'Wat is forensisch onderzoek?',ic:'🕵️',lp:[
+ ['Wetenschap, geen tv-serie',`<p><b>Forensisch onderzoek</b> is natuurwetenschappelijk onderzoek naar wat er rond een misdrijf is gebeurd. Op de <b>plaats delict</b> (de plek van het misdrijf) zoek je sporen en die onderzoek je in het lab.</p><p>Anders dan op tv: een echte onderzoeker draagt een wit pak, handschoenen en een mondkapje, ondervraagt geen getuigen en lost de zaak niet zelf op. Hij levert <b>feiten</b>. De <b>rechter</b> beslist of iemand schuldig is.</p>`,['Wie beslist of een verdachte schuldig is?','de rechter','de forensisch onderzoeker|de politie','De onderzoeker levert alleen feiten en een objectieve uitleg. Het oordeel is aan de rechter (de officier van justitie beslist of iemand vervolgd wordt).']],
+ ['Scenario\'s en tunnelvisie',`<p>Bij een zaak bedenk je meerdere <b>scenario\'s</b> (hypotheses): zelfmoord? inbreker? ruzie? Er kan er maar één kloppen.</p><p>De valkuil is <b>tunnelvisie</b>: je gaat uit van één scenario en zoekt alleen nog sporen die daarbij passen. Daarom test je meerdere scenario's en zoek je ook naar sporen die een verdachte juist <b>vrijpleiten</b>. Het gaat om de waarheid, niet om iemand ‘schuldig maken’.</p>`,['Wat is tunnelvisie?','alleen nog zoeken naar bewijs voor één scenario','te weinig licht op de plaats delict|het verwisselen van sporen','Door vooringenomenheid zie je andere verklaringen over het hoofd.']],
+ ['Het NFI',`<p>In Nederland doet het <b>NFI</b> (Nederlands Forensisch Instituut) het meeste forensisch onderzoek, <b>alleen in opdracht</b> van politie, officier van justitie of rechter.</p><p>Eén <b>tekenbevoegde deskundige</b> is verantwoordelijk voor een onderzoek: hij maakt het plan, stuurt de onderzoekers aan, schrijft het deskundigenrapport en is de enige die contact heeft met de opdrachtgever. Zo krijgen de onderzoekers niet meer informatie dan nodig: dat voorkomt tunnelvisie.</p><p>Alles wordt <b>vastgelegd</b> (administratie), zodat je later kunt controleren wat er gedaan is.</p>`,['Waarom krijgen NFI-onderzoekers zo min mogelijk informatie over de zaak?','om vooringenomenheid (tunnelvisie) te voorkomen','omdat het geheim is voor de pers|omdat ze anders te lang werken','Wie veel weet over de verdachte, gaat (onbewust) naar bevestiging zoeken.']],
+ ['Every contact leaves a trace',`<p>Bij elk contact blijft er iets achter: dat is het idee achter sporenonderzoek. De vraag is steeds of een spoor <b>delictgerelateerd</b> is: heeft het met het misdrijf te maken, en dus bewijswaarde?</p><p>Sporen vind je op de plaats delict en op <b>stukken van overtuiging (SVO\'s)</b>, zoals een mes of een kledingstuk.</p><p><b>Biologische sporen</b> (bloed, speeksel, sperma, haar met wortel) bevatten cellen en dus DNA.</p><p>Een spoor van de verdachte op het moordwapen bewijst nog geen schuld: misschien sneed hij er eerder een tomaat mee.</p>`,['Welk spoor is géén biologisch spoor?','een schoenafdruk','speeksel op een glas|bloed op een trui','Een schoenafdruk bevat geen cellen en dus geen DNA.']],
+ ['Getuigen en de leugendetector',`<p>Getuigen vertellen een heel verhaal, sporen geven alleen een <b>momentopname</b>. Maar getuigen vergissen zich vaak, en mensen liegen soms.</p><p>Een <b>leugendetector</b> meet hartslag, bloeddruk, ademhaling en zweten. Die is niet betrouwbaar: in het voorbeeld van de module wordt maar <b>75%</b> van de leugenaars herkend en wordt <b>1 op de 12</b> eerlijke mensen toch als leugenaar aangewezen. In Nederland wordt hij daarom niet gebruikt.</p><div class="ex">Kans dat een leugenaar <b>niet</b> herkend wordt: 1 − 0,75 = <b>0,25</b>.<br>Kans dat een eerlijk persoon toch als leugenaar wordt aangewezen: 1 ÷ 12 ≈ <b>0,083</b>.</div><p>Ook rood worden of wegkijken bewijst niets: misschien is iemand gewoon zenuwachtig of verlegen.</p>`,['Een leugendetector herkent 80% van de leugenaars. Hoe groot is de kans dat een leugenaar er doorheen komt?','0,20','0,80|0,08','Niet herkend = 1 − 0,80 = 0,20.']]],
+ q:[
+ ['Wat is een plaats delict?','de plek waar het misdrijf is gepleegd','het lab van het NFI|de rechtszaal','Delict = misdrijf.'],
+ ['Wat is een SVO?','een stuk van overtuiging: een voorwerp dat als bewijs kan dienen','een speciale verhoortechniek|een soort vingerafdrukpoeder','Bijvoorbeeld een mes, een trui of een glas.'],
+ ['Waarom dragen onderzoekers een wit pak, mondkapje en handschoenen?','om de sporen niet te besmetten met hun eigen haren, huidcellen en speeksel','om er professioneel uit te zien|om zichzelf te beschermen tegen kou','Anders laten ze zelf DNA en haren achter (contaminatie).'],
+ ['Wat bedoelen we met een delictgerelateerd spoor?','een spoor dat met het misdrijf in verband staat','elk spoor op de plaats delict|een spoor dat te oud is','Niet elk spoor heeft met het misdrijf te maken (bijv. een haar van een ambulancebroeder).'],
+ ['Wat doet de tekenbevoegde deskundige?','coördineert het onderzoek en schrijft het deskundigenrapport','arresteert de verdachte|beslist over de straf','Hij is ook de enige die contact heeft met de opdrachtgever.'],
+ ['Wie zegt dat een verdachte vervolgd wordt?','de officier van justitie','het NFI|de getuige','Het openbaar ministerie (de officier) besluit tot vervolging; de rechter oordeelt.'],
+ ['Waarom bedenkt de recherche meerdere scenario\'s?','zodat je niet blind wordt voor andere verklaringen','omdat het verplicht is in elke tv-serie|om de rechter te verwarren','Meerdere hypotheses testen voorkomt tunnelvisie.'],
+ ['Een leugendetector wijst 1 op de 12 eerlijke mensen aan als leugenaar. Wat zegt dat?','de test geeft ook vals-positieve uitslagen','de test is altijd betrouwbaar|alle leugenaars worden betrapt','Een eerlijk mens die toch ‘positief’ test, is een vals-positieve uitslag.'],
+ ['Over welk moment geeft een spoor informatie?','alleen over het moment waarop het spoor ontstond','over het hele verhaal|over de toekomst','Een spoor is een momentopname; een getuige kan een heel verhaal vertellen.'],
+ ['Waarom is administratie (alles vastleggen) belangrijk?','zodat het onderzoek controleerbaar is voor advocaat en rechter','om de onderzoekers bezig te houden|omdat het mooi staat in het dossier','Zonder documentatie kun je niet nagaan of er fouten of besmetting zijn geweest.']]},
+
+{id:'vs',nr:'3',t:'Vingersporen',ic:'👆',lp:[
+ ['Spoor of afdruk?',`<p>Een <b>vingerspoor</b> is een (vaak onzichtbare) afdruk die een <b>onbekend</b> persoon heeft achtergelaten, bijvoorbeeld op een glas.</p><p>Een <b>vingerafdruk</b> maak je bewust van een <b>bekend</b> persoon: met inkt op een kaart of met een scanner (verdachte, paspoort).</p><p>Het vakwoord voor vingersporenonderzoek is <b>dactyloscopie</b> (Grieks: kijken naar vingers). In Nederland staan vingerafdrukken in de databank <b>HAVANK</b>.</p>`,['Je vindt een onbekende afdruk op een deurklink. Dat is een…','vingerspoor','vingerafdruk|referentieafdruk','Onbekend persoon, op de plaats delict → vingerspoor.']],
+ ['Hoe ontstaat een vingerspoor?',`<p>Op je vingertoppen zitten huidlijnen: <b>papillairlijnen</b>. Daarin zitten poriën die zweet afgeven (vooral water met zouten). Door aan je gezicht of haar te komen, komt er ook <b>vet (talg)</b> bij.</p><p>Pak je iets vast, dan blijft dat mengsel achter in het patroon van je huidlijnen. Het water verdampt, de <b>vetten en zouten</b> blijven: daar hecht het poeder aan.</p><p>Vingerafdrukken zijn <b>uniek</b> en <b>onveranderlijk</b> (behalve bij zware beschadiging, zoals een brandwond). Francis Galton liet dat in de 19e eeuw zien.</p>`,['Waaraan blijft vingerafdrukpoeder vooral plakken?','aan de vetten en zouten van het spoor','aan het water|aan de inkt','Het water verdampt; het poeder hecht aan vet en zout.']],
+ ['Hoofdpatronen',`${figPatronen()}<p>Eerst kijk je naar het grove <b>hoofdpatroon</b>: <b>boog</b>, <b>lus</b> of <b>kring</b>. Vingerafdrukken op hoofdpatroon indelen heet <b>classificeren</b>.</p>`,['Hoe heet het indelen van vingerafdrukken op hoofdpatroon?','classificeren','identificeren|contamineren','Classificeren = in groepen indelen. Identificeren = vaststellen van wie het spoor is.']],
+ ['Minutiae: de details',`${figMinutiae()}<p>Daarna zoek je de details, de <b>minutiae</b>:</p><ul><li><b>beginnende/eindigende lijn</b>: een lijn stopt</li><li><b>bifurcatie</b>: een lijn splitst in twee</li><li><b>oog</b>: lijn splitst en komt meteen weer samen</li><li><b>haak</b>: lijn splitst en één tak stopt kort daarna</li><li><b>lijnfragment</b>: een kort stukje lijn</li><li><b>lijnunit/eilandje</b>: puntje met één porie (telt in Nederland niet mee)</li></ul><p>Voor een sluitende identificatie zijn in Nederland <b>12 dactyloscopische punten</b> nodig (overeenkomende minutiae op dezelfde plek), of <b>10</b> met een bijzonder kenmerk zoals een litteken.</p>`,['Hoeveel dactyloscopische punten zijn er in Nederland nodig (zonder litteken)?','12','8|20','12 punten, of 10 met een bijzonder kenmerk.']],
+ ['Sporen zichtbaar maken',`<p>Een vers spoor is 99% water en 1% zouten en vetten. Hoe ouder, hoe minder water.</p><table class="gt"><tr><th>situatie</th><th>methode</th></tr><tr><td>redelijk vers of vettig, <b>niet-poreus</b> (glas, plastic)</td><td><b>poeder</b> + kwastje, afplakken met plakband/folie</td></tr><tr><td><b>poreus</b> (papier, karton)</td><td><b>chemische vloeistof</b> (het papier neemt het spoor op)</td></tr><tr><td><b>ouder dan 2 dagen</b>, niet-poreus</td><td><b>cyanoacrylaat</b> (damp van secondelijm, vochtige ruimte): witte laag op het spoor</td></tr></table><p>Fotografeer een afdruk altijd met een <b>liniaal</b> erbij, voor de echte maat.</p>`,['Een week oud spoor op een plastic tas. Welke methode?','cyanoacrylaat (secondelijmdamp)','poeder|chemische vloeistof','Ouder dan twee dagen en niet-poreus → cyanoacrylaat.']]],
+ q:[
+ ['Wat betekent dactyloscopie?','vingersporenonderzoek (kijken naar vingers)','haaronderzoek|DNA-onderzoek','Grieks: daktylos = vinger, skopein = kijken.'],
+ ['Hoe heet de Nederlandse vingerafdrukkendatabank?','HAVANK','CODIS|NFI','HAVANK = Het Automatisch Vinger Afdrukkensysteem Nederlandse Kollektie. CODIS is voor DNA.'],
+ ['Waarom zit niet iedereen in HAVANK?','vanwege de wet op de bescherming van persoonsgegevens','omdat de computer te klein is|omdat vingerafdrukken veranderen','Privacy: alleen bepaalde groepen (vooral verdachten) worden opgenomen.'],
+ ['Wat zijn papillairlijnen?','de huidlijnen op je vingertoppen','de lijnen op een DNA-profiel|lijnen van bloedspatten','In die lijnen zitten de poriën die zweet afgeven.'],
+ ['Een lijn splitst in tweeën. Welke minutia is dat?','bifurcatie','oog|lijnfragment','Bi = twee: de lijn vertakt.'],
+ ['Twee lijnen splitsen en komen kort daarna weer samen. Dit is een…','oog','haak|bifurcatie','Er ontstaat een ‘ooggat’ tussen de twee lijnen.'],
+ ['Welke methode kies je voor een vingerspoor op een brief?','een chemische vloeistof','poeder|cyanoacrylaat','Papier is poreus: het neemt het spoor op. Poeder werkt daar slecht.'],
+ ['Waarom fotografeer je een afdruk met een liniaal erbij?','zodat je de echte grootte weet, ook als je de foto vergroot','zodat de foto scherper wordt|om hem recht te leggen','Bij vergelijken moet de schaal kloppen.'],
+ ['Waarom gebruik je voor de proef de duim of wijsvinger?','die afdrukken zijn het grootst en duidelijkst','die vingers hebben geen minutiae|omdat het de wet is','Op een grote, duidelijke afdruk vind je makkelijker 12 punten.'],
+ ['Wat is het verschil tussen classificeren en identificeren?','classificeren = indelen op hoofdpatroon, identificeren = vaststellen van wie het spoor is','het is hetzelfde|identificeren = indelen, classificeren = de dader vinden','Eerst classificeren (grof), daarna identificeren met minutiae.'],
+ ['Waarom blijft een vingerafdruk je hele leven geschikt voor identificatie?','het patroon is uniek en verandert niet','het patroon groeit mee en wordt duidelijker|je krijgt elk jaar een nieuwe','Alleen ernstige beschadiging (brandwond) kan het veranderen.']]},
+
+{id:'ha',nr:'4',t:'Haren',ic:'💇',lp:[
+ ['Twee manieren',`<p>Een <b>haarspoor</b> is een haar op de plaats delict of op een SVO (bijvoorbeeld een bivakmuts). Je wilt weten van wie hij is. Dat kan op twee manieren:</p><ul><li><b>Morfologisch</b> onderzoek: de uiterlijke kenmerken vergelijken onder de microscoop.</li><li><b>DNA-onderzoek</b>: alleen als er een <b>haarwortel</b> aan zit, want daar zitten de cellen.</li></ul>`,['Waarom is een haar mét wortel extra waardevol?','in de wortel zitten cellen, dus kun je een DNA-profiel maken','een wortel heeft een mooiere kleur|zonder wortel is het geen echt haar','DNA zit in de celkernen van de wortel.']],
+ ['Kenmerken van een haar',`<p><b>Algemene kenmerken</b> heeft een haar van nature: kleur, kleurintensiteit, pigment, vorm, lengte, dikte.</p><p><b>Bijzondere kenmerken</b> komen van buitenaf: geverfd, gebleekt, gepermanent, geknipt, gespleten punten, beschadigd.</p>`,['Geverfd haar is een… kenmerk.','bijzonder','algemeen|genetisch','Verf komt van buitenaf → bijzonder kenmerk.']],
+ ['Het haarpalet',`<p>Hoofdharen verschillen per plek op je hoofd. Daarom maak je een <b>referentiemonster</b> met haren van verschillende plekken: <b>gekamd, geknipt en getrokken</b>. Samen vormen ze het <b>haarpalet</b>.</p><p>Past het haarspoor in iemands palet? Dan kan het van die persoon zijn. Past het niet, dan is het waarschijnlijk niet van hem, maar je weet nog steeds niet zeker dat hij het voorwerp nooit heeft aangeraakt.</p><p>Haaronderzoek is moeilijk: daarom kijken <b>twee onderzoekers los van elkaar</b>.</p>`,['Waarom doen twee onderzoekers het haaronderzoek onafhankelijk?','vergelijken op het oog is subjectief, zo verklein je de kans op fouten','omdat het snel moet|omdat één onderzoeker geen microscoop mag gebruiken','Twee onafhankelijke oordelen zijn betrouwbaarder.']],
+ ['Valkuilen: contaminatie en overdracht',`<p><b>Contaminatie</b> = besmetting/verontreiniging van sporen. Onderzoek je de trui van het slachtoffer en van de verdachte op dezelfde tafel, dan kunnen haren overspringen. Dan lijkt het of ze contact hadden, terwijl dat niet zo is. Dus: netjes en gescheiden werken.</p><p><b>Secundaire overdracht</b>: een haar kan via iets anders verhuizen (bioscoopstoel → jas → plaats delict).</p><p>Een haar mét wortel bewijst ook geen worsteling: misschien kamde iemand er eerder zijn haar.</p>`,['Wat is contaminatie?','besmetting van een spoor, bijvoorbeeld doordat sporen overspringen','het verven van haar|het vergroten van een foto','Bij forensisch onderzoek betekent het: sporen raken verontreinigd of vermengd.']]],
+ q:[
+ ['Wat betekent morfologisch onderzoek?','onderzoek naar de uiterlijke kenmerken (vorm, kleur, dikte)','DNA-onderzoek|onderzoek naar de chemische samenstelling','Morfologie = vormleer.'],
+ ['Waaruit bestaat een referentiemonster van hoofdhaar?','gekamde, geknipte en getrokken haren van verschillende plekken','één haar van de kruin|alleen haren met wortel','Zo is het palet representatief voor die persoon.'],
+ ['Welke is een algemeen kenmerk van een haar?','de dikte','gebleekt|gespleten punten','Dikte heeft het haar van nature.'],
+ ['Een haarspoor past niet in het palet van de verdachte. Mag je zeggen dat hij de muts nooit heeft aangeraakt?','nee, alleen dat dit haar waarschijnlijk niet van hem is','ja, dat is bewezen|ja, maar alleen als de haar een wortel heeft','Hij kan de muts gedragen hebben zonder dat déze haar van hem is.'],
+ ['Waar zitten de cellen waaruit je DNA kunt halen?','in de haarwortel','in de haarpunt|in de kleurstof','De haarschacht zelf is dood materiaal; de wortel bevat cellen.'],
+ ['Wat is secundaire overdracht?','een spoor komt via een tussenstap ergens terecht','een tweede DNA-test|het overtrekken van een vingerafdruk','Bijvoorbeeld: haar van een vreemde via een stoel op jouw jas.'],
+ ['Waarom onderzoek je kleding van slachtoffer en verdachte niet op dezelfde tafel?','om contaminatie te voorkomen','omdat de tafel te klein is|omdat het licht dan slecht is','Anders kunnen sporen overspringen en lijkt het of ze contact hadden.'],
+ ['Bij welke vergroting bekijk je haarcellen in de proef?','150× en 400×','2× en 4×|10.000×','Met de lichtmicroscoop.']]},
+
+{id:'bl',nr:'5',t:'Bloed',ic:'🩸',lp:[
+ ['Luminol: bloed laten oplichten',`<p>Zelfs schoongemaakt bloed kun je nog vinden. <b>Luminol</b> (van het Latijnse <i>lumen</i> = licht) reageert met <b>waterstofperoxide</b> (H₂O₂) en geeft dan <b>blauw licht</b>. Je spuit het in het donker.</p><p>Die reactie gaat vanzelf heel traag. Het <b>ijzer in hemoglobine</b> (rode bloedcellen) werkt als <b>katalysator</b>: de reactie gaat dan snel en fel. Zo zie je waar bloed zit.</p><p>Luminol is heel <b>gevoelig</b>: het werkt ook op sterk verdund of weggepoetst bloed. Oud bloed licht zelfs feller op dan vers bloed.</p>`,['Wat doet het ijzer uit het bloed bij de luminolreactie?','het is een katalysator: de reactie gaat veel sneller','het kleurt het licht rood|het stopt de reactie','Een katalysator versnelt de reactie, zodat je het licht ziet.']],
+ ['Gevoelig, maar niet selectief',`<p>Luminol reageert ook met andere dingen: dat heet een <b>vals-positieve</b> uitslag. Bijvoorbeeld met:</p><ul><li>roest</li><li>schimmels en bacteriën</li><li>chloor- en joodionen (schoonmaakmiddelen, bleekwater)</li><li>formaline</li><li>planten (citrus, banaan, watermeloen, groenten)</li><li>sommige verfsoorten</li></ul><p>Valse oplichting duurt vaak korter of heeft een andere kleur.</p><p><b>Bleekwater</b> valt na een paar dagen uiteen. Dus heeft een dader met bleek schoongemaakt, dan wacht je een paar dagen met spuiten.</p><p><b>Gevoelig</b> = reageert al op heel weinig. <b>Selectief</b> = reageert alleen op die ene stof. Luminol is wel gevoelig, maar <b>niet selectief</b>.</p>`,['Luminol licht op bij roest. Dat noem je…','een vals-positieve uitslag','een vals-negatieve uitslag|een match','Positief (licht) terwijl er geen bloed is → vals-positief.']],
+ ['Exotherm',`<p>Bij de luminolreactie komt energie vrij als licht (en wat warmte): het is een <b>exotherme</b> reactie. Bij een <b>endotherme</b> reactie wordt juist warmte uit de omgeving opgenomen.</p><p>In de proef meet je de temperatuur voor en na. Stijgt die, dan is het exotherm.</p>`,['De temperatuur stijgt tijdens een reactie. Die reactie is…','exotherm','endotherm|neutraal','Er komt energie vrij → exotherm.']],
+ ['De tetrabasetest',`<p>Zie je een roodbruine vlek? Met de <b>tetrabasetest</b> check je of het echt bloed is. Je schraapt over de vlek met papier, druppelt <b>tetrabase</b> en <b>bariumperoxide</b> erop: kleurt het <b>blauw</b>, dan is het (waarschijnlijk) bloed.</p><p>Eerst test je de oplossingen op een stukje stof met een bekende bloeddruppel: werken ze nog? (Ze zijn maar een maand houdbaar.)</p><p>Ook deze test kent vals-positieven, en reageert ook op <b>dierenbloed</b>. Is het dierenbloed, dan levert het DNA-onderzoek geen profiel op: de NFI-systemen werken alleen voor menselijk DNA.</p>`,['Hoe ontdek je dat een bloedspoor van een dier is?','het DNA-onderzoek levert geen (menselijk) profiel op','de tetrabasetest kleurt rood|luminol geeft groen licht','Tetrabase en luminol reageren ook op dierenbloed; het DNA-systeem werkt alleen voor mensen.']],
+ ['Bloedspoorpatronen',`${figSpat()}<p>Bloed gedraagt zich als een projectiel (<b>ballistiek</b>). Uit de <b>vorm</b> van een spat haal je de <b>richting</b>, de <b>hoek</b> en de <b>hoogte</b> waarvan het bloed kwam, en zo de plek van het slachtoffer.</p><p>Valt een druppel recht (90°), dan is hij rond: lengte ÷ breedte (l/b) ≈ 1. Hoe schuiner, hoe <b>langgerekter</b>: l/b wordt groter.</p><p>De vorm zegt <b>niet</b> van wie het bloed is: daarvoor heb je DNA nodig.</p>`,['Wat kun je NIET uit de vorm van een bloedspat halen?','van wie het bloed is','uit welke richting het kwam|onder welke hoek het viel','Dat zoek je uit met DNA-onderzoek.']]],
+ q:[
+ ['Waarmee reageert luminol (waarbij blauw licht ontstaat)?','waterstofperoxide','zuurstof uit de lucht|zout water','Luminol + H₂O₂ in basisch milieu → blauw licht.'],
+ ['Waarom spuit je luminol in het donker?','het blauwe licht is zwak, in het licht zie je het niet','luminol breekt af in daglicht|omdat bloed in het donker beter reageert','Je ogen moeten aan het donker wennen.'],
+ ['Wat betekent ‘selectief’ bij een reagens?','het reageert alleen met die ene stof','het reageert met heel weinig stof|het is giftig','Luminol is gevoelig maar niet selectief.'],
+ ['Een dader heeft alles met bleekwater gepoetst. Wat doe je?','een paar dagen wachten met luminol, tot het bleekmiddel is afgebroken','meteen spuiten|eerst opnieuw met water poetsen','Restjes bleek geven anders vals-positieve resultaten.'],
+ ['Wat is een reagens?','een stof waarmee je een andere stof aantoont','een stof die vingerafdrukken maakt|een DNA-kenmerk','Luminol is een reagens op bloed.'],
+ ['Een druppel valt recht naar beneden op de vloer. Hoe ziet de spat eruit?','rond (l/b ongeveer 1)','heel langgerekt|als een streep','Recht van boven = rond.'],
+ ['Hoe schuiner een druppel het oppervlak raakt…','hoe langgerekter de spat (grotere l/b)','hoe ronder de spat|hoe kleiner de spat','De breedte blijft ongeveer gelijk, de lengte neemt toe.'],
+ ['Waarom test je de tetrabaseoplossingen eerst op een bekend bloedvlekje?','om te controleren of de oplossingen nog werken','om het bloed te verdunnen|omdat het verplicht is bij dieren','Ze zijn maar een maand bruikbaar.'],
+ ['Welke stof geeft GEEN vals-positief bij luminol?','gewoon water','roest|bleekwater','Water reageert niet. Roest, bleek, sommige planten en verf wel.'],
+ ['Waarom is luminol toch nuttig, al is het niet selectief?','het vindt heel weinig bloed en wijst je waar je verder moet zoeken (bijv. onder een plint)','het bewijst wie de dader is|het geeft meteen een DNA-profiel','Daarna volgen tetrabase en DNA-onderzoek.']]},
+
+{id:'dna',nr:'6',t:'DNA',ic:'🧬',lp:[
+ ['DNA in het kort',`<p>DNA is een gedraaide <b>touwladder</b>. De treden zijn paren <b>basen</b>: A, T, C en G. Elke cel heeft <b>hetzelfde DNA</b>, dus het maakt niet uit of het uit bloed, speeksel of een haarwortel komt.</p><p>Het DNA zit in <b>23 chromosoomparen</b>: van elk paar één van je vader, één van je moeder.</p><p>Slechts <b>2%</b> van het DNA codeert voor eigenschappen. In de andere <b>98%</b> zitten <b>hypervariabele gebieden</b> die per persoon sterk verschillen: die gebruik je voor een DNA-profiel.</p>`,['Welk deel van het DNA gebruik je voor een DNA-profiel?','hypervariabele gebieden in het niet-coderende DNA','de genen voor haarkleur|het hele DNA','Daar verschillen mensen het meest van elkaar.']],
+ ['STR, locus en allel',`${figSTR()}<p>Een hypervariabel gebied bestaat uit een stukje DNA dat zich herhaalt: een <b>STR</b> (Short Tandem Repeat), bijvoorbeeld TCAT TCAT TCAT.</p><p>De <b>plek</b> op het DNA heet een <b>locus</b> (meervoud <b>loci</b>), bijvoorbeeld D2S1338 op chromosoom 2.</p><p>Het <b>aantal herhalingen</b> is het <b>DNA-kenmerk</b> (ook: <b>allel</b>). Omdat je elk chromosoom twee keer hebt (vader + moeder), heb je per locus <b>twee</b> kenmerken, bijvoorbeeld 17/20.</p>`,['TCAT staat 9 keer achter elkaar op het chromosoom van je moeder. Wat is dat DNA-kenmerk?','9','4|TCAT','Het kenmerk is het aantal herhalingen.']],
+ ['Het DNA-profiel',`<p>Het NFI kijkt naar <b>15 loci</b> op verschillende chromosomen, plus <b>AMEL</b> voor het geslacht: <b>X/Y = man</b>, <b>alleen X = vrouw</b>.</p><p>In het profiel zie je de kenmerken als <b>pieken</b>. Twee pieken = twee verschillende kenmerken: <b>heterozygoot</b> (bijv. 12/13). Eén piek = twee keer hetzelfde: <b>homozygoot</b> (bijv. 15/15).</p><p>Zijn alle loci zichtbaar, dan heb je een <b>volledig profiel</b>. Bij afgebroken DNA zie je er minder: een <b>onvolledig profiel</b>.</p>`,['Bij locus D3S1358 zie je één piek bij 15. Wat geldt?','de persoon is homozygoot: 15/15','de persoon heeft maar één chromosoom|het is een vrouw','Eén piek = van vader én moeder hetzelfde kenmerk.']],
+ ['Matchkans per locus',`<p>Hoe bijzonder is een kenmerk? Dat staat in een frequentietabel: <b>0,207</b> betekent dat 20,7% van de bevolking dat kenmerk heeft.</p><div class="ex"><b>Twee verschillende kenmerken</b> (bijv. 17/18): 2 × p × q<br>= 2 × 0,207 × 0,083 = <b>0,034</b><br><span class="src">× 2, want 17 kan van vader óf van moeder komen.</span><br><br><b>Twee dezelfde</b> (bijv. 17/17): p × p<br>= 0,207 × 0,207 = <b>0,043</b></div>`,['Kenmerk 16 heeft frequentie 0,1. Wat is de kans op 16/16?','0,01','0,2|0,1','Homozygoot: p × p = 0,1 × 0,1 = 0,01 (geen × 2).']],
+ ['Matchkans van het hele profiel',`<p>De loci liggen op verschillende chromosomen, dus je mag de kansen <b>vermenigvuldigen</b>. Bij 15 loci kom je op getallen als <b>3,29 · 10⁻²¹</b>: veel kleiner dan 1 op een miljard. Dit heet de <b>berekende frequentie</b> of <b>matchkans</b>: de kans dat een willekeurige, <b>niet-verwante</b> persoon hetzelfde profiel heeft.</p><p>Hoeveel mensen in Nederland hebben het profiel? <b>aantal = bevolking × matchkans</b>. Bij een kans van 1 op 1 miljoen zijn dat er ongeveer 17 (17 miljoen ÷ 1 miljoen).</p><p><b>Familieleden</b> lijken veel meer op elkaar, want ze erven dezelfde kenmerken.</p>`,['Matchkans 1 op 100.000, Nederland heeft 17 miljoen inwoners. Hoeveel mensen hebben ongeveer dit profiel?','170','17|1700','17.000.000 ÷ 100.000 = 170.']],
+ ['Een match bewijst geen schuld',`<p>Komt het profiel van het spoor overeen met dat van de verdachte, dan heet dat een <b>match</b>. Dat zegt alleen: hij <b>kan</b> de donor zijn van het spoor.</p><p>Hoe het spoor daar kwam, is interpretatie. Misschien was hij er eerder, of liet een voorbijganger of agent het spoor achter. Verschilt het profiel op één locus? Dan is de verdachte <b>niet</b> de donor (tenzij er iets mis ging met het spoor).</p>`,['Wat bewijst een DNA-match?','dat de verdachte de donor van het spoor kan zijn','dat de verdachte de dader is|dat de verdachte op de plaats delict woonde','De bewijskracht hangt af van de relatie tussen spoor en delict. Het oordeel is aan de rechter.']]],
+ q:[
+ ['Wat is een locus?','de plaats van een hypervariabel gebied op het DNA','een soort base|een DNA-profiel','Meervoud: loci.'],
+ ['Wat is een allel (DNA-kenmerk)?','het aantal herhalingen op een locus','een chromosoom|een piek in het geslacht','Bijvoorbeeld 17 = 17 herhalingen.'],
+ ['Wat betekent STR?','Short Tandem Repeat: een kort herhaald stukje DNA','Standaard Test Resultaat|Spoor Tot Rechtbank','Bijvoorbeeld TCAT TCAT TCAT.'],
+ ['AMEL laat X en Y zien. Dit profiel is van een…','man','vrouw|dier','Een man heeft X en Y, een vrouw alleen X.'],
+ ['Waarom heb je per locus twee DNA-kenmerken?','je hebt elk chromosoom twee keer: van vader en moeder','omdat de test twee keer gedaan wordt|omdat DNA uit twee touwen bestaat','Daarom 17/20: één van elk chromosoom.'],
+ ['Waarom doe je × 2 bij twee verschillende kenmerken (17/18)?','17 kan van vader en 18 van moeder komen, of andersom','omdat je twee loci hebt|omdat mannen dubbel tellen','Twee mogelijkheden: 17/18 en 18/17.'],
+ ['Wat is de som van alle frequenties op één locus?','1 (100%)','0,5|2','Iedereen heeft op die locus wel een van de kenmerken.'],
+ ['Waarom mag je de kansen van verschillende loci vermenigvuldigen?','ze liggen op verschillende chromosomen en erven los van elkaar over','omdat de getallen anders te groot worden|dat mag niet, je telt ze op','Onafhankelijke kansen vermenigvuldig je.'],
+ ['Wat is homozygoot?','op een locus twee keer hetzelfde kenmerk (één piek)','twee verschillende kenmerken|geen DNA op die locus','Heterozygoot = twee verschillende (twee pieken).'],
+ ['Hoe isoleer je in de klas DNA uit wangslijmvlies?','zout + afwasmiddel, 60 °C, dan ijskoude alcohol: er ontstaat een witte band DNA','alleen water koken|met luminol spuiten','Op het NFI gaat dat met een speciale kit.'],
+ ['Het profiel van spoor en verdachte verschilt op één van de 15 loci. Conclusie?','de verdachte is niet de donor van dit spoor','het is toch een match|de verdachte is een familielid','Verschillen = geen match (als het spoor goed onderzocht is).'],
+ ['Waarom hebben familieleden vaker (bijna) hetzelfde profiel?','ze erven kenmerken van dezelfde ouders','ze wonen in hetzelfde huis|ze eten hetzelfde','Daarom geldt de matchkans voor niet-verwante personen.']]},
+
+{id:'bay',nr:'7',t:'Bayes: hoe sterk is het bewijs?',ic:'⚖️',lp:[
+ ['De valkuil',`<p>Op een boot zijn 1001 mensen. Iemand wordt vermoord, in <b>jouw</b> hut. Het bloed op het wapen matcht met jou, met een matchkans van <b>1 op 1000</b>.</p><p>Simpel gedacht: ‘dan is het 99,9% zeker dat jij het was’. <b>Fout!</b> Van de 1000 anderen zou er gemiddeld óók één toevallig matchen. Dan zijn er dus twee mensen met dit profiel: jij en nog één. De kans dat jij het bent is dan maar ongeveer 50%.</p>`,['Matchkans 1 op 1000, 1000 andere mensen aan boord. Hoeveel van hen matchen gemiddeld toevallig?','1','0|1000','1000 × 1/1000 = 1.']],
+ ['Stap 1: a priori kansverhouding',`<p>Eerst kijkt de rechter <b>zonder</b> het spoor: hoeveel mensen kunnen de dader zijn? Twee hypotheses: <b>Hp</b> (aanklager: jij bent schuldig) en <b>Hd</b> (verdediging: onschuldig).</p><div class="ex">a priori kansverhouding = P(Hp) ÷ P(Hd)<br>Bij 1001 mogelijke daders: (1/1001) ÷ (1000/1001) = <b>1/1000</b></div><p>Kort: <b>1 ÷ (aantal anderen)</b>.</p>`,['Er zijn 501 mensen die het gedaan kunnen hebben. Wat is de a priori kansverhouding voor één van hen?','1/500','1/501|500','1 ÷ (501 − 1) = 1/500.']],
+ ['Stap 2: likelihood ratio',`<p>Hoe sterk is het spoor? Vergelijk twee kansen:</p><ul><li>P(E|Hp): de kans op dit spoor als jij de dader bent. Dat is meestal <b>1</b>.</li><li>P(E|Hd): de kans op dit spoor als je onschuldig bent. Dat is de <b>matchkans</b>.</li></ul><div class="ex">likelihood ratio (LR) = P(E|Hp) ÷ P(E|Hd) = 1 ÷ matchkans<br>Matchkans 1/1000 → LR = <b>1000</b></div>`,['De matchkans is 1 op 50.000. Wat is de likelihood ratio?','50.000','1/50.000|1','LR = 1 ÷ (1/50.000) = 50.000.']],
+ ['Stap 3: a posteriori kansverhouding',`<div class="ex"><b>a posteriori = a priori × likelihood ratio</b><br>Boot: 1/1000 × 1000 = <b>1</b>, dus 1 : 1, fifty-fifty.</div><p>Een kansverhouding van 1 betekent: schuldig en onschuldig even waarschijnlijk. Daarop veroordeelt geen rechter.</p><p>Met een <b>volledig</b> profiel (matchkans 3,29 · 10⁻²¹) wordt LR gigantisch en de a posteriori enorm groot. Dan is het spoor heel sterk bewijs dat jij de donor bent (de vraag hoe het spoor daar kwam blijft!).</p><p>Wil je er een kans van maken: kans = verhouding ÷ (1 + verhouding). Verhouding 1 → kans 0,5.</p>`,['A priori 1/200, likelihood ratio 1000. Wat is de a posteriori kansverhouding?','5','1000|0,2','1/200 × 1000 = 5. Schuldig is dan 5 keer zo waarschijnlijk als onschuldig.']]],
+ q:[
+ ['Wat is Hp?','de hypothese van de aanklager: de verdachte is schuldig','de hypothese van de verdediging|de matchkans','p = prosecution (aanklager).'],
+ ['Wat is Hd?','de hypothese van de verdediging: de verdachte is onschuldig','de hypothese van de aanklager|het DNA-profiel','d = defence (verdediging).'],
+ ['Wat is P(E|Hd) meestal?','de matchkans','1|0','Als je onschuldig bent, is het toeval dat het spoor matcht: dat is de matchkans.'],
+ ['Wat is P(E|Hp) meestal?','1','de matchkans|0','Als jij de dader bent die het spoor achterliet, matcht het spoor natuurlijk met jou.'],
+ ['Hoe reken je de a posteriori kansverhouding uit?','a priori × likelihood ratio','a priori + likelihood ratio|likelihood ratio ÷ a priori','Regel van Bayes.'],
+ ['Waarom is ‘matchkans 1/1000, dus 99,9% schuldig’ fout?','je vergeet hoeveel andere mensen ook toevallig kunnen matchen','omdat DNA nooit klopt|omdat de rechter dat zegt','Dit heet ook wel de denkfout van de aanklager.'],
+ ['A posteriori kansverhouding = 1. Wat betekent dat?','schuldig en onschuldig zijn even waarschijnlijk','de verdachte is zeker schuldig|de verdachte is zeker onschuldig','1 : 1 = fifty-fifty.'],
+ ['Wie beslist uiteindelijk welke kans ‘genoeg’ is voor een veroordeling?','de rechter','de forensisch statisticus|het NFI','De statistiek is een hulpmiddel voor de rechter.']]},
+
+{id:'sim',nr:'8-9',t:'Modellen en de eindopdracht',ic:'🗂️',lp:[
+ ['Model en simulatie',`<p>Sommige vragen kun je niet met één proef beantwoorden, omdat veel factoren meespelen (snelheid, luchtweerstand, hoek…). Dan maak je een <b>model</b>: een <b>vereenvoudigde weergave van de werkelijkheid</b>. Met de computer laat je het model lopen: een <b>simulatie</b>. Zo voorspel je wat er gebeurt en zie je snel het effect van een verandering.</p><p>Een model is pas bruikbaar als het klopt met <b>metingen</b> (bijvoorbeeld de proef met de deken en rode inkt). In de module gebruik je <b>Coach</b>, met <b>voorraadgrootheden</b> (inkt in trechter, inkt in maatcilinder), een <b>stroomgrootheid</b> en een <b>constante</b> (doorlaatbaarheid).</p>`,['Wat is een model?','een vereenvoudigde weergave van de werkelijkheid','een precieze kopie van de werkelijkheid|een foto van de plaats delict','Vereenvoudigd, maar wel zo nauwkeurig mogelijk.']],
+ ['De kogelbaan reconstrueren',`<p>In de simulatie reken je terug: de kogel had een <b>beginsnelheid</b> van 340 m/s en raakte het lichaam met <b>170 m/s</b> onder een hoek van 85°. Hoe diep hij in het lichaam drong (43 mm) vertelt de snelheid bij binnenkomst (getest met <b>ballistische gel</b>, die remt zoals menselijk weefsel).</p><p>Het model rekent met <b>zwaartekracht</b> en <b>luchtwrijving</b> (F<sub>w</sub> = k · v²). Door de starthoek te variëren vind je de <b>afstand</b> tot de schutter en de hoek waaronder geschoten is.</p>`,['Waar staat ballistische gel voor in het onderzoek?','het remt een kogel zoals menselijk weefsel','het maakt vingerafdrukken zichtbaar|het toont bloed aan','Zo kun je uit de indringdiepte de snelheid halen.']],
+ ['Eindopdracht: proces-verbaal en sporenmatrix',`<p>In de eindopdracht krijg je het <b>proces-verbaal</b> van Victor Zand: wat hij op de plaats delict aantrof (‘Ik zag…’, ‘Ik trof … aan’). Jij vat het samen en geeft aan waar de sporen op wijzen.</p><p>Daarna vul je een <b>sporenmatrix</b> in: een officieel document met per SVO:</p><table class="gt"><tr><th>SVO</th><th>soort</th><th>plaats aantreffen</th><th>wijze veiligstellen</th><th>vervolgonderzoek</th></tr><tr><td>1</td><td>schoenindruk</td><td>aarde voortuin</td><td>gipsen</td><td>vergelijken met referentieschoenen</td></tr><tr><td>2</td><td>vingerspoor</td><td>glasscherf onder raam</td><td>poeder + liftfolie</td><td>vergelijken met referenties + HAVANK</td></tr></table>`,['Een vingerspoor in de sporenmatrix: wat is het vervolgonderzoek?','vergelijken met referenties en met HAVANK','vergelijken met CODIS|gipsen','HAVANK = vingers, CODIS = DNA.']],
+ ['Sporendrager en SVO',`<p>Een <b>sporendrager</b> is het voorwerp waar sporen op zitten. Van één sporendrager kun je <b>meerdere SVO's</b> halen. Een bebloed mes:</p><ul><li>SVO 1: bloed van het lemmet, veiliggesteld met een vochtig wattenstaafje (voor DNA)</li><li>SVO 2: vingersporen op het heft (cyanoacrylaat)</li><li>SVO 3: het mes zelf (afmetingen, vorm)</li></ul><p><b>Referenties</b> neem je af van slachtoffer, getuigen, betrokkenen en verdachten. Is er geen match, dan zoek je in de <b>databanken</b>: HAVANK (vingers) en CODIS (DNA).</p><p>Tot slot bedenk je <b>3 scenario's</b> die bij het sporenbeeld passen, en zeg je welk scenario het meest waarschijnlijk is.</p>`,['Hoeveel SVO\'s kun je van één bebloed mes halen?','meerdere: bloed, vingersporen en het mes zelf','altijd precies één|geen, een mes is een sporendrager','Een sporendrager kan meerdere SVO\'s opleveren.']]],
+ q:[
+ ['Wat is een simulatie?','een model (op de computer) laten lopen om te voorspellen wat er gebeurt','een proef in het lab|een getuigenverklaring nadoen','Simuleren = nabootsen.'],
+ ['Waarom vergelijk je je model met meetgegevens?','om te controleren of het model de werkelijkheid goed benadert','omdat het mooi is|om de proef over te slaan','Alleen een kloppend model mag je gebruiken om te voorspellen.'],
+ ['Wat is een sporendrager?','het voorwerp waarop de sporen zitten','de persoon die het spoor achterliet|de onderzoeker die het spoor draagt','Bijvoorbeeld het mes, de trui of de glasscherf.'],
+ ['Waarvoor dient CODIS?','databank voor DNA-profielen','databank voor vingerafdrukken|databank voor haren','HAVANK is voor vingerafdrukken.'],
+ ['Hoe stel je een schoenindruk in aarde veilig?','gipsen (een afgietsel maken)','met poeder|met luminol','Zo bewaar je de vorm en het profiel van de zool.'],
+ ['Van wie neem je referenties af?','slachtoffer, getuigen, betrokkenen en verdachten','alleen van de verdachte|alleen van de politie','Zo kun je sporen van onschuldige betrokkenen uitsluiten.'],
+ ['Welke krachten zitten in het kogelbaanmodel?','zwaartekracht en luchtwrijving','alleen zwaartekracht|magnetische kracht','De luchtwrijving is F = k · v².'],
+ ['Wat schrijf je in een proces-verbaal?','wat de onderzoeker zag en aantrof, feitelijk beschreven','wie de dader is|welk vonnis de rechter moet geven','‘Ik zag…’, ‘Ik trof … aan’.'],
+ ['Hoe stel je bloed op een mes veilig voor DNA-onderzoek?','met een vochtig wattenstaafje (swab)','met poeder en plakband|met een fototoestel alleen','De swab gaat naar het lab voor een DNA-profiel.']]}
+];
+
+/* ---------- Begrippen voor de begrippenblitz ---------- */
+const BEGR=[['dactyloscopie','vingersporenonderzoek'],['papillairlijnen','huidlijnen op de vingertoppen'],['minutiae','kenmerkende details in een vingerafdruk'],['bifurcatie','een huidlijn splitst in tweeën'],['HAVANK','Nederlandse databank met vingerafdrukken'],['CODIS','databank met DNA-profielen'],['SVO','stuk van overtuiging: voorwerp als bewijs'],['plaats delict','plek van het misdrijf'],['delictgerelateerd','in verband met het misdrijf'],['sporendrager','voorwerp waarop sporen zitten'],['haarpalet','referentieset haren: gekamd, geknipt, getrokken'],['morfologie','uiterlijke kenmerken (vorm, kleur, dikte)'],['contaminatie','besmetting of vermenging van sporen'],['luminol','reagens dat met bloed blauw oplicht'],['reagens','stof waarmee je een andere stof aantoont'],['katalysator','versnelt een reactie (bijv. ijzer uit bloed)'],['vals-positief','test reageert terwijl de stof er niet is'],['tetrabasetest','test of een vlek echt bloed is (wordt blauw)'],['ballistiek','leer van de baan van projectielen'],['exotherm','reactie waarbij energie vrijkomt'],['locus','plaats van een hypervariabel gebied op het DNA'],['allel','DNA-kenmerk: aantal herhalingen op een locus'],['STR','kort stukje DNA dat zich herhaalt'],['homozygoot','twee dezelfde kenmerken op een locus'],['heterozygoot','twee verschillende kenmerken op een locus'],['AMEL','locus voor het geslacht (X of XY)'],['matchkans','kans dat een willekeurig niet-verwant persoon hetzelfde profiel heeft'],['match','twee gelijke DNA-profielen'],['a priori kansverhouding','kansverhouding schuldig/onschuldig zonder het spoor'],['likelihood ratio','1 ÷ matchkans: hoe sterk het spoor is'],['a posteriori kansverhouding','a priori × likelihood ratio'],['tunnelvisie','alleen zoeken naar bewijs voor één scenario'],['NFI','Nederlands Forensisch Instituut'],['scenario','mogelijke verklaring (hypothese) van wat er gebeurde'],['model','vereenvoudigde weergave van de werkelijkheid'],['referentiemonster','materiaal van een bekend persoon om mee te vergelijken'],['forensische entomologie','onderzoek met insecten, bijv. naar het tijdstip van overlijden'],['onvolledig DNA-profiel','profiel waarin niet alle loci zichtbaar zijn']];
+
+/* ---------- Methodekiezer: spoor + situatie → methode ---------- */
+const METH=[
+ ['Vers vingerspoor op een drinkglas','poeder + kwastje, afplakken','cyanoacrylaat|chemische vloeistof|luminol','Vers spoor, niet-poreus (glas) → poeder.'],
+ ['Vingerspoor op een brief van papier','chemische vloeistof','poeder + kwastje, afplakken|cyanoacrylaat|gipsen','Papier is poreus en neemt het spoor op → chemische vloeistof.'],
+ ['Vingerspoor van een week oud op een plastic zak','cyanoacrylaat','poeder + kwastje, afplakken|chemische vloeistof|tetrabasetest','Ouder dan 2 dagen en niet-poreus → cyanoacrylaat (secondelijmdamp).'],
+ ['De badkamer ruikt naar bleek; je vermoedt weggepoetst bloed','paar dagen wachten, dan luminol','meteen luminol spuiten|poeder|tetrabasetest op de vloer','Restjes bleekwater geven vals-positief; na een paar dagen zijn ze weg.'],
+ ['Een roodbruine vlek op een deurpost: is het bloed?','tetrabasetest','luminol in het donker|poeder|gipsen','Zichtbare vlek die op bloed lijkt → tetrabase checkt of het echt bloed is.'],
+ ['Onzichtbaar bloed op een vloer die is schoongemaakt (met water)','luminol in het donker','tetrabasetest|poeder|cyanoacrylaat','Luminol vindt ook verdund, onzichtbaar bloed.'],
+ ['Een bebloed mes: je wilt weten van wie het bloed is','vochtig wattenstaafje, DNA-onderzoek','poeder|luminol|bloedspoorpatroononderzoek','Van wie → DNA. Veiligstellen met een swab.'],
+ ['Bloedspatten op een muur: waar stond het slachtoffer?','bloedspoorpatroononderzoek','DNA-onderzoek|tetrabasetest|haarpalet','Vorm, richting en hoek van de spatten → punt van oorsprong.'],
+ ['Een haar met wortel in een bivakmuts','DNA-onderzoek van de wortel','alleen luminol|poeder|cyanoacrylaat','De wortel bevat cellen → DNA-profiel.'],
+ ['Een haar zonder wortel op de jas van het slachtoffer','morfologisch vergelijken met haarpaletten','DNA-onderzoek van de wortel|tetrabasetest|cyanoacrylaat','Geen wortel → geen DNA uit cellen; vergelijk de uiterlijke kenmerken.'],
+ ['Een schoenindruk in de modder van de tuin','gipsen','poeder|luminol|chemische vloeistof','Een afgietsel bewaart de vorm van de zool.'],
+ ['Sigarettenpeuken en bierflesjes in een wietplantage','speeksel afnemen voor DNA-onderzoek','poeder + kwastje, afplakken|tetrabasetest|bloedspoorpatroononderzoek','Speeksel bevat wangslijmvliescellen → DNA.']];
+
+/* ---------- rekenlab: sommen met steeds nieuwe getallen ---------- */
+const R=(a,b)=>a+Math.floor(Math.random()*(b-a+1));const pick=a=>a[Math.random()*a.length|0];
+const nf=(v,d=3)=>{const r=Math.round(v*10**d)/10**d;return String(r).replace('.',',')};
+const wet=v=>{if(v>=0.001)return nf(v,4);const e=Math.floor(Math.log10(v)),m=v/10**e;return `${nf(m,2)}·10<sup>${e}</sup>`};
+const grootGetal=n=>String(Math.round(n)).replace(/\B(?=(\d{3})+(?!\d))/g,'.');
+const RG={
+ het(){const loc=pick(['D2S1338','D10S1248','FGA','D8S1179','TH01']);const a=R(14,20),b=a+R(1,5),p=R(20,350)/1000,q=R(20,350)/1000,x=2*p*q;
+  return {q:`Op locus ${loc} heeft de verdachte de kenmerken <b>${a}/${b}</b>. Kenmerk ${a} heeft frequentie <b>${nf(p)}</b>, kenmerk ${b} heeft <b>${nf(q)}</b>. Hoe groot is de kans op deze combinatie?`,a:x,tol:.02,
+   hint:'Twee verschillende kenmerken (heterozygoot): vermenigvuldig de twee frequenties en doe dat × 2 (vader/moeder kan andersom).',
+   w:`Twee verschillende kenmerken → 2 × p × q = 2 × ${nf(p)} × ${nf(q)} = <b>${nf(x,4)}</b>. De × 2 omdat ${a} van vader en ${b} van moeder kan komen, of andersom.`}},
+ hom(){const a=R(12,24),p=R(40,400)/1000,x=p*p;
+  return {q:`Op een locus zie je maar één piek, bij kenmerk <b>${a}</b> (${a}/${a}). De frequentie van kenmerk ${a} is <b>${nf(p)}</b>. Hoe groot is de kans op deze combinatie?`,a:x,tol:.02,
+   hint:'Eén piek = homozygoot: twee keer hetzelfde kenmerk. Dan p × p, zonder × 2.',
+   w:`Homozygoot (${a}/${a}) → p × p = ${nf(p)} × ${nf(p)} = <b>${nf(x,4)}</b>. Geen × 2: er is maar één manier.`}},
+ prof(){const n=R(3,4),ls=[];let x=1;for(let i=0;i<n;i++){const h=Math.random()<.65;const p=R(30,300)/1000,q=R(30,300)/1000;const v=h?2*p*q:p*p;x*=v;ls.push({h,p,q,v})}
+  return {q:`Een onvolledig DNA-profiel heeft ${n} loci. De kansen per locus zijn al uitgerekend: ${ls.map(l=>`<b>${nf(l.v,4)}</b>`).join(', ')}. Wat is de matchkans van het hele profiel?`,a:x,tol:.02,
+   hint:'De loci liggen op verschillende chromosomen: vermenigvuldig alle kansen met elkaar. Tip: met de 🧮 kun je ×10ˣ gebruiken.',
+   w:`Vermenigvuldigen: ${ls.map(l=>nf(l.v,4)).join(' × ')} = <b>${wet(x)}</b>.`}},
+ aantal(){const N=pick([10000,50000,100000,250000,1000000,2000000]),bev=17000000,x=bev/N;
+  return {q:`Een onvolledig profiel heeft een matchkans van <b>1 op ${grootGetal(N)}</b>. Nederland heeft ongeveer 17 miljoen inwoners. Hoeveel mensen in Nederland hebben dit profiel ongeveer?`,a:x,tol:.02,
+   hint:'Aantal = bevolking × matchkans = 17.000.000 ÷ (het getal na ‘1 op’).',
+   w:`17.000.000 × 1/${grootGetal(N)} = 17.000.000 ÷ ${grootGetal(N)} = <b>${nf(x,1)}</b> mensen.`}},
+ leug(){const t=pick([0,1]);if(t===0){const p=R(60,95);return {q:`Een leugendetector herkent <b>${p}%</b> van de leugenaars. Hoe groot is de kans dat een leugenaar <b>niet</b> herkend wordt? (als kommagetal)`,a:1-p/100,tol:.01,hint:'Niet herkend = 1 − kans op herkend. Reken het percentage eerst om naar een kommagetal.',w:`1 − ${nf(p/100,2)} = <b>${nf(1-p/100,2)}</b>.`}}
+  const n=pick([8,10,12,15,20]);return {q:`Een leugendetector wijst <b>1 op de ${n}</b> eerlijke mensen toch aan als leugenaar. Hoe groot is die kans? (als kommagetal)`,a:1/n,tol:.02,hint:'1 op de n = 1 ÷ n.',w:`1 ÷ ${n} = <b>${nf(1/n,3)}</b>.`}},
+ lr(){const N=pick([500,1000,5000,20000,100000]);return {q:`De matchkans van een spoor is <b>1 op ${grootGetal(N)}</b>. Hoe groot is de likelihood ratio?`,a:N,tol:.001,
+  hint:'LR = P(E|Hp) ÷ P(E|Hd) = 1 ÷ matchkans.',w:`P(E|Hp) = 1, P(E|Hd) = 1/${grootGetal(N)}. LR = 1 ÷ (1/${grootGetal(N)}) = <b>${grootGetal(N)}</b>.`}},
+ apri(){const M=pick([101,201,501,1001,2001]);return {q:`Er waren <b>${M}</b> mensen die de dader kunnen zijn. De a priori kansverhouding voor de verdachte is 1/… Wat staat er op de puntjes?`,a:M-1,tol:.001,
+  hint:'A priori = P(schuldig) ÷ P(onschuldig) = (1/M) ÷ ((M−1)/M) = 1/(M−1).',w:`(1/${M}) ÷ (${M-1}/${M}) = 1/${M-1}. Dus <b>${M-1}</b>.`}},
+ post(){const M=pick([101,201,501,1001]),N=pick([100,200,500,1000,5000,10000]),x=N/(M-1);
+  return {q:`Op een feest waren <b>${M}</b> mensen die de dader kunnen zijn. Het spoor matcht met de verdachte, matchkans <b>1 op ${grootGetal(N)}</b>. Hoe groot is de a posteriori kansverhouding?`,a:x,tol:.02,
+   hint:'Stap 1: a priori = 1/(M − 1). Stap 2: LR = 1 ÷ matchkans. Stap 3: a posteriori = a priori × LR.',
+   w:`a priori = 1/${M-1}, LR = ${grootGetal(N)}. a posteriori = ${grootGetal(N)} ÷ ${M-1} = <b>${nf(x,2)}</b>. ${x<1?'Onschuldig is dus waarschijnlijker dan schuldig!':x<20?'Dat is nog lang geen overtuigend bewijs.':'Schuldig is nu veel waarschijnlijker dan onschuldig.'}`}},
+ kans(){const r=pick([1,2,3,4,9,19,99]);return {q:`De a posteriori kansverhouding is <b>${r}</b> (schuldig : onschuldig = ${r} : 1). Hoe groot is de kans dat de verdachte schuldig is? (als kommagetal)`,a:r/(r+1),tol:.01,
+  hint:`Kans = verhouding ÷ (1 + verhouding). Bij ${r} : 1 zijn er samen ${r+1} ‘delen’.`,w:`${r} ÷ (${r} + 1) = <b>${nf(r/(r+1),3)}</b>.`}}};
+const LABS={rdna:{t:'Rekenlab DNA',ic:'🧮',g:['het','hom','prof','aantal'],doel:5},rbay:{t:'Rekenlab Bayes',ic:'⚖️',g:['lr','apri','post','kans','leug'],doel:5}};
+function parseNum(v){let t=String(v).trim().replace(/\s/g,'').replace(/\./g,m=>m).replace(',','.').replace(/[·x×\*]10\^?/i,'e').replace('−','-');if(/^[1-9]\d{0,2}(\.\d{3})+$/.test(t))t=t.replace(/\./g,'');if(!/^[-+]?\d*\.?\d+(e[-+]?\d+)?$/i.test(t))return NaN;return parseFloat(t)}
+
+/* ---------- opslag ---------- */
+const KEY='nlt-foren-v1';
+const $=s=>document.querySelector(s);
+let S={lp:{},b:{},tr:{},sp:{},toets:0,blitz:0,mis:{},samen:0};
+try{const r=localStorage.getItem(KEY);if(r)S=Object.assign(S,JSON.parse(r))}catch(e){}
+const save=()=>{try{localStorage.setItem(KEY,JSON.stringify(S))}catch(e){}};
+const shuffle=a=>{a=a.slice();for(let i=a.length-1;i>0;i--){const j=Math.random()*(i+1)|0;[a[i],a[j]]=[a[j],a[i]]}return a};
+const P=$('#play');
+function show(id){$('#home').hidden=id!=='home';P.hidden=id!=='play';scrollTo(0,0)}
+const mcItem=(v,h)=>({q:v[0],a:v[1],opts:[v[1],...v[2].split('|')],w:v[3],h,id:v[0]});
+
+/* ---------- leerroute ---------- */
+const ROUTE=[];
+H.forEach(h=>{ROUTE.push([h.id+'-lp',h.id,`📖 Leerpad: ${h.t}`,'Kaartjes met uitleg, na elk kaartje een checkvraag.',4,'lp',h.id]);
+ ROUTE.push([h.id+'-pr',h.id,`✅ Oefenronde: ${h.t}`,'10 vragen, haal er 8 in één keer goed.',6,'pr',h.id]);
+ if(h.id==='vs')ROUTE.push(['min','vs','🔎 Vingerafdruk-detective','Herken patronen en minutiae. Doel: 8 van de 10.',5,'sp','min']);
+ if(h.id==='bl')ROUTE.push(['meth','bl','🧪 Methodekiezer op de plaats delict','Welke methode gebruik je voor dit spoor? Doel: 8 van de 10.',5,'sp','meth']);
+ if(h.id==='dna')ROUTE.push(['rdna','dna','🧮 Rekenlab DNA','Kans per locus en voor het hele profiel. Doel: 5 op rij goed.',5,'tr','rdna']);
+ if(h.id==='bay')ROUTE.push(['rbay','bay','⚖️ Rekenlab Bayes','A priori, likelihood ratio, a posteriori. Doel: 5 op rij goed.',5,'tr','rbay'])});
+ROUTE.push(['blitz','eind','⚡ Begrippenblitz: 15 punten','60 seconden: welk begrip hoort bij de uitleg?',3,'blitz'],['toets','eind','🎯 Proeftoets: een 7','20 gemengde vragen, ook rekenen. Een 7 = klaar voor vrijdag.',7,'toets'],['samen','eind','📄 Alles nog eens lezen','Alle uitleg onder elkaar, voor de avond of ochtend vóór de toets.',0,'samen']);
+const HNAAM={eind:'Eindsprint'};H.forEach(h=>HNAAM[h.id]=`${h.ic} ${h.t} (hst. ${h.nr})`);
+const rDone=r=>r[5]==='lp'?!!S.lp[r[6]]:r[5]==='pr'?(S.b[r[6]]||0)>=.8:r[5]==='sp'?(S.sp[r[6]]||0)>=.8:r[5]==='tr'?(S.tr[r[6]]||0)>=LABS[r[6]].doel:r[5]==='blitz'?S.blitz>=15:r[5]==='toets'?S.toets>=7:!!S.samen;
+const pct=()=>ROUTE.reduce((a,r)=>a+(rDone(r)?r[4]:0),0);window.leerVoortgang=pct;
+const RT={on:false,p0:0};
+function rGo(r){RT.on=true;RT.p0=pct();const t=r[5];if(t==='lp')leerpad(r[6]);else if(t==='pr')ronde(r[6]);else if(t==='sp')spel(r[6]);else if(t==='tr')lab(r[6]);else if(t==='blitz')blitz();else if(t==='toets')toets();else samen()}
+function routeScreen(){show('play');const p=pct(),nxt=ROUTE.find(r=>!rDone(r)),win=RT.on&&p>RT.p0?p-RT.p0:0;RT.on=false;let deel='';
+ P.innerHTML=`<div class="top"><button class="btn licht klein" id="terug">‹ Overzicht</button><span class="stap">Leerroute</span><span class="teller ok">${p}%</span></div>
+ ${win?`<div class="kaart" style="border-color:var(--good);background:var(--good-bg)"><b class="goed-t">Gehaald! +${win}%</b></div>`:''}
+ <div class="kaart"><div class="balk"><i style="width:${p}%"></i></div><p class="sub" style="margin:4px 0 0">Van boven naar beneden: eerst het leerpad, dan oefenen, af en toe een spel. Een stap is pas groen als het doel gehaald is.</p>
+ ${nxt?`<div class="acts"><button class="btn" id="rtgo">Ga verder: ${nxt[2]} →</button></div>`:'<p><b>Alles gehaald. Klaar voor vrijdag! 🎉</b></p>'}</div>
+ ${ROUTE.map((r,i)=>{const kop=r[1]!==deel?(deel=r[1],`<h2>${HNAAM[r[1]]}</h2>`):'';return kop+`<button class="mode${rDone(r)?' gehaald':''}" data-r="${i}" style="width:100%;margin:8px 0"><h3>${r[2]}</h3><p>${r[3]}${r[4]?` · ${r[4]}%`:' · telt niet mee'}</p></button>`}).join('')}`;
+ $('#terug').onclick=()=>{RT.on=false;goHome()};P.querySelectorAll('[data-r]').forEach(b=>b.onclick=()=>rGo(ROUTE[+b.dataset.r]));const g=$('#rtgo');if(g){g.onclick=()=>rGo(nxt);g.focus()}}
+
+/* ---------- hoofdscherm ---------- */
+function renderHome(){const nx=ROUTE.find(r=>!rDone(r));
+ $('#stand').innerHTML=`<button class="mode main" id="rtbox" style="width:100%"><h3>${nx?(pct()?'Ga verder: ':'Begin: ')+nx[2]:'Leerroute klaar. Herhalen?'}</h3><p>🧭 Leerroute · ${pct()}%${S.toets?` · beste proeftoets ${String(S.toets).replace('.',',')}`:''}</p><div class="balk" style="background:rgba(127,127,127,.35)"><i style="width:${pct()}%"></i></div></button>`;
+ $('#rtbox').onclick=routeScreen;
+ $('#hst').innerHTML=H.map(h=>`<div class="kaart hk"><h3>${h.ic} ${h.t} <span class="stap">hst. ${h.nr}</span></h3><div class="acts" style="margin-top:8px"><button class="btn klein${S.lp[h.id]?' ok':' licht'}" data-lp="${h.id}">📖 Leerpad${S.lp[h.id]?' ✓':''}</button><button class="btn klein${(S.b[h.id]||0)>=.8?' ok':' licht'}" data-pr="${h.id}">✅ Oefenen${S.b[h.id]!=null?' '+Math.round(S.b[h.id]*10)+'/10':''}</button></div></div>`).join('');
+ const g=(id,ok)=>{const e=$('#'+id);if(e)e.classList.toggle('gehaald',ok)};g('pmin',(S.sp.min||0)>=.8);g('pmeth',(S.sp.meth||0)>=.8);g('prdna',(S.tr.rdna||0)>=5);g('prbay',(S.tr.rbay||0)>=5);g('pblitz',S.blitz>=15);g('ptoets',S.toets>=7);g('psamen',!!S.samen);
+ const fm=Object.keys(S.mis).length;$('#fouten').hidden=!fm;$('#fouten p').textContent=`${fm} vraag${fm===1?'':'en'} die je eerder fout had.`;P.innerHTML=''}
+function goHome(){clearInterval(window.__klok);if(RT.on)return routeScreen();show('home');renderHome()}
+document.addEventListener('click',e=>{if($('#home').hidden)return;const b=e.target.closest('[data-lp],[data-pr]');if(!b)return;if(b.dataset.lp)leerpad(b.dataset.lp);else ronde(b.dataset.pr)});
+$('#pmin').onclick=()=>spel('min');$('#pmeth').onclick=()=>spel('meth');$('#prdna').onclick=()=>lab('rdna');$('#prbay').onclick=()=>lab('rbay');$('#pblitz').onclick=()=>blitz();$('#ptoets').onclick=()=>toets();$('#psamen').onclick=()=>samen();$('#fouten').onclick=()=>foutRonde();
+$('#wis').onclick=()=>{if(confirm('Al je voortgang bij NLT wissen?')){S={lp:{},b:{},tr:{},sp:{},toets:0,blitz:0,mis:{},samen:0};save();renderHome()}};
+
+/* ---------- leerpad: kaartje voor kaartje, met checkvraag ---------- */
+function leerpad(id){const h=H.find(x=>x.id===id);let i=0;show('play');
+ const teken=()=>{const c=h.lp[i];const opts=c[2]?shuffle([c[2][1],...c[2][2].split('|')]):[];
+  P.innerHTML=`<div class="top"><button class="btn licht klein" id="stop">Stoppen</button><span class="stap">Leerpad · ${h.t}</span><span class="teller">${i+1}/${h.lp.length}</span></div>
+  <div class="balk"><i style="width:${i/h.lp.length*100}%"></i></div>
+  <div class="kaart"><h2 style="margin-top:0">${c[0]}</h2>${c[1]}${c[2]?`<div class="check"><div class="label">Even checken</div><h3 style="margin:6px 0 0;font-family:inherit">${c[2][0]}</h3><div class="opts">${opts.map((o,k)=>`<button class="opt" data-k="${k}">${o}</button>`).join('')}</div><div id="fb"></div></div>`:''}
+  <div class="acts" id="nav" ${c[2]?'hidden':''}>${i?'<button class="btn licht" id="vor">← Terug</button>':''}<button class="btn" id="vd">${i<h.lp.length-1?'Verder →':'Klaar ✓'}</button></div></div>`;
+  $('#stop').onclick=goHome;const vd=()=>{i++;if(i>=h.lp.length){const nieuw=!S.lp[id];S.lp[id]=1;save();klaar(nieuw)}else teken()};
+  const nav=()=>{$('#nav').hidden=false;$('#vd').onclick=vd;const v=$('#vor');if(v)v.onclick=()=>{i--;teken()};$('#vd').focus()};
+  if(c[2])P.querySelectorAll('.opt').forEach(b=>b.onclick=()=>{if(P.querySelector('.opt.goed'))return;const ok=opts[+b.dataset.k]===c[2][1];
+   P.querySelectorAll('.opt').forEach((x,k)=>{if(opts[k]===c[2][1])x.classList.add('goed');else if(x===b)x.classList.add('fout')});
+   $('#fb').innerHTML=`<div class="uitleg"><b class="${ok?'goed-t':'fout-t'}">${ok?'Goed!':'Niet goed.'}</b> ${c[2][3]}</div>`;nav()});else nav()};
+ const klaar=nieuw=>{P.innerHTML=`<div class="kaart" style="text-align:center"><div class="label">Leerpad klaar</div><h2>${h.ic} ${h.t}</h2><p>Nu oefenen: 10 vragen, haal er 8.</p><div class="acts" style="justify-content:center"><button class="btn" id="opn">✅ Oefenronde</button><button class="btn licht" id="hm">${RT.on?'Terug naar de route':'Naar het overzicht'}</button></div></div>`;
+  $('#opn').onclick=()=>ronde(id);$('#hm').onclick=goHome;$('#opn').focus()};
+ teken()}
+
+/* ---------- vragen stellen: meerkeuze of invullen; fout = herkansing aan het eind ---------- */
+function quiz(qs,o){let i=0,goed=0,opnieuw=[],reeks=0,best=0;const n=qs.length;
+ const volgende=()=>{if(i>=qs.length){if(opnieuw.length&&!o.geenHer){qs=qs.concat(opnieuw);opnieuw=[]}else return einde()}
+  const q=qs[i],her=i>=n,num=q.num;const opts=num?[]:shuffle(q.opts);
+  P.innerHTML=`<div class="top"><button class="btn licht klein" id="stop">Stoppen</button><span class="stap">${o.titel}</span><span class="teller">${o.reeks?`reeks ${reeks} · doel ${o.reeks}`:`${Math.min(i+1,n)}/${n}${her?' · herkansing':''}`}</span></div>
+  <div class="kaart">${her?'<div class="label" style="color:var(--gold)">Herkansing: deze ging eerder fout</div>':''}${q.h?`<div class="label">${q.h.ic} ${q.h.t}</div>`:''}${q.fig||''}<h3 class="vraag">${q.q}</h3>
+  ${num?`<form class="typerow" id="nf" autocomplete="off"><input id="ni" inputmode="decimal" placeholder="antwoord" aria-label="Antwoord"><button class="btn" type="submit" id="nb">Controleer</button></form>${q.hint&&!o.toets?`<button class="btn licht klein" type="button" id="hintb" style="margin-top:10px">💡 Hoe pak ik dit aan?</button><div class="tip" id="hintbox" hidden>${q.hint}</div>`:''}`:`<div class="opts">${opts.map((x,k)=>`<button class="opt" data-k="${k}">${x}</button>`).join('')}</div>`}<div id="fb"></div></div>`;
+  $('#stop').onclick=goHome;const hb=$('#hintb');if(hb)hb.onclick=()=>{$('#hintbox').hidden=false;hb.hidden=true};
+  const af=ok=>{if(!her&&ok)goed++;if(ok){reeks++;best=Math.max(best,reeks);if(q.id)delete S.mis[q.id]}else{reeks=0;if(q.id&&q.h)S.mis[q.id]=q.h.id;if(!her&&!o.reeks)opnieuw.push(q)}save();
+   if(hb)hb.hidden=true;$('#fb').innerHTML=`<div class="uitleg"><b class="${ok?'goed-t':'fout-t'}">${ok?'Goed!':'Niet goed.'}</b> ${num&&!ok?`Het antwoord is <b>${q.toon||wet(q.a)}</b>. `:''}${q.w}</div><div class="acts"><button class="btn" id="vd">Verder ↵</button></div>`;
+   i++;if(o.reeks&&reeks>=o.reeks)$('#vd').textContent='Doel gehaald! →';$('#vd').onclick=()=>{if(o.reeks&&reeks>=o.reeks)return einde();volgende()};$('#vd').focus()};
+  if(num){const inp=$('#ni');inp.focus();$('#nf').onsubmit=e=>{e.preventDefault();const v=parseNum(inp.value);if(isNaN(v)){inp.classList.remove('shake');void inp.offsetWidth;inp.classList.add('shake');return}
+   inp.readOnly=true;$('#nb').hidden=true;af(Math.abs(v-q.a)<=Math.abs(q.a)*(q.tol??.02)+1e-12)}}
+  else P.querySelectorAll('.opt').forEach(b=>b.onclick=()=>{if(P.querySelector('.opt.goed'))return;const ok=opts[+b.dataset.k]===q.a;P.querySelectorAll('.opt').forEach((x,k)=>{if(opts[k]===q.a)x.classList.add('goed');else if(x===b)x.classList.add('fout')});af(ok)})};
+ const einde=()=>{P.innerHTML=`<div class="kaart" style="text-align:center"><div class="label">${o.titel}</div><div class="groot">${o.reeks?best:goed}<span> ${o.reeks?'op rij':'/ '+n}</span></div>${o.klaar(goed,n,best)}</div>`;o.na&&o.na()};
+ show('play');volgende()}
+const terugKnop=()=>`<button class="btn licht" id="hm">${RT.on?'Terug naar de route':'Naar het overzicht'}</button>`;
+
+function ronde(id){const h=H.find(x=>x.id===id);const qs=shuffle(h.q).slice(0,10).map(v=>mcItem(v,h));
+ quiz(qs,{titel:'Oefenronde · '+h.t,klaar:(goed,n)=>{const f=goed/n;if(f>(S.b[id]||0))S.b[id]=f;save();
+  return `<p>${f>=.8?'Gehaald! 🎉':'Nog niet: 8 van de 10 in één keer goed is het doel.'}</p><div class="acts" style="justify-content:center"><button class="btn" id="opn">Nog een ronde</button><button class="btn licht" id="lp">Leerpad nalezen</button>${terugKnop()}</div>`},
+  na:()=>{$('#opn').onclick=()=>ronde(id);$('#lp').onclick=()=>leerpad(id);$('#hm').onclick=goHome}})}
+function lab(k){const L=LABS[k];const qs=[];for(let i=0;i<40;i++){const g=L.g[i%L.g.length];const q=RG[g]();q.num=1;qs.push(q)}
+ quiz(shuffle(qs),{titel:L.t,reeks:L.doel,klaar:(g,n,best)=>{if(best>(S.tr[k]||0))S.tr[k]=best;save();
+  return `<p>${best>=L.doel?'Doel gehaald! 🎉':`Doel: ${L.doel} op rij goed. Je beste reeks: ${best}.`}</p><div class="acts" style="justify-content:center"><button class="btn" id="opn">Nog een keer</button>${terugKnop()}</div>`},
+  na:()=>{$('#opn').onclick=()=>lab(k);$('#hm').onclick=goHome}})}
+
+/* ---------- spellen: vingerafdruk-detective en methodekiezer ---------- */
+function spelVragen(k){if(k==='meth')return shuffle(METH).slice(0,10).map(m=>({q:`<span class="label">Spoor</span><br>${m[0]}. Wat doe je?`,a:m[1],opts:[m[1],...m[2].split('|')],w:m[3]}));
+ const qs=[];const ms=Object.keys(MINNAAM),ps=Object.keys(PATNAAM);
+ for(let i=0;i<10;i++){if(i%3===2){const p=pick(ps);qs.push({fig:SVG(160,140,patroon(p),'patroon'),q:'Welk hoofdpatroon is dit?',a:p,opts:ps,w:{boog:'Boog: de lijnen lopen van links naar rechts met een bult in het midden.',lus:'Lus: de lijnen komen aan één kant binnen, keren om en gaan aan dezelfde kant weer terug.',kring:'Kring: de lijnen lopen in (bijna) gesloten cirkels rond het midden.'}[p]})}
+  else{const m=pick(ms);qs.push({fig:SVG(220,140,ruggen(m),'minutia'),q:'Welke minutia zie je in de rode cirkel?',a:MINNAAM[m],opts:[MINNAAM[m],...shuffle(ms.filter(x=>x!==m)).slice(0,3).map(x=>MINNAAM[x])],w:{eind:'De lijn stopt: een beginnende of eindigende lijn.',bif:'De lijn splitst in tweeën: bifurcatie.',oog:'Splitst en komt meteen weer samen: oog.',haak:'Splitst, en één tak stopt kort daarna: haak.',frag:'Een kort losse stukje lijn: lijnfragment.',eiland:'Een puntje met één porie: lijnunit. Telt in Nederland niet als dactyloscopisch punt.'}[m]})}}
+ return qs}
+function spel(k){const t=k==='min'?'🔎 Vingerafdruk-detective':'🧪 Methodekiezer';
+ quiz(spelVragen(k),{titel:t,klaar:(goed,n)=>{const f=goed/n;if(f>(S.sp[k]||0))S.sp[k]=f;save();return `<p>${f>=.8?'Gehaald! 🎉':'Doel: 8 van de 10 in één keer goed.'}</p><div class="acts" style="justify-content:center"><button class="btn" id="opn">Nog een keer</button>${terugKnop()}</div>`},
+  na:()=>{$('#opn').onclick=()=>spel(k);$('#hm').onclick=goHome}})}
+
+/* ---------- proeftoets: 20 vragen, 14 meerkeuze + 6 rekenen ---------- */
+function toets(){const mc=shuffle(H.flatMap(h=>shuffle(h.q).slice(0,2).map(v=>mcItem(v,h)))).slice(0,14);
+ const rk=shuffle(['het','hom','prof','aantal','lr','post','apri','kans','leug']).slice(0,6).map(g=>Object.assign(RG[g](),{num:1}));
+ quiz(shuffle(mc.concat(rk)),{titel:'Proeftoets',toets:1,geenHer:1,klaar:(goed,n)=>{const c=Math.round((1+9*goed/n)*10)/10;if(c>S.toets)S.toets=c;save();
+  return `<p>Cijfer: <b style="font-size:22px">${String(c).replace('.',',')}</b>${c>=7?' 🎉':''}</p><div class="acts" style="justify-content:center"><button class="btn" id="opn">Nog een proeftoets</button>${terugKnop()}</div>`},
+  na:()=>{$('#opn').onclick=toets;$('#hm').onclick=goHome}})}
+function foutRonde(){const lijst=Object.entries(S.mis).map(([id,hid])=>{const h=H.find(x=>x.id===hid);const v=h&&h.q.find(v=>v[0]===id);return v?mcItem(v,h):null}).filter(Boolean);
+ if(!lijst.length)return goHome();quiz(shuffle(lijst).slice(0,15),{titel:'Mijn fouten',klaar:()=>`<p>${Object.keys(S.mis).length?`Nog ${Object.keys(S.mis).length} in je foutenlijst.`:'Foutenlijst leeg. Top!'}</p><div class="acts" style="justify-content:center">${terugKnop()}</div>`,na:()=>{$('#hm').onclick=goHome}})}
+
+/* ---------- begrippenblitz ---------- */
+function blitz(){let punten=0,eind=Date.now()+60000;show('play');
+ const vraag=()=>{if(Date.now()>=eind)return stop();const b=pick(BEGR),rev=Math.random()<.5;const fout=shuffle(BEGR.filter(x=>x!==b)).slice(0,2);const goedT=rev?b[0]:b[1];const opts=shuffle([goedT,...fout.map(x=>rev?x[0]:x[1])]);
+  P.innerHTML=`<div class="top"><button class="btn licht klein" id="stop">Stoppen</button><span class="teller ok">${punten} punten</span><span class="teller" id="tijd">60 s</span></div>
+  <div class="kaart"><div class="label">${rev?'Welk begrip hoort hierbij?':'Wat betekent dit begrip?'}</div><h3 class="vraag">${rev?b[1]:b[0]}</h3><div class="opts">${opts.map((x,k)=>`<button class="opt" data-k="${k}">${x}</button>`).join('')}</div><div id="fb"></div></div>`;
+  tik();$('#stop').onclick=goHome;
+  P.querySelectorAll('.opt').forEach(x=>x.onclick=()=>{if(P.querySelector('.opt.goed'))return;const ok=opts[+x.dataset.k]===goedT;P.querySelectorAll('.opt').forEach((y,k)=>{if(opts[k]===goedT)y.classList.add('goed');else if(y===x)y.classList.add('fout')});
+   if(ok){punten++;setTimeout(vraag,350)}else{$('#fb').innerHTML=`<div class="uitleg"><b class="fout-t">Fout.</b> <b>${b[0]}</b> = ${b[1]}.</div><div class="acts"><button class="btn" id="vd">Verder ↵</button></div>`;$('#vd').onclick=vraag;$('#vd').focus()}})};
+ const tik=()=>{const e=$('#tijd');if(e)e.textContent=Math.max(0,Math.ceil((eind-Date.now())/1000))+' s'};
+ const stop=()=>{clearInterval(window.__klok);const rec=punten>S.blitz;if(rec)S.blitz=punten;save();
+  P.innerHTML=`<div class="kaart" style="text-align:center"><div class="label">Begrippenblitz</div><div class="groot">${punten}</div><p>${rec?'Nieuw record! 🎉':`Record: ${S.blitz}`}${S.blitz>=15?'':' · doel: 15'}</p><div class="acts" style="justify-content:center"><button class="btn" id="opn">Nog een keer</button>${terugKnop()}</div></div>`;
+  $('#opn').onclick=blitz;$('#hm').onclick=goHome};
+ window.__klok=setInterval(()=>{tik();if(Date.now()>=eind&&!P.querySelector('#vd'))stop()},250);vraag()}
+
+/* ---------- alles nalezen ---------- */
+function samen(){S.samen=1;save();show('play');
+ P.innerHTML=`<div class="top"><button class="btn licht klein" id="terug">‹ Terug</button><span class="stap">Alles nog eens lezen</span></div>
+ <div class="kaart"><p style="margin:0"><b>NLT · Forensisch onderzoek.</b> Forensisch onderzoek is wetenschap: sporen vertellen wat er gebeurde, de rechter beslist. Hieronder alle uitleg van het leerpad op een rij.</p></div>
+ ${H.map(h=>`<h2>${h.ic} ${h.t} <span class="stap">hst. ${h.nr}</span></h2>${h.lp.map(c=>`<div class="kaart"><h3>${c[0]}</h3>${c[1]}</div>`).join('')}`).join('')}
+ <h2>Begrippen</h2><div class="kaart"><dl class="begr">${BEGR.map(b=>`<dt>${b[0]}</dt><dd>${b[1]}</dd>`).join('')}</dl></div>
+ <div class="acts"><button class="btn licht" id="terug2">‹ Terug</button></div>`;$('#terug').onclick=goHome;$('#terug2').onclick=goHome}
+
+renderHome();
+</script>
+</body>
+</html>
