@@ -6,7 +6,9 @@ Doel: leren makkelijker en leuker maken. Alles in het Nederlands, kort en vriend
 bouwt het samen met Claude; hij wil ook zelf kunnen meeleren (scheikunde: hij begon met 0 voorkennis).
 
 - `index.html`: wachtwoord (SHA-256 in `H`, alleen een drempel: de repo is openbaar), daarna "Wie ben jij?"
-  (`leren-wie` = `ben`, `dana`, `marcel`, `anja` of `gast`) en per persoon kaarten naar de vakken. Marcel en Anja zien
+  (`leren-wie` = `ben`, `dana`, `marcel`, `anja` of `gast`) en per persoon eerst de **vakken** (kaarten gebundeld op de vaknaam vóór ' · ' in de titel, zoals ‘Scheikunde · H1 …’;
+  tik = alleen de opdrachten van dat vak, met ‹ Alle vakken; laatst geopende vak in `sessionStorage['leren-vak-<wie>']`). Nieuwe opdracht: kaart in de juiste
+  `<section data-who>` met titel ‘Vak · onderwerp’, dan komt hij vanzelf onder het goede vak. Marcel en Anja zien
   alles en zitten achter een pincode (SHA-256 in `PIN`, drempel). "Ik ben een vriend(in)" = gast: naam + klas in
   `leren-gast` ({naam, klas: 'havo4' = vakken van Ben, 'vwo3' = vakken van Dana}). Het oude `alle` (Ouder) wordt
   overal één keer `marcel`, met de opslag `@alle` → `@marcel` (`wie()` in index.html, `lerenWie()` in leerlog.js). Elke vakpagina stuurt
