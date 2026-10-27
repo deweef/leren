@@ -66,6 +66,10 @@ label.zelf input{width:22px;height:22px;margin-top:2px;flex:none;accent-color:va
 .tegel{font:700 17px "Atkinson Hyperlegible",system-ui,sans-serif;padding:8px 12px;border-radius:10px;border:2px solid var(--ink);background:var(--surface);color:var(--ink);cursor:pointer}
 .tegel.weg{visibility:hidden}
 .goed-t{color:var(--good);font-weight:700}.fout-t{color:var(--bad);font-weight:700}
+.opk{display:grid;grid-template-columns:repeat(3,1fr);gap:8px;margin:6px 0 4px}.opk .label{grid-column:1/-1}
+.opb{font:inherit;text-align:left;padding:10px;border-radius:12px;border:2px solid var(--line);background:var(--surface);color:var(--ink);cursor:pointer;line-height:1.25}.opb b{display:block;font-size:15px}.opb small{color:var(--muted);font-size:12.5px}
+.opb.aan{border-color:var(--accent);box-shadow:inset 0 0 0 1px var(--accent)}
+@media (max-width:420px){.opk{grid-template-columns:1fr}}
 [hidden]{display:none!important}
 </style>
 </head>
@@ -73,7 +77,8 @@ label.zelf input{width:22px;height:22px;margin-top:2px;flex:none;accent-color:va
 <main id="home">
   <a href="index.html" class="terug">‹ Alle vakken</a>
   <h1><span class="vlag"><i></i><i></i><i></i></span>Briefhelfer</h1>
-  <p class="sub">Duits · schrijven. Je schrijft de brief zelf, stukje voor stukje. De helfer geeft tips, bouwstenen en een controlelijst.</p>
+  <p class="sub">Duits · schrijven. Kies een opdracht (informeel of formeel) en schrijf hem zelf, stukje voor stukje. De helfer geeft tips, bouwstenen en een controlelijst.</p>
+  <div class="opk" id="opk"></div>
   <div class="kaart opdracht" id="opdracht"></div>
   <div class="kaart"><div class="top"><b>Jouw brief</b><span class="teller" id="hTeller">0 woorden</span></div>
     <div class="balk"><i id="hBalk" style="width:0"></i></div><div class="sub" id="hStand" style="margin:0;font-size:15px"></div></div>
@@ -99,7 +104,7 @@ const shuffle=a=>{a=a.slice();for(let i=a.length-1;i>0;i--){const j=Math.random(
 function show(id){$('#home').hidden=id!=='home';$('#play').hidden=id!=='play';scrollTo(0,0)}
 
 /* ---------- De opdracht ---------- */
-const OPDRACHT=`<div class="label">Schrijfopdracht</div><h2 style="margin-top:6px">Een brief aan Jonas</h2>
+const OPDRACHT_J=`<div class="label">Schrijfopdracht</div><h2 style="margin-top:6px">Een brief aan Jonas</h2>
 <p>Je school heeft een uitwisseling met een school in Keulen. Volgende maand komt <b>Jonas (16)</b> een week bij jou logeren. Hij heeft je een mailtje gestuurd om kennis te maken. Jij schrijft hem terug.</p>
 <p><b>Schrijf een brief van 60 tot 80 woorden. Hierin moet je:</b></p>
 <ol><li>Jonas <b>bedanken</b> voor zijn mail en zeggen dat je je op zijn bezoek verheugt.</li>
@@ -110,7 +115,7 @@ const OPDRACHT=`<div class="label">Schrijfopdracht</div><h2 style="margin-top:6p
 <p style="margin-bottom:0"><b>Let op:</b> goede aanhef en groet · <i>du</i> (informeel) · minstens één zin met <i>weil</i> of <i>dass</i> · zelfstandige naamwoorden met een hoofdletter.</p>`;
 
 /* ---------- Onderdelen van de brief, met tips en bouwstenen ---------- */
-const DELEN=[
+const DELEN_J=[
  {id:'a',titel:'Aanhef',kort:'aanhef',rijen:2,vraag:'Hoe begin je de brief?',
   tip:'Een jongen: <b>Lieber</b> Jonas, · een meisje: <b>Liebe</b> Lena, · of gewoon <b>Hallo</b> Jonas,<br>Zet er een <b>komma</b> achter. De volgende zin begint daarna met een <b>kleine letter</b> (behalve een zelfstandig naamwoord of een naam).',
   stenen:[['Lieber Jonas,','Beste Jonas, (aan een jongen)'],['Hallo Jonas,','Hoi Jonas,']]},
@@ -141,7 +146,7 @@ const aantal=()=>woorden(DELEN.map(d=>tekst(d.id)).join(' '));
 /* ---------- Automatische controle ---------- */
 // zelfstandige naamwoorden die vaak per ongeluk met een kleine letter worden geschreven
 const NOMEN=['Mail','Besuch','Wochenende','Samstag','Sonntag','Freunde','Freund','Freundin','Freizeit','Stadt','Film','Schule','Eltern','Schwester','Bruder','Familie','Hobby','Fußball','Verein','Kino','Wetter','Spaß','Haustiere','Instrument','Jahre','Woche','Strand','Museum','Fahrrad','Rad','Hause','Musik','Brief','Grüße','Dank','Niederlanden','Sport','Mutter','Vater','Hund','Katze'];
-function checks(){const r=[],a=tekst('a'),p1=tekst('p1'),p3=tekst('p3'),p4=tekst('p4'),p5=tekst('p5'),g=tekst('g'),alles=DELEN.map(d=>tekst(d.id)).join('\n'),n=aantal();
+function checks_J(){const r=[],a=tekst('a'),p1=tekst('p1'),p3=tekst('p3'),p4=tekst('p4'),p5=tekst('p5'),g=tekst('g'),alles=DELEN.map(d=>tekst(d.id)).join('\n'),n=aantal();
  r.push({ok:n>=60&&n<=80,t:`Lengte: ${n} woorden`,u:n<60?`Nog ${60-n} woorden erbij (60 tot 80).`:n>80?`${n-80} woorden te veel: maak een paar zinnen korter.`:'Precies goed: tussen 60 en 80.'});
  r.push({ok:/^(lieber|liebe|hallo|hi)\s+\S+.*,$/i.test(a),t:'Aanhef met komma',u:a?(/,$/.test(a)?'Goed.':'Zet een komma achter de aanhef: Lieber Jonas,'):'Nog geen aanhef.'});
  if(p1&&/^(Ich|Vielen|Danke|Schön|Wie|Mir)\b/.test(p1))r.push({let:1,t:'Kleine letter na de aanhef',u:`Na "Lieber Jonas," begint de volgende zin met een kleine letter: ${esc(p1.split(/\s/)[0].toLowerCase())} …`});
@@ -162,12 +167,122 @@ function checks(){const r=[],a=tekst('a'),p1=tekst('p1'),p3=tekst('p3'),p4=tekst
  const klein=[...new Set(NOMEN.filter(w=>new RegExp('(^|[^A-Za-zÄÖÜäöüß])'+w.toLowerCase()+'(?![a-zäöüß])').test(alles)))];
  if(klein.length)r.push({let:1,t:'Hoofdletters bij zelfstandige naamwoorden',u:'Schrijf met een hoofdletter: '+klein.join(', ')+'.'});
  return r}
-const ZELF=['In elke gewone zin staat het werkwoord op plek 2.','In mijn weil-zin (en dass-zin) staat het werkwoord achteraan.','Alle zelfstandige naamwoorden hebben een hoofdletter.','Ik heb steeds du (dich, dir, dein) gebruikt, nooit Sie.','Ik heb de brief nog één keer helemaal (hardop) gelezen.'];
+const ZELF_J=['In elke gewone zin staat het werkwoord op plek 2.','In mijn weil-zin (en dass-zin) staat het werkwoord achteraan.','Alle zelfstandige naamwoorden hebben een hoofdletter.','Ik heb steeds du (dich, dir, dein) gebruikt, nooit Sie.','Ik heb de brief nog één keer helemaal (hardop) gelezen.'];
+
+/* ---------- Extra opdrachten (van Anja): formeel (Ferienjob) en informeel (Lukas) ---------- */
+const OPDRACHT_F=`<div class="label">Oefenopdracht 1 · Formell</div><h2 style="margin-top:6px">Bewerbung um einen Ferienjob</h2>
+<p>Du hast im Internet eine Anzeige für einen Ferienjob in einem Hotel in Deutschland gelesen. Du möchtest dich bewerben.</p>
+<p><b>Schreibe eine formelle E-Mail von 60–80 Wörtern. Schreibe über folgende Punkte:</b></p>
+<ol><li>Stelle dich vor und erkläre, warum du schreibst.</li><li>Erkläre, warum du in diesem Hotel arbeiten möchtest.</li><li>Beschreibe zwei Eigenschaften von dir.</li><li>Frage nach den Arbeitszeiten.</li><li>Bitte um eine Antwort.</li></ol>
+<p style="margin-bottom:0"><b>Verwende:</b> eine formelle Anrede und einen höflichen Schreibstil. <span class="sub">(Dus: <b>Sie</b>, <b>Ihnen</b>, <b>Ihr</b>, altijd met een hoofdletter, nooit du.)</span></p>`;
+const DELEN_F=[
+ {id:'a',titel:'Anrede (formeel)',kort:'anrede',rijen:2,vraag:'Hoe begin je een formele mail?',
+  tip:'Weet je de naam niet: <b>Sehr geehrte Damen und Herren,</b><br>Weet je de naam wel: <b>Sehr geehrte Frau Müller,</b> / <b>Sehr geehrter Herr Müller,</b><br>Komma erachter, en daarna verder met een <b>kleine letter</b>.',
+  stenen:[['Sehr geehrte Damen und Herren,','Geachte dames en heren,'],['Sehr geehrte Frau Becker,','Geachte mevrouw Becker,'],['Sehr geehrter Herr Becker,','Geachte heer Becker,']]},
+ {id:'p1',titel:'1. Jezelf voorstellen en waarom je schrijft',kort:'voorgesteld',vraag:'Stel je voor en leg uit waarom je schrijft.',
+  tip:'Na de aanhef met een kleine letter: <i>mein Name ist …</i><br>Zeg waar je de advertentie zag: <i>…, weil ich Ihre Anzeige im Internet gelesen habe.</i> (na weil: werkwoord achteraan!)',
+  stenen:[['mein Name ist … und ich bin 16 Jahre alt.','mijn naam is … en ik ben 16 jaar.'],['Ich wohne in den Niederlanden und gehe in die vierte Klasse.','Ik woon in Nederland en zit in de vierde klas.'],['Ich schreibe Ihnen, weil ich Ihre Anzeige im Internet gelesen habe.','Ik schrijf u, omdat ik uw advertentie op internet heb gelezen.'],['Ich interessiere mich für den Ferienjob in Ihrem Hotel.','Ik ben geïnteresseerd in de vakantiebaan in uw hotel.']]},
+ {id:'p2',titel:'2. Waarom dit hotel',kort:'waarom',vraag:'Leg uit waarom je in dit hotel wilt werken.',
+  tip:'Gebruik <b>weil</b> of <b>denn</b>. Let op: na <b>weil</b> gaat het werkwoord naar het eind, na <b>denn</b> niet.<br><i>…, weil ich gern mit Menschen <b>arbeite</b>.</i> / <i>…, denn ich <b>möchte</b> mein Deutsch verbessern.</i>',
+  stenen:[['Ich möchte gern in Ihrem Hotel arbeiten, weil …','Ik wil graag in uw hotel werken, omdat …'],['…, weil ich gern mit Menschen arbeite.','…, omdat ik graag met mensen werk.'],['…, weil ich mein Deutsch verbessern möchte.','…, omdat ik mijn Duits wil verbeteren.'],['Ihr Hotel liegt in einer sehr schönen Gegend.','Uw hotel ligt in een heel mooie omgeving.'],['Außerdem möchte ich Erfahrung sammeln.','Bovendien wil ik ervaring opdoen.']]},
+ {id:'p3',titel:'3. Twee eigenschappen',kort:'eigenschappen',vraag:'Beschrijf twee eigenschappen van jezelf.',
+  tip:'<i>Ich bin … und …</i> Kies twee eigenschappen en geef eventueel een kort voorbeeld.',
+  stenen:[['Ich bin freundlich und zuverlässig.','Ik ben vriendelijk en betrouwbaar.'],['Ich bin pünktlich und arbeite gern im Team.','Ik ben punctueel en werk graag in een team.'],['Ich bin hilfsbereit und flexibel.','Ik ben behulpzaam en flexibel.'],['Ich bin fleißig und lerne schnell.','Ik ben ijverig en leer snel.']]},
+ {id:'p4',titel:'4. Vragen naar de werktijden',kort:'werktijden',vraag:'Vraag naar de werktijden.',
+  tip:'Beleefd vragen: <b>Könnten Sie mir bitte sagen, …</b> Dan staat het werkwoord van de bijzin achteraan: <i>…, wann ich arbeiten <b>muss</b>?</i> Of een korte vraag: <i>Wie sind die Arbeitszeiten?</i>',
+  stenen:[['Könnten Sie mir bitte sagen, wie die Arbeitszeiten sind?','Zou u mij kunnen vertellen wat de werktijden zijn?'],['Wie viele Stunden pro Woche muss ich arbeiten?','Hoeveel uur per week moet ik werken?'],['Muss ich auch am Wochenende arbeiten?','Moet ik ook in het weekend werken?']]},
+ {id:'p5',titel:'5. Om een antwoord vragen',kort:'antwoord',vraag:'Vraag beleefd om een antwoord.',
+  tip:'Een vaste slotzin: <i>Ich freue mich auf Ihre Antwort.</i> Let op: <b>Ihre</b> met een hoofdletter (u), niet ‘ihre’ (haar).',
+  stenen:[['Ich freue mich auf Ihre Antwort.','Ik kijk uit naar uw antwoord.'],['Über eine Antwort würde ich mich sehr freuen.','Ik zou een antwoord erg op prijs stellen.'],['Vielen Dank im Voraus.','Alvast hartelijk bedankt.']]},
+ {id:'g',titel:'Afsluiting',kort:'groet',rijen:3,vraag:'Sluit formeel af en zet je naam eronder.',
+  tip:'Formeel: <b>Mit freundlichen Grüßen</b> (zonder komma), daaronder je voor- en achternaam.',
+  stenen:[['Mit freundlichen Grüßen','Met vriendelijke groet'],['Ben de Wever','je naam']]}];
+function checks_F(){const r=[],a=tekst('a'),p1=tekst('p1'),p2=tekst('p2'),p3=tekst('p3'),p4=tekst('p4'),p5=tekst('p5'),g=tekst('g'),alles=DELEN.map(d=>tekst(d.id)).join('\n'),n=aantal();
+ r.push({ok:n>=60&&n<=80,t:`Lengte: ${n} woorden`,u:n<60?`Nog ${60-n} woorden erbij (60 tot 80).`:n>80?`${n-80} woorden te veel: maak een paar zinnen korter.`:'Precies goed: tussen 60 en 80.'});
+ r.push({ok:/^sehr geehrte(r)?\s+.+,$/i.test(a),t:'Formele aanhef met komma',u:a?(/^sehr geehrte/i.test(a)?(/,$/.test(a)?'Goed.':'Zet een komma achter de aanhef.'):'Formeel begin je met Sehr geehrte Damen und Herren, (niet Hallo of Lieber).'):'Nog geen aanhef.'});
+ if(p1&&/^(Ich|Mein|Vielen|Hiermit)\b/.test(p1))r.push({let:1,t:'Kleine letter na de aanhef',u:`Na de komma van de aanhef begin je met een kleine letter: ${esc(p1.split(/\s/)[0].toLowerCase())} …`});
+ r.push({ok:/(name|heiße|bin)/i.test(p1)&&/(anzeige|schreibe|bewerbe|ferienjob|interess)/i.test(p1),t:'1. Voorgesteld en waarom je schrijft',u:/(name|heiße|bin)/i.test(p1)?(/(anzeige|schreibe|bewerbe|ferienjob|interess)/i.test(p1)?'Goed.':'Zeg ook waarom je schrijft: de advertentie / de vakantiebaan.'):'Stel je voor: mein Name ist …, ich bin … Jahre alt.'});
+ r.push({ok:/\b(weil|denn|da)\b/i.test(p2)&&woorden(p2)>=6,t:'2. Waarom dit hotel (met weil/denn)',u:/\b(weil|denn|da)\b/i.test(p2)?'Goed. Staat na weil het werkwoord achteraan?':'Zeg waarom, bijvoorbeeld met weil: …, weil ich gern mit Menschen arbeite.'});
+ const EIG=/(freundlich|zuverlässig|pünktlich|hilfsbereit|flexibel|fleißig|ehrlich|höflich|teamfähig|kontaktfreudig|motiviert|ordentlich|selbstständig|geduldig|offen|kreativ|team)/gi,ne=new Set((p3.match(EIG)||[]).map(x=>x.toLowerCase())).size;
+ r.push({ok:ne>=2,t:'3. Twee eigenschappen',u:ne>=2?'Goed.':ne?'Nog één eigenschap erbij (bijv. zuverlässig, pünktlich, hilfsbereit).':'Noem twee eigenschappen: Ich bin freundlich und zuverlässig.'});
+ r.push({ok:/\?/.test(p4)&&/(arbeitszeit|stunden|wann|uhr|wochenende|arbeiten)/i.test(p4),t:'4. Vraag naar de werktijden',u:/\?/.test(p4)?'Goed.':'Stel een vraag met een vraagteken: Wie sind die Arbeitszeiten?'});
+ r.push({ok:/antwort/i.test(p5),t:'5. Om antwoord gevraagd',u:/antwort/i.test(p5)?'Goed.':'Bijvoorbeeld: Ich freue mich auf Ihre Antwort.'});
+ const du=/\b(du|dich|dir|dein|deine|deinen|deinem|deiner)\b/i.test(alles);
+ r.push({ok:!du,t:'Sie-vorm (beleefd)',u:du?'Je schrijft ergens du/dich/dir/dein. In een formele mail gebruik je Sie, Ihnen, Ihr.':'Goed: geen du.'});
+ const kl=/\bihnen\b/.test(alles)||/\b(könnten|können|würden|haben|sind)\s+sie\b/.test(alles)||/\bihr(e|em|en)?\s+(hotel|anzeige|antwort)\b/.test(alles);
+ if(kl)r.push({let:1,t:'Sie / Ihnen / Ihr met hoofdletter',u:'Als je de lezer bedoelt (u, uw), schrijf je altijd Sie, Ihnen, Ihr, Ihre met een hoofdletter.'});
+ if(/\b(weil|dass)\b/i.test(alles)&&!/,\s*(weil|dass)\b/i.test(alles))r.push({let:1,t:'Komma vóór weil/dass',u:'In het Duits staat er altijd een komma vóór weil en dass.'});
+ r.push({ok:/mit freundlichen grüßen/i.test(g)&&g.split('\n').filter(x=>x.trim()).length>=2,t:'Formele groet en naam',u:/mit freundlichen grüßen/i.test(g)?(g.split('\n').filter(x=>x.trim()).length>=2?'Goed.':'Zet je naam op een nieuwe regel onder de groet.'):'Formeel sluit je af met Mit freundlichen Grüßen, en je naam eronder.'});
+ if(/grüßen\s*,/i.test(g))r.push({let:1,t:'Geen komma na de groet',u:'In het Duits: "Mit freundlichen Grüßen" zonder komma.'});
+ if(/(viele|liebe)\s+grüße|tschüss|bis bald/i.test(g))r.push({let:1,t:'Te informele groet',u:'Viele Grüße / Tschüss is voor vrienden. Formeel: Mit freundlichen Grüßen.'});
+ const klein=[...new Set(NOMEN.concat(['Anzeige','Hotel','Ferienjob','Arbeitszeiten','Antwort','Erfahrung','Gegend','Stunden','Name','Internet','Klasse','Menschen','Deutsch','Team','Woche']).filter(w=>new RegExp('(^|[^A-Za-zÄÖÜäöüß])'+w.toLowerCase()+'(?![a-zäöüß])').test(alles)))];
+ if(klein.length)r.push({let:1,t:'Hoofdletters bij zelfstandige naamwoorden',u:'Schrijf met een hoofdletter: '+klein.join(', ')+'.'});
+ return r}
+const ZELF_F=['In elke gewone zin staat het werkwoord op plek 2.','Na weil, dass en wann (bijzin) staat het werkwoord achteraan.','Sie, Ihnen, Ihr en Ihre (= u, uw) hebben overal een hoofdletter.','Ik heb nergens du, dich, dir of dein gebruikt.','Alle zelfstandige naamwoorden hebben een hoofdletter.','Ik heb de mail nog één keer helemaal (hardop) gelezen.'];
+
+const OPDRACHT_L=`<div class="label">Oefenopdracht 2 · Informell</div><h2 style="margin-top:6px">Ferien mit einem Freund</h2>
+<p>Dein deutscher Freund <b>Lukas</b> möchte dich in den Sommerferien besuchen. Er fragt dich, was ihr zusammen machen könnt.</p>
+<p><b>Schreibe eine informelle E-Mail von 60–80 Wörtern. Schreibe über folgende Punkte:</b></p>
+<ol><li>Begrüße Lukas und reagiere auf seine Nachricht.</li><li>Schlage zwei Aktivitäten vor.</li><li>Erkläre, wo er schlafen kann.</li><li>Schreibe, was er mitbringen soll.</li><li>Stelle ihm eine Frage und verabschiede dich.</li></ol>
+<p style="margin-bottom:0"><b>Verwende:</b> eine informelle Anrede und einen freundlichen Schreibstil. <span class="sub">(Dus: du, dich, dir, dein.)</span></p>`;
+const DELEN_L=[
+ {id:'a',titel:'Aanhef',kort:'aanhef',rijen:2,vraag:'Hoe begin je de mail aan Lukas?',
+  tip:'<b>Lieber Lukas,</b> of <b>Hallo Lukas,</b> met een komma. Daarna verder met een <b>kleine letter</b>.',stenen:[['Lieber Lukas,','Beste Lukas,'],['Hallo Lukas,','Hoi Lukas,']]},
+ {id:'p1',titel:'1. Begroeten en reageren',kort:'gereageerd',vraag:'Begroet Lukas en reageer op zijn bericht.',
+  tip:'Begin met een kleine letter na de aanhef: <i>danke für deine Mail!</i><br><i>Schön, <b>dass</b> du mich <b>besuchen möchtest</b>.</i> (na dass: werkwoord achteraan)',
+  stenen:[['danke für deine Mail!','bedankt voor je mail!'],['Wie geht es dir?','Hoe gaat het met je?'],['Schön, dass du mich in den Sommerferien besuchen möchtest!','Leuk dat je me in de zomervakantie wilt bezoeken!'],['Ich freue mich schon sehr auf dich.','Ik verheug me al erg op je.']]},
+ {id:'p2',titel:'2. Twee activiteiten voorstellen',kort:'activiteiten',vraag:'Stel twee dingen voor die jullie samen kunnen doen.',
+  tip:'<b>Wir können</b> … + hele werkwoord achteraan: <i>Wir können an den Strand <b>gehen</b>.</i> Of als vraag: <i>Hast du Lust, … zu <b>fahren</b>?</i>',
+  stenen:[['Wir können zusammen an den Strand gehen.','We kunnen samen naar het strand gaan.'],['Wir könnten mit dem Fahrrad nach Amsterdam fahren.','We zouden met de fiets naar Amsterdam kunnen gaan.'],['Ich möchte dir meine Stadt zeigen.','Ik wil je mijn stad laten zien.'],['Hast du Lust, in einen Freizeitpark zu gehen?','Heb je zin om naar een pretpark te gaan?'],['Abends können wir Fußball spielen oder ins Kino gehen.','\'s Avonds kunnen we voetballen of naar de bioscoop gaan.']]},
+ {id:'p3',titel:'3. Waar hij kan slapen',kort:'slaapt',vraag:'Leg uit waar Lukas kan slapen.',
+  tip:'<i>Du <b>kannst</b> in meinem Zimmer <b>schlafen</b>.</i> (kannst op plek 2, schlafen achteraan). Let op: <i>du schläfst</i> (met ä).',
+  stenen:[['Du kannst in meinem Zimmer schlafen.','Je kunt in mijn kamer slapen.'],['Wir haben ein Gästezimmer.','We hebben een logeerkamer.'],['Du schläfst auf einer Luftmatratze.','Je slaapt op een luchtbed.'],['Mein Bruder schläft dann bei meinen Eltern.','Mijn broer slaapt dan bij mijn ouders.']]},
+ {id:'p4',titel:'4. Wat hij moet meenemen',kort:'meeneemt',vraag:'Schrijf wat Lukas moet meenemen.',
+  tip:'Gebiedende wijs met du: <b>Bring</b> … <b>mit</b> / <b>Nimm</b> … <b>mit</b> (het stukje <i>mit</i> gaat naar het eind!). Leg uit waarom: <i>…, weil es hier oft <b>regnet</b>.</i>',
+  stenen:[['Bring bitte deine Badesachen mit.','Neem alsjeblieft je zwemspullen mee.'],['Nimm eine Regenjacke mit, weil es hier oft regnet.','Neem een regenjas mee, omdat het hier vaak regent.'],['Vergiss deinen Schlafsack nicht!','Vergeet je slaapzak niet!'],['Du brauchst auch Sportschuhe.','Je hebt ook sportschoenen nodig.']]},
+ {id:'p5',titel:'5. Een vraag en afscheid',kort:'een vraag',vraag:'Stel Lukas een vraag en neem afscheid.',
+  tip:'Een vraag met een vraagteken: <i>Wann kommst du genau an?</i> En een vriendelijke slotzin: <i>Bis bald!</i>',
+  stenen:[['Wann kommst du genau an?','Wanneer kom je precies aan?'],['Was isst du gern?','Wat eet je graag?'],['Kommst du mit dem Zug?','Kom je met de trein?'],['Schreib mir bald zurück!','Schrijf me snel terug!'],['Bis bald!','Tot snel!']]},
+ {id:'g',titel:'Groet',kort:'groet',rijen:3,vraag:'Sluit af met een groet en je naam.',
+  tip:'<b>Viele Grüße</b> of <b>Liebe Grüße</b> (zonder komma), daaronder je naam. Van een jongen: <i>Dein Ben</i>.',
+  stenen:[['Viele Grüße','Groetjes'],['Liebe Grüße','Lieve groet'],['Dein Ben','Je Ben']]}];
+function checks_L(){const r=[],a=tekst('a'),p1=tekst('p1'),p2=tekst('p2'),p3=tekst('p3'),p4=tekst('p4'),p5=tekst('p5'),g=tekst('g'),alles=DELEN.map(d=>tekst(d.id)).join('\n'),n=aantal();
+ r.push({ok:n>=60&&n<=80,t:`Lengte: ${n} woorden`,u:n<60?`Nog ${60-n} woorden erbij (60 tot 80).`:n>80?`${n-80} woorden te veel: maak een paar zinnen korter.`:'Precies goed: tussen 60 en 80.'});
+ r.push({ok:/^(lieber|liebe|hallo|hi)\s+\S+.*,$/i.test(a),t:'Aanhef met komma',u:a?(/,$/.test(a)?'Goed.':'Zet een komma achter de aanhef: Lieber Lukas,'):'Nog geen aanhef.'});
+ if(p1&&/^(Ich|Vielen|Danke|Schön|Wie|Mir|Toll|Super)\b/.test(p1))r.push({let:1,t:'Kleine letter na de aanhef',u:`Na "Lieber Lukas," begint de volgende zin met een kleine letter: ${esc(p1.split(/\s/)[0].toLowerCase())} …`});
+ r.push({ok:woorden(p1)>=5,t:'1. Begroet en gereageerd',u:woorden(p1)>=5?'Goed.':'Reageer op zijn bericht: danke für deine Mail! Schön, dass du kommst.'});
+ const act=(p2.match(/\b(gehen|fahren|spielen|zeigen|besuchen|schwimmen|machen|essen|sehen|baden|grillen)\b/gi)||[]).length;
+ r.push({ok:act>=2,t:'2. Twee activiteiten',u:act>=2?'Goed. Staat het hele werkwoord achteraan?':act?'Nog één activiteit erbij.':'Stel twee dingen voor: Wir können … gehen. Wir können … spielen.'});
+ r.push({ok:/(schlaf|schläf|zimmer|bett|luftmatratze|sofa|gäste)/i.test(p3),t:'3. Waar hij slaapt',u:/(schlaf|schläf|zimmer|bett)/i.test(p3)?'Goed.':'Zeg waar hij slaapt: Du kannst in meinem Zimmer schlafen.'});
+ r.push({ok:/(\bmit\b|bring|nimm|vergiss|brauchst)/i.test(p4),t:'4. Wat hij meeneemt',u:/(\bmit\b|bring|nimm|vergiss|brauchst)/i.test(p4)?'Goed. Staat "mit" achteraan in je zin met bring/nimm?':'Bijvoorbeeld: Bring bitte deine Badesachen mit.'});
+ r.push({ok:/\?/.test(p5),t:'5. Een vraag gesteld',u:/\?/.test(p5)?'Goed.':'Stel Lukas een vraag, met een vraagteken.'});
+ const sie=/[a-zäöüß,]\s+(Sie|Ihnen|Ihr|Ihre)\b/.test(alles);
+ r.push({ok:!sie,t:'Du-vorm volgehouden',u:sie?'Je schrijft ergens Sie/Ihnen/Ihr. Lukas is een vriend: du, dich, dir, dein.':'Goed: je zegt du tegen Lukas.'});
+ if(/\b(weil|dass)\b/i.test(alles)&&!/,\s*(weil|dass)\b/i.test(alles))r.push({let:1,t:'Komma vóór weil/dass',u:'In het Duits staat er altijd een komma vóór weil en dass.'});
+ r.push({ok:/(grüße|grüßen|bis bald|tschüss)/i.test(g)&&g.split('\n').filter(x=>x.trim()).length>=2,t:'Groet en naam',u:/(grüße|bis bald|tschüss)/i.test(g)?(g.split('\n').filter(x=>x.trim()).length>=2?'Goed.':'Zet je naam op een nieuwe regel onder de groet.'):'Sluit af met Viele Grüße en je naam eronder.'});
+ if(/grüße\s*,/i.test(g))r.push({let:1,t:'Geen komma na de groet',u:'In het Duits: "Viele Grüße" zonder komma.'});
+ const klein=[...new Set(NOMEN.concat(['Sommerferien','Ferien','Strand','Zimmer','Badesachen','Regenjacke','Schlafsack','Zug','Luftmatratze','Gästezimmer','Nachricht','Lust']).filter(w=>new RegExp('(^|[^A-Za-zÄÖÜäöüß])'+w.toLowerCase()+'(?![a-zäöüß])').test(alles)))];
+ if(klein.length)r.push({let:1,t:'Hoofdletters bij zelfstandige naamwoorden',u:'Schrijf met een hoofdletter: '+klein.join(', ')+'.'});
+ return r}
+const ZELF_L=['In elke gewone zin staat het werkwoord op plek 2.','Met können/möchten staat het tweede werkwoord achteraan (Wir können … gehen).','Bij mitbringen/mitnehmen staat "mit" achteraan (Bring … mit).','Ik heb steeds du (dich, dir, dein) gebruikt, nooit Sie.','Alle zelfstandige naamwoorden hebben een hoofdletter.'];
+
+/* ---------- welke opdracht: elke opdracht heeft zijn eigen tekst (S.tt[id]) ---------- */
+const OPS={jonas:{t:'Brief aan Jonas',s:'informeel',o:()=>OPDRACHT_J,d:DELEN_J,c:checks_J,z:ZELF_J},
+ job:{t:'Ferienjob in een hotel',s:'formeel',o:()=>OPDRACHT_F,d:DELEN_F,c:checks_F,z:ZELF_F},
+ lukas:{t:'Lukas komt logeren',s:'informeel',o:()=>OPDRACHT_L,d:DELEN_L,c:checks_L,z:ZELF_L}};
+let OPDRACHT,DELEN,ZELF,checks;
+if(!S.tt)S.tt={};if(!S.cur||!OPS[S.cur])S.cur='jonas';
+function zetOp(id){const o=OPS[id];OPDRACHT=o.o();DELEN=o.d;ZELF=o.z;checks=o.c}
+zetOp(S.cur);
+function kiesOp(id){if(id===S.cur)return;S.tt[S.cur]={t:S.t,zelf:S.zelf};const x=S.tt[id]||{t:{},zelf:{}};S.cur=id;S.t=x.t||{};S.zelf=x.zelf||{};zetOp(id);save();renderHome()}
+
 const scoreAuto=()=>{if(!aantal())return 0;const c=checks().filter(x=>!x.let);return c.filter(x=>x.ok).length/c.length};
 window.leerVoortgang=()=>Math.round(scoreAuto()*100);
 
 /* ---------- Hoofdscherm ---------- */
 function renderHome(){show('home');$('#opdracht').innerHTML=OPDRACHT;
+ $('#opk').innerHTML='<div class="label" style="margin:4px 0 6px">Kies een opdracht</div>'+Object.entries(OPS).map(([id,o])=>{const t=id===S.cur?S.t:((S.tt[id]||{}).t||{});const n=woorden(Object.values(t).join(' '));return `<button class="opb${id===S.cur?' aan':''}" data-op="${id}"><b>${o.t}</b><small>${o.s}${n?' · '+n+' woorden':''}</small></button>`}).join('');
+ document.querySelectorAll('[data-op]').forEach(b=>b.onclick=()=>kiesOp(b.dataset.op));
  const n=aantal(),p=Math.round(scoreAuto()*100),t=$('#hTeller');t.textContent=n+' woorden';t.className='teller'+(n>=60&&n<=80?' ok':n>80?' te':'');
  $('#hBalk').style.width=p+'%';const gevuld=DELEN.filter(d=>tekst(d.id)).length;
  $('#hStand').textContent=gevuld?`${gevuld} van de ${DELEN.length} onderdelen ingevuld · ${p}% van de controlelijst klopt`:'Nog niets geschreven. Begin bij Schrijven.';
@@ -215,8 +330,15 @@ function mijnBrief(){show('play');const b=heleBrief();
  $('#stop').onclick=renderHome;$('#naar').onclick=()=>schrijf(0);$('#ch').onclick=controle;
  if($('#kopie'))$('#kopie').onclick=async()=>{try{await navigator.clipboard.writeText(b);$('#msg').textContent='Gekopieerd! Plak hem in je document of mail.'}catch(e){const r=document.createRange();r.selectNodeContents($('#br'));const s=getSelection();s.removeAllRanges();s.addRange(r);$('#msg').textContent='Geselecteerd: kies nu Kopiëren.'}}}
 
+function voorbeeldF(){
+ const V=[['Sehr geehrte Damen und Herren,','Formele aanhef met komma'],['mein Name ist Lisa de Vries und ich bin 16 Jahre alt. Ich schreibe Ihnen, weil ich im Sommer einen Sprachkurs in Berlin machen möchte.','Kleine letter na de aanhef · weil: werkwoord (möchte) achteraan'],['Ich lerne seit drei Jahren Deutsch und möchte besser sprechen können.','Werkwoord op plek 2'],['Könnten Sie mir bitte sagen, wie viel der Kurs kostet und wann er beginnt?','Beleefde vraag · Sie met hoofdletter'],['Gibt es auch eine Unterkunft für die Teilnehmer?','Ja/nee-vraag: werkwoord vooraan'],['Ich freue mich auf Ihre Antwort.','Ihre (= uw) met hoofdletter'],['Mit freundlichen Grüßen\nLisa de Vries','Formele groet zonder komma, voor- en achternaam']];
+ $('#play').innerHTML=`<div class="top"><button class="btn licht klein" id="stop">‹ Terug</button></div>
+ <div class="kaart"><div class="label">Voorbeeld: formele mail</div><h2 style="margin-top:6px">Lisa vraagt informatie over een taalcursus</h2>
+ <p class="sub">Een ander onderwerp dan jouw opdracht: kijk hoe een formele mail is opgebouwd, en schrijf je eigen mail zelf.</p>
+ ${V.map(([z,u])=>`<div style="margin:10px 0"><div class="brief" style="padding:10px 14px">${esc(z)}</div><div style="font-size:14px;color:var(--muted);margin-top:3px">↳ ${esc(u)}</div></div>`).join('')}</div>`;
+ $('#stop').onclick=renderHome}
 /* ---------- Voorbeeldbrief (ander onderwerp, zodat je hem niet overschrijft) ---------- */
-function voorbeeld(){show('play');
+function voorbeeld(){show('play');if(S.cur==='job')return voorbeeldF();
  const V=[['Liebe Lena,','Aanhef met komma'],['vielen Dank für deinen Brief! Mir geht es gut.','Kleine letter na de aanhef'],['In den Ferien war ich mit meiner Familie in Spanien. Wir haben jeden Tag im Meer gebadet und abends Pizza gegessen.','Perfekt: haben … gebadet / gegessen'],['Das Wetter war super, weil die Sonne immer geschienen hat.','weil: werkwoord (hat) achteraan, komma ervoor'],['Und du? Was hast du in den Ferien gemacht? Kommst du im Sommer zu uns?','Vragen: werkwoord op plek 1 of 2'],['Schreib mir bald zurück!','Slotzin'],['Viele Grüße\nDeine Sanne','Groet zonder komma, naam eronder']];
  $('#play').innerHTML=`<div class="top"><button class="btn licht klein" id="stop">‹ Terug</button></div>
  <div class="kaart"><div class="label">Voorbeeldbrief</div><h2 style="margin-top:6px">Sanne schrijft aan Lena over de vakantie</h2>
@@ -225,8 +347,7 @@ function voorbeeld(){show('play');
  $('#stop').onclick=renderHome}
 
 /* ---------- Spel: bouwstenen (Nederlands → Duits) ---------- */
-const BOUW=DELEN.flatMap(d=>d.stenen.filter(s=>!s[0].startsWith('…')).map(s=>({de:s[0],nl:s[1]})));
-function stenenSpel(){let rij=shuffle(BOUW).slice(0,12),i=0,goed=0;show('play');
+function stenenSpel(){const BOUW=DELEN.flatMap(d=>d.stenen.filter(s=>!s[0].startsWith('…')).map(s=>({de:s[0],nl:s[1]})));let rij=shuffle(BOUW).slice(0,12),i=0,goed=0;show('play');
  const vraag=()=>{if(i>=rij.length){S.bs=Math.max(S.bs,goed);save();
    $('#play').innerHTML=`<div class="kaart"><h2>${goed} van de ${rij.length} goed${goed>=10?' 🎉':''}</h2><p>${goed>=10?'Deze bouwstenen zitten erin. Gebruik ze in je brief!':'Nog een keer? Bij 10 goed is hij gehaald.'}</p><div class="acts"><button class="btn" id="nog">Nog een keer</button><button class="btn licht" id="stop">Terug</button></div></div>`;
    $('#nog').onclick=stenenSpel;$('#stop').onclick=renderHome;return}
@@ -248,6 +369,11 @@ const ZINNEN=[
  {z:'Was möchtest du in Amsterdam sehen?',ook:[],u:'Vraagwoord eerst, dan het werkwoord (<b>möchtest</b>), sehen achteraan.'},
  {z:'Hast du ein Haustier?',ook:[],u:'Ja/nee-vraag: het werkwoord (<b>Hast</b>) vooraan.'},
  {z:'Wir können Rad fahren, weil das Wetter schön ist.',ook:[],u:'<b>können</b> op plek 2 en <b>fahren</b> achteraan; na weil staat <b>ist</b> achteraan.'},
+ {z:'Ich schreibe Ihnen, weil ich Ihre Anzeige gelesen habe.',ook:[],u:'Na <b>weil</b> staat het werkwoord achteraan: <b>gelesen habe</b>.'},
+ {z:'Könnten Sie mir bitte die Arbeitszeiten sagen?',ook:[],u:'Beleefde vraag: <b>Könnten</b> vooraan, <b>sagen</b> achteraan.'},
+ {z:'Du kannst in meinem Zimmer schlafen.',ook:[],u:'<b>kannst</b> op plek 2, <b>schlafen</b> achteraan.'},
+ {z:'Bring bitte deine Badesachen mit.',ook:[],u:'Gebiedende wijs: <b>Bring</b> vooraan, <b>mit</b> achteraan (mitbringen).'},
+ {z:'Ich möchte in Ihrem Hotel arbeiten, weil ich gern mit Menschen arbeite.',ook:[],u:'<b>möchte</b> op plek 2 en <b>arbeiten</b> achteraan; na weil staat <b>arbeite</b> achteraan.'},
  {z:'In meiner Freizeit spiele ich gern Gitarre.',ook:['Ich spiele in meiner Freizeit gern Gitarre.'],u:'Begint de zin met "In meiner Freizeit", dan komt het werkwoord direct daarna: <b>spiele ich</b>.'}];
 function volgordeSpel(){let rij=shuffle(ZINNEN).slice(0,7),i=0,goed=0;show('play');
  const zin=()=>{if(i>=rij.length){S.wv=Math.max(S.wv,goed);save();

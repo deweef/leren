@@ -135,6 +135,10 @@ schermen `show('home'|'play')`, `goHome()`, `ask()`, `practice(sec)` (oefenronde
   automatisch na (lengte, aanhefkomma, kleine letter erna, Perfekt, weil + komma, 2 vragen, geen Sie, groet zonder komma,
   zelfstandige naamwoorden uit `NOMEN` met kleine letter), `ZELF` = zelf afvinken. Spelletjes: Bouwstenen (NL → DE,
   gehaald bij 10/12, `S.bs`) en Woordvolgorde (`ZINNEN`, tegels; `ook` = andere goede volgordes; gehaald bij 6/7, `S.wv`).
+  **Drie opdrachten** (`OPS`: jonas = eigen, job = Anja's ‘Bewerbung um einen Ferienjob’ (formeel, Sie, Mit freundlichen Grüßen), lukas = Anja's
+  ‘Ferien mit einem Freund’ (informeel)), elk met eigen `OPDRACHT_x`, `DELEN_x`, `checks_x`, `ZELF_x`; `zetOp`/`kiesOp` wisselen, tekst per opdracht in
+  `S.tt[id]` (huidige in `S.t`/`S.zelf`, `S.cur`). Formeel checkt o.a. Sehr geehrte…, geen du, Sie/Ihnen/Ihr met hoofdletter, eigenschappen, vraag
+  naar Arbeitszeiten. Voorbeeld voor formeel: `voorbeeldF` (taalcursus Berlijn). Bouwstenen-spel volgt de gekozen opdracht.
   Voorbeeldbrief over een ander onderwerp (niet overschrijfbaar). We schrijven de brief niet voor Ben: tips, geen
   verbeterde versie (ook niet als Marcel zijn tekst in de chat plakt).
 
