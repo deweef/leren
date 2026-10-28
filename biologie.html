@@ -229,7 +229,7 @@ canvas#conf{position:fixed;inset:0;pointer-events:none;z-index:9}
   <section>
     <div class="sec-head"><h2>2. Leren</h2></div>
     <div class="modes">
-      <button class="mode" data-m="learn"><span class="lab">Begrip</span><span class="tag">Voor de begrippentoets</span><h3>Begrippen inprenten</h3><p>Eerst kiezen, daarna zelf het begrip typen. Fouten komen terug tot je ze kent.</p></button>
+      <button class="mode" data-m="learn"><span class="lab">Begrip</span><span class="tag">Voor de begrippentoets</span><h3>Begrippen inprenten</h3><p>Twee keer kiezen per begrip. Fouten komen terug tot je ze kent.</p></button>
       <button class="mode" data-m="flash"><span class="lab">Kaart</span><h3>Flitskaarten</h3><p>Begrip zien, uitleg bedenken, omdraaien. Snel alles langs.</p></button>
       <button class="mode" data-m="kennis"><span class="lab">Vraag</span><h3>Kennisvragen</h3><p>Meerkeuzevragen over de stof, met uitleg na elk antwoord.</p></button>
       <button class="mode" data-m="sum"><span class="lab">Lezen</span><h3>Samenvatting</h3><p>De kern van elke paragraaf op één scherm.</p></button>
@@ -261,7 +261,7 @@ canvas#conf{position:fixed;inset:0;pointer-events:none;z-index:9}
       <summary>Zo pak je het aan</summary>
       <ul>
         <li>Voor de begrippentoets: per avond 2 paragrafen <b>Begrippen inprenten</b>, tot de balk bij die paragraaf vol is.</li>
-        <li>Zelf typen onthoud je beter dan aanklikken. Typ een fout antwoord meteen goed over.</li>
+        <li>Fout gekozen? Lees de uitleg even hardop: dan blijft hij beter hangen. Het begrip komt vanzelf terug.</li>
         <li>Voor de voortgangstoets: <b>Kennisvragen</b>, <b>Osmose-lab</b>, <b>Rekenen</b> en <b>Cel benoemen</b>, en tot slot de <b>Proeftoets</b>.</li>
         <li>Lees eerst de <b>Samenvatting</b> van een paragraaf als je iets niet snapt.</li>
         <li>Toetsen: <b>Enter</b> = controleren/verder, <b>1 2 3 4</b> = antwoord kiezen, <b>spatie</b> = kaart omdraaien.</li>
@@ -697,29 +697,15 @@ function learnNext(){
     bindQuit();
     P.querySelectorAll('.opt').forEach((btn,i)=>btn.onclick=()=>{const ok=opts[i]===b;markOpts(opts.indexOf(b),i);markDay();
       if(ok){S.xp+=2;it.stage=1;reinsert(it,2)}else{it.miss=true;G.mist.add(b);const s=bs(b);s.l=Math.max(0,s.l-1);s.x++;reinsert(it,2)}
-      $('#fbox').innerHTML=`<div class="fb ${ok?'good':'bad'}"><div class="t">${ok?'Goed! Straks typ je het begrip zelf.':'Helaas.'}</div><div class="ans">${esc(b.alt[0])}</div><div>${esc(b.d)}</div></div>`+nextBtn();bindNext(learnNext);save()});
+      $('#fbox').innerHTML=`<div class="fb ${ok?'good':'bad'}"><div class="t">${ok?'Goed! Zo meteen nog een keer.':'Helaas.'}</div><div class="ans">${esc(b.alt[0])}</div><div>${esc(b.d)}</div></div>`+nextBtn();bindNext(learnNext);save()});
   }else{
-    let k=0,phase='ask';
-    P.innerHTML=top+`<div class="slide">${head(`Paragraaf ${b.p}`,'Stap 2 van 2 · typen')}<div class="slide-body"><div class="q">Typ het begrip</div><div class="prompt">${esc(b.d)}</div><div class="pattern" id="pat"></div>
-     <form class="typerow" id="tf" autocomplete="off"><input id="ti" autocapitalize="off" autocorrect="off" spellcheck="false" placeholder="begrip…" aria-label="Begrip"><button class="btn dark" type="submit" id="tb">Controleer</button></form>
-     <div class="acts" id="ta"><button class="btn small ghost" type="button" id="hint">Hint</button><button class="btn small ghost" type="button" id="idk">Weet ik niet</button></div><div id="fbox"></div></div></div>`;
-    bindQuit();const inp=$('#ti');inp.focus();
-    $('#hint').onclick=()=>{k++;it.hinted=true;$('#pat').textContent=pattern(b,k);inp.focus()};
-    const fail=(msg,typed)=>{phase='retype';it.miss=true;G.mist.add(b);const s=bs(b);s.l=Math.max(0,s.l-1);s.x++;it.stage=0;reinsert(it,3);markDay();
-      $('#ta').hidden=true;$('#pat').textContent='';
-      $('#fbox').innerHTML=`<div class="fb bad"><div class="t">${msg}</div>${typed?`<div>Jij typte: <s>${esc(typed)}</s></div>`:''}<div class="ans">${esc(b.alt.join(' / '))}</div><div class="tip">Typ het goede begrip over om verder te gaan.</div></div>`;
-      inp.value='';inp.placeholder='typ het goede begrip over…';$('#tb').textContent='Verder';inp.focus()};
-    $('#idk').onclick=()=>fail('Geeft niet, zo leer je het.');
-    $('#tf').onsubmit=e=>{e.preventDefault();const v=inp.value;
-      if(phase==='done')return learnNext();
-      if(phase==='retype'){if(checkB(v,b)==='ok'){phase='done';learnNext()}else{inp.classList.remove('shake');void inp.offsetWidth;inp.classList.add('shake')}return}
-      const r=checkB(v,b);if(r==='empty')return;
-      if(r==='ok'){phase='done';inp.readOnly=true;inp.classList.add('okay');$('#ta').hidden=true;markDay();let t;
-        if(it.hinted){t='Goed, maar met hint. Hij komt nog één keer terug.';S.xp+=3;reinsert(it,3);it.hinted=false}
-        else{G.done++;if(!it.miss)G.firstOk++;const s=bs(b);s.l=Math.min(5,s.l+(it.miss?1:2));S.xp+=10;t=pick(['Top!','Perfect!','Yes!','Helemaal goed!'])}
-        $('#fbox').innerHTML=`<div class="fb good"><div class="t">${t}</div><div class="ans">${esc(b.alt.join(' / '))}</div></div>`;$('#tb').textContent='Verder';$('#tb').focus();save()}
-      else if(r==='near'){$('#fbox').innerHTML='<div class="fb warn"><div class="t">Bijna! Let op de spelling en probeer het nog eens.</div></div>';inp.select()}
-      else fail('Niet goed.',v)};
+    const opts=shuffle([b,...bDistract(b,4)]);
+    P.innerHTML=top+`<div class="slide">${head(`Paragraaf ${b.p}`,'Stap 2 van 2 · nog een keer')}<div class="slide-body"><div class="q">Welk begrip hoort bij deze uitleg?</div><div class="prompt">${esc(b.d)}</div>${mcButtons(opts.map(o=>o.alt[0]))}<div id="fbox"></div></div></div>`;
+    bindQuit();
+    P.querySelectorAll('.opt').forEach((btn,i)=>btn.onclick=()=>{const ok=opts[i]===b;markOpts(opts.indexOf(b),i);markDay();let t;
+      if(ok){G.done++;if(!it.miss)G.firstOk++;const s=bs(b);s.l=Math.min(5,s.l+(it.miss?1:2));S.xp+=10;t=pick(['Top!','Perfect!','Yes!','Helemaal goed!'])}
+      else{t='Helaas. Hij komt terug.';it.miss=true;G.mist.add(b);const s=bs(b);s.l=Math.max(0,s.l-1);s.x++;it.stage=0;reinsert(it,3)}
+      $('#fbox').innerHTML=`<div class="fb ${ok?'good':'bad'}"><div class="t">${t}</div><div class="ans">${esc(b.alt.join(' / '))}</div><div>${esc(b.d)}</div></div>`+nextBtn();bindNext(learnNext);save()});
   }
 }
 /* ---------- flitskaarten ---------- */
@@ -977,7 +963,7 @@ function klimNext(){const K=klimS(),c=KCAMPS[G.ci];
 /* stap: [id, deel, titel, waarom nu, gewicht (%), type, arg, doel]; de gewichten tellen op tot 100 */
 const ROUTE=[
  ['s1.1','1.1','1.1 Samenvatting lezen','Begin hier: wat is leven, levensloop en organisatieniveaus.',2,'sum','1.1'],
- ['b1.1','1.1','1.1 Begrippen inprenten','De begrippen van 1.1: eerst kiezen, dan zelf typen.',3,'learn','1.1'],
+ ['b1.1','1.1','1.1 Begrippen inprenten','De begrippen van 1.1: per begrip twee keer kiezen.',3,'learn','1.1'],
  ['k1.1','1.1','1.1 Kennisvragen','Snap je het ook? Vragen over 1.1.',3,'kennis','1.1'],
  ['c1.1','1.1','Celberg: Basiskamp','Eindcheck van 1.1: alle begrippen en vragen één keer goed.',3,'klim',0],
  ['s1.2','1.2','1.2 Samenvatting lezen','Organen, weefsels en cellen.',2,'sum','1.2'],

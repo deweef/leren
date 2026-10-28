@@ -142,6 +142,9 @@ schermen `show('home'|'play')`, `goHome()`, `ask()`, `practice(sec)` (oefenronde
   Voorbeeldbrief over een ander onderwerp (niet overschrijfbaar). We schrijven de brief niet voor Ben: tips, geen
   verbeterde versie (ook niet als Marcel zijn tekst in de chat plakt).
 
+- **Biologie begrippen inprenten** (`biologie.html`, `learnNext`): geen typen (Bens wens). Stap 1 = kiezen (begrip of uitleg),
+  stap 2 = uitleg → begrip kiezen uit 5 opties; pas stap 2 goed telt als geleerd, fout = terug naar stap 1. Rekenvragen houden een invulvak.
+
 - **Armpjes-plaatjes** (scheikunde.html, H2 leerpad 2.1): `figArmpjes()` (H, O, N, C met 1-4 armpjes), `molFig(mols, h, w)` met
   `atoomBol` (kleuren `AKL`): moleculen waarin armpjes elkaar vasthouden (geel bolletje per binding), `figWaterEnz()` (H₂O, NH₃, CH₄) en
   `figDubbel()` (O₂, N₂, CO₂). Op de kaartjes Armpjes: covalentie, Structuurformules en Dubbel en driedubbel. In 2.2 "Lang of bolletje": `figSliert()`
