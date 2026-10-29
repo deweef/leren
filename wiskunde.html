@@ -181,7 +181,7 @@ canvas#conf{position:fixed;inset:0;pointer-events:none;z-index:9}
 .nums{font-family:"JetBrains Mono",var(--f-mono);font-size:20px;font-weight:500;background:var(--bg);border-radius:10px;padding:10px 12px;margin:8px 0;overflow-wrap:anywhere;letter-spacing:.02em}
 .tw{overflow-x:auto;margin:8px 0}
 .ft{border-collapse:collapse;font-variant-numeric:tabular-nums;font-size:15.5px;background:var(--surface)}
-.ft th,.ft td{border:1px solid var(--line);padding:5px 10px;text-align:center}
+.ft th,.ft td{border:1px solid var(--line);padding:5px 7px;text-align:center;overflow-wrap:normal;white-space:nowrap}
 .ft th{background:var(--chip);text-align:left;font-weight:700}
 .ft.v td:first-child{font-family:var(--f-mono);font-size:14px}
 .chart{display:block;width:100%;max-width:420px;height:auto;color:var(--ink);margin:6px 0}
@@ -574,24 +574,36 @@ function svgNormal(mu,sig,unit,hi){
   <text x="${W-L}" y="${H-4}" text-anchor="end" font-size="9.5" fill="currentColor" opacity=".7">${unit||''}</text></svg>`;
 }
 /* ---------- generatoren ---------- */
+/* frequentietabel: vraag + uitleg in stappen (Ben: mediaan en gemiddelde gingen mis bij lange tabellen) */
+function medStappen(xs,fs){const N=sum(fs),all=[];xs.forEach((x,i)=>{for(let j=0;j<fs[i];j++)all.push(x)});
+ const p1=N%2?(N+1)/2:N/2,p2=N%2?p1:p1+1;let t=`<b>Stap 1.</b> Tel het totaal: ${fs.join(' + ')} = <b>${N}</b>.<br>`;
+ t+=N%2?`<b>Stap 2.</b> ${N} is oneven, dus er is één middelste getal: (${N} + 1) ÷ 2 = <b>${p1}</b>. Je zoekt het ${p1}e getal.<br>`:`<b>Stap 2.</b> ${N} is even, dus er zijn twee middelste getallen: ${N} ÷ 2 = ${p1}. Je zoekt het <b>${p1}e en ${p2}e</b> getal.<br>`;
+ let c=0,regels=[];for(let i=0;i<xs.length;i++){const van=c+1;c+=fs[i];regels.push(`${van===c?`nummer ${c}`:`nummer ${van} t/m ${c}`} is een ${xs[i]}`);if(c>=p2)break}
+ t+=`<b>Stap 3.</b> Tel door in de tabel: ${regels.join('; ')}.<br>`;
+ const a=all[p1-1],b=all[p2-1],me=(a+b)/2;
+ t+=N%2?`<b>Stap 4.</b> Het ${p1}e getal is een <b>${a}</b>. Dat is de mediaan.`:`<b>Stap 4.</b> Het ${p1}e getal is ${a} en het ${p2}e is ${b}. ${a===b?`Allebei ${a}, dus de mediaan is <b>${a}</b>.`:`Mediaan = (${a} + ${b}) ÷ 2 = <b>${nf(me,2)}</b>.`}`;
+ if(N<=30)t+=`<div class="nums" style="font-size:15px">${all.map((x,i)=>i===p1-1||i===p2-1?`<b style="color:var(--accent)">${x}</b>`:x).join(' ')}</div>`;
+ return {t,me}}
+function freqVraag(xs,fs,k){const N=sum(fs),S=sum(xs.map((x,i)=>x*fs[i])),g=S/N,mo=xs[fs.indexOf(Math.max(...fs))];const T=tbl('waarde',xs,'frequentie',fs);
+ if(k==='gem')return {q:`Bereken het <b>gemiddelde</b> bij deze frequentietabel. Rond af op één decimaal.${T}`,a:g,tol:.051,w:`<b>Stap 1.</b> Tel het totaal: ${fs.join(' + ')} = <b>${N}</b>.<br><b>Stap 2.</b> Elke waarde keer hoe vaak hij voorkomt: ${xs.map((x,i)=>`${fs[i]} × ${x} = ${fs[i]*x}`).join(', ')}.<br><b>Stap 3.</b> Alles bij elkaar: ${xs.map((x,i)=>fs[i]*x).join(' + ')} = <b>${S}</b>.<br><b>Stap 4.</b> Gemiddelde = ${S} ÷ ${N} ≈ <b>${nf(g)}</b>.`};
+ if(k==='med'){const m=medStappen(xs,fs);return {q:`Bepaal de <b>mediaan</b> bij deze frequentietabel.${T}`,a:m.me,tol:.001,w:m.t}}
+ if(k==='mod')return {q:`Wat is de <b>modus</b>?${T}`,a:mo,tol:.001,w:`Kijk welke frequentie het grootst is: ${Math.max(...fs)}. Die hoort bij <b>${mo}</b>. (De modus is de waarde, niet de frequentie!)`};
+ return {q:`Hoeveel waarnemingen zijn er in totaal?${T}`,a:N,tol:.001,w:`Tel de frequenties op: ${fs.join(' + ')} = ${N}.`}}
 const GENS={
  gmm:{sec:'2.3',t:'Gemiddelde, mediaan, modus',f(){
-  const n=R(6,9);let a;do{a=Array.from({length:n},()=>R(1,20));a[R(0,n-1)]=a[R(0,n-1)]}while(false);
+  const n=R(5,8);let a;do{a=Array.from({length:n},()=>R(1,12));a[R(0,n-1)]=a[R(0,n-1)]}while(false);
   const s=[...a].sort((x,y)=>x-y),mo=modeOf(a);const kinds=['gem','med'];if(mo!=null)kinds.push('mod');const k=pick(kinds);
   const g=sum(a)/n,me=median(s);
   const lst=a.join('&nbsp;&nbsp;');
   if(k==='gem')return {q:`Bereken het <b>gemiddelde</b> van<div class="nums">${lst}</div>Rond af op één decimaal.`,a:g,tol:.051,w:`Som = ${a.join(' + ')} = ${sum(a)}. Aantal = ${n}. Gemiddelde = ${sum(a)} ÷ ${n} ≈ ${nf(g)}.`};
   if(k==='med')return {q:`Bereken de <b>mediaan</b> van<div class="nums">${lst}</div>`,a:me,tol:.001,w:`Op volgorde: ${s.join(' ')}. ${n%2?`Oneven aantal (${n}): het middelste getal is het ${(n+1)/2}e = ${nf(me,2)}.`:`Even aantal (${n}): het gemiddelde van het ${n/2}e en ${n/2+1}e getal = (${s[n/2-1]} + ${s[n/2]}) ÷ 2 = ${nf(me,2)}.`}`};
   return {q:`Wat is de <b>modus</b> van<div class="nums">${lst}</div>`,a:mo,tol:.001,w:`${mo} komt het vaakst voor (${a.filter(x=>x===mo).length} keer).`};}},
+ freq0:{sec:'2.3',t:'Frequentietabel (makkelijk)',f(){
+  const n=R(3,4),st=R(4,7),xs=Array.from({length:n},(_,i)=>st+i);let fs;do{fs=xs.map(()=>R(1,4))}while(fs.filter(f=>f===Math.max(...fs)).length>1||sum(fs)<5);
+  return freqVraag(xs,fs,pick(['gem','med','med','mod','tot']))}},
  freq:{sec:'2.3',t:'Frequentietabel',f(){
   const st=R(1,10),xs=Array.from({length:6},(_,i)=>st+i);let fs;do{fs=xs.map(()=>R(1,9))}while(fs.filter(f=>f===Math.max(...fs)).length>1);
-  const N=sum(fs),S=sum(xs.map((x,i)=>x*fs[i])),g=S/N;const all=[];xs.forEach((x,i)=>{for(let j=0;j<fs[i];j++)all.push(x)});const me=median(all),mo=xs[fs.indexOf(Math.max(...fs))];
-  const k=pick(['gem','med','mod','tot']);const T=tbl('waarde',xs,'frequentie',fs);
-  const cum=[];fs.reduce((s,f)=>{cum.push(s+f);return s+f},0);
-  if(k==='gem')return {q:`Bereken het <b>gemiddelde</b> bij deze frequentietabel. Rond af op één decimaal.${T}`,a:g,tol:.051,w:`Totaal = ${fs.join(' + ')} = ${N}. Som = ${xs.map((x,i)=>`${fs[i]}·${x}`).join(' + ')} = ${S}. Gemiddelde = ${S} ÷ ${N} ≈ ${nf(g)}.`};
-  if(k==='med')return {q:`Bepaal de <b>mediaan</b> bij deze frequentietabel.${T}`,a:me,tol:.001,w:`Totaal ${N}. ${N%2?`De mediaan is het ${(N+1)/2}e getal.`:`De mediaan is het gemiddelde van het ${N/2}e en ${N/2+1}e getal.`} Tel op: ${cum.join(', ')}. Dus mediaan = ${nf(me,2)}.`};
-  if(k==='mod')return {q:`Wat is de <b>modus</b>?${T}`,a:mo,tol:.001,w:`${mo} heeft de grootste frequentie (${Math.max(...fs)}).`};
-  return {q:`Hoeveel waarnemingen zijn er in totaal?${T}`,a:N,tol:.001,w:`${fs.join(' + ')} = ${N}.`};}},
+  return freqVraag(xs,fs,pick(['gem','med','mod','tot']))}},
  klas:{sec:'2.3',t:'Klassenindeling',f(){
   const bw=pick([5,10,20]),st=pick([0,20,40,50,60]),n=R(5,6);const cl=Array.from({length:n},(_,i)=>st+i*bw);let fs;do{fs=cl.map(()=>R(2,15))}while(fs.filter(f=>f===Math.max(...fs)).length>1);
   const lab=cl.map(c=>`[${c}, ${c+bw})`),mid=cl.map(c=>c+bw/2),N=sum(fs),S=sum(mid.map((m,i)=>m*fs[i])),g=S/N;
@@ -659,7 +671,7 @@ const GENS={
   const F=['1 · De onderzoeksvraag','2 · Data verzamelen','3 · Data analyseren','4 · Conclusies trekken'];
   return {mc:true,q:`In welke fase van de statistische cyclus past dit?<div class="nums" style="font-size:18px">${esc(it[0])}</div>`,opts:F,keep:true,a:F[it[1]],w:`Dit hoort bij fase ${F[it[1]]}.`};}}
 };
-const SECGENS={'2.1':['cyc'],'2.2':['var'],'2.3':['gmm','freq','klas','rel','weeg'],'2.4':['kw','box','cum'],'2.5':['norm','sd','shape']};
+const SECGENS={'2.1':['cyc'],'2.2':['var'],'2.3':['gmm','freq0','freq','klas','rel','weeg'],'2.4':['kw','box','cum'],'2.5':['norm','sd','shape']};
 
 /* ---------- grafieken: interactief ---------- */
 const PW=340,PH=250,ML=40,MR=14,MT=14,MB=34;
@@ -978,7 +990,8 @@ const ROUTE=[
  ['k1','2.2','Statistiekberg: Kamp 1','Eindcheck van 2.2.',4,'klim',1],
  ['lp2.3','2.3','Leerpad 2.3: data analyseren','Gemiddelde, mediaan, modus, frequentietabel en klassen.',5,'lp','2.3'],
  ['gmm','2.3','Snel oefenen: gemiddelde, mediaan, modus','De drie centrummaten.',2,'tr','gmm',5],
- ['freq','2.3','Snel oefenen: frequentietabel','Turven en tellen.',2,'tr','freq',5],
+ ['freq0','2.3','Snel oefenen: frequentietabel (makkelijk)','Korte tabellen: eerst zo leren tellen.',1,'tr','freq0',5],
+ ['freq','2.3','Snel oefenen: frequentietabel','Langere tabellen, met uitleg in stappen.',1,'tr','freq',5],
  ['rel','2.3','Snel oefenen: relatieve frequentie','Van aantal naar procent.',2,'tr','rel',5],
  ['klas','2.3','Snel oefenen: klassenindeling','Data in groepjes voor een histogram.',2,'tr','klas',5],
  ['weeg','2.3','Snel oefenen: gewogen gemiddelde','Gemiddelde uit een frequentietabel.',2,'tr','weeg',5],
@@ -1119,6 +1132,8 @@ const LP={
  ['De modus',`<p>Het getal dat het <b>vaakst</b> voorkomt.</p><div class="ex">3 3 3 4 5 6 8 8 → modus <b>3</b></div><p>Komen twee getallen even vaak het meest voor? Dan is er geen modus.</p>`],
  ['Welke kies je?',`<p>Het gemiddelde gebruikt alle getallen, maar schiet uit van één rare waarde: een <b>uitschieter</b>.</p><div class="ex">Leeftijden op een feestje: 14, 14, 15, 15, 68 (opa). Gemiddelde 25,2. Mediaan 15.</div><p>Bij uitschieters zegt de mediaan meer. Bij kwalitatieve data (kleuren) kan alleen de modus.</p>`,['Welke centrummaat kun je gebruiken bij "lievelingskleur"?','modus','gemiddelde|mediaan','Je kunt met kleuren niet rekenen of ordenen.']],
  ['Frequentietabel',`<p>Bij veel gegevens maak je een tabel: welk getal, hoe vaak.</p><table class="gt"><tr><th>cijfer</th><td>5</td><td>6</td><td>7</td></tr><tr><th>frequentie</th><td>2</td><td>5</td><td>3</td></tr></table><p>Gemiddelde: (2·5 + 5·6 + 3·7) ÷ 10 = 61 ÷ 10 = <b>6,1</b>. Vergeet niet te vermenigvuldigen met de frequentie!</p>`,['Hoeveel leerlingen zijn er in deze tabel?','10','3|18','2 + 5 + 3 = 10.']],
+ ['Mediaan in een frequentietabel',`<p>In een frequentietabel staan de getallen al op volgorde. Je hoeft ze dus alleen te <b>tellen</b>.</p><div class="rule"><b>Totaal oneven</b>: (totaal + 1) ÷ 2 = het nummer van het middelste getal.<br><b>Totaal even</b>: totaal ÷ 2 en het getal erna; de mediaan is het gemiddelde van die twee.</div><p><b>Voorbeeld 1 (oneven).</b></p>${tbl('cijfer',[5,6,7],'frequentie',[2,4,3])}<ol><li>Totaal: 2 + 4 + 3 = <b>9</b>.</li><li>Oneven: (9 + 1) ÷ 2 = <b>5</b>. Je zoekt het 5e getal.</li><li>Tel door: nummer 1 t/m 2 is een 5, nummer 3 t/m 6 is een 6. Het 5e getal zit daarin.</li><li>Mediaan = <b>6</b>.</li></ol><div class="nums" style="font-size:15px">5 5 6 6 <b style="color:var(--accent)">6</b> 6 7 7 7</div><p><b>Voorbeeld 2 (even), een lange tabel.</b></p>${tbl('waarde',[5,6,7,8,9,10],'frequentie',[6,4,3,1,3,3])}<ol><li>Totaal: 6 + 4 + 3 + 1 + 3 + 3 = <b>20</b>.</li><li>Even: 20 ÷ 2 = 10. Je zoekt het <b>10e en 11e</b> getal.</li><li>Tel door: nummer 1 t/m 6 is een 5, nummer 7 t/m 10 is een 6, nummer 11 t/m 13 is een 7. Verder hoef je niet.</li><li>Het 10e is 6, het 11e is 7. Mediaan = (6 + 7) ÷ 2 = <b>6,5</b>.</li></ol><div class="ex">Let op: tel het <b>totaal van de frequenties</b> (20), niet het aantal vakjes (6). En de mediaan is een getal uit de <b>bovenste</b> rij, nooit een frequentie.</div>`,['Waarde 4, 5, 6 met frequentie 3, 1, 3. Wat is de mediaan?','5','4|6','Totaal 7, oneven: (7 + 1) ÷ 2 = 4e getal. Nummer 1 t/m 3 is een 4, nummer 4 is een 5. Mediaan = 5.']],
+ ['Gemiddelde in een frequentietabel',`<p>Elke waarde komt een paar keer voor. Reken dus eerst <b>waarde × frequentie</b> uit, tel alles op en deel door het totaal.</p><div class="tw"><table class="ft"><tr><th>waarde</th><td>5</td><td>6</td><td>7</td><td>8</td><td>9</td><td>10</td></tr><tr><th>frequentie</th><td>6</td><td>4</td><td>3</td><td>1</td><td>3</td><td>3</td></tr><tr><th>waarde × freq</th><td>30</td><td>24</td><td>21</td><td>8</td><td>27</td><td>30</td></tr></table></div><ol><li>Totaal: 6 + 4 + 3 + 1 + 3 + 3 = <b>20</b>.</li><li>Alles opgeteld: 30 + 24 + 21 + 8 + 27 + 30 = <b>140</b>.</li><li>Gemiddelde = 140 ÷ 20 = <b>7</b>.</li></ol><div class="ex">Tip: zet die derde rij er zelf onder op je kladblaadje. En deel door het totaal (20), niet door het aantal vakjes (6).</div>`,['Waarde 2 en 3 met frequentie 1 en 3. Wat is het gemiddelde?','2,75','2,5|5,5','1 × 2 + 3 × 3 = 11. Totaal 4. 11 ÷ 4 = 2,75.']],
  ['Klassen en histogram',(()=>`<p>Bij veel verschillende waarden maak je <b>klassen</b>: [20, 30) betekent 20 tot 30, waarbij 20 meedoet en 30 niet. Het <b>klassenmidden</b> is 25.</p>${svgHist([3,7,12,9,4])}<p>Een <b>histogram</b> heeft staven die tegen elkaar aan staan. Het gemiddelde schat je met de klassenmiddens.</p>`),['Wat is het klassenmidden van [40, 50)?','45','40|50','(40 + 50) ÷ 2.']]],
 '2.4':[
  ['Cumulatief: optellen',`<p><b>Cumulatief</b> betekent: steeds alles ervóór erbij optellen.</p><table class="gt"><tr><th>minuten</th><td>(0,1]</td><td>(1,2]</td><td>(2,3]</td></tr><tr><th>frequentie</th><td>18</td><td>23</td><td>14</td></tr><tr><th>cumulatief</th><td>18</td><td>41</td><td>55</td></tr></table><p>Dus 41 gesprekken duurden 2 minuten of korter.</p>`,['Wat komt er na 18, 41, 55 als de volgende frequentie 8 is?','63','8|26','55 + 8 = 63.']],
@@ -1202,7 +1217,7 @@ function pracNext(){
   ask(q,`Paragraaf ${G.sec}`,q.gen?GENS[q.gen].t:'Begrip',topbar(G.i,G.items.length),ok=>{rec(G.sec,ok);if(q.id)S.mc[q.id]=(S.mc[q.id]||0)+(ok?1:-1);if(ok)G.ok++;else G.mist.push(q);save();G.i++;pracNext()});
 }
 const LEES={cyc:['De statistische cyclus','Een goede vraag'],var:['Variabelen en waarden','Kwalitatief: nominaal of ordinaal','Kwantitatief: discreet of continu'],gmm:['Het gemiddelde','De mediaan','De modus','Welke kies je?'],
- freq:['Frequentietabel'],klas:['Klassen en histogram'],rel:['Frequentietabel'],weeg:['Het gemiddelde'],kw:['Kwartielen','Spreiding'],box:['Vijf getallen','De boxplot'],cum:['Cumulatief: optellen','Aflezen uit een cumulatieve grafiek'],
+ freq:['Frequentietabel','Mediaan in een frequentietabel','Gemiddelde in een frequentietabel'],freq0:['Frequentietabel','Mediaan in een frequentietabel','Gemiddelde in een frequentietabel'],klas:['Klassen en histogram'],rel:['Frequentietabel'],weeg:['Het gemiddelde'],kw:['Kwartielen','Spreiding'],box:['Vijf getallen','De boxplot'],cum:['Cumulatief: optellen','Aflezen uit een cumulatieve grafiek'],
  norm:['De normale verdeling','De vuistregels'],sd:['De standaardafwijking'],shape:['De vorm van data','Scheef','Andere vormen']};
 /* nalezen: per foute vraag het leerpad-kaartje met die stof (via th of de soort som), anders de theorie zelf */
 function leesKaarten(mist){const out=[],seen=new Set();

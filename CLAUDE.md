@@ -148,6 +148,12 @@ schermen `show('home'|'play')`, `goHome()`, `ask()`, `practice(sec)` (oefenronde
 - **Wiskunde soorten variabelen**: `figVar()` (wiskunde.html) = boomschema variabelen → kwantitatief (discreet, continu) / kwalitatief
   (nominaal, ordinaal), naar Bens plaatje; staat in de theorie van 2.2, op het kaartje "Het stroomschema" en op de spiekbrief.
 
+- **Wiskunde frequentietabel** (Ben maakte fouten bij gemiddelde/mediaan in lange tabellen): `freqVraag(xs, fs, k)` en `medStappen(xs, fs)` geven
+  de uitleg in stappen (totaal → (N+1)÷2 of N÷2 en de volgende → doortellen 'nummer 1 t/m 6 is een 5' → mediaan; bij N ≤ 30 de rij uitgeschreven met
+  de middelste gekleurd; gemiddelde met waarde × frequentie). Makkelijke generator `freq0` (3-4 waarden, frequentie 1-4) vóór `freq` in `SECGENS` en
+  de route (elk 1%). Leerpad 2.3 heeft "Mediaan in een frequentietabel" en "Gemiddelde in een frequentietabel" (met Bens tabel 6×5 … 3×10).
+  `.ft`-cellen hebben `white-space:nowrap` (getallen als 10 braken eerder in tweeën).
+
 - **Biologie begrippen inprenten** (`biologie.html`, `learnNext`): geen typen (Bens wens). Stap 1 = kiezen (begrip of uitleg),
   stap 2 = uitleg → begrip kiezen uit 5 opties; pas stap 2 goed telt als geleerd, fout = terug naar stap 1. Rekenvragen houden een invulvak.
 
