@@ -173,6 +173,15 @@ schermen `show('home'|'play')`, `goHome()`, `ask()`, `practice(sec)` (oefenronde
   post, kans r/(1+r), leug; `LABS`, doel 5 op rij, `S.tr`, met hintknop en rekenmachine.js), Begrippenblitz (`BEGR`), proeftoets 14 MC + 6 rekenen.
   Leerroute: per hoofdstuk leerpad 4% + oefenronde 6% (8/10), spellen 4 × 5%, blitz ≥ 15 3%, toets ≥ 7 7%; Alles nalezen (`samen`) 0%.
 
+- **BSM** (`bsm.html`, Ben, `bsm-h12-v1`): Be Sports-Minded (Boom), toetsstof § 1.1 gezonde leefstijl, 1.2 warming-up/cooling-down, § 2.1 communicatie,
+  2.2 begeleiden (rollen), 2.3 leren lesgeven, plus de modules padel, softbal en discus/groene spelen (scans in OneDrive `Leren/BSM`; de scans hebben
+  geen boekvragen, alle vragen zijn zelf gemaakt, in eigen woorden). Opbouw als `nlt.html`: `H` = 8 onderdelen `{id, nr, t, ic, lp, q}` (ids 1.1, 1.2,
+  2.1, 2.2, 2.3, pad, sof, gro). Plaatjes: `figWho`, `figBravo`, `figRicht`, `figBoog`, `figComm`, `figTuckman`, `figSandwich`, `figLeider`, `figMaslow`,
+  `figDida`, `figPPD`, `figPadel(o)`, `figVeld(hl, {lopers})` (softbalveld, `POS` = veldposities). Spellen in `SPEL` (doel per spel): Wat is dit? (`ROL`),
+  Softbal-scheids (`SCHEIDS` + posities), Padel-teller (`padTel()` generator), Op volgorde (`VOLG`, tegels, 8 per keer, doel 6/8). Route: per onderdeel
+  leerpad 4% + oefenronde 6% (8/10), 4 spellen × 3%, blitz ≥ 15 3%, toets ≥ 7 5%. Let op: praatje-plaatje-daadje (boek § 2.3) vs plaatje-praatje-daadje
+  (module groene spelen), allebei genoemd. Padelregels volgen de module (return onderhands, tiebreak tot 7). Discustechniek en softbal blz. 2-6 ontbraken in de scans.
+
 ## Leerlogboek en scores (gedeeld met deweef/spelletjes)
 - `leerlog.js` staat in de `<head>` van elke vakpagina (vóór de andere scripts). Per bezoek stuurt het stil één
   regel (wie, vak, actieve minuten, wat erbij kwam, stand) met `sendBeacon` naar het Apps Script van het
