@@ -45,7 +45,8 @@ bouwt het samen met Claude; hij wil ook zelf kunnen meeleren (scheikunde: hij be
   invulvak (`#nf`/`#ni`) een knop 🧮 met een rekenmachientje (×10ˣ, x², haakjes; "→ antwoord" zet de uitkomst in het vak).
   Werkt vanzelf via een MutationObserver; open/dicht blijft gelijk tussen vragen. Op een laptop (`pointer:fine`) kun je ook **typen** in het
   bovenste regeltje `.rk-som` (een input; * / x : ^ mogen ook, Enter = uitrekenen, Esc = wissen; Bens wens); op iPad/telefoon `inputmode=none`, dus geen
-  schermtoetsenbord. Nieuwe pagina met invulvragen: script erbij zetten.
+  schermtoetsenbord. Typen werkt ook zonder focus: `toets()` vangt cijfers/tekens op zolang de rekenmachine open is en je niet in een ander
+  vakje staat (Bens Dell met aanraakscherm telde niet als laptop). Script staat als `rekenmachine.js?v=N` in de pagina's: hoog N op bij een wijziging. Nieuwe pagina met invulvragen: script erbij zetten.
 - "‹ Alle vakken" staat bovenaan het hoofdmenu (`<main id="home">`) van elk vak, niet zwevend: tijdens een spel
   ga je met Stoppen/Terug linksboven eerst naar het menu.
 

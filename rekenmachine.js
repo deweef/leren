@@ -22,7 +22,7 @@ function mooi(v){if(isNaN(v))return '';let s=Math.abs(v)>=1e9||(Math.abs(v)<1e-4
 function teken(p,getypt){const v=rekenen(som),i=p.querySelector('.rk-som');if(!getypt)i.value=som;p.querySelector('.rk-uit').textContent=som?(isNaN(v)?'…':'= '+mooi(v)):'0'}
 function paneel(form){let p=form.parentNode.querySelector('.rk');if(!open){if(p)p.remove();return}
  if(p)return;p=document.createElement('div');p.className='rk';
- const laptop=matchMedia('(pointer:fine)').matches;
+ const laptop=matchMedia('(any-pointer:fine)').matches||matchMedia('(hover:hover)').matches;
  p.innerHTML=`<div class="rk-scherm"><input class="rk-som" autocomplete="off" autocapitalize="off" spellcheck="false" aria-label="Som" ${laptop?'placeholder="typ hier je som…"':'inputmode="none"'}><div class="rk-uit">0</div></div>${laptop?'<div class="rk-tip">Typ gerust: 3,5*2^3 of (4+6)/2. Enter = uitrekenen.</div>':''}<div class="rk-toetsen">${TOETS.map(k=>`<button type="button" data-k="${k}" class="${/^[÷×−+]$/.test(k)?'op':k==='='?'is':k==='→ antwoord'?'zet':k.length>2?'klein op':/^[C⌫()]$|x²/.test(k)?'op':''}">${k}</button>`).join('')}</div>`;
  form.after(p);teken(p);const inv=p.querySelector('.rk-som');
  inv.addEventListener('input',()=>{som=inv.value;teken(p,true)});
@@ -38,7 +38,12 @@ function zetErbij(){const form=document.getElementById('nf'),inp=document.getEle
  som='';const b=document.createElement('button');b.type='button';b.className='btn ghost rk-knop';b.title='Rekenmachine';b.setAttribute('aria-label','Rekenmachine');b.textContent='🧮';
  const nb=form.querySelector('[type=submit]');form.insertBefore(b,nb||null);
  b.onclick=()=>{open=!open;paneel(form)};paneel(form)}
-function start(){const st=document.createElement('style');st.textContent=css;document.head.appendChild(st);
+/* toetsenbord: typ je terwijl de rekenmachine open is (en je niet in een ander vakje staat), dan gaat het in de som.
+   Zo werkt typen ook op een laptop met aanraakscherm, die zich als tablet voordoet. */
+function toets(e){const inv=document.querySelector('.rk .rk-som');if(!inv||e.ctrlKey||e.metaKey||e.altKey)return;const a=document.activeElement;
+ if(a===inv||(a&&/^(INPUT|TEXTAREA|SELECT)$/.test(a.tagName)))return;if(!/^[0-9+\-*/().,xX:^²]$/.test(e.key)&&e.key!=='Backspace')return;
+ e.preventDefault();e.stopPropagation();inv.removeAttribute('inputmode');inv.focus();som=e.key==='Backspace'?som.slice(0,-1):som+e.key;teken(inv.closest('.rk'))}
+function start(){const st=document.createElement('style');st.textContent=css;document.head.appendChild(st);document.addEventListener('keydown',toets,true);
  new MutationObserver(zetErbij).observe(document.body,{childList:true,subtree:true});zetErbij()}
 if(document.readyState==='loading')document.addEventListener('DOMContentLoaded',start);else start();
 })();
