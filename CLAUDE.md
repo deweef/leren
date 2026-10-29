@@ -43,7 +43,9 @@ bouwt het samen met Claude; hij wil ook zelf kunnen meeleren (scheikunde: hij be
   tikken. Tekenvlakken e.d. houden hun eigen `touch-action:none` (specifieker).
 - `rekenmachine.js` (in de head van scheikunde-h1, scheikunde, wiskunde en natuurkunde, `defer`): zet bij elke vraag met een
   invulvak (`#nf`/`#ni`) een knop 🧮 met een rekenmachientje (×10ˣ, x², haakjes; "→ antwoord" zet de uitkomst in het vak).
-  Werkt vanzelf via een MutationObserver; open/dicht blijft gelijk tussen vragen. Nieuwe pagina met invulvragen: script erbij zetten.
+  Werkt vanzelf via een MutationObserver; open/dicht blijft gelijk tussen vragen. Op een laptop (`pointer:fine`) kun je ook **typen** in het
+  bovenste regeltje `.rk-som` (een input; * / x : ^ mogen ook, Enter = uitrekenen, Esc = wissen; Bens wens); op iPad/telefoon `inputmode=none`, dus geen
+  schermtoetsenbord. Nieuwe pagina met invulvragen: script erbij zetten.
 - "‹ Alle vakken" staat bovenaan het hoofdmenu (`<main id="home">`) van elk vak, niet zwevend: tijdens een spel
   ga je met Stoppen/Terug linksboven eerst naar het menu.
 
