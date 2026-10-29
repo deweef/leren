@@ -1,0 +1,527 @@
+<!doctype html>
+<html lang="nl">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<meta name="robots" content="noindex">
+<script src="leerlog.js"></script><script>(function(){try{if(localStorage.getItem('leren-ok')!=='53a39a231246354922d1b5f7242c1639ebdc75da84bde2e766eed704f5a89cf8'){location.replace('index.html')}}catch(e){location.replace('index.html')}})();</script>
+<title>Wiskunde · Google Spreadsheets</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Archivo:wdth,wght@62..125,400..900&family=Atkinson+Hyperlegible:wght@400;700&family=JetBrains+Mono:wght@500;700&display=swap">
+<style>
+/* iPad: twee keer snel tikken mag niet inzoomen (knijpen om te zoomen blijft werken) */
+*{touch-action:manipulation}
+:root{--bg:#F5F2EC;--surface:#fff;--ink:#1E2230;--muted:#5D6375;--line:#DDD6CB;--chip:#EEE8DE;--accent:#188038;--gold:#B8860B;--good:#1E8E5A;--good-bg:#E3F4EA;--bad:#C0392B;--bad-bg:#FBE9E7;--tip:#FFF6DA}
+@media (prefers-color-scheme:dark){:root:not([data-theme="light"]){--bg:#14161D;--surface:#1D2029;--ink:#E9EAF0;--muted:#A0A5B5;--line:#30343F;--chip:#272A35;--accent:#5BB974;--gold:#E8B84A;--good:#4CD68A;--good-bg:#173226;--bad:#FF7B6B;--bad-bg:#3A1E1B;--tip:#2E2A1C;color-scheme:dark}}
+:root[data-theme="dark"]{--bg:#14161D;--surface:#1D2029;--ink:#E9EAF0;--muted:#A0A5B5;--line:#30343F;--chip:#272A35;--accent:#5BB974;--gold:#E8B84A;--good:#4CD68A;--good-bg:#173226;--bad:#FF7B6B;--bad-bg:#3A1E1B;--tip:#2E2A1C;color-scheme:dark}
+*{box-sizing:border-box}
+body{margin:0;background:var(--bg);color:var(--ink);font:17px/1.55 "Atkinson Hyperlegible",system-ui,sans-serif;overflow-wrap:break-word}
+main{max-width:720px;margin:0 auto;padding:20px 16px 60px}
+h1{font:800 clamp(30px,7vw,44px)/1.05 Archivo,system-ui,sans-serif;font-stretch:90%;margin:4px 0 6px}
+h2{font:800 22px/1.2 Archivo,system-ui,sans-serif;margin:22px 0 8px}
+h3{font:800 18px/1.25 Archivo,system-ui,sans-serif;margin:0 0 6px}
+.sub{color:var(--muted);margin:0 0 16px}
+.terug{display:inline-block;margin:0 0 10px;color:inherit;opacity:.7;text-decoration:none;font:700 14px system-ui,sans-serif}
+.vlag{display:inline-flex;height:10px;width:44px;border-radius:3px;overflow:hidden;vertical-align:middle;margin-right:8px}
+.vlag i{flex:1}.vlag i:nth-child(1){background:#111}.vlag i:nth-child(2){background:#DD0000}.vlag i:nth-child(3){background:#FFCE00}
+.kaart{background:var(--surface);border:2px solid var(--line);border-radius:16px;padding:16px;margin:12px 0}
+.opdracht{border-color:var(--ink)}
+.opdracht ol{padding-left:22px;margin:8px 0}.opdracht li{margin:4px 0}
+.label{font:700 12px/1 "JetBrains Mono",monospace;letter-spacing:.06em;text-transform:uppercase;color:var(--accent)}
+.modes{display:grid;grid-template-columns:repeat(auto-fit,minmax(200px,1fr));gap:12px;margin-top:12px}
+.mode{display:block;text-align:left;background:var(--surface);color:var(--ink);border:2px solid var(--line);border-radius:16px;padding:16px;cursor:pointer;font:inherit;position:relative}
+.mode h3{margin:0 0 4px}.mode p{margin:0;color:var(--muted);font-size:15px}
+.mode.main{background:var(--ink);color:var(--bg);border-color:var(--ink)}.mode.main p{color:var(--bg);opacity:.8}
+.mode.gehaald{background:var(--good-bg);border-color:var(--good)}
+.mode.gehaald::after{content:"✓ gehaald";position:absolute;top:8px;right:10px;font:700 11px "JetBrains Mono",monospace;color:var(--good)}
+.balk{height:10px;background:var(--chip);border-radius:6px;overflow:hidden;margin:8px 0 4px}.balk i{display:block;height:100%;background:var(--good);transition:width .3s}
+.btn{font:700 16px system-ui,sans-serif;padding:11px 16px;border-radius:12px;border:2px solid var(--ink);background:var(--ink);color:var(--bg);cursor:pointer}
+.btn.licht{background:none;color:var(--ink)}
+.btn.klein{font-size:14px;padding:7px 12px}
+.acts{display:flex;gap:10px;flex-wrap:wrap;margin-top:14px}
+.top{display:flex;justify-content:space-between;align-items:center;gap:10px;margin-bottom:10px}
+.top>*{white-space:nowrap}
+.teller{font:700 14px "JetBrains Mono",monospace;padding:6px 10px;border-radius:10px;background:var(--chip)}
+.teller.ok{background:var(--good-bg);color:var(--good)}.teller.te{background:var(--bad-bg);color:var(--bad)}
+.stap{font:700 13px "JetBrains Mono",monospace;color:var(--muted)}
+textarea{width:100%;min-height:120px;font:17px/1.5 "Atkinson Hyperlegible",system-ui,sans-serif;padding:12px;border-radius:12px;border:2px solid var(--line);background:var(--bg);color:var(--ink);resize:vertical}
+textarea:focus{outline:none;border-color:var(--accent)}
+.tip{background:var(--tip);border-radius:12px;padding:10px 14px;margin:10px 0;font-size:15.5px}
+.stenen{display:flex;flex-wrap:wrap;gap:8px;margin:8px 0}
+.steen{font:15px "Atkinson Hyperlegible",system-ui,sans-serif;padding:7px 11px;border-radius:10px;border:1.5px dashed var(--muted);background:var(--surface);color:var(--ink);cursor:pointer;text-align:left}
+.steen small{display:block;color:var(--muted);font-size:12.5px}
+.check{list-style:none;padding:0;margin:8px 0}
+.check li{padding:7px 0 7px 30px;position:relative;border-bottom:1px solid var(--line)}
+.check li::before{position:absolute;left:4px;top:7px;font-weight:800}
+.check li.ja::before{content:"✓";color:var(--good)}.check li.nee::before{content:"✗";color:var(--bad)}.check li.let::before{content:"!";color:var(--gold)}
+.check li small{display:block;color:var(--muted);font-size:14px}
+label.zelf{display:flex;gap:10px;align-items:flex-start;padding:8px 0;border-bottom:1px solid var(--line);cursor:pointer}
+label.zelf input{width:22px;height:22px;margin-top:2px;flex:none;accent-color:var(--good)}
+.brief{white-space:pre-wrap;font:17px/1.6 Georgia,"Times New Roman",serif;background:var(--surface);border:2px solid var(--line);border-radius:12px;padding:16px}
+.opts{display:grid;gap:10px;margin-top:12px}
+.opt{font:inherit;text-align:left;padding:12px 14px;border-radius:12px;border:2px solid var(--line);background:var(--surface);color:var(--ink);cursor:pointer}
+.opt.goed{border-color:var(--good);background:var(--good-bg)}.opt.fout{border-color:var(--bad);background:var(--bad-bg)}
+.uitleg{margin-top:10px;padding:10px 14px;border-radius:12px;background:var(--chip)}
+.tegels{display:flex;flex-wrap:wrap;gap:8px;min-height:52px;padding:8px;border-radius:12px;border:2px dashed var(--line);margin:10px 0}
+.tegel{font:700 17px "Atkinson Hyperlegible",system-ui,sans-serif;padding:8px 12px;border-radius:10px;border:2px solid var(--ink);background:var(--surface);color:var(--ink);cursor:pointer}
+.tegel.weg{visibility:hidden}
+.goed-t{color:var(--good);font-weight:700}.fout-t{color:var(--bad);font-weight:700}
+[hidden]{display:none!important}
+.kaart ul{padding-left:20px;margin:6px 0}.kaart li{margin:4px 0}
+.opt{font-size:17px;overflow-wrap:anywhere}
+.top .stap{white-space:normal;text-align:center;flex:1;min-width:0}
+.vraag{margin:6px 0 0;font:700 19px/1.45 "Atkinson Hyperlegible",system-ui,sans-serif}
+.groot{font:800 54px Archivo,system-ui;margin:8px 0}.groot span{font-size:.45em;color:var(--muted)}
+.ex{background:var(--chip);border-left:4px solid var(--accent);border-radius:8px;padding:10px 12px;margin:10px 0}
+.src{color:var(--muted);font-size:14px}
+.gt{display:block;overflow-x:auto;border-collapse:collapse;font-size:14.5px;margin:8px 0}.gt th,.gt td{border:1px solid var(--line);padding:6px 8px;text-align:left;vertical-align:top;overflow-wrap:normal}.gt th{background:var(--chip)}
+.fig{display:block;width:100%;max-width:240px;margin:6px auto;color:var(--ink)}
+.figrij{display:grid;grid-template-columns:repeat(auto-fit,minmax(120px,1fr));gap:8px;margin:10px 0;text-align:center}.figrij small{display:block;color:var(--muted);font-size:13px;line-height:1.3}
+.check{margin-top:14px;padding-top:12px;border-top:2px dashed var(--line)}
+.typerow{display:flex;gap:10px;margin-top:12px}.typerow input{flex:1;min-width:0;font:700 18px "Atkinson Hyperlegible",system-ui;padding:11px 12px;border-radius:12px;border:2px solid var(--line);background:var(--bg);color:var(--ink)}
+.shake{animation:sh .3s}@keyframes sh{25%{transform:translateX(-6px)}75%{transform:translateX(6px)}}
+.btn.ok{background:var(--good-bg);color:var(--good);border-color:var(--good)}
+.hk h3{display:flex;justify-content:space-between;gap:8px;align-items:baseline}
+dl.begr{margin:0}.begr dt{font-weight:700;margin-top:8px}.begr dd{margin:0 0 0 12px;color:var(--muted)}
+.fig.breed{max-width:440px}.fig.veld{max-width:360px}
+.volgrij{min-height:40px;margin:10px 0;padding-left:26px}.volgrij li{font-weight:700;margin:4px 0}
+.gt td,.gt th{overflow-wrap:normal}
+
+code.f{font:600 15px "JetBrains Mono",monospace;background:var(--chip);padding:1px 6px;border-radius:6px;white-space:nowrap}
+.tw{overflow-x:auto;margin:8px 0}
+table.mini,table.sh{border-collapse:collapse;font:15px "JetBrains Mono",monospace;background:var(--surface)}
+.mini th,.mini td,.sh th,.sh td{border:1px solid var(--line);padding:4px 8px;min-width:44px;height:28px;white-space:nowrap;overflow-wrap:normal}
+.mini th,.sh th{background:var(--chip);color:var(--muted);font-weight:500;font-size:13px;text-align:center;min-width:26px}
+.mini td.n,.sh td.n{text-align:right}.mini td.hl{background:#FCE8B2;color:#1E2230;font-weight:700}
+.ws{overflow:auto;max-height:62vh;margin:8px 0;border-radius:8px;-webkit-overflow-scrolling:touch}
+.sh td{min-width:68px;cursor:cell;user-select:none;-webkit-user-select:none}
+.sh td.vast{background:var(--chip)}
+.sh td.doel{outline:2px dashed var(--gold);outline-offset:-3px}
+.sh td.ok{background:var(--good-bg);color:var(--good);font-weight:700}
+.sh td.err{color:var(--bad);font-weight:700}
+.sh td.sel{box-shadow:inset 0 0 0 3px var(--accent)}
+.sh tr:first-child th{position:sticky;top:0;z-index:2}.sh tr th:first-child{position:sticky;left:0;z-index:1}.sh tr:first-child th:first-child{z-index:3}
+.teller:empty{display:none}
+.fbar{display:flex;align-items:center;gap:8px;border:2px solid var(--line);border-radius:10px;padding:4px 8px;background:var(--bg)}
+.fbar #naam{font:700 14px "JetBrains Mono",monospace;min-width:34px;color:var(--muted)}.fbar .fx{font:italic 700 14px Georgia,serif;color:var(--muted)}
+.fbar input{flex:1;min-width:0;border:0;background:transparent;color:var(--ink);font:600 17px "JetBrains Mono",monospace;padding:6px 0;outline:none}
+.fbar:focus-within{border-color:var(--accent)}
+.chips{display:flex;flex-wrap:wrap;gap:6px;margin:8px 0}
+.chip{font:600 14px "JetBrains Mono",monospace;padding:6px 10px;border-radius:8px;border:1.5px solid var(--line);background:var(--surface);color:var(--ink);cursor:pointer;min-width:34px}
+ol.taken{padding-left:22px;margin:6px 0}.taken li{margin:6px 0}.taken li.af{color:var(--muted)}
+.hintk{font:600 13px system-ui;border:1px solid var(--line);background:var(--surface);color:var(--ink);border-radius:8px;padding:2px 8px;cursor:pointer;margin-left:4px}
+.tw-fb{font-size:14px;color:var(--bad);margin-top:3px}
+.opt.code{font-family:"JetBrains Mono",monospace;font-size:15.5px}
+.typerow{display:flex;gap:10px;margin-top:12px}.typerow input{flex:1;min-width:0;font:700 18px "Atkinson Hyperlegible",system-ui;padding:11px 12px;border-radius:12px;border:2px solid var(--line);background:var(--bg);color:var(--ink)}
+.shake{animation:sh .3s}@keyframes sh{25%{transform:translateX(-6px)}75%{transform:translateX(6px)}}
+</style>
+</head>
+<body>
+<main id="home">
+  <a href="index.html" class="terug">‹ Alle vakken</a>
+  <h1>Wiskunde · Google Spreadsheets</h1>
+  <p class="sub">Mini-cursus rekenblad: formules, SOM, gemiddelde, mediaan en modus, frequentietabellen, kwartielen, vastzetten met $ en grafieken. Je typt de formules zelf in een echt oefenblad, dat meteen nakijkt.</p>
+  <div id="stand"></div>
+  <h2>Oefenen</h2>
+  <div class="modes">
+    <button class="mode" id="pvrij"><h3>🧾 Vrij rekenblad</h3><p>Zelf proberen, zonder opdrachten.</p></button>
+    <button class="mode" id="puit"><h3>🔮 Wat komt eruit?</h3><p>Je ziet een formule: wat rekent hij uit?</p></button>
+    <button class="mode" id="pwelke"><h3>🔍 Welke formule is goed?</h3><p>Kies de formule zonder fout.</p></button>
+    <button class="mode" id="ptoets"><h3>🎯 Proeftoets</h3><p>16 vragen met een cijfer. Doel: een 7.</p></button>
+    <button class="mode" id="psamen"><h3>📄 Spiekbrief</h3><p>Alle functies op één pagina.</p></button>
+  </div>
+  <h2>Lessen</h2>
+  <div id="lessen"></div>
+  <div class="acts"><button class="btn licht klein" id="wis">Voortgang wissen</button></div>
+</main>
+<main id="play" hidden></main>
+<script>
+/* ---------- de rekenkern: een klein rekenblad dat formules snapt zoals Google Spreadsheets ----------
+   Nederlandse én Engelse functienamen, ; of , tussen de delen, komma als decimaalteken. */
+const KOL='ABCDEFGH';
+const isNum=s=>/^-?\d+([.,]\d+)?$/.test(String(s).trim());
+const toNum=s=>parseFloat(String(s).trim().replace(',','.'));
+class Fout{constructor(c){this.c=c}}
+const FOUT={div:'#DEEL/0!',naam:'#NAAM?',waarde:'#WAARDE!',ref:'#VERW!',na:'#N/B',parse:'#FOUT!'};
+function celNaam(c,r){return KOL[c]+(r+1)}
+function celPos(n){const m=/^\$?([A-H])\$?(\d+)$/.exec(n.toUpperCase());return m?[KOL.indexOf(m[1]),+m[2]-1]:null}
+/* tokens */
+function tokens(src){const t=[];let i=0;const s=src;
+ while(i<s.length){const ch=s[i];
+  if(/\s/.test(ch)){i++;continue}
+  if(ch==='"'){let j=i+1,v='';while(j<s.length&&s[j]!=='"')v+=s[j++];if(j>=s.length)throw new Fout(FOUT.parse);t.push({k:'str',v});i=j+1;continue}
+  let m=/^\$?[A-Ha-h]\$?\d+/.exec(s.slice(i));if(m&&!/^[A-Za-z.]/.test(s.slice(i+m[0].length))){t.push({k:'ref',v:m[0].toUpperCase()});i+=m[0].length;continue}
+  m=/^\d+(?:[.,]\d+)?/.exec(s.slice(i));if(m){t.push({k:'num',v:toNum(m[0])});i+=m[0].length;continue}
+  m=/^[A-Za-z][A-Za-z0-9.]*/.exec(s.slice(i));if(m){t.push({k:'naam',v:m[0].toUpperCase()});i+=m[0].length;continue}
+  m=/^(<=|>=|<>|[-+*/^():;,<>=&%])/.exec(s.slice(i));if(m){t.push({k:'op',v:m[0]});i+=m[0].length;continue}
+  throw new Fout(FOUT.parse)}
+ return t}
+/* functies: elke functie krijgt de argumenten (getal, tekst of lijst) */
+const vlak=args=>args.flatMap(a=>Array.isArray(a)?a.filter(x=>typeof x==='number'):[typeof a==='number'?a:(typeof a==='string'&&isNum(a)?toNum(a):(a===''?0:(()=>{throw new Fout(FOUT.waarde)})()))]);
+const sorteer=a=>[...a].sort((x,y)=>x-y);
+function kwartiel(a,k){const s=sorteer(a),n=s.length;if(!n)throw new Fout(FOUT.na);if(k<0||k>4)throw new Fout(FOUT.waarde);const p=(n-1)*k/4,l=Math.floor(p);return l+1<n?s[l]+(p-l)*(s[l+1]-s[l]):s[l]}
+function voldoet(v,crit){let c=String(crit).trim(),op='=';const m=/^(<=|>=|<>|<|>|=)/.exec(c);if(m){op=m[1];c=c.slice(op.length).trim()}
+ const cn=isNum(c)?toNum(c):null,vn=typeof v==='number'?v:(isNum(v)?toNum(v):null);
+ if(cn!==null&&vn!==null)return op==='='?vn===cn:op==='<>'?vn!==cn:op==='<'?vn<cn:op==='>'?vn>cn:op==='<='?vn<=cn:vn>=cn;
+ const a=String(v).toLowerCase(),b=c.toLowerCase();return op==='<>'?a!==b:op==='='?a===b:false}
+const FN={};
+const def=(namen,f)=>namen.forEach(n=>FN[n]=f);
+def(['SOM','SUM'],a=>vlak(a).reduce((x,y)=>x+y,0));
+def(['GEMIDDELDE','AVERAGE'],a=>{const v=vlak(a);if(!v.length)throw new Fout(FOUT.div);return v.reduce((x,y)=>x+y,0)/v.length});
+def(['MEDIAAN','MEDIAN'],a=>{const s=sorteer(vlak(a)),n=s.length;if(!n)throw new Fout(FOUT.na);return n%2?s[(n-1)/2]:(s[n/2-1]+s[n/2])/2});
+def(['MODUS','MODE','MODE.SNGL'],a=>{const v=vlak(a),c=new Map();let best=null,bn=1;v.forEach(x=>{const k=(c.get(x)||0)+1;c.set(x,k);if(k>bn){bn=k;best=x}});if(best===null)throw new Fout(FOUT.na);return best});
+def(['MIN'],a=>{const v=vlak(a);return v.length?Math.min(...v):0});
+def(['MAX'],a=>{const v=vlak(a);return v.length?Math.max(...v):0});
+def(['AANTAL','COUNT'],a=>a.flatMap(x=>Array.isArray(x)?x:[x]).filter(x=>typeof x==='number').length);
+def(['AANTALARG','COUNTA'],a=>a.flatMap(x=>Array.isArray(x)?x:[x]).filter(x=>x!==''&&x!==null).length);
+def(['AANTAL.ALS','COUNTIF'],a=>{if(a.length!==2||!Array.isArray(a[0]))throw new Fout(FOUT.waarde);return a[0].filter(v=>v!==''&&voldoet(v,a[1])).length});
+def(['KWARTIEL','QUARTILE','KWARTIEL.INC','QUARTILE.INC'],a=>{if(a.length!==2)throw new Fout(FOUT.waarde);return kwartiel(vlak([a[0]]),Math.round(vlak([a[1]])[0]))});
+def(['STDEV.P','STDEVP','STDEV.POP'],a=>{const v=vlak(a),n=v.length;if(!n)throw new Fout(FOUT.div);const g=v.reduce((x,y)=>x+y,0)/n;return Math.sqrt(v.reduce((s,x)=>s+(x-g)**2,0)/n)});
+def(['STDEV','STDEV.S'],a=>{const v=vlak(a),n=v.length;if(n<2)throw new Fout(FOUT.div);const g=v.reduce((x,y)=>x+y,0)/n;return Math.sqrt(v.reduce((s,x)=>s+(x-g)**2,0)/(n-1))});
+def(['SOMPRODUCT','SUMPRODUCT'],a=>{if(a.length<2||!a.every(Array.isArray)||a.some(x=>x.length!==a[0].length))throw new Fout(FOUT.waarde);return a[0].reduce((s,_,i)=>s+a.reduce((p,l)=>p*(typeof l[i]==='number'?l[i]:0),1),0)});
+def(['AFRONDEN','ROUND'],a=>{const v=vlak(a),d=v[1]||0;return Math.round(v[0]*10**d)/10**d});
+def(['WORTEL','SQRT'],a=>{const v=vlak(a)[0];if(v<0)throw new Fout(FOUT.waarde);return Math.sqrt(v)});
+def(['ABS'],a=>Math.abs(vlak(a)[0]));
+def(['MACHT','POWER'],a=>{const v=vlak(a);return v[0]**v[1]});
+def(['ALS','IF'],a=>(a[0]&&a[0]!==0)?(a[1]??true):(a[2]??false));
+/* het blad: ruwe inhoud per cel, waarden worden steeds opnieuw uitgerekend */
+class Blad{
+ constructor(rij,kol,cellen){this.rij=rij;this.kol=kol;this.c=Object.assign({},cellen||{})}
+ ruw(n){return this.c[n]??''}
+ waarde(n,bezig=new Set()){const r=this.ruw(n);if(r===''||r===null)return '';const s=String(r);
+  if(s[0]!=='=')return isNum(s)?toNum(s):s;
+  if(bezig.has(n))throw new Fout(FOUT.ref);bezig.add(n);
+  try{const v=this.formule(s.slice(1),bezig);return v}finally{bezig.delete(n)}}
+ toon(n){try{const v=this.waarde(n);return v}catch(e){if(e instanceof Fout)return e;throw e}}
+ formule(src,bezig){const t=tokens(src);let i=0;const kijk=()=>t[i],neem=()=>t[i++];
+  const isOp=v=>t[i]&&t[i].k==='op'&&t[i].v===v;
+  const getal=x=>{if(x instanceof Fout)throw x;if(Array.isArray(x))throw new Fout(FOUT.waarde);if(typeof x==='number')return x;if(x==='')return 0;if(typeof x==='boolean')return x?1:0;if(isNum(x))return toNum(x);throw new Fout(FOUT.waarde)};
+  const cel=n=>{const p=celPos(n);if(!p)throw new Fout(FOUT.ref);if(p[0]>=this.kol||p[1]>=this.rij)return '';return this.waarde(celNaam(p[0],p[1]),bezig)};
+  const vergelijk=()=>{let a=som();while(t[i]&&t[i].k==='op'&&['=','<>','<','>','<=','>='].includes(t[i].v)){const o=neem().v,b=som();const x=typeof a==='number'||typeof b==='number'?[getal(a),getal(b)]:[String(a),String(b)];a=o==='='?x[0]===x[1]:o==='<>'?x[0]!==x[1]:o==='<'?x[0]<x[1]:o==='>'?x[0]>x[1]:o==='<='?x[0]<=x[1]:x[0]>=x[1]}return a};
+  const som=()=>{let a=keer();while(isOp('+')||isOp('-')){const o=neem().v,b=keer();a=o==='+'?getal(a)+getal(b):getal(a)-getal(b)}return a};
+  const keer=()=>{let a=macht();while(isOp('*')||isOp('/')){const o=neem().v,b=macht();if(o==='*')a=getal(a)*getal(b);else{if(getal(b)===0)throw new Fout(FOUT.div);a=getal(a)/getal(b)}}return a};
+  const macht=()=>{let a=min();while(isOp('^')){neem();a=getal(a)**getal(min())}return a};
+  const min=()=>{if(isOp('-')){neem();return -getal(min())}if(isOp('+')){neem();return getal(min())}let v=basis();if(isOp('%')){neem();v=getal(v)/100}return v};
+  const basis=()=>{const k=neem();if(!k)throw new Fout(FOUT.parse);
+   if(k.k==='num')return k.v;if(k.k==='str')return k.v;
+   if(k.k==='ref'){if(isOp(':')){neem();const e=neem();if(!e||e.k!=='ref')throw new Fout(FOUT.parse);const a=celPos(k.v),b=celPos(e.v);const l=[];
+     for(let c=Math.min(a[0],b[0]);c<=Math.max(a[0],b[0]);c++)for(let r=Math.min(a[1],b[1]);r<=Math.max(a[1],b[1]);r++){l.push(c>=this.kol||r>=this.rij?'':this.waarde(celNaam(c,r),bezig))}return l}
+    return cel(k.v)}
+   if(k.k==='naam'){if(!isOp('('))throw new Fout(FOUT.naam);neem();const f=FN[k.v];const args=[];
+    if(!isOp(')')){do{args.push(vergelijk())}while((isOp(';')||isOp(','))&&neem())}
+    if(!isOp(')'))throw new Fout(FOUT.parse);neem();if(!f)throw new Fout(FOUT.naam);
+    args.forEach(a=>{if(a instanceof Fout)throw a;if(Array.isArray(a))a.forEach(x=>{if(x instanceof Fout)throw x})});return f(args)}
+   if(k.k==='op'&&k.v==='('){const v=vergelijk();if(!isOp(')'))throw new Fout(FOUT.parse);neem();return v}
+   throw new Fout(FOUT.parse)};
+  const v=vergelijk();if(i<t.length)throw new Fout(FOUT.parse);if(Array.isArray(v))throw new Fout(FOUT.waarde);return v}
+}
+/* formule doortrekken: rijnummers zonder $ schuiven mee */
+function schuif(f,dr){if(String(f)[0]!=='=')return f;let uit='',inStr=false;const s=String(f);
+ for(let i=0;i<s.length;i++){if(s[i]==='"'){inStr=!inStr;uit+=s[i];continue}
+  if(!inStr){const m=/^(\$?)([A-Ha-h])(\$?)(\d+)/.exec(s.slice(i));const voor=i?s[i-1]:'';
+   if(m&&!/[A-Za-z0-9.]/.test(voor)&&!/^[A-Za-z(.]/.test(s.slice(i+m[0].length))){uit+=m[1]+m[2].toUpperCase()+m[3]+(m[3]?m[4]:Math.max(1,+m[4]+dr));i+=m[0].length-1;continue}}
+  uit+=s[i]}
+ return uit}
+/* netjes tonen: komma als decimaalteken */
+function mooi(v){if(v instanceof Fout)return v.c;if(typeof v==='boolean')return v?'WAAR':'ONWAAR';if(typeof v!=='number')return String(v);
+ if(Number.isInteger(v))return String(v);let s=String(Math.round(v*1e6)/1e6);return s.replace('.',',')}
+function getalTekst(v){return typeof v==='number'?String(Math.round(v*1e6)/1e6).replace('.',','):String(v)}
+
+const esc=s=>String(s).replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;').replace(/"/g,'&quot;');
+/* ---------- mini-tabelletje voor uitleg en vragen (ziet eruit als een rekenblad) ---------- */
+function mini(cellen,rij,kol,o={}){let h='<div class="tw"><table class="mini"><tr><th></th>';for(let c=0;c<kol;c++)h+=`<th>${KOL[c]}</th>`;h+='</tr>';
+ for(let r=0;r<rij;r++){h+=`<tr><th>${r+1}</th>`;for(let c=0;c<kol;c++){const n=celNaam(c,r),v=cellen[n]??'';h+=`<td class="${isNum(v)?'n':''}${o.hl&&o.hl.includes(n)?' hl':''}">${esc(v)}</td>`}h+='</tr>'}
+ return h+'</table></div>'}
+const F=t=>`<code class="f">${esc(t)}</code>`;
+
+/* ---------- de lessen ----------
+   lp: kaartjes [titel, html, [vraag, goed, 'fout|fout', uitleg]?]
+   blad: {rij, kol, data:{cel:inhoud}, taken:[{cel, t, opl, fn?, dollar?, hint}]}
+   q: meerkeuzevragen voor de proeftoets [vraag, goed, 'fout|fout|fout', uitleg] */
+const L=[
+{id:'cel',t:'Cellen en formules',ic:'🔢',lp:[
+ ['Een rekenblad',`<p>Een rekenblad (spreadsheet) is een grote tabel. De <b>kolommen</b> hebben letters (A, B, C…), de <b>rijen</b> nummers (1, 2, 3…). Elk vakje heet een <b>cel</b>. Een cel heet naar zijn kolom en rij: de gekleurde cel hieronder is <b>B3</b>.</p>${mini({A1:'naam',B1:'cijfer',A2:'Ben',B2:'7',A3:'Dana',B3:'8',A4:'Jip',B4:'6'},4,3,{hl:['B3']})}<p>Eerst de letter, dan het getal. Net als bij zeeslag.</p>`,['Welke cel staat in kolom C en rij 5?','C5','5C|CE|E3','Eerst de kolomletter, dan het rijnummer.']],
+ ['Een formule begint met =',`<p>Wil je dat het blad <b>rekent</b>, dan begin je met een <b>=</b>.</p>${mini({A1:'je typt',B1:'je ziet',A2:'=3+4',B2:'7',A3:'3+4',B3:'3+4'},3,2)}<p>Zonder = denkt het blad dat het gewoon tekst is. Rekentekens:</p><table class="gt"><tr><td>${F('+')} plus</td><td>${F('-')} min</td><td>${F('*')} keer</td><td>${F('/')} delen</td><td>${F('^')} macht</td></tr></table><p>Let op: keer is een <b>sterretje</b> en delen een <b>schuine streep</b>.</p>`,['Je typt in een cel 2*5 (zonder =). Wat zie je?','gewoon 2*5, als tekst','10|#FOUT!|25','Zonder = rekent het blad niet.']],
+ ['Rekenen met cellen',`<p>Het mooiste: je rekent niet met getallen, maar met <b>cellen</b>.</p>${mini({A1:'prijs',B1:'aantal',C1:'totaal',A2:'2,50',B2:'4',C2:'10'},2,3,{hl:['C2']})}<p>In C2 staat ${F('=A2*B2')}. Verander je de prijs in A2, dan verandert C2 vanzelf mee. Je hoeft niets opnieuw uit te rekenen.</p><div class="ex">Getallen met een komma typ je zoals je gewend bent: <b>2,50</b>.</div>`,['In C2 staat =A2*B2. Je verandert B2 van 4 in 6. Wat gebeurt er met C2?','die rekent vanzelf opnieuw: 15','die blijft 10|die wordt #FOUT!|je moet C2 opnieuw typen','Daarom reken je met celnamen in plaats van met getallen.']],
+ ['Haakjes',`<p>Het blad rekent in dezelfde volgorde als jij: eerst <b>haakjes</b>, dan <b>machten</b>, dan <b>keer en delen</b>, dan <b>plus en min</b>.</p>${mini({A1:'4',A2:'6'},2,1)}<table class="gt"><tr><td>${F('=A1+A2/2')}</td><td>= 4 + 3 = <b>7</b></td></tr><tr><td>${F('=(A1+A2)/2')}</td><td>= 10 ÷ 2 = <b>5</b></td></tr></table><p>Wil je het gemiddelde van twee cellen, zet dan <b>haakjes</b> om de som.</p>`,['A1 = 4 en A2 = 6. Wat geeft =A1+A2/2?','7','5|10|2','Eerst 6 ÷ 2 = 3, dan 4 + 3 = 7. Met haakjes (A1+A2)/2 krijg je 5.']]],
+ blad:{rij:8,kol:5,data:{A1:'product',B1:'prijs',C1:'aantal',D1:'totaal',A2:'pen',B2:'1,5',C2:'3',A3:'schrift',B3:'2,25',C3:'4',A4:'gum',B4:'0,8',C4:'2',A5:'liniaal',B5:'1,2',C5:'1',A7:'gemiddelde prijs pen en schrift'},
+  taken:[{cel:'D2',t:'Bereken in <b>D2</b> wat de pennen samen kosten: prijs keer aantal.',opl:'=B2*C2',hint:'Begin met = en gebruik de cellen B2 en C2. Keer is *.'},
+   {cel:'D3:D5',t:'Doe hetzelfde in <b>D3, D4 en D5</b>.',opl:'=B3*C3 (enzovoort)',hint:'In D3 typ je =B3*C3. Of: klik op D2 en gebruik ⤓ Doortrekken (dat leer je in les 2).'},
+   {cel:'D7',t:'Zet in <b>D7</b> de gemiddelde prijs van een pen en een schrift. Let op de haakjes!',opl:'=(B2+B3)/2',must:/\(/,hint:'Gemiddelde van twee = de twee optellen en dan delen door 2. Zonder haakjes deelt hij alleen B3.'}]},
+ q:[['Hoe begint elke formule?','met =','met een haakje|met de celnaam|met een spatie','Zonder = rekent het blad niet.'],
+  ['Wat is het teken voor keer in een rekenblad?','*','x|·|×','Een sterretje.'],
+  ['Welke formule geeft het gemiddelde van A1 en A2?','=(A1+A2)/2','=A1+A2/2|=A1+A2÷2|(A1+A2)/2','Haakjes om de som, en het =-teken vooraan.'],
+  ['Wat is cel D7?','kolom D, rij 7','rij D, kolom 7|de 7e cel van rij D|kolom 7, rij 4','Eerst de letter van de kolom, dan het nummer van de rij.']]},
+
+{id:'som',t:'Bereik, SOM en doortrekken',ic:'➕',lp:[
+ ['Een bereik: van … tot en met',`<p>Met een <b>dubbele punt</b> geef je een rijtje cellen aan: ${F('A2:A6')} betekent A2, A3, A4, A5 en A6. Dat heet een <b>bereik</b>.</p>${mini({A1:'km',A2:'3',A3:'5',A4:'2',A5:'4',A6:'6',A7:'20'},7,1,{hl:['A7']})}<p>In A7 staat ${F('=SOM(A2:A6)')}: alles bij elkaar = 20.</p><div class="ex">Pas op: ${F('=SOM(A2;A6)')} met een <b>puntkomma</b> telt alleen A2 en A6 op (3 + 6 = 9). De puntkomma zet je <b>tussen</b> losse delen.</div>`,['Welke cellen tellen mee bij =SOM(B3:B6)?','B3, B4, B5 en B6','alleen B3 en B6|B3 tot B6, maar niet B6|B3 t/m B6 en de cel zelf','De dubbele punt betekent: van B3 tot en met B6.']],
+ ['Doortrekken',`<p>Vaak wil je dezelfde formule in een hele kolom. Je hoeft hem niet steeds te typen: je <b>trekt hem door</b>.</p>${mini({A1:'heen',B1:'terug',C1:'samen',A2:'3',B2:'4',C2:'=A2+B2',A3:'5',B3:'5',C3:'=A3+B3',A4:'2',B4:'3',C4:'=A4+B4'},4,3,{hl:['C2','C3','C4']})}<p>In Google Spreadsheets klik je op C2 en sleep je het <b>blauwe blokje</b> rechtsonder naar beneden (of dubbelklik erop). De formule schuift mee: in C3 wordt het ${F('=A3+B3')}, in C4 ${F('=A4+B4')}. Dat heet een <b>relatieve verwijzing</b>.</p><p>In ons oefenblad doe je dat met de knop <b>⤓ Doortrekken</b>.</p>`,['In C2 staat =A2+B2. Je trekt door tot C5. Wat staat er in C5?','=A5+B5','=A2+B2|=A5+B2|=C2+C3','Alle rijnummers schuiven mee: 2 wordt 5.']],
+ ['Nederlands of Engels?',`<p>De functies hebben in het Nederlands andere namen dan in het Engels. Staat Google Spreadsheets bij jou in het Engels, dan typ je de Engelse naam. Ons oefenblad snapt allebei.</p><table class="gt"><tr><th>Nederlands</th><th>Engels</th><th>wat</th></tr><tr><td>SOM</td><td>SUM</td><td>optellen</td></tr><tr><td>GEMIDDELDE</td><td>AVERAGE</td><td>gemiddelde</td></tr><tr><td>MEDIAAN</td><td>MEDIAN</td><td>mediaan</td></tr><tr><td>MODUS</td><td>MODE</td><td>modus</td></tr><tr><td>AANTAL</td><td>COUNT</td><td>hoeveel getallen</td></tr><tr><td>AANTAL.ALS</td><td>COUNTIF</td><td>hoeveel voldoen aan…</td></tr><tr><td>KWARTIEL</td><td>QUARTILE</td><td>kwartiel</td></tr></table><p>Tussen de delen zet je meestal een <b>;</b> (puntkomma), omdat de komma al voor kommagetallen is. In het Engels is dat soms een komma.</p>`,['Hoe heet GEMIDDELDE als je blad in het Engels staat?','AVERAGE','MEAN|MIDDLE|AVG','SUM, AVERAGE, MEDIAN, MODE, COUNT.']]],
+ blad:{rij:8,kol:4,data:{A1:'dag',B1:'km heen',C1:'km terug',D1:'samen',A2:'ma',B2:'4,5',C2:'4,5',A3:'di',B3:'4,5',C3:'6',A4:'wo',B4:'4,5',C4:'4,5',A5:'do',B5:'4,5',C5:'7',A6:'vr',B6:'4,5',C6:'4,5',A8:'totaal'},
+  taken:[{cel:'D2:D6',t:'Bereken in <b>D2 t/m D6</b> hoeveel km Ben elke dag fietst. Typ D2 en trek door.',opl:'=B2+C2, dan ⤓ Doortrekken',hint:'Typ in D2 =B2+C2 en druk Enter. Klik dan weer op D2 en druk op ⤓ Doortrekken.'},
+   {cel:'B8',t:'Zet in <b>B8</b> het totaal aantal km heen, met SOM.',opl:'=SOM(B2:B6)',fn:/SOM|SUM/,hint:'=SOM( … ) met het bereik van B2 tot en met B6, met een dubbele punt.'},
+   {cel:'D8',t:'Zet in <b>D8</b> het totaal van de hele week.',opl:'=SOM(D2:D6)',fn:/SOM|SUM/,hint:'Net als B8, maar dan kolom D.'}]},
+ q:[['Wat betekent B2:B9?','B2 tot en met B9','alleen B2 en B9|B2 tot B9, zonder B9|B2 keer B9','De dubbele punt maakt een bereik.'],
+  ['Wat geeft =SOM(A1;A4)?','A1 + A4 (alleen die twee)','A1 + A2 + A3 + A4|A1 × A4|een foutmelding','Met ; tel je losse cellen op.'],
+  ['In D2 staat =B2*C2. Je trekt door naar D3. Wat staat er in D3?','=B3*C3','=B2*C2|=B3*C2|=C3*D3','De rijnummers schuiven mee.'],
+  ['Hoe heet SOM in het Engels?','SUM','SOME|TOTAL|PLUS','Ons blad snapt allebei.']]},
+
+{id:'gmm',t:'Gemiddelde, mediaan en modus',ic:'📊',lp:[
+ ['De centrummaten in één keer',`<p>Wat je nu bij wiskunde met de hand doet, kan het blad in één keer. Stel de cijfers staan in A2 t/m A13:</p><table class="gt"><tr><td>${F('=GEMIDDELDE(A2:A13)')}</td><td>het gemiddelde</td></tr><tr><td>${F('=MEDIAAN(A2:A13)')}</td><td>de mediaan (het blad sorteert zelf!)</td></tr><tr><td>${F('=MODUS(A2:A13)')}</td><td>de modus</td></tr><tr><td>${F('=MIN(A2:A13)')} en ${F('=MAX(A2:A13)')}</td><td>de kleinste en de grootste</td></tr><tr><td>${F('=AANTAL(A2:A13)')}</td><td>hoeveel getallen er staan</td></tr></table><p>Het blad doet het sorteren en tellen voor je. Jij moet wel weten <b>welke</b> maat je nodig hebt en wat hij betekent.</p>`,['Je wilt het middelste getal van A2:A13. Welke functie?','MEDIAAN','GEMIDDELDE|MODUS|MIDDEN','Mediaan = het middelste getal als ze op volgorde staan.']],
+ ['AANTAL telt alleen getallen',`<p>${F('=AANTAL(A1:A13)')} telt alleen cellen met een <b>getal</b>. De kop "cijfer" in A1 telt dus niet mee.</p>${mini({A1:'cijfer',A2:'7',A3:'6,5',A4:'',A5:'8'},5,1)}<p>Hier geeft ${F('=AANTAL(A1:A5)')} het getal <b>3</b>: de tekst en de lege cel tellen niet. Ook ${F('=GEMIDDELDE')} slaat lege cellen over.</p>`,['A1 = "cijfer", A2 = 7, A3 is leeg, A4 = 5. Wat geeft =AANTAL(A1:A4)?','2','4|3|1','Alleen de getallen 7 en 5 tellen.']]],
+ blad:{rij:13,kol:4,data:{A1:'cijfer',A2:'6,5',A3:'7',A4:'5,5',A5:'8',A6:'6,5',A7:'7,5',A8:'4',A9:'6,5',A10:'9',A11:'7',A12:'5',A13:'6,5',C1:'wat',D1:'uitkomst',C2:'gemiddelde',C3:'mediaan',C4:'modus',C5:'hoogste',C6:'laagste',C7:'aantal'},
+  taken:[{cel:'D2',t:'Het <b>gemiddelde</b> cijfer in D2.',opl:'=GEMIDDELDE(A2:A13)',fn:/GEMIDDELDE|AVERAGE/,hint:'=GEMIDDELDE(A2:A13)'},
+   {cel:'D3',t:'De <b>mediaan</b> in D3.',opl:'=MEDIAAN(A2:A13)',fn:/MEDIAAN|MEDIAN/,hint:'Zelfde bereik, andere functie.'},
+   {cel:'D4',t:'De <b>modus</b> in D4.',opl:'=MODUS(A2:A13)',fn:/MODUS|MODE/,hint:'De functie heet MODUS.'},
+   {cel:'D5',t:'Het <b>hoogste</b> cijfer in D5.',opl:'=MAX(A2:A13)',fn:/MAX/,hint:'MAX = het grootste.'},
+   {cel:'D6',t:'Het <b>laagste</b> cijfer in D6.',opl:'=MIN(A2:A13)',fn:/MIN/,hint:'MIN = het kleinste.'},
+   {cel:'D7',t:'Het <b>aantal</b> cijfers in D7.',opl:'=AANTAL(A2:A13)',fn:/AANTAL|COUNT/,hint:'De functie die telt hoeveel getallen er staan.'}]},
+ q:[['Welke formule geeft het gemiddelde van B2 t/m B20?','=GEMIDDELDE(B2:B20)','=GEMIDDELDE(B2;B20)|=SOM(B2:B20)|=MEDIAAN(B2:B20)','Met ; zou je alleen B2 en B20 middelen.'],
+  ['Moet je de getallen eerst sorteren voor =MEDIAAN?','nee, dat doet het blad zelf','ja, altijd|alleen bij een even aantal|alleen bij kommagetallen','Met de hand moet het wel, het blad sorteert zelf.'],
+  ['Wat geeft =MAX(A2:A9)-MIN(A2:A9)?','het verschil tussen grootste en kleinste (de spreidingsbreedte)','het gemiddelde|de mediaan|het aantal getallen','Spreidingsbreedte = grootste − kleinste.'],
+  ['Wat telt =AANTAL(A1:A10) niet mee?','tekst en lege cellen','getallen met een komma|negatieve getallen|de getallen 0','Alleen getallen tellen.']]},
+
+{id:'freq',t:'Frequentietabel',ic:'🧮',lp:[
+ ['Tellen met AANTAL.ALS',`<p>${F('=AANTAL.ALS(bereik;voorwaarde)')} telt hoeveel cellen ergens aan voldoen.</p><table class="gt"><tr><td>${F('=AANTAL.ALS(A2:A30;7)')}</td><td>hoe vaak komt 7 voor?</td></tr><tr><td>${F('=AANTAL.ALS(A2:A30;">=5,5")')}</td><td>hoeveel voldoendes?</td></tr><tr><td>${F('=AANTAL.ALS(A2:A30;"<5,5")')}</td><td>hoeveel onvoldoendes?</td></tr></table><p>Met een groter-dan of kleiner-dan zet je de voorwaarde tussen <b>aanhalingstekens</b>. Zo maak je in een paar tellen een frequentietabel van een lange lijst.</p>`,['Hoe tel je hoeveel cijfers in A2:A25 hoger dan 8 zijn?','=AANTAL.ALS(A2:A25;">8")','=AANTAL(A2:A25;>8)|=SOM.ALS(A2:A25;8)|=AANTAL.ALS(A2:A25)>8','De voorwaarde ">8" tussen aanhalingstekens.']],
+ ['Gemiddelde uit een frequentietabel',`<p>Zelfde manier als met de hand: maak een <b>hulpkolom</b> waarde × frequentie.</p>${mini({A1:'waarde',B1:'freq',C1:'w × f',A2:'5',B2:'6',C2:'30',A3:'6',B3:'4',C3:'24',A4:'7',B4:'3',C4:'21',A5:'8',B5:'1',C5:'8',A6:'9',B6:'3',C6:'27',A7:'10',B7:'3',C7:'30',A8:'totaal',B8:'20',C8:'140'},8,3,{hl:['B8','C8']})}<ol><li>C2: ${F('=A2*B2')} en doortrekken.</li><li>B8: ${F('=SOM(B2:B7)')} = 20 (aantal waarnemingen).</li><li>C8: ${F('=SOM(C2:C7)')} = 140.</li><li>Gemiddelde: ${F('=C8/B8')} = 7.</li></ol><div class="ex">Deel door het <b>totaal van de frequenties</b> (20), niet door het aantal rijen (6). Een snellere manier is ${F('=SOMPRODUCT(A2:A7;B2:B7)/SOM(B2:B7)')}.</div>`,['Waarom deel je door SOM(B2:B7) en niet door 6?','er zijn 20 waarnemingen, niet 6','omdat 6 te klein is|dat maakt niet uit|omdat het blad dat wil','Elke waarde komt meerdere keren voor: tel de frequenties op.']]],
+ blad:{rij:10,kol:6,data:{A1:'waarde',B1:'freq',C1:'w × f',A2:'5',B2:'6',A3:'6',B3:'4',A4:'7',B4:'3',A5:'8',B5:'1',A6:'9',B6:'3',A7:'10',B7:'3',A8:'totaal',A10:'gemiddelde',E1:'cijfers klas',E2:'6',E3:'4,5',E4:'7',E5:'8',E6:'5',E7:'6,5',E8:'3,5',E9:'7',E10:'9'},
+  taken:[{cel:'C2:C7',t:'Reken in <b>C2 t/m C7</b> waarde × frequentie uit.',opl:'=A2*B2, dan ⤓ Doortrekken',hint:'Typ in C2 =A2*B2 en trek door.'},
+   {cel:'B8',t:'Het totaal aantal waarnemingen in <b>B8</b>.',opl:'=SOM(B2:B7)',fn:/SOM|SUM/,hint:'Tel de frequenties op met SOM.'},
+   {cel:'C8',t:'Het totaal van kolom C in <b>C8</b>.',opl:'=SOM(C2:C7)',fn:/SOM|SUM/,hint:'Net als B8, maar dan kolom C.'},
+   {cel:'B10',t:'Het <b>gemiddelde</b> in B10, met de twee totalen.',opl:'=C8/B8',hint:'Totaal van waarde × frequentie gedeeld door het aantal waarnemingen.'},
+   {cel:'F2',t:'Hoeveel cijfers in kolom E zijn een <b>voldoende</b> (5,5 of hoger)? Zet het in <b>F2</b>.',opl:'=AANTAL.ALS(E2:E10;">=5,5")',fn:/AANTAL\.ALS|COUNTIF/,hint:'=AANTAL.ALS(E2:E10;">=5,5") — let op de aanhalingstekens.'}]},
+ q:[['Wat geeft =AANTAL.ALS(A2:A20;6)?','hoe vaak 6 voorkomt in A2:A20','de som van alle zessen|het 6e getal|hoeveel getallen groter dan 6 zijn','AANTAL.ALS telt hoeveel cellen voldoen.'],
+  ['Waarde in A, frequentie in B (rij 2-7). Welke formule geeft het gemiddelde?','=SOMPRODUCT(A2:A7;B2:B7)/SOM(B2:B7)','=GEMIDDELDE(A2:A7)|=SOM(A2:A7)/6|=GEMIDDELDE(B2:B7)','GEMIDDELDE(A2:A7) vergeet hoe vaak elke waarde voorkomt.'],
+  ['Hoe schrijf je de voorwaarde "groter dan of gelijk aan 5,5"?','">=5,5"','>=5,5|"=>5,5"|(>=5,5)','Tussen aanhalingstekens, eerst > en dan =.']]},
+
+{id:'spr',t:'Kwartielen en spreiding',ic:'📦',lp:[
+ ['KWARTIEL',`<p>${F('=KWARTIEL(A2:A12;1)')} geeft Q<sub>1</sub>, ${F('=KWARTIEL(A2:A12;3)')} geeft Q<sub>3</sub>. Met 2 krijg je de mediaan, met 0 het minimum en met 4 het maximum.</p><table class="gt"><tr><td>spreidingsbreedte</td><td>${F('=MAX(A2:A12)-MIN(A2:A12)')}</td></tr><tr><td>interkwartielafstand</td><td>Q<sub>3</sub> − Q<sub>1</sub>, bijvoorbeeld ${F('=D3-D2')}</td></tr></table><div class="ex">Let op: het blad rekent kwartielen soms <b>iets anders</b> uit dan jullie met de hand doen (het ‘schuift’ tussen twee getallen). Er kan dus een klein verschil zijn. Op de toets met de hand gebruik je de methode van je boek.</div>`,['Welke formule geeft Q3 van B2:B30?','=KWARTIEL(B2:B30;3)','=KWARTIEL(B2:B30;75)|=KWARTIEL3(B2:B30)|=MEDIAAN(B2:B30;3)','Het tweede getal is het nummer van het kwartiel: 1, 2 of 3.']],
+ ['Standaardafwijking',`<p>De <b>standaardafwijking</b> zegt hoe ver de getallen gemiddeld van het gemiddelde af liggen.</p><table class="gt"><tr><td>${F('=STDEV.P(A2:A12)')}</td><td>van de hele groep: hetzelfde als σ op je rekenmachine</td></tr><tr><td>${F('=STDEV(A2:A12)')}</td><td>van een steekproef: een iets groter getal</td></tr></table><p>Vraag je docent welke jullie gebruiken. Ons oefenblad keurt allebei goed.</p>`,['Wat zegt een grote standaardafwijking?','de getallen liggen ver uit elkaar','het gemiddelde is groot|er zijn veel getallen|de getallen zijn allemaal gelijk','Grote spreiding = grote standaardafwijking.']]],
+ blad:{rij:12,kol:4,data:{A1:'lengte (cm)',A2:'162',A3:'175',A4:'168',A5:'181',A6:'159',A7:'170',A8:'172',A9:'166',A10:'177',A11:'169',A12:'185',C1:'wat',D1:'uitkomst',C2:'Q1',C3:'Q3',C4:'IKA',C5:'spreidingsbreedte',C6:'standaardafwijking'},
+  taken:[{cel:'D2',t:'<b>Q1</b> in D2.',opl:'=KWARTIEL(A2:A12;1)',fn:/KWARTIEL|QUARTILE/,hint:'=KWARTIEL(bereik;1)'},
+   {cel:'D3',t:'<b>Q3</b> in D3.',opl:'=KWARTIEL(A2:A12;3)',fn:/KWARTIEL|QUARTILE/,hint:'Zelfde, maar met een 3.'},
+   {cel:'D4',t:'De <b>interkwartielafstand</b> in D4, met de cellen D2 en D3.',opl:'=D3-D2',must:/D3/i,hint:'Q3 − Q1, dus =D3-D2.'},
+   {cel:'D5',t:'De <b>spreidingsbreedte</b> in D5.',opl:'=MAX(A2:A12)-MIN(A2:A12)',fn:/MAX/,hint:'Grootste min kleinste.'},
+   {cel:'D6',t:'De <b>standaardafwijking</b> in D6.',opl:'=STDEV.P(A2:A12)',alt:'=STDEV(A2:A12)',fn:/STDEV/,hint:'=STDEV.P(A2:A12) (of STDEV).'}]},
+ q:[['Wat geeft =KWARTIEL(A2:A40;2)?','de mediaan','het tweede getal|Q3|het gemiddelde','Kwartiel 2 = het midden = de mediaan.'],
+  ['Hoe bereken je de interkwartielafstand als Q1 in D2 en Q3 in D3 staat?','=D3-D2','=D2-D3|=KWARTIEL(D2:D3)|=D3/D2','IKA = Q3 − Q1.'],
+  ['Waarom kan KWARTIEL iets anders geven dan jouw berekening met de hand?','het blad gebruikt een andere rekenmethode','het blad rekent fout|je hebt de getallen niet gesorteerd|het blad rondt altijd af','Het blad schuift tussen twee getallen in.'],
+  ['Welke functie hoort bij σ op je rekenmachine?','STDEV.P','STDEV|KWARTIEL|GEMIDDELDE','STDEV (zonder P) is voor een steekproef.']]},
+
+{id:'vast',t:'Vast verwijzen met $',ic:'📌',lp:[
+ ['Het probleem',`<p>Je wilt van elke rij het percentage van het totaal. In C2 typ je ${F('=B2/B7*100')} en je trekt door…</p>${mini({A1:'vervoer',B1:'aantal',C1:'%',A2:'fiets',B2:'14',C2:'46,7',A3:'bus',B3:'6',C3:'#DEEL/0!',A4:'auto',B4:'3',C4:'#DEEL/0!',A7:'totaal',B7:'30'},7,3,{hl:['C3','C4']})}<p>In C3 staat nu ${F('=B3/B8*100')}: het totaal is meegeschoven naar B8, en daar staat niets. Delen door niets: <b>#DEEL/0!</b>.</p>`,['In C2 staat =B2/B7. Je trekt door naar C3. Wat staat er dan in C3?','=B3/B8','=B3/B7|=B2/B7|=B3/$B$7','Zonder $ schuiven alle rijnummers mee, ook die van het totaal.']],
+ ['De oplossing: $',`<p>Met een <b>$</b> zet je een cel vast: ${F('$B$7')} schuift niet mee bij doortrekken.</p><table class="gt"><tr><td>${F('=B2/$B$7*100')}</td><td>in C2</td></tr><tr><td>${F('=B3/$B$7*100')}</td><td>in C3 na doortrekken: B3 schuift wel, $B$7 niet</td></tr></table><p>Dit heet een <b>absolute verwijzing</b>. Op een laptop: klik in de formule op B7 en druk op <b>F4</b>, dan zet Google Spreadsheets de $-tekens erbij.</p><div class="ex">Het $ vóór de 7 houdt de <b>rij</b> vast, het $ vóór de B de <b>kolom</b>. Bij omlaag doortrekken is ${F('B$7')} genoeg, maar ${F('$B$7')} is altijd goed.</div>`,['Wat doet het $-teken in =B2/$B$7?','het houdt B7 vast bij doortrekken','het rekent in euro|het rondt af op 2 decimalen|het maakt er een percentage van','Absoluut verwijzen.']]],
+ blad:{rij:8,kol:3,data:{A1:'vervoer',B1:'aantal',C1:'procent',A2:'fiets',B2:'14',A3:'bus',B3:'6',A4:'auto',B4:'3',A5:'lopen',B5:'4',A6:'trein',B6:'3',A7:'totaal'},
+  taken:[{cel:'B7',t:'Het <b>totaal</b> in B7.',opl:'=SOM(B2:B6)',fn:/SOM|SUM/,hint:'=SOM(B2:B6)'},
+   {cel:'C2:C6',t:'Het <b>percentage</b> van elk vervoermiddel in C2 t/m C6. Typ C2 en trek door: gebruik $!',opl:'=B2/$B$7*100, dan ⤓ Doortrekken',dollar:true,hint:'In C2: =B2/$B$7*100. Dan klik je C2 aan en druk je op ⤓ Doortrekken.'},
+   {cel:'C7',t:'Controleer in C7: alle procenten samen.',opl:'=SOM(C2:C6)',fn:/SOM|SUM/,hint:'Als het goed is komt hier 100 uit.'}]},
+ q:[['Welke formule kun je goed doortrekken voor het percentage van het totaal in B10?','=B2/$B$10*100','=B2/B10*100|=$B$2/B10*100|=B2/B$2*100','Het totaal moet vastgezet worden.'],
+  ['Wat betekent #DEEL/0! ?','je deelt door 0 of door een lege cel','je formule is te lang|je hebt een tekst getypt|het getal past niet','Vaak komt het door doortrekken zonder $.'],
+  ['Welke toets zet op een laptop de $-tekens bij een cel?','F4','F2|Ctrl + $|Shift + 4','Klik in de formule op de cel en druk op F4.']]},
+
+{id:'graf',t:'Grafieken kiezen en maken',ic:'📈',lp:[
+ ['Welke grafiek past?',`<table class="gt"><tr><th>diagram</th><th>wanneer</th><th>voorbeeld</th></tr><tr><td><b>staafdiagram</b></td><td>categorieën vergelijken</td><td>vervoer naar school</td></tr><tr><td><b>histogram</b></td><td>klassen van getallen; staven tegen elkaar</td><td>lengtes in klassen van 5 cm</td></tr><tr><td><b>lijndiagram</b></td><td>verloop in de tijd</td><td>temperatuur per uur</td></tr><tr><td><b>cirkeldiagram</b></td><td>delen van een geheel (procenten)</td><td>verdeling van je zakgeld</td></tr><tr><td><b>spreidingsdiagram</b></td><td>verband tussen twee variabelen</td><td>lengte en schoenmaat</td></tr></table>`,['Je wilt laten zien hoe je hartslag verandert tijdens een training. Welk diagram?','lijndiagram','cirkeldiagram|staafdiagram|histogram','Verloop in de tijd = lijndiagram.']],
+ ['Zo maak je een grafiek',`<ol><li>Selecteer de tabel (met de koppen erbij).</li><li><b>Invoegen → Diagram</b>.</li><li>Rechts opent de <b>diagrameditor</b>: kies bij <b>Instellen</b> het type (staaf, lijn, cirkel, histogram…).</li><li>Bij <b>Aanpassen</b> geef je het diagram een titel en de assen een naam.</li></ol><div class="ex">Controleer altijd: titel, namen bij de assen, eenheden (cm, minuten, €) en een as die bij 0 begint (anders lijken verschillen groter dan ze zijn).</div><p>Dit oefen je echt in Google Spreadsheets: ons oefenblad maakt geen grafieken.</p>`,['Wat hoort er altijd bij een goede grafiek?','een titel en namen bij de assen','zoveel mogelijk kleuren|een 3D-effect|altijd een cirkeldiagram','Zonder titel en asnamen weet niemand wat hij ziet.']]],
+ q:[['Lengtes van 30 leerlingen in klassen van 5 cm. Welk diagram?','histogram','cirkeldiagram|lijndiagram|spreidingsdiagram','Klassen van getallen, staven tegen elkaar.'],
+  ['Hoe de klas naar school gaat, in procenten van het geheel. Welk diagram past het best?','cirkeldiagram','lijndiagram|histogram|spreidingsdiagram','Delen van een geheel.'],
+  ['Je onderzoekt of langere mensen grotere schoenen hebben. Welk diagram?','spreidingsdiagram','cirkeldiagram|histogram|staafdiagram','Twee variabelen tegen elkaar: elk punt is één persoon.'],
+  ['Het aantal leerlingen per favoriete sport vergelijken. Welk diagram?','staafdiagram','lijndiagram|spreidingsdiagram|histogram','Categorieën (sporten) vergelijken.'],
+  ['Hoe voeg je in Google Spreadsheets een grafiek toe?','Invoegen → Diagram','Bestand → Grafiek|Opmaak → Tabel|Gegevens → Sorteren','Selecteer eerst de tabel.'],
+  ['De temperatuur elk uur van een dag. Welk diagram?','lijndiagram','cirkeldiagram|histogram|staafdiagram','Verloop in de tijd.'],
+  ['Waarom laat je de verticale as meestal bij 0 beginnen?','anders lijken verschillen groter dan ze zijn','dat staat mooier|anders werkt het blad niet|dan past de titel beter','Een afgeknotte as kan misleiden.'],
+  ['Wat is het verschil tussen een staafdiagram en een histogram?','bij een histogram staan de staven tegen elkaar (klassen van getallen)','een histogram is altijd rond|een staafdiagram heeft geen assen|er is geen verschil','Staafdiagram: losse categorieën met ruimte ertussen.']]}
+];
+
+/* ---------- spel 1: wat komt eruit? ---------- */
+function rnd(a,b){return a+Math.floor(Math.random()*(b-a+1))}
+function watKomtEruit(){const n=5,vals=Array.from({length:n},()=>rnd(1,9));const cel={};vals.forEach((v,i)=>cel['A'+(i+1)]=String(v));
+ const b2=rnd(2,5);cel.B1=String(b2);
+ const opts=[['=SOM(A1:A5)','Alles van A1 t/m A5 opgeteld.'],['=SOM(A1;A5)','Alleen A1 en A5 (puntkomma!).'],['=A1+A2/2','Eerst A2 ÷ 2, dan plus A1.'],['=(A1+A2)/2','Eerst de haakjes, dan delen door 2.'],
+  ['=MAX(A1:A5)-MIN(A1:A5)','Grootste min kleinste.'],['=MEDIAAN(A1:A5)','Op volgorde zetten en het middelste nemen.'],['=A3*B1','A3 keer B1.'],['=A1^2','A1 in het kwadraat.'],['=AANTAL.ALS(A1:A5;">5")','Tel hoeveel getallen groter dan 5 zijn.'],['=GEMIDDELDE(A1:A4)','A1 t/m A4 optellen en delen door 4.'],['=SOM(A2:A4)*B1','Eerst A2 t/m A4 optellen, dan keer B1.'],['=A5-A4+A3','Van links naar rechts.']];
+ const [f,w]=opts[Math.random()*opts.length|0];const b=new Blad(5,2,cel);b.c.C1=f;const v=b.waarde('C1');
+ return {fig:mini(cel,5,2),q:`Wat komt eruit bij ${F(f)}?`,a:v,num:1,w:`${w} Uitkomst: <b>${mooi(v)}</b>.`}}
+/* ---------- spel 2: welke formule is goed? ---------- */
+const WELKE=[
+ ['Het gemiddelde van A2 t/m A10.','=GEMIDDELDE(A2:A10)','=GEMIDDELDE(A2;A10)|GEMIDDELDE(A2:A10)|=GEMIDDELDE(A2-A10)','Bereik met een dubbele punt, en het =-teken vooraan.'],
+ ['Het gemiddelde van A1 en B1.','=(A1+B1)/2','=A1+B1/2|=A1+B1:2|=(A1+B1)÷2','Haakjes om de som; delen is /.'],
+ ['Prijs (B2) keer aantal (C2).','=B2*C2','=B2xC2|=B2·C2|B2*C2','Keer is een sterretje, en vergeet het = niet.'],
+ ['Hoe vaak 8 voorkomt in A2:A30.','=AANTAL.ALS(A2:A30;8)','=AANTAL(A2:A30;8)|=SOM(A2:A30;8)|=AANTAL.ALS(8;A2:A30)','Eerst het bereik, dan de voorwaarde.'],
+ ['Hoeveel cijfers in B2:B25 onvoldoende zijn (lager dan 5,5).','=AANTAL.ALS(B2:B25;"<5,5")','=AANTAL.ALS(B2:B25;<5,5)|=AANTAL(B2:B25<5,5)|=AANTAL.ALS(B2:B25;">5,5")','De voorwaarde tussen aanhalingstekens.'],
+ ['Percentage van B2 ten opzichte van het totaal in B9, zodat je kunt doortrekken.','=B2/$B$9*100','=B2/B9*100|=$B$2/B9*100|=B2/B$2*100','Het totaal moet vast staan.'],
+ ['Q1 van de getallen in A2:A40.','=KWARTIEL(A2:A40;1)','=KWARTIEL(A2:A40;25)|=KWARTIEL(1;A2:A40)|=Q1(A2:A40)','Eerst het bereik, dan het nummer van het kwartiel.'],
+ ['De spreidingsbreedte van A2:A20.','=MAX(A2:A20)-MIN(A2:A20)','=MIN(A2:A20)-MAX(A2:A20)|=MAX(A2:A20)+MIN(A2:A20)|=KWARTIEL(A2:A20;3)-KWARTIEL(A2:A20;1)','Grootste min kleinste. Q3 − Q1 is de interkwartielafstand.'],
+ ['De mediaan van C2:C15.','=MEDIAAN(C2:C15)','=GEMIDDELDE(C2:C15)|=MODUS(C2:C15)|=MEDIAAN(C2;C15)','Het middelste getal; met ; zouden het maar twee cellen zijn.'],
+ ['Het totaal van D2 t/m D8.','=SOM(D2:D8)','=SOM(D2;D8)|=D2+D8|=AANTAL(D2:D8)','AANTAL telt hoeveel getallen er zijn, SOM telt ze op.'],
+ ['Het gemiddelde uit een frequentietabel: waarden in A2:A7, frequenties in B2:B7.','=SOMPRODUCT(A2:A7;B2:B7)/SOM(B2:B7)','=GEMIDDELDE(A2:A7)|=SOM(A2:A7)/SOM(B2:B7)|=GEMIDDELDE(B2:B7)','Elke waarde keer zijn frequentie, gedeeld door het aantal waarnemingen.'],
+ ['Het aantal getallen in A2:A50 (er staan ook lege cellen tussen).','=AANTAL(A2:A50)','=SOM(A2:A50)|=49|=MAX(A2:A50)','AANTAL slaat lege cellen over.']];
+
+/* ---------- opslag en algemeen ---------- */
+const KEY='spreadsheet-v1';
+const $=s=>document.querySelector(s);
+const leeg=()=>({lp:{},blad:{},cel:{},b:{},sp:{},toets:0,samen:0,mis:{}});
+let S=leeg();
+try{const r=localStorage.getItem(KEY);if(r)S=Object.assign(S,JSON.parse(r))}catch(e){}
+const save=()=>{try{localStorage.setItem(KEY,JSON.stringify(S))}catch(e){}};
+const shuffle=a=>{a=a.slice();for(let i=a.length-1;i>0;i--){const j=Math.random()*(i+1)|0;[a[i],a[j]]=[a[j],a[i]]}return a};
+const pick=a=>a[Math.random()*a.length|0];
+const P=$('#play');
+function show(id){$('#home').hidden=id!=='home';P.hidden=id!=='play';scrollTo(0,0)}
+const fijn=matchMedia('(any-pointer:fine)').matches||matchMedia('(hover:hover)').matches;
+const SPEL={uit:{t:'🔮 Wat komt eruit?',doel:.8},welke:{t:'🔍 Welke formule is goed?',doel:.8}};
+
+/* ---------- leerroute ---------- */
+const ROUTE=[];
+L.forEach(l=>{ROUTE.push([l.id+'-lp',l.id,`📖 Leerpad: ${l.t}`,'Uitleg in kaartjes, met een checkvraag.',4,'lp',l.id]);
+ if(l.blad)ROUTE.push([l.id+'-bl',l.id,`🧪 Oefenblad: ${l.t}`,'Typ zelf de formules. Klaar als alle opdrachten groen zijn.',6,'blad',l.id]);
+ else ROUTE.push([l.id+'-pr',l.id,`✅ Vragen: ${l.t}`,'8 vragen, haal er 7 in één keer goed.',6,'pr',l.id]);
+ if(l.id==='som')ROUTE.push(['uit','som',SPEL.uit.t,'Voorspel wat een formule uitrekent. Doel: 8 van de 10.',8,'sp','uit']);
+ if(l.id==='vast')ROUTE.push(['welke','vast',SPEL.welke.t,'Kies de formule die klopt. Doel: 8 van de 10.',8,'sp','welke'])});
+ROUTE.push(['toets','eind','🎯 Proeftoets: een 7','16 vragen door elkaar, ook voorspellen wat eruit komt.',14,'toets'],['samen','eind','📄 Spiekbrief','Alle functies en uitleg op één pagina.',0,'samen']);
+const LNAAM={eind:'Eindsprint'};L.forEach((l,i)=>LNAAM[l.id]=`${l.ic} Les ${i+1}: ${l.t}`);
+const rDone=r=>r[5]==='lp'?!!S.lp[r[6]]:r[5]==='blad'?!!S.blad[r[6]]:r[5]==='pr'?(S.b[r[6]]||0)>=7/8:r[5]==='sp'?(S.sp[r[6]]||0)>=SPEL[r[6]].doel:r[5]==='toets'?S.toets>=7:!!S.samen;
+const pct=()=>ROUTE.reduce((a,r)=>a+(rDone(r)?r[4]:0),0);window.leerVoortgang=pct;
+const RT={on:false,p0:0};
+function rGo(r){RT.on=true;RT.p0=pct();const t=r[5];if(t==='lp')leerpad(r[6]);else if(t==='blad')blad(r[6]);else if(t==='pr')ronde(r[6]);else if(t==='sp')spel(r[6]);else if(t==='toets')toets();else samen()}
+function routeScreen(){show('play');const p=pct(),nxt=ROUTE.find(r=>!rDone(r)),win=RT.on&&p>RT.p0?p-RT.p0:0;RT.on=false;let deel='';
+ P.innerHTML=`<div class="top"><button class="btn licht klein" id="terug">‹ Overzicht</button><span class="stap">Leerroute</span><span class="teller ok">${p}%</span></div>
+ ${win?`<div class="kaart" style="border-color:var(--good);background:var(--good-bg)"><b class="goed-t">Gehaald! +${win}%</b></div>`:''}
+ <div class="kaart"><div class="balk"><i style="width:${p}%"></i></div><p class="sub" style="margin:4px 0 0">Van boven naar beneden. Een stap is pas groen als het doel gehaald is.</p>
+ ${nxt?`<div class="acts"><button class="btn" id="rtgo">Ga verder: ${nxt[2]} →</button></div>`:'<p><b>Alles gehaald. Spreadsheet-kampioen! 🎉</b></p>'}</div>
+ ${ROUTE.map((r,i)=>{const kop=r[1]!==deel?(deel=r[1],`<h2>${LNAAM[r[1]]}</h2>`):'';return kop+`<button class="mode${rDone(r)?' gehaald':''}" data-r="${i}" style="width:100%;margin:8px 0"><h3>${r[2]}</h3><p>${r[3]}${r[4]?` · ${r[4]}%`:' · telt niet mee'}</p></button>`}).join('')}`;
+ $('#terug').onclick=()=>{RT.on=false;goHome()};P.querySelectorAll('[data-r]').forEach(b=>b.onclick=()=>rGo(ROUTE[+b.dataset.r]));const g=$('#rtgo');if(g){g.onclick=()=>rGo(nxt);g.focus()}}
+
+/* ---------- hoofdscherm ---------- */
+function renderHome(){const nx=ROUTE.find(r=>!rDone(r));
+ $('#stand').innerHTML=`<button class="mode main" id="rtbox" style="width:100%"><h3>${nx?(pct()?'Ga verder: ':'Begin: ')+nx[2]:'Leerroute klaar. Herhalen?'}</h3><p>🧭 Leerroute · ${pct()}%${S.toets?` · beste proeftoets ${String(S.toets).replace('.',',')}`:''}</p><div class="balk" style="background:rgba(127,127,127,.35)"><i style="width:${pct()}%"></i></div></button>`;
+ $('#rtbox').onclick=routeScreen;
+ $('#lessen').innerHTML=L.map((l,i)=>`<div class="kaart hk"><h3>${l.ic} ${l.t} <span class="stap">les ${i+1}</span></h3><div class="acts" style="margin-top:8px"><button class="btn klein${S.lp[l.id]?' ok':' licht'}" data-lp="${l.id}">📖 Leerpad${S.lp[l.id]?' ✓':''}</button>${l.blad?`<button class="btn klein${S.blad[l.id]?' ok':' licht'}" data-bl="${l.id}">🧪 Oefenblad${S.blad[l.id]?' ✓':''}</button>`:`<button class="btn klein${(S.b[l.id]||0)>=7/8?' ok':' licht'}" data-pr="${l.id}">✅ Vragen</button>`}</div></div>`).join('');
+ const g=(id,ok)=>{const e=$('#'+id);if(e)e.classList.toggle('gehaald',ok)};g('puit',(S.sp.uit||0)>=.8);g('pwelke',(S.sp.welke||0)>=.8);g('ptoets',S.toets>=7);g('psamen',!!S.samen);P.innerHTML=''}
+function goHome(){if(RT.on)return routeScreen();show('home');renderHome()}
+document.addEventListener('click',e=>{if($('#home').hidden)return;const b=e.target.closest('[data-lp],[data-bl],[data-pr]');if(!b)return;if(b.dataset.lp)leerpad(b.dataset.lp);else if(b.dataset.bl)blad(b.dataset.bl);else ronde(b.dataset.pr)});
+$('#puit').onclick=()=>spel('uit');$('#pwelke').onclick=()=>spel('welke');$('#pvrij').onclick=()=>blad('vrij');$('#ptoets').onclick=()=>toets();$('#psamen').onclick=()=>samen();
+$('#wis').onclick=()=>{if(confirm('Al je voortgang bij Spreadsheets wissen?')){S=leeg();save();renderHome()}};
+
+/* ---------- leerpad ---------- */
+function leerpad(id){const l=L.find(x=>x.id===id);let i=0;show('play');
+ const teken=()=>{const c=l.lp[i];const opts=c[2]?shuffle([c[2][1],...c[2][2].split('|')]):[];
+  P.innerHTML=`<div class="top"><button class="btn licht klein" id="stop">Stoppen</button><span class="stap">Leerpad · ${l.t}</span><span class="teller">${i+1}/${l.lp.length}</span></div>
+  <div class="balk"><i style="width:${i/l.lp.length*100}%"></i></div>
+  <div class="kaart"><h2 style="margin-top:0">${c[0]}</h2>${c[1]}${c[2]?`<div class="check"><div class="label">Even checken</div><h3 style="margin:6px 0 0;font-family:inherit">${c[2][0]}</h3><div class="opts">${opts.map((o,k)=>`<button class="opt" data-k="${k}">${esc(o)}</button>`).join('')}</div><div id="fb"></div></div>`:''}
+  <div class="acts" id="nav" ${c[2]?'hidden':''}>${i?'<button class="btn licht" id="vor">← Terug</button>':''}<button class="btn" id="vd">${i<l.lp.length-1?'Verder →':'Klaar ✓'}</button></div></div>`;
+  $('#stop').onclick=goHome;const vd=()=>{i++;if(i>=l.lp.length){S.lp[id]=1;save();klaar()}else teken()};
+  const nav=()=>{$('#nav').hidden=false;$('#vd').onclick=vd;const v=$('#vor');if(v)v.onclick=()=>{i--;teken()};$('#vd').focus()};
+  if(c[2])P.querySelectorAll('.opt').forEach(b=>b.onclick=()=>{if(P.querySelector('.opt.goed'))return;const ok=opts[+b.dataset.k]===c[2][1];
+   P.querySelectorAll('.opt').forEach((x,k)=>{if(opts[k]===c[2][1])x.classList.add('goed');else if(x===b)x.classList.add('fout')});
+   $('#fb').innerHTML=`<div class="uitleg"><b class="${ok?'goed-t':'fout-t'}">${ok?'Goed!':'Niet goed.'}</b> ${c[2][3]}</div>`;nav()});else nav()};
+ const klaar=()=>{P.innerHTML=`<div class="kaart" style="text-align:center"><div class="label">Leerpad klaar</div><h2>${l.ic} ${l.t}</h2><p>${l.blad?'Nu zelf doen in het oefenblad.':'Nu de vragen.'}</p><div class="acts" style="justify-content:center"><button class="btn" id="opn">${l.blad?'🧪 Oefenblad':'✅ Vragen'}</button><button class="btn licht" id="hm">${RT.on?'Terug naar de route':'Naar het overzicht'}</button></div></div>`;
+  $('#opn').onclick=()=>l.blad?blad(id):ronde(id);$('#hm').onclick=goHome;$('#opn').focus()};
+ teken()}
+
+/* ---------- het oefenblad ---------- */
+const CHIPS={cel:[],som:['SOM('],gmm:['GEMIDDELDE(','MEDIAAN(','MODUS(','MAX(','MIN(','AANTAL('],freq:['SOM(','AANTAL.ALS(','SOMPRODUCT('],spr:['KWARTIEL(','MAX(','MIN(','STDEV.P('],vast:['SOM('],vrij:['SOM(','GEMIDDELDE(','MEDIAAN(','MODUS(','MAX(','MIN(','AANTAL(','AANTAL.ALS(','KWARTIEL(','STDEV.P(']};
+function cellenVan(spec){const [a,b]=spec.split(':');const p=celPos(a),q=celPos(b||a);const l=[];for(let c=p[0];c<=q[0];c++)for(let r=p[1];r<=q[1];r++)l.push(celNaam(c,r));return l}
+const basisF=t=>t.opl.split(', dan')[0].split(' (')[0].trim();
+function oplossing(B){const o=new Blad(B.rij,B.kol,B.data);B.taken.forEach(t=>{const cs=cellenVan(t.cel),f=basisF(t);cs.forEach((n,i)=>o.c[n]=schuif(f,i))});return o}
+function controleer(b,B,t,sol){const uit=[];for(const n of cellenVan(t.cel)){const r=String(b.ruw(n)).trim();
+  if(!r){uit.push({n,ok:false});continue}
+  if(r[0]!=='='){uit.push({n,ok:false,w:`${n}: begin met een <b>=</b>, anders rekent het blad niet.`});continue}
+  if(!/\$?[A-H]\$?\d/i.test(r)){uit.push({n,ok:false,w:`${n}: reken met de <b>cellen</b> (zoals A2), niet met getallen die je overtypt.`});continue}
+  const v=b.toon(n);if(v instanceof Fout){uit.push({n,ok:false,w:`${n} geeft <b>${v.c}</b>. ${v.c==='#DEEL/0!'?'Je deelt door 0 of door een lege cel.':v.c==='#NAAM?'?'Die functienaam kent het blad niet: controleer de spelling.':v.c==='#VERW!'?'De formule verwijst naar zichzelf of naar een cel buiten het blad.':'Controleer haakjes, ; en : in je formule.'}`});continue}
+  if(t.fn&&!t.fn.test(r.toUpperCase())){uit.push({n,ok:false,w:`${n}: gebruik hier een functie (${esc(basisF(t).match(/=([A-Z.]+)\(/)?.[1]||'')}).`});continue}
+  if(t.must&&!t.must.test(r)){uit.push({n,ok:false,w:`${n}: ${t.must.source==='\\('?'zet haakjes om de som.':'gebruik de cellen uit de opdracht.'}`});continue}
+  if(t.dollar&&!r.includes('$')){uit.push({n,ok:false,w:`${n}: zet het totaal vast met <b>$</b>, anders schuift het mee bij doortrekken.`});continue}
+  let e=sol.toon(n),ok=typeof v==='number'&&typeof e==='number'&&Math.abs(v-e)<=1e-9*Math.max(1,Math.abs(e));
+  if(!ok&&t.alt){const o2=new Blad(sol.rij,sol.kol,sol.c);o2.c[n]=t.alt;const e2=o2.toon(n);ok=typeof v==='number'&&typeof e2==='number'&&Math.abs(v-e2)<=1e-9*Math.max(1,Math.abs(e2))}
+  uit.push({n,ok,w:ok?'':`${n}: de uitkomst klopt nog niet. Kijk naar het bereik en de rekentekens.`})}
+ return uit}
+function blad(id){const vrij=id==='vrij';const l=vrij?null:L.find(x=>x.id===id);
+ const B=vrij?{rij:15,kol:6,data:{},taken:[]}:l.blad;S.cel[id]=S.cel[id]||{};
+ const b=new Blad(B.rij,B.kol,Object.assign({},B.data,S.cel[id]));const vast=new Set(Object.keys(B.data));
+ const sol=vrij?null:oplossing(B);const doelen=new Set(B.taken.flatMap(t=>cellenVan(t.cel)));
+ let sel=B.taken.length?cellenVan(B.taken[0].cel)[0]:'A1',melding='',hints={};
+ show('play');
+ P.innerHTML=`<div class="top"><button class="btn licht klein" id="stop">Stoppen</button><span class="stap">${vrij?'Vrij rekenblad':'Oefenblad · '+l.t}</span><span class="teller" id="score"></span></div>
+ ${vrij?'<div class="kaart"><p style="margin:0">Probeer alles uit wat je wilt. Wat je typt wordt bewaard.</p></div>':`<div class="kaart"><div class="label">Opdrachten</div><ol class="taken" id="taken"></ol></div>`}
+ <div class="kaart blad"><div class="fbar"><span id="naam"></span><span class="fx">fx</span><input id="fx" autocomplete="off" autocapitalize="off" autocorrect="off" spellcheck="false" aria-label="Inhoud van de cel"></div>
+ <div class="chips">${['=','(',')',':',';','$','"','*','/','+','-',...CHIPS[id]].map(c=>`<button class="chip" data-c="${esc(c)}">${esc(c)}</button>`).join('')}</div>
+ <div class="ws" id="ws"></div>
+ <div class="acts"><button class="btn klein" id="ok">✓ Invoeren</button><button class="btn licht klein" id="trek">⤓ Doortrekken</button><button class="btn licht klein" id="wiscel">✕ Cel leeg</button></div><div id="mld"></div></div>
+ <div id="klaarbox"></div>`;
+ const fx=$('#fx');
+ const tekenGrid=()=>{const res=vrij?[]:B.taken.map(t=>controleer(b,B,t,sol));const okCel=new Set(res.flat().filter(x=>x.ok).map(x=>x.n));
+  let h='<table class="sh"><tr><th></th>'+[...Array(B.kol)].map((_,c)=>`<th>${KOL[c]}</th>`).join('')+'</tr>';
+  for(let r=0;r<B.rij;r++){h+=`<tr><th>${r+1}</th>`;for(let c=0;c<B.kol;c++){const n=celNaam(c,r),v=b.toon(n),num=typeof v==='number';
+    h+=`<td data-n="${n}" class="${vast.has(n)?'vast':''}${doelen.has(n)?(okCel.has(n)?' ok':' doel'):''}${n===sel?' sel':''}${num?' n':''}${v instanceof Fout?' err':''}">${esc(mooi(v))}</td>`}h+='</tr>'}
+  $('#ws').innerHTML=h+'</table>';$('#naam').textContent=sel;
+  if(!vrij){const af=B.taken.map((t,i)=>res[i].every(x=>x.ok));
+   $('#taken').innerHTML=B.taken.map((t,i)=>{const fout=res[i].find(x=>!x.ok&&x.w);return `<li class="${af[i]?'af':''}">${t.t}${af[i]?' <b class="goed-t">✓</b>':''}${!af[i]&&fout?`<div class="tw-fb">${fout.w}</div>`:''}${!af[i]?` <button class="hintk" data-h="${i}">💡${hints[i]>=1?' antwoord':''}</button>${hints[i]?`<div class="tip">${hints[i]>=2?`Zo kan het: <code class="f">${esc(t.opl)}</code>`:esc(t.hint)}</div>`:''}`:''}</li>`}).join('');
+   $('#score').textContent=`${af.filter(Boolean).length}/${B.taken.length} ✓`;
+   P.querySelectorAll('.hintk').forEach(k=>k.onclick=()=>{const i=+k.dataset.h;hints[i]=(hints[i]||0)+1;tekenGrid()});
+   if(af.every(Boolean)){const nieuw=!S.blad[id];S.blad[id]=1;save();$('#klaarbox').innerHTML=`<div class="kaart" style="border-color:var(--good);background:var(--good-bg);text-align:center"><b class="goed-t" style="font-size:20px">Blad af! ${nieuw?'🎉':'✓'}</b><p>Alle opdrachten kloppen.</p><div class="acts" style="justify-content:center">${terugKnop()}</div></div>`;$('#hm').onclick=goHome}}
+  $('#mld').innerHTML=melding?`<div class="uitleg">${melding}</div>`:''};
+ const kies=n=>{sel=n;fx.value=b.ruw(n);melding='';tekenGrid();if(fijn)fx.focus()};
+ const invoer=()=>{const v=fx.value.trim();if(vast.has(sel)){if(v===String(b.ruw(sel)))return true;if(true){melding='Deze cel hoort bij de gegevens: die laat je staan. Kies een lege cel.';fx.value=b.ruw(sel)}tekenGrid();return false}
+  if(v)b.c[sel]=v;else delete b.c[sel];if(v)S.cel[id][sel]=v;else delete S.cel[id][sel];save();melding='';return true};
+ const verplaats=(dc,dr)=>{const p=celPos(sel);const c=Math.max(0,Math.min(B.kol-1,p[0]+dc)),r=Math.max(0,Math.min(B.rij-1,p[1]+dr));kies(celNaam(c,r))};
+ const plakRef=()=>{const v=fx.value,pos=fx.selectionStart??v.length;return document.activeElement===fx&&v[0]==='='&&/[=+\-*/^(;:,<>&]$/.test(v.slice(0,pos))};
+ $('#ws').addEventListener('pointerdown',e=>{const td=e.target.closest('td[data-n]');if(!td)return;
+  if(plakRef()){e.preventDefault();const pos=fx.selectionStart,v=fx.value;fx.value=v.slice(0,pos)+td.dataset.n+v.slice(pos);fx.setSelectionRange(pos+td.dataset.n.length,pos+td.dataset.n.length);return}
+  if(fx.value.trim()!==String(b.ruw(sel)))invoer();kies(td.dataset.n)});
+ fx.addEventListener('keydown',e=>{if(e.key==='Enter'){e.preventDefault();if(invoer())verplaats(0,1);else tekenGrid()}
+  else if(e.key==='Tab'){e.preventDefault();if(invoer())verplaats(e.shiftKey?-1:1,0)}
+  else if(e.key==='Escape'){fx.value=b.ruw(sel)}
+  else if((e.key==='ArrowDown'||e.key==='ArrowUp')&&fx.value===String(b.ruw(sel))){e.preventDefault();verplaats(0,e.key==='ArrowDown'?1:-1)}});
+ P.querySelectorAll('.chip').forEach(c=>{c.addEventListener('pointerdown',e=>e.preventDefault());c.onclick=()=>{const t=c.dataset.c,pos=fx.selectionStart??fx.value.length,v=fx.value;fx.value=v.slice(0,pos)+t+v.slice(fx.selectionEnd??pos);fx.focus();fx.setSelectionRange(pos+t.length,pos+t.length)}});
+ $('#ok').onclick=()=>{if(invoer())verplaats(0,1);else tekenGrid()};
+ $('#wiscel').onclick=()=>{fx.value='';invoer();tekenGrid()};
+ $('#trek').onclick=()=>{if(fx.value.trim()!==String(b.ruw(sel)))invoer();const raw=String(b.ruw(sel));const p=celPos(sel);
+  if(raw[0]!=='='){melding='Kies eerst een cel met een formule (die begint met =). Die trek je dan door naar beneden.';return tekenGrid()}
+  let r=p[1];const links=rr=>p[0]>0&&vast.has(celNaam(p[0]-1,rr))&&b.ruw(celNaam(p[0]-1,rr))!=='';
+  while(r+1<B.rij&&links(r+1)&&!vast.has(celNaam(p[0],r+1)))r++;
+  if(r===p[1]){melding='Hier valt niets door te trekken: links van de cellen eronder staan geen gegevens.';return tekenGrid()}
+  for(let rr=p[1]+1;rr<=r;rr++){const n=celNaam(p[0],rr),f=schuif(raw,rr-p[1]);b.c[n]=f;S.cel[id][n]=f}save();
+  melding=`Doorgetrokken tot ${celNaam(p[0],r)}. Kijk maar: in ${celNaam(p[0],p[1]+1)} staat nu <code class="f">${esc(b.ruw(celNaam(p[0],p[1]+1)))}</code>.`;tekenGrid()};
+ $('#stop').onclick=goHome;
+ kies(sel)}
+
+/* ---------- vragen: meerkeuze of een getal ---------- */
+const terugKnop=()=>`<button class="btn licht" id="hm">${RT.on?'Terug naar de route':'Naar het overzicht'}</button>`;
+const leesGetal=v=>{const t=String(v).trim().replace(/\s/g,'').replace(',','.');return t===''||isNaN(+t)?NaN:+t};
+function quiz(qs,o){let i=0,goed=0,opnieuw=[];const n=qs.length;
+ const volgende=()=>{if(i>=qs.length){if(opnieuw.length&&!o.geenHer){qs=qs.concat(opnieuw);opnieuw=[]}else return einde()}
+  const q=qs[i],her=i>=n;const opts=q.num?[]:shuffle(q.opts);
+  P.innerHTML=`<div class="top"><button class="btn licht klein" id="stop">Stoppen</button><span class="stap">${o.titel}</span><span class="teller">${Math.min(i+1,n)}/${n}${her?' · herkansing':''}</span></div>
+  <div class="kaart">${her?'<div class="label" style="color:var(--gold)">Herkansing: deze ging eerder fout</div>':''}${q.fig||''}<h3 class="vraag">${q.q}</h3>
+  ${q.num?`<form class="typerow" id="nf" autocomplete="off"><input id="ni" inputmode="decimal" placeholder="uitkomst" aria-label="Antwoord"><button class="btn" type="submit" id="nb">Controleer</button></form>`:`<div class="opts">${opts.map((x,k)=>`<button class="opt${q.code?' code':''}" data-k="${k}">${esc(x)}</button>`).join('')}</div>`}<div id="fb"></div></div>`;
+  $('#stop').onclick=goHome;
+  const af=ok=>{if(!her&&ok)goed++;if(!ok&&!her)opnieuw.push(q);
+   $('#fb').innerHTML=`<div class="uitleg"><b class="${ok?'goed-t':'fout-t'}">${ok?'Goed!':'Niet goed.'}</b> ${q.num&&!ok?`Het antwoord is <b>${mooi(q.a)}</b>. `:''}${q.w}</div><div class="acts"><button class="btn" id="vd">Verder ↵</button></div>`;
+   i++;$('#vd').onclick=volgende;$('#vd').focus()};
+  if(q.num){const inp=$('#ni');inp.focus();$('#nf').onsubmit=e=>{e.preventDefault();const v=leesGetal(inp.value);if(isNaN(v)){inp.classList.remove('shake');void inp.offsetWidth;inp.classList.add('shake');return}
+   inp.readOnly=true;$('#nb').hidden=true;af(Math.abs(v-q.a)<=Math.abs(q.a)*.001+1e-9)}}
+  else P.querySelectorAll('.opt').forEach(b=>b.onclick=()=>{if(P.querySelector('.opt.goed'))return;const ok=opts[+b.dataset.k]===q.a;P.querySelectorAll('.opt').forEach((x,k)=>{if(opts[k]===q.a)x.classList.add('goed');else if(x===b)x.classList.add('fout')});af(ok)})};
+ const einde=()=>{P.innerHTML=`<div class="kaart" style="text-align:center"><div class="label">${o.titel}</div><div class="groot">${goed}<span> / ${n}</span></div>${o.klaar(goed,n)}</div>`;o.na&&o.na()};
+ show('play');volgende()}
+const mc=v=>({q:v[0],a:v[1],opts:[v[1],...v[2].split('|')],w:v[3]});
+const welkeVraag=v=>({q:`<span class="label">Welke formule is goed?</span><br>${v[0]}`,a:v[1],opts:[v[1],...v[2].split('|')],w:v[3],code:1});
+function ronde(id){const l=L.find(x=>x.id===id);quiz(shuffle(l.q).slice(0,8).map(mc),{titel:'Vragen · '+l.t,klaar:(g,n)=>{const f=g/n;if(f>(S.b[id]||0))S.b[id]=f;save();
+ return `<p>${f>=7/8?'Gehaald! 🎉':'Doel: 7 van de 8 in één keer goed.'}</p><div class="acts" style="justify-content:center"><button class="btn" id="opn">Nog een keer</button>${terugKnop()}</div>`},na:()=>{$('#opn').onclick=()=>ronde(id);$('#hm').onclick=goHome}})}
+function spel(k){const qs=k==='uit'?Array.from({length:10},watKomtEruit):shuffle(WELKE).slice(0,10).map(welkeVraag);
+ quiz(qs,{titel:SPEL[k].t,klaar:(g,n)=>{const f=g/n;if(f>(S.sp[k]||0))S.sp[k]=f;save();return `<p>${f>=.8?'Gehaald! 🎉':'Doel: 8 van de 10 in één keer goed.'}</p><div class="acts" style="justify-content:center"><button class="btn" id="opn">Nog een keer</button>${terugKnop()}</div>`},
+  na:()=>{$('#opn').onclick=()=>spel(k);$('#hm').onclick=goHome}})}
+function toets(){const qs=shuffle([...shuffle(L.flatMap(l=>l.q)).slice(0,10).map(mc),...Array.from({length:4},watKomtEruit),...shuffle(WELKE).slice(0,2).map(welkeVraag)]);
+ quiz(qs,{titel:'Proeftoets',geenHer:1,klaar:(g,n)=>{const c=Math.round((1+9*g/n)*10)/10;if(c>S.toets)S.toets=c;save();
+  return `<p>Cijfer: <b style="font-size:22px">${String(c).replace('.',',')}</b>${c>=7?' 🎉':''}</p><div class="acts" style="justify-content:center"><button class="btn" id="opn">Nog een proeftoets</button>${terugKnop()}</div>`},na:()=>{$('#opn').onclick=toets;$('#hm').onclick=goHome}})}
+
+/* ---------- spiekbrief ---------- */
+function samen(){S.samen=1;save();show('play');
+ const FS=[['=SOM(A2:A9)','optellen'],['=GEMIDDELDE(A2:A9)','gemiddelde'],['=MEDIAAN(A2:A9)','mediaan'],['=MODUS(A2:A9)','modus'],['=MIN(…) / =MAX(…)','kleinste / grootste'],['=AANTAL(A2:A9)','hoeveel getallen'],['=AANTAL.ALS(A2:A9;">=5,5")','hoeveel voldoen'],['=SOMPRODUCT(A2:A7;B2:B7)','waarde × frequentie opgeteld'],['=KWARTIEL(A2:A9;1)','Q1 (3 = Q3)'],['=STDEV.P(A2:A9)','standaardafwijking (σ)'],['=B2/$B$9*100','procent van een vast totaal']];
+ P.innerHTML=`<div class="top"><button class="btn licht klein" id="terug">‹ Terug</button><span class="stap">Spiekbrief</span></div>
+ <div class="kaart"><h2 style="margin-top:0">Alle functies</h2><table class="gt">${FS.map(f=>`<tr><td><code class="f">${esc(f[0])}</code></td><td>${f[1]}</td></tr>`).join('')}</table><p class="sub">Formule begint met = · bereik met : · losse delen met ; · vastzetten met $ · keer * · delen /</p></div>
+ ${L.map((l,i)=>`<h2>${l.ic} Les ${i+1}: ${l.t}</h2>${l.lp.map(c=>`<div class="kaart"><h3>${c[0]}</h3>${c[1]}</div>`).join('')}`).join('')}
+ <div class="acts"><button class="btn licht" id="terug2">‹ Terug</button></div>`;$('#terug').onclick=goHome;$('#terug2').onclick=goHome}
+
+renderHome();
+</script>
+</body>
+</html>

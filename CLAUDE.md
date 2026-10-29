@@ -188,6 +188,17 @@ schermen `show('home'|'play')`, `goHome()`, `ask()`, `practice(sec)` (oefenronde
   leerpad 4% + oefenronde 6% (8/10), 4 spellen × 3%, blitz ≥ 15 3%, toets ≥ 7 5%. Let op: praatje-plaatje-daadje (boek § 2.3) vs plaatje-praatje-daadje
   (module groene spelen), allebei genoemd. Padelregels volgen de module (return onderhands, tiebreak tot 7). Discustechniek en softbal blz. 2-6 ontbraken in de scans.
 
+- **Google Spreadsheets** (`spreadsheet.html`, `spreadsheet-v1`, wiskunde 4 havo, volgend hoofdstuk van Ben; geen boek, zelf opgezet): staat voorlopig
+  alleen onder **Marcel** (`<section data-who="marcel">` in index.html), later naar Ben verplaatsen. Eigen rekenkern (`Blad`, `tokens`, `FN`, `schuif`
+  voor doortrekken, `Fout` met #DEEL/0!, #NAAM?, #WAARDE!, #VERW!, #FOUT!): Nederlandse én Engelse functienamen (SOM/SUM, GEMIDDELDE, MEDIAAN, MODUS,
+  MIN, MAX, AANTAL, AANTAL.ALS, KWARTIEL (= QUARTILE.INC, kan afwijken van de handmethode), STDEV.P/STDEV, SOMPRODUCT, AFRONDEN, ALS), `;` of `,`
+  tussen argumenten, komma als decimaal, `$` vastzetten; cellen buiten het blad zijn leeg. `L` = 7 lessen {id, lp, blad?, q} (cel, som, gmm, freq, spr,
+  vast, graf). Oefenblad `blad(id)`: opdrachten `taken` [{cel (ook bereik), t, opl (machine-oplossing = deel vóór ', dan' / ' ('), fn, must, dollar,
+  alt, hint}] worden live nagekeken tegen `oplossing(B)` (formule verplicht, met celverwijzing); 💡 = hint, 2e keer de formule. Formulebalk `#fx`,
+  knoppen voor tekens/functies (`CHIPS`), tik op een cel tijdens een formule = celnaam invoegen, ⤓ Doortrekken (tot waar links vaste gegevens staan),
+  Ben's invoer in `S.cel[id]`. Vrij rekenblad `blad('vrij')`. Spellen: Wat komt eruit? (`watKomtEruit()`), Welke formule is goed? (`WELKE`).
+  Route: per les leerpad 4% + oefenblad 6% (graf: vragen 6%, 7/8), spellen 2 × 8%, proeftoets ≥ 7 14%, spiekbrief 0%.
+
 ## Leerlogboek en scores (gedeeld met deweef/spelletjes)
 - `leerlog.js` staat in de `<head>` van elke vakpagina (vóór de andere scripts). Per bezoek stuurt het stil één
   regel (wie, vak, actieve minuten, wat erbij kwam, stand) met `sendBeacon` naar het Apps Script van het
