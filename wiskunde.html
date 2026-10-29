@@ -336,6 +336,21 @@ const SECS=[
  {id:'2.4',t:'Kwartielen en spreiding',s:'Cumulatieve frequentie, kwartielen, spreidingsbreedte, IKA, boxplot'},
  {id:'2.5',t:'Statistische verdelingen',s:'Scheef, symmetrisch, uniform, standaardafwijking, normale verdeling'}
 ];
+/* boomschema soorten variabelen (Bens wens, naar zijn plaatje) */
+function figVar(){
+  const box=(x,y,w,t)=>`<rect x="${x-w/2}" y="${y}" width="${w}" height="30" rx="3" fill="#FFE95C" stroke="#1E2230" stroke-width="1.5"/><text x="${x}" y="${y+21}" text-anchor="middle" font-size="16" font-weight="700" fill="#1E2230">${t}</text>`;
+  const lab=(x,y,t,a='middle')=>`<text x="${x}" y="${y}" text-anchor="${a}" font-size="12.5" font-style="italic" font-weight="700" style="fill:var(--bad)">${t}</text>`;
+  const pijl=(x1,y1,x2,y2)=>`<line x1="${x1}" y1="${y1}" x2="${x2}" y2="${y2}" stroke="currentColor" stroke-width="1.6" marker-end="url(#vpijl)"/>`;
+  return `<svg class="chart" viewBox="0 0 480 200" style="max-width:520px" role="img" aria-label="Soorten variabelen: kwantitatief (discreet, continu) en kwalitatief (nominaal, ordinaal)">
+  <defs><marker id="vpijl" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto"><path d="M0 0L10 5L0 10z" fill="currentColor"/></marker></defs>
+  ${box(240,6,120,'variabelen')}
+  ${pijl(205,36,135,80)}${pijl(275,36,345,80)}
+  ${lab(150,58,'getal','end')}${lab(330,58,'geen getal','start')}
+  ${box(120,82,130,'kwantitatief')}${box(360,82,124,'kwalitatief')}
+  ${pijl(100,112,65,150)}${pijl(140,112,175,150)}${pijl(340,112,305,150)}${pijl(380,112,415,150)}
+  ${box(60,152,96,'discreet')}${box(180,152,96,'continu')}${box(300,152,104,'nominaal')}${box(420,152,104,'ordinaal')}
+  ${lab(60,197,'losse getallen')}${lab(180,197,'alles mogelijk')}${lab(300,197,'geen volgorde')}${lab(420,197,'volgorde')}
+  </svg>`}
 const UITLEG={
 '2.1':`<h3>De statistische cyclus</h3>
 <p>Een statistisch onderzoek doorloopt vier fasen. Daarna levert het vaak nieuwe vragen op, en begint de cyclus opnieuw.</p>
@@ -353,6 +368,8 @@ const UITLEG={
 '2.2':`<h3>Variabelen, waarden en dataset</h3>
 <p>De kenmerken die je onderzoekt heten <b>variabelen</b>, omdat ze variëren. De mogelijke uitkomsten heten <b>waarden</b>. Alle gegevens samen vormen de <b>dataset</b> (data = gegevens, set = verzameling).</p>
 <p class="ex">Variabele <i>woonplaats</i> met waarden Ruurlo, Laren, Borculo. Variabele <i>leeftijd</i> met waarden 13, 14, 15.</p>
+<h3>In één plaatje</h3>
+${figVar()}
 <h3>Het stroomschema</h3>
 <div class="flow">
 <div class="fq">Zijn de waarden getallen?</div><div class="fa">Nee → <b>kwalitatief</b></div>
@@ -1095,7 +1112,7 @@ const LP={
  ['Getallen of woorden?',`<div class="rule">Waarden zijn geen hoeveelheden → <b>kwalitatief</b><br>Waarden zijn hoeveelheden → <b>kwantitatief</b></div><p>Let op: een postcode of kluisnummer is wel een getal, maar geen hoeveelheid. Dat is dus kwalitatief.</p><p>Test: heeft het gemiddelde zin? Gemiddelde lengte wel, gemiddeld kluisnummer niet.</p>`,['Welk type is "telefoonnummer"?','kwalitatief','kwantitatief|continu','Het is een getal, maar geen hoeveelheid.']],
  ['Kwalitatief: nominaal of ordinaal',`<div class="rule">Geen logische volgorde → <b>nominaal</b> (kleur, woonplaats)<br>Wel een volgorde → <b>ordinaal</b> (nooit/soms/vaak, slecht/goed)</div><p>Nominaal komt van <i>nomen</i> = naam: je geeft alleen een naam.</p>`,['"Tevredenheid: slecht, matig, goed" is …','ordinaal','nominaal|continu','Er zit een logische volgorde in.']],
  ['Kwantitatief: discreet of continu',`<div class="rule"><b>Tellen</b> → discreet (aantal broers, schoenmaat)<br><b>Meten</b> → continu (lengte, gewicht, tijd)</div><p>Bij continu kan elke tussenwaarde: 172,35 cm. Bij discreet niet: je hebt geen 2,5 broer.</p>`,['Het gewicht van een appel is …','continu','discreet|nominaal','Gewicht meet je, elke tussenwaarde kan.']],
- ['Het stroomschema',`<div class="flow"><div class="fq">Hoeveelheid?</div><div class="fa">nee → kwalitatief · ja → kwantitatief</div><div class="fq">Kwalitatief: volgorde?</div><div class="fa">nee → nominaal · ja → ordinaal</div><div class="fq">Kwantitatief: tussenwaarden?</div><div class="fa">nee → discreet · ja → continu</div></div><p>Met deze drie vragen kun je elke variabele indelen.</p>`,['Aantal kinderen in een gezin is …','kwantitatief discreet','kwantitatief continu|kwalitatief ordinaal','Hoeveelheid, en je telt het.']]],
+ ['Het stroomschema',`${figVar()}<div class="flow"><div class="fq">Hoeveelheid?</div><div class="fa">nee → kwalitatief · ja → kwantitatief</div><div class="fq">Kwalitatief: volgorde?</div><div class="fa">nee → nominaal · ja → ordinaal</div><div class="fq">Kwantitatief: tussenwaarden?</div><div class="fa">nee → discreet · ja → continu</div></div><p>Met deze drie vragen kun je elke variabele indelen.</p>`,['Aantal kinderen in een gezin is …','kwantitatief discreet','kwantitatief continu|kwalitatief ordinaal','Hoeveelheid, en je telt het.']]],
 '2.3':[
  ['Het gemiddelde',`<p>Tel alles op en deel door het aantal. Het is wat iedereen krijgt als je eerlijk verdeelt.</p><div class="ex">8, 5, 3, 6, 3, 4, 8, 3 → som 40 → 40 ÷ 8 = <b>5</b></div>`,['Gemiddelde van 4, 6, 8?','6','18|5','18 ÷ 3 = 6.']],
  ['De mediaan',`<p>Zet de getallen <b>op volgorde</b> en neem het middelste.</p><div class="ex">3 3 3 <b>4 5</b> 6 8 8 → even aantal, dus (4 + 5) ÷ 2 = <b>4,5</b></div><p>Bij een oneven aantal is er precies één middelste getal.</p>`,['Mediaan van 7, 1, 9, 3, 5?','5','9|3','Op volgorde: 1 3 5 7 9. Middelste is 5.']],
@@ -1230,7 +1247,7 @@ function spiek(){
   P.innerHTML=`<div class="playbar"><button class="btn small ghost" id="quit">Terug</button></div><div class="uitleg"><h2 style="font-size:26px">Spiekbriefje H2</h2>
   <h3>Cyclus</h3><p>1 onderzoeksvraag → 2 data verzamelen → 3 data analyseren → 4 conclusies trekken.</p>
   <h3>Steekproef</h3><p><b>Representatief</b>: goede afspiegeling van de populatie. <b>Aselect</b>: iedereen even grote kans.</p>
-  <h3>Variabelen</h3><p>Geen getallen of geen hoeveelheden → <b>kwalitatief</b>: zonder volgorde <b>nominaal</b>, met volgorde <b>ordinaal</b>. Hoeveelheden → <b>kwantitatief</b>: tellen = <b>discreet</b>, meten = <b>continu</b>.</p>
+  <h3>Variabelen</h3>${figVar()}<p>Geen getallen of geen hoeveelheden → <b>kwalitatief</b>: zonder volgorde <b>nominaal</b>, met volgorde <b>ordinaal</b>. Hoeveelheden → <b>kwantitatief</b>: tellen = <b>discreet</b>, meten = <b>continu</b>.</p>
   <h3>Centrummaten</h3><p><b>Gemiddelde</b> = som ÷ aantal. <b>Mediaan</b> = middelste (op volgorde!). <b>Modus</b> = vaakst. Uitschieters → mediaan. Kwalitatief → modus.</p>
   <h3>Klassen</h3><p>[20, 30): 20 wel, 30 niet. Klassenmidden 25. Gemiddelde schatten met klassenmiddens. Modale klasse = hoogste frequentie.</p>
   <h3>Spreiding</h3><p>Q1 en Q3 = mediaan van eerste en tweede helft. <b>Spreidingsbreedte</b> = Q4 − Q0. <b>Interkwartielafstand</b> = Q3 − Q1. Elk stuk van de boxplot ≈ 25%, de box = 50%.</p>

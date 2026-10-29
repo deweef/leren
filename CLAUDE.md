@@ -142,6 +142,9 @@ schermen `show('home'|'play')`, `goHome()`, `ask()`, `practice(sec)` (oefenronde
   Voorbeeldbrief over een ander onderwerp (niet overschrijfbaar). We schrijven de brief niet voor Ben: tips, geen
   verbeterde versie (ook niet als Marcel zijn tekst in de chat plakt).
 
+- **Wiskunde soorten variabelen**: `figVar()` (wiskunde.html) = boomschema variabelen → kwantitatief (discreet, continu) / kwalitatief
+  (nominaal, ordinaal), naar Bens plaatje; staat in de theorie van 2.2, op het kaartje "Het stroomschema" en op de spiekbrief.
+
 - **Biologie begrippen inprenten** (`biologie.html`, `learnNext`): geen typen (Bens wens). Stap 1 = kiezen (begrip of uitleg),
   stap 2 = uitleg → begrip kiezen uit 5 opties; pas stap 2 goed telt als geleerd, fout = terug naar stap 1. Rekenvragen houden een invulvak.
 
