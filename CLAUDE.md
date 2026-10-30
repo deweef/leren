@@ -187,6 +187,9 @@ schermen `show('home'|'play')`, `goHome()`, `ask()`, `practice(sec)` (oefenronde
   Softbal-scheids (`SCHEIDS` + posities), Padel-teller (`padTel()` generator), Op volgorde (`VOLG`, tegels, 8 per keer, doel 6/8). Route: per onderdeel
   leerpad 4% + oefenronde 6% (8/10), 4 spellen × 3%, blitz ≥ 15 3%, toets ≥ 7 5%. Let op: praatje-plaatje-daadje (boek § 2.3) vs plaatje-praatje-daadje
   (module groene spelen), allebei genoemd. Padelregels volgen de module (return onderhands, tiebreak tot 7). Discustechniek en softbal blz. 2-6 ontbraken in de scans.
+  Softbal-lijnen (op de toets tekenen): `LIJN` (12 lijnen/vakken naar de plattegrond blz. 9: foutlijnen, 1-meterlijn, slagperk, vangersperk,
+  werpcirkel, helpersvak, wachtcirkel, backstop, zijveld-/verreveldafrastering, warningtrack, eindpalen), `figLijnen(hl)` (genummerd, of één oranje
+  voor de vraag 'hoe heet de oranje lijn?', 2× in Softbal-scheids), `legLijnen()`; kaartje "Lijnen en vakken op het veld" met tekentip.
 
 - **Google Spreadsheets** (`spreadsheet.html`, `spreadsheet-v1`, wiskunde 4 havo, volgend hoofdstuk van Ben; geen boek, zelf opgezet): staat voorlopig
   alleen onder **Marcel** (`<section data-who="marcel">` in index.html), later naar Ben verplaatsen. Eigen rekenkern (`Blad`, `tokens`, `FN`, `schuif`
