@@ -202,6 +202,16 @@ schermen `show('home'|'play')`, `goHome()`, `ask()`, `practice(sec)` (oefenronde
   Ben's invoer in `S.cel[id]`. Vrij rekenblad `blad('vrij')`. Spellen: Wat komt eruit? (`watKomtEruit()`), Welke formule is goed? (`WELKE`).
   Route: per les leerpad 4% + oefenblad 6% (graf: vragen 6%, 7/8), spellen 2 × 8%, proeftoets ≥ 7 14%, spiekbrief 0%.
 
+- **Biologie Thema 2 Voortplanting en seksualiteit** (`biologie-t2.html`, Ben, `bio-thema2-v1`; Biologie voor jou 4 havo, scans OneDrive `Leren/Biologie`
+  'Biologie Thema 2 deel 1-4'): `H` = 6 basisstoffen 2.1-2.6 {id, t, kort, ic, lp} (kaartjes met plaatjes; context uit het boek alleen als `VB()`-voorbeeld
+  met ‘hoef je niet te leren’: bananen, anabolen, endometriose, Nikkie, mannenpil). **Podcast** `POD[sec]` = 3 delen per basisstof, stemmen Lotte (E) en
+  Sem (D), zelfde speler/stemkeuze als geschiedenis (`podMenu`, `podStart`, `podAlles`, `spreek`, `stemmen`, `leren-stem`), daarna checkvragen.
+  `MCQ[sec]` (≈30 per basisstof), `BEGR` (100), `OPEN` (38, nakijken als geschiedenis: `openSet`/`openNakijk`/`oMarkeer`, `S.open`), `EXAM` (27
+  examenstijl-vragen met gegevens/tabellen, o.a. de 4 MC-examenvragen uit het boek; `examen()`, doel 70%, `S.ex`). Spellen: Cyclus-detective (`CYC`, met
+  `figCyclus(dag)`), Chromosomen tellen (`chrVraag()`, invulgetal), Op volgorde (`VOLG`; tegels moeten unieke teksten hebben). Plaatjes: `figCelcyclus`,
+  `figMitose`, `figMeiose`, `figBevruchting`, `figBloem`, `figRouteMan/Vrouw`, `figCyclus`, `figRegelMan/Vrouw`, `figZwanger`, `figStam`. Route: per
+  basisstof 3 podcastdelen × 1% + leerpad 4% + oefenronde 5% (8/10); volg 3, chr 4, cyc 4; blitz 2, examen 5, open 4, toets 6; samen 0%.
+
 ## Leerlogboek en scores (gedeeld met deweef/spelletjes)
 - `leerlog.js` staat in de `<head>` van elke vakpagina (vóór de andere scripts). Per bezoek stuurt het stil één
   regel (wie, vak, actieve minuten, wat erbij kwam, stand) met `sendBeacon` naar het Apps Script van het
