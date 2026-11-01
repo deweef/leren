@@ -219,6 +219,10 @@ schermen `show('home'|'play')`, `goHome()`, `ask()`, `practice(sec)` (oefenronde
   bloedgroepen, letaal manx 2/3; uitleg in 3 stappen met schema), **Stamboom-detective** (`SB` stambomen + `STAM` vragen), Tel de chromosomen (`telVraag()`, 2ⁿ, syndromen),
   Op volgorde (`VOLG`). Route: per basisstof 3 podcastdelen × 1% + leerpad 4% + oefenronde 5%; tel 2, volg 2 (na 3.2), kruis 6, stam 4 (na 3.3); blitz 2, examen 5, open 3, toets 4.
 
+- **Hintknop biologie** (`biologie-t2.html`, `biologie-t3.html`): onder elke vraag (niet in de proeftoets) "💡 Hoe pak ik dit aan?" = `hintVan(q)`: `q.hint` (de aanpak, bij
+  spellen/generatoren) of een algemene tip, plus het best passende leerpad-kaartje (`kaartVoor(q)`: woorden van vraag + antwoord vergeleken met de kaartjes van die basisstof)
+  in een uitklapper `.hkaart`. Verdwijnt na het antwoord.
+
 ## Leerlogboek en scores (gedeeld met deweef/spelletjes)
 - `leerlog.js` staat in de `<head>` van elke vakpagina (vóór de andere scripts). Per bezoek stuurt het stil één
   regel (wie, vak, actieve minuten, wat erbij kwam, stand) met `sendBeacon` naar het Apps Script van het

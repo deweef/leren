@@ -105,6 +105,7 @@ dl.begr{margin:0}.begr dt{font-weight:700;margin-top:8px}.begr dd{margin:0 0 0 1
 .fig{max-width:460px}.fig.breed{max-width:460px}.volgrij{min-height:40px;margin:10px 0;padding-left:26px}.volgrij li{font-weight:700;margin:4px 0}
 .gt td,.gt th{overflow-wrap:normal}.typerow{display:flex;gap:10px;margin-top:12px}
 .kt{border-collapse:collapse;margin:10px auto;font-size:1.05rem}.kt th,.kt td{border:1.5px solid var(--line,#999);padding:8px 14px;text-align:center;white-space:nowrap}.kt th{background:rgba(127,127,127,.15)}.kt td.mk{background:rgba(46,204,113,.28);font-weight:800}.kt .hoek{font-size:.8rem}
+.hintrij{margin-top:12px}.hintbox{background:var(--chip);border-left:4px solid #e0b100;border-radius:8px;padding:10px 12px;margin-top:8px;font-size:15.5px;line-height:1.5}.hkaart{margin-top:8px}.hkaart summary{cursor:pointer;font-weight:700;color:var(--accent)}.hkaart[open]{background:var(--surface);border-radius:8px;padding:6px 10px}
 </style>
 </head>
 <body>
@@ -1545,7 +1546,8 @@ function kruisVraag(){const soort=pick(['dom','dom','dom','int','x','x','abo','l
  else{const p=pr(k,n);goed=p+'%';opts=[goed,...shuffle([0,25,50,75,100].filter(x=>x!==p)).slice(0,3).map(x=>x+'%')]}
  const kleur=(m,v)=>{const c=[m,v];if(soort==='x'&&alle!=='kinderen'&&(alle==='zonen')!==c.includes('Y'))return false;return fen(c)===welke};
  const w=`<b>Stap 1</b>: geslachtscellen ♂ ${gm.map(al).join(' en ')}, ♀ ${gv.map(al).join(' en ')}.<br><b>Stap 2</b>: het schema (gekleurd = ${welke==='ziek'?'ziek':welke}):${kruisTabel(gm,gv,kleur)}<b>Stap 3</b>: ${soort==='let'?`MM sterft, dus er blijven 3 vakjes over; daarvan ${k}: ${k}/3.`:soort==='x'&&alle!=='kinderen'?`kijk alleen naar de vakjes van de ${alle} (${alle==='zonen'?'met Y':'XX'}): ${k} van de ${n} = ${pr(k,n)}%.`:`${k} van de ${n} vakjes = ${pr(k,n)}%.`}`;
- return {q:intro+'<br>'+vr,a:goed,opts,w}}
+ const hint=`<b>Stap 1</b>: schrijf de geslachtscellen van beide ouders op (elke geslachtscel krijgt één allel van het paar). <b>Stap 2</b>: zet ze in een kruisingsschema, zaadcellen links (♂) en eicellen boven (♀), en vul de vakjes in. <b>Stap 3</b>: tel de vakjes met het gevraagde fenotype.${soort==='x'?' Let op: gaat de vraag over zonen, dochters of alle kinderen? Tel dan alleen die vakjes.':soort==='let'?' Let op: streep eerst het vakje MM door, want die jongen worden niet geboren.':soort==='abo'?' Bloedgroep O heb je alleen met ii; A en B samen geeft AB.':''}`;
+ return {q:intro+'<br>'+vr,a:goed,opts,w,hint}}
 
 /* Stamboom-detective */
 const SB={
@@ -1572,7 +1574,7 @@ const STAM=[
  ['drie','De aandoening is autosomaal recessief. Hoe groot is de kans dat een volgend kind van 3 en 4 ziek is?','25%','50%|0%|12,5%','3 en 4 zijn allebei Aa. Aa × Aa: 1 van de 4 is aa = <b>25%</b>.'],
  ['domk','De aandoening is dominant. Hoe groot is de kans dat een volgend kind van 1 en 2 ziek is?','50%','25%|75%|100%','Moeder 2 is gezond: aa. Vader 1 is ziek; omdat kind 4 gezond (aa) is, is hij Aa. Aa × aa geeft 1 Aa : 1 aa: <b>50%</b>.'],
  ['domk','De aandoening is dominant. Wat is het genotype van persoon 3?','Aa','AA|aa|AA of Aa, dat weet je niet zeker','Moeder 2 is gezond (aa) en geeft altijd een a. Persoon 3 is ziek, dus heeft een A van vader: <b>Aa</b>.']];
-const stamItem=s=>{const [p,paar,kind]=SB[s[0]];return {fig:figStamboom(p,paar,kind),q:s[1],a:s[2],opts:[s[2],...s[3].split('|')],w:s[4]}};
+const stamItem=s=>{const [p,paar,kind]=SB[s[0]];return {fig:figStamboom(p,paar,kind),q:s[1],a:s[2],opts:[s[2],...s[3].split('|')],w:s[4],hint:/X-chromosomaal/.test(s[1])?'Een zoon krijgt zijn X van zijn moeder en de Y van zijn vader. Een dochter krijgt van allebei een X. Een man heeft maar één X: is die X<sup>a</sup>, dan is hij ziek.':/dominant of recessief/.test(s[1])?'Zoek twee ouders die hetzelfde zijn, met een kind dat anders is. Twee gezonde ouders met een ziek kind: het zieke allel zat verstopt. Twee zieke ouders met een gezond kind: het gezonde allel zat verstopt.':'Begin bij de mensen van wie je het genotype zeker weet: wie het recessieve fenotype heeft, is aa. Een aa-kind kreeg van elke ouder een a. Een aa-ouder geeft altijd een a door. Bij een kans: maak daarna een kruisingsschema.'}};
 
 /* Tellen: chromosomen en recombinatie */
 const SOORT=[['de mens',46],['een kat',38],['een hond',78],['een fruitvlieg',8],['een paard',64],['een kip',78],['een chimpansee',48]];
@@ -1722,6 +1724,12 @@ function leerpad(id){stilte();const h=SECN[id];let i=0;show('play');
   $('#opn').onclick=()=>ronde(id);$('#hm').onclick=goHome;$('#opn').focus()};
  teken()}
 
+
+/* ---------- 💡 Hoe pak ik dit aan? De aanpak (q.hint) en het kaartje uit het leerpad waar de vraag over gaat; niet in de proeftoets ---------- */
+const STOPW=new Set('deze die dat wat welke hoeveel waarom wordt worden niet zijn heeft hebben kunnen moet maar ook door naar voor over onder tussen bij zonder iets meer minder alle elke steeds daarna eerst juist goed fout klopt uitspraak uitspraken antwoord'.split(' '));
+const woorden=t=>(String(t).replace(/<[^>]+>/g,' ').toLowerCase().match(/[a-zà-ÿ]{4,}/g)||[]).filter(x=>!STOPW.has(x));
+function kaartVoor(q){const h=q.sec&&SECN[q.sec];if(!h)return null;const w=new Set(woorden(q.q+' '+q.a));let best=null,bs=0;h.lp.forEach(l=>{const n=new Set(woorden(l[0]+' '+l[1]).filter(x=>w.has(x))).size;if(n>bs){bs=n;best=l}});return bs>=1?best:null}
+function hintVan(q){const k=kaartVoor(q);if(!q.hint&&!k)return '';return `<div>${q.hint||'Zoek de kernwoorden in de vraag. Weet je niet meer wat ze betekenen? Lees het kaartje hieronder nog eens, en kijk dan opnieuw naar de opties.'}</div>${k?`<details class="hkaart"><summary>📖 Kaartje uit het leerpad: ${k[0]}</summary>${k[1]}</details>`:''}`}
 /* ---------- vragen: meerkeuze of getal; fout = herkansing aan het eind ---------- */
 const terugKnop=()=>`<button class="btn licht" id="hm">${RT.on?'Terug naar de route':'Naar het overzicht'}</button>`;
 function quiz(qs,o){let i=0,goed=0,opnieuw=[];const n=qs.length;
@@ -1729,9 +1737,10 @@ function quiz(qs,o){let i=0,goed=0,opnieuw=[];const n=qs.length;
   const q=qs[i],her=i>=n;const opts=q.num?[]:shuffle(q.opts);
   P.innerHTML=`<div class="top"><button class="btn licht klein" id="stop">Stoppen</button><span class="stap">${o.titel}</span><span class="teller">${Math.min(i+1,n)}/${n}${her?' · herkansing':''}</span></div>
   <div class="kaart">${her?'<div class="label" style="color:var(--gold)">Herkansing: deze ging eerder fout</div>':''}${q.sec?`<div class="label">${SECN[q.sec].ic} ${q.sec} ${SECN[q.sec].t}</div>`:''}${q.fig||''}<div class="vraag">${q.q}</div>
+  ${o.titel!=='Proeftoets'&&hintVan(q)?`<div class="hintrij"><button class="btn licht klein" type="button" id="hintb">💡 Hoe pak ik dit aan?</button><div id="hintbox" class="hintbox" hidden>${hintVan(q)}</div></div>`:''}
   ${q.num?`<form class="typerow" id="nf" autocomplete="off"><input id="ni" inputmode="numeric" placeholder="aantal" aria-label="Antwoord"><button class="btn" type="submit" id="nb">Controleer</button></form>`:`<div class="opts">${opts.map((x,k)=>`<button class="opt" data-k="${k}">${x}</button>`).join('')}</div>`}<div id="fb"></div></div>`;
-  $('#stop').onclick=goHome;
-  const af=ok=>{if(!her&&ok)goed++;if(ok){if(q.id)delete S.mis[q.id]}else{if(q.id&&q.sec&&!o.geenMis)S.mis[q.id]=q.sec;if(!her)opnieuw.push(q)}save();
+  $('#stop').onclick=goHome;const hb=$('#hintb');if(hb)hb.onclick=()=>{$('#hintbox').hidden=false;hb.hidden=true};
+  const af=ok=>{const hr=P.querySelector('.hintrij');if(hr)hr.hidden=true;if(!her&&ok)goed++;if(ok){if(q.id)delete S.mis[q.id]}else{if(q.id&&q.sec&&!o.geenMis)S.mis[q.id]=q.sec;if(!her)opnieuw.push(q)}save();
    $('#fb').innerHTML=`<div class="uitleg"><b class="${ok?'goed-t':'fout-t'}">${ok?'Goed!':'Niet goed.'}</b> ${q.num&&!ok?`Het antwoord is <b>${q.a}</b>. `:''}${q.w||''}</div><div class="acts"><button class="btn" id="vd">Verder ↵</button></div>`;
    i++;$('#vd').onclick=volgende;$('#vd').focus()};
   if(q.num){const inp=$('#ni');inp.focus();$('#nf').onsubmit=e=>{e.preventDefault();const v=parseInt(inp.value,10);if(isNaN(v)){inp.classList.remove('shake');void inp.offsetWidth;inp.classList.add('shake');return}inp.readOnly=true;$('#nb').hidden=true;af(v===q.a)}}
@@ -1748,7 +1757,7 @@ function examen(){stilte();quiz(shuffle(EXAM).slice(0,12).map(exItem),{titel:'Ex
 function spelKlaar(k,goed,n){const f=goed/n,d=SPEL[k].doel;if(f>(S.sp[k]||0))S.sp[k]=f;save();
  return `<p>${f>=d?'Gehaald! 🎉':`Doel: ${Math.ceil(d*n)} van de ${n} in één keer goed.`}</p><div class="acts" style="justify-content:center"><button class="btn" id="opn">Nog een keer</button>${terugKnop()}</div>`}
 function spel(k){stilte();if(k==='volg')return volg();
- const qs=k==='tel'?Array.from({length:10},telVraag):k==='kruis'?Array.from({length:10},kruisVraag):shuffle(STAM).slice(0,10).map(stamItem);
+ const qs=k==='tel'?Array.from({length:10},()=>Object.assign(telVraag(),{hint:'Lichaamscel = 2n (diploïd, chromosomen in paren). Geslachtscel = n (haploïd, van elk paar één). Recombinatie: elk paar geeft 2 mogelijkheden, dus 2 tot de macht n (het aantal paren). Autosomen = alle chromosomen behalve X en Y. Bevruchting: elke soort eicel kan met elke soort zaadcel, dus vermenigvuldig.'})):k==='kruis'?Array.from({length:10},kruisVraag):shuffle(STAM).slice(0,10).map(stamItem);
  quiz(qs,{titel:SPEL[k].t,geenHer:k!=='stam',klaar:(g,n)=>spelKlaar(k,g,n),na:()=>{$('#opn').onclick=()=>spel(k);$('#hm').onclick=goHome}})}
 function volg(){const set=shuffle(VOLG).slice(0,5);let i=0,goed=0;show('play');
  const teken=()=>{if(i>=set.length){P.innerHTML=`<div class="kaart" style="text-align:center"><div class="label">${SPEL.volg.t}</div><div class="groot">${goed}<span> / ${set.length}</span></div>${spelKlaar('volg',goed,set.length)}</div>`;$('#opn').onclick=volg;$('#hm').onclick=goHome;return}
