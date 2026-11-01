@@ -223,6 +223,16 @@ schermen `show('home'|'play')`, `goHome()`, `ask()`, `practice(sec)` (oefenronde
   spellen/generatoren) of een algemene tip, plus het best passende leerpad-kaartje (`kaartVoor(q)`: woorden van vraag + antwoord vergeleken met de kaartjes van die basisstof)
   in een uitklapper `.hkaart`. Verdwijnt na het antwoord.
 
+- **Scheikunde H3 Organische chemie** (`scheikunde-h3.html`, Ben, `chem-h3-v1`; Nova scheikunde havo 4 blz 133-187, scans OneDrive `Leren/Scheikunde` 'Scheikunde H3 deel 1-4'):
+  gebouwd op de biologie-engine (zelfde `H`/`quiz`/`ronde`/`OPEN`/`EXAM`/route-opzet, geen podcasts). Delen '0' (Voorkennis = het ‘hoofdstuk 0’ van blz 134-135) en 3.1-3.4.
+  Uitstapjes naar eerdere stof: `TERUG(titel, html)` (‘🔙 Weet je het nog?’, klasse `.terug`) in de leerpaden. `MCQ` heeft een 5e veld `hint`, `EXAM` een 6e; `hintVan` = hint +
+  passend kaartje (zie Hintknop biologie). Organische helpers in het script: `molSVG(spec)` (volledige structuurformule, alleen onvertakt),
+  `naam(spec)` (systematische naam: laagste nummer voor achtervoegsel, dan dubbele binding, dan voorvoegsels, gelijk = alfabetisch), `formule(spec)`, `randMol()`;
+  spec = {n, dub, main:{t:'ol'|'amine'|'zuur', p}, hal:[[p,'Cl']]}. Spellen: Naamgever (`naamVraag`), Welke structuur? (`tekenVraag`, opties zijn SVG’s, `.svgopts`),
+  Reactiedetective (`reactieVraag`), Verbranding kloppend (`kloppendVraag`, getal). De berg = **destillatietoren** (`KCAMPS` residu → benzine, `S.klim[vraag]`, alle MCQ
+  van een deel één keer goed; `quiz` heeft `opGoed`). Route: lp 5/6, spellen naam 6, teken 4, reactie 5, kloppend 4, oefenronde 4/6, toren 1/3; blitz 2, toets-
+  vragen 3, open 3, proeftoets 3.
+
 ## Leerlogboek en scores (gedeeld met deweef/spelletjes)
 - `leerlog.js` staat in de `<head>` van elke vakpagina (vóór de andere scripts). Per bezoek stuurt het stil één
   regel (wie, vak, actieve minuten, wat erbij kwam, stand) met `sendBeacon` naar het Apps Script van het
