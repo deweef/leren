@@ -191,8 +191,8 @@ schermen `show('home'|'play')`, `goHome()`, `ask()`, `practice(sec)` (oefenronde
   werpcirkel, helpersvak, wachtcirkel, backstop, zijveld-/verreveldafrastering, warningtrack, eindpalen), `figLijnen(hl)` (genummerd, of één oranje
   voor de vraag 'hoe heet de oranje lijn?', 2× in Softbal-scheids), `legLijnen()`; kaartje "Lijnen en vakken op het veld" met tekentip.
 
-- **Google Spreadsheets** (`spreadsheet.html`, `spreadsheet-v1`, wiskunde 4 havo, volgend hoofdstuk van Ben; geen boek, zelf opgezet): staat voorlopig
-  alleen onder **Marcel** (`<section data-who="marcel">` in index.html), later naar Ben verplaatsen. Eigen rekenkern (`Blad`, `tokens`, `FN`, `schuif`
+- **Google Spreadsheets** (`spreadsheet.html`, `spreadsheet-v1`, wiskunde 4 havo, volgend hoofdstuk van Ben; geen boek, zelf opgezet): staat sinds 1 nov
+  bij **Ben** (eerst even onder Marcel). Eigen rekenkern (`Blad`, `tokens`, `FN`, `schuif`
   voor doortrekken, `Fout` met #DEEL/0!, #NAAM?, #WAARDE!, #VERW!, #FOUT!): Nederlandse én Engelse functienamen (SOM/SUM, GEMIDDELDE, MEDIAAN, MODUS,
   MIN, MAX, AANTAL, AANTAL.ALS, KWARTIEL (= QUARTILE.INC, kan afwijken van de handmethode), STDEV.P/STDEV, SOMPRODUCT, AFRONDEN, ALS), `;` of `,`
   tussen argumenten, komma als decimaal, `$` vastzetten; cellen buiten het blad zijn leeg. `L` = 7 lessen {id, lp, blad?, q} (cel, som, gmm, freq, spr,
