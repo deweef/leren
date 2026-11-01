@@ -90,7 +90,7 @@ schermen `show('home'|'play')`, `goHome()`, `ask()`, `practice(sec)` (oefenronde
   te weten. Onder elke formule staat "Wat betekent wat?" (`leg(keys)`, `SYM`: symbool,
   betekenis, eenheid), op de theorie (`TH.*.h`) en via `legBij` op leerpad-kaartjes. Stel bij een vraag van Marcel
   over de stof eerst vast of het al ergens uitgelegd staat; ontbreekt het, stel dan een kaartje voor.
-- **Hintknop** (scheikunde-h1): onder elke vraag "💡 Hoe pak ik dit aan?" (`hintVan(q)` = `q.hint` of anders `HINT[q.th]`): de aanpak,
+- **Hintknop** (scheikunde-h1, ook scheikunde.html H2 met `HINT[th]` per theorie-onderwerp; generatoren via `GENS[k].th`): onder elke vraag "💡 Hoe pak ik dit aan?" (`hintVan(q)` = `q.hint` of anders `HINT[q.th]`): de aanpak,
   nooit het antwoord. Niet in de proeftoets; verdwijnt na nakijken. Nieuwe generator of theorie-onderwerp: geef een `hint` mee of vul `HINT` aan.
 - **Kleuren op het hoofdscherm** (alle vakken met een route): **donker** (`mode main`) alleen voor de kaart van de
   leerroute; **wit** = nog te doen; **groen met "✓ gehaald"** (klasse `gehaald`) = gehaald volgens hetzelfde doel als

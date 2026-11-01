@@ -309,6 +309,7 @@ td.okc{background:var(--good-bg);font-weight:700}td.badc{background:var(--bad-bg
 .par.gehaald,.gate.gehaald,.gcard.gehaald{position:relative;background:var(--good-bg)!important;border-color:var(--good)!important}
 .par.gehaald::after,.gate.gehaald::after,.gcard.gehaald::after{content:"✓";position:absolute;top:6px;right:9px;font-weight:800;color:var(--good)}
 .lpfig{display:block;width:100%;max-width:420px;margin:10px auto;color:var(--ink)}
+.hintrij{margin-top:10px}.hintbox{background:var(--chip);border-left:4px solid #e0b100;border-radius:8px;padding:10px 12px;font-size:15px;line-height:1.5;margin-top:8px}
 </style>
 
 </head>
@@ -1294,13 +1295,44 @@ function mcButtons(labels){return `<div class="opts">${labels.map((o,i)=>`<butto
 function markOpts(ci,chosen){P.querySelectorAll('.opt').forEach((b,i)=>{b.disabled=true;b.classList.add(i===ci?'good':i===chosen?'bad':'dim')})}
 function parseNum(v){const t=String(v).trim().replace(/\s/g,'').replace('%','').replace(',','.');if(!/^[-+]?\d*\.?\d+$/.test(t))return NaN;return parseFloat(t)}
 /* één vraag: q = {q, mc, opts, a, tol, u, w, th} */
+
+/* ---------- 💡 Hoe pak ik dit aan? (de aanpak, niet het antwoord): q.hint of HINT[q.th]; niet in de proeftoets ---------- */
+const HINT={
+atoom:'Een atoom: protonen (+) en neutronen in de kern, elektronen (−) eromheen. Atoomnummer = aantal protonen; massagetal = protonen + neutronen. Kijk in het periodiek systeem (Binas 99).',
+ps:'Zoek het element op in het periodiek systeem: links staan de metalen, rechts de niet-metalen. De groep (kolom) zegt hoeveel valentie-elektronen er zijn.',
+formule:'Lees een formule per atoomsoort: het kleine getal rechtsonder (index) hoort bij het atoom ervoor. Een getal vóór de formule (coëfficiënt) telt het aantal moleculen.',
+fase:'Bedenk welke fase de stof eerst heeft en welke daarna: vast ↔ vloeibaar ↔ gas. Bij een faseovergang blijven de moleculen hetzelfde.',
+kloppend:'Tel per atoomsoort links en rechts. Begin met het atoom dat in de minste stoffen voorkomt, zet getallen alléén vóór de formules (nooit de index veranderen), en tel aan het eind alles na.',
+drie:'Vraag je af: zit er een metaal in? Alleen metaal = metaal; metaal + niet-metaal = zout; alleen niet-metalen = moleculaire stof.',
+atoombinding:'Een atoombinding is een gedeeld elektronenpaar tussen twee niet-metaalatomen. Teken de atomen en kijk hoeveel elektronen elk nog nodig heeft.',
+covalentie:'Covalentie = aantal armpjes: H 1, O 2, N 3, C 4, halogeen 1. Elk atoom gebruikt precies zijn aantal armpjes.',
+structuur:'Een molecuulformule telt de atomen; een structuurformule laat zien hoe ze aan elkaar zitten. Tel in de structuurformule per atoomsoort.',
+naam:'Systematische naam: tel de atomen per soort en gebruik mono, di, tri, tetra … (mono vooraan laat je weg). Het niet-metaal dat het meest links in het periodiek systeem staat komt vooraan.',
+triviaal:'Triviale namen moet je kennen (water, ammoniak, methaan, alcohol, glucose …). Herhaal het lijstje uit de theorie.',
+element:'Zeven elementen komen als twee-atomige moleculen voor: H₂, N₂, O₂, F₂, Cl₂, Br₂, I₂.',
+reactie:'Ontstaan er nieuwe stoffen (andere moleculen)? Dan is het een reactie. Verandert alleen de fase en blijven de moleculen gelijk? Dan is het een faseovergang.',
+vdw:'De vanderwaalsbinding is de aantrekking tussen moleculen. Groter molecuul (meer massa, groter contactoppervlak) = sterkere vanderwaalsbinding = hoger kookpunt.',
+hbrug:'Kijk of het molecuul een O–H of N–H heeft: alleen dan kan het waterstofbruggen vormen. Waterstofbruggen zijn sterker dan vanderwaalsbindingen.',
+oplos:'Soort zoekt soort: stoffen met O–H of N–H (hydrofiel) mengen met water; stoffen zonder (hydrofoob) niet.',
+molrooster:'In een molecuulrooster zitten moleculen; er zijn geen vrije geladen deeltjes, dus geen stroomgeleiding.',
+metaal:'Metaalbinding: positieve metaalionen in een zee van vrije elektronen. Die vrije elektronen verklaren de geleiding.',
+metaaleig:'Eigenschappen van metalen komen van de vrije elektronen (geleiding) en de lagen die over elkaar kunnen schuiven (vervormbaar).',
+legering:'Een legering is een mengsel van metalen. Andere atomen in het rooster maken het moeilijker voor de lagen om te schuiven: harder.',
+edel:'Hoe edeler een metaal, hoe minder snel het reageert. Kijk in de rij van edelheid (Binas 48).',
+zout:'Een zout bestaat uit een metaal en een niet-metaal (of een samengesteld ion). Zoek eerst het metaal.',
+ion:'Metalen geven elektronen af en worden positief; niet-metalen nemen elektronen op en worden negatief. Kijk naar de groep in het periodiek systeem (of Binas 40A/45).',
+zoutformule:'Zoek de lading van het positieve en het negatieve ion. Kies de aantallen zo dat de totale lading 0 is (kruisregel of kleinste gemene veelvoud).',
+ionrooster:'In een ionrooster trekken + en − ionen elkaar aan (ionbinding). Vast geleidt het niet; gesmolten of opgelost wel, want dan kunnen de ionen bewegen.',
+zouteig:'Zouten: hoog smeltpunt (sterke ionbinding), geleiden alleen als vloeistof of in oplossing (bewegende ionen).',
+rekenen:'Schrijf op wat gegeven is en wat gevraagd wordt. Reken met het rekenschema: gram ↔ mol met M (atoommassa’s optellen), mol ↔ deeltjes met N_A.'};
+function hintVan(q){const g=q.gen&&GENS[q.gen];return q.hint||HINT[q.th]||(g&&HINT[g.th])||''}
 function ask(q,title,right,top,cb,opts={}){
   const isMC=!!q.mc;let labels;if(isMC){labels=q.keep?q.opts:shuffle(q.opts)}
-  P.innerHTML=top+`<div class="slide">${head(title,right)}<div class="slide-body">${opts.again?'<div class="pill" style="align-self:flex-start">Herkansing: deze ging eerder fout</div>':''}<div class="prompt" style="font-size:clamp(18px,4vw,22px);font-weight:600">${q.q}</div>
+  P.innerHTML=top+`<div class="slide">${head(title,right)}<div class="slide-body">${opts.again?'<div class="pill" style="align-self:flex-start">Herkansing: deze ging eerder fout</div>':''}<div class="prompt" style="font-size:clamp(18px,4vw,22px);font-weight:600">${q.q}</div>${hintVan(q)&&title!=='Proeftoets'?`<div class="hintrij"><button class="btn small ghost" type="button" id="hintb">💡 Hoe pak ik dit aan?</button><div id="hintbox" class="hintbox" hidden>${hintVan(q)}</div></div>`:''}
    ${isMC?mcButtons(labels):`<form class="typerow" id="nf" autocomplete="off"><input id="ni" inputmode="decimal" placeholder="antwoord${q.u?' in '+q.u:''}" aria-label="Antwoord"><button class="btn dark" type="submit" id="nb">Controleer</button></form>`}
    <div id="fbox"></div></div></div>`;
-  const qb=$('#quit');if(qb)qb.onclick=opts.onQuit||goHome;
-  const fin=(ok,given)=>{const fb=$('#fbox');
+  const qb=$('#quit');if(qb)qb.onclick=opts.onQuit||goHome;const hb=$('#hintb');if(hb)hb.onclick=()=>{$('#hintbox').hidden=false;hb.hidden=true};
+  const fin=(ok,given)=>{const fb=$('#fbox');if(hb)hb.closest('.hintrij').hidden=true;
     if(opts.silent){cb(ok,given);return}
     fb.innerHTML=`<div class="fb ${ok?'good':'bad'}"><div class="t">${ok?pick(['Goed!','Klopt!','Top!','Netjes!']):'Niet goed. Het antwoord is '+(isMC?q.a:nf(q.a,2)+(q.u?' '+q.u:''))+'.'}</div>${q.w?`<div class="tip"><b>Uitleg:</b> ${q.w}</div>`:''}${!ok&&q.th?thCard(q.th):''}</div><div class="foot" style="margin-top:12px"><button class="btn primary" id="next">Verder ↵</button></div>`;
     const n=$('#next');n.onclick=()=>cb(ok,given);n.focus()};
@@ -1347,7 +1379,7 @@ function endScreen(){
   $('#again').onclick=()=>practice(sec);$('#uit').onclick=()=>uitleg(sec);$('#home2').onclick=goHome;const lb=$('#lees');if(lb){lb.onclick=()=>leesStart(sec,lees);if(pct<.8){lb.focus();return}}$('#again').focus();
 }
 function trainer(k,goal){G={m:'tr',k,n:0,ok:0,streak:0,goal};show('play');trNext()}
-function trNext(){const g=GENS[G.k];const q=g.f();
+function trNext(){const g=GENS[G.k];const q=g.f();if(!q.th&&g.th)q.th=g.th;
   ask(q,g.t,`Reeks: ${G.streak}${G.goal?' · doel '+G.goal:''}`,topbar(`${G.ok} van ${G.n} goed`,0,'Klaar'),ok=>{G.n++;if(ok){G.ok++;G.streak++;if(G.streak%5===0||G.streak===G.goal)confetti()}else G.streak=0;if(!S.tr)S.tr={};S.tr[G.k]=Math.max(S.tr[G.k]||0,G.streak);rec(g.sec,ok);save();trNext()});
 }
 const SECGAMES={'0':[['balans','⚖️ Weegschaal: kloppend maken'],['band','Sorteerband']],'2.1':[['bouw','Molecuulbouwer']],'2.2':[['oplos','🧪 Lab: oplossen'],['kook','🌡️ Kookpuntladder']],'2.3':[['metaal','🔥 Metalenrace'],['stroom','💡 Stroomtest']],'2.4':[['zout','⚗️ Zoutfabriek'],['stroom','💡 Stroomtest']]};
