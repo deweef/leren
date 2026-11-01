@@ -212,6 +212,13 @@ schermen `show('home'|'play')`, `goHome()`, `ask()`, `practice(sec)` (oefenronde
   `figMitose`, `figMeiose`, `figBevruchting`, `figBloem`, `figRouteMan/Vrouw`, `figCyclus`, `figRegelMan/Vrouw`, `figZwanger`, `figStam`. Route: per
   basisstof 3 podcastdelen × 1% + leerpad 4% + oefenronde 5% (8/10); volg 3, chr 4, cyc 4; blitz 2, examen 5, open 4, toets 6; samen 0%.
 
+- **Biologie Thema 3 Genetica** (`biologie-t3.html`, Ben, `bio-thema3-v1`; scans OneDrive `Leren/Biologie` 'Biologie Thema 3 deel 1-3', blz 164-227): zelfde opbouw als
+  thema 2 (`H` 3.1-3.6, `POD` Lotte/Sem, `MCQ`, `BEGR`, `OPEN`, `EXAM` met de boek-examenopgaven Wilson, varkens, alzheimer, MSUD). Notatie-helpers: `al('XA')` → X<sup>A</sup>,
+  `gt(a,b)` genotype, `kruisTabel(man, vrouw, kleur)` (zaadcellen links ♂, eicellen boven ♀, klasse `.kt`, `.mk` = gekleurd vakje), `figStamboom(p, paar, kind)`,
+  `figDNA`, `figKaryo(sex, extra)`, `figGenen`, `figXY`. Spellen: **Kruisingslab** (`kruisVraag()`: dominant, intermediair, X-chromosomaal per zonen/dochters/kinderen,
+  bloedgroepen, letaal manx 2/3; uitleg in 3 stappen met schema), **Stamboom-detective** (`SB` stambomen + `STAM` vragen), Tel de chromosomen (`telVraag()`, 2ⁿ, syndromen),
+  Op volgorde (`VOLG`). Route: per basisstof 3 podcastdelen × 1% + leerpad 4% + oefenronde 5%; tel 2, volg 2 (na 3.2), kruis 6, stam 4 (na 3.3); blitz 2, examen 5, open 3, toets 4.
+
 ## Leerlogboek en scores (gedeeld met deweef/spelletjes)
 - `leerlog.js` staat in de `<head>` van elke vakpagina (vóór de andere scripts). Per bezoek stuurt het stil één
   regel (wie, vak, actieve minuten, wat erbij kwam, stand) met `sendBeacon` naar het Apps Script van het
