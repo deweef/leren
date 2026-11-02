@@ -233,6 +233,15 @@ schermen `show('home'|'play')`, `goHome()`, `ask()`, `practice(sec)` (oefenronde
   van een deel één keer goed; `quiz` heeft `opGoed`). Route: lp 5/6, spellen naam 6, teken 4, reactie 5, kloppend 4, oefenronde 4/6, toren 1/3; blitz 2, toets-
   vragen 3, open 3, proeftoets 3.
 
+- **Latijn H14-H15** (`latijn.html`, Dana, `latijn-h1415-v1`; Minerva 3 vwo, scans OneDrive `Leren/Latijn`; toets wo 4 nov): biologie-engine met podcast (Eva/Daan,
+  zoals geschiedenis) voor de Nederlandse teksten '14a' Rome/Romeinse religie, '14b' jodendom en christendom, '14c' mysteriegodsdiensten, '15a' Samson en Delilah, '15b'
+  Judith en Holofernes (kunstwerken als `VB()`), plus 'gr' Grammatica en 'lt' Latijnse teksten 14A, 14B, 15A (Vulgaat letterlijk mag; relativa `<b class="rel">`,
+  abl. abs. `<u class="aa">`, vertaling in `<details>`). **15B: geen grammatica** (niet vertaald in de les). Toetsstof = vooral de Nederlandse teksten, daarnaast
+  grammatica (relativum, relatieve aansluiting, ablativus absolutus); woordjes niet. Spellen: tabel qui/quae/quod (`QQQ`, `tabelVraag`, `tabelTabel` = twee tabellen
+  .tw), Relativum-detective (`REL` in gram.js-deel: [tekst, zin, vorm, antecedent, naamval, waarom, geslacht/getal, vertaling], `relVraag`), Ablativus absolutus
+  (`AA`, `NIETAA`, `aaVraag`). Berg = de zeven heuvels van Rome (`KCAMPS` per deel, vrij te kiezen). Brede tabellen: `.gt` scrollt (display:block).
+  Boekfout: ‘wijn in water’ moet water in wijn zijn.
+
 ## Leerlogboek en scores (gedeeld met deweef/spelletjes)
 - `leerlog.js` staat in de `<head>` van elke vakpagina (vóór de andere scripts). Per bezoek stuurt het stil één
   regel (wie, vak, actieve minuten, wat erbij kwam, stand) met `sendBeacon` naar het Apps Script van het
