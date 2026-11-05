@@ -242,6 +242,14 @@ schermen `show('home'|'play')`, `goHome()`, `ask()`, `practice(sec)` (oefenronde
   (`AA`, `NIETAA`, `aaVraag`). Berg = de zeven heuvels van Rome (`KCAMPS` per deel, vrij te kiezen). Brede tabellen: `.gt` scrollt (display:block).
   Boekfout: ‘wijn in water’ moet water in wijn zijn.
 
+- **Scheikunde H1 3 vwo** (`scheikunde-h1v.html`, Dana, `chem3v-h1-v1`; Nova 3A vwo/gym, scans OneDrive `Leren/Scheikunde` 'Scheikunde NOVA H1 deel 1-2'; toets ± wo/do
+  11-12 nov): biologie-engine met podcast (Eva/Daan, per paragraaf een rode draad: zeppelin, ijsthee, chocolademelk bij het kampvuur, emmer zeewater). § 1.1 Materialen,
+  1.2 Deeltjesmodel, 1.3 Zuivere stoffen en mengsels, 1.4 Scheidingsmethoden (+ chromatografie en sublimeren uit de les). **Dana: begrippen niet letterlijk kennen, wel
+  snappen** → geen definitie-vragen, blitz = begrip herkennen. Plaatjes `figDeeltjes(vast|vloeibaar|gas|mengsel)`, `figCurve('zuiver'|'mengsel' of {smelt, kook,
+  mengsel, punt, labels})`, `figFasen()`. Spellen: Deeltjesdetective (`deeltjesVraag`), Zuiver of mengsel? (`curveVraag`, opwarmcurves), Rekenlab (`rekenVraag`,
+  dichtheid/massa%/vol%/g/L; `quiz` kent nu decimalen met `q.tol`, rekenmachine.js), Scheidingsmeester (`SCH`, `METH` = tabel 1). Berg = **van ijs tot stoom**
+  (klimmen langs de opwarmcurve, `KCAMPS` 1.1-1.4). Route: per § 3 pod + lp 4 + oefenronde 4 + kamp 2; spellen 5/5/4/6; blitz 3, toetsvragen 8, open 7, toets 10.
+
 ## Leerlogboek en scores (gedeeld met deweef/spelletjes)
 - `leerlog.js` staat in de `<head>` van elke vakpagina (vóór de andere scripts). Per bezoek stuurt het stil één
   regel (wie, vak, actieve minuten, wat erbij kwam, stand) met `sendBeacon` naar het Apps Script van het
