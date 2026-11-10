@@ -253,6 +253,9 @@ schermen `show('home'|'play')`, `goHome()`, `ask()`, `practice(sec)` (oefenronde
 - **Profielkeuze** (`profiel.html`, Dana, `profiel-v1`; profielen klas 4 Murmellius 2027-2028): 13 vakken (`VAK`), 26 tweetallen (`maakDuels`: elk vak 4 keer),
   per tweetal twee vragen: leukst en beste in (of ‘even’). Score per vak = gewonnen ÷ duels, totaal = gemiddelde van leuk en goed. Profielscore (`PROF`) = gemiddelde
   van de verplichte vakken plus het beste vak uit elk keuzeblok; NT vraagt wiskunde B (≥ 6,0 in klas 3, melding). Ook Latijn/Grieks, Duits/Frans en vrije deel.
+  Startscherm: ‘nog niet gehad’ (`S.nieuw`, standaard economie, filosofie, kunst: alleen ‘lijkt me leuk’, goed-vraag overgeslagen) en optionele cijfers
+  (`S.cijfer`, telt 60% mee bij ‘goed in’). Uitslag per profiel alle 11 vakken (`pakket`: gemeenschappelijk, Latijn/Grieks, Duits/Frans, profielvakken, vrije deel)
+  met centraal examen / alleen schoolexamen (LO, wiskunde D) / navragen (Cultuur van de oudheid); gelijkspel-melding.
 
 ## Leerlogboek en scores (gedeeld met deweef/spelletjes)
 - `leerlog.js` staat in de `<head>` van elke vakpagina (vóór de andere scripts). Per bezoek stuurt het stil één
