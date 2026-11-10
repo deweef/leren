@@ -1,0 +1,1045 @@
+<!doctype html>
+<html lang="nl">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<meta name="robots" content="noindex">
+<script src="leerlog.js"></script><script>(function(){try{if(localStorage.getItem('leren-ok')!=='53a39a231246354922d1b5f7242c1639ebdc75da84bde2e766eed704f5a89cf8'){location.replace('index.html')}}catch(e){location.replace('index.html')}})();</script>
+<title>Maatschappijleer · Introductie</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Archivo:wdth,wght@62..125,400..900&family=Atkinson+Hyperlegible:wght@400;700&family=JetBrains+Mono:wght@500;700&display=swap">
+<style>
+/* iPad: twee keer snel tikken mag niet inzoomen (knijpen om te zoomen blijft werken) */
+*{touch-action:manipulation}
+:root{--bg:#F5F2EC;--surface:#fff;--ink:#1E2230;--muted:#5D6375;--line:#DDD6CB;--chip:#EEE8DE;--accent:#2E7D5B;--gold:#B8860B;--good:#1E8E5A;--good-bg:#E3F4EA;--bad:#C0392B;--bad-bg:#FBE9E7;--tip:#FFF6DA}
+@media (prefers-color-scheme:dark){:root:not([data-theme="light"]){--bg:#14161D;--surface:#1D2029;--ink:#E9EAF0;--muted:#A0A5B5;--line:#30343F;--chip:#272A35;--accent:#5FC596;--gold:#E8B84A;--good:#4CD68A;--good-bg:#173226;--bad:#FF7B6B;--bad-bg:#3A1E1B;--tip:#2E2A1C;color-scheme:dark}}
+:root[data-theme="dark"]{--bg:#14161D;--surface:#1D2029;--ink:#E9EAF0;--muted:#A0A5B5;--line:#30343F;--chip:#272A35;--accent:#5FC596;--gold:#E8B84A;--good:#4CD68A;--good-bg:#173226;--bad:#FF7B6B;--bad-bg:#3A1E1B;--tip:#2E2A1C;color-scheme:dark}
+*{box-sizing:border-box}
+body{margin:0;background:var(--bg);color:var(--ink);font:17px/1.55 "Atkinson Hyperlegible",system-ui,sans-serif;overflow-wrap:break-word}
+main{max-width:720px;margin:0 auto;padding:20px 16px 60px}
+h1{font:800 clamp(30px,7vw,44px)/1.05 Archivo,system-ui,sans-serif;font-stretch:90%;margin:4px 0 6px}
+h2{font:800 22px/1.2 Archivo,system-ui,sans-serif;margin:22px 0 8px}
+h3{font:800 18px/1.25 Archivo,system-ui,sans-serif;margin:0 0 6px}
+.sub{color:var(--muted);margin:0 0 16px}
+.terug{display:inline-block;margin:0 0 10px;color:inherit;opacity:.7;text-decoration:none;font:700 14px system-ui,sans-serif}
+.vlag{display:inline-flex;height:10px;width:44px;border-radius:3px;overflow:hidden;vertical-align:middle;margin-right:8px}
+.vlag i{flex:1}.vlag i:nth-child(1){background:#111}.vlag i:nth-child(2){background:#DD0000}.vlag i:nth-child(3){background:#FFCE00}
+.kaart{background:var(--surface);border:2px solid var(--line);border-radius:16px;padding:16px;margin:12px 0}
+.opdracht{border-color:var(--ink)}
+.opdracht ol{padding-left:22px;margin:8px 0}.opdracht li{margin:4px 0}
+.label{font:700 12px/1 "JetBrains Mono",monospace;letter-spacing:.06em;text-transform:uppercase;color:var(--accent)}
+.modes{display:grid;grid-template-columns:repeat(auto-fit,minmax(200px,1fr));gap:12px;margin-top:12px}
+.mode{display:block;text-align:left;background:var(--surface);color:var(--ink);border:2px solid var(--line);border-radius:16px;padding:16px;cursor:pointer;font:inherit;position:relative}
+.mode h3{margin:0 0 4px}.mode p{margin:0;color:var(--muted);font-size:15px}
+.mode.main{background:var(--ink);color:var(--bg);border-color:var(--ink)}.mode.main p{color:var(--bg);opacity:.8}
+.mode.gehaald{background:var(--good-bg);border-color:var(--good)}
+.mode.gehaald::after{content:"✓ gehaald";position:absolute;top:8px;right:10px;font:700 11px "JetBrains Mono",monospace;color:var(--good)}
+.balk{height:10px;background:var(--chip);border-radius:6px;overflow:hidden;margin:8px 0 4px}.balk i{display:block;height:100%;background:var(--good);transition:width .3s}
+.btn{font:700 16px system-ui,sans-serif;padding:11px 16px;border-radius:12px;border:2px solid var(--ink);background:var(--ink);color:var(--bg);cursor:pointer}
+.btn.licht{background:none;color:var(--ink)}
+.btn.klein{font-size:14px;padding:7px 12px}
+.acts{display:flex;gap:10px;flex-wrap:wrap;margin-top:14px}
+.top{display:flex;justify-content:space-between;align-items:center;gap:10px;margin-bottom:10px}
+.top>*{white-space:nowrap}
+.teller{font:700 14px "JetBrains Mono",monospace;padding:6px 10px;border-radius:10px;background:var(--chip)}
+.teller.ok{background:var(--good-bg);color:var(--good)}.teller.te{background:var(--bad-bg);color:var(--bad)}
+.stap{font:700 13px "JetBrains Mono",monospace;color:var(--muted)}
+textarea{width:100%;min-height:120px;font:17px/1.5 "Atkinson Hyperlegible",system-ui,sans-serif;padding:12px;border-radius:12px;border:2px solid var(--line);background:var(--bg);color:var(--ink);resize:vertical}
+textarea:focus{outline:none;border-color:var(--accent)}
+.tip{background:var(--tip);border-radius:12px;padding:10px 14px;margin:10px 0;font-size:15.5px}
+.stenen{display:flex;flex-wrap:wrap;gap:8px;margin:8px 0}
+.steen{font:15px "Atkinson Hyperlegible",system-ui,sans-serif;padding:7px 11px;border-radius:10px;border:1.5px dashed var(--muted);background:var(--surface);color:var(--ink);cursor:pointer;text-align:left}
+.steen small{display:block;color:var(--muted);font-size:12.5px}
+.check{list-style:none;padding:0;margin:8px 0}
+.check li{padding:7px 0 7px 30px;position:relative;border-bottom:1px solid var(--line)}
+.check li::before{position:absolute;left:4px;top:7px;font-weight:800}
+.check li.ja::before{content:"✓";color:var(--good)}.check li.nee::before{content:"✗";color:var(--bad)}.check li.let::before{content:"!";color:var(--gold)}
+.check li small{display:block;color:var(--muted);font-size:14px}
+label.zelf{display:flex;gap:10px;align-items:flex-start;padding:8px 0;border-bottom:1px solid var(--line);cursor:pointer}
+label.zelf input{width:22px;height:22px;margin-top:2px;flex:none;accent-color:var(--good)}
+.brief{white-space:pre-wrap;font:17px/1.6 Georgia,"Times New Roman",serif;background:var(--surface);border:2px solid var(--line);border-radius:12px;padding:16px}
+.opts{display:grid;gap:10px;margin-top:12px}
+.opt{font:inherit;text-align:left;padding:12px 14px;border-radius:12px;border:2px solid var(--line);background:var(--surface);color:var(--ink);cursor:pointer}
+.opt.goed{border-color:var(--good);background:var(--good-bg)}.opt.fout{border-color:var(--bad);background:var(--bad-bg)}
+.uitleg{margin-top:10px;padding:10px 14px;border-radius:12px;background:var(--chip)}
+.tegels{display:flex;flex-wrap:wrap;gap:8px;min-height:52px;padding:8px;border-radius:12px;border:2px dashed var(--line);margin:10px 0}
+.tegel{font:700 17px "Atkinson Hyperlegible",system-ui,sans-serif;padding:8px 12px;border-radius:10px;border:2px solid var(--ink);background:var(--surface);color:var(--ink);cursor:pointer}
+.tegel.weg{visibility:hidden}
+.goed-t{color:var(--good);font-weight:700}.fout-t{color:var(--bad);font-weight:700}
+[hidden]{display:none!important}
+.kaart ul{padding-left:20px;margin:6px 0}.kaart li{margin:4px 0}
+.opt{font-size:17px;overflow-wrap:anywhere}
+.top .stap{white-space:normal;text-align:center;flex:1;min-width:0}
+.vraag{margin:6px 0 0;font:700 19px/1.45 "Atkinson Hyperlegible",system-ui,sans-serif}
+.groot{font:800 54px Archivo,system-ui;margin:8px 0}.groot span{font-size:.45em;color:var(--muted)}
+.ex{background:var(--chip);border-left:4px solid var(--accent);border-radius:8px;padding:10px 12px;margin:10px 0}
+.src{color:var(--muted);font-size:14px}
+.gt{display:block;overflow-x:auto;border-collapse:collapse;font-size:14.5px;margin:8px 0}.gt th,.gt td{border:1px solid var(--line);padding:6px 8px;text-align:left;vertical-align:top;overflow-wrap:normal}.gt th{background:var(--chip)}
+.fig{display:block;width:100%;max-width:240px;margin:6px auto;color:var(--ink)}
+.figrij{display:grid;grid-template-columns:repeat(auto-fit,minmax(120px,1fr));gap:8px;margin:10px 0;text-align:center}.figrij small{display:block;color:var(--muted);font-size:13px;line-height:1.3}
+.check{margin-top:14px;padding-top:12px;border-top:2px dashed var(--line)}
+.typerow{display:flex;gap:10px;margin-top:12px}.typerow input{flex:1;min-width:0;font:700 18px "Atkinson Hyperlegible",system-ui;padding:11px 12px;border-radius:12px;border:2px solid var(--line);background:var(--bg);color:var(--ink)}
+.shake{animation:sh .3s}@keyframes sh{25%{transform:translateX(-6px)}75%{transform:translateX(6px)}}
+.btn.ok{background:var(--good-bg);color:var(--good);border-color:var(--good)}
+.hk h3{display:flex;justify-content:space-between;gap:8px;align-items:baseline}
+dl.begr{margin:0}.begr dt{font-weight:700;margin-top:8px}.begr dd{margin:0 0 0 12px;color:var(--muted)}
+.fig.breed{max-width:440px}.fig.veld{max-width:360px}
+.volgrij{min-height:40px;margin:10px 0;padding-left:26px}.volgrij li{font-weight:700;margin:4px 0}
+.gt td,.gt th{overflow-wrap:normal}
+.lijnleg{padding-left:24px;font-size:15.5px}.lijnleg li{margin:4px 0}
+
+.vb{background:var(--tip);border-left:4px solid var(--gold);border-radius:10px;padding:10px 12px;margin:10px 0;font-size:15.5px}
+.vraag{margin:6px 0 0;font:700 18px/1.45 "Atkinson Hyperlegible",system-ui,sans-serif}.vraag .gt{font-weight:400}
+.podmode,.speler,.tempo{display:flex;gap:8px;flex-wrap:wrap;align-items:center;margin:8px 0}
+.speler{background:var(--chip);border-radius:12px;padding:10px}
+.transcript{display:grid;gap:4px;margin-top:10px}.vl{margin:0 0 6px;line-height:1.6}.vkop{margin:14px 0 4px;font-size:16px;color:var(--accent)}
+.wie{display:inline-block;font-size:12px;letter-spacing:.03em;padding:1px 8px;border-radius:999px;margin-right:4px;color:#fff;vertical-align:1px}.wie.E{background:#C2417A}.wie.D{background:#2F6BD8}
+.transcript.luis .z{cursor:pointer;border-radius:4px}.z.nu{background:#FFE88A;color:#1E2230}
+.stemkies{display:grid;grid-template-columns:1fr auto;gap:8px;align-items:center;margin-top:8px}.stemkies label{display:flex;gap:6px;align-items:center;min-width:0}
+.stemkies select{min-width:0;flex:1;font:inherit;padding:6px;border-radius:8px;border:1px solid var(--line);background:var(--surface);color:var(--ink)}
+.stemdet{background:var(--chip);border-radius:12px;padding:10px 12px;margin-top:8px}.stemdet summary{cursor:pointer;font-weight:700;font-size:15px;list-style:none}.stemdet summary::-webkit-details-marker{display:none}.stemdet summary u{color:var(--accent);white-space:nowrap}
+.ovraag{display:grid;gap:8px}.ovraag textarea{width:100%;min-height:110px}
+.oantw,.omodel{border-radius:10px;padding:10px 12px;line-height:1.55}.oantw{background:var(--chip)}.omodel{background:var(--good-bg);border-left:4px solid var(--good)}
+.oantw mark{background:#FFE58A;color:#1E2230;border-radius:3px;padding:0 2px}
+.opunt{display:grid;gap:6px}.opunt label{display:flex;gap:10px;align-items:flex-start;cursor:pointer}.opunt input{width:20px;height:20px;flex:none;margin-top:2px}
+.fig{max-width:460px}.fig.breed{max-width:460px}.volgrij{min-height:40px;margin:10px 0;padding-left:26px}.volgrij li{font-weight:700;margin:4px 0}
+.gt td,.gt th{overflow-wrap:normal}.typerow{display:flex;gap:10px;margin-top:12px}
+.kt{border-collapse:collapse;margin:10px auto;font-size:1.05rem}.kt th,.kt td{border:1.5px solid var(--line,#999);padding:8px 14px;text-align:center;white-space:nowrap}.kt th{background:rgba(127,127,127,.15)}.kt td.mk{background:rgba(46,204,113,.28);font-weight:800}.kt .hoek{font-size:.8rem}
+.hintrij{margin-top:12px}.hintbox{background:var(--chip);border-left:4px solid #e0b100;border-radius:8px;padding:10px 12px;margin-top:8px;font-size:15.5px;line-height:1.5}.hkaart{margin-top:8px}.hkaart summary{cursor:pointer;font-weight:700;color:var(--accent)}.hkaart[open]{background:var(--surface);border-radius:8px;padding:6px 10px}
+.gt{display:block;overflow-x:auto;max-width:100%}.tw{display:flex;flex-wrap:wrap;gap:8px}.tw .gt{flex:1 1 280px;display:table}.gt td,.gt th{padding:5px 6px;font-size:14.5px}
+.lat{font-family:Georgia,serif;font-size:1.05em;background:var(--chip);border-radius:10px;padding:8px 12px;margin:4px 0 8px;line-height:1.55}.lat b,b.rel{color:#C0392B}.lat u,u.aa{text-decoration-color:#2E86C1;text-decoration-thickness:2px}
+.qqq td,.qqq th{text-align:center;padding:5px 6px;white-space:nowrap}.qqq td.mk{background:rgba(46,204,113,.3);font-weight:800}
+</style>
+</head>
+<body>
+<main id="home">
+  <a href="index.html" class="terug">‹ Alle vakken</a>
+  <h1>Maatschappijleer · Introductie</h1>
+  <p class="sub">Wat krijg je bij maatschappijleer? Per thema een korte podcast met Eva en Daan, uitleg en een paar vragen, en het spel ‘Eens of oneens?’. Geen toets: gewoon kennismaken.</p>
+  <div id="stand"></div>
+  <h2>Oefenen en spellen</h2>
+  <div class="modes">
+    <button class="mode" id="palles"><h3>🎧 Alle podcasts</h3><p>De 10 delen achter elkaar.</p></button>
+    <button class="mode" id="pstel"><h3>🗳️ Eens of oneens?</h3><p>Echte discussies, met argumenten voor én tegen.</p></button>
+    <button class="mode" id="pblitz"><h3>⚡ Begrippenblitz</h3><p>60 seconden: welk begrip hoort erbij?</p></button>
+    <button class="mode" id="pberg"><h3>🏛️ Op weg naar het Binnenhof</h3><p>Alle vragen, één stop per thema.</p></button>
+    <button class="mode" id="fouten" hidden><h3>🔁 Mijn fouten</h3><p></p></button>
+    <button class="mode" id="psamen"><h3>📄 Alles nog eens lezen</h3><p>Alle uitleg en begrippen onder elkaar.</p></button>
+  </div>
+  <h2>Per deel</h2>
+  <div id="hst"></div>
+  <div class="acts"><button class="btn licht klein" id="wis">Voortgang wissen</button></div>
+</main>
+<main id="play" hidden></main>
+<script>
+/* ---------- Introductie tot maatschappijleer: vijf delen met hun leerpad ----------
+   lp: [titel, html, [vraag, goed, 'fout|fout|fout', uitleg]]; geen boek, in eigen woorden naar de vaste opbouw van het vak
+   (rechtsstaat, parlementaire democratie, verzorgingsstaat, pluriforme samenleving). Neutraal: geen partijnamen, geen stemadvies.
+   Een '📎 Voorbeeld' is een situatie uit het dagelijks leven om het te snappen. */
+const VB=(t,h)=>`<div class="vb"><b>📎 Voorbeeld: ${t}</b><br>${h}</div>`;
+const H=[
+{id:'intro',t:'Wat is maatschappijleer?',kort:'Waar het vak over gaat, de vier thema’s en hoe je werkt',ic:'🧭',lp:[
+ ['Waar gaat het vak over?',`<p><b>Maatschappijleer</b> gaat over hoe onze samenleving werkt, en hoe jij daarin <b>meedoet</b>.</p><ul><li>Wie maakt de regels, en waarom?</li><li>Wat zijn jouw rechten en plichten?</li><li>Hoe gaan we om met mensen die anders denken of leven?</li></ul><p>Het lijkt ver van je bed, maar het gaat over jouw leven: je bijbaantje (minimumloon, werktijden), je scooter (verkeersregels, boetes), je school (leerplicht) en straks je stem bij verkiezingen.</p>`,['Waar gaat maatschappijleer vooral over?','Hoe de samenleving werkt en hoe jij daarin meedoet','Hoe je een bedrijf start|De geschiedenis van de Romeinen|Hoe het lichaam werkt','Het vak gaat over samenleven, regels, politiek en meedoen. Een bedrijf starten hoort bij economie, de Romeinen bij geschiedenis en het lichaam bij biologie.']],
+ ['De vier thema’s',`<p>Het vak heeft vier vaste thema’s. Die kom je steeds weer tegen:</p><table class="gt"><tr><th>thema</th><th>kort gezegd</th></tr><tr><td>⚖️ Rechtsstaat</td><td>regels, grondrechten, rechters, politie</td></tr><tr><td>🏛️ Parlementaire democratie</td><td>verkiezingen, Tweede Kamer, kabinet, gemeente</td></tr><tr><td>🤝 Verzorgingsstaat</td><td>uitkeringen, zorg, onderwijs, belasting</td></tr><tr><td>🌍 Pluriforme samenleving</td><td>cultuur, identiteit, migratie, samenleven</td></tr></table><p>💡 Ezelsbruggetje: <b>regels</b>, <b>macht</b>, <b>zorg</b> en <b>samenleven</b>.</p>`,['Bij welk thema hoort de vraag ‘Wie betaalt de AOW?’','Verzorgingsstaat','Rechtsstaat|Parlementaire democratie|Pluriforme samenleving','De AOW is een uitkering, en uitkeringen en zorg horen bij de verzorgingsstaat. Over de hoogte beslist wel de politiek, maar het onderwerp zelf is de verzorgingsstaat.']],
+ ['Een probleem van alle kanten bekijken',`<p>Bij maatschappijleer bekijk je een <b>maatschappelijk probleem</b> vanuit verschillende kanten. Daar is een vast stappenplan voor, de <b>politiek-probleembenadering</b>:</p><ol><li><b>Wat</b> is het probleem?</li><li><b>Waarom</b> is het een maatschappelijk (politiek) probleem? Het raakt veel mensen en men vindt dat de overheid iets moet doen.</li><li>Wat zijn de <b>oorzaken</b>?</li><li>Welke <b>oplossingen</b> zijn er, en wie wil welke (welke belangen en waarden)?</li><li>Hoe verloopt de <b>besluitvorming</b>: wie beslist?</li><li>Hoe pakt het besluit uit in de <b>praktijk</b>?</li></ol>${VB('vuurwerk','Probleem: gewonden en schade. Oorzaak: zwaar en illegaal vuurwerk. Oplossingen: een verbod, of alleen strengere regels. Hulpverleners en dierenorganisaties willen vaak een verbod, liefhebbers en verkopers niet. Gemeente en kabinet beslissen.')}`,['Welke stap komt in de politiek-probleembenadering vóór ‘welke oplossingen zijn er?’','Wat zijn de oorzaken?','Hoe pakt het besluit uit in de praktijk?|Hoe verloopt de besluitvorming?|Wie wint de verkiezingen?','Je zoekt eerst de oorzaken, want een oplossing moet bij de oorzaak passen. Besluitvorming en praktijk komen pas daarna, en verkiezingen zijn geen stap.']],
+ ['Belangen en waarden',`<p>Waarom zijn mensen het zo vaak oneens? Door twee dingen:</p><ul><li><b>Belang</b>: wat levert het mij (of mijn groep) op, of wat kost het mij? Een vuurwerkverkoper verliest geld bij een verbod.</li><li><b>Waarde</b>: wat vind ik belangrijk? De een vindt <b>veiligheid</b> het belangrijkst, de ander <b>vrijheid</b> of <b>traditie</b>.</li></ul><p>💡 Snap je het zo? Belang = wat het je oplevert. Waarde = wat je belangrijk vindt, ook als het je niets oplevert.</p>`,['Een oma zonder huisdieren wil een vuurwerkverbod omdat ze ‘veiligheid voor iedereen’ belangrijk vindt. Waar baseert zij haar mening vooral op?','Een waarde','Een belang|Een wet|Een grondrecht','Ze heeft er zelf geen voordeel van, maar vindt veiligheid belangrijk: dat is een waarde. Een belang zou zijn dat zij er zelf iets mee wint of verliest.']],
+ ['Waarom is het nuttig?',`<ul><li>Vanaf <b>18 jaar</b> mag je stemmen. Dan wil je snappen waar je over beslist.</li><li>Je begrijpt het <b>nieuws</b> beter: wat doet een minister, waarom valt een kabinet, wat is een coalitie?</li><li>Je kent je <b>rechten</b>: wat mag de politie, wat mag je werkgever, wat als je gediscrimineerd wordt?</li><li>Je leert <b>luisteren</b> naar mensen die anders denken.</li></ul><p>In de bovenbouw is maatschappijleer voor iedereen verplicht (meestal in klas 4) en sluit je het af met een schoolexamen. Wie er meer van wil, kan het profielvak <b>maatschappijwetenschappen</b> kiezen.</p>`,['Vanaf welke leeftijd mag je in Nederland stemmen voor de Tweede Kamer?','18 jaar','16 jaar|21 jaar|14 jaar','Je mag vanaf 18 jaar stemmen. Er is wel discussie over stemrecht vanaf 16, maar dat geldt (nog) niet.']],
+ ['Hoe ziet een les eruit?',`<ul><li>📰 <b>Actualiteit</b>: je begint vaak met iets uit het nieuws.</li><li>🗣️ <b>Discussie</b>: in de klas wissel je meningen uit, met respect.</li><li>✍️ <b>Betoog</b>: je neemt een <b>standpunt</b> in en onderbouwt het met <b>argumenten</b>. Je noemt ook een tegenargument en weerlegt dat.</li><li>🔎 <b>Bronnen</b>: is dit een feit of een mening? Wie zegt het, en waarom?</li></ul><p>De leraar zegt niet wat je moet vinden of stemmen. Het gaat erom dat jij je mening goed kunt <b>onderbouwen</b>.</p>`,['Wat maakt een betoog sterk?','Een duidelijk standpunt met argumenten, en een tegenargument dat je weerlegt','Zo vaak mogelijk ‘ik vind’ zeggen|Alleen je eigen kant noemen|De mening van de leraar overnemen','Een sterk betoog onderbouwt en laat zien dat je de andere kant kent. Herhalen of overnemen is geen onderbouwing.']]
+]},
+{id:'rs',t:'Rechtsstaat',kort:'Grondwet, grondrechten, trias politica, rechtspraak en jeugdstrafrecht',ic:'⚖️',lp:[
+ ['Wat is een rechtsstaat?',`<p>In een <b>rechtsstaat</b> moeten niet alleen burgers zich aan de wet houden, maar <b>ook de overheid</b>. De macht van de overheid is begrensd.</p><ul><li>De overheid mag alleen doen wat de wet toestaat.</li><li>Burgers hebben <b>grondrechten</b> die de overheid moet respecteren.</li><li>De macht is <b>verdeeld</b>, zodat niemand alles alleen beslist.</li><li>Er zijn <b>onafhankelijke rechters</b> bij wie je terechtkunt, ook tegen de overheid.</li></ul><p>Het tegenovergestelde is een dictatuur: daar staat de leider boven de wet.</p>`,['Welke situatie past níet bij een rechtsstaat?','Een minister laat een journalist oppakken omdat hij kritisch schrijft','Een burger daagt de gemeente voor de rechter|Een verdachte krijgt een advocaat|De politie heeft toestemming nodig om een huis te doorzoeken','Iemand oppakken om kritiek gaat in tegen de vrijheid van meningsuiting en tegen het idee dat de overheid zelf aan de wet gebonden is. De andere drie zijn juist kenmerken van een rechtsstaat.']],
+ ['De Grondwet en grondrechten',`<p>De <b>Grondwet</b> is de belangrijkste wet van Nederland. Andere wetten mogen er niet mee in strijd zijn. Hij regelt hoe de staat is ingericht en bevat de <b>grondrechten</b>.</p><ul><li><b>Artikel 1</b>: gelijke behandeling in gelijke gevallen, en een verbod op discriminatie.</li><li>Vrijheid van <b>godsdienst</b>, van <b>meningsuiting</b>, van <b>onderwijs</b>.</li><li>Recht op <b>privacy</b>, vrijheid van <b>vereniging</b> en <b>betoging</b> (demonstreren).</li><li><b>Kiesrecht</b>.</li></ul><p>De Grondwet veranderen is extra lastig: daar is in de tweede ronde een <b>tweederdemeerderheid</b> voor nodig.</p>`,['Wat staat er in artikel 1 van de Grondwet?','Gelijke behandeling in gelijke gevallen en een verbod op discriminatie','De vrijheid van meningsuiting|Dat Amsterdam de hoofdstad is|Hoe de koning gekozen wordt','Artikel 1 is het gelijkheidsbeginsel. Meningsuiting staat in een ander artikel, en de koning wordt niet gekozen.']],
+ ['Klassiek of sociaal?',`<p>Er zijn twee soorten grondrechten:</p><table class="gt"><tr><th>klassieke grondrechten</th><th>sociale grondrechten</th></tr><tr><td>beschermen je <b>tegen</b> de overheid</td><td>de overheid moet <b>zorgen voor</b> iets</td></tr><tr><td>de overheid moet zich er <b>buiten houden</b></td><td>de overheid moet <b>iets doen</b></td></tr><tr><td>vrijheid van meningsuiting, godsdienst, privacy, demonstreren</td><td>werkgelegenheid, bestaanszekerheid, volksgezondheid, onderwijs, huisvesting</td></tr></table><p>💡 Snap je het zo? Klassiek = <b>handen af</b>. Sociaal = <b>handen uit de mouwen</b>.</p><p>Sociale grondrechten kun je meestal niet bij de rechter afdwingen: de overheid moet haar best doen, maar je kunt niet eisen dat ze je morgen een baan geeft.</p>`,['Welk grondrecht is een <b>sociaal</b> grondrecht?','De overheid zorgt voor voldoende werkgelegenheid','Vrijheid van meningsuiting|Het recht om te demonstreren|Het recht op privacy','Bij werkgelegenheid moet de overheid iets doen: sociaal grondrecht. De andere drie zijn klassiek: de overheid moet je daarbij met rust laten.']],
+ ['Trias politica: de macht in drieën',`<p>De Franse denker <b>Montesquieu</b> bedacht in de 18e eeuw: verdeel de macht over drie delen, zodat ze elkaar in evenwicht houden. Dat heet de <b>trias politica</b>.</p><table class="gt"><tr><th>macht</th><th>taak</th><th>in Nederland</th></tr><tr><td>wetgevende</td><td>wetten maken</td><td>regering + Staten-Generaal (Tweede en Eerste Kamer)</td></tr><tr><td>uitvoerende</td><td>wetten uitvoeren, besturen</td><td>regering (koning + ministers)</td></tr><tr><td>rechterlijke</td><td>rechtspreken</td><td>onafhankelijke rechters</td></tr></table><p>In Nederland is de scheiding niet helemaal strikt: de regering doet mee aan wetgeven én voert uit. Daarom spreken we ook wel van <b>machtenspreiding</b>.</p>`,['Waarom is het slim om de macht in drieën te verdelen?','Zodat niemand alle macht heeft en de machten elkaar controleren','Omdat het werk dan sneller gaat|Omdat er drie partijen in de Kamer zitten|Zodat de koning meer macht krijgt','Het gaat om evenwicht en controle, niet om snelheid. Het heeft niets te maken met het aantal partijen, en de koning krijgt er juist minder macht door.']],
+ ['Van verdachte tot vonnis',`<p>Bij een <b>strafzaak</b> (iemand heeft mogelijk een strafbaar feit gepleegd) werken drie partijen samen:</p><ol><li><b>Politie</b>: opsporing. Bewijs verzamelen, verdachten aanhouden en verhoren.</li><li><b>Openbaar Ministerie</b> (de officier van justitie): beslist of iemand vervolgd wordt en eist een straf.</li><li><b>Rechter</b>: beslist of de verdachte schuldig is en welke straf hij krijgt.</li></ol><p>Belangrijke regels: je bent <b>onschuldig tot het tegendeel bewezen is</b>, je hebt recht op een <b>advocaat</b> en je hoeft niet mee te werken aan je eigen veroordeling (zwijgrecht).</p><p>Naast het strafrecht is er het <b>privaatrecht</b> (burgerlijk recht): ruzies tussen burgers of bedrijven, zoals een kapotte telefoon die de winkel niet wil vervangen.</p>`,['Wie beslist uiteindelijk of een verdachte schuldig is?','De rechter','De politie|De officier van justitie|Het slachtoffer','De politie spoort op en de officier van justitie vervolgt en eist een straf, maar alleen de rechter beslist over schuld en straf.']],
+ ['Jeugdstrafrecht en Halt',`<ul><li>Onder de <b>12 jaar</b> kun je niet vervolgd worden.</li><li>Van <b>12 tot 18 jaar</b> geldt het <b>jeugdstrafrecht</b> (voor jongvolwassenen tot 23 soms ook).</li><li>Doel: vooral <b>opvoeden en leren</b>, niet alleen straffen. Straffen zijn lichter, zoals een <b>taakstraf</b> (werken of een leertraject) of <b>jeugddetentie</b>.</li><li>Bij lichte vergrijpen (vandalisme, vuurwerk, winkeldiefstal, spijbelen) krijg je vaak een <b>Halt-straf</b>. Maak je die goed af, dan krijg je geen strafblad.</li></ul>${VB('de scooterboete','Te hard rijden met je scooter is een verkeersovertreding. Daarvoor krijg je een boete thuisgestuurd, ook als je 16 bent. Rijd je veel te hard of zonder rijbewijs, dan kan het een strafzaak worden.')}`,['Een jongen van 14 gooit een ruit in bij de bushalte. Wat is een waarschijnlijke straf?','Een Halt-straf, bijvoorbeeld de schade herstellen en excuses aanbieden','Een gevangenisstraf van vijf jaar|Niets, want hij is te jong|Een boete voor de school','Hij is 12 of ouder, dus wel strafbaar. Bij zo’n licht vergrijp past een Halt-straf. Vijf jaar cel is veel te zwaar en de school is niet verantwoordelijk.']]
+]},
+{id:'pd',t:'Parlementaire democratie',kort:'Verkiezingen, Kamers, kabinet, partijen, gemeente en zelf invloed uitoefenen',ic:'🏛️',lp:[
+ ['Wat is een parlementaire democratie?',`<p><b>Democratie</b> = het volk regeert. Niet rechtstreeks: we kiezen <b>vertegenwoordigers</b> die namens ons beslissen. Dat heet een <b>representatieve</b> (vertegenwoordigende) democratie.</p><p><b>Parlementair</b> betekent: het <b>parlement</b> (de Staten-Generaal: Tweede en Eerste Kamer) controleert de regering. Een minister die het vertrouwen van de Kamer kwijt is, moet weg.</p><p>Nederland is ook een <b>constitutionele monarchie</b>: er is een koning, maar zijn macht staat in de Grondwet en is heel beperkt. De <b>ministers</b> zijn verantwoordelijk, niet de koning (<b>ministeriële verantwoordelijkheid</b>).</p>`,['Wat betekent ‘parlementair’ in parlementaire democratie?','Het parlement controleert de regering en kan een minister wegsturen','De koning beslist alles|Burgers stemmen over elke wet zelf|Er is maar één partij','Parlementair verwijst naar de controle door het parlement. De koning heeft weinig macht, we stemmen niet over elke wet (dat zou directe democratie zijn), en er zijn veel partijen.']],
+ ['Verkiezingen',`<ul><li>De <b>Tweede Kamer</b> wordt gekozen, normaal <b>elke vier jaar</b> (eerder als het kabinet valt).</li><li>Stemmen mag vanaf <b>18 jaar</b> en is een recht, geen plicht.</li><li>Je stemt op een <b>persoon</b> op de lijst van een <b>partij</b>. Bovenaan staat de <b>lijsttrekker</b>.</li><li>We hebben <b>evenredige vertegenwoordiging</b>: een partij krijgt zetels naar verhouding van de stemmen. Ongeveer 1/150 van de stemmen = 1 zetel.</li></ul><p>Daardoor komen er veel partijen in de Kamer, ook kleine. We kiezen ook de <b>gemeenteraad</b>, de <b>Provinciale Staten</b>, de <b>waterschappen</b> en het <b>Europees Parlement</b>.</p>`,['Een partij krijgt 10% van alle stemmen. Ongeveer hoeveel zetels in de Tweede Kamer is dat?','15','10|75|1','10% van 150 zetels = 15 zetels. Zetels gaan naar verhouding van de stemmen (evenredige vertegenwoordiging).']],
+ ['Tweede en Eerste Kamer',`<table class="gt"><tr><th></th><th>Tweede Kamer</th><th>Eerste Kamer</th></tr><tr><td>leden</td><td>150</td><td>75</td></tr><tr><td>gekozen door</td><td>de kiezers</td><td>de Provinciale Staten</td></tr><tr><td>wetten</td><td>kan wetten veranderen (amendement) en zelf voorstellen</td><td>alleen ja of nee</td></tr></table><p>Rechten van de Tweede Kamer, onder meer:</p><ul><li><b>motie</b>: een verzoek of mening aan de regering (een <b>motie van wantrouwen</b> kan een minister wegsturen);</li><li><b>amendement</b>: een wetsvoorstel veranderen;</li><li><b>vragen stellen</b> aan ministers, bijvoorbeeld in het vragenuur;</li><li><b>budgetrecht</b>: de Kamer moet de begroting goedkeuren;</li><li><b>enquête</b>: een groot onderzoek met verhoren onder ede.</li></ul>`,['Wat kan de Eerste Kamer níet?','Een wetsvoorstel veranderen','Een wetsvoorstel aannemen|Een wetsvoorstel verwerpen|Wetten controleren','De Eerste Kamer kan alleen ja of nee zeggen. Veranderen (amenderen) kan alleen de Tweede Kamer.']],
+ ['Formatie, coalitie en kabinet',`<ol><li>Na de verkiezingen zoeken partijen een <b>meerderheid</b>: minstens <b>76</b> van de 150 zetels.</li><li>Die partijen vormen een <b>coalitie</b> en schrijven een <b>coalitieakkoord</b> (de plannen). Dit heet de <b>formatie</b>; een <b>informateur</b> en <b>formateur</b> leiden die.</li><li>Het <b>kabinet</b> = de ministers en staatssecretarissen, onder leiding van de <b>minister-president</b>.</li></ol><p>De partijen die niet meeregeren vormen de <b>oppositie</b>: zij controleren extra kritisch en laten andere ideeën horen.</p><p>Op <b>Prinsjesdag</b> (derde dinsdag van september) leest de koning de <b>troonrede</b> voor: de plannen van het kabinet voor het komende jaar.</p>`,['Hoeveel zetels heeft een coalitie minimaal nodig voor een meerderheid in de Tweede Kamer?','76','75|100|50','Meer dan de helft van 150 is 76. Met 75 heb je precies de helft, en dat is geen meerderheid.']],
+ ['Links, rechts, progressief, conservatief',`<p>Partijen kun je ruwweg indelen. Het zijn windrichtingen, geen vaste hokjes:</p><table class="gt"><tr><th>links</th><th>rechts</th></tr><tr><td>meer gelijkheid tussen arm en rijk; de overheid doet meer; sterkste schouders, zwaarste lasten</td><td>meer vrije markt; lagere belastingen; eigen verantwoordelijkheid; de overheid doet minder</td></tr></table><table class="gt"><tr><th>progressief</th><th>conservatief</th></tr><tr><td>open voor verandering en vernieuwing</td><td>bestaande tradities en waarden bewaren</td></tr></table><p>Een partij kan op beide lijnen ergens anders staan (bijvoorbeeld economisch rechts en progressief). Daarom gebruikt men ook wel een assenstelsel in plaats van één lijn. Partijen in het <b>midden</b> zoeken vaak een compromis.</p>`,['Welk standpunt past het best bij <b>conservatief</b>?','Bestaande tradities moeten we zoveel mogelijk bewaren','De belasting voor rijken moet omhoog|Alles moet zo snel mogelijk veranderen|De overheid moet meer uitkeringen geven','Conservatief = bewaren wat er is. Belasting voor rijken en meer uitkeringen gaan over de links-rechtsas, en snel veranderen is juist progressief.']],
+ ['Gemeente en provincie',`<table class="gt"><tr><th></th><th>gemeente</th><th>provincie</th></tr><tr><td>gekozen</td><td>gemeenteraad</td><td>Provinciale Staten</td></tr><tr><td>dagelijks bestuur</td><td>burgemeester en wethouders (het college)</td><td>Gedeputeerde Staten</td></tr><tr><td>voorzitter (benoemd)</td><td>burgemeester</td><td>commissaris van de Koning</td></tr><tr><td>gaat over</td><td>speeltuinen, afval, bijstand, jeugdzorg, paspoort</td><td>natuur, provinciale wegen, streekvervoer</td></tr></table><p>De burgemeester wordt dus niet gekozen, maar <b>benoemd</b> door de regering (de Kroon), na een voordracht van de gemeenteraad.</p>`,['Wie beslist over het sluiten van een skatebaan in jouw dorp?','De gemeente','De provincie|De Tweede Kamer|De Europese Unie','Een skatebaan is een plaatselijke voorziening, dus de gemeenteraad en het college beslissen. Provincie, Kamer en Europese Unie gaan over grotere zaken.']],
+ ['Zelf invloed uitoefenen',`<p>Stemmen is niet de enige manier om invloed te hebben. Ook als je nog geen 18 bent, kun je:</p><ul><li>✍️ een <b>petitie</b> starten of tekenen;</li><li>🎤 <b>inspreken</b> bij de gemeenteraad;</li><li>📣 <b>demonstreren</b> (grondrecht; je meldt het vooraf bij de gemeente);</li><li>📺 de <b>media</b> en social media gebruiken;</li><li>🤝 lid worden van een <b>actiegroep</b>, jongerenraad of politieke jongerenorganisatie.</li></ul><p><b>Lobbyen</b> = politici proberen te overtuigen met informatie en gesprekken. Bedrijven, vakbonden, boeren en milieuorganisaties doen dat allemaal. Zulke groepen heten <b>belangengroepen</b> of <b>pressiegroepen</b>.</p>`,['Een milieuorganisatie praat met Kamerleden om ze te overtuigen van strengere regels. Hoe heet dat?','Lobbyen','Demonstreren|Stemmen|Een enquête houden','Lobbyen is het overtuigen van politici met gesprekken en informatie. Demonstreren is op straat, stemmen doe je bij verkiezingen, en een enquête is een onderzoek van de Kamer.']]
+]},
+{id:'vs',t:'Verzorgingsstaat',kort:'Sociale zekerheid, zorg, onderwijs, belasting en de discussie over de rol van de overheid',ic:'🤝',lp:[
+ ['Wat is een verzorgingsstaat?',`<p>In een <b>verzorgingsstaat</b> zorgt de overheid ervoor dat iedereen een <b>bestaansminimum</b> heeft en toegang heeft tot <b>zorg, onderwijs en huisvesting</b>.</p><p>Vroeger waren mensen bij ziekte, werkloosheid of ouderdom afhankelijk van familie, de kerk of liefdadigheid. Na de <b>Tweede Wereldoorlog</b> bouwde Nederland de verzorgingsstaat uit, met onder meer de <b>AOW</b> (1957).</p><p>Het idee: <b>solidariteit</b>. Wie gezond is en werkt, betaalt mee voor wie ziek, oud of werkloos is. Morgen kun jij het zijn die hulp nodig heeft.</p>`,['Welk idee zit achter de verzorgingsstaat?','Solidariteit: wie het goed heeft, betaalt mee voor wie hulp nodig heeft','Iedereen zorgt alleen voor zichzelf|De kerk zorgt voor de armen|Alleen rijke mensen krijgen zorg','De verzorgingsstaat draait om solidariteit via de overheid. Alleen voor jezelf zorgen of de kerk laten zorgen was juist de situatie van vroeger.']],
+ ['Sociale zekerheid',`<table class="gt"><tr><th>regeling</th><th>voor wie</th></tr><tr><td><b>AOW</b></td><td>basispensioen vanaf de AOW-leeftijd (nu 67)</td></tr><tr><td><b>WW</b></td><td>werkloosheidsuitkering als je je baan verliest (tijdelijk, deel van je loon)</td></tr><tr><td><b>WIA</b></td><td>als je door ziekte niet (volledig) kunt werken</td></tr><tr><td><b>bijstand</b></td><td>het laatste vangnet als je geen inkomen en weinig geld hebt; de <b>gemeente</b> regelt het</td></tr></table><p>Daarnaast zijn er <b>toeslagen</b> (zorgtoeslag, huurtoeslag, kinderopvangtoeslag) en de <b>kinderbijslag</b> voor ouders.</p><p>💡 Bijstand is een <b>vangnet</b>: je krijgt het pas als er geen andere uitkering of eigen geld is.</p>`,['De vader van een vriendin wordt ontslagen omdat het bedrijf failliet gaat. Welke uitkering krijgt hij waarschijnlijk eerst?','WW','AOW|bijstand|kinderbijslag','Bij baanverlies krijg je eerst de WW. De AOW is voor ouderen, bijstand pas als de WW op is en er geen geld meer is, en kinderbijslag hangt niet van je baan af.']],
+ ['Zorg',`<ul><li>Vanaf <b>18 jaar</b> moet iedereen een <b>basisverzekering</b> hebben. Onder de 18 ben je gratis meeverzekerd bij je ouders.</li><li>Je betaalt elke maand <b>premie</b> aan een zorgverzekeraar. Wie weinig verdient, krijgt <b>zorgtoeslag</b>.</li><li>Het <b>eigen risico</b>: een bedrag van een paar honderd euro per jaar dat je eerst zelf betaalt (niet voor de huisarts, en niet voor jongeren onder 18).</li><li>Langdurige zorg (zoals een verpleeghuis) wordt grotendeels uit belastinggeld en premies betaald.</li></ul>${VB('je 18e verjaardag','Op je 18e komt er een brief: je moet binnen vier maanden zelf een zorgverzekering afsluiten. Veel jongeren vragen dan meteen zorgtoeslag aan.')}`,['Vanaf wanneer moet je zelf een zorgverzekering hebben?','Vanaf 18 jaar','Vanaf 16 jaar|Vanaf je eerste bijbaantje|Vanaf 21 jaar','De verzekeringsplicht geldt vanaf 18. Tot dan ben je gratis meeverzekerd bij je ouders, ook als je een bijbaantje hebt.']],
+ ['Onderwijs en werk',`<ul><li><b>Leerplicht</b>: van 5 tot en met het schooljaar waarin je 16 wordt.</li><li><b>Kwalificatieplicht</b>: tot je 18e moet je naar school tot je een <b>startkwalificatie</b> hebt (diploma havo, vwo of minstens mbo 2).</li><li>De overheid betaalt het grootste deel van je school. Ouders betalen hooguit een vrijwillige ouderbijdrage.</li><li>Studenten kunnen <b>studiefinanciering</b> krijgen.</li></ul><p><b>Werk</b>: vanaf 13 mag je licht werk doen (zoals kranten bezorgen), met strenge regels over werktijden. Er is een <b>minimumloon</b>; onder de 21 geldt een lager <b>jeugdloon</b>.</p>`,['Hoe heet het minimumloon voor jongeren onder de 21?','Jeugdloon','Bijstand|Kinderbijslag|Zakgeld','Onder de 21 geldt een lager wettelijk minimum: het jeugdloon. Bijstand en kinderbijslag zijn uitkeringen, en zakgeld komt van je ouders.']],
+ ['Belasting betalen',`<p>De verzorgingsstaat kost veel geld. Dat komt vooral uit <b>belastingen en premies</b>.</p><ul><li><b>Inkomstenbelasting</b> (loonbelasting): over wat je verdient. Het is <b>progressief</b>: wie meer verdient, betaalt over het hogere deel een hoger percentage.</li><li><b>Btw</b>: over wat je koopt: 21%, of 9% op onder meer eten en boeken.</li><li><b>Accijns</b>: extra belasting op onder meer benzine, alcohol en tabak.</li></ul><p>Belasting heeft ook een <b>sturende</b> functie: hoge accijns op sigaretten moet roken ontmoedigen.</p>`,['Eva koopt een zak chips. Welke belasting betaalt ze daarbij?','Btw','Inkomstenbelasting|Accijns|Geen, want ze is 15','Over producten betaal je btw, ook als je jong bent. Inkomstenbelasting gaat over je loon, en accijns zit op dingen als benzine, alcohol en tabak.']],
+ ['Hoeveel moet de overheid doen?',`<p>Dé vraag bij de verzorgingsstaat: <b>hoeveel moet de overheid voor ons regelen?</b></p><table class="gt"><tr><th>meer overheid</th><th>minder overheid</th></tr><tr><td>Iedereen verdient zekerheid. Pech (ziekte, ontslag) kan iedereen overkomen. De sterkste schouders dragen de zwaarste lasten.</td><td>Mensen kunnen veel zelf. Lagere belastingen geven meer vrijheid. Te veel uitkeringen kunnen het minder aantrekkelijk maken om te werken.</td></tr></table><p>Ook zijn er <b>problemen</b>: de <b>vergrijzing</b> (meer ouderen, minder werkenden) maakt AOW en zorg duurder. Daarom gaat de AOW-leeftijd omhoog. Sinds ongeveer 2013 spreekt men ook van een <b>participatiesamenleving</b>: burgers moeten zelf meer doen, bijvoorbeeld voor familie en buren.</p><p>Wie gelijk heeft, hangt af van wat je belangrijker vindt. Daar gaan verkiezingen vaak over.</p>`,['Wat bedoelt men met vergrijzing?','Er komen meer ouderen en verhoudingsgewijs minder werkenden','Mensen krijgen sneller grijs haar|Er komen meer jongeren|De belasting gaat omlaag','Vergrijzing = de bevolking wordt gemiddeld ouder. Daardoor betalen minder werkenden voor meer ouderen, en dat maakt AOW en zorg duurder.']]
+]},
+{id:'ps',t:'Pluriforme samenleving',kort:'Cultuur, waarden en normen, socialisatie, identiteit, migratie en samenleven',ic:'🌍',lp:[
+ ['Cultuur',`<p>Bij maatschappijleer betekent <b>cultuur</b>: alles wat mensen in een groep van elkaar <b>aanleren</b> en delen. Taal, gewoontes, kleding, eten, feesten, waarden en normen.</p><p>Cultuur is dus niet aangeboren, maar <b>aangeleerd</b>. En cultuur verandert: denk aan hoe we nu appen in plaats van bellen.</p><p>Een <b>pluriforme</b> (veelvormige) samenleving bestaat uit veel groepen met verschillende culturen, geloven en leefstijlen. Binnen een land kunnen ook <b>subculturen</b> bestaan: groepen met eigen gewoontes, zoals gamers, boeren of skaters.</p>`,['Welke uitspraak over cultuur klopt?','Cultuur is aangeleerd en kan veranderen','Cultuur is aangeboren|Cultuur gaat alleen over kunst en musea|Iedereen in Nederland heeft precies dezelfde cultuur','Cultuur leer je van je omgeving en verandert met de tijd. Kunst is maar één deel ervan, en in een pluriforme samenleving verschillen culturen juist.']],
+ ['Waarden en normen',`<table class="gt"><tr><th>waarde</th><th>norm die erbij hoort</th></tr><tr><td>respect</td><td>niet door iemand heen praten</td></tr><tr><td>eerlijkheid</td><td>niet spieken bij een toets</td></tr><tr><td>gezondheid</td><td>niet roken op het schoolplein</td></tr><tr><td>vrijheid</td><td>iedereen mag zijn eigen kleding kiezen</td></tr></table><p><b>Waarde</b> = iets wat je belangrijk vindt (een idee). <b>Norm</b> = een regel voor gedrag die daarbij hoort.</p><p>Sommige normen zijn vastgelegd in de <b>wet</b> (niet stelen). Andere zijn ongeschreven (je bedankt de buschauffeur). Breek je een norm, dan volgt vaak een <b>sanctie</b>: een boete, of gewoon een boze blik.</p>`,['Welke is een <b>norm</b>?','Je stapt op voor een oudere in de bus','Behulpzaamheid|Respect|Vrijheid','Opstaan voor een oudere is een gedragsregel: een norm. Behulpzaamheid, respect en vrijheid zijn waarden, de ideeën erachter.']],
+ ['Socialisatie en identiteit',`<p><b>Socialisatie</b> = het proces waarin je de cultuur van je omgeving aanleert. Wie je daarbij beïnvloeden heten <b>socialisatoren</b>:</p><ul><li><b>gezin</b>: daar begint het (primaire socialisatie);</li><li><b>school</b>, <b>vrienden</b> (de peergroup), <b>sportclub</b>, <b>geloof</b>;</li><li><b>media en social media</b>.</li></ul><p>Zo ontstaat je <b>identiteit</b>: hoe je jezelf ziet en hoe anderen jou zien. Iedereen heeft <b>meerdere identiteiten</b> tegelijk: dochter, gymnasiast, hockeyer, Brabander, gamer. Daardoor heb je met heel verschillende mensen iets gemeen.</p>`,['Wat bedoelen we met ‘de peergroup’?','Leeftijdgenoten met wie je omgaat, zoals vrienden','Je ouders|De leraren|De politie','De peergroup zijn mensen van ongeveer je eigen leeftijd. Ze hebben veel invloed in je tienerjaren. Ouders, leraren en politie zijn andere socialisatoren of hebben er weinig mee te maken.']],
+ ['Van verzuiling naar pluriform',`<p>Tot ongeveer de jaren zestig was Nederland <b>verzuild</b>. Elke groep had zijn eigen ‘zuil’:</p><ul><li>katholieken, protestanten, socialisten en liberalen;</li><li>elk met een eigen school, krant, omroep, vakbond, partij en zelfs sportclub.</li></ul><p>De top van de zuilen werkte samen in de politiek, maar gewone mensen kwamen elkaar weinig tegen. Vanaf de jaren zestig verdween de verzuiling (<b>ontzuiling</b>): mensen werden <b>individualistischer</b> en minder kerkelijk.</p><p>💡 Je ziet het nog terug: in Nederland zijn er bijzondere scholen (katholiek, protestants, islamitisch) en omroepen met een eigen achtergrond.</p>`,['Wat was een kenmerk van de verzuiling?','Elke levensbeschouwelijke groep had eigen scholen, kranten en clubs','Iedereen ging naar dezelfde school|Er waren geen politieke partijen|Nederland had geen kerken','In de verzuiling leefden groepen naast elkaar, met eigen instellingen. Er waren juist veel partijen en kerken, en iedereen had zijn eigen school.']],
+ ['Migratie',`<table class="gt"><tr><th>periode</th><th>wie kwamen er?</th></tr><tr><td>na 1945</td><td>mensen uit het voormalige <b>Nederlands-Indië</b> (Indonesië), later uit <b>Suriname</b> en de <b>Antillen</b> (koloniaal verleden)</td></tr><tr><td>jaren 60-70</td><td><b>arbeidsmigranten</b> uit onder meer Italië, Spanje, Turkije en Marokko; later volgde <b>gezinshereniging</b></td></tr><tr><td>vanaf jaren 90</td><td><b>vluchtelingen</b> (asielzoekers) uit oorlogsgebieden</td></tr><tr><td>vanaf 2004</td><td>werknemers uit nieuwe <b>EU-landen</b>, zoals Polen; ook kennismigranten en studenten</td></tr></table><p>Ongeveer een <b>kwart</b> van de mensen in Nederland heeft een migratieachtergrond (zelf in het buitenland geboren of minstens één ouder). Mensen <b>emigreren</b> ook uit Nederland, bijvoorbeeld naar Canada of Australië.</p>`,['Waarom kwamen er in de jaren zestig veel Turkse en Marokkaanse arbeidsmigranten naar Nederland?','Er was een tekort aan arbeidskrachten in de fabrieken','Ze vluchtten voor een oorlog|Het waren voormalige koloniën van Nederland|Ze kwamen hier studeren','Er was werk, dus bedrijven haalden mensen hierheen. Turkije en Marokko waren geen Nederlandse koloniën (dat waren onder meer Indonesië en Suriname), en het ging niet om vluchten of studeren.']],
+ ['Vooroordelen en discriminatie',`<ul><li><b>Stereotype</b>: een vereenvoudigd beeld van een hele groep (‘alle Nederlanders zijn gierig’).</li><li><b>Vooroordeel</b>: een (vaak negatieve) mening over iemand zonder dat je diegene kent, vaak gebaseerd op een stereotype.</li><li><b>Discriminatie</b>: iemand echt <b>anders behandelen</b> vanwege bijvoorbeeld afkomst, geloof, geslacht of seksuele voorkeur. Verboden volgens artikel 1 van de Grondwet.</li></ul><p>💡 Snap je het zo? Stereotype en vooroordeel zitten <b>in je hoofd</b>. Discriminatie is wat je <b>doet</b>.</p>${VB('de bijbaan','Twee meiden met dezelfde cijfers en ervaring solliciteren bij een café. Eén wordt niet uitgenodigd vanwege haar achternaam. Dat is discriminatie, en daar kun je een melding van maken bij een antidiscriminatievoorziening of het College voor de Rechten van de Mens.')}`,['Een winkelbediende loopt een meisje met een hoofddoek achterna, alleen omdat hij denkt dat ‘zulke meisjes stelen’. Wat is hier aan de hand?','Discriminatie op basis van een vooroordeel','Socialisatie|Sociale cohesie|Een gewone norm','Hij heeft een vooroordeel (in zijn hoofd) en behandelt haar daardoor anders (discriminatie). Socialisatie en cohesie gaan over iets anders, en dit is geen acceptabele norm.']],
+ ['Samenleven: sociale cohesie',`<p><b>Sociale cohesie</b> = hoe sterk mensen in een samenleving zich met elkaar <b>verbonden</b> voelen. Veel cohesie: mensen vertrouwen elkaar en helpen elkaar.</p><p>Hoe ga je om met verschillen? Daar zijn verschillende ideeën over:</p><ul><li><b>Assimilatie</b>: nieuwkomers nemen de cultuur van het nieuwe land helemaal over.</li><li><b>Integratie</b>: nieuwkomers doen volwaardig mee (taal, werk, school) en mogen een deel van hun eigen cultuur houden.</li><li><b>Multiculturele samenleving</b>: groepen behouden hun eigen cultuur naast elkaar.</li></ul><p>Wat helpt: <b>ontmoeting</b> (school, sport, buurt), de taal spreken, en gedeelde regels zoals de Grondwet. Hoeveel migratie Nederland wil en wat je van nieuwkomers mag verwachten, is een echte politieke discussie.</p>`,['Een nieuwkomer leert Nederlands en werkt, maar viert ook zijn eigen feesten. Welk begrip past daarbij?','Integratie','Assimilatie|Verzuiling|Discriminatie','Meedoen én een deel van je eigen cultuur houden is integratie. Bij assimilatie neem je de nieuwe cultuur helemaal over. Verzuiling en discriminatie gaan over iets anders.']]
+]}
+];
+
+const POD={};
+Object.assign(POD,{
+'intro':[
+{t:'Wat is maatschappijleer eigenlijk?',s:[
+['E','Daan, volgend jaar krijgen we maatschappijleer. Ik heb geen idee wat dat is.'],
+['D','Ik ook maar half. Mijn broer zegt: het gaat over hoe Nederland in elkaar zit, en hoe jij daarin meedoet.'],
+['E','Meedoen? Ik ben vijftien. Ik doe toch nog nergens aan mee?'],
+['D','Meer dan je denkt. Jij hebt een bijbaantje bij de supermarkt, toch? Dan gelden er regels over hoe lang je mag werken en wat je minimaal verdient.'],
+['E','Ja, en ik betaal er zelfs belasting over, zag ik op mijn loonstrook.'],
+['D','Zie je. En wie bedenkt die regels? Dat is de politiek. Daar gaat maatschappijleer over.'],
+['E','Oké. Maar het is toch niet alleen politiek?'],
+['D','Nee. Het vak heeft vier grote thema’s. Het eerste is de rechtsstaat: regels, rechten en rechters.'],
+['E','Dus ook die scooterboete van mijn neef.'],
+['D','Precies. Het tweede is de parlementaire democratie: verkiezingen, de Tweede Kamer, het kabinet, en de gemeente.'],
+['E','En het derde?'],
+['D','De verzorgingsstaat. Hoe de overheid zorgt voor mensen die ziek, oud of werkloos zijn. Denk aan pensioen en de zorgverzekering van je ouders.'],
+['E','En nummer vier?'],
+['D','De pluriforme samenleving. Pluriform betekent veelvormig: in Nederland wonen mensen met heel verschillende achtergronden, gewoontes en geloven.'],
+['E','Dus hoe we samenleven met al die verschillen.'],
+['D','Ja. Rechtsstaat, democratie, verzorgingsstaat en pluriforme samenleving. Die vier komen steeds terug.'],
+['E','Klinkt eigenlijk best nuttig. Over drie jaar mag ik stemmen.'],
+['D','Daarom bestaat het vak ook. Je leert snappen wat er in het nieuws gebeurt, zodat je zelf een mening kunt vormen.'],
+['E','Een mening vormen, dus niet de mening van de leraar overnemen?'],
+['D','Nee, juist niet. Een goede leraar maatschappijleer vertelt je niet op wie je moet stemmen. Je leert zelf nadenken.']
+],q:[
+['Welke vier thema’s heeft maatschappijleer?','Rechtsstaat, parlementaire democratie, verzorgingsstaat en pluriforme samenleving','Geschiedenis, aardrijkskunde, economie en recht|Politiek, sport, cultuur en religie|Grondwet, belasting, verkeer en school','Dit zijn de vier vaste thema’s van het vak. De andere rijtjes noemen losse onderwerpen of andere vakken: die komen hooguit als voorbeeld voorbij.'],
+['Wat betekent ‘pluriform’?','Veelvormig: met veel verschillende groepen en gewoontes','Eenvormig: iedereen is hetzelfde|Met veel regels|Met veel politieke partijen','Pluri betekent veel, vorm is vorm. Een pluriforme samenleving heeft veel verschillende mensen en leefstijlen. Het gaat niet over regels of partijen.'],
+['Waarom heeft het vak iets te maken met Eva’s bijbaantje?','Er gelden regels over werktijden, loon en belasting, en die maakt de politiek','Omdat de supermarkt van de overheid is|Omdat je voor een bijbaantje een examen moet doen|Het heeft er niets mee te maken','Regels over hoe lang je mag werken, het minimumloon en belasting worden door de politiek gemaakt. De supermarkt is gewoon een bedrijf, en een examen is niet nodig.'],
+['Wat hoort een leraar maatschappijleer níet te doen?','Vertellen op welke partij je moet stemmen','Uitleggen hoe verkiezingen werken|Laten zien dat er verschillende meningen zijn|Je leren een mening te onderbouwen','Het vak is neutraal: je leert hoe het werkt en hoe je zelf nadenkt. Stemadvies geven past daar niet bij. De andere drie horen er juist wel bij.']
+]},
+{t:'Hoe werk je bij maatschappijleer?',s:[
+['D','Eva, weet je hoe zo’n les eruitziet? Ik dacht eerst: veel stampen.'],
+['E','En is dat zo?'],
+['D','Valt mee. Je begint vaak met iets uit het nieuws. Een actualiteit, heet dat.'],
+['E','Zoals het plan om vuurwerk helemaal te verbieden?'],
+['D','Ja, perfect voorbeeld. Dan bekijk je zo’n probleem van verschillende kanten.'],
+['E','Hoe dan?'],
+['D','Daar heb je een vast stappenplan voor: de politiek probleembenadering. Eerst vraag je: wat is precies het probleem?'],
+['E','Bij vuurwerk: gewonden, schade, en dieren die schrikken.'],
+['D','Goed. Dan: waarom is het een maatschappelijk probleem? Het raakt veel mensen, en mensen vinden dat de overheid er iets aan moet doen.'],
+['E','En dan zoek je de oorzaken?'],
+['D','Ja. Daarna kijk je naar de oplossingen, en wie welke oplossing wil. Hulpverleners willen een verbod, sommige verkopers en liefhebbers juist niet.'],
+['E','Dus iedereen heeft andere belangen.'],
+['D','En andere waarden. De een vindt veiligheid het belangrijkst, de ander vrijheid en traditie.'],
+['E','En wie beslist uiteindelijk?'],
+['D','Dat is de volgende stap: de besluitvorming. Gemeente, kabinet of Tweede Kamer. En als laatste: werkt het besluit in de praktijk?'],
+['E','Dat klinkt eigenlijk als een recept dat je bij elk onderwerp kunt gebruiken.'],
+['D','Precies. Verder voer je veel discussies en schrijf je soms een betoog. Dan moet je jouw standpunt onderbouwen met argumenten.'],
+['E','Niet alleen roepen: ik vind dit, punt.'],
+['D','Nee, je zegt waarom, en je denkt ook na over wat de andere kant zou zeggen.'],
+['E','Dat lijkt me eerlijk gezegd wel leuk. Lekker discussiëren.']
+],q:[
+['Wat is meestal de eerste stap van de politiek probleembenadering?','Vaststellen wat precies het probleem is','Kiezen welke oplossing het beste is|Stemmen in de klas|Een betoog schrijven','Je begint altijd met de vraag wat het probleem is. Oplossingen, besluiten en betogen komen pas later.'],
+['Waarom willen mensen bij vuurwerk verschillende oplossingen?','Ze hebben verschillende belangen en vinden verschillende waarden belangrijk','Omdat niemand het probleem kent|Omdat de wet dat voorschrijft|Omdat er maar één goede oplossing is','Belangen (wat levert het mij op of kost het mij?) en waarden (wat vind ik belangrijk, zoals veiligheid of vrijheid) verschillen per groep. Daarom is er discussie.'],
+['Wat is een actualiteit?','Iets wat nu in het nieuws is','Een oude wet|Een vaste regel van school|Een politieke partij','Actueel betekent: van nu. Lessen beginnen vaak met zo’n nieuwsonderwerp.'],
+['Wat doe je in een goed betoog?','Je standpunt onderbouwen met argumenten en de tegenargumenten serieus nemen','Zo hard mogelijk je mening herhalen|Alleen feiten opsommen zonder mening|De mening van de leraar overnemen','Een betoog heeft een standpunt plus argumenten, en je laat zien dat je de andere kant kent. Alleen herhalen of overnemen is geen onderbouwing.']
+]}
+],
+'rs':[
+{t:'Regels, rechten en de Grondwet',s:[
+['E','Daan, mijn neef kreeg gisteren een boete. Hij reed met zijn scooter veel te hard.'],
+['D','Auw. Maar eerlijk is eerlijk: hij hield zich niet aan de regels.'],
+['E','Hij zei: de politie mag ook niet zomaar alles.'],
+['D','Daar heeft hij gelijk in. Dat is precies het idee van een rechtsstaat.'],
+['E','Wat is dat precies?'],
+['D','Een land waar niet alleen burgers zich aan de wet moeten houden, maar de overheid ook. De regering, de politie, iedereen.'],
+['E','Dus de overheid kan niet zomaar iemand opsluiten.'],
+['D','Nee. Alleen als de wet dat toestaat, en dan beslist uiteindelijk een rechter.'],
+['E','Waar staan die regels dan?'],
+['D','De belangrijkste staan in de Grondwet. Daarin staan onze grondrechten.'],
+['E','Zoals vrijheid van meningsuiting.'],
+['D','Ja. En vrijheid van godsdienst, het recht op privacy, en het verbod op discriminatie in artikel 1.'],
+['E','Artikel 1 ken ik. Iedereen moet in gelijke gevallen gelijk behandeld worden.'],
+['D','Goed! Die rechten noemen we klassieke grondrechten. Ze beschermen jou tegen de overheid. De overheid moet je met rust laten.'],
+['E','Zijn er ook andere?'],
+['D','Ja, sociale grondrechten. Daarbij moet de overheid juist iets doen. Zorgen voor onderwijs, voor goede gezondheidszorg, voor werk en bestaanszekerheid.'],
+['E','Dus bij klassieke rechten blijft de overheid eraf, en bij sociale rechten moet ze juist helpen.'],
+['D','Precies. Maar een grondrecht is niet onbeperkt. Vrijheid van meningsuiting betekent niet dat je mag bedreigen of beledigen.'],
+['E','Snap ik. Mijn vrijheid houdt op waar die van een ander begint.'],
+['D','Mooi gezegd. Dat zou zo in een maatschappijleerboek kunnen staan.']
+],q:[
+['Wat is het belangrijkste kenmerk van een rechtsstaat?','Ook de overheid moet zich aan de wet houden','De politie mag alles om criminelen te pakken|Er zijn geen boetes|Burgers maken zelf de wetten','In een rechtsstaat is de macht van de overheid beperkt door de wet. De politie mag dus niet alles, en boetes bestaan wel degelijk.'],
+['Welk grondrecht is een klassiek grondrecht?','Vrijheid van godsdienst','Recht op onderwijs dat de overheid regelt|Zorg voor werkgelegenheid|Zorg voor de volksgezondheid','Bij een klassiek grondrecht moet de overheid je met rust laten, zoals bij je geloof. De andere drie zijn sociale grondrechten: daar moet de overheid juist iets voor doen.'],
+['Wat staat er in artikel 1 van de Grondwet?','Gelijke behandeling in gelijke gevallen, en een verbod op discriminatie','Vrijheid van meningsuiting|Het recht om te stemmen|Dat de koning het land bestuurt','Artikel 1 is het gelijkheidsbeginsel met het discriminatieverbod. Meningsuiting staat in een ander artikel, en de koning bestuurt het land niet zelf.'],
+['Mag je alles zeggen dankzij de vrijheid van meningsuiting?','Nee, bedreigen, opruien en discrimineren zijn bijvoorbeeld strafbaar','Ja, alles mag|Nee, je mag geen kritiek op de regering hebben|Alleen als je ouder bent dan 18','Grondrechten hebben grenzen. Kritiek op de regering mag juist wel, en de vrijheid geldt voor iedereen, niet alleen voor volwassenen.']
+]},
+{t:'Machten, rechters en jongeren',s:[
+['E','Daan, wie maakt eigenlijk de wetten? En wie zorgt dat ze worden uitgevoerd?'],
+['D','Dat is een slimme vraag. Een Franse denker, Montesquieu, zei al in de achttiende eeuw: verdeel de macht in drieën.'],
+['E','De trias politica! Die naam heb ik weleens gehoord.'],
+['D','Ja. Er is een wetgevende macht die wetten maakt, een uitvoerende macht die ze uitvoert, en een rechterlijke macht die oordeelt bij ruzie of misdaad.'],
+['E','En waarom drie?'],
+['D','Zodat niemand alle macht heeft. Ze houden elkaar in evenwicht.'],
+['E','En wie is wie in Nederland?'],
+['D','Wetten maken doen de regering en het parlement samen. Uitvoeren doet de regering met de ministeries. En de rechters zijn onafhankelijk.'],
+['E','Oké. Stel nu dat een jongen uit mijn klas een fiets steelt. Wat gebeurt er dan?'],
+['D','Eerst doet de politie onderzoek. Dat heet opsporing. Ze verhoort hem en verzamelt bewijs.'],
+['E','En dan gaat hij meteen naar de rechter?'],
+['D','Nee, eerst beslist het Openbaar Ministerie, met de officier van justitie, of hij vervolgd wordt.'],
+['E','En tot de rechter iets beslist?'],
+['D','Is hij onschuldig. Iemand is onschuldig tot het tegendeel bewezen is. Hij heeft ook recht op een advocaat.'],
+['E','Maar hij is pas veertien. Krijgt hij dezelfde straf als een volwassene?'],
+['D','Nee. Vanaf twaalf jaar kun je worden vervolgd, maar tot achttien geldt het jeugdstrafrecht. Daarin staat leren van je fout voorop.'],
+['E','Wat voor straf dan?'],
+['D','Bij kleine dingen, zoals vandalisme of vuurwerk afsteken op de verkeerde dag, krijg je vaak een Halt-straf. Bijvoorbeeld schade herstellen en excuses aanbieden.'],
+['E','En dan heb je geen strafblad?'],
+['D','Als je de Halt-straf goed afmaakt, niet. Een tweede kans dus. Maar bij ernstige dingen kan een jongere ook jeugddetentie krijgen.']
+],q:[
+['Wat bedoelde Montesquieu met de trias politica?','De macht verdelen over wetgevend, uitvoerend en rechtsprekend, zodat niemand alle macht heeft','Drie politieke partijen in het parlement|Drie keer per jaar verkiezingen|Een koning, een president en een paus','Trias politica betekent driedeling van de macht. Het gaat niet over partijen, verkiezingen of drie leiders.'],
+['Wie beslist of een verdachte wordt vervolgd?','Het Openbaar Ministerie (de officier van justitie)','De politie|De burgemeester|Het slachtoffer','De politie spoort op, het Openbaar Ministerie besluit over vervolgen, de rechter oordeelt. Burgemeester en slachtoffer beslissen dat niet.'],
+['Vanaf welke leeftijd kun je in Nederland strafrechtelijk worden vervolgd?','12 jaar','10 jaar|16 jaar|18 jaar','Vanaf 12 jaar kun je worden vervolgd, en tot 18 jaar geldt meestal het jeugdstrafrecht. 16 en 18 zijn dus te laat, 10 is te vroeg.'],
+['Wat is een Halt-straf?','Een straf voor jongeren bij lichte vergrijpen, zoals schade herstellen of excuses aanbieden','Een gevangenisstraf voor jongeren|Een boete voor ouders|Een verbod om op straat te komen','Halt is bedoeld voor kleine vergrijpen en geeft een tweede kans. Het is geen celstraf, geen boete voor ouders en geen straatverbod.']
+]}
+],
+'pd':[
+{t:'Verkiezingen en de Tweede Kamer',s:[
+['E','Daan, mijn ouders stonden gisteren in de rij bij het stembureau in onze school.'],
+['D','Leuk. Dan waren er verkiezingen. Weet je waarvoor?'],
+['E','Voor de Tweede Kamer, zeiden ze. Wat is dat eigenlijk?'],
+['D','De Tweede Kamer is het belangrijkste deel van het parlement. Er zitten honderdvijftig Kamerleden in.'],
+['E','En wat doen die?'],
+['D','Twee dingen. Ze maken samen met de regering de wetten, en ze controleren de regering.'],
+['E','Hoe kom je in de Kamer?'],
+['D','Via een politieke partij. Elke partij heeft een kandidatenlijst. Bovenaan staat de lijsttrekker.'],
+['E','En hoe vaak zijn er verkiezingen?'],
+['D','Normaal elke vier jaar. Maar als een kabinet eerder valt, zijn er vaak eerder nieuwe verkiezingen.'],
+['E','En wie mag er stemmen?'],
+['D','Iedere Nederlander vanaf achttien jaar. Stemmen is wel een recht, maar geen plicht.'],
+['E','Mijn moeder zei dat er wel twintig partijen op het biljet stonden.'],
+['D','Klopt. Dat komt door ons kiesstelsel. Het aantal zetels per partij hangt af van het percentage stemmen. Met ongeveer een honderdvijftigste deel van alle stemmen heb je al een zetel.'],
+['E','Dus ook kleine partijen komen erin.'],
+['D','Precies. En daardoor heeft bijna nooit één partij de meerderheid. Partijen moeten samenwerken.'],
+['E','Is er ook een Eerste Kamer?'],
+['D','Ja, die heeft vijfenzeventig leden. Die worden niet door ons gekozen, maar door de leden van de Provinciale Staten.'],
+['E','Wat doet die Eerste Kamer?'],
+['D','Ze controleert wetten nog een keer goed. Ze kan een wet alleen aannemen of verwerpen, niet zelf veranderen. Daarom heet ze ook wel de chambre de réflexion: de kamer van bezinning.']
+],q:[
+['Hoeveel leden heeft de Tweede Kamer?','150','75|100|225','De Tweede Kamer heeft 150 leden. De Eerste Kamer heeft er 75.'],
+['Wat zijn de twee hoofdtaken van de Tweede Kamer?','Wetten maken (samen met de regering) en de regering controleren','Rechtspreken en straffen|Belasting innen en uitgeven|De koning kiezen en benoemen','Wetgeven en controleren zijn de taken van het parlement. Rechtspreken doen rechters, belasting innen doet de Belastingdienst, en de koning wordt niet gekozen.'],
+['Waarom regeert in Nederland bijna nooit één partij alleen?','Omdat bijna geen partij in haar eentje een meerderheid van de zetels haalt','Omdat dat in de Grondwet verboden is|Omdat de koning dat beslist|Omdat er maar twee partijen zijn','Door ons kiesstelsel komen veel partijen in de Kamer, dus een meerderheid (76 zetels) haal je bijna altijd alleen samen. Het is niet verboden en de koning beslist het niet.'],
+['Hoe worden de leden van de Eerste Kamer gekozen?','Door de leden van de Provinciale Staten','Direct door alle kiezers|Door de koning|Door de Tweede Kamer','Wij kiezen de Provinciale Staten, en die kiezen de Eerste Kamer. Het is dus een indirecte verkiezing.']
+]},
+{t:'Kabinet, partijen en meepraten',s:[
+['E','Oké, Daan, na de verkiezingen. Wie gaat er dan regeren?'],
+['D','Dan begint de formatie. Partijen die samen meer dan de helft van de zetels hebben, gaan onderhandelen. Dat is een coalitie.'],
+['E','Meer dan de helft van honderdvijftig, dus minstens zesenzeventig.'],
+['D','Precies. Ze schrijven samen een coalitieakkoord: wat ze de komende jaren willen doen.'],
+['E','En dan heb je een kabinet?'],
+['D','Ja: de ministers en staatssecretarissen. De minister-president leidt het kabinet.'],
+['E','En wat is links en rechts dan eigenlijk? Dat hoor ik steeds in het nieuws.'],
+['D','Grof gezegd: links vindt meestal dat de overheid meer moet doen om verschillen tussen arm en rijk kleiner te maken.'],
+['E','En rechts?'],
+['D','Rechts legt meestal meer nadruk op de vrije markt, lagere belastingen en eigen verantwoordelijkheid.'],
+['E','En progressief en conservatief?'],
+['D','Progressief betekent: open voor verandering en vernieuwing. Conservatief betekent: bestaande tradities en waarden willen bewaren.'],
+['E','Dus een partij kan bijvoorbeeld rechts en progressief zijn?'],
+['D','Ja, dat kan allemaal door elkaar. Het zijn meer windrichtingen dan vaste hokjes.'],
+['E','En dichterbij? Bij ons in het dorp gaan ze een skatebaan sluiten.'],
+['D','Dat beslist de gemeente. De gemeenteraad wordt door de inwoners gekozen. De burgemeester en de wethouders voeren het uit.'],
+['E','Kan ik daar iets tegen doen, ook al mag ik nog niet stemmen?'],
+['D','Zeker! Je kunt een petitie starten, inspreken bij de gemeenteraad, demonstreren, of de lokale krant mailen.'],
+['E','En grote bedrijven lobbyen toch ook bij politici?'],
+['D','Ja. Lobbyen is proberen politici te overtuigen met informatie en gesprekken. Belangengroepen doen dat ook, van boeren tot milieuclubs.']
+],q:[
+['Wat is een coalitie?','Een samenwerking van partijen die samen een meerderheid hebben en de regering vormen','Alle partijen in de Tweede Kamer|De partijen die tegen de regering zijn|Een groep ministers zonder partij','Een coalitie heeft samen minstens 76 zetels en levert het kabinet. De partijen die niet meedoen heten de oppositie.'],
+['Wat is meestal een standpunt dat bij politiek links past?','De overheid moet meer doen om verschillen tussen arm en rijk te verkleinen','Belastingen moeten zo laag mogelijk|Bedrijven moeten zo vrij mogelijk zijn|Tradities moeten altijd blijven zoals ze zijn','Links wil vaak meer gelijkheid via de overheid. Lage belastingen en een vrije markt passen meer bij rechts, en tradities bewaren is conservatief.'],
+['Wie kiest de gemeenteraad?','De inwoners van de gemeente die mogen stemmen','De burgemeester|De Tweede Kamer|De koning','Inwoners kiezen de raad. De burgemeester wordt benoemd, niet gekozen, en de Tweede Kamer of de koning kiezen de raad niet.'],
+['Eva is 15 en wil de skatebaan redden. Wat kan zij doen?','Een petitie starten of inspreken bij de gemeenteraad','Stemmen bij de gemeenteraadsverkiezingen|Een wet indienen in de Tweede Kamer|Niets, want ze is te jong','Stemmen kan pas vanaf 18 en wetten indienen kan zij niet. Maar meepraten mag iedereen: petitie, inspreken, demonstreren of de media inschakelen.']
+]}
+],
+'vs':[
+{t:'Wat doet de verzorgingsstaat?',s:[
+['E','Daan, mijn opa is net met pensioen. Hij krijgt nu elke maand geld van de overheid. Hoe zit dat?'],
+['D','Dat is de AOW: de algemene ouderdomswet. Iedereen die lang genoeg in Nederland heeft gewoond, krijgt vanaf een bepaalde leeftijd een basispensioen.'],
+['E','Vanaf welke leeftijd?'],
+['D','Nu ongeveer zevenenzestig jaar. Die leeftijd gaat langzaam omhoog, omdat mensen ouder worden.'],
+['E','En wie betaalt dat?'],
+['D','De mensen die nu werken, via premies en belasting. Werkende mensen betalen voor de ouderen van nu.'],
+['E','Dat heet toch de verzorgingsstaat?'],
+['D','Ja. Een land waarin de overheid zorgt dat iedereen een bestaansminimum heeft, en toegang tot zorg en onderwijs.'],
+['E','Wat valt daar nog meer onder?'],
+['D','De WW, de werkloosheidsuitkering. Als je je baan verliest, krijg je een tijdje een deel van je loon.'],
+['E','En als je geen werk vindt en geen geld meer hebt?'],
+['D','Dan is er de bijstand. Die regelt de gemeente. Het is het vangnet waar je op terugvalt als niets anders lukt.'],
+['E','Mijn moeder klaagde laatst over de zorgverzekering. Moet zij die betalen?'],
+['D','Iedereen vanaf achttien moet een basisverzekering hebben. Kinderen onder de achttien zijn gratis meeverzekerd bij hun ouders.'],
+['E','Dus ik kost mijn moeder niks. Mooi.'],
+['D','Haha, voor de zorgverzekering niet. Maar als jij achttien wordt, moet je het zelf regelen. Wie weinig verdient, krijgt zorgtoeslag.'],
+['E','En onderwijs hoort er ook bij, toch?'],
+['D','Ja. Er is leerplicht tot je zestien bent, en tot je achttiende moet je naar school tot je een startkwalificatie hebt: een diploma van havo, vwo of minstens mbo niveau twee. En de overheid betaalt het grootste deel van jouw school.'],
+['E','Wanneer is dit allemaal ontstaan?'],
+['D','Vooral na de Tweede Wereldoorlog. De AOW is uit negentienhonderd zevenenvijftig. Daarvoor waren veel ouderen afhankelijk van hun kinderen of van de kerk.']
+],q:[
+['Wat is de AOW?','Een basispensioen van de overheid voor iedereen vanaf de AOW-leeftijd','Een uitkering als je je baan verliest|Een uitkering van de gemeente als je geen geld hebt|Een verzekering voor de tandarts','De AOW is het ouderdomspensioen. Werkloosheid is de WW, het vangnet van de gemeente is de bijstand, en de tandarts valt onder zorgverzekeringen.'],
+['Wie regelt de bijstand?','De gemeente','De werkgever|De zorgverzekeraar|De Europese Unie','De bijstand is een vangnet dat de gemeente uitvoert. Werkgevers, verzekeraars en de Europese Unie betalen die niet uit.'],
+['Moet Eva (15) zelf een zorgverzekering betalen?','Nee, tot 18 jaar ben je gratis meeverzekerd bij je ouders','Ja, vanaf 12 jaar|Ja, als ze een bijbaantje heeft|Nee, want jongeren krijgen nooit zorg','Tot je 18de ben je gratis meeverzekerd. Een bijbaantje verandert daar niets aan, en jongeren krijgen natuurlijk wel zorg.'],
+['Wie betaalt de AOW van de ouderen van nu?','Vooral de mensen die nu werken, via premies en belasting','De ouderen zelf, van hun spaargeld|De gemeente uit eigen geld|De banken','De AOW werkt met een omslagstelsel: werkenden betalen voor de ouderen van nu. Ouderen hoeven er niet zelf voor te sparen, en gemeente of banken betalen het niet.']
+]},
+{t:'Belasting en hoeveel de overheid moet doen',s:[
+['E','Daan, al die uitkeringen en zorg. Dat kost toch bakken met geld?'],
+['D','Zeker. Daarom betalen we belasting. Jij ook, trouwens.'],
+['E','Ik? Ik verdien maar een paar tientjes per week.'],
+['D','Als je een zak chips koopt, betaal je btw. Dat is belasting op wat je koopt. Op eten en boeken is het negen procent, op de meeste andere dingen eenentwintig procent.'],
+['E','Oh ja. En op mijn loon?'],
+['D','Daar kan loonbelasting af gaan. Met een klein bijbaantje is dat vaak weinig of niets, en anders krijg je het meestal terug als je aangifte doet.'],
+['E','Is het voor iedereen hetzelfde percentage?'],
+['D','Nee. Wie meer verdient, betaalt over het hogere deel een hoger percentage. Dat heet een progressief belastingstelsel.'],
+['E','Is dat niet oneerlijk voor wie hard werkt?'],
+['D','Daar gaat precies de grote discussie over. Sommige mensen vinden: de sterkste schouders moeten de zwaarste lasten dragen.'],
+['E','En anderen?'],
+['D','Die vinden dat de overheid minder moet doen. Lagere belastingen, minder regels, en mensen meer eigen verantwoordelijkheid geven.'],
+['E','Wie heeft er gelijk?'],
+['D','Dat is geen kwestie van gelijk of ongelijk. Het hangt af van wat je belangrijker vindt: gelijkheid en zekerheid, of vrijheid en eigen keuzes.'],
+['E','Er zijn toch ook problemen met de verzorgingsstaat?'],
+['D','Ja. Mensen worden ouder en de zorg wordt duurder. Daarom gaat de AOW-leeftijd omhoog en wordt er gesproken over eigen risico en eigen bijdragen.'],
+['E','En wat is dat eigen risico?'],
+['D','Een bedrag dat je eerst zelf betaalt voor sommige zorg, voordat de verzekering betaalt. Een paar honderd euro per jaar.'],
+['E','Dus de vraag blijft: hoeveel moet de overheid voor ons zorgen?'],
+['D','Precies. Dat is één van de vaste discussies bij maatschappijleer, en bij bijna elke verkiezing.']
+],q:[
+['Wat is btw?','Belasting die je betaalt over wat je koopt','Belasting over je loon|Een uitkering voor jongeren|Een boete voor te hard rijden','Btw zit in de prijs van producten en diensten. Loonbelasting gaat van je loon af, en een uitkering of boete is iets anders.'],
+['Wat betekent een progressief belastingstelsel?','Wie meer verdient, betaalt over het hogere deel een hoger percentage','Iedereen betaalt precies hetzelfde bedrag|Jongeren betalen meer dan ouderen|Belasting gaat elk jaar omhoog','Progressief betekent hier: het percentage stijgt met het inkomen. Het gaat niet om gelijke bedragen, leeftijd of jaarlijkse stijgingen.'],
+['Iemand vindt: ‘Mensen moeten meer zelf regelen en de belasting moet omlaag.’ Welke kant van de discussie is dat?','De overheid moet minder doen','De overheid moet meer doen|De sterkste schouders moeten de zwaarste lasten dragen|De verzorgingsstaat moet groter','Minder belasting en meer eigen verantwoordelijkheid betekent een kleinere rol voor de overheid. De andere drie antwoorden pleiten juist voor meer overheid.'],
+['Waarom gaat de AOW-leeftijd omhoog?','Omdat mensen gemiddeld ouder worden en de AOW anders te duur wordt','Omdat jongeren niet meer willen werken|Omdat de Grondwet dat voorschrijft|Omdat er minder ouderen komen','Mensen leven langer, dus de AOW wordt langer uitbetaald. Er komen juist méér ouderen, en de Grondwet zegt er niets over.']
+]}
+],
+'ps':[
+{t:'Cultuur, waarden en normen',s:[
+['E','Daan, bij mijn vriendin Yasmin thuis trekken ze de schoenen uit bij de deur. Bij ons niet.'],
+['D','En bij ons eten we altijd om zes uur, en bij mijn oom pas om acht. Dat noemen ze cultuur.'],
+['E','Cultuur? Ik dacht dat dat over musea ging.'],
+['D','Ook. Maar bij maatschappijleer betekent cultuur: alles wat je als groep aanleert. Taal, gewoontes, waarden en normen.'],
+['E','Wat is het verschil tussen waarden en normen?'],
+['D','Waarden zijn dingen die je belangrijk vindt. Zoals eerlijkheid, vrijheid of respect.'],
+['E','En normen?'],
+['D','Normen zijn de regels voor gedrag die bij die waarden horen. Als je respect belangrijk vindt, is een norm: niet door iemand heen praten.'],
+['E','Dus de waarde is het idee, en de norm is wat je daarom doet.'],
+['D','Precies. En hoe leer je die eigenlijk?'],
+['E','Van je ouders, denk ik.'],
+['D','Ja, dat is socialisatie: hoe je de cultuur van je omgeving aanleert. Eerst thuis in het gezin, daarna op school, bij vrienden, op sport en via social media.'],
+['E','Dus mijn TikTok-feed bepaalt ook wie ik ben?'],
+['D','Een beetje wel. Al die invloeden samen vormen je identiteit: wie je bent en bij welke groepen je hoort.'],
+['E','Ik ben dus tegelijk dochter, gymnasiast, hockeyer en Brabander.'],
+['D','Haha, ja. Iedereen heeft meerdere identiteiten. Dat maakt het ook makkelijker om met verschillende mensen iets gemeen te hebben.'],
+['E','En waarom heet het een pluriforme samenleving?'],
+['D','Omdat Nederland uit heel veel groepen bestaat, met verschillende culturen, geloven en leefstijlen.'],
+['E','Was dat vroeger anders?'],
+['D','Vroeger was Nederland verzuild. Katholieken, protestanten, socialisten en liberalen hadden elk hun eigen school, krant, omroep en zelfs voetbalclub.']
+],q:[
+['Wat is het verschil tussen een waarde en een norm?','Een waarde is wat je belangrijk vindt, een norm is een gedragsregel die daarbij hoort','Een waarde is een wet, een norm is een gewoonte|Ze betekenen precies hetzelfde|Een norm is wat iets kost','Waarde = idee dat je belangrijk vindt (respect). Norm = regel voor gedrag (niet door iemand heen praten). Het zijn geen wetten of prijzen, en ze betekenen niet hetzelfde.'],
+['Wat is socialisatie?','Het aanleren van de cultuur van je omgeving: waarden, normen en gewoontes','Het gebruiken van social media|Het lid worden van een politieke partij|Het verhuizen naar een ander land','Socialisatie is het proces waarin je leert hoe je je hoort te gedragen, vooral via gezin, school, vrienden en media. Social media is maar één van die invloeden.'],
+['Waar begint socialisatie meestal?','In het gezin','Op de middelbare school|Op het werk|In de politiek','Je eerste waarden en normen leer je thuis. School, vrienden en werk komen later.'],
+['Wat was de verzuiling?','Een tijd waarin elke levensbeschouwelijke groep haar eigen scholen, kranten en clubs had','Een periode met veel oorlog|Het bouwen van kerken met zuilen|Een wet tegen migratie','Katholieken, protestanten, socialisten en liberalen leefden vooral binnen hun eigen ‘zuil’. Het gaat niet over bouwwerken, oorlog of wetten.']
+]},
+{t:'Migratie, vooroordelen en samenleven',s:[
+['E','Daan, Yasmins opa kwam in de jaren zestig uit Marokko naar Nederland. Waarom eigenlijk?'],
+['D','Nederlandse fabrieken hadden toen werkers nodig. Ze haalden arbeidsmigranten uit onder meer Turkije, Marokko, Italië en Spanje.'],
+['E','En die gingen niet terug?'],
+['D','Veel bleven, en lieten later hun gezin overkomen. Dat heet gezinshereniging.'],
+['E','En de familie van mijn buurvrouw komt uit Suriname.'],
+['D','Ja, dat heeft te maken met het koloniale verleden. Mensen kwamen uit Indonesië, Suriname en de Antillen.'],
+['E','En nu?'],
+['D','Nu komen er bijvoorbeeld werknemers uit andere landen van de Europese Unie, zoals Polen, studenten, en vluchtelingen die asiel aanvragen.'],
+['E','Hoeveel mensen in Nederland hebben eigenlijk een migratieachtergrond?'],
+['D','Ongeveer een kwart. Ze zijn zelf geboren in het buitenland, of minstens één ouder is dat.'],
+['E','Ik merk soms dat mensen Yasmin anders behandelen. Een man in de winkel liep haar achterna, alsof ze zou stelen.'],
+['D','Dat is een vooroordeel: een mening over iemand zonder dat je diegene kent. Vaak gebaseerd op een stereotype, een vast beeld van een hele groep.'],
+['E','En als je iemand daarom echt anders behandelt?'],
+['D','Dan is het discriminatie. En die is verboden volgens artikel 1 van de Grondwet.'],
+['E','Hoe zorgen we dat iedereen zich thuis voelt?'],
+['D','Daar gaat sociale cohesie over: hoe sterk mensen in een samenleving zich met elkaar verbonden voelen.'],
+['E','Wat helpt daarbij?'],
+['D','Elkaar ontmoeten. Op school, op de sportclub, in de buurt. Mensen die elkaar kennen, hebben minder vooroordelen.'],
+['E','Maar mensen zijn het toch ook vaak oneens over migratie?'],
+['D','Ja, en dat is een echte politieke discussie. Hoeveel migratie wil je, en wat verwacht je van nieuwkomers? Bij maatschappijleer leer je alle kanten te zien.']
+],q:[
+['Waarom kwamen er in de jaren zestig veel arbeidsmigranten naar Nederland?','Nederlandse fabrieken hadden werkers nodig','Ze vluchtten voor een oorlog in Nederland|Ze kwamen studeren|Ze moesten van de Verenigde Naties','Er was een tekort aan arbeidskrachten, dus bedrijven haalden mensen uit landen als Turkije en Marokko. Het ging niet om vluchten, studeren of een opdracht van de Verenigde Naties.'],
+['Wat is een stereotype?','Een vast, vereenvoudigd beeld van een hele groep mensen','Een wet tegen discriminatie|Een soort muziek|Een migrant uit Europa','Een stereotype is een algemeen beeld, zoals ‘alle Nederlanders zijn gierig’. Het klopt nooit voor iedereen.'],
+['Wanneer is er sprake van discriminatie?','Als je iemand echt anders behandelt vanwege bijvoorbeeld afkomst, geloof of geslacht','Als je een mening hebt over politiek|Als je een ander land leuk vindt|Als je in een andere stad woont','Discriminatie is ongelijk behandelen zonder goede reden. Een vooroordeel zit in je hoofd, discriminatie is wat je doet. Een mening hebben of verhuizen is geen discriminatie.'],
+['Wat is sociale cohesie?','Hoe sterk mensen in een samenleving zich met elkaar verbonden voelen','Het aantal migranten in een land|Een sociale uitkering|De regels van de Grondwet','Cohesie betekent samenhang. Het gaat over verbondenheid, niet over aantallen, uitkeringen of wetten.']
+]}
+]
+});
+
+// Introductie maatschappijleer (3 vwo): meerkeuzevragen, begrippen en stellingen
+// MCQ[deel] = [vraag, goed, 'fout|fout|fout', uitleg, hint]
+// BEGR = [begrip, uitleg in gewone taal, deel]
+// STELLING = [stelling, waarom vinden mensen dit (voor), waarom niet (tegen), deel]  (neutraal: beide kanten even sterk)
+
+const MCQ={
+intro:[
+['Welke vier thema’s heeft maatschappijleer?','rechtsstaat, parlementaire democratie, verzorgingsstaat en pluriforme samenleving','politiek, economie, geschiedenis en recht|Grondwet, belasting, verkeer en school|Europa, Nederland, provincie en gemeente',
+ 'Dit zijn de vier vaste thema’s.<br>Fout: de andere rijtjes noemen losse onderwerpen of andere vakken. Belasting of de gemeente komen wel voorbij, maar als onderdeel van een thema.',
+ 'Denk aan: regels, macht, zorg en samenleven.'],
+['Wat betekent ‘pluriform’?','veelvormig','eenvormig|ouderwets|politiek',
+ '<b>Pluri</b> = veel, <b>form</b> = vorm. Een pluriforme samenleving heeft veel verschillende groepen en leefstijlen.<br>Fout: eenvormig is juist het tegenovergestelde, en ouderwets of politiek heeft er niets mee te maken.',
+ 'Pluri lijkt op ‘plural’, meervoud.'],
+['Wat is de eerste stap van de politiek-probleembenadering?','vaststellen wat het probleem is','een oplossing kiezen|de besluitvorming bekijken|nagaan hoe het besluit uitpakt',
+ 'Je begint altijd met de vraag <b>wat het probleem</b> precies is.<br>Fout: oplossingen, besluitvorming en de praktijk komen later in het stappenplan.',
+ 'Je kunt pas iets oplossen als je weet wat er aan de hand is.'],
+['Waarom wordt een probleem een <b>politiek</b> probleem?','omdat veel mensen het raakt en men vindt dat de overheid er iets aan moet doen','omdat een politicus het heeft bedacht|omdat het in de krant staat|omdat het een persoonlijk probleem is',
+ 'Een probleem wordt politiek als het <b>veel mensen raakt</b> en mensen vinden dat de <b>overheid</b> moet ingrijpen.<br>Fout: in de krant staan alleen is niet genoeg, en een persoonlijk probleem (ruzie met je zus) is geen zaak voor de overheid.',
+ 'Wie moet het probleem oplossen: jijzelf, of de overheid?'],
+['Wat is een <b>belang</b>?','wat iets jou of jouw groep oplevert of kost','wat je belangrijk vindt, zoals vrijheid|een wet uit de Grondwet|een politieke partij',
+ 'Een belang gaat over <b>voordeel of nadeel</b> voor jou of je groep.<br>Fout: ‘wat je belangrijk vindt’ is een <b>waarde</b>. Een wet of partij is iets anders.',
+ 'Belang = portemonnee of voordeel. Waarde = idee.'],
+['Een vuurwerkverkoper is tegen een vuurwerkverbod. Waar baseert hij zich vooral op?','een belang','een waarde|een grondrecht|een norm',
+ 'Bij een verbod verliest hij omzet: hij heeft er een <b>belang</b> bij.<br>Fout: een waarde is een idee zoals vrijheid; een grondrecht of norm is hier niet zijn reden.',
+ 'Wat verliest of wint hij er zelf bij?'],
+['Vanaf welke leeftijd mag je stemmen voor de Tweede Kamer?','18','16|17|21',
+ 'Stemmen mag vanaf <b>18 jaar</b>.<br>Fout: over 16 wordt gediscussieerd, maar het geldt niet. 17 en 21 kloppen ook niet.',
+ 'Dezelfde leeftijd als waarop je volwassen wordt.'],
+['Wat hoort de leraar maatschappijleer níet te doen?','zeggen op welke partij je moet stemmen','discussies leiden in de klas|uitleggen hoe verkiezingen werken|leren hoe je een mening onderbouwt',
+ 'Het vak is <b>neutraal</b>: stemadvies geven past daar niet bij.<br>Fout: de andere drie zijn juist wat een leraar maatschappijleer doet.',
+ 'Wat zou oneerlijk zijn tegenover leerlingen die anders denken?'],
+['Wat hoort in een goed betoog?','een standpunt met argumenten, en een tegenargument dat je weerlegt','alleen je mening, zonder uitleg|zoveel mogelijk feiten zonder standpunt|alleen de argumenten van de andere kant',
+ 'Een betoog heeft een <b>standpunt</b>, <b>argumenten</b> en laat zien dat je de <b>andere kant</b> kent.<br>Fout: alleen een mening is geen onderbouwing; alleen feiten zonder standpunt is een uiteenzetting, geen betoog.',
+ 'Betogen = iemand overtuigen. Wat heb je daarvoor nodig?'],
+['Wat is een actualiteit?','een onderwerp dat nu in het nieuws is','een oude wet|een vast schoolvak|een kenmerk van de rechtsstaat',
+ '<b>Actueel</b> = van nu. Lessen beginnen vaak met zo’n nieuwsonderwerp.<br>Fout: een oude wet is juist niet nieuw, en de andere twee hebben er niets mee te maken.',
+ 'Actueel = ‘wat speelt er nu?’'],
+['Bij welk thema hoort de vraag ‘Mag de politie mijn telefoon doorzoeken?’','rechtsstaat','verzorgingsstaat|pluriforme samenleving|parlementaire democratie',
+ 'Wat de politie mag en jouw <b>recht op privacy</b> horen bij de rechtsstaat.<br>Fout: de verzorgingsstaat gaat over zorg en uitkeringen, de pluriforme samenleving over cultuur, en democratie over verkiezingen en het parlement.',
+ 'Het gaat over regels, rechten en politie.']
+],
+rs:[
+['Wat is het belangrijkste kenmerk van een rechtsstaat?','ook de overheid moet zich aan de wet houden','de politie mag alles om misdaad te bestrijden|de koning staat boven de wet|er zijn geen straffen',
+ 'In een rechtsstaat is de macht van de overheid <b>begrensd door de wet</b>.<br>Fout: de politie mag juist niet alles, de koning staat niet boven de wet, en straffen bestaan wel.',
+ 'Wie moet zich in een rechtsstaat óók aan de regels houden?'],
+['Wat is de Grondwet?','de belangrijkste wet, met onder meer de grondrechten en de inrichting van de staat','een lijst met verkeersregels|het verkiezingsprogramma van het kabinet|een wet die alleen voor rechters geldt',
+ 'De Grondwet is de <b>basis</b>: andere wetten mogen er niet mee in strijd zijn.<br>Fout: verkeersregels staan in andere wetten, een verkiezingsprogramma is van een partij, en de Grondwet geldt voor iedereen.',
+ 'Grond = fundament.'],
+['Welk grondrecht is <b>klassiek</b>?','vrijheid van meningsuiting','zorg voor werkgelegenheid|zorg voor de volksgezondheid|zorg voor voldoende woningen',
+ 'Bij een klassiek grondrecht moet de overheid je met <b>rust laten</b>.<br>Fout: bij werk, gezondheid en woningen moet de overheid juist iets doen: dat zijn sociale grondrechten.',
+ 'Klassiek = handen af. Sociaal = handen uit de mouwen.'],
+['Welk grondrecht is <b>sociaal</b>?','de overheid zorgt voor goede gezondheidszorg','vrijheid van godsdienst|recht op privacy|recht om te demonstreren',
+ 'Bij gezondheidszorg moet de overheid <b>actief iets doen</b>: sociaal grondrecht.<br>Fout: godsdienst, privacy en demonstreren zijn klassieke grondrechten, de overheid moet zich er buiten houden.',
+ 'Moet de overheid iets doen, of juist niets doen?'],
+['Wat staat in artikel 1 van de Grondwet?','gelijke behandeling in gelijke gevallen en een verbod op discriminatie','vrijheid van onderwijs|het kiesrecht|de taken van de koning',
+ 'Artikel 1 is het <b>gelijkheidsbeginsel</b>.<br>Fout: onderwijs, kiesrecht en de koning staan in andere artikelen.',
+ 'Het allereerste artikel gaat over gelijkheid.'],
+['Iemand plaatst online een bedreiging en zegt: ‘Vrijheid van meningsuiting!’ Klopt dat?','nee, grondrechten hebben grenzen; bedreigen is strafbaar','ja, je mag alles zeggen|ja, op internet gelden geen regels|nee, je mag nooit je mening geven',
+ 'Vrijheid van meningsuiting is groot maar <b>niet onbeperkt</b>: bedreigen, opruien en discrimineren zijn strafbaar.<br>Fout: ook online gelden wetten, en een gewone mening geven mag natuurlijk wel.',
+ 'Waar houdt jouw vrijheid op?'],
+['Wie bedacht de trias politica?','Montesquieu','Thorbecke|Willem van Oranje|Karl Marx',
+ 'De Fransman <b>Montesquieu</b> beschreef in de 18e eeuw de driedeling van de macht.<br>Fout: Thorbecke schreef de Nederlandse Grondwet van 1848, Willem van Oranje leidde de opstand tegen Spanje, en Marx schreef over klassenstrijd.',
+ 'Een Franse denker uit de 18e eeuw.'],
+['Welke macht maakt de wetten?','de wetgevende macht: regering en Staten-Generaal samen','de rechterlijke macht|alleen de koning|de politie',
+ 'Wetten maken doen <b>regering en parlement samen</b>.<br>Fout: rechters passen wetten toe, de koning heeft geen eigen macht, en de politie voert alleen uit.',
+ 'Kijk naar het woord: wet-gevend.'],
+['Waarom is de macht verdeeld (trias politica)?','zodat niemand alle macht heeft en de machten elkaar controleren','zodat besluiten sneller gaan|zodat de koning meer te zeggen heeft|zodat er minder wetten komen',
+ 'Het doel is <b>evenwicht</b>: machtsmisbruik voorkomen.<br>Fout: het gaat niet om snelheid of minder wetten, en de koning krijgt er geen macht bij.',
+ 'Wat gebeurt er als één persoon alle macht heeft?'],
+['Wie beslist of een verdachte wordt vervolgd?','het Openbaar Ministerie (de officier van justitie)','de politie|de rechter|de burgemeester',
+ 'Het <b>Openbaar Ministerie</b> besluit of een zaak naar de rechter gaat.<br>Fout: de politie spoort op, de rechter oordeelt pas daarna, en de burgemeester gaat over openbare orde.',
+ 'Politie → ? → rechter.'],
+['Wat betekent ‘onschuldig tot het tegendeel bewezen is’?','een verdachte geldt als onschuldig tot de rechter hem schuldig verklaart','wie wordt opgepakt, is schuldig|de politie bepaalt de straf|een verdachte mag geen advocaat',
+ 'Dit heet de <b>onschuldpresumptie</b>: pas na het vonnis ben je schuldig.<br>Fout: opgepakt worden betekent niet schuldig zijn, de rechter (niet de politie) bepaalt de straf, en je hebt juist recht op een advocaat.',
+ 'Wie beslist over schuld?'],
+['Vanaf welke leeftijd kun je strafrechtelijk vervolgd worden?','12 jaar','10 jaar|14 jaar|18 jaar',
+ 'Vanaf <b>12 jaar</b>. Tot 18 jaar geldt dan het jeugdstrafrecht.<br>Fout: 10 is te jong, en ook met 14 of 16 kun je al vervolgd worden.',
+ 'Ongeveer de leeftijd waarop je naar de middelbare school gaat.'],
+['Wat staat in het jeugdstrafrecht voorop?','opvoeden en leren van je fout','zo zwaar mogelijk straffen|de ouders straffen|de school straffen',
+ 'Bij jongeren gaat het vooral om <b>opvoeden</b> en een nieuwe kans.<br>Fout: straffen zijn juist lichter dan bij volwassenen, en ouders of school worden niet gestraft voor wat jij doet.',
+ 'Jongeren zijn nog in ontwikkeling.'],
+['Een meisje van 15 steelt make-up. Het is de eerste keer. Wat krijgt ze waarschijnlijk?','een Halt-straf','een gevangenisstraf|niets, ze is te jong|een strafblad voor haar ouders',
+ 'Bij een licht vergrijp en een eerste keer past een <b>Halt-straf</b>: geen strafblad als je hem goed afmaakt.<br>Fout: cel is te zwaar, met 15 ben je wel strafbaar, en ouders krijgen geen strafblad.',
+ 'Licht vergrijp + jongere = ?'],
+['Je koopt online een telefoon die nooit wordt geleverd. Bij welk soort recht hoort deze ruzie?','privaatrecht (burgerlijk recht)','strafrecht|staatsrecht|jeugdstrafrecht',
+ 'Een conflict tussen burger en bedrijf hoort bij het <b>privaatrecht</b>.<br>Fout: strafrecht gaat over strafbare feiten waarbij de staat vervolgt (bij echte oplichting kan dat ook), staatsrecht over de inrichting van de staat.',
+ 'Wie hebben hier ruzie: twee burgers, of de staat en een verdachte?']
+],
+pd:[
+['Wat betekent democratie?','het volk regeert, via gekozen vertegenwoordigers','één leider beslist alles|de koning regeert|het leger regeert',
+ '<b>Demos</b> = volk, <b>kratein</b> = regeren. In Nederland kiezen we vertegenwoordigers.<br>Fout: één leider is een dictatuur, en de koning en het leger hebben in Nederland geen politieke macht.',
+ 'Grieks: demos = volk.'],
+['Hoeveel leden heeft de Tweede Kamer?','150','75|100|200',
+ 'De Tweede Kamer telt <b>150</b> leden.<br>Fout: 75 is de Eerste Kamer, 100 en 200 kloppen niet.',
+ 'Twee keer zoveel als de Eerste Kamer.'],
+['Hoeveel leden heeft de Eerste Kamer?','75','150|50|100',
+ 'De Eerste Kamer telt <b>75</b> leden.<br>Fout: 150 is de Tweede Kamer.',
+ 'De helft van de Tweede Kamer.'],
+['Wie kiezen de leden van de Eerste Kamer?','de leden van de Provinciale Staten','alle kiezers rechtstreeks|de koning|de Tweede Kamer',
+ 'De Eerste Kamer wordt <b>indirect</b> gekozen, door de Provinciale Staten.<br>Fout: wij kiezen de Staten, niet de Eerste Kamer zelf. Koning en Tweede Kamer kiezen niemand voor de Eerste Kamer.',
+ 'Welke verkiezing hoort ‘er tussenin’?'],
+['Wat kan de Tweede Kamer wel, maar de Eerste Kamer niet?','een wetsvoorstel veranderen (amendement)','een wet aannemen|een wet verwerpen|wetten controleren',
+ 'Alleen de Tweede Kamer heeft het <b>recht van amendement</b>. De Eerste Kamer zegt alleen ja of nee.<br>Fout: aannemen, verwerpen en controleren kunnen beide Kamers.',
+ 'De Eerste Kamer kan alleen ja of nee zeggen.'],
+['Wat is een motie van wantrouwen?','de Kamer zegt dat ze geen vertrouwen meer heeft in een minister of het kabinet','een onderzoek met verhoren onder ede|een wijziging in een wetsvoorstel|een vraag van een burger',
+ 'Neemt de Kamer zo’n motie aan, dan moet de minister (of het kabinet) normaal gesproken <b>aftreden</b>.<br>Fout: een onderzoek met verhoren is een enquête, een wijziging is een amendement.',
+ 'Wantrouwen = geen vertrouwen meer.'],
+['Hoe vaak zijn er normaal Tweede Kamerverkiezingen?','elke vier jaar','elk jaar|elke vijf jaar|elke tien jaar',
+ 'Normaal <b>elke vier jaar</b>; eerder als het kabinet valt.<br>Fout: vijf jaar geldt voor het Europees Parlement, één en tien jaar kloppen niet.',
+ 'Even vaak als het WK voetbal.'],
+['Een partij haalt ongeveer 20% van de stemmen. Hoeveel zetels krijgt ze ongeveer?','30','20|15|75',
+ '20% van 150 = <b>30</b> zetels. Zetels gaan naar verhouding van de stemmen.<br>Fout: 20 is het percentage zelf, 15 is 10%, en 75 is de helft.',
+ 'Reken 20% van 150 uit.'],
+['Wat is een coalitie?','partijen die samen een meerderheid hebben en de regering vormen','alle partijen in de Kamer|de partijen die niet meeregeren|een groep burgemeesters',
+ 'Een <b>coalitie</b> heeft samen minstens 76 zetels.<br>Fout: de partijen die niet meeregeren vormen de oppositie.',
+ 'Coalitie = samenwerkingsverband.'],
+['Wie leidt het kabinet?','de minister-president','de koning|de voorzitter van de Tweede Kamer|de grootste oppositiepartij',
+ 'De <b>minister-president</b> (premier) leidt het kabinet.<br>Fout: de koning is formeel onderdeel van de regering maar leidt niets, de Kamervoorzitter leidt de vergaderingen van de Kamer, en de oppositie regeert niet.',
+ 'Ook wel: de premier.'],
+['Welk standpunt past het best bij politiek <b>rechts</b>?','lagere belastingen en meer eigen verantwoordelijkheid','de overheid moet meer uitkeringen geven|rijke mensen moeten veel meer belasting betalen|de overheid moet bedrijven streng regelen',
+ 'Rechts legt meestal nadruk op de <b>vrije markt</b>, lage belastingen en eigen verantwoordelijkheid.<br>Fout: meer uitkeringen, hogere belasting voor rijken en strenge regels voor bedrijven passen meer bij links.',
+ 'Rechts = meer markt, minder overheid.'],
+['Wat betekent <b>progressief</b>?','open voor verandering en vernieuwing','tradities willen bewaren|zo weinig mogelijk belasting|tegen de democratie',
+ 'Progressief = <b>vooruit</b>, vernieuwen.<br>Fout: tradities bewaren is conservatief, belasting gaat over links/rechts, en progressief heeft niets met tegen democratie zijn te maken.',
+ 'Progressie = vooruitgang.'],
+['Wie wordt <b>niet</b> gekozen maar benoemd?','de burgemeester','de gemeenteraad|de Tweede Kamer|de Provinciale Staten',
+ 'De burgemeester wordt <b>benoemd</b> door de regering (de Kroon), na een voordracht van de gemeenteraad.<br>Fout: gemeenteraad, Tweede Kamer en Provinciale Staten worden door de kiezers gekozen.',
+ 'Welke functie in het rijtje heeft geen verkiezingsposters?'],
+['Wat is lobbyen?','politici proberen te overtuigen met gesprekken en informatie','stemmen bij verkiezingen|een wet aannemen|een minister wegsturen',
+ 'Bedrijven, vakbonden en belangengroepen <b>lobbyen</b> om invloed te krijgen.<br>Fout: stemmen doen burgers, en wetten aannemen of ministers wegsturen doet het parlement.',
+ 'Het woord komt van de ‘lobby’ (de hal) van het parlement, waar men politici aansprak.'],
+['Eva (15) wil invloed op de gemeente. Wat kan ze <b>niet</b>?','stemmen bij de gemeenteraadsverkiezingen','een petitie starten|inspreken bij de gemeenteraad|demonstreren',
+ 'Stemmen kan pas vanaf <b>18</b>.<br>Fout: petitie, inspreken en demonstreren staan open voor iedereen, ook voor jongeren.',
+ 'Welke manier heeft een leeftijdsgrens?']
+],
+vs:[
+['Wat is een verzorgingsstaat?','een land waarin de overheid zorgt voor een bestaansminimum, zorg en onderwijs voor iedereen','een land zonder belasting|een land waar de kerk voor armen zorgt|een land waar alleen werkenden zorg krijgen',
+ 'In een verzorgingsstaat regelt de <b>overheid</b> bestaanszekerheid voor iedereen.<br>Fout: zonder belasting kan dat niet betaald worden, de kerk zorgde vooral vroeger, en zorg is er voor iedereen.',
+ 'Wie zorgt er in een verzorgingsstaat?'],
+['Wanneer werd de verzorgingsstaat in Nederland vooral opgebouwd?','na de Tweede Wereldoorlog','in de Gouden Eeuw|rond 1900, in één keer|na 2010',
+ 'Vooral na <b>1945</b>, met onder meer de AOW in 1957.<br>Fout: in de Gouden Eeuw was er geen sociale zekerheid, rond 1900 begonnen pas de eerste wetjes, en na 2010 werd er juist bezuinigd.',
+ 'De AOW is uit 1957.'],
+['Wat is de AOW?','een basispensioen van de overheid vanaf de AOW-leeftijd','een werkloosheidsuitkering|een studiebeurs|een zorgverzekering',
+ 'AOW = <b>Algemene Ouderdomswet</b>: pensioen van de overheid.<br>Fout: werkloosheid is de WW, de studiebeurs is studiefinanciering, en zorg loopt via de zorgverzekering.',
+ 'Ouderdom = oud zijn.'],
+['Wat is de WW?','een tijdelijke uitkering als je je baan verliest','een pensioen|een uitkering voor kinderen|het laatste vangnet van de gemeente',
+ 'WW = <b>Werkloosheidswet</b>: je krijgt een tijdje een deel van je loon.<br>Fout: pensioen is de AOW, voor kinderen is er kinderbijslag, en het laatste vangnet is de bijstand.',
+ 'W van werkloos.'],
+['Wanneer krijg je bijstand?','als je geen inkomen en weinig eigen geld hebt, en geen andere uitkering','zodra je 65 bent|als je een bijbaantje hebt|als je gaat studeren',
+ 'Bijstand is het <b>laatste vangnet</b>, geregeld door de gemeente.<br>Fout: voor ouderen is er de AOW, met een bijbaantje heb je inkomen, en voor studenten is er studiefinanciering.',
+ 'Bijstand = als niets anders meer helpt.'],
+['Wat is solidariteit in de verzorgingsstaat?','wie het goed heeft, betaalt mee voor wie hulp nodig heeft','iedereen betaalt alleen voor zichzelf|alleen rijken krijgen hulp|de overheid betaalt niets',
+ 'Solidariteit = <b>samen de lasten dragen</b>.<br>Fout: alleen voor jezelf betalen is juist het tegenovergestelde, en de overheid speelt een grote rol.',
+ 'Denk aan: ‘morgen kun jij het zijn’.'],
+['Tot welke leeftijd ben je gratis meeverzekerd bij je ouders voor de zorg?','tot 18 jaar','tot 16 jaar|tot 21 jaar|tot je gaat werken',
+ 'Tot je <b>18e</b>. Daarna moet je zelf een basisverzekering afsluiten.<br>Fout: 16 en 21 kloppen niet, en een bijbaantje verandert er niets aan.',
+ 'Dezelfde leeftijd als stemmen.'],
+['Wat is het eigen risico in de zorg?','een bedrag dat je eerst zelf betaalt voordat de verzekering sommige zorg betaalt','de maandelijkse premie|een boete als je te laat bent bij de dokter|zorg die altijd gratis is',
+ 'Het <b>eigen risico</b> is een paar honderd euro per jaar dat je eerst zelf betaalt (niet voor de huisarts, en niet onder 18).<br>Fout: de premie betaal je elke maand los daarvan, en het is geen boete.',
+ 'Eigen = wat jij zelf moet betalen.'],
+['Wat is een progressief belastingstelsel?','wie meer verdient, betaalt over het hogere deel een hoger percentage','iedereen betaalt hetzelfde bedrag|iedereen betaalt hetzelfde percentage|jongeren betalen meer',
+ 'Het <b>percentage stijgt</b> mee met het inkomen.<br>Fout: hetzelfde bedrag of percentage voor iedereen is juist niet progressief, en leeftijd speelt hier geen rol.',
+ 'Progressief = oplopend.'],
+['Waarom is de accijns op sigaretten zo hoog?','om roken te ontmoedigen én geld op te halen','omdat sigaretten gezond zijn|omdat de EU sigaretten verbiedt|omdat btw daar niet geldt',
+ 'Belasting kan <b>sturen</b>: hoge accijns maakt roken duurder.<br>Fout: sigaretten zijn niet gezond, ze zijn niet verboden, en er zit ook gewoon btw op.',
+ 'Belasting kan gedrag beïnvloeden.'],
+['Wat is vergrijzing?','er komen meer ouderen en verhoudingsgewijs minder werkenden','de belastingen stijgen|er worden meer kinderen geboren|mensen gaan eerder met pensioen',
+ 'Bij <b>vergrijzing</b> wordt de bevolking gemiddeld ouder; dat maakt AOW en zorg duurder.<br>Fout: meer geboortes maakt de bevolking juist jonger, hogere belastingen zijn hooguit een gevolg, en mensen gaan juist later met pensioen.',
+ 'Grijs haar.'],
+['Iemand zegt: ‘De sterkste schouders moeten de zwaarste lasten dragen.’ Wat vindt hij?','dat mensen met meer geld meer moeten bijdragen','dat sterke mensen meer moeten sporten|dat de overheid minder moet doen|dat iedereen evenveel moet betalen',
+ 'Dit is een bekend argument voor <b>meer overheid en meer herverdeling</b>.<br>Fout: het gaat niet over sport; minder overheid of gelijk betalen is juist de andere kant.',
+ 'Schouders = draagkracht, dus geld.']
+],
+ps:[
+['Wat betekent cultuur bij maatschappijleer?','alles wat mensen in een groep aanleren en delen, zoals taal, gewoontes, waarden en normen','alleen kunst en musea|wat je bij je geboorte meekrijgt|alleen religie',
+ 'Cultuur is <b>aangeleerd</b> en gaat over het hele dagelijkse leven.<br>Fout: kunst en religie zijn maar delen ervan, en cultuur is niet aangeboren.',
+ 'Is cultuur aangeboren of aangeleerd?'],
+['Welke is een <b>waarde</b>?','eerlijkheid','niet spieken|op tijd komen|je telefoon weg tijdens de les',
+ 'Een <b>waarde</b> is een idee dat je belangrijk vindt.<br>Fout: niet spieken, op tijd komen en je telefoon wegleggen zijn gedragsregels: normen.',
+ 'Waarde = idee, norm = gedrag.'],
+['Welke is een <b>norm</b>?','je stapt op voor een oudere in de bus','respect|behulpzaamheid|gelijkheid',
+ 'Een <b>norm</b> is een concrete regel voor gedrag.<br>Fout: respect, behulpzaamheid en gelijkheid zijn waarden.',
+ 'Kun je het zien dat iemand het doet? Dan is het een norm.'],
+['Wat is socialisatie?','het aanleren van de cultuur van je omgeving','het gebruiken van sociale media|lid worden van een vereniging|een uitkering krijgen',
+ '<b>Socialisatie</b> is hoe je waarden, normen en gewoontes leert.<br>Fout: sociale media zijn maar één invloed, een vereniging is een plek, en een uitkering hoort bij de verzorgingsstaat.',
+ 'Hoe word je wie je bent?'],
+['Waar begint socialisatie?','in het gezin','op de middelbare school|op je werk|in de politiek',
+ 'Het <b>gezin</b> is de eerste plek waar je leert hoe het hoort.<br>Fout: school, werk en politiek komen later of spelen een kleinere rol.',
+ 'Wie voeden je als eerste op?'],
+['Wat is identiteit?','hoe je jezelf ziet en hoe anderen jou zien','je paspoort|je adres|je cijferlijst',
+ 'Identiteit gaat over <b>wie je bent</b>, en iedereen heeft er meerdere.<br>Fout: een paspoort is een identiteitsbewijs, geen identiteit; adres en cijfers zijn gegevens.',
+ 'Wie ben jij?'],
+['Wat was de verzuiling?','elke levensbeschouwelijke groep had eigen scholen, kranten, omroepen en clubs','het bouwen van kerken met zuilen|een periode zonder politieke partijen|een wet tegen migratie',
+ 'Katholieken, protestanten, socialisten en liberalen leefden in hun <b>eigen zuil</b>.<br>Fout: het gaat niet over bouwwerken, er waren juist veel partijen, en het was geen wet.',
+ 'Zuil = een groep met al haar eigen instellingen.'],
+['Waarom kwamen in de jaren zestig veel arbeidsmigranten naar Nederland?','er was een tekort aan arbeidskrachten','ze vluchtten voor een oorlog|ze kwamen uit Nederlandse koloniën|ze kwamen studeren',
+ 'Bedrijven <b>wierven</b> werknemers in landen als Turkije en Marokko.<br>Fout: dat waren geen vluchtelingen en geen koloniën (dat waren onder meer Indonesië en Suriname), en ze kwamen werken, niet studeren.',
+ 'Arbeid = werk.'],
+['Wat is gezinshereniging?','familie laten overkomen naar het land waar je woont','een verhuizing binnen Nederland|een familiefeest|terugkeren naar je geboorteland',
+ 'Veel arbeidsmigranten bleven en lieten hun <b>gezin overkomen</b>.<br>Fout: het gaat niet om verhuizen binnen Nederland, een feest of terugkeren.',
+ 'Herenigen = weer samenbrengen.'],
+['Wat is een vooroordeel?','een mening over iemand zonder dat je diegene kent','iemand echt anders behandelen|een wet tegen discriminatie|een feit over een groep',
+ 'Een <b>vooroordeel</b> zit in je hoofd: een oordeel vóórdat je iemand kent.<br>Fout: iemand anders behandelen is discriminatie, en een vooroordeel is geen feit of wet.',
+ 'Voor-oordeel: oordelen vóórdat je iemand kent.'],
+['Wanneer is er sprake van discriminatie?','als je iemand echt anders behandelt vanwege afkomst, geloof, geslacht of seksuele voorkeur','als je een vooroordeel in je hoofd hebt|als je een andere mening hebt|als je een sollicitant met betere cijfers kiest',
+ 'Discriminatie is <b>ongelijk behandelen zonder goede reden</b>.<br>Fout: een vooroordeel is (nog) geen handeling, een mening is geen discriminatie, en kiezen op betere cijfers is een goede reden.',
+ 'Discriminatie is wat je doet, niet wat je denkt.'],
+['Wat is integratie?','nieuwkomers doen volwaardig mee en mogen een deel van hun eigen cultuur houden','nieuwkomers nemen de nieuwe cultuur helemaal over|groepen leven volledig apart|nieuwkomers moeten terug',
+ 'Bij <b>integratie</b> doe je mee (taal, werk, school) en houd je iets van je eigen cultuur.<br>Fout: helemaal overnemen is assimilatie, apart leven lijkt op de verzuiling, en terugsturen is geen integratie.',
+ 'Integreren = erbij gaan horen, zonder jezelf helemaal op te geven.'],
+['Wat is sociale cohesie?','hoe sterk mensen in een samenleving zich met elkaar verbonden voelen','het aantal migranten in een land|een uitkering van de gemeente|een soort belasting',
+ '<b>Cohesie</b> = samenhang.<br>Fout: het gaat niet om aantallen, uitkeringen of belastingen.',
+ 'Cohesie = samenhang, ‘aan elkaar plakken’.']
+]
+};
+
+const BEGR=[
+['maatschappijleer','Vak over hoe de samenleving werkt en hoe jij daarin meedoet','intro'],
+['politiek-probleembenadering','Stappenplan: wat is het probleem, waarom politiek, oorzaken, oplossingen, besluitvorming, uitvoering','intro'],
+['maatschappelijk probleem','Probleem dat veel mensen raakt en waarvan men vindt dat de overheid er iets aan moet doen','intro'],
+['belang','Wat iets jou of jouw groep oplevert of kost','intro'],
+['waarde','Iets wat je belangrijk vindt, zoals vrijheid, veiligheid of eerlijkheid','ps'],
+['standpunt','Wat je ergens van vindt, je mening in één zin','intro'],
+['argument','Reden die je standpunt onderbouwt','intro'],
+['actualiteit','Onderwerp dat nu in het nieuws is','intro'],
+['rechtsstaat','Land waarin ook de overheid zich aan de wet moet houden','rs'],
+['Grondwet','Belangrijkste wet van Nederland, met de grondrechten en de inrichting van de staat','rs'],
+['klassiek grondrecht','Grondrecht dat je beschermt tegen de overheid: de overheid moet je met rust laten','rs'],
+['sociaal grondrecht','Grondrecht waarbij de overheid moet zorgen voor iets, zoals onderwijs of gezondheidszorg','rs'],
+['artikel 1','Gelijke behandeling in gelijke gevallen en een verbod op discriminatie','rs'],
+['trias politica','Verdeling van de macht in wetgevend, uitvoerend en rechtsprekend (Montesquieu)','rs'],
+['wetgevende macht','Maakt de wetten: regering en parlement samen','rs'],
+['uitvoerende macht','Voert de wetten uit en bestuurt het land: de regering','rs'],
+['rechterlijke macht','Onafhankelijke rechters die beslissen bij conflicten en strafzaken','rs'],
+['Openbaar Ministerie','Beslist of een verdachte wordt vervolgd; de officier van justitie eist een straf','rs'],
+['onschuldpresumptie','Je bent onschuldig tot de rechter je schuldig verklaart','rs'],
+['jeugdstrafrecht','Strafrecht voor jongeren van 12 tot 18, gericht op opvoeden','rs'],
+['Halt-straf','Straf voor jongeren bij lichte vergrijpen, zonder strafblad als je hem goed afmaakt','rs'],
+['privaatrecht','Recht voor conflicten tussen burgers of bedrijven onderling','rs'],
+['democratie','Het volk regeert, in Nederland via gekozen vertegenwoordigers','pd'],
+['parlement','De Tweede en Eerste Kamer samen, ook Staten-Generaal genoemd','pd'],
+['Tweede Kamer','150 gekozen leden die wetten maken en de regering controleren','pd'],
+['Eerste Kamer','75 leden, gekozen door de Provinciale Staten; zegt ja of nee tegen wetten','pd'],
+['kabinet','De ministers en staatssecretarissen samen','pd'],
+['minister-president','Leider van het kabinet, ook premier genoemd','pd'],
+['coalitie','Partijen die samen een meerderheid hebben en de regering vormen','pd'],
+['oppositie','Partijen in het parlement die niet meeregeren','pd'],
+['formatie','Onderhandelingen na de verkiezingen om een nieuw kabinet te vormen','pd'],
+['amendement','Wijziging van een wetsvoorstel door de Tweede Kamer','pd'],
+['motie van wantrouwen','De Kamer zegt het vertrouwen in een minister of kabinet op','pd'],
+['evenredige vertegenwoordiging','Partijen krijgen zetels naar verhouding van het aantal stemmen','pd'],
+['lobbyen','Politici proberen te overtuigen met gesprekken en informatie','pd'],
+['gemeenteraad','Door de inwoners gekozen bestuur van de gemeente','pd'],
+['verzorgingsstaat','Land waarin de overheid zorgt voor bestaanszekerheid, zorg en onderwijs voor iedereen','vs'],
+['sociale zekerheid','Uitkeringen en regelingen die je inkomen beschermen bij ouderdom, ziekte of werkloosheid','vs'],
+['AOW','Basispensioen van de overheid vanaf de AOW-leeftijd','vs'],
+['WW','Tijdelijke uitkering als je je baan verliest','vs'],
+['bijstand','Laatste vangnet van de gemeente als je geen inkomen en weinig geld hebt','vs'],
+['solidariteit','Wie het goed heeft, betaalt mee voor wie hulp nodig heeft','vs'],
+['eigen risico','Bedrag dat je eerst zelf betaalt voordat de zorgverzekering betaalt','vs'],
+['progressieve belasting','Wie meer verdient, betaalt over het hogere deel een hoger percentage','vs'],
+['vergrijzing','Er komen meer ouderen en verhoudingsgewijs minder werkenden','vs'],
+['cultuur','Alles wat mensen in een groep aanleren en delen','ps'],
+['norm','Regel voor gedrag die bij een waarde hoort','ps'],
+['socialisatie','Het aanleren van de cultuur van je omgeving','ps'],
+['identiteit','Hoe je jezelf ziet en hoe anderen jou zien','ps'],
+['verzuiling','Tijd waarin elke levensbeschouwelijke groep eigen scholen, kranten en clubs had','ps'],
+['pluriforme samenleving','Samenleving met veel groepen met verschillende culturen en leefstijlen','ps'],
+['vooroordeel','Mening over iemand zonder dat je diegene kent','ps'],
+['discriminatie','Iemand echt anders behandelen zonder goede reden, bijvoorbeeld om afkomst of geloof','ps'],
+['integratie','Nieuwkomers doen volwaardig mee en houden een deel van hun eigen cultuur','ps'],
+['sociale cohesie','Hoe sterk mensen in een samenleving zich met elkaar verbonden voelen','ps']
+];
+
+const STELLING=[
+['Jongeren moeten vanaf 16 jaar mogen stemmen.','Op je 16e betaal je al belasting over je bijbaantje en gaan veel besluiten (klimaat, onderwijs) over jouw toekomst. Wie jong begint met stemmen, blijft vaker stemmen.','Veel 16-jarigen volgen de politiek nog weinig en zijn makkelijker te beïnvloeden. Ook andere volwassen rechten en plichten gaan pas op je 18e in.','pd'],
+['Er moeten meer camera’s komen op straat.','Camera’s helpen daders te vinden en kunnen misdaad voorkomen. Mensen voelen zich veiliger op plekken met toezicht.','Camera’s tasten de privacy van iedereen aan, ook van wie niets fout doet. Misdaad verplaatst zich vaak gewoon naar een plek zonder camera.','rs'],
+['De AOW-leeftijd moet verder omhoog.','Mensen leven langer en gezonder, dus kunnen ze langer werken. Anders moeten steeds minder werkenden betalen voor steeds meer ouderen.','Voor mensen met zwaar werk (bouw, zorg) is langer doorwerken vaak niet vol te houden. Zij leven gemiddeld ook korter en hebben dus minder lang AOW.','vs'],
+['Er moet weer een verplichte dienstplicht komen.','Het leger heeft mensen nodig in een onrustige wereld. Jongeren uit verschillende groepen leren elkaar kennen en leren discipline.','Het kost jongeren een jaar van hun opleiding of werk. Een beroepsleger met gemotiveerde, goed getrainde mensen is beter dan mensen die gedwongen worden.','pd'],
+['Gezichtsbedekkende kleding (zoals een boerka of bivakmuts) moet overal op straat verboden zijn.','Op straat moet je elkaar kunnen herkennen en aankijken; dat is goed voor veiligheid en contact. Sommigen zien het ook als een teken van ongelijkheid tussen man en vrouw.','Iedereen mag zelf kiezen wat hij draagt en hoe hij zijn geloof beleeft. Het gaat om een kleine groep, en een verbod kan hen juist verder buitensluiten.','ps'],
+['Openbaar vervoer moet gratis zijn voor jongeren tot 18.','Jongeren kunnen dan makkelijker naar school, sport en werk, ook als hun ouders weinig geld hebben. Het is beter voor het milieu dan de auto.','Het kost veel belastinggeld, dat dan niet naar iets anders kan. Bussen en treinen raken op drukke momenten nog voller.','vs'],
+['Vuurwerk moet helemaal verboden worden voor particulieren.','Elk jaar raken mensen gewond, schrikken dieren en hebben hulpverleners het zwaar. Een gemeentelijke vuurwerkshow is veiliger.','Vuurwerk afsteken is voor veel mensen een gezellige traditie. Een verbod is lastig te handhaven en kan leiden tot meer illegaal vuurwerk.','rs'],
+['Rijke mensen moeten meer belasting betalen.','De sterkste schouders kunnen de zwaarste lasten dragen. Zo worden de verschillen tussen arm en rijk kleiner.','Wie hard werkt of risico neemt, moet daarvan kunnen profiteren. Hoge belastingen kunnen ondernemers en goedverdieners naar het buitenland jagen.','vs'],
+['De maximumsnelheid op de snelweg moet overal 100 km per uur zijn.','Het is veiliger, beter voor de lucht en het klimaat, en scheelt brandstof.','Je bent er langer over, terwijl auto’s steeds schoner en veiliger worden. Op rustige wegen is 130 prima te doen.','pd'],
+['Het eigen risico in de zorg moet helemaal worden afgeschaft.','Mensen met weinig geld gaan nu soms niet naar de dokter omdat ze bang zijn voor de kosten. Gezondheid mag geen kwestie van geld zijn.','Zonder eigen risico wordt de zorg duurder en gaat de premie voor iedereen omhoog. Het eigen risico zorgt dat mensen er bewust mee omgaan.','vs'],
+['Social media moeten verboden zijn voor kinderen onder de 15.','Social media kunnen verslavend zijn en slecht voor de concentratie en het zelfbeeld van jonge kinderen. Ouders staan er nu vaak alleen voor.','Kinderen gebruiken social media ook om contact te houden en te leren. Een verbod is moeilijk te controleren; beter leer je ze er verstandig mee omgaan.','ps'],
+['Een Nederlandse taaltoets moet verplicht zijn voor iedereen die hier komt wonen.','Wie de taal spreekt, vindt makkelijker werk en vrienden en kan echt meedoen. Het is goed voor de sociale cohesie.','Voor sommige mensen (ouderen, mensen die weinig school hebben gehad) is dat heel zwaar. Taal leer je vaak beter door mee te doen dan door een toets.','ps'],
+['Jongeren onder de 18 mogen na middernacht niet meer zonder volwassene op straat.','Het kan overlast en criminaliteit ’s nachts verminderen en jongeren beschermen.','Het beperkt de vrijheid van alle jongeren, ook van wie niets fout doet. Het is lastig te handhaven en ouders kunnen dit zelf regelen.','rs'],
+['De bijstand moet hoger worden.','Mensen in de bijstand kunnen nu vaak moeilijk rondkomen. Een fatsoenlijk bestaan is een sociaal grondrecht.','Als de bijstand hoger is, wordt het verschil met werken kleiner en is werken minder aantrekkelijk. Het kost ook meer belastinggeld.','vs'],
+['Er moeten bindende referenda komen: burgers beslissen zelf over belangrijke wetten.','Burgers krijgen meer directe invloed en voelen zich meer gehoord. Het vertrouwen in de politiek kan erdoor stijgen.','Moeilijke onderwerpen passen niet in een simpel ja of nee. Gekozen politici kunnen beter compromissen sluiten en alle belangen afwegen.','pd'],
+['Scholen moeten een uniform invoeren.','Er is minder druk om dure merkkleding te dragen en verschillen tussen arm en rijk zijn minder zichtbaar. Het geeft een gevoel van samen horen.','Kleding is een manier om je eigen identiteit te laten zien. Een uniform kost ouders ook geld en past slecht bij de vrijheid die Nederland belangrijk vindt.','ps']
+];
+
+/* ---------- spel: Eens of oneens? ---------- */
+const R=(a,b)=>a+Math.floor(Math.random()*(b-a+1));const pick=a=>a[Math.random()*a.length|0];
+const OPEN=[],EXAM=[];
+function stelSpel(){stilte();const set=shuffle(STELLING).slice(0,6);let i=0;const keus={eens:0,oneens:0,twijfel:0};show('play');
+ const teken=()=>{if(i>=set.length){const sp=S.sp.stel||0;S.sp.stel=Math.min(1,sp+set.length/STELLING.length+.01);if(!S.stelGezien)S.stelGezien=0;S.stelGezien+=set.length;save();
+   P.innerHTML=`<div class="kaart" style="text-align:center"><div class="label">🗳️ Eens of oneens?</div><div class="groot">${set.length}<span> stellingen</span></div><p>Je was het ${keus.eens}× eens, ${keus.oneens}× oneens en twijfelde ${keus.twijfel}×.</p><p class="sub">Er is geen goed of fout: bij maatschappijleer gaat het erom dat je je mening kunt <b>onderbouwen</b> en de argumenten van de andere kant snapt.</p><div class="acts" style="justify-content:center"><button class="btn" id="opn">Nog 6 stellingen</button>${terugKnop()}</div></div>`;
+   $('#opn').onclick=stelSpel;$('#hm').onclick=goHome;return}
+  const [st,voor,tegen,th]=set[i];
+  P.innerHTML=`<div class="top"><button class="btn licht klein" id="stop">Stoppen</button><span class="stap">🗳️ Eens of oneens?</span><span class="teller">${i+1}/${set.length}</span></div>
+  <div class="kaart"><div class="label">${SECN[th]?SECN[th].ic+' '+SECN[th].t:''}</div><div class="vraag">${st}</div>
+  <div class="opts"><button class="opt" data-k="eens">👍 Eens</button><button class="opt" data-k="oneens">👎 Oneens</button><button class="opt" data-k="twijfel">🤔 Weet ik nog niet</button></div><div id="fb"></div></div>`;
+  $('#stop').onclick=goHome;
+  P.querySelectorAll('.opt').forEach(b=>b.onclick=()=>{if(P.querySelector('.opt.goed'))return;b.classList.add('goed');keus[b.dataset.k]++;
+   const ander0=b.dataset.k==='eens'?'Wie het <b>oneens</b> is, zegt:':b.dataset.k==='oneens'?'Wie het <b>eens</b> is, zegt:':'Twijfelen mag: daarom de argumenten van twee kanten.';
+   $('#fb').innerHTML=`<div class="uitleg"><p><b class="goed-t">👍 Voor:</b> ${voor}</p><p><b class="fout-t">👎 Tegen:</b> ${tegen}</p><p class="sub" style="margin:0">${b.dataset.k==='twijfel'?'Twijfelen mag: daarom zie je de argumenten van twee kanten.':`Wie het ${b.dataset.k==='eens'?'<b>oneens</b>':'<b>eens</b>'} is, denkt aan de argumenten bij ‘${b.dataset.k==='eens'?'tegen':'voor'}’.`} Snap je hun punt, ook als je het er niet mee eens bent?</p></div><div class="acts"><button class="btn" id="vd">Verder ↵</button></div>`;
+   $('#vd').onclick=()=>{i++;teken()};$('#vd').focus()})};
+ teken()}
+
+/* ---------- de berg: de zeven heuvels van Rome (alle vragen van het hoofdstuk, één verdieping per paragraaf, 100% = alles één keer goed) ---------- */
+const KCAMPS=[['intro','Het stembureau','#7FB3D5'],['rs','De rechtbank','#5499C7'],['pd','De Tweede Kamer','#2E86C1'],['vs','Het ministerie','#2471A3'],['ps','Het Binnenhof','#1B4F72']];
+const KL=()=>S.klim||(S.klim={});
+const klimIds=sec=>(MCQ[sec]||[]).map(v=>v[0]);
+const klimPct=sec=>{const ids=klimIds(sec);return ids.length?ids.filter(i=>KL()[i]).length/ids.length:0};
+const klimOpen=i=>true;
+const klimTot=()=>{let a=0,b=0;KCAMPS.forEach(([s])=>{const ids=klimIds(s);b+=ids.length;a+=ids.filter(i=>KL()[i]).length});return b?a/b:0};
+function torenSVG(){const W=300,H=430,x0=20,w=96;let s='';
+ KCAMPS.forEach(([sec,nm,kl],i)=>{const y=372-i*52,p=klimPct(sec);s+=`<rect x="${x0+6}" y="${y}" width="${(w-12)*p}" height="40" rx="6" fill="${kl}"/><rect x="${x0+6}" y="${y}" width="${w-12}" height="40" rx="6" fill="none" stroke="currentColor" stroke-opacity=".35"/><text x="${x0+w/2}" y="${y+25}" text-anchor="middle" font-size="12" font-weight="800" fill="${p>.5?'#1E2230':'currentColor'}">${Math.round(p*100)}%</text><line x1="${x0+w}" y1="${y+20}" x2="${x0+w+14}" y2="${y+20}" stroke="currentColor" stroke-width="2"/><text x="${x0+w+18}" y="${y+18}" font-size="11.5" font-weight="700" fill="currentColor">${nm}</text><text x="${x0+w+18}" y="${y+32}" font-size="10.5" fill="currentColor" opacity=".75">${SECN[sec].t.length>26?SECN[sec].t.slice(0,25)+"…":SECN[sec].t}</text>`});
+ s+=`<text x="${x0+w/2}" y="14" text-anchor="middle" font-size="12" font-weight="700" fill="currentColor">🏛️ de top: het Palatijn</text>`;
+ return `<svg viewBox="0 0 ${W} ${H}" class="fig" role="img" aria-label="De zeven heuvels">${s}</svg>`}
+function klimHome(){stilte();show('play');const t=klimTot();
+ P.innerHTML=`<div class="top"><button class="btn licht klein" id="stop">‹ Terug</button><span class="stap">🏛️ Op weg naar het Binnenhof</span><span class="teller">${Math.round(t*100)}%</span></div>
+ <div class="kaart"><p class="sub" style="margin:0">Van het stembureau naar het Binnenhof in Den Haag: elk deel is een stop. Een stop is gehaald als je <b>alle</b> vragen ervan één keer goed hebt. Je mag beginnen waar je wilt.</p>${torenSVG()}</div>
+ ${KCAMPS.map(([sec,nm],i)=>{const p=klimPct(sec),open=klimOpen(i);return `<button class="mode${p>=1?' gehaald':''}" data-k="${i}" style="width:100%;margin:8px 0"${open?'':' disabled'}><h3>${open?'':'🔒 '}${nm} · ${SECN[sec].t}</h3><p>${Math.round(p*100)}% · ${klimIds(sec).filter(x=>!KL()[x]).length} vragen te gaan${open?'':' · eerst de heuvel ervoor veroveren'}</p></button>`}).join('')}`;
+ $('#stop').onclick=goHome;P.querySelectorAll('[data-k]').forEach(b=>b.onclick=()=>klimPlay(KCAMPS[+b.dataset.k][0]))}
+function klimPlay(sec){stilte();const todo=shuffle(MCQ[sec].filter(v=>!KL()[v[0]]));const set=(todo.length?todo:shuffle(MCQ[sec])).slice(0,10).map(v=>mcItem(v,sec));const nm=KCAMPS.find(c=>c[0]===sec)[1];
+ quiz(set,{titel:'🏛️ '+nm,geenHer:1,opGoed:q=>{KL()[q.id]=1;save()},klaar:()=>{const p=klimPct(sec);return `<p>${p>=1?`${nm}: gehaald! 🎉`:`${nm}: ${Math.round(p*100)}%`}</p><div class="acts" style="justify-content:center">${p<1?'<button class="btn" id="opn">Verder klimmen</button>':''}<button class="btn licht" id="tor">Naar de route</button>${terugKnop()}</div>`},
+  na:()=>{const o=$('#opn');if(o)o.onclick=()=>klimPlay(sec);$('#tor').onclick=klimHome;$('#hm').onclick=goHome}})}
+
+/* ---------- opslag en algemeen ---------- */
+const KEY='msl-intro-v1';
+const $=s=>document.querySelector(s);
+const leeg=()=>({pod:{},lp:{},klim:{},b:{},sp:{},open:{a:{},best:0,per:{}},ex:0,toets:0,blitz:0,mis:{},samen:0,tempo:1});
+let S=leeg();
+try{const r=localStorage.getItem(KEY);if(r)S=Object.assign(S,JSON.parse(r))}catch(e){}
+const save=()=>{try{localStorage.setItem(KEY,JSON.stringify(S))}catch(e){}};
+const shuffle=a=>{a=a.slice();for(let i=a.length-1;i>0;i--){const j=Math.random()*(i+1)|0;[a[i],a[j]]=[a[j],a[i]]}return a};
+const esc=s=>String(s).replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;').replace(/"/g,'&quot;');
+const nf=(x,d=1)=>String(Math.round(x*10**d)/10**d).replace('.',',');
+const P=$('#play');let G=null;
+function show(id){$('#home').hidden=id!=='home';P.hidden=id!=='play';scrollTo(0,0)}
+const mcItem=(v,sec)=>({q:v[0],a:v[1],opts:[v[1],...v[2].split('|')],w:v[3],hint:v[4],sec,id:v[0]});
+const SPEL={stel:{t:'🗳️ Eens of oneens?',doel:.99}};
+const SECN={};H.forEach(h=>SECN[h.id]=h);
+
+/* ---------- leerroute ---------- */
+const ROUTE=[];
+H.forEach(h=>{const id=h.id;
+ [0,1].forEach(i=>ROUTE.push([`pod${id}-${i}`,id,`🎧 Podcast deel ${i+1}: ${POD[id][i].t}`,i?'Het gesprek gaat verder, daarna checkvragen.':'Eva en Daan vertellen het in gewone taal. Luisteren of lezen, daarna een paar checkvragen.',2,'pod',[id,i]]));
+ ROUTE.push([`lp${id}`,id,`📖 Uitleg: ${h.t}`,'Korte kaartjes, steeds een checkvraag.',6,'lp',id]);
+ ROUTE.push([`pr${id}`,id,`✅ Oefenronde: ${h.t}`,'10 vragen, haal er 8 in één keer goed. Met 💡 tips.',6,'pr',id]);
+ ROUTE.push([`kamp${id}`,id,`🏛️ Stop: ${KCAMPS.find(c=>c[0]===id)[1]}`,'Alle vragen van dit deel één keer goed.',2,'kamp',id]);
+ if(id==='pd')ROUTE.push(['stel','pd',SPEL.stel.t,'Echte discussies: wat vind jij? Daarna zie je de argumenten voor én tegen. Doel: alle stellingen gezien.',6,'sp','stel'])});
+ROUTE.push(['blitz','eind','⚡ Begrippenblitz: 15 punten','60 seconden: welk begrip hoort bij de uitleg?',4,'blitz'],['samen','eind','📄 Alles nog eens lezen','Alle uitleg onder elkaar.',0,'samen']);
+const HNAAM={eind:'Eindsprint'};H.forEach(h=>HNAAM[h.id]=`${h.ic} ${h.t}`);
+const OS=()=>S.open||(S.open={a:{},best:0,per:{}});
+const rDone=r=>{const t=r[5];return t==='kamp'?klimPct(r[6])>=1:t==='pod'?!!S.pod[r[6].join(':')]:t==='lp'?!!S.lp[r[6]]:t==='pr'?(S.b[r[6]]||0)>=.8:t==='sp'?(S.sp[r[6]]||0)>=SPEL[r[6]].doel:t==='blitz'?S.blitz>=15:t==='exam'?S.ex>=.7:t==='open'?(OS().best||0)>=.6:t==='toets'?S.toets>=7:!!S.samen};
+const pct=()=>ROUTE.reduce((a,r)=>a+(rDone(r)?r[4]:0),0);window.leerVoortgang=pct;
+const RT={on:false,p0:0};
+function rGo(r){RT.on=true;RT.p0=pct();const t=r[5];if(t==='kamp')klimPlay(r[6]);else if(t==='pod')podStart(...r[6]);else if(t==='lp')leerpad(r[6]);else if(t==='pr')ronde(r[6]);else if(t==='sp')spel(r[6]);else if(t==='blitz')blitz();else if(t==='exam')examen();else if(t==='open')openProefwerk();else if(t==='toets')toets();else samen()}
+function routeScreen(){stilte();show('play');const p=pct(),nxt=ROUTE.find(r=>!rDone(r)),win=RT.on&&p>RT.p0?p-RT.p0:0;RT.on=false;let deel='';
+ P.innerHTML=`<div class="top"><button class="btn licht klein" id="terug">‹ Overzicht</button><span class="stap">Leerroute</span><span class="teller ok">${p}%</span></div>
+ ${win?`<div class="kaart" style="border-color:var(--good);background:var(--good-bg)"><b class="goed-t">Gehaald! +${win}%</b></div>`:''}
+ <div class="kaart"><div class="balk"><i style="width:${p}%"></i></div><p class="sub" style="margin:4px 0 0">Per deel: eerst de podcast, dan het leerpad, dan oefenen en een heuvel van Rome. Een stap is pas groen als het doel gehaald is.</p>
+ ${nxt?`<div class="acts"><button class="btn" id="rtgo">Ga verder: ${nxt[2]} →</button></div>`:'<p><b>Alles gehaald. Klaar voor de toets! 🎉</b></p>'}</div>
+ ${ROUTE.map((r,i)=>{const kop=r[1]!==deel?(deel=r[1],`<h2>${HNAAM[r[1]]}</h2>`):'';return kop+`<button class="mode${rDone(r)?' gehaald':''}" data-r="${i}" style="width:100%;margin:8px 0"><h3>${r[2]}</h3><p>${r[3]}${r[4]?` · ${r[4]}%`:' · telt niet mee'}</p></button>`}).join('')}`;
+ $('#terug').onclick=()=>{RT.on=false;goHome()};P.querySelectorAll('[data-r]').forEach(b=>b.onclick=()=>rGo(ROUTE[+b.dataset.r]));const g=$('#rtgo');if(g){g.onclick=()=>rGo(nxt);g.focus()}}
+
+/* ---------- hoofdscherm ---------- */
+function renderHome(){const nx=ROUTE.find(r=>!rDone(r));
+ $('#stand').innerHTML=`<button class="mode main" id="rtbox" style="width:100%"><h3>${nx?(pct()?'Ga verder: ':'Begin: ')+nx[2]:'Leerroute klaar. Herhalen?'}</h3><p>🧭 Leerroute · ${pct()}%${S.toets?` · beste proeftoets ${nf(S.toets)}`:''}</p><div class="balk" style="background:rgba(127,127,127,.35)"><i style="width:${pct()}%"></i></div></button>`;
+ $('#rtbox').onclick=routeScreen;
+ $('#hst').innerHTML=H.map(h=>{const pd=[0,1].filter(i=>S.pod[h.id+':'+i]).length;const no=OPEN.filter(q=>q[0]===h.id).length;return `<div class="kaart hk"><h3>${h.ic} ${h.t}</h3><p class="sub" style="margin:2px 0 0">${h.kort}</p><div class="acts" style="margin-top:8px">${POD[h.id]?`<button class="btn klein${pd===2?' ok':' licht'}" data-pod="${h.id}">🎧 Podcast ${pd}/2</button>`:''}<button class="btn klein${S.lp[h.id]?' ok':' licht'}" data-lp="${h.id}">📖 Leerpad${S.lp[h.id]?' ✓':''}</button><button class="btn klein${(S.b[h.id]||0)>=.8?' ok':' licht'}" data-pr="${h.id}">✅ Oefenen${S.b[h.id]!=null?' '+Math.round(S.b[h.id]*10)+'/10':''}</button>${no?`<button class="btn klein${(OS().per[h.id]||0)>=.6?' ok':' licht'}" data-os="${h.id}">✍️ Open (${no})</button>`:''}</div></div>`}).join('');
+ const g=(id,ok)=>{const e=$('#'+id);if(e)e.classList.toggle('gehaald',ok)};Object.keys(SPEL).forEach(k=>g('p'+k,(S.sp[k]||0)>=SPEL[k].doel));g('pblitz',S.blitz>=15);g('pexam',S.ex>=.7);g('popen',(OS().best||0)>=.6);g('ptoets',S.toets>=7);g('psamen',!!S.samen);g('pberg',klimTot()>=1);
+ const fm=Object.keys(S.mis).length;$('#fouten').hidden=!fm;$('#fouten p').textContent=`${fm} vraag${fm===1?'':'en'} die je eerder fout had.`;P.innerHTML=''}
+function goHome(){stilte();clearInterval(window.__klok);if(RT.on)return routeScreen();show('home');renderHome()}
+document.addEventListener('click',e=>{if($('#home').hidden)return;const b=e.target.closest('[data-lp],[data-pr],[data-pod],[data-os]');if(!b)return;const d=b.dataset;if(d.lp)leerpad(d.lp);else if(d.pr)ronde(d.pr);else if(d.pod)podMenu(d.pod);else openSet(OPEN.filter(q=>q[0]===d.os),'Open vragen '+d.os,d.os)});
+Object.keys(SPEL).forEach(k=>$('#p'+k).onclick=()=>spel(k));$('#pblitz').onclick=()=>blitz();$('#psamen').onclick=()=>samen();$('#fouten').onclick=()=>foutRonde();$('#palles').onclick=()=>podAlles(H.filter(h=>POD[h.id]).flatMap(h=>[0,1,2].map(i=>[h.id,i])),'Alle podcasts');$('#pberg').onclick=()=>klimHome();
+$('#wis').onclick=()=>{if(confirm('Al je voortgang bij maatschappijleer wissen?')){S=leeg();save();renderHome()}};
+
+/* ---------- podcast: luisteren of lezen ---------- */
+const SPK={E:'Eva',D:'Daan'};
+const TEMPO=[['langzaam',.8],['normaal',1],['snel',1.2],['sneller',1.45]];
+const kanPraten='speechSynthesis' in window&&typeof SpeechSynthesisUtterance!=='undefined';
+const stemKw=v=>{const t=(v.voiceURI||'')+' '+v.name;return /premium/i.test(t)?3:/enhanced|verbeterd|neural|natural|online/i.test(t)?2:/compact/i.test(t)?0:1};
+const stemLabel=v=>`${v.name.replace(/\s*\((verbeterd|enhanced|premium)\)/i,'')}${stemKw(v)>=2?' (verbeterd)':''}${/BE/i.test(v.lang)?' · Vlaams':''}`;
+function nlStemmen(){return kanPraten?speechSynthesis.getVoices().filter(v=>/^nl/i.test(v.lang)):[]}
+function eigenKeuze(){try{return JSON.parse(localStorage.getItem('leren-stem')||'{}')}catch(e){return {}}}
+function stemmen(){if(!kanPraten)return null;const nl=nlStemmen(),k0=eigenKeuze();if(!nl.length)return k0.een?{E:{v:null,p:1},D:{v:null,p:1},tekst:'één voorlezer (standaardstem)'}:{E:{v:null,p:1.15},D:{v:null,p:.82},tekst:'geen Nederlandse stem gevonden, de standaardstem leest voor'};
+ const beste=l=>[...l].sort((a,b)=>(stemKw(b)+(/nl-NL/i.test(b.lang)?.5:0))-(stemKw(a)+(/nl-NL/i.test(a.lang)?.5:0)))[0];
+ if(k0.een){const v=nl.find(x=>x.voiceURI===k0.een)||beste(nl);return {E:{v,p:1},D:{v,p:1},een:v,tekst:`één voorlezer: ${stemLabel(v)}`}}
+ const vr=/claire|ellen|fenna|colette|lotte|femke|anna|female|vrouw|google nederlands/i,mn=/xander|maarten|frank|arnaud|male|\bman\b/i;
+ const zoek=u=>nl.find(v=>v.voiceURI===u);let e=zoek(k0.E)||beste(nl.filter(v=>vr.test(v.name))),d=zoek(k0.D)||beste(nl.filter(v=>mn.test(v.name)&&!vr.test(v.name)));
+ if(e&&d&&e!==d)return {E:{v:e,p:1},D:{v:d,p:1},tekst:`Lotte = ${stemLabel(e)}, Sem = ${stemLabel(d)}`};
+ const een=e||d||beste(nl);return {E:{v:een,p:1.18},D:{v:een,p:.8},tekst:`één stem (${stemLabel(een)}) op twee toonhoogtes`}}
+function stemKiezer(){const nl=nlStemmen(),st=stemmen()||{},een=!!eigenKeuze().een;
+ const wissel=`<div class="podmode" style="margin:6px 0"><button class="btn klein ${een?'licht':''}" id="kTwee">👥 Twee stemmen</button><button class="btn klein ${een?'':'licht'}" id="kEen">👤 Eén voorlezer</button></div>`;
+ if(!nl.length)return wissel+'<p class="src">Op dit apparaat zijn geen Nederlandse stemmen gevonden.</p>';
+ const opt=w=>nl.map(v=>`<option value="${esc(v.voiceURI)}"${st[w]&&st[w].v===v?' selected':''}>${esc(stemLabel(v))}</option>`).join('');
+ if(een)return wissel+`<div class="stemkies"><label><b>Voorlezer</b><select id="kN">${nl.map(v=>`<option value="${esc(v.voiceURI)}"${st.een===v?' selected':''}>${esc(stemLabel(v))}</option>`).join('')}</select></label><button class="btn klein licht" data-test="E">▶ test</button></div>`;
+ return wissel+`<div class="stemkies"><label><b class="wie E">Lotte</b><select id="kE">${opt('E')}</select></label><button class="btn klein licht" data-test="E">▶ test</button><label><b class="wie D">Sem</b><select id="kD">${opt('D')}</select></label><button class="btn klein licht" data-test="D">▶ test</button></div><p class="src" style="margin:4px 0 0">Staat je gedownloade stem er niet bij? Sluit Safari helemaal af en open de pagina opnieuw.</p>`}
+function stemKiezerKoppel(){const k=eigenKeuze(),bew=()=>{try{localStorage.setItem('leren-stem',JSON.stringify(k))}catch(e){}podDraw()};
+ const t2=document.getElementById('kTwee');if(t2){t2.onclick=()=>{delete k.een;bew()};document.getElementById('kEen').onclick=()=>{const st=stemmen()||{};k.een=(st.E&&st.E.v&&st.E.v.voiceURI)||'auto';bew()}}
+ const sn=document.getElementById('kN');if(sn)sn.onchange=()=>{k.een=sn.value;bew()};['E','D'].forEach(w=>{const s=document.getElementById('k'+w);if(s)s.onchange=()=>{k[w]=s.value;bew()}});
+ P.querySelectorAll('[data-test]').forEach(b=>b.onclick=()=>{stilte();const w=b.dataset.test,sv=(stemmen()||{})[w]||{};const u=new SpeechSynthesisUtterance(eigenKeuze().een?'Hoi, ik lees het voor.':w==='E'?'Hoi, ik ben Lotte.':'En ik ben Sem.');u.lang='nl-NL';if(sv.v)u.voice=sv.v;u.pitch=sv.p||1;u.rate=TEMPO[S.tempo??1][1];speechSynthesis.speak(u)})}
+if(kanPraten){try{speechSynthesis.getVoices();speechSynthesis.addEventListener('voiceschanged',()=>{const n=document.getElementById('stemnaam');const s=stemmen();if(n&&s)n.textContent=s.tekst})}catch(e){}}
+function stilte(){if(G&&G.m==='pod'){G.playing=false;G.token=(G.token||0)+1}if(kanPraten)try{speechSynthesis.cancel()}catch(e){}}
+function zinnen(t){return t.match(/[^.!?]+[.!?]+["”']?\s*|[^.!?]+$/g)||[t]}
+function podMenu(sec){stilte();show('play');const h=SECN[sec];
+ P.innerHTML=`<div class="top"><button class="btn licht klein" id="stop">Terug</button><span class="stap">Podcast · ${h.t}</span><span></span></div>
+ <div class="kaart"><p style="margin:0">Lotte en Sem vertellen basisstof ${sec} in drie stukjes van een paar minuten. Luister of lees, en beantwoord daarna een paar checkvragen.</p>
+ <div class="acts"><button class="btn" id="palle">🎧 Alle drie achter elkaar</button></div></div>
+ ${POD[sec].map((p,i)=>`<button class="mode${S.pod[sec+':'+i]?' gehaald':''}" data-pi="${i}" style="width:100%;margin:8px 0"><h3>Deel ${i+1}: ${p.t}</h3><p>${p.s.length} beurten · ${p.q.length} checkvragen</p></button>`).join('')}`;
+ $('#stop').onclick=goHome;P.querySelectorAll('[data-pi]').forEach(b=>b.onclick=()=>podStart(sec,+b.dataset.pi));$('#palle').onclick=()=>podAlles([0,1,2].map(i=>[sec,i]),'Basisstof '+sec+' helemaal')}
+function podStart(sec,i){stilte();const p=POD[sec][i];const items=[];p.s.forEach(([w,t],li)=>zinnen(t).forEach(z=>items.push({w,t:z.trim(),li})));
+ G={m:'pod',sec,i,items,idx:0,playing:false,token:0,mode:kanPraten?(S.podMode||'luister'):'lees',klaar:false};show('play');podDraw()}
+function podAlles(parts,titel){stilte();const items=[];parts.forEach(([sec,i],pi)=>{const p=POD[sec][i];p.s.forEach(([w,t],li)=>zinnen(t).forEach((z,zi)=>items.push({w,t:z.trim(),li:pi*1000+li,pi,kop:li===0&&zi===0?`${sec} · deel ${i+1}: ${p.t}`:''})))});
+ G={m:'pod',alles:{parts,titel},items,idx:0,playing:false,token:0,mode:kanPraten?(S.podMode||'luister'):'lees',klaar:false};show('play');podDraw()}
+function podDraw(){const A=G.alles,p=A?null:POD[G.sec][G.i],st=stemmen(),tempo=S.tempo??1;let li=-1,html='';
+ G.items.forEach((it,k)=>{if(it.li!==li){if(li>=0)html+='</p>';li=it.li;if(it.kop)html+=`<h3 class="vkop">${it.kop}</h3>`;html+=`<p class="vl"><b class="wie ${it.w}">${SPK[it.w]}</b> `}html+=`<span class="z" data-k="${k}">${esc(it.t)} </span>`});html+='</p>';
+ P.innerHTML=`<div class="top"><button class="btn licht klein" id="stop">Stoppen</button><span class="stap">${A?A.titel:`Podcast ${G.sec} · deel ${G.i+1}`}</span><span class="teller" id="cnt"></span></div>
+ <div class="kaart">${A?'':`<h2 style="margin-top:0">${p.t}</h2>`}
+  ${kanPraten?`<div class="podmode"><button class="btn klein ${G.mode==='luister'?'':'licht'}" id="mLuis">🎧 Luisteren</button><button class="btn klein ${G.mode==='lees'?'':'licht'}" id="mLees">📖 Lezen</button></div>`:''}
+  ${G.mode==='luister'?`<div class="speler"><button class="btn" id="pPlay">${G.playing?'⏸ Pauze':(G.idx>0&&G.idx<G.items.length?'▶ Verder':'▶ Afspelen')}</button><button class="btn licht klein" id="pTerug" aria-label="Een zin terug">⏮</button>
+   <div class="tempo">${TEMPO.map(([n],k)=>`<button class="btn klein ${tempo===k?'':'licht'}" data-t="${k}">${n}</button>`).join('')}</div></div>
+   <details class="stemdet"${G.stemOpen?' open':''}><summary>🔊 Stemmen: <span id="stemnaam">${st?st.tekst:''}</span> <u>wijzigen</u></summary>${stemKiezer()}</details>
+   <p class="src" style="margin:6px 0 0">Tik op een zin om daar verder te luisteren.</p>`:''}
+  <div class="transcript${G.mode==='luister'?' luis':''}">${html}</div>
+  <div class="acts"><button class="btn ${G.klaar||G.mode==='lees'?'':'licht'}" id="pVraag">${A?'Klaar ✓':'Klaar, naar de checkvragen →'}</button></div></div>`;
+ $('#stop').onclick=()=>{stilte();goHome()};
+ const ml=$('#mLuis');if(ml){ml.onclick=()=>{S.podMode='luister';save();G.mode='luister';podDraw()};$('#mLees').onclick=()=>{stilte();S.podMode='lees';save();G.mode='lees';podDraw()}}
+ const pp=$('#pPlay');if(pp){pp.onclick=()=>{if(G.playing){stilte();podDraw()}else{if(G.idx>=G.items.length)G.idx=0;G.playing=true;podDraw();spreek()}};
+  $('#pTerug').onclick=()=>{G.idx=Math.max(0,G.idx-1);if(G.playing){stilte();G.playing=true;spreek()}else markZin()};
+  P.querySelectorAll('[data-t]').forEach(b=>b.onclick=()=>{S.tempo=+b.dataset.t;save();const sp=G.playing;stilte();G.playing=sp;podDraw();if(sp)spreek()})}
+ if(G.mode==='luister')P.querySelectorAll('.z').forEach(z=>z.onclick=()=>{G.idx=+z.dataset.k;stilte();G.playing=true;podDraw();spreek()});
+ $('#pVraag').onclick=()=>{stilte();if(A)goHome();else podVragen()};const sd=P.querySelector('.stemdet');if(sd){sd.ontoggle=()=>{G.stemOpen=sd.open};stemKiezerKoppel()}markZin()}
+function markZin(){P.querySelectorAll('.z.nu').forEach(z=>z.classList.remove('nu'));const c=$('#cnt');if(c)c.textContent=`${Math.min(G.idx+1,G.items.length)}/${G.items.length}`;if(G.mode!=='luister')return;const z=P.querySelector(`.z[data-k="${G.idx}"]`);if(z&&(G.playing||G.idx>0)){z.classList.add('nu');if(G.playing)z.scrollIntoView({block:'center',behavior:'smooth'})}}
+function spreek(){if(!G||G.m!=='pod'||!G.playing)return;if(G.idx>=G.items.length){G.playing=false;G.klaar=true;podDraw();const b=$('#pVraag');if(b)b.scrollIntoView({block:'center',behavior:'smooth'});return}
+ const it=G.items[G.idx],st=stemmen()||{},sv=st[it.w]||{},tok=++G.token;const u=new SpeechSynthesisUtterance(it.t);u.lang='nl-NL';if(sv.v)u.voice=sv.v;u.pitch=sv.p||1;u.rate=TEMPO[S.tempo??1][1];
+ const door=()=>{if(!G||G.m!=='pod'||tok!==G.token||!G.playing)return;G.idx++;spreek()};u.onend=door;u.onerror=door;markZin();try{speechSynthesis.speak(u)}catch(e){G.playing=false;podDraw()}}
+function podVragen(){const {sec,i}=G;const p=POD[sec][i];G=null;
+ quiz(p.q.map(v=>mcItem(v,null)),{titel:`Checkvragen ${sec} · deel ${i+1}`,klaar:(goed,n)=>{S.pod[sec+':'+i]=1;save();
+  return `<p>Deel ${i+1} gehaald ✓</p><div class="acts" style="justify-content:center">${i<2?`<button class="btn" id="opn">Deel ${i+2}: ${POD[sec][i+1].t} →</button>`:`<button class="btn" id="opn">📖 Leerpad ${sec}</button>`}${terugKnop()}</div>`},
+  na:()=>{$('#opn').onclick=()=>i<2?podStart(sec,i+1):leerpad(sec);$('#hm').onclick=goHome}})}
+
+/* ---------- leerpad ---------- */
+function leerpad(id){stilte();const h=SECN[id];let i=0;show('play');
+ const teken=()=>{const c=h.lp[i];const opts=c[2]?shuffle([c[2][1],...c[2][2].split('|')]):[];
+  P.innerHTML=`<div class="top"><button class="btn licht klein" id="stop">Stoppen</button><span class="stap">Leerpad ${h.id} · ${h.t}</span><span class="teller">${i+1}/${h.lp.length}</span></div>
+  <div class="balk"><i style="width:${i/h.lp.length*100}%"></i></div>
+  <div class="kaart"><h2 style="margin-top:0">${c[0]}</h2>${c[1]}${c[2]?`<div class="check"><div class="label">Even checken</div><h3 style="margin:6px 0 0;font-family:inherit">${c[2][0]}</h3><div class="opts">${opts.map((o,k)=>`<button class="opt" data-k="${k}">${esc(o)}</button>`).join('')}</div><div id="fb"></div></div>`:''}
+  <div class="acts" id="nav" ${c[2]?'hidden':''}>${i?'<button class="btn licht" id="vor">← Terug</button>':''}<button class="btn" id="vd">${i<h.lp.length-1?'Verder →':'Klaar ✓'}</button></div></div>`;
+  $('#stop').onclick=goHome;const vd=()=>{i++;if(i>=h.lp.length){S.lp[id]=1;save();klaar()}else teken()};
+  const nav=()=>{$('#nav').hidden=false;$('#vd').onclick=vd;const v=$('#vor');if(v)v.onclick=()=>{i--;teken()};$('#vd').focus()};
+  if(c[2])P.querySelectorAll('.opt').forEach(b=>b.onclick=()=>{if(P.querySelector('.opt.goed'))return;const ok=opts[+b.dataset.k]===c[2][1];
+   P.querySelectorAll('.opt').forEach((x,k)=>{if(opts[k]===c[2][1])x.classList.add('goed');else if(x===b)x.classList.add('fout')});
+   $('#fb').innerHTML=`<div class="uitleg"><b class="${ok?'goed-t':'fout-t'}">${ok?'Goed!':'Niet goed.'}</b> ${c[2][3]}</div>`;nav()});else nav()};
+ const klaar=()=>{P.innerHTML=`<div class="kaart" style="text-align:center"><div class="label">Leerpad klaar</div><h2>${h.ic} ${h.t}</h2><p>Nu oefenen: 10 vragen, haal er 8.</p><div class="acts" style="justify-content:center"><button class="btn" id="opn">✅ Oefenronde</button>${terugKnop()}</div></div>`;
+  $('#opn').onclick=()=>ronde(id);$('#hm').onclick=goHome;$('#opn').focus()};
+ teken()}
+
+
+/* ---------- 💡 Hoe pak ik dit aan? De aanpak (q.hint) en het kaartje uit het leerpad waar de vraag over gaat; niet in de proeftoets ---------- */
+const STOPW=new Set('deze die dat wat welke hoeveel waarom wordt worden niet zijn heeft hebben kunnen moet maar ook door naar voor over onder tussen bij zonder iets meer minder alle elke steeds daarna eerst juist goed fout klopt uitspraak uitspraken antwoord'.split(' '));
+const woorden=t=>(String(t).replace(/<[^>]+>/g,' ').toLowerCase().match(/[a-zà-ÿ]{4,}/g)||[]).filter(x=>!STOPW.has(x));
+function kaartVoor(q){const h=q.sec&&SECN[q.sec];if(!h)return null;const w=new Set(woorden(q.q));let best=null,bs=0;h.lp.forEach(l=>{const n=new Set(woorden(l[0]+' '+l[1]).filter(x=>w.has(x))).size;if(n>bs){bs=n;best=l}});return bs>=2?best:null}
+function hintVan(q){const k=kaartVoor(q);if(!q.hint&&!k)return '';return `<div>${q.hint||'Zoek de kernwoorden in de vraag. Weet je niet meer wat ze betekenen? Lees het kaartje hieronder nog eens, en kijk dan opnieuw naar de opties.'}</div>${k?`<details class="hkaart"><summary>📖 Kaartje uit het leerpad: ${k[0]}</summary>${k[1]}</details>`:''}`}
+/* ---------- vragen: meerkeuze of getal; fout = herkansing aan het eind ---------- */
+const terugKnop=()=>`<button class="btn licht" id="hm">${RT.on?'Terug naar de route':'Naar het overzicht'}</button>`;
+function quiz(qs,o){let i=0,goed=0,opnieuw=[];const n=qs.length;
+ const volgende=()=>{if(i>=qs.length){if(opnieuw.length&&!o.geenHer){qs=qs.concat(opnieuw);opnieuw=[]}else return einde()}
+  const q=qs[i],her=i>=n;const opts=q.num?[]:shuffle(q.opts);
+  P.innerHTML=`<div class="top"><button class="btn licht klein" id="stop">Stoppen</button><span class="stap">${o.titel}</span><span class="teller">${Math.min(i+1,n)}/${n}${her?' · herkansing':''}</span></div>
+  <div class="kaart">${her?'<div class="label" style="color:var(--gold)">Herkansing: deze ging eerder fout</div>':''}${q.sec?`<div class="label">${SECN[q.sec].ic} ${q.sec} ${SECN[q.sec].t}</div>`:''}${q.fig||''}<div class="vraag">${q.q}</div>
+  ${o.titel!=='Proeftoets'&&hintVan(q)?`<div class="hintrij"><button class="btn licht klein" type="button" id="hintb">💡 Hoe pak ik dit aan?</button><div id="hintbox" class="hintbox" hidden>${hintVan(q)}</div></div>`:''}
+  ${q.num?`<form class="typerow" id="nf" autocomplete="off"><input id="ni" inputmode="numeric" placeholder="aantal" aria-label="Antwoord"><button class="btn" type="submit" id="nb">Controleer</button></form>`:`<div class="opts">${opts.map((x,k)=>`<button class="opt" data-k="${k}">${x}</button>`).join('')}</div>`}<div id="fb"></div></div>`;
+  $('#stop').onclick=goHome;const hb=$('#hintb');if(hb)hb.onclick=()=>{$('#hintbox').hidden=false;hb.hidden=true};
+  const af=ok=>{const hr=P.querySelector('.hintrij');if(hr)hr.hidden=true;if(ok&&o.opGoed)o.opGoed(q);if(!her&&ok)goed++;if(ok){if(q.id)delete S.mis[q.id]}else{if(q.id&&q.sec&&!o.geenMis)S.mis[q.id]=q.sec;if(!her)opnieuw.push(q)}save();
+   $('#fb').innerHTML=`<div class="uitleg"><b class="${ok?'goed-t':'fout-t'}">${ok?'Goed!':'Niet goed.'}</b> ${q.num&&!ok?`Het antwoord is <b>${q.a}</b>. `:''}${q.w||''}</div><div class="acts"><button class="btn" id="vd">Verder ↵</button></div>`;
+   i++;$('#vd').onclick=volgende;$('#vd').focus()};
+  if(q.num){const inp=$('#ni');inp.focus();$('#nf').onsubmit=e=>{e.preventDefault();const v=parseInt(inp.value,10);if(isNaN(v)){inp.classList.remove('shake');void inp.offsetWidth;inp.classList.add('shake');return}inp.readOnly=true;$('#nb').hidden=true;af(v===q.a)}}
+  else P.querySelectorAll('.opt').forEach(b=>b.onclick=()=>{if(P.querySelector('.opt.goed'))return;const ok=opts[+b.dataset.k]===q.a;P.querySelectorAll('.opt').forEach((x,k)=>{if(opts[k]===q.a)x.classList.add('goed');else if(x===b)x.classList.add('fout')});af(ok)})};
+ const einde=()=>{P.innerHTML=`<div class="kaart" style="text-align:center"><div class="label">${o.titel}</div><div class="groot">${goed}<span> / ${n}</span></div>${o.klaar(goed,n)}</div>`;o.na&&o.na()};
+ show('play');volgende()}
+function ronde(id){stilte();const qs=shuffle(MCQ[id]).slice(0,10).map(v=>mcItem(v,id));
+ quiz(qs,{titel:'Oefenronde: '+SECN[id].t,klaar:(goed,n)=>{const f=goed/n;if(f>(S.b[id]||0))S.b[id]=f;save();
+  return `<p>${f>=.8?'Gehaald! 🎉':'Nog niet: 8 van de 10 in één keer goed is het doel.'}</p><div class="acts" style="justify-content:center"><button class="btn" id="opn">Nog een ronde</button><button class="btn licht" id="lp">Leerpad nalezen</button>${terugKnop()}</div>`},
+  na:()=>{$('#opn').onclick=()=>ronde(id);$('#lp').onclick=()=>leerpad(id);$('#hm').onclick=goHome}})}
+const exItem=v=>({q:v[1],a:v[2],opts:[v[2],...v[3].split('|')],w:v[4],hint:v[5],sec:v[0],id:'ex|'+v[1].slice(0,60)});
+function examen(){stilte();quiz(shuffle(EXAM).slice(0,12).map(exItem),{titel:'Toetsvragen',geenHer:1,geenMis:1,klaar:(goed,n)=>{const f=goed/n;if(f>S.ex)S.ex=f;save();
+ return `<p>${Math.round(f*100)}% goed${f>=.7?' · gehaald! 🎉':' · doel: 70%'}</p><p class="sub">Toetsvragen zijn lastig: lees de uitleg goed, daar zie je hoe je moet redeneren.</p><div class="acts" style="justify-content:center"><button class="btn" id="opn">Nog een keer</button>${terugKnop()}</div>`},na:()=>{$('#opn').onclick=examen;$('#hm').onclick=goHome}})}
+function spelKlaar(k,goed,n){const f=goed/n,d=SPEL[k].doel;if(f>(S.sp[k]||0))S.sp[k]=f;save();
+ return `<p>${f>=d?'Gehaald! 🎉':`Doel: ${Math.ceil(d*n)} van de ${n} in één keer goed.`}</p><div class="acts" style="justify-content:center"><button class="btn" id="opn">Nog een keer</button>${terugKnop()}</div>`}
+function spel(k){stilte();if(k==='stel')return stelSpel();const f=null;
+ quiz(Array.from({length:10},f),{titel:SPEL[k].t,geenHer:1,klaar:(g,n)=>spelKlaar(k,g,n),na:()=>{$('#opn').onclick=()=>spel(k);$('#hm').onclick=goHome}})}
+function volg(){const set=shuffle(VOLG).slice(0,5);let i=0,goed=0;show('play');
+ const teken=()=>{if(i>=set.length){P.innerHTML=`<div class="kaart" style="text-align:center"><div class="label">${SPEL.volg.t}</div><div class="groot">${goed}<span> / ${set.length}</span></div>${spelKlaar('volg',goed,set.length)}</div>`;$('#opn').onclick=volg;$('#hm').onclick=goHome;return}
+  const [titel,juist]=set[i];let los;do{los=shuffle(juist)}while(los.join()===juist.join());const rij=[];
+  const bouw=()=>{P.innerHTML=`<div class="top"><button class="btn licht klein" id="stop">Stoppen</button><span class="stap">${SPEL.volg.t}</span><span class="teller">${i+1}/${set.length}</span></div>
+   <div class="kaart"><div class="label">Zet op volgorde</div><div class="vraag">${titel}</div><p class="sub" style="margin:4px 0 0">Tik de stappen aan van eerste naar laatste.</p>
+   <ol class="volgrij">${rij.map(t=>`<li>${t}</li>`).join('')}</ol><div class="tegels">${los.map((t,k)=>`<button class="tegel${rij.includes(t)?' weg':''}" data-k="${k}">${t}</button>`).join('')}</div>
+   <div id="fb"></div><div class="acts" id="ra">${rij.length?'<button class="btn licht klein" id="wis2">↺ Opnieuw</button>':''}</div></div>`;
+   $('#stop').onclick=goHome;const w=$('#wis2');if(w)w.onclick=()=>{rij.length=0;bouw()};
+   P.querySelectorAll('.tegel').forEach(b=>b.onclick=()=>{if(b.classList.contains('weg'))return;rij.push(los[+b.dataset.k]);if(rij.length<juist.length)return bouw();
+    bouw();const ok=rij.join()===juist.join();if(ok)goed++;$('#ra').innerHTML='';P.querySelectorAll('.tegel').forEach(x=>x.disabled=true);
+    $('#fb').innerHTML=`<div class="uitleg"><b class="${ok?'goed-t':'fout-t'}">${ok?'Goed!':'Niet goed.'}</b>${ok?'':` De goede volgorde:<ol>${juist.map(t=>`<li>${t}</li>`).join('')}</ol>`}</div><div class="acts"><button class="btn" id="vd">Verder ↵</button></div>`;$('#vd').onclick=()=>{i++;teken()};$('#vd').focus()})};
+  bouw()};
+ teken()}
+function toets(){stilte();const mc=shuffle(H.flatMap(h=>shuffle(MCQ[h.id]).slice(0,2).map(v=>mcItem(v,h.id))));const ex=shuffle(EXAM).slice(0,6).map(exItem);
+ const qs=shuffle([...mc.slice(0,12),...ex,]);
+ quiz(qs,{titel:'Proeftoets',geenHer:1,geenMis:1,klaar:(goed,n)=>{const c=Math.round((1+9*goed/n)*10)/10;if(c>S.toets)S.toets=c;save();
+  return `<p>Cijfer: <b style="font-size:22px">${nf(c)}</b>${c>=7?' 🎉':''}</p><div class="acts" style="justify-content:center"><button class="btn" id="opn">Nog een proeftoets</button>${terugKnop()}</div>`},na:()=>{$('#opn').onclick=toets;$('#hm').onclick=goHome}})}
+function foutRonde(){const lijst=Object.entries(S.mis).map(([id,sec])=>{const v=(MCQ[sec]||[]).find(v=>v[0]===id);return v?mcItem(v,sec):null}).filter(Boolean);
+ if(!lijst.length){S.mis={};save();return goHome()}quiz(shuffle(lijst).slice(0,15),{titel:'Mijn fouten',klaar:()=>`<p>${Object.keys(S.mis).length?`Nog ${Object.keys(S.mis).length} in je foutenlijst.`:'Foutenlijst leeg. Top!'}</p><div class="acts" style="justify-content:center">${terugKnop()}</div>`,na:()=>{$('#hm').onclick=goHome}})}
+
+/* ---------- open vragen: invullen en nakijken ---------- */
+const oId=q=>q[0]+'|'+q[1];
+function openMenu(){stilte();show('play');const o=OS();
+ P.innerHTML=`<div class="top"><button class="btn licht klein" id="stop">Terug</button><span class="stap">Open vragen</span><span></span></div>
+ <div class="kaart"><p style="margin:0">Typ je antwoord in je eigen woorden, zoals op de toets. Tik daarna op <b>Nakijken</b>: je ziet jouw antwoord en daaronder het goede antwoord, en je vinkt aan welke punten je had.</p></div>
+ <button class="mode main" id="opw" style="width:100%;margin:8px 0"><h3>✍️ Proefwerk: 8 open vragen</h3><p>Uit alle basisstoffen. Ongeveer 25 minuten.${o.best?` Beste: ${Math.round(o.best*100)}%.`:''}</p></button>
+ ${H.map(h=>{const n=OPEN.filter(q=>q[0]===h.id).length;return n?`<button class="mode${(o.per[h.id]||0)>=.6?' gehaald':''}" data-os="${h.id}" style="width:100%;margin:8px 0"><h3>${h.ic} ${h.id} ${h.t}</h3><p>${n} open vragen.${o.per[h.id]?` Beste: ${Math.round(o.per[h.id]*100)}%.`:''}</p></button>`:''}).join('')}`;
+ $('#stop').onclick=goHome;$('#opw').onclick=openProefwerk;P.querySelectorAll('[data-os]').forEach(b=>b.onclick=()=>openSet(OPEN.filter(q=>q[0]===b.dataset.os),'Open vragen '+b.dataset.os,b.dataset.os))}
+function openProefwerk(){const qs=[];H.forEach(h=>{const l=shuffle(OPEN.filter(q=>q[0]===h.id));qs.push(...l.slice(0,h.id==='gr'?2:1))});openSet(qs.slice(0,8),'Proefwerk open vragen',null)}
+function openSet(qs,titel,sec){stilte();show('play');G={m:'open',qs,titel,sec};const o=OS();
+ P.innerHTML=`<div class="top"><button class="btn licht klein" id="stop">Stoppen</button><span class="stap">${titel}</span><span class="teller">${qs.length} vragen</span></div>
+ <p class="src">Je antwoorden worden bewaard, ook als je even weggaat. Schrijf in hele zinnen.</p>
+ ${qs.map((q,i)=>`<div class="kaart ovraag"><div class="label">Vraag ${i+1} · ${q[0]} · ${q[3].length} punten</div><div class="vraag">${q[1]}</div><textarea data-i="${i}" rows="4" placeholder="Jouw antwoord…">${esc(o.a[oId(q)]||'')}</textarea></div>`).join('')}
+ <div class="acts"><button class="btn" id="nakijk">Nakijken →</button><button class="btn licht" id="leeg">Antwoorden wissen</button></div>`;
+ P.querySelectorAll('textarea').forEach(t=>t.oninput=()=>{o.a[oId(qs[+t.dataset.i])]=t.value;save()});
+ $('#stop').onclick=()=>RT.on?goHome():openMenu();$('#leeg').onclick=()=>{if(!confirm('Alle antwoorden van deze vragen wissen?'))return;qs.forEach(q=>delete o.a[oId(q)]);save();openSet(qs,titel,sec)};
+ $('#nakijk').onclick=()=>{const l=qs.filter(q=>!(o.a[oId(q)]||'').trim()).length;if(l&&!confirm(`${l} vraag${l>1?'en zijn':' is'} nog leeg. Toch nakijken?`))return;openNakijk()}}
+function oMarkeer(tekst,q){if(!(tekst||'').trim())return '<i class="src">(niet ingevuld)</i>';const iv=[];
+ q[3].forEach(p=>{try{const r=new RegExp(p[1],'gi');let m;while((m=r.exec(tekst))){if(!m[0].length){r.lastIndex++;continue}iv.push([m.index,m.index+m[0].length])}}catch(e){}});
+ iv.sort((a,b)=>a[0]-b[0]);const mg=[];iv.forEach(x=>{const l=mg[mg.length-1];if(l&&x[0]<=l[1])l[1]=Math.max(l[1],x[1]);else mg.push(x.slice())});
+ let h='',k=0;mg.forEach(([a,b])=>{h+=esc(tekst.slice(k,a))+'<mark>'+esc(tekst.slice(a,b))+'</mark>';k=b});h+=esc(tekst.slice(k));return h.replace(/\n/g,'<br>')}
+function openNakijk(){const {qs,titel,sec}=G,o=OS();show('play');
+ P.innerHTML=`<div class="top"><button class="btn licht klein" id="terug">← Antwoorden</button><span class="stap">Nakijken</span><span class="teller" id="osc"></span></div>
+ <p class="src">Vergelijk je antwoord met het goede antwoord. Woorden die al lijken te kloppen zijn <mark>gemarkeerd</mark> en dat punt staat al aangevinkt. Klopt het niet? Haal het vinkje weg. Had je het in andere woorden? Vink het aan.</p>
+ ${qs.map((q,i)=>{const t=o.a[oId(q)]||'';return `<div class="kaart ovraag"><div class="label">Vraag ${i+1} · ${q[0]}</div><div class="vraag">${q[1]}</div>
+  <div class="oantw"><div class="label">Jouw antwoord</div>${oMarkeer(t,q)}</div><div class="omodel"><div class="label">Goed antwoord</div>${q[2]}</div>
+  <div class="opunt"><div class="label">Had jij dit? (1 punt per vinkje)</div>${q[3].map((p,k)=>{let ok=false;try{ok=new RegExp(p[1],'i').test(t)}catch(e){}return `<label><input type="checkbox" data-p="${i}-${k}"${ok?' checked':''}> ${p[0]}</label>`}).join('')}</div></div>`}).join('')}
+ <div class="kaart" id="ouit"></div>`;
+ const tel=()=>{const c=P.querySelectorAll('[data-p]'),g=[...c].filter(x=>x.checked).length,f=c.length?g/c.length:0,cijfer=Math.round((1+9*f)*10)/10;$('#osc').textContent=`${g}/${c.length} punten`;
+  $('#ouit').innerHTML=`<h3>Score: ${g} van de ${c.length} punten · cijfer ${nf(cijfer)}</h3><p class="sub">${f>=.8?'Super! Dit kun je op de toets ook.':f>=.6?'Goed bezig. Kijk nog even naar de punten die je miste.':'Lees de goede antwoorden nog eens rustig door, en probeer het daarna opnieuw.'}</p><div class="acts"><button class="btn" id="obew">Score bewaren</button><button class="btn licht" id="oopn">Opnieuw</button></div>`;
+  $('#obew').onclick=()=>{if(sec)o.per[sec]=Math.max(o.per[sec]||0,f);else o.best=Math.max(o.best||0,f);save();$('#obew').textContent='Bewaard ✓';$('#obew').disabled=true;const n=document.createElement('button');n.className='btn licht';n.textContent=RT.on?'Terug naar de route':'Naar het menu';n.onclick=()=>RT.on?goHome():openMenu();$('#obew').after(n)};
+  $('#oopn').onclick=()=>sec?openSet(qs,titel,sec):openProefwerk()};
+ P.querySelectorAll('[data-p]').forEach(x=>x.onchange=tel);tel();$('#terug').onclick=()=>openSet(qs,titel,sec)}
+
+/* ---------- begrippenblitz ---------- */
+function blitz(){stilte();let punten=0,eind=Date.now()+60000;show('play');
+ const vraag=()=>{if(Date.now()>=eind)return stop();const b=pick(BEGR),rev=Math.random()<.5;const fout=shuffle(BEGR.filter(x=>x!==b)).slice(0,2);const goedT=rev?b[0]:b[1];const opts=shuffle([goedT,...fout.map(x=>rev?x[0]:x[1])]);
+  P.innerHTML=`<div class="top"><button class="btn licht klein" id="stop">Stoppen</button><span class="teller ok">${punten} punten</span><span class="teller" id="tijd">60 s</span></div>
+  <div class="kaart"><div class="label">${rev?'Welk begrip hoort hierbij?':'Wat betekent dit begrip?'}</div><div class="vraag">${rev?b[1]:b[0]}</div><div class="opts">${opts.map((x,k)=>`<button class="opt" data-k="${k}">${x}</button>`).join('')}</div><div id="fb"></div></div>`;
+  tik();$('#stop').onclick=goHome;
+  P.querySelectorAll('.opt').forEach(x=>x.onclick=()=>{if(P.querySelector('.opt.goed'))return;const ok=opts[+x.dataset.k]===goedT;P.querySelectorAll('.opt').forEach((y,k)=>{if(opts[k]===goedT)y.classList.add('goed');else if(y===x)y.classList.add('fout')});
+   if(ok){punten++;setTimeout(vraag,350)}else{$('#fb').innerHTML=`<div class="uitleg"><b class="fout-t">Fout.</b> <b>${b[0]}</b> = ${b[1]}.</div><div class="acts"><button class="btn" id="vd">Verder ↵</button></div>`;$('#vd').onclick=vraag;$('#vd').focus()}})};
+ const tik=()=>{const e=$('#tijd');if(e)e.textContent=Math.max(0,Math.ceil((eind-Date.now())/1000))+' s'};
+ const stop=()=>{clearInterval(window.__klok);const rec=punten>S.blitz;if(rec)S.blitz=punten;save();
+  P.innerHTML=`<div class="kaart" style="text-align:center"><div class="label">Begrippenblitz</div><div class="groot">${punten}</div><p>${rec?'Nieuw record! 🎉':`Record: ${S.blitz}`}${S.blitz>=15?'':' · doel: 15'}</p><div class="acts" style="justify-content:center"><button class="btn" id="opn">Nog een keer</button>${terugKnop()}</div></div>`;
+  $('#opn').onclick=blitz;$('#hm').onclick=goHome};
+ window.__klok=setInterval(()=>{tik();if(Date.now()>=eind&&!P.querySelector('#vd'))stop()},250);vraag()}
+
+/* ---------- alles nalezen ---------- */
+function samen(){stilte();S.samen=1;save();show('play');
+ P.innerHTML=`<div class="top"><button class="btn licht klein" id="terug">‹ Terug</button><span class="stap">Alles nog eens lezen</span><span></span></div>
+ <div class="kaart"><p style="margin:0"><b>Introductie maatschappijleer.</b> Hoe de samenleving werkt en hoe je zelf meedoet: wat het vak is en hoe je naar een probleem kijkt, de rechtsstaat, de parlementaire democratie, de verzorgingsstaat en de pluriforme samenleving.</p></div>
+ ${H.map(h=>`<h2>${h.ic} ${h.id} ${h.t}</h2>${h.lp.map(c=>`<div class="kaart"><h3>${c[0]}</h3>${c[1]}</div>`).join('')}`).join('')}
+ <h2>Begrippen</h2><div class="kaart"><dl class="begr">${BEGR.map(b=>`<dt>${b[0]}</dt><dd>${b[1]}</dd>`).join('')}</dl></div>
+ <div class="acts"><button class="btn licht" id="terug2">‹ Terug</button></div>`;$('#terug').onclick=goHome;$('#terug2').onclick=goHome}
+
+renderHome();
+</script>
+</body>
+</html>

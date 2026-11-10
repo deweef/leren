@@ -257,6 +257,11 @@ schermen `show('home'|'play')`, `goHome()`, `ask()`, `practice(sec)` (oefenronde
   (`S.cijfer`, telt 60% mee bij ‘goed in’). Uitslag per profiel alle 11 vakken (`pakket`: gemeenschappelijk, Latijn/Grieks, Duits/Frans, profielvakken, vrije deel)
   met centraal examen / alleen schoolexamen (LO, wiskunde D) / navragen (Cultuur van de oudheid); gelijkspel-melding.
 
+- **Maatschappijleer introductie** (`maatschappijleer.html`, Dana, `msl-intro-v1`; geen boek, algemene kennis van het vak, neutraal, geen partijnamen): biologie-engine,
+  delen intro, rs (rechtsstaat), pd (parlementaire democratie), vs (verzorgingsstaat), ps (pluriforme samenleving); per deel 2 podcastdelen (Eva/Daan), uitleg,
+  oefenronde, stop van de berg **Op weg naar het Binnenhof**. Spel **Eens of oneens?** (`STELLING` [stelling, voor, tegen, thema], `stelSpel`, 6 per ronde, toont
+  argumenten van beide kanten). Geen proeftoets/open vragen (`OPEN`=`EXAM`=[]). Route: per deel pod 2×2 + lp 6 + pr 6 + kamp 2; stel 6; blitz 4.
+
 ## Leerlogboek en scores (gedeeld met deweef/spelletjes)
 - `leerlog.js` staat in de `<head>` van elke vakpagina (vóór de andere scripts). Per bezoek stuurt het stil één
   regel (wie, vak, actieve minuten, wat erbij kwam, stand) met `sendBeacon` naar het Apps Script van het
