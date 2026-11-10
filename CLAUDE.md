@@ -250,6 +250,10 @@ schermen `show('home'|'play')`, `goHome()`, `ask()`, `practice(sec)` (oefenronde
   dichtheid/massa%/vol%/g/L; `quiz` kent nu decimalen met `q.tol`, rekenmachine.js), Scheidingsmeester (`SCH`, `METH` = tabel 1). Berg = **van ijs tot stoom**
   (klimmen langs de opwarmcurve, `KCAMPS` 1.1-1.4). Route: per § 3 pod + lp 4 + oefenronde 4 + kamp 2; spellen 5/5/4/6; blitz 3, toetsvragen 8, open 7, toets 10.
 
+- **Profielkeuze** (`profiel.html`, Dana, `profiel-v1`; profielen klas 4 Murmellius 2027-2028): 13 vakken (`VAK`), 26 tweetallen (`maakDuels`: elk vak 4 keer),
+  per tweetal twee vragen: leukst en beste in (of ‘even’). Score per vak = gewonnen ÷ duels, totaal = gemiddelde van leuk en goed. Profielscore (`PROF`) = gemiddelde
+  van de verplichte vakken plus het beste vak uit elk keuzeblok; NT vraagt wiskunde B (≥ 6,0 in klas 3, melding). Ook Latijn/Grieks, Duits/Frans en vrije deel.
+
 ## Leerlogboek en scores (gedeeld met deweef/spelletjes)
 - `leerlog.js` staat in de `<head>` van elke vakpagina (vóór de andere scripts). Per bezoek stuurt het stil één
   regel (wie, vak, actieve minuten, wat erbij kwam, stand) met `sendBeacon` naar het Apps Script van het

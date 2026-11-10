@@ -1,0 +1,116 @@
+<!doctype html>
+<html lang="nl">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<meta name="robots" content="noindex">
+<script src="leerlog.js"></script><script>(function(){try{if(localStorage.getItem('leren-ok')!=='53a39a231246354922d1b5f7242c1639ebdc75da84bde2e766eed704f5a89cf8'){location.replace('index.html')}}catch(e){location.replace('index.html')}})();</script>
+<title>Profielkeuze · Wat past bij jou?</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Archivo:wdth,wght@62..125,400..900&family=Atkinson+Hyperlegible:wght@400;700&family=JetBrains+Mono:wght@500;700&display=swap">
+<style>
+/* iPad: twee keer snel tikken mag niet inzoomen (knijpen om te zoomen blijft werken) */
+*{touch-action:manipulation}
+:root{--bg:#F5F2EC;--surface:#fff;--ink:#1E2230;--muted:#5D6375;--line:#DDD6CB;--chip:#EEE8DE;--accent:#2E7D5B;--gold:#B8860B;--good:#1E8E5A;--good-bg:#E3F4EA;--bad:#C0392B;--bad-bg:#FBE9E7;--tip:#FFF6DA}
+@media (prefers-color-scheme:dark){:root:not([data-theme="light"]){--bg:#14161D;--surface:#1D2029;--ink:#E9EAF0;--muted:#A0A5B5;--line:#30343F;--chip:#272A35;--accent:#5FC596;--gold:#E8B84A;--good:#4CD68A;--good-bg:#173226;--bad:#FF7B6B;--bad-bg:#3A1E1B;--tip:#2E2A1C;color-scheme:dark}}
+:root[data-theme="dark"]{--bg:#14161D;--surface:#1D2029;--ink:#E9EAF0;--muted:#A0A5B5;--line:#30343F;--chip:#272A35;--accent:#5FC596;--gold:#E8B84A;--good:#4CD68A;--good-bg:#173226;--bad:#FF7B6B;--bad-bg:#3A1E1B;--tip:#2E2A1C;color-scheme:dark}
+*{box-sizing:border-box}
+body{margin:0;background:var(--bg);color:var(--ink);font:17px/1.55 "Atkinson Hyperlegible",system-ui,sans-serif;overflow-wrap:break-word}
+main{max-width:720px;margin:0 auto;padding:20px 16px 60px}
+h1{font:800 clamp(30px,7vw,44px)/1.05 Archivo,system-ui,sans-serif;font-stretch:90%;margin:4px 0 6px}
+h2{font:800 22px/1.2 Archivo,system-ui,sans-serif;margin:22px 0 8px}
+h3{font:800 18px/1.25 Archivo,system-ui,sans-serif;margin:0 0 6px}
+.sub{color:var(--muted);margin:0 0 16px}
+.terug{display:inline-block;margin:0 0 10px;color:inherit;opacity:.7;text-decoration:none;font:700 14px system-ui,sans-serif}
+.kaart{background:var(--surface);border:2px solid var(--line);border-radius:16px;padding:16px;margin:12px 0}
+.btn{font:700 16px system-ui,sans-serif;border:0;border-radius:12px;padding:12px 18px;cursor:pointer;background:var(--ink);color:var(--bg)}
+.btn.licht{background:var(--chip);color:var(--ink)}
+.balk{height:8px;border-radius:4px;background:var(--chip);overflow:hidden;margin:8px 0}.balk i{display:block;height:100%;background:var(--accent)}
+.duel{display:grid;grid-template-columns:1fr auto 1fr;gap:8px;align-items:stretch;margin:6px 0 14px}
+.vak{border:2px solid var(--line);background:var(--surface);color:var(--ink);border-radius:14px;padding:12px 8px;font:800 17px/1.2 Archivo,system-ui,sans-serif;cursor:pointer;min-height:64px}
+.vak small{display:block;font:400 12.5px/1.3 "Atkinson Hyperlegible",system-ui;color:var(--muted);margin-top:4px}
+.vak.gek{border-color:var(--accent);background:var(--good-bg)}
+.even{border:2px dashed var(--line);background:none;color:var(--muted);border-radius:14px;padding:6px 8px;font:700 13px/1.2 system-ui;cursor:pointer;width:74px}
+.even.gek{border-style:solid;border-color:var(--gold);color:var(--ink)}
+.vraag{font:800 15px/1.2 Archivo,system-ui,sans-serif;margin:6px 0 2px}
+.rij{display:flex;align-items:center;gap:8px;margin:5px 0}.rij .nm{width:150px;flex:none;font-weight:700;font-size:15px}.rij .b{flex:1;height:14px;border-radius:7px;background:var(--chip);overflow:hidden}.rij .b i{display:block;height:100%}
+.prof{border-width:3px}.prof.top{border-color:var(--accent)}
+.pakket{font-size:14.5px;color:var(--muted)}
+.let{background:var(--tip);border-left:4px solid var(--gold);border-radius:10px;padding:10px 12px;margin:10px 0;font-size:15px}
+.acts{display:flex;gap:10px;flex-wrap:wrap;margin-top:12px}
+</style>
+</head>
+<body>
+<main id="app"></main>
+<script>
+const KEY='profiel-v1';
+const VAK={
+ na:['Natuurkunde','stroom, krachten, licht'],sk:['Scheikunde','stoffen en reacties'],bi:['Biologie','planten, dieren, je lichaam'],
+ wi:['Wiskunde','sommen, formules, grafieken'],ec:['Economie','geld, bedrijven, keuzes maken'],gs:['Geschiedenis','vroeger en waarom het zo ging'],
+ ak:['Aardrijkskunde','landen, klimaat, steden'],du:['Duits',''],fr:['Frans',''],gr:['Grieks','taal en verhalen'],la:['Latijn','taal en verhalen'],
+ fi:['Filosofie','nieuw vak: nadenken over grote vragen'],ku:['Kunst algemeen','nieuw vak: kunst, muziek, film, theater']};
+const IDS=Object.keys(VAK);
+/* elk vak 4 keer in een duel (26 duels), steeds een andere tegenstander */
+function maakDuels(){const n=IDS.length;let best=null;
+ for(let t=0;t<400;t++){const tel={},paar=new Set(),d=[];IDS.forEach(i=>tel[i]=0);let ok=true;
+  for(let k=0;k<26&&ok;k++){const kand=IDS.filter(i=>tel[i]<4).sort(()=>Math.random()-.5).sort((a,b)=>tel[a]-tel[b]);let gevonden=false;
+   for(const a of kand){for(const b of kand){if(a===b)continue;const s=[a,b].sort().join();if(paar.has(s))continue;paar.add(s);tel[a]++;tel[b]++;d.push(Math.random()<.5?[a,b]:[b,a]);gevonden=true;break}if(gevonden)break}
+   if(!gevonden)ok=false}
+  if(ok){best=d;break}}
+ return best.sort(()=>Math.random()-.5)}
+let S;try{S=JSON.parse(localStorage.getItem(KEY)||'null')}catch(e){}
+if(!S||!S.duels)S={duels:maakDuels(),ant:{},klaar:0};
+const save=()=>{try{localStorage.setItem(KEY,JSON.stringify(S))}catch(e){}};
+const A=document.getElementById('app');let i=0;
+function start(){A.innerHTML=`<a href="index.html" class="terug">‹ Alle vakken</a><h1>Welk profiel past bij jou?</h1>
+ <p class="sub">Je krijgt steeds twee vakken naast elkaar. Kies bij elk tweetal welk vak je <b>het leukst</b> vindt en waar je <b>het beste in</b> bent. Twijfel je, of weet je het niet (bij een nieuw vak)? Kies dan ‘even’. Niet te lang nadenken: je eerste gevoel is meestal goed.</p>
+ <div class="kaart"><p style="margin:0">26 tweetallen, ongeveer 5 minuten. Daarna zie je welk profiel het best bij je past: Natuur &amp; Techniek, Natuur &amp; Gezondheid, Economie &amp; Maatschappij of Cultuur &amp; Maatschappij.</p>
+ <div class="acts"><button class="btn" id="go">${Object.keys(S.ant).length?'Verder waar je was':'Begin'}</button>${Object.keys(S.ant).length>=S.duels.length?'<button class="btn licht" id="uit">Bekijk de uitslag</button>':''}${Object.keys(S.ant).length?'<button class="btn licht" id="opn">Opnieuw (nieuwe tweetallen)</button>':''}</div></div>`;
+ document.getElementById('go').onclick=()=>{i=Math.min(Object.keys(S.ant).length,S.duels.length-1);while(S.ant[i]&&i<S.duels.length-1)i++;duel()};
+ const u=document.getElementById('uit');if(u)u.onclick=uitslag;const o=document.getElementById('opn');if(o)o.onclick=()=>{if(confirm('Opnieuw beginnen?')){S={duels:maakDuels(),ant:{},klaar:0};save();start()}}}
+const knop=(id,kant,gek)=>`<button class="vak${gek?' gek':''}" data-k="${kant}">${VAK[id][0]}${VAK[id][1]?`<small>${VAK[id][1]}</small>`:''}</button>`;
+function duel(){const [a,b]=S.duels[i],an=S.ant[i]||{};const n=S.duels.length;
+ const blok=(v,tit)=>`<div class="vraag">${tit}</div><div class="duel" data-v="${v}">${knop(a,'a',an[v]==='a')}<button class="even${an[v]==='='?' gek':''}" data-k="=">even</button>${knop(b,'b',an[v]==='b')}</div>`;
+ A.innerHTML=`<div style="display:flex;justify-content:space-between;align-items:center"><button class="btn licht" id="stop" style="padding:8px 14px">‹ Stoppen</button><span class="sub" style="margin:0">${i+1} / ${n}</span></div>
+ <div class="balk"><i style="width:${i/n*100}%"></i></div>
+ <div class="kaart">${blok('leuk','😍 Wat vind je het leukst?')}${blok('goed','💪 Waar ben je het beste in?')}
+ <div class="acts" style="justify-content:space-between">${i?'<button class="btn licht" id="vorig">‹ Vorige</button>':'<span></span>'}<button class="btn" id="vd" ${an.leuk&&an.goed?'':'disabled style="opacity:.4"'}>${i===n-1?'Naar de uitslag':'Volgende ›'}</button></div></div>`;
+ document.getElementById('stop').onclick=start;
+ A.querySelectorAll('.duel button').forEach(b=>b.onclick=()=>{const v=b.parentNode.dataset.v;S.ant[i]={...(S.ant[i]||{}),[v]:b.dataset.k};save();const x=S.ant[i];const was=an.leuk&&an.goed;duel();if(x.leuk&&x.goed&&!was)setTimeout(volg,300)});
+ const vg=document.getElementById('vorig');if(vg)vg.onclick=()=>{i--;duel()};
+ document.getElementById('vd').onclick=volg}
+function volg(){if(i<S.duels.length-1){i++;duel()}else{S.klaar=1;save();uitslag()}}
+function scores(){const s={};IDS.forEach(v=>s[v]={leuk:0,goed:0,n:0});
+ S.duels.forEach(([a,b],k)=>{const x=S.ant[k];if(!x)return;s[a].n++;s[b].n++;['leuk','goed'].forEach(v=>{const r=x[v];if(r==='a')s[a][v]+=1;else if(r==='b')s[b][v]+=1;else if(r==='='){s[a][v]+=.5;s[b][v]+=.5}})});
+ IDS.forEach(v=>{const o=s[v];o.leuk=o.n?o.leuk/o.n:.5;o.goed=o.n?o.goed/o.n:.5;o.tot=.5*o.leuk+.5*o.goed});return s}
+const PROF=[
+ {n:'Natuur & Techniek',kort:'NT',kl:'#2E86C1',vast:['na','sk','wi'],keuze:[['bi','wi']],wiB:1,tekst:'Natuurkunde, scheikunde en wiskunde B, plus biologie of wiskunde D.'},
+ {n:'Natuur & Gezondheid',kort:'NG',kl:'#1E8E5A',vast:['bi','sk'],keuze:[['wi'],['ak','na']],tekst:'Biologie en scheikunde, wiskunde A of B, en aardrijkskunde of natuurkunde.'},
+ {n:'Economie & Maatschappij',kort:'EM',kl:'#D68910',vast:['ec','gs'],keuze:[['wi'],['ak','du','fr']],tekst:'Economie en geschiedenis, wiskunde A of B, en aardrijkskunde, Duits of Frans.'},
+ {n:'Cultuur & Maatschappij',kort:'CM',kl:'#8E44AD',vast:['gs'],keuze:[['wi'],['ak','ec'],['du','fi','fr','gr','ku','la']],tekst:'Geschiedenis, wiskunde A of B, aardrijkskunde of economie, en een taal, filosofie of kunst.'}];
+function uitslag(){const s=scores();
+ const R=PROF.map(p=>{const kies=p.keuze.map(box=>box.slice().sort((a,b)=>s[b].tot-s[a].tot)[0]);const vakken=[...p.vast,...kies];
+  const sc=vakken.reduce((t,v)=>t+s[v].tot,0)/vakken.length;return {...p,kies,vakken,sc}}).sort((a,b)=>b.sc-a.sc);
+ const rij=IDS.slice().sort((a,b)=>s[b].tot-s[a].tot);
+ const pr=v=>Math.round(v*100);
+ const gk=(x,y)=>s[x].tot>=s[y].tot?x:y;
+ const taal1=gk('la','gr'),taal2=gk('du','fr');
+ const top=R[0];const bezet=new Set([...top.vakken,taal1,taal2]);const vrij=rij.filter(v=>!bezet.has(v)).slice(0,2);
+ A.innerHTML=`<a href="index.html" class="terug">‹ Alle vakken</a><h1>Jouw uitslag</h1>
+ <p class="sub">Op basis van wat je het leukst vindt en waar je goed in bent (allebei even zwaar). Het is een hulpmiddel, geen besluit: praat er ook over met je mentor en thuis.</p>
+ <h2>Profielen</h2>
+ ${R.map((p,k)=>`<div class="kaart prof${k===0?' top':''}"><h3>${k===0?'🏆 ':''}${p.n} <span style="float:right">${pr(p.sc)}%</span></h3><div class="balk"><i style="width:${pr(p.sc)}%;background:${p.kl}"></i></div>
+  <div class="pakket">${p.tekst}<br>Met jouw voorkeuren: <b>${p.vakken.map((v,j)=>v==='wi'?(p.wiB?(j<p.vast.length?'Wiskunde B':'Wiskunde D'):'Wiskunde A of B'):VAK[v][0]).join(', ')}</b></div></div>`).join('')}
+ ${top.wiB||(top.kort!=='NT'&&R[1].kort==='NT')?'<div class="let"><b>Let op bij Natuur &amp; Techniek:</b> daar hoort wiskunde B bij, en daarvoor moet je eindcijfer wiskunde B in klas 3 minimaal een 6,0 zijn.</div>':''}
+ <div class="let">Bij alle profielen kies je ook nog: <b>${VAK[taal1][0]}</b> (Grieks of Latijn) en <b>${VAK[taal2][0]}</b> (Duits of Frans), op basis van jouw keuzes. In het vrije deel zou ${vrij.map(v=>`<b>${VAK[v][0]}</b>`).join(' of ')} goed passen.</div>
+ <h2>Alle vakken</h2><div class="kaart"><p class="sub" style="margin:0 0 8px">Groen = leuk, blauw = goed in.</p>
+ ${rij.map(v=>`<div class="rij"><span class="nm">${VAK[v][0]}</span><span class="b" title="leuk"><i style="width:${pr(s[v].leuk)}%;background:#1E8E5A"></i></span><span class="b" title="goed"><i style="width:${pr(s[v].goed)}%;background:#2E86C1"></i></span></div>`).join('')}</div>
+ <div class="acts"><button class="btn licht" id="opn">Opnieuw doen</button><button class="btn licht" id="terugk">Antwoorden aanpassen</button></div>`;
+ window.leerVoortgang=()=>100;
+ document.getElementById('opn').onclick=()=>{if(confirm('Opnieuw beginnen met nieuwe tweetallen?')){S={duels:maakDuels(),ant:{},klaar:0};save();start()}};
+ document.getElementById('terugk').onclick=()=>{i=0;duel()}}
+window.leerVoortgang=()=>Math.round(Object.keys(S.ant).length/S.duels.length*100);
+S.klaar?uitslag():start();
+</script>
+</body>
+</html>
