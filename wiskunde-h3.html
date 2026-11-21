@@ -823,7 +823,23 @@ const EXAM=[
 ['3.5','Een model voor het afval per inwoner is N = 9,5t + 281 (t = jaren na 1970). In 2004 was het echte afval 561 kg.<br>Hoeveel procent zit het model in 2004 te hoog?',
  'ongeveer 7,7%','ongeveer 7,1%|ongeveer 43%|ongeveer 50%',
  't = 34: N = 9,5 × 34 + 281 = 604. (604 − 561) : 561 × 100% ≈ <b>7,7%</b>.<br>Fout: 7,1% deelt door 604. 43 is het verschil in kg. 50% is een gok.',
- 'Bereken eerst wat het model in 2004 geeft (t = 34).']
+ 'Bereken eerst wat het model in 2004 geeft (t = 34).'],
+// ---------- uit het boek, nagemeten ----------
+['3.2',`${figLijn([{a:1/3,b:5/3}],{xmin:0,xmax:6,ymin:0,ymax:5})}Welke formule hoort bij deze lijn? Gebruik punten die precies op een roosterpunt liggen.`,'y = ⅓x + 1⅔','y = 0,4x + 1,6|y = 3x + 1⅔|y = ⅓x + 2',
+ 'Roosterpunten: (1, 2) en (4, 3). a = Δy : Δx = 1 : 3 = ⅓. Invullen bij (1, 2): ⅓ + b = 2, dus b = 1⅔.<br>Fout: y = 0,4x + 1,6 komt van een slecht afgelezen beginpunt (1,6 ligt niet op het rooster). 3x draait Δy en Δx om. b = 2 is de y bij x = 1, niet bij x = 0.',
+ 'Zoek twee punten waar de lijn precies door een kruispunt van het rooster gaat.'],
+['3.2',`${figLijn([{a:1.25,b:5}],{xmin:0,xmax:12,ymin:0,ymax:20})}Welke formule hoort bij deze lijn?`,'y = 1,25x + 5','y = x + 5|y = 0,8x + 5|y = 1,25x',
+ 'Beginwaarde: de lijn snijdt de y-as bij 5. Roosterpunten (0, 5) en (8, 15): a = 10 : 8 = 1,25.<br>Fout: y = x + 5 is een schatting zonder roosterpunten. 0,8 = 8 : 10 is omgedraaid. y = 1,25x vergeet de beginwaarde.',
+ 'Begin bij de y-as (b) en zoek dan een tweede punt op een kruispunt van het rooster.'],
+['3.5','Conconitest. Bij een hardlooptest stijgt de hartslag H (slagen per minuut) eerst lineair met de snelheid v (km/u). Bij Kees liggen de meetpunten op een rechte lijn door A(10, 120) en B(15, 160).<br>Welke formule hoort bij dit lineaire model?','H = 8v + 40','H = 0,125v + 118,75|H = 8v + 120|H = 40v + 8',
+ 'a = ΔH : Δv = (160 − 120) : (15 − 10) = 40 : 5 = 8. Invullen bij A: 8 × 10 + b = 120, dus b = 40. <b>H = 8v + 40</b>.<br>Fout: 0,125 = 5 : 40 is omgedraaid. b = 120 is de hartslag bij v = 10, niet bij v = 0. 40v + 8 verwisselt a en b.',
+ 'Eerst de rc uit de twee punten, dan een punt invullen voor b.'],
+['3.5','Conconitest. Het model van Kees is H = 8v + 40. Bij 15,8 km/u begint zijn hartslag af te wijken: hij meet daar 164 slagen per minuut (de anaerobe drempel).<br>Hoeveel procent ligt die hartslag onder het model?','ongeveer 1,4%','ongeveer 2,4%|ongeveer 1,5%|ongeveer 14%',
+ 'Model: 8 × 15,8 + 40 = 166,4. Verschil: 166,4 − 164 = 2,4. In procenten van het model: 2,4 : 166,4 × 100% ≈ <b>1,4%</b>.<br>Fout: 2,4% is het verschil zonder delen. 1,5% deelt door 164 in plaats van door het model. 14% is een komma verkeerd.',
+ 'Reken eerst uit wat het model zegt bij 15,8 km/u. Deel het verschil door die modelwaarde.'],
+['3.5','Conconitest. Na een training is de rusthartslag van Kees (bij v = 0) nog steeds 40, maar bij 12 km/u meet hij nu 142 slagen. Hij gaat verzuren bij een hartslag van 178.<br>Bij welke snelheid ligt zijn nieuwe anaerobe drempel (in één decimaal)?','16,2 km/u','17,3 km/u|15,8 km/u|20,9 km/u',
+ 'Nieuwe rc: (142 − 40) : 12 = 8,5. Model H = 8,5v + 40. 8,5v + 40 = 178 → 8,5v = 138 → v ≈ <b>16,2 km/u</b>.<br>Fout: 17,3 = (178 − 40) : 8 rekent met de oude rc. 15,8 is de oude drempel. 20,9 = 178 : 8,5 vergeet de beginwaarde 40.',
+ 'De beginwaarde blijft 40. Bereken de nieuwe rc met het punt (12, 142) en los dan de vergelijking op.'],
 ];
 
 /* ---------- de berg: van ijs tot stoom (klimmen langs de opwarmcurve van water) (alle vragen van het hoofdstuk, één verdieping per paragraaf, 100% = alles één keer goed) ---------- */

@@ -268,7 +268,7 @@ schermen `show('home'|'play')`, `goHome()`, `ask()`, `practice(sec)` (oefenronde
   Twee punten (`rcTweePunten`), Snijpunten en ongelijkheden (`snijVraag`), Formules in het echt (`contextVraag`); berg = **De stijgende lijn** (trap, een trede per §).
   Boekfouten verbeterd: druk onder water P = 1,015 + 0,1d; regenton 7,5 + b = 25. **H4 Combinatoriek** (`wiskunde-h4.html`, `wis-h4-v1`, § 4.1-4.4): `figRooster(b,h,pad)`,
   `figBoom`, `figWegen`; spellen Hoeveel manieren? (`telVraag`: n^k, nPr, nCr, n!, keer/plus, routes, munt, complement) en Welke formule? (`welkeVraag`); berg =
-  **Kraak het combinatieslot** (4 wielen). Boekfout: test 5b = 344 (niet 334). Proeftoets voegt generatorvragen toe via `window.TOETSGEN`. rekenmachine.js staat erin.
+  **Kraak het combinatieslot** (4 wielen). Boekfout: test 5b = 344 (niet 334). Kaartjes uit het boek nagetekend (na scherpe foto's van Marcel): `figRivier()` (P→Q over twee bruggen = 14), `figWandel(blauw)` (A-B 3, A-D 2, B-D 2, A-C 2, C-D 4; blauw gestippeld = pad langs het meer), `figBad(n, pt)` (schuin stratenplan badplaats, S onderaan; T = 3L+7R, U = 9L+1R, Y = 3L+2R) via de generieke `figGraaf(nodes, edges, o)`. H3: Conconitest nagemeten A(10, 120), B(15, 160) → H = 8v + 40; opgave 30: l: y = ⅓x + 1⅔, m: y = −0,15x + 47,5, n: y = 1,25x + 5. Proeftoets voegt generatorvragen toe via `window.TOETSGEN`. rekenmachine.js staat erin.
 
 ## Leerlogboek en scores (gedeeld met deweef/spelletjes)
 - `leerlog.js` staat in de `<head>` van elke vakpagina (vóór de andere scripts). Per bezoek stuurt het stil één
