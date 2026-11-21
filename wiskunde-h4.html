@@ -1,0 +1,964 @@
+<!doctype html>
+<html lang="nl">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<meta name="robots" content="noindex">
+<script src="leerlog.js"></script><script src="rekenmachine.js?v=3" defer></script><script>(function(){try{if(localStorage.getItem('leren-ok')!=='53a39a231246354922d1b5f7242c1639ebdc75da84bde2e766eed704f5a89cf8'){location.replace('index.html')}}catch(e){location.replace('index.html')}})();</script>
+<title>Wiskunde · H4 Combinatoriek</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Archivo:wdth,wght@62..125,400..900&family=Atkinson+Hyperlegible:wght@400;700&family=JetBrains+Mono:wght@500;700&display=swap">
+<style>
+/* iPad: twee keer snel tikken mag niet inzoomen (knijpen om te zoomen blijft werken) */
+*{touch-action:manipulation}
+:root{--bg:#F5F2EC;--surface:#fff;--ink:#1E2230;--muted:#5D6375;--line:#DDD6CB;--chip:#EEE8DE;--accent:#2E7D5B;--gold:#B8860B;--good:#1E8E5A;--good-bg:#E3F4EA;--bad:#C0392B;--bad-bg:#FBE9E7;--tip:#FFF6DA}
+@media (prefers-color-scheme:dark){:root:not([data-theme="light"]){--bg:#14161D;--surface:#1D2029;--ink:#E9EAF0;--muted:#A0A5B5;--line:#30343F;--chip:#272A35;--accent:#5FC596;--gold:#E8B84A;--good:#4CD68A;--good-bg:#173226;--bad:#FF7B6B;--bad-bg:#3A1E1B;--tip:#2E2A1C;color-scheme:dark}}
+:root[data-theme="dark"]{--bg:#14161D;--surface:#1D2029;--ink:#E9EAF0;--muted:#A0A5B5;--line:#30343F;--chip:#272A35;--accent:#5FC596;--gold:#E8B84A;--good:#4CD68A;--good-bg:#173226;--bad:#FF7B6B;--bad-bg:#3A1E1B;--tip:#2E2A1C;color-scheme:dark}
+*{box-sizing:border-box}
+body{margin:0;background:var(--bg);color:var(--ink);font:17px/1.55 "Atkinson Hyperlegible",system-ui,sans-serif;overflow-wrap:break-word}
+main{max-width:720px;margin:0 auto;padding:20px 16px 60px}
+h1{font:800 clamp(30px,7vw,44px)/1.05 Archivo,system-ui,sans-serif;font-stretch:90%;margin:4px 0 6px}
+h2{font:800 22px/1.2 Archivo,system-ui,sans-serif;margin:22px 0 8px}
+h3{font:800 18px/1.25 Archivo,system-ui,sans-serif;margin:0 0 6px}
+.sub{color:var(--muted);margin:0 0 16px}
+.terug{display:inline-block;margin:0 0 10px;color:inherit;opacity:.7;text-decoration:none;font:700 14px system-ui,sans-serif}
+.vlag{display:inline-flex;height:10px;width:44px;border-radius:3px;overflow:hidden;vertical-align:middle;margin-right:8px}
+.vlag i{flex:1}.vlag i:nth-child(1){background:#111}.vlag i:nth-child(2){background:#DD0000}.vlag i:nth-child(3){background:#FFCE00}
+.kaart{background:var(--surface);border:2px solid var(--line);border-radius:16px;padding:16px;margin:12px 0}
+.opdracht{border-color:var(--ink)}
+.opdracht ol{padding-left:22px;margin:8px 0}.opdracht li{margin:4px 0}
+.label{font:700 12px/1 "JetBrains Mono",monospace;letter-spacing:.06em;text-transform:uppercase;color:var(--accent)}
+.modes{display:grid;grid-template-columns:repeat(auto-fit,minmax(200px,1fr));gap:12px;margin-top:12px}
+.mode{display:block;text-align:left;background:var(--surface);color:var(--ink);border:2px solid var(--line);border-radius:16px;padding:16px;cursor:pointer;font:inherit;position:relative}
+.mode h3{margin:0 0 4px}.mode p{margin:0;color:var(--muted);font-size:15px}
+.mode.main{background:var(--ink);color:var(--bg);border-color:var(--ink)}.mode.main p{color:var(--bg);opacity:.8}
+.mode.gehaald{background:var(--good-bg);border-color:var(--good)}
+.mode.gehaald::after{content:"✓ gehaald";position:absolute;top:8px;right:10px;font:700 11px "JetBrains Mono",monospace;color:var(--good)}
+.balk{height:10px;background:var(--chip);border-radius:6px;overflow:hidden;margin:8px 0 4px}.balk i{display:block;height:100%;background:var(--good);transition:width .3s}
+.btn{font:700 16px system-ui,sans-serif;padding:11px 16px;border-radius:12px;border:2px solid var(--ink);background:var(--ink);color:var(--bg);cursor:pointer}
+.btn.licht{background:none;color:var(--ink)}
+.btn.klein{font-size:14px;padding:7px 12px}
+.acts{display:flex;gap:10px;flex-wrap:wrap;margin-top:14px}
+.top{display:flex;justify-content:space-between;align-items:center;gap:10px;margin-bottom:10px}
+.top>*{white-space:nowrap}
+.teller{font:700 14px "JetBrains Mono",monospace;padding:6px 10px;border-radius:10px;background:var(--chip)}
+.teller.ok{background:var(--good-bg);color:var(--good)}.teller.te{background:var(--bad-bg);color:var(--bad)}
+.stap{font:700 13px "JetBrains Mono",monospace;color:var(--muted)}
+textarea{width:100%;min-height:120px;font:17px/1.5 "Atkinson Hyperlegible",system-ui,sans-serif;padding:12px;border-radius:12px;border:2px solid var(--line);background:var(--bg);color:var(--ink);resize:vertical}
+textarea:focus{outline:none;border-color:var(--accent)}
+.tip{background:var(--tip);border-radius:12px;padding:10px 14px;margin:10px 0;font-size:15.5px}
+.stenen{display:flex;flex-wrap:wrap;gap:8px;margin:8px 0}
+.steen{font:15px "Atkinson Hyperlegible",system-ui,sans-serif;padding:7px 11px;border-radius:10px;border:1.5px dashed var(--muted);background:var(--surface);color:var(--ink);cursor:pointer;text-align:left}
+.steen small{display:block;color:var(--muted);font-size:12.5px}
+.check{list-style:none;padding:0;margin:8px 0}
+.check li{padding:7px 0 7px 30px;position:relative;border-bottom:1px solid var(--line)}
+.check li::before{position:absolute;left:4px;top:7px;font-weight:800}
+.check li.ja::before{content:"✓";color:var(--good)}.check li.nee::before{content:"✗";color:var(--bad)}.check li.let::before{content:"!";color:var(--gold)}
+.check li small{display:block;color:var(--muted);font-size:14px}
+label.zelf{display:flex;gap:10px;align-items:flex-start;padding:8px 0;border-bottom:1px solid var(--line);cursor:pointer}
+label.zelf input{width:22px;height:22px;margin-top:2px;flex:none;accent-color:var(--good)}
+.brief{white-space:pre-wrap;font:17px/1.6 Georgia,"Times New Roman",serif;background:var(--surface);border:2px solid var(--line);border-radius:12px;padding:16px}
+.opts{display:grid;gap:10px;margin-top:12px}
+.opt{font:inherit;text-align:left;padding:12px 14px;border-radius:12px;border:2px solid var(--line);background:var(--surface);color:var(--ink);cursor:pointer}
+.opt.goed{border-color:var(--good);background:var(--good-bg)}.opt.fout{border-color:var(--bad);background:var(--bad-bg)}
+.uitleg{margin-top:10px;padding:10px 14px;border-radius:12px;background:var(--chip)}
+.tegels{display:flex;flex-wrap:wrap;gap:8px;min-height:52px;padding:8px;border-radius:12px;border:2px dashed var(--line);margin:10px 0}
+.tegel{font:700 17px "Atkinson Hyperlegible",system-ui,sans-serif;padding:8px 12px;border-radius:10px;border:2px solid var(--ink);background:var(--surface);color:var(--ink);cursor:pointer}
+.tegel.weg{visibility:hidden}
+.goed-t{color:var(--good);font-weight:700}.fout-t{color:var(--bad);font-weight:700}
+[hidden]{display:none!important}
+.kaart ul{padding-left:20px;margin:6px 0}.kaart li{margin:4px 0}
+.opt{font-size:17px;overflow-wrap:anywhere}
+.top .stap{white-space:normal;text-align:center;flex:1;min-width:0}
+.vraag{margin:6px 0 0;font:700 19px/1.45 "Atkinson Hyperlegible",system-ui,sans-serif}
+.groot{font:800 54px Archivo,system-ui;margin:8px 0}.groot span{font-size:.45em;color:var(--muted)}
+.ex{background:var(--chip);border-left:4px solid var(--accent);border-radius:8px;padding:10px 12px;margin:10px 0}
+.src{color:var(--muted);font-size:14px}
+.gt{display:block;overflow-x:auto;border-collapse:collapse;font-size:14.5px;margin:8px 0}.gt th,.gt td{border:1px solid var(--line);padding:6px 8px;text-align:left;vertical-align:top;overflow-wrap:normal}.gt th{background:var(--chip)}
+.fig{display:block;width:100%;max-width:240px;margin:6px auto;color:var(--ink)}
+.figrij{display:grid;grid-template-columns:repeat(auto-fit,minmax(120px,1fr));gap:8px;margin:10px 0;text-align:center}.figrij small{display:block;color:var(--muted);font-size:13px;line-height:1.3}
+.check{margin-top:14px;padding-top:12px;border-top:2px dashed var(--line)}
+.typerow{display:flex;gap:10px;margin-top:12px}.typerow input{flex:1;min-width:0;font:700 18px "Atkinson Hyperlegible",system-ui;padding:11px 12px;border-radius:12px;border:2px solid var(--line);background:var(--bg);color:var(--ink)}
+.shake{animation:sh .3s}@keyframes sh{25%{transform:translateX(-6px)}75%{transform:translateX(6px)}}
+.btn.ok{background:var(--good-bg);color:var(--good);border-color:var(--good)}
+.hk h3{display:flex;justify-content:space-between;gap:8px;align-items:baseline}
+dl.begr{margin:0}.begr dt{font-weight:700;margin-top:8px}.begr dd{margin:0 0 0 12px;color:var(--muted)}
+.fig.breed{max-width:440px}.fig.veld{max-width:360px}
+.volgrij{min-height:40px;margin:10px 0;padding-left:26px}.volgrij li{font-weight:700;margin:4px 0}
+.gt td,.gt th{overflow-wrap:normal}
+.lijnleg{padding-left:24px;font-size:15.5px}.lijnleg li{margin:4px 0}
+
+.vb{background:var(--tip);border-left:4px solid var(--gold);border-radius:10px;padding:10px 12px;margin:10px 0;font-size:15.5px}
+.vraag{margin:6px 0 0;font:700 18px/1.45 "Atkinson Hyperlegible",system-ui,sans-serif}.vraag .gt{font-weight:400}
+.podmode,.speler,.tempo{display:flex;gap:8px;flex-wrap:wrap;align-items:center;margin:8px 0}
+.speler{background:var(--chip);border-radius:12px;padding:10px}
+.transcript{display:grid;gap:4px;margin-top:10px}.vl{margin:0 0 6px;line-height:1.6}.vkop{margin:14px 0 4px;font-size:16px;color:var(--accent)}
+.wie{display:inline-block;font-size:12px;letter-spacing:.03em;padding:1px 8px;border-radius:999px;margin-right:4px;color:#fff;vertical-align:1px}.wie.E{background:#C2417A}.wie.D{background:#2F6BD8}
+.transcript.luis .z{cursor:pointer;border-radius:4px}.z.nu{background:#FFE88A;color:#1E2230}
+.stemkies{display:grid;grid-template-columns:1fr auto;gap:8px;align-items:center;margin-top:8px}.stemkies label{display:flex;gap:6px;align-items:center;min-width:0}
+.stemkies select{min-width:0;flex:1;font:inherit;padding:6px;border-radius:8px;border:1px solid var(--line);background:var(--surface);color:var(--ink)}
+.stemdet{background:var(--chip);border-radius:12px;padding:10px 12px;margin-top:8px}.stemdet summary{cursor:pointer;font-weight:700;font-size:15px;list-style:none}.stemdet summary::-webkit-details-marker{display:none}.stemdet summary u{color:var(--accent);white-space:nowrap}
+.ovraag{display:grid;gap:8px}.ovraag textarea{width:100%;min-height:110px}
+.oantw,.omodel{border-radius:10px;padding:10px 12px;line-height:1.55}.oantw{background:var(--chip)}.omodel{background:var(--good-bg);border-left:4px solid var(--good)}
+.oantw mark{background:#FFE58A;color:#1E2230;border-radius:3px;padding:0 2px}
+.opunt{display:grid;gap:6px}.opunt label{display:flex;gap:10px;align-items:flex-start;cursor:pointer}.opunt input{width:20px;height:20px;flex:none;margin-top:2px}
+.fig{max-width:460px}.fig.breed{max-width:460px}.volgrij{min-height:40px;margin:10px 0;padding-left:26px}.volgrij li{font-weight:700;margin:4px 0}
+.gt td,.gt th{overflow-wrap:normal}.typerow{display:flex;gap:10px;margin-top:12px}
+.kt{border-collapse:collapse;margin:10px auto;font-size:1.05rem}.kt th,.kt td{border:1.5px solid var(--line,#999);padding:8px 14px;text-align:center;white-space:nowrap}.kt th{background:rgba(127,127,127,.15)}.kt td.mk{background:rgba(46,204,113,.28);font-weight:800}.kt .hoek{font-size:.8rem}
+.hintrij{margin-top:12px}.hintbox{background:var(--chip);border-left:4px solid #e0b100;border-radius:8px;padding:10px 12px;margin-top:8px;font-size:15.5px;line-height:1.5}.hkaart{margin-top:8px}.hkaart summary{cursor:pointer;font-weight:700;color:var(--accent)}.hkaart[open]{background:var(--surface);border-radius:8px;padding:6px 10px}
+.gt{display:block;overflow-x:auto;max-width:100%}.tw{display:flex;flex-wrap:wrap;gap:8px}.tw .gt{flex:1 1 280px;display:table}.gt td,.gt th{padding:5px 6px;font-size:14.5px}
+.lat{font-family:Georgia,serif;font-size:1.05em;background:var(--chip);border-radius:10px;padding:8px 12px;margin:4px 0 8px;line-height:1.55}.lat b,b.rel{color:#C0392B}.lat u,u.aa{text-decoration-color:#2E86C1;text-decoration-thickness:2px}
+.qqq td,.qqq th{text-align:center;padding:5px 6px;white-space:nowrap}.qqq td.mk{background:rgba(46,204,113,.3);font-weight:800}
+</style>
+</head>
+<body>
+<main id="home">
+  <a href="index.html" class="terug">‹ Alle vakken</a>
+  <h1>Wiskunde · H4 Combinatoriek</h1>
+  <p class="sub">Tellen op hoeveel manieren iets kan: pincodes, menu’s, routes en commissies. Per paragraaf uitleg, een spel en een oefenronde, en zo kraak je het combinatieslot. Bij elke vraag een 💡 tip en een rekenmachine.</p>
+  <div id="stand"></div>
+  <h2>Oefenen en spellen</h2>
+  <div class="modes">
+    <button class="mode" id="ptel"><h3>🔢 Hoeveel manieren?</h3><p>Allerlei telsommen, met rekenmachine.</p></button>
+    <button class="mode" id="pwelke"><h3>🎯 Welke formule?</h3><p>n^k, n!, nPr of nCr?</p></button>
+    <button class="mode" id="pberg"><h3>🔐 Kraak het combinatieslot</h3><p>Alle vragen, één stuk per paragraaf.</p></button>
+    <button class="mode" id="pexam"><h3>🎓 Toetsvragen</h3><p>Met een gegeven: tabel, grafiek of situatie.</p></button>
+    <button class="mode" id="popen"><h3>✍️ Open vragen</h3><p>Zelf typen, dan nakijken met het goede antwoord.</p></button>
+    <button class="mode" id="pblitz"><h3>⚡ Begrippenblitz</h3><p>60 seconden alle begrippen.</p></button>
+    <button class="mode" id="ptoets"><h3>🎯 Proeftoets</h3><p>20 vragen met een cijfer. Doel: een 7.</p></button>
+    <button class="mode" id="fouten" hidden><h3>🔁 Mijn fouten</h3><p></p></button>
+    <button class="mode" id="psamen"><h3>📄 Alles nog eens lezen</h3><p>Alle uitleg en begrippen onder elkaar.</p></button>
+  </div>
+  <h2>Per paragraaf</h2>
+  <div id="hst"></div>
+  <div class="acts"><button class="btn licht klein" id="wis">Voortgang wissen</button></div>
+</main>
+<main id="play" hidden></main>
+<script>
+/* ---------- plaatjes ---------- */
+function figRooster(b,h,pad){const s=34,W=b*s+60,H=h*s+50,x0=30,y0=20;let g='';
+ for(let i=0;i<=b;i++)g+=`<line x1="${x0+i*s}" y1="${y0}" x2="${x0+i*s}" y2="${y0+h*s}" stroke="currentColor" stroke-opacity=".55" stroke-width="2"/>`;
+ for(let j=0;j<=h;j++)g+=`<line x1="${x0}" y1="${y0+j*s}" x2="${x0+b*s}" y2="${y0+j*s}" stroke="currentColor" stroke-opacity=".55" stroke-width="2"/>`;
+ if(pad){let x=x0,y=y0+h*s,d=`M${x} ${y}`;pad.split('').forEach(c=>{if(c==='R')x+=s;else y-=s;d+=` L${x} ${y}`});g+=`<path d="${d}" fill="none" stroke="#E67E22" stroke-width="5" stroke-linejoin="round"/>`}
+ g+=`<circle cx="${x0}" cy="${y0+h*s}" r="7" fill="#2E86C1"/><text x="${x0-12}" y="${y0+h*s+18}" font-size="14" font-weight="800" fill="currentColor">A</text><circle cx="${x0+b*s}" cy="${y0}" r="7" fill="#C0392B"/><text x="${x0+b*s+8}" y="${y0-4}" font-size="14" font-weight="800" fill="currentColor">B</text>`;
+ return `<svg viewBox="0 0 ${W} ${H}" class="fig" style="max-width:${Math.min(360,W*1.3)}px" role="img" aria-label="stratenrooster">${g}</svg>`}
+function figBoom(a,b){const W=300,H=Math.max(120,a.length*b.length*22+20);let g=`<circle cx="20" cy="${H/2}" r="5" fill="currentColor"/>`;const n=a.length*b.length;let k=0;
+ a.forEach((x,i)=>{const ya=(i+.5)*H/a.length;g+=`<line x1="20" y1="${H/2}" x2="120" y2="${ya}" stroke="currentColor" stroke-width="1.8"/><text x="124" y="${ya+4}" font-size="13" font-weight="700" fill="currentColor">${x}</text>`;
+  b.forEach(y=>{const yb=(k+.5)*H/n;k++;g+=`<line x1="140" y1="${ya}" x2="230" y2="${yb}" stroke="currentColor" stroke-opacity=".7" stroke-width="1.5"/><text x="234" y="${yb+4}" font-size="12" fill="currentColor">${x}${y}</text>`})});
+ return `<svg viewBox="0 0 ${W} ${H}" class="fig" style="max-width:320px" role="img" aria-label="boomdiagram">${g}</svg>`}
+function figWegen(ns){const pts=ns.length+1,W=80+ns.length*120,H=120,L='ABCDEF';let g='';
+ ns.forEach((n,i)=>{const x1=40+i*120,x2=x1+120;for(let k=0;k<n;k++){const off=(k-(n-1)/2)*16;g+=`<path d="M${x1} 60 Q${(x1+x2)/2} ${60+off*2.2} ${x2} 60" fill="none" stroke="currentColor" stroke-width="2"/>`}g+=`<text x="${(x1+x2)/2}" y="${18}" text-anchor="middle" font-size="12" fill="currentColor">${n} wegen</text>`});
+ for(let i=0;i<pts;i++)g+=`<circle cx="${40+i*120}" cy="60" r="12" fill="#2E86C1"/><text x="${40+i*120}" y="65" text-anchor="middle" font-size="13" font-weight="800" fill="#fff">${L[i]}</text>`;
+ return `<svg viewBox="0 0 ${W} ${H}" class="fig" style="max-width:${W}px" role="img" aria-label="wegendiagram">${g}</svg>`}
+/* ---------- rekenen ---------- */
+const R=(a,b)=>a+Math.floor(Math.random()*(b-a+1));const pick=a=>a[Math.random()*a.length|0];
+const fac=n=>n<=1?1:n*fac(n-1);const nPr=(n,r)=>fac(n)/fac(n-r);const nCr=(n,r)=>Math.round(nPr(n,r)/fac(r));
+const g=x=>String(x).replace(/\B(?=(\d{3})+(?!\d))/g,'&#8239;');
+const KIES='<b>Welke formule?</b> 1) Telt de <b>volgorde</b>? 2) Mag iets <b>vaker</b> voorkomen? Volgorde + herhaling: n<sup>k</sup>. Volgorde, geen herhaling: n nPr k (alles: n!). Geen volgorde, geen herhaling: n nCr k. En bij <b>en</b> vermenigvuldig je, bij <b>of</b> tel je op.';
+/* soort: [vraagtekst, antwoord, uitleg, soortnaam] */
+function telVraag(){const t=R(0,8);let q,a,w,f;
+ if(t===0){const k=R(3,6);q=`Een pincode bestaat uit ${k} cijfers (0 t/m 9). Cijfers mogen vaker voorkomen. Hoeveel codes zijn er?`;a=10**k;w=`Volgorde telt en herhaling mag: 10<sup>${k}</sup> = ${g(a)}.`;f='n^k'}
+ else if(t===1){const n=R(5,12),k=R(2,4);q=`Bij een race met ${n} lopers worden goud, zilver en ${k>3?'nog '+(k-2)+' prijzen':k===3?'brons':'—'} uitgedeeld. Hoeveel uitslagen voor de eerste ${k} plaatsen zijn er?`;if(k===2)q=`Bij een race met ${n} lopers worden goud en zilver uitgedeeld. Hoeveel mogelijkheden zijn er?`;a=nPr(n,k);w=`Volgorde telt (goud ≠ zilver), niemand twee keer: ${n} nPr ${k} = ${Array.from({length:k},(_,i)=>n-i).join(' × ')} = ${g(a)}.`;f='nPr'}
+ else if(t===2){const n=R(6,15),k=R(2,5);q=`Uit een klas van ${n} leerlingen kies je een groepje van ${k} voor een opdracht. Hoeveel groepjes kun je maken?`;a=nCr(n,k);w=`Volgorde telt niet (een groepje is een groepje), niemand twee keer: ${n} nCr ${k} = ${g(a)}.`;f='nCr'}
+ else if(t===3){const n=R(4,8);q=`Op hoeveel manieren kun je ${n} boeken naast elkaar op een plank zetten?`;a=fac(n);w=`Alle ${n} in een volgorde: ${n}! = ${Array.from({length:n},(_,i)=>n-i).join(' × ')} = ${g(a)}.`;f='n!'}
+ else if(t===4){const v=R(2,5),h=R(3,6),d=R(2,4);q=`Een menu: ${v} voorgerechten, ${h} hoofdgerechten en ${d} desserts. Je kiest van elk één. Hoeveel menu’s zijn er?`;a=v*h*d;w=`Voorgerecht <b>en</b> hoofdgerecht <b>en</b> dessert: vermenigvuldigen. ${v} × ${h} × ${d} = ${a}.`;f='keer'}
+ else if(t===5){const x=R(3,8),y=R(2,7);q=`Je kiest óf een broodje (${x} soorten) óf een salade (${y} soorten). Hoeveel keuzes heb je?`;a=x+y;w=`Broodje <b>of</b> salade: optellen. ${x} + ${y} = ${a}.`;f='plus'}
+ else if(t===6){const b=R(2,5),h=R(2,4);q=`Hoeveel kortste routes (zonder omweg) zijn er van A naar B in dit stratenrooster?`;a=nCr(b+h,h);w=`Elke route is een rijtje van ${b}× R(echts) en ${h}× B(oven): ${b+h} stappen, waarvan je kiest welke ${h} omhoog gaan: ${b+h} nCr ${h} = ${a}.`;f='rooster';return {fig:figRooster(b,h),q,a,num:1,w,hint:'Een route zonder omweg = een rijtje stappen naar rechts en omhoog. Tel hoeveel stappen er in totaal zijn en kies welke ervan omhoog gaan.'}}
+ else if(t===7){const n=R(6,12),k=R(3,5);q=`Een munt wordt ${n} keer gegooid. Hoeveel rijtjes met precies ${k} keer kop zijn er?`;a=nCr(n,k);w=`Kies op welke ${k} van de ${n} plekken kop komt: ${n} nCr ${k} = ${g(a)}.`;f='nCr'}
+ else{const n=R(4,6),k=R(2,3);const tot=n**k,zonder=nPr(n,k);q=`Een code van ${k} letters uit A t/m ${'ABCDEFGH'[n-1]} (${n} letters, herhaling mag). Bij hoeveel codes komt minstens één letter <b>dubbel</b> voor?`;a=tot-zonder;w=`Complement: alle codes min codes zonder dubbele. ${n}<sup>${k}</sup> − ${n} nPr ${k} = ${tot} − ${zonder} = ${a}.`;f='complement'}
+ return {q,a,num:1,w,hint:KIES}}
+function welkeVraag(){const t=R(0,3);const n=R(6,12),k=R(3,4);
+ const S=[[`Een code van ${k} cijfers, cijfers mogen vaker voorkomen.`,`10<sup>${k}</sup>`],[`Uit ${n} kandidaten kies je een voorzitter, een secretaris${k>3?', een penningmeester en een lid':' en een penningmeester'}.`,`${n} nPr ${k}`],[`Uit ${n} kandidaten kies je een commissie van ${k} gelijke leden.`,`${n} nCr ${k}`],[`Op hoeveel manieren gaan ${k} mensen naast elkaar op een bankje zitten?`,`${k}!`]];
+ const [q,a]=S[t];const opts=[a,...S.filter((_,i)=>i!==t).map(x=>x[1])];
+ return {q:`${q}<br>Welke berekening hoort hierbij?`,a,opts,w:['Volgorde telt en herhaling mag: n<sup>k</sup>.','Volgorde telt (elke functie is anders), niemand twee keer: nPr.','Volgorde telt niet (alle leden gelijk), niemand twee keer: nCr.','Iedereen op een plek, alle volgordes: k!.'][t],hint:KIES}}
+Object.defineProperty(window,'TOETSGEN',{get:()=>[telVraag(),telVraag(),telVraag(),welkeVraag()]});
+
+const VB=(t,h)=>`<div class="vb"><b>📎 Voorbeeld: ${t}</b><br>${h}</div>`;
+const H=[
+{id:'4.1',t:'Regels bij telproblemen',kort:'Wegendiagram en boomdiagram, bij en keer, bij of plus, met of zonder herhaling',ic:'🌳',lp:[
+ ['Wat is een telprobleem?',`<p>Bij een <b>telprobleem</b> wil je weten op hoeveel manieren iets kan, zonder alle mogelijkheden één voor één op te schrijven. Dat heet ook wel <b>combinatoriek</b>.</p><p>Voorbeelden:</p><ul><li>Hoeveel verschillende driegangendiners kun je kiezen van een menukaart?</li><li>Hoeveel pincodes van vier cijfers bestaan er?</li><li>Op hoeveel manieren kun je drie mensen uit een groep van vijf kiezen?</li></ul><p>Bij kleine aantallen kun je nog alles opschrijven. Maar bij een pincode zijn het er al 10&#8239;000: dan wil je een <b>slimme rekenregel</b>. Die leer je in dit hoofdstuk.</p><p>💡 Tip voor het hele hoofdstuk: schrijf eerst <b>één mogelijkheid</b> op. Dan zie je meteen hoeveel keuzes er achter elkaar gemaakt worden.</p>`,
+  ['Waarom wil je bij een telprobleem een rekenregel gebruiken?','omdat alles opschrijven bij grote aantallen veel te lang duurt','omdat je anders het antwoord niet mag opschrijven|omdat een rekenregel altijd een groter antwoord geeft|omdat de GR geen lijstjes kan maken','Een rekenregel geeft hetzelfde antwoord als alles opschrijven, maar veel sneller. Bij 10&#8239;000 pincodes ben je met opschrijven dagen bezig. Een rekenregel geeft niet ‘een groter’ antwoord, maar het juiste.']],
+ ['Het boomdiagram',`${figBoom(['salade','soep'],['vlees','vis','vega'])}<p>Annette kiest in een restaurant een voorgerecht (salade of soep) en een hoofdgerecht (vlees, vis of vega). In een <b>boomdiagram</b> teken je alle keuzes als takken:</p><ol><li>Eerst 2 takken: salade of soep.</li><li>Aan elke tak weer 3 takken: vlees, vis of vega.</li><li>Tel de eindpunten: 2 × 3 = <b>6</b> tweegangendiners.</li></ol><p>Komt er nog een nagerecht bij (ijs, fruit of taart), dan krijgt elk eindpunt nog 3 takken: 2 × 3 × 3 = <b>18</b> driegangendiners.</p><p>Een boomdiagram is duidelijk, maar wordt snel heel groot. Daarom is er ook het wegendiagram.</p>`,
+  ['Je kiest een shirt (4 soorten) en een broek (3 soorten). Hoeveel eindpunten heeft het boomdiagram?','12','7|4|43','Elk van de 4 shirt-takken splitst in 3 broek-takken: 4 × 3 = 12 eindpunten. Fout: 7 is 4 + 3 (optellen), maar je kiest een shirt <b>en</b> een broek. 4 telt alleen de shirts.']],
+ ['Het wegendiagram',`${figWegen([2,3])}<p>In een <b>wegendiagram</b> teken je elke keuze als een stukje weg tussen twee punten. Hierboven: 2 wegen voor het voorgerecht, daarna 3 wegen voor het hoofdgerecht.</p><p>Elke route van begin tot eind is één tweegangendiner. Het aantal routes is 2 × 3 = <b>6</b>.</p><p>Bij een driegangendiner komt er een derde stuk bij met 3 wegen (ijs, fruit, taart): 2 × 3 × 3 = 18.</p><p><b>Zonder vis?</b> Haal de weg ‘vis’ weg. Dan blijven er 2 hoofdgerechten over: 2 × 2 × 3 = <b>12</b>.</p><p>Een wegendiagram is kleiner dan een boom, want je tekent elke keuze maar één keer.</p>`,
+  ['Van A naar B gaan 4 wegen, van B naar C gaan 3 wegen. Hoeveel routes zijn er van A via B naar C?','12','7|64|81','Je kiest een weg van A naar B <b>en</b> een weg van B naar C: 4 × 3 = 12. Fout: 7 = 4 + 3 (optellen hoort bij ‘of’). 64 en 81 zijn machten, die horen hier niet.']],
+ ['De vermenigvuldigingsregel: bij en keer',`<p>Om het wegendiagram te doorlopen kies je een voorgerecht <b>en</b> een hoofdgerecht <b>en</b> een nagerecht. Daarom gebruik je de <b>vermenigvuldigingsregel</b>:</p><p style="text-align:center"><b>Bij <i>en</i> vermenigvuldig je</b> de aantallen keuzes die na elkaar komen.</p><ol><li>Voorgerecht: 2 keuzes.</li><li>Hoofdgerecht: 3 keuzes.</li><li>Nagerecht: 3 keuzes.</li><li>Aantal = 2 × 3 × 3 = <b>18</b>.</li></ol><p>💡 Snap je het zo? Bij elke salade horen 3 hoofdgerechten, en bij elk van die 6 combinaties weer 3 nagerechten. Elke keuze maakt het aantal dus <b>zo veel keer groter</b>.</p>`,
+  ['Een pizza bestaat uit een bodem (3 soorten), een saus (2 soorten) en een topping (5 soorten). Hoeveel pizza’s kun je maken?','30','10|15|25','Bodem <b>en</b> saus <b>en</b> topping: 3 × 2 × 5 = 30. Fout: 10 = 3 + 2 + 5 (optellen). 15 en 25 vergeten een van de drie keuzes of tellen er een dubbel.']],
+ ['De somregel: bij of plus',`<p>Freek wil een tweegangendiner (voor + hoofd) <b>of</b> een driegangendiner (voor + hoofd + na). Dat zijn twee verschillende <b>situaties</b>.</p><ol><li>Tweegangen: 2 × 3 = 6.</li><li>Driegangen: 2 × 3 × 3 = 18.</li><li>Het is het een <b>of</b> het ander, dus tel op: 6 + 18 = <b>24</b>.</li></ol><p>Dat is de <b>somregel</b>: tel de aantallen van de verschillende situaties bij elkaar op.</p><p style="text-align:center"><b>Bij <i>of</i> tel je op.</b></p><p>Let op: soms staat het woordje ‘of’ er niet, en moet je het er zelf bij denken. ‘Een film kijken, of een wandeling maken en daarna een spel doen’ = 4 + 2 × 3 als er 4 films, 2 wandelingen en 3 spellen zijn.</p>`,
+  ['Gijs kijkt een film (4 keuzes) óf maakt een wandeling (2 keuzes) en speelt daarna een bordspel (3 keuzes). Hoeveel mogelijkheden?','10','24|9|18','Twee situaties: film (4) <b>of</b> wandeling-en-spel (2 × 3 = 6). Samen 4 + 6 = 10. Fout: 24 = 4 × 2 × 3 (alles vermenigvuldigd, maar hij doet niet alles). 9 = 4 + 2 + 3 (de ‘en’ tussen wandeling en spel vergeten).']],
+ ['Voorbeeld: en en of samen',`${VB('warme drank','Je kiest koffie, thee of chocolademelk. Koffie en chocolademelk kunnen met of zonder slagroom. Thee is er in 3 smaken.<ol><li>Koffie of chocolademelk (2) <b>en</b> met of zonder slagroom (2): 2 × 2 = 4.</li><li>Thee (1) <b>en</b> een smaak (3): 1 × 3 = 3.</li><li>Situatie 1 <b>of</b> situatie 2: 4 + 3 = <b>7</b>.</li></ol>')}${VB('een kast kiezen','Een kast heeft 3 breedtes en 4 kleuren. De deur is van hout (in 4 kleuren), van matglas of van helder glas.<ol><li>Deur: 4 + 1 + 1 = 6 keuzes (hout <b>of</b> matglas <b>of</b> helder glas).</li><li>Breedte <b>en</b> kleur <b>en</b> deur: 3 × 4 × 6 = <b>72</b> kasten.</li></ol>')}<p>💡 Zo pak je het aan: zoek eerst de woorden <b>en</b> en <b>of</b> (soms in gedachten). Reken eerst binnen een situatie (keer), en tel dan de situaties op (plus).</p>`,
+  ['Een broodje is wit of bruin. Bij wit kies je kaas of ham, bij bruin kies je uit 3 soorten beleg. Hoeveel broodjes?','5','6|8|12','Wit: 1 × 2 = 2. Bruin: 1 × 3 = 3. Wit <b>of</b> bruin: 2 + 3 = 5. Fout: 6 = 2 × 3 (dan doe je alsof je bij elk broodje alles kunt kiezen). 8 en 12 vermenigvuldigen ook situaties die niet samen kunnen.']],
+ ['Met of zonder herhaling',`<p>Drie vrienden kiezen elk één van 8 verschillende karakters in een spel. Belangrijke vraag: <b>mag een karakter vaker gekozen worden?</b></p><table class="gt"><tr><th></th><th>berekening</th><th>aantal</th></tr><tr><td><b>Zonder herhaling</b><br>(iedereen een ander karakter)</td><td>8 × 7 × 6</td><td>336</td></tr><tr><td><b>Met herhaling</b><br>(mag hetzelfde)</td><td>8 × 8 × 8 = 8³</td><td>512</td></tr></table><ol><li>Zonder herhaling: de eerste kiest uit 8, daarna is er één weg, dus de tweede kiest uit 7, de derde uit 6.</li><li>Met herhaling: iedereen kiest gewoon uit alle 8.</li></ol><p>💡 Snap je het zo? Zonder herhaling wordt het getal na elke keuze <b>één kleiner</b>. Met herhaling blijft het <b>steeds hetzelfde</b>.</p>`,
+  ['Je maakt een code van 3 letters uit A t/m F, en elke letter mag maar één keer. Welke berekening hoort hierbij?','6 × 5 × 4','6 × 6 × 6|3 × 2 × 1|6 + 5 + 4','Zonder herhaling: 6 letters voor de eerste plek, dan 5, dan 4: 6 × 5 × 4 = 120. Fout: 6 × 6 × 6 is met herhaling. 3 × 2 × 1 rekent met het aantal plekken in plaats van het aantal letters. Optellen hoort niet bij plekken die je allemaal invult.']],
+ ['Met herhaling: machten',`<p>Mogen dingen vaker voorkomen, dan heb je op elke plek <b>evenveel keuzes</b>. Dan krijg je een macht.</p><ol><li>Een pincode van 4 cijfers: elke plek 10 keuzes (0 t/m 9): 10 × 10 × 10 × 10 = 10<sup>4</sup> = <b>10&#8239;000</b>.</li><li>Vier keer gooien met een dobbelsteen: 6<sup>4</sup> = <b>1296</b> uitkomsten.</li><li>Een oud kenteken XX-99-99 (26 letters, 10 cijfers): 26 × 26 × 10 × 10 × 10 × 10 = 26² × 10<sup>4</sup> = <b>6&#8239;760&#8239;000</b>.</li></ol><p>Let op de volgorde in de macht: <b>keuzes per plek</b> onderaan, <b>aantal plekken</b> boven. Een pincode is 10<sup>4</sup>, níet 4<sup>10</sup>.</p>${VB('kentekens zonder klinkers','Vanaf serie 4 gebruikt de RDW geen klinkers (A, E, I, O, U, Y) en geen C en Q. Dan blijven er 26 − 8 = 18 letters over. Een kenteken XX-XX-99 kan dan op 18<sup>4</sup> × 10² = 10&#8239;497&#8239;600 manieren.')}`,
+  ['Hoeveel pincodes van 5 cijfers bestaan er als cijfers vaker mogen?','10<sup>5</sup> = 100&#8239;000','5<sup>10</sup>|10 × 9 × 8 × 7 × 6|10 × 5 = 50','Elke van de 5 plekken heeft 10 keuzes: 10<sup>5</sup>. Fout: 5<sup>10</sup> draait het om (keuzes per plek horen onderaan). 10 × 9 × 8 × 7 × 6 is zonder herhaling. 10 × 5 telt maar twee keuzes.']],
+ ['Niet twee dezelfde naast elkaar',`<p>Een website-achtergrond heeft 3 gekleurde banen boven elkaar. Je kiest uit 5 kleuren.</p><table class="gt"><tr><th>regel</th><th>berekening</th><th>aantal</th></tr><tr><td>alle banen een andere kleur</td><td>5 × 4 × 3</td><td>60</td></tr><tr><td>twee banen <b>naast elkaar</b> niet dezelfde</td><td>5 × 4 × 4</td><td>80</td></tr><tr><td>alles mag</td><td>5 × 5 × 5</td><td>125</td></tr></table><p>Waarom 5 × 4 × 4?</p><ol><li>Baan 1: 5 kleuren.</li><li>Baan 2: niet de kleur van baan 1, dus 4.</li><li>Baan 3: alleen niet de kleur van baan 2. De kleur van baan 1 mag wél weer! Dus ook 4.</li></ol><p>Zo ook: vier keer gooien met een dobbelsteen zonder twee keer achter elkaar hetzelfde: 6 × 5 × 5 × 5 = 750.</p>`,
+  ['Een vlag heeft 3 banen naast elkaar en je kiest uit 7 kleuren. Banen die tegen elkaar aan liggen mogen niet dezelfde kleur hebben. Hoeveel vlaggen?','252','210|343|294','7 × 6 × 6 = 252: de derde baan mag weer de kleur van de eerste hebben. Fout: 210 = 7 × 6 × 5 (alle drie verschillend, strenger dan nodig). 343 = 7³ (alles mag). 294 = 7 × 6 × 7 (de derde mag dan ook de kleur van de middelste, dat mag niet).']],
+ ['Beperkingen: begin met de lastige plek',`<p>Soms mag niet elke plek alles. Begin dan met de plek waar een <b>eis</b> op zit.</p>${VB('getallen groter dan 6000','Getallen van vier cijfers met de cijfers 3, 4, 5, 6, 7 en 8, elk cijfer één keer, groter dan 6000.<ol><li>Eerste cijfer: 6, 7 of 8 → 3 keuzes.</li><li>Tweede cijfer: 5 over (één is gebruikt).</li><li>Derde: 4, vierde: 3.</li><li>Aantal = 3 × 5 × 4 × 3 = <b>180</b>.</li></ol>')}${VB('een tabel met tapas','Coen kiest in ronde 1 een Spaanse, in ronde 2 een Italiaanse en in ronde 3 een Portugese tapa. Hij wil een Italiaans visgerecht en verder twee vleestapas. Spaans vlees: 8, Italiaanse vis: 7, Portugees vlees: 4. Aantal = 8 × 7 × 4 = <b>224</b>.')}<p>💡 Snap je het zo? Begin je met een makkelijke plek, dan weet je later niet meer hoeveel keuzes er voor de lastige plek over zijn.</p>`,
+  ['Getallen van drie cijfers met de cijfers 1 t/m 5, elk cijfer één keer, en het getal moet groter zijn dan 300. Hoeveel?','36','60|75|48','Eerste cijfer 3, 4 of 5 (3 keuzes), dan 4, dan 3: 3 × 4 × 3 = 36. Fout: 60 = 5 × 4 × 3 (de eis vergeten). 75 = 3 × 5 × 5 (met herhaling). 48 = 3 × 4 × 4 (bij het derde cijfer niet één weggehaald).']],
+ ['Samenvatting 4.1',`<table class="gt"><tr><th>signaal</th><th>wat doe je?</th><th>voorbeeld</th></tr><tr><td>keuzes na elkaar (<b>en</b>)</td><td>vermenigvuldigen</td><td>2 × 3 × 3 = 18</td></tr><tr><td>verschillende situaties (<b>of</b>)</td><td>optellen</td><td>6 + 18 = 24</td></tr><tr><td>mag vaker (met herhaling)</td><td>steeds hetzelfde getal: n<sup>k</sup></td><td>10<sup>4</sup> pincodes</td></tr><tr><td>mag niet vaker (zonder herhaling)</td><td>steeds één minder</td><td>8 × 7 × 6</td></tr><tr><td>niet twee dezelfde naast elkaar</td><td>n × (n−1) × (n−1) × …</td><td>5 × 4 × 4</td></tr></table><p>💡 Werk altijd zo: <b>1</b> schrijf één mogelijkheid op, <b>2</b> kijk hoeveel plekken er zijn, <b>3</b> per plek: hoeveel keuzes?, <b>4</b> en = keer, of = plus.</p>`]
+]},
+{id:'4.2',t:'Permutaties en combinaties',kort:'Faculteit n!, permutaties nPr (volgorde telt) en combinaties nCr (volgorde telt niet)',ic:'🎲',lp:[
+ ['Permutaties: rangschikkingen',`<p>Voor een feestavond melden acht leerlingen zich (A t/m H). Er worden er drie gekozen: de eerste regelt het drinken, de tweede de hapjes, de derde de muziek.</p><ol><li>Drinken: 8 keuzes.</li><li>Hapjes: nog 7 over.</li><li>Muziek: nog 6 over.</li><li>Aantal = 8 × 7 × 6 = <b>336</b>.</li></ol><p>Een mogelijke verdeling is BDF (B drinken, D hapjes, F muziek). Dat heet een <b>rangschikking</b> van 3 uit 8, of een <b>permutatie</b>. DBF is een andere permutatie, want dan doet iemand anders het drinken.</p><p>Bij een permutatie:</p><ul><li>kies je <b>zonder herhaling</b> (niemand twee keer);</li><li>doet de <b>volgorde ertoe</b>.</li></ul><p>Het aantal permutaties van 4 uit 7 is 7 × 6 × 5 × 4 = 840.</p>`,
+  ['Hoeveel permutaties van 3 uit 10 zijn er?','720','1000|120|30','10 × 9 × 8 = 720: zonder herhaling en de volgorde telt. Fout: 1000 = 10³ (met herhaling). 120 is het aantal combinaties (volgorde telt niet). 30 = 10 × 3.']],
+ ['Faculteit: alles op volgorde',`<p>Hoeveel volgordes zijn er voor 10 dingen? Dan rangschik je ze <b>allemaal</b>:</p><p style="text-align:center">10 × 9 × 8 × 7 × 6 × 5 × 4 × 3 × 2 × 1 = 3&#8239;628&#8239;800</p><p>Dat schrijf je korter als <b>10!</b>, en je zegt ‘10 <b>faculteit</b>’.</p><table class="gt"><tr><th>n</th><th>n!</th></tr><tr><td>3</td><td>3 × 2 × 1 = 6</td></tr><tr><td>4</td><td>4 × 3 × 2 × 1 = 24</td></tr><tr><td>5</td><td>120</td></tr><tr><td>8</td><td>40&#8239;320</td></tr><tr><td>10</td><td>3&#8239;628&#8239;800</td></tr></table><p>Faculteiten worden heel snel heel groot. Een playlist van 10 nummers in alle volgordes afspelen (28 minuten per keer) duurt ongeveer <b>195 jaar</b>!</p><p>Op de GR: MATH → PROB → <b>!</b> (bijvoorbeeld 10!).</p>`,
+  ['Negen volleyballers gaan op een rij voor de teamfoto. Hoeveel rijen zijn er mogelijk?','9! = 362&#8239;880','9 × 9 = 81|9<sup>9</sup>|9 × 8 = 72','Alle 9 spelers op volgorde: 9 × 8 × … × 1 = 9! = 362&#8239;880. Fout: 9<sup>9</sup> is met herhaling (een speler kan niet op twee plekken staan). 81 en 72 tellen maar twee plekken.']],
+ ['nPr op de rekenmachine',`<p>Het aantal permutaties van k uit n kun je op de GR uitrekenen met <b>nPr</b>: MATH → PROB → nPr.</p>${VB('hardloopwedstrijd','16 atleten lopen een wedstrijd.<ol><li>Goud, zilver en brons: 16 × 15 × 14 = 3360 (GR: 16 nPr 3).</li><li>Alle 16 in volgorde over de finish: 16! ≈ 2,1 × 10<sup>13</sup>.</li><li>Een top-8: 16 × 15 × … × 9 = 518&#8239;918&#8239;400 (GR: 16 nPr 8).</li></ol>')}<p>💡 Snap je het zo? Bij 16 nPr 8 vermenigvuldig je <b>8 getallen</b>, beginnend bij 16 en steeds één lager. Het laatste getal is 16 − 8 + 1 = 9.</p><p>Zo ook: n nPr n = n! (alles op volgorde).</p>`,
+  ['Simone maakt een top-5 van haar 12 bordspellen. Welke berekening hoort hierbij?','12 nPr 5','12 nCr 5|5<sup>12</sup>|12!','Een top-5 heeft een volgorde (nummer 1 is iets anders dan nummer 2), en elk spel komt er maar één keer in: permutaties, 12 nPr 5 = 95&#8239;040. Fout: nCr is zonder volgorde. 5<sup>12</sup> is met herhaling en omgedraaid. 12! zet alle 12 spellen op volgorde.']],
+ ['Combinaties: de volgorde telt niet',`<p>Na een feest maken 3 leerlingen de zaal schoon. Er zijn 5 vrijwilligers: A, B, C, D, E. Op hoeveel manieren kies je een ploeg?</p><p>5 × 4 × 3 = 60 is <b>niet goed</b>. Ploeg ABC is precies dezelfde ploeg als BAC of CBA: in een ploeg heeft niemand een eigen taak.</p><table class="gt"><tr><th>ploeg</th><th>dezelfde ploeg in andere volgordes</th></tr><tr><td>ABC</td><td>ACB, BAC, BCA, CAB, CBA</td></tr><tr><td>ABD</td><td>ADB, BAD, BDA, DAB, DBA</td></tr><tr><td>…</td><td>…</td></tr></table><ol><li>In 60 telt elke ploeg 3! = 6 keer mee (alle volgordes van 3 mensen).</li><li>Dus delen door 6: 60 ÷ 6 = <b>10</b> ploegen.</li></ol><p>Als de volgorde <b>niet</b> belangrijk is, heet dat een <b>combinatie</b>. Er zijn 10 combinaties van 3 uit 5.</p>`,
+  ['Katya, Linde en Marit: twee van hen moeten een tafel tillen. Hoeveel tweetallen zijn er?','3','6|9|2','Katya-Linde, Katya-Marit en Linde-Marit: 3. Fout: 6 = 3 × 2, dan tel je Katya-Linde en Linde-Katya als twee verschillende tweetallen, maar het is hetzelfde tweetal (6 ÷ 2! = 3).']],
+ ['n boven k en nCr',`<p>Het aantal combinaties van 3 uit 5 schrijf je als <b>(5 boven 3)</b>: een 5 boven een 3 tussen haakjes. Je zegt ‘vijf boven drie’.</p><p style="text-align:center">(5 boven 3) = (5 × 4 × 3) ÷ 3! = 60 ÷ 6 = 10</p><p>Op de GR: MATH → PROB → <b>nCr</b>, dus 5 nCr 3 = 10. Ga zelf na: 7 nCr 4 = 35.</p><table class="gt"><tr><th></th><th>volgorde</th><th>GR</th><th>3 uit 5</th></tr><tr><td><b>permutaties</b></td><td>telt wél</td><td>nPr</td><td>60</td></tr><tr><td><b>combinaties</b></td><td>telt niet</td><td>nCr</td><td>10</td></tr></table><p>💡 Handig om te weten: (n boven k) = (n boven n−k). Drie mensen kiezen die mee mogen uit 5 is hetzelfde als twee mensen kiezen die thuisblijven: (5 boven 3) = (5 boven 2) = 10.</p>`,
+  ['Hoeveel is 6 nCr 2?','15','30|12|36','6 nCr 2 = (6 × 5) ÷ 2! = 30 ÷ 2 = 15. Fout: 30 is 6 nPr 2 (dan telt de volgorde). 12 = 6 × 2 en 36 = 6² hebben er niets mee te maken.']],
+ ['Permutatie of combinatie?',`<p>Stel jezelf steeds de vraag: <b>maakt het uit in welke volgorde ik kies?</b> Krijgen de gekozen dingen een eigen plek, taak of rangnummer, dan wel.</p>${VB('Frauke geeft boeken weg','Frauke heeft 10 boeken en geeft er 3 weg.<ol><li>Aan 3 vrienden, ieder één boek: wie welk boek krijgt maakt uit → permutaties: 10 × 9 × 8 = 720.</li><li>Aan één vriendin alle drie: dan is het gewoon een stapeltje van 3 → combinaties: (10 boven 3) = 120.</li></ol>')}<table class="gt"><tr><th>situatie</th><th>soort</th></tr><tr><td>zes leerlingen kiezen voor de boodschappen</td><td>combinaties</td></tr><tr><td>vijf gelijke bioscoopbonnen verloten</td><td>combinaties</td></tr><tr><td>voorzitter, secretaris en penningmeester kiezen</td><td>permutaties</td></tr><tr><td>een eigen top-3 uit een top-10</td><td>permutaties</td></tr><tr><td>300 van de 500 leerlingen komen naar het feest</td><td>combinaties</td></tr></table>`,
+  ['Uit een klas van 30 kies je 5 leerlingen voor een klankbordgroep. Permutaties of combinaties?','combinaties: 30 nCr 5','permutaties: 30 nPr 5|met herhaling: 30<sup>5</sup>|faculteit: 30!','In een klankbordgroep heeft niemand een eigen functie, dus de volgorde telt niet: (30 boven 5) = 142&#8239;506. Fout: nPr zou betekenen dat de eerste gekozen iets anders is dan de tweede. 30<sup>5</sup> laat iemand vaker kiezen. 30! zet de hele klas op volgorde.']],
+ ['Werken met groepen: k van de ene en m van de andere',`<p>Aysha heeft 9 popplaten, 12 rockplaten en 5 metalplaten (26 samen). Kees leent er 5, waarvan precies 3 rockplaten.</p><ol><li>Uitlenen: de volgorde telt niet → combinaties.</li><li>3 rockplaten uit 12: (12 boven 3) = 220.</li><li>De andere 2 komen uit de niet-rockplaten: 26 − 12 = 14, dus (14 boven 2) = 91.</li><li>3 rock <b>en</b> 2 andere: 220 × 91 = <b>20&#8239;020</b>.</li></ol><p>💡 Snap je het zo? Bij elke keuze van 3 rockplaten kun je weer 91 keer de andere twee kiezen. ‘En’ dus keer.</p><p>Let op ‘precies 3’: de andere 2 mogen dan géén rockplaat zijn, daarom kies je ze uit de 14.</p>`,
+  ['Een klas heeft 12 jongens en 15 meisjes. Je kiest een groepje van 2 jongens en 2 meisjes. Welke berekening klopt?','(12 nCr 2) × (15 nCr 2)','(12 nCr 2) + (15 nCr 2)|27 nCr 4|12 × 11 × 15 × 14','Twee jongens <b>en</b> twee meisjes: vermenigvuldigen, en in een groepje telt de volgorde niet: 66 × 105 = 6930. Fout: optellen hoort bij ‘of’. 27 nCr 4 let niet op jongens en meisjes. 12 × 11 × 15 × 14 telt de volgorde mee.']],
+ ['Somregel met combinaties en permutaties',`<p>Bij <b>of</b>, <b>minstens</b> en <b>meer dan</b> splits je in situaties en tel je op.</p>${VB('drie of vier popplaten','Kees leent 3 of 4 popplaten (uit 9): (9 boven 3) + (9 boven 4) = 84 + 126 = <b>210</b>.')}${VB('top-3 uit één genre','Aysha maakt een top-3 met platen uit één genre: pop of rock of metal. Een top-3 heeft een volgorde → permutaties.<ol><li>Pop: 9 × 8 × 7 = 504</li><li>Rock: 12 × 11 × 10 = 1320</li><li>Metal: 5 × 4 × 3 = 60</li><li>Samen: 504 + 1320 + 60 = <b>1884</b></li></ol>')}${VB('minstens vier meisjes','Klankbordgroep van 5 uit 16 meisjes en 13 jongens, minstens 4 meisjes: 4 meisjes en 1 jongen <b>of</b> 5 meisjes. (16 boven 4) × 13 + (16 boven 5) = 23&#8239;660 + 4368 = <b>28&#8239;028</b>.')}`,
+  ['Een bestuur van voorzitter, secretaris en penningmeester komt uit 13 jongens óf uit 16 meisjes (alleen jongens of alleen meisjes). Welke berekening hoort hierbij?','13 × 12 × 11 + 16 × 15 × 14','(13 nCr 3) + (16 nCr 3)|(13 × 12 × 11) × (16 × 15 × 14)|29 × 28 × 27','Functies verdelen → permutaties. Alleen jongens <b>of</b> alleen meisjes → optellen: 1716 + 3360 = 5076. Fout: nCr vergeet dat de functies verschillen. Vermenigvuldigen hoort bij ‘en’. 29 × 28 × 27 laat ook gemengde besturen toe.']],
+ ['Welke formule kies ik?',`<p>Gebruik dit stappenplan bij elke vraag:</p><ol><li><b>Schrijf één mogelijkheid op.</b> Hoeveel plekken (k) zijn er, en uit hoeveel dingen (n) kies je?</li><li><b>Mag iets vaker voorkomen?</b><ul><li>Ja (met herhaling) → <b>n<sup>k</sup></b> (pincode: 10<sup>4</sup>).</li><li>Nee → ga naar stap 3.</li></ul></li><li><b>Is de volgorde belangrijk?</b> (rangnummer, taak, plek)<ul><li>Ja, en je zet <b>alles</b> op volgorde → <b>n!</b> (rij op de foto: 9!).</li><li>Ja, maar je kiest er k uit n → <b>n nPr k</b> (top-3: 10 × 9 × 8).</li><li>Nee (groepje, stapeltje) → <b>n nCr k</b> (groepje van 3: (10 boven 3)).</li></ul></li><li><b>Meerdere stukken?</b> en → keer, of → plus.</li></ol><table class="gt"><tr><th></th><th>volgorde telt</th><th>volgorde telt niet</th></tr><tr><td><b>met herhaling</b></td><td>n<sup>k</sup></td><td>(komt niet voor)</td></tr><tr><td><b>zonder herhaling</b></td><td>n nPr k (alles: n!)</td><td>n nCr k</td></tr></table>`,
+  ['Tien lopers doen mee. Hoeveel manieren voor goud, zilver en brons? Welke berekening?','10 × 9 × 8','10<sup>3</sup>|10 nCr 3|10!','Niemand kan twee medailles winnen (zonder herhaling) en goud is iets anders dan zilver (volgorde telt): 10 nPr 3 = 10 × 9 × 8 = 720. Fout: 10³ is met herhaling. 10 nCr 3 vergeet de volgorde. 10! zet alle tien lopers op volgorde.']],
+ ['Dubbel tellen en terugrekenen',`${VB('kleurenblind','Vier potloden (rood, geel, groen, blauw) liggen naast elkaar. Sebas ziet geen verschil tussen rood en groen. Hoeveel volgordes ziet hij?<ol><li>Alle volgordes: 4! = 24.</li><li>Rood en groen omwisselen ziet hij niet, dus elke volgorde die hij ziet is 2 keer geteld.</li><li>24 ÷ 2 = <b>12</b>.</li></ol>')}${VB('terugrekenen','Vier leerlingen krijgen elk een eigen wijk: dat kan op 1680 manieren. Uit hoeveel leerlingen (n) werd gekozen?<ol><li>Eigen wijk = volgorde telt: n × (n−1) × (n−2) × (n−3) = 1680.</li><li>Proberen: 8 × 7 × 6 × 5 = 1680, dus n = 8.</li><li>Doen ze alle wijken samen, dan telt de volgorde niet: (8 boven 4) = 1680 ÷ 4! = <b>70</b>.</li></ol>')}<p>💡 Het verband: n nCr k = (n nPr k) ÷ k!.</p>`,
+  ['Er zijn 210 manieren om 3 leerlingen elk een andere taak te geven. Hoeveel groepjes van 3 (zonder taken) zijn er dan?','35','70|630|105','Groepjes: delen door het aantal volgordes van 3: 210 ÷ 3! = 210 ÷ 6 = 35. Fout: 70 = 210 ÷ 3 (delen door 3 in plaats van 3!). 630 = 210 × 3. 105 = 210 ÷ 2.']]
+]},
+{id:'4.3',t:'Combinatoriek toepassen',kort:'Rijtjes van A’s en B’s, 2ⁿ, routes zonder omweg en situaties onderscheiden',ic:'🗺️',lp:[
+ ['Rijtjes van A’s en B’s',`<p>Otto zet 5 pionnen op een rij: 2 witte en 3 zwarte. Hoeveel verschillende rijtjes kan hij maken?</p><ol><li>Er zijn 5 plekken.</li><li>Kies de 2 plekken voor de witte pionnen. Op de andere plekken komen vanzelf de zwarte, daar heb je geen keus meer.</li><li>Bij het kiezen van plekken telt de volgorde niet (plek 1 en 5 = plek 5 en 1).</li><li>Aantal = (5 boven 2) = <b>10</b>.</li></ol><p>Noem een witte pion A en een zwarte B. Dan zoek je het aantal rijtjes met 2 A’s en 3 B’s, zoals ABBBA.</p><p style="text-align:center"><b>Een rijtje met a A’s en b B’s kan op (a+b boven a) manieren.</b></p>`,
+  ['Hoeveel rijtjes kun je maken met 2 A’s en 4 B’s?','15','30|64|8','6 plekken, kies er 2 voor de A’s: (6 boven 2) = 15. Fout: 30 = 6 × 5 (de volgorde van twee gelijke A’s telt niet). 64 = 2<sup>6</sup> is álle rijtjes van 6 letters. 8 = 2 × 4.']],
+ ['Plekken voor A of plekken voor B',`<p>Je kunt ook eerst de 3 zwarte pionnen neerzetten: (5 boven 3) = 10. Dat geeft hetzelfde!</p><p>Zo is ook:</p><ul><li>(8 boven 2) = (8 boven 6) = 28</li><li>(10 boven 3) = (10 boven 7) = 120</li></ul><p>Algemeen: <b>(n boven k) = (n boven n−k)</b>. Plekken kiezen voor de A’s is hetzelfde als plekken kiezen voor de B’s: de rest ligt dan vast.</p><p>💡 Snap je het zo? Kiezen wie er mee mag is hetzelfde als kiezen wie er thuis moet blijven.</p>`,
+  ['Welke is gelijk aan (12 boven 5)?','(12 boven 7)','(12 boven 6)|(7 boven 5)|12 nPr 5','12 − 5 = 7, dus (12 boven 5) = (12 boven 7) = 792. Fout: (12 boven 6) = 924. (7 boven 5) gebruikt het verkeerde totaal. 12 nPr 5 telt de volgorde mee.']],
+ ['Voorbeeld: borden stapelen',`${VB('rode en witte borden','Een kok stapelt rode en witte borden.<ol><li>8 borden, waarvan 6 rood: kies de 6 plekken voor rood: (8 boven 6) = <b>28</b>.</li><li>5 rode en 7 witte: in totaal 12 borden, (12 boven 5) = <b>792</b>.</li><li>Een stapel van 10 borden, rood en wit maakt niet uit: elk bord heeft 2 mogelijkheden: 2<sup>10</sup> = <b>1024</b>.</li></ol>')}<p>Let goed op het verschil:</p><ul><li>Staat vast <b>hoeveel</b> A’s er zijn? → (n boven k).</li><li>Mag elke plek A of B zijn, zonder eis? → 2<sup>n</sup> (met herhaling, 2 keuzes per plek).</li></ul>`,
+  ['Fayla gooit 5 keer met een munt. Hoeveel series van kop en munt zijn er in totaal?','32','10|25|120','Elke worp kop of munt, 5 worpen: 2<sup>5</sup> = 32. Fout: 10 = (5 boven 2), dat is maar één soort serie (2 keer kop). 25 = 5². 120 = 5!.']],
+ ['Minstens … goed: optellen',`<p>Een toelatingsexamen heeft 20 vragen met 2 keuzes. Je bent toegelaten met minstens 80% goed, dus minstens 16 goed.</p><ol><li>Een antwoordenrij is een rijtje van G’s (goed) en F’en (fout).</li><li>Minstens 16 goed = 16 <b>of</b> 17 <b>of</b> 18 <b>of</b> 19 <b>of</b> 20 goed.</li><li>(20 boven 16) + (20 boven 17) + (20 boven 18) + (20 boven 19) + (20 boven 20)</li><li>= 4845 + 1140 + 190 + 20 + 1 = <b>6196</b>.</li></ol><p>Alle antwoordenrijen samen: 2<sup>20</sup> = 1&#8239;048&#8239;576. Dus maar 6196 ÷ 1&#8239;048&#8239;576 ≈ 0,59% van alle rijen geeft toegang.</p>`,
+  ['Een toets heeft 10 goed/fout-vragen. Op hoeveel manieren heb je er minstens 9 goed?','11','10|1|1024','9 goed: (10 boven 9) = 10, <b>of</b> 10 goed: (10 boven 10) = 1. Samen 11. Fout: 10 vergeet ‘alles goed’. 1 vergeet ‘9 goed’. 1024 = 2<sup>10</sup> zijn alle rijen.']],
+ ['Routes zonder omweg',`${figRooster(4,4)}<p>In het stratenplan van Barcelona loop je van A (linksonder) naar B (rechtsboven), zonder omweg. Dan ga je bij elke kruising alleen naar <b>rechts (O)</b> of naar <b>boven (N)</b>.</p><ol><li>Je moet 4 blokken naar rechts en 4 naar boven: 8 stappen.</li><li>Een route is een rijtje, bijvoorbeeld NOONONON: 4 N’en en 4 O’s.</li><li>Kies welke 4 van de 8 stappen een N zijn: (8 boven 4) = <b>70</b> routes.</li></ol><p style="text-align:center"><b>Routes in een rooster van b breed en h hoog: (b+h boven h)</b></p>`,
+  ['Hoeveel routes zonder omweg zijn er in een rooster van 3 blokken breed en 2 blokken hoog?','10','6|5|32','5 stappen, waarvan 2 omhoog: (5 boven 2) = 10. Fout: 6 = 3 × 2 (blokken vermenigvuldigen werkt niet). 5 is alleen het aantal stappen. 32 = 2<sup>5</sup> telt ook routes die te ver naar rechts of boven gaan.']],
+ ['Routes via een punt',`${figRooster(5,4)}<p>Moet je onderweg langs punt P, dan knip je de route in twee stukken.</p>${VB('via P','Rooster 5 breed en 4 hoog. P ligt 2 blokken naar rechts en 2 omhoog vanaf A.<ol><li>A → P: 2 rechts en 2 omhoog: (4 boven 2) = 6.</li><li>P → B: nog 3 rechts en 2 omhoog: (5 boven 2) = 10.</li><li>Eerste stuk <b>en</b> tweede stuk: 6 × 10 = <b>60</b> routes.</li></ol>')}<p>Zonder de eis ‘via P’ zijn het er (9 boven 4) = 126.</p><p>💡 Bij een schuin rooster werkt het net zo: elke stap is linksboven of rechtsboven, dus weer een rijtje van twee letters.</p>`,
+  ['Van A naar P zijn er 3 routes, van P naar B zijn er 6 routes. Hoeveel routes zijn er van A via P naar B?','18','9|36|3','A → P <b>en</b> P → B: 3 × 6 = 18. Fout: 9 = 3 + 6 (optellen hoort bij ‘of’). 36 = 6 × 6. 3 telt alleen het eerste stuk.']],
+ ['Is het een rijtje van A’s en B’s?',`<p>Het werkt alleen als er op elke plek <b>twee soorten</b> zijn.</p><table class="gt"><tr><th>situatie</th><th>A/B?</th><th>aantal</th></tr><tr><td>wachtwoord met 3 enen en 5 nullen</td><td>ja</td><td>(8 boven 3) = 56</td></tr><tr><td>fietsenrek met 10 plekken, 5 gelijke fietsen</td><td>ja (fiets of leeg)</td><td>(10 boven 5) = 252</td></tr><tr><td>voetbal, eindstand 2-4 (wie scoort?)</td><td>ja (thuis of uit)</td><td>(6 boven 2) = 15</td></tr><tr><td>tegels: 2 rood, 2 wit, 4 geel</td><td>nee, drie soorten</td><td>(8 boven 2) × (6 boven 2) = 420</td></tr><tr><td>vier dobbelstenen, allemaal anders</td><td>nee</td><td>6 × 5 × 4 × 3 = 360</td></tr></table><p>Bij de tegels kies je eerst 2 plekken voor rood uit 8, daarna 2 plekken voor wit uit de 6 die over zijn. De rest wordt geel.</p>`,
+  ['Bij een voetbalwedstrijd wordt het 3-1. Hoeveel scoreverlopen zijn er?','4','16|3|24','4 doelpunten, waarvan 1 voor de uitploeg: (4 boven 1) = 4. Fout: 16 = 2<sup>4</sup> zijn alle verlopen met 4 doelpunten, ook 2-2 of 4-0. 3 en 24 = 4! horen er niet bij.']],
+ ['Telproblemen structureren: situaties',`<p>Soms moet je eerst nadenken welke <b>situaties</b> er mogelijk zijn. Schrijf ze allemaal op, reken ze apart uit en tel ze op. Zo vergeet je niets.</p>${VB('talentenshow','De jury kiest 8 winnaars uit 20 leerlingen en 6 docenten. Er moeten altijd meer leerlingen dan docenten zijn, maar niet alleen leerlingen.<ol><li>Situaties: 7 L + 1 D, 6 L + 2 D, 5 L + 3 D. (4 L + 4 D mag niet: dan zijn het er niet méér.)</li><li>7 L + 1 D: (20 boven 7) × (6 boven 1) = 465&#8239;120</li><li>6 L + 2 D: (20 boven 6) × (6 boven 2) = 581&#8239;400</li><li>5 L + 3 D: (20 boven 5) × (6 boven 3) = 310&#8239;080</li><li>Samen: <b>1&#8239;356&#8239;600</b></li></ol>')}`,
+  ['Je kiest 6 winnaars uit leerlingen en docenten. Er moeten meer leerlingen dan docenten zijn, maar niet alleen leerlingen. Welke situaties zijn er?','5 L + 1 D en 4 L + 2 D','3 L + 3 D, 4 L + 2 D en 5 L + 1 D|4 L + 2 D, 5 L + 1 D en 6 L|alleen 4 L + 2 D','Meer leerlingen dan docenten en minstens één docent: 5 + 1 en 4 + 2. Fout: bij 3 + 3 zijn er evenveel, niet méér. 6 L is alleen leerlingen, dat mag niet. Alleen 4 + 2 vergeet 5 + 1.']],
+ ['Voorbeeld: situaties met dobbelstenen en teams',`${VB('vijf dobbelstenen, samen 28','Wat kan er liggen? 5 × 6 = 30, dus je mist 2 ogen.<ol><li>Drie zessen en twee vijven: de plekken van de vijven kiezen: (5 boven 2) = 10.</li><li>Vier zessen en een vier: de plek van de vier: (5 boven 1) = 5.</li><li>Samen 10 + 5 = <b>15</b>.</li></ol>')}${VB('basketbalteam','3 spelers uit 2 guards (G), 4 centers (C) en 3 forwards (F), met hoogstens één center en minstens één guard.<ol><li>1G + 2F: 2 × 3 = 6</li><li>1G + 1C + 1F: 2 × 4 × 3 = 24</li><li>2G + 1F: 1 × 3 = 3</li><li>2G + 1C: 1 × 4 = 4</li><li>Samen: <b>37</b></li></ol>')}`,
+  ['Je gooit met drie dobbelstenen en hebt samen 17 ogen. Hoeveel worpen (in volgorde: eerste, tweede, derde steen) zijn er?','3','1|6|2','17 = 6 + 6 + 5 is de enige mogelijkheid. De 5 kan op 3 plekken liggen: (3 boven 1) = 3. Fout: 1 vergeet dat de 5 op verschillende stenen kan liggen. 6 = 3! doet alsof alle drie de getallen verschillend zijn.']],
+ ['Snap je het zo? De rij voor de kantine',`<p>Zes vrienden staan in de rij. Dennis wil direct achter Eke staan en bij de eerste vier zijn. Als Eke niet voorop staat, wil Claire voorop staan.</p><ol><li>Eke en Dennis vormen een blokje ED. Dennis staat op plek 2, 3 of 4. Dat zijn drie situaties.</li><li>Eke op 1, Dennis op 2: de andere 4 vrij: 4! = 24.</li><li>Eke op 2, Dennis op 3: Claire op 1, de andere 3 vrij: 3! = 6.</li><li>Eke op 3, Dennis op 4: Claire op 1, de andere 3 vrij: 3! = 6.</li><li>Samen: 24 + 6 + 6 = <b>36</b>.</li></ol><p>💡 Werkwijze: <b>1</b> maak de lastige eis eerst vast, <b>2</b> schrijf alle situaties op, <b>3</b> reken per situatie, <b>4</b> tel op.</p>`,
+  ['Waarom tel je bij situaties onderscheiden de aantallen op?','omdat het de ene situatie óf de andere is','omdat je steeds alle situaties tegelijk kiest|omdat optellen altijd veiliger is dan vermenigvuldigen|omdat de situaties elkaar overlappen','Situaties sluiten elkaar uit: het is de een óf de ander, dus somregel. Fout: je kiest ze niet tegelijk (dat zou ‘en’ zijn). Mogen ze overlappen, dan tel je juist dubbel, dat moet je vermijden.']]
+]},
+{id:'4.4',t:'Allerlei telproblemen',kort:'De goede aanpak kiezen, complementregel, blokjes, en puzzelen met Pólya',ic:'🧩',lp:[
+ ['Een juiste aanpak kiezen',`<p>Bij een telprobleem zie je niet altijd meteen welke aanpak werkt. Herken je het niet van een eerdere opgave, schrijf dan eerst <b>één mogelijkheid</b> uit. Stel jezelf daarna deze vragen:</p><ol><li>Moet je de aantallen <b>vermenigvuldigen of optellen</b>?</li><li>Zijn <b>herhalingen</b> toegestaan?</li><li>Heb je te maken met <b>permutaties of combinaties</b>?</li><li>Is het telprobleem om te zetten naar <b>rijtjes van A’s en B’s</b>?</li><li>Is het handig om eerst <b>situaties te onderscheiden</b>?</li></ol><p>Bij de opgaven van deze paragraaf komt alles door elkaar. Loop het rijtje steeds even langs.</p>`,
+  ['Welke vraag staat níet in het rijtje voor het kiezen van een aanpak?','Hoe groot is de kans dat het lukt?','Zijn herhalingen toegestaan?|Is het om te zetten naar rijtjes van A’s en B’s?|Moet je vermenigvuldigen of optellen?','Het rijtje gaat over tellen: keer of plus, herhaling, permutaties of combinaties, A’s en B’s, situaties. Kansen horen hier niet bij. De andere drie staan wél in het rijtje.']],
+ ['Voorbeeld: eerst één mogelijkheid uitschrijven',`${VB('Mondriaan','Een vlakverdeling heeft 8 rechthoeken. Vier ervan kleur je rood, geel, blauw en zwart (elke kleur één keer), de rest blijft wit.<ol><li>Eén mogelijkheid: rood in vlak 3, geel in 5, blauw in 1, zwart in 8.</li><li>Rood kan in 8 vlakken, geel dan nog in 7, blauw in 6, zwart in 5.</li><li>De kleuren zijn verschillend, dus de volgorde telt: 8 × 7 × 6 × 5 = <b>1680</b> (8 nPr 4).</li></ol>')}${VB('draaischijven','Drie schijven worden gedraaid. Schijf I heeft 2 vakjes A, schijf II 4 en schijf III 5. Drie keer A: 2 × 4 × 5 = <b>40</b>.')}<p>💡 Snap je het zo? Door één mogelijkheid op te schrijven zie je hoeveel keuzes er achter elkaar komen, en of de volgorde telt.</p>`,
+  ['Op hoeveel manieren kies je 3 verschillende vlakken uit 8 en kleur je ze rood, geel en blauw (elk één keer)?','336','56|512|24','Rood 8 vlakken, geel 7, blauw 6: 8 × 7 × 6 = 336. De kleuren verschillen, dus de volgorde telt. Fout: 56 = (8 boven 3), dan zijn de kleuren gelijk. 512 = 8³ laat twee kleuren in één vlak toe. 24 = 4!.']],
+ ['Alles of niets: 2ⁿ',`<p>Michiel staat bij een kraam met 6 verschillende spellen en mag er zoveel kopen als hij wil. Hoeveel mogelijkheden?</p><ol><li>Bij elk spel: kopen of niet kopen. Dat zijn 2 mogelijkheden.</li><li>Zes spellen: 2 × 2 × 2 × 2 × 2 × 2 = 2<sup>6</sup> = <b>64</b>.</li><li>Moet hij minstens één spel kopen? Dan valt ‘niets kopen’ af: 64 − 1 = <b>63</b>.</li></ol><p>Je kunt het ook met combinaties tellen: 0 of 1 of … of 6 spellen: (6 boven 0) + (6 boven 1) + … + (6 boven 6) = 1 + 6 + 15 + 20 + 15 + 6 + 1 = 64.</p>${VB('brailleschrift','Een braille-teken heeft 6 stippen, elk voelbaar of niet. Een teken zonder voelbare stip telt niet: 2<sup>6</sup> − 1 = <b>63</b> tekens.')}`,
+  ['Een pizza krijgt een selectie uit 5 verschillende toppings (ook geen enkele topping mag). Hoeveel pizza’s?','32','25|120|5','Bij elke topping: wel of niet, dus 2<sup>5</sup> = 32. Fout: 25 = 5² draait het om. 120 = 5! is een volgorde, maar toppings hebben geen volgorde. 5 telt maar één topping per pizza.']],
+ ['Eerst kiezen, dan verdelen',`${VB('escaperoom','Een team van 3 jongens en 4 meisjes. Vier verschillende taken worden uitgevoerd door 2 jongens en 2 meisjes.<ol><li>Welke 2 jongens? (3 boven 2) = 3.</li><li>Welke 2 meisjes? (4 boven 2) = 6.</li><li>De 4 gekozen mensen krijgen elk een andere taak: 4! = 24.</li><li>Alles <b>en</b>: 3 × 6 × 24 = <b>432</b>.</li></ol>')}<p>💡 Snap je het zo? Eerst kies je <b>wie</b> (de volgorde telt niet), dan <b>wie wat doet</b> (de volgorde telt wel).</p>${VB('Wie is de mol?','Zes kandidaten: één duo fotografeert kerken, een ander duo musea, één geeft aanwijzingen, één sorteert. (6 boven 2) × (4 boven 2) × 2 × 1 = 15 × 6 × 2 = <b>180</b>.')}`,
+  ['Uit 5 mensen kies je er 3, en die 3 krijgen elk een andere taak. Welke berekening klopt?','(5 nCr 3) × 3!','5 nCr 3|5<sup>3</sup>|(5 nCr 3) + 3!','Kiezen: (5 boven 3) = 10 <b>en</b> taken verdelen: 3! = 6, samen 60 (= 5 nPr 3). Fout: alleen 5 nCr 3 vergeet de taken. 5³ is met herhaling. Optellen hoort bij ‘of’.']],
+ ['De complementregel: totaal min wat niet mag',`<p>Bij <b>minstens één</b> is het vaak makkelijker om te tellen wat níet mag, en dat van het totaal af te halen.</p>${VB('schoolkrant','Een redactie heeft 6 vierdeklassers en 8 vijfdeklassers. Een groep van 3 moet minstens één vijfdeklasser hebben.<ol><li>Alle groepen van 3: (14 boven 3) = 364.</li><li>Groepen zonder vijfdeklasser (alleen vierdeklassers): (6 boven 3) = 20.</li><li>Minstens één vijfdeklasser: 364 − 20 = <b>344</b>.</li></ol>')}${VB('afdelingen','6 nieuwe medewerkers worden verdeeld over 6 afdelingen, maar niet allemaal op dezelfde. Totaal 6<sup>6</sup> = 46&#8239;656, min de 6 keer dat iedereen op één afdeling zit: <b>46&#8239;650</b>.')}<p>Let op: 8 × (13 boven 2) is fout. Dan tel je groepen met twee vijfdeklassers dubbel.</p>`,
+  ['Een groepje van 3 komt uit 10 jongens en 5 meisjes. Hoeveel groepjes hebben minstens één meisje?','(15 nCr 3) − (10 nCr 3)','(15 nCr 3) − (5 nCr 3)|5 × (14 nCr 2)|15 nCr 3','Totaal min ‘geen meisje’ (alleen jongens): 455 − 120 = 335. Fout: (5 nCr 3) zijn de groepjes met alleen meisjes, die wil je juist houden. 5 × (14 nCr 2) telt groepjes met meer meisjes dubbel. 15 nCr 3 zonder aftrekken telt ook groepjes zonder meisje.']],
+ ['Naast elkaar: maak er een blokje van',`<p>Janita heeft 6 genummerde moestuinbakken voor 6 gewassen. Wortels en uien moeten naast elkaar.</p><ol><li>Plak wortels en uien aan elkaar tot één blokje.</li><li>Nu zet je 5 dingen op volgorde (het blokje en 4 gewassen): 5! = 120.</li><li>In het blokje kan het wortels-uien of uien-wortels: × 2.</li><li>Aantal = 120 × 2 = <b>240</b>.</li></ol><p>Zonder eis waren het 6! = 720 volgordes. Door de eis vallen er 720 − 240 = 480 af.</p>${VB('vaste plek','Een serie van 8 afleveringen in willekeurige volgorde, maar ‘The Heist’ altijd als laatste. De laatste plek ligt vast, de andere 7 vrij: 7! = <b>5040</b>.')}`,
+  ['Vijf vrienden gaan op een rij. Anna en Bram willen naast elkaar staan. Hoeveel rijen?','48','24|120|96','Blokje AB + 3 anderen = 4 dingen: 4! = 24, en binnen het blokje 2 volgordes: 24 × 2 = 48. Fout: 24 vergeet BA. 120 = 5! is zonder eis. 96 = 48 × 2 telt het blokje twee keer om.']],
+ ['Meer dan twee soorten',`${VB('feestverlichting','19 lampjes, elk groen, rood of uit: elke lamp 3 mogelijkheden, dus 3<sup>19</sup> = 1&#8239;162&#8239;261&#8239;467 situaties.')}<ul><li>Branden ze allemaal, met precies 5 rood? Dan is het weer een rijtje van twee soorten (rood/groen): (19 boven 5) = 11&#8239;628.</li><li>Minder dan 3 rood (en alles brandt): (19 boven 0) + (19 boven 1) + (19 boven 2) = 1 + 19 + 171 = 191.</li></ul>${VB('drie soorten verdelen','8 klusjes: het jongste kind doet er 2, het middelste 2 en het oudste de rest (4). Kies eerst 2 uit 8, dan 2 uit de 6 die over zijn: (8 boven 2) × (6 boven 2) = 28 × 15 = <b>420</b>.')}`,
+  ['Een rij van 4 lampjes, elk rood, groen of uit. Hoeveel situaties?','81','64|12|24','Elk lampje 3 mogelijkheden, 4 lampjes: 3<sup>4</sup> = 81. Fout: 64 = 4³ draait het om. 12 = 3 × 4. 24 = 4!.']],
+ ['Puzzelen: de vier stappen van Pólya',`<p>Sommige telproblemen passen niet bij één vaste techniek. De Hongaarse wiskundige <b>George Pólya</b> (1887-1985) onderzocht hoe goede probleemoplossers te werk gaan. Hij noemt vier stappen:</p><ol><li><b>Begrijp het probleem.</b> Wat wordt er gevraagd? Wat mag wel en wat niet? Schrijf een voorbeeld op.</li><li><b>Puzzel op een aanpak.</b> Lijkt het op iets wat je kent? Kun je het opsplitsen? Begin klein.</li><li><b>Voer je aanpak uit.</b> Reken netjes, systematisch, zonder dingen over te slaan.</li><li><b>Reflecteer.</b> Klopt het antwoord? Kan het op een andere manier? Heb je niets dubbel geteld?</li></ol>`,
+  ['Wat doe je bij de vierde stap van Pólya?','terugkijken of je aanpak en antwoord kloppen','het probleem begrijpen|op een aanpak puzzelen|de aanpak uitvoeren','Stap 4 is reflecteren: klopt het, heb je niets vergeten of dubbel geteld? Begrijpen is stap 1, puzzelen stap 2, uitvoeren stap 3.']],
+ ['Pólya in actie: vierkanten tellen',`<p>Hoeveel vierkanten zitten er in een rooster van 4 bij 4 vakjes?</p><ol><li><b>Begrijpen:</b> niet alleen de kleine vakjes tellen, ook grotere vierkanten van 2 × 2, 3 × 3 en 4 × 4 vakjes.</li><li><b>Aanpak:</b> tel per maat apart (situaties!).</li><li><b>Uitvoeren:</b><ul><li>1 × 1: 4 × 4 = 16</li><li>2 × 2: 3 × 3 = 9</li><li>3 × 3: 2 × 2 = 4</li><li>4 × 4: 1</li></ul>Samen 16 + 9 + 4 + 1 = <b>30</b>.</li><li><b>Reflecteren:</b> een 2 × 2-vierkant kan op 3 plekken naast elkaar en op 3 plekken onder elkaar. Dat klopt.</li></ol>${VB('hardloopschema','Levi loopt elke week op 3 vaste dagen, nooit twee dagen achter elkaar (ook niet zondag en maandag, want de volgende week loopt door). Systematisch opschrijven: ma-wo-vr, ma-wo-za, ma-do-za, di-do-za, di-do-zo, di-vr-zo, wo-vr-zo: <b>7</b> schema’s.')}`,
+  ['Hoeveel vierkanten zitten er in een rooster van 3 bij 3 vakjes?','14','9|13|10','1 × 1: 9, 2 × 2: 4, 3 × 3: 1. Samen 14. Fout: 9 telt alleen de kleine vakjes. 13 vergeet het grote vierkant, 10 vergeet de 2 × 2-vierkanten.']],
+ ['Pólya in actie: zeeslag',`<p>Op een veld van 3 bij 3 hokjes zet je één boot van 2 hokjes (niet schuin) en twee gelijke bootjes van 1 hokje.</p><ol><li><b>Begrijpen:</b> de twee kleine bootjes zijn gelijk, dus hun volgorde telt niet.</li><li><b>Aanpak:</b> eerst de grote boot, dan de kleintjes.</li><li><b>Uitvoeren:</b><ul><li>Grote boot liggend: 3 rijen × 2 plekken = 6. Staand ook 6. Samen 12.</li><li>Er blijven 7 hokjes over voor 2 gelijke bootjes: (7 boven 2) = 21.</li><li>12 × 21 = <b>252</b>.</li></ul></li><li><b>Reflecteren:</b> waren de kleine bootjes verschillend, dan was het 12 × 7 × 6 = 504, precies 2 keer zo veel. Klopt.</li></ol>`,
+  ['Op een veld van 2 bij 3 hokjes (6 hokjes) zet je 2 gelijke bootjes van 1 hokje. Hoeveel opstellingen?','15','30|36|12','2 hokjes kiezen uit 6, gelijke bootjes dus zonder volgorde: (6 boven 2) = 15. Fout: 30 = 6 × 5 telt de volgorde mee. 36 = 6² laat beide in hetzelfde hokje toe. 12 = 6 × 2.']],
+ ['Overzicht: het hele hoofdstuk',`<table class="gt"><tr><th>herken je …</th><th>dan …</th><th>voorbeeld</th></tr><tr><td>keuzes na elkaar</td><td>vermenigvuldigen</td><td>5 × 4 × 3 = 60</td></tr><tr><td>situaties (of, minstens)</td><td>optellen</td><td>84 + 126</td></tr><tr><td>mag vaker</td><td>n<sup>k</sup></td><td>9<sup>5</sup></td></tr><tr><td>alles op volgorde</td><td>n!</td><td>8! = 40&#8239;320</td></tr><tr><td>k uit n, volgorde telt</td><td>n nPr k</td><td>8 × 7 × 6</td></tr><tr><td>k uit n, volgorde telt niet</td><td>n nCr k</td><td>(8 boven 5) = 56</td></tr><tr><td>twee soorten op n plekken</td><td>(n boven k), of 2<sup>n</sup> als alles mag</td><td>(16 boven 4)</td></tr><tr><td>route in een rooster</td><td>(b+h boven h)</td><td>(8 boven 4) = 70</td></tr><tr><td>minstens één</td><td>totaal − geen</td><td>364 − 20</td></tr><tr><td>naast elkaar</td><td>blokje, × volgorde in het blokje</td><td>5! × 2</td></tr><tr><td>past nergens bij</td><td>Pólya: begrijp, puzzel, voer uit, reflecteer</td><td>vierkanten tellen</td></tr></table>`]
+]}
+];
+
+const POD={};
+const MCQ={
+'4.1':[
+['Een restaurant heeft 4 voorgerechten, 5 hoofdgerechten en 3 nagerechten. Hoeveel driegangendiners zijn er?','60','12|20|15',
+ 'Voorgerecht <b>en</b> hoofdgerecht <b>en</b> nagerecht: 4 × 5 × 3 = 60.<br>Fout: 12 = 4 + 5 + 3 (optellen, maar je kiest alle drie). 20 = 4 × 5 vergeet het nagerecht. 15 = 5 × 3 vergeet het voorgerecht.',
+ 'Je kiest drie dingen na elkaar. Bij ‘en’: vermenigvuldigen.'],
+['Een menu heeft 2 voorgerechten, 3 hoofdgerechten en 3 nagerechten. Je neemt een twee- of een driegangendiner (tweegangen = zonder nagerecht). Welke berekening hoort hierbij?','2 × 3 + 2 × 3 × 3','2 × 3 × 2 × 3 × 3|2 + 3 + 3|2 × 3 × 3',
+ 'Twee situaties: tweegangen (2 × 3 = 6) <b>of</b> driegangen (2 × 3 × 3 = 18). Samen 24.<br>Fout: de twee situaties vermenigvuldigen hoort bij ‘en’, maar je eet maar één diner. 2 + 3 + 3 telt losse gerechten. 2 × 3 × 3 vergeet de tweegangendiners.',
+ 'Zoek het woordje ‘of’: dat zijn twee situaties. Reken ze apart uit en tel op.'],
+['Wat doe je volgens de vuistregel bij het woordje <b>en</b>?','vermenigvuldigen','optellen|aftrekken|delen',
+ 'Bij <b>en</b> vermenigvuldig je (vermenigvuldigingsregel), bij <b>of</b> tel je op (somregel).<br>Aftrekken en delen horen bij geen van deze twee vuistregels.',
+ 'Denk aan het menu: salade en vlees en ijs → 2 × 3 × 3.'],
+['Hoeveel pincodes van 4 cijfers zijn er als cijfers vaker mogen voorkomen? Welke berekening?','10<sup>4</sup>','10 × 9 × 8 × 7|4<sup>10</sup>|10 × 4',
+ 'Elke plek heeft 10 keuzes (0 t/m 9), 4 plekken: 10<sup>4</sup> = 10&#8239;000.<br>Fout: 10 × 9 × 8 × 7 is zonder herhaling. 4<sup>10</sup> draait het om. 10 × 4 telt geen combinaties van plekken.',
+ 'Mag een cijfer vaker? Dan heeft elke plek evenveel keuzes: keuzes<sup>plekken</sup>.'],
+['Hoeveel pincodes van 4 cijfers bestaan uit vier <b>verschillende</b> cijfers?','5040','10&#8239;000|210|40',
+ 'Zonder herhaling: 10 × 9 × 8 × 7 = 5040.<br>Fout: 10&#8239;000 = 10<sup>4</sup> is met herhaling. 210 = (10 boven 4), maar bij een pincode telt de volgorde. 40 = 10 × 4.',
+ 'Zonder herhaling: elke plek één keuze minder dan de vorige.'],
+['Een oud kenteken heeft de vorm XX-99-99 (X = een van de 26 letters, 9 = een cijfer). Welke berekening geeft het aantal kentekens?','26² × 10<sup>4</sup>','26 × 25 × 10 × 9 × 8 × 7|26² + 10<sup>4</sup>|2 × 26 + 4 × 10',
+ 'Letters en cijfers mogen vaker: 26 × 26 × 10 × 10 × 10 × 10 = 6&#8239;760&#8239;000.<br>Fout: 26 × 25 × … is zonder herhaling. Optellen hoort bij ‘of’, maar je kiest letters <b>en</b> cijfers.',
+ 'Tel per plek het aantal keuzes. Mogen letters en cijfers vaker voorkomen?'],
+['Een vlag heeft 3 banen en je kiest uit 6 kleuren. Alle banen moeten een andere kleur hebben. Hoeveel vlaggen?','120','216|150|18',
+ '6 × 5 × 4 = 120.<br>Fout: 216 = 6³ (kleuren mogen vaker). 150 = 6 × 5 × 5 (alleen buren verschillend). 18 = 6 × 3.',
+ 'Alle drie verschillend: zonder herhaling, steeds één kleur minder.'],
+['Een vlag heeft 3 banen en je kiest uit 6 kleuren. Banen die naast elkaar liggen mogen niet dezelfde kleur hebben. Hoeveel vlaggen?','150','120|216|180',
+ '6 × 5 × 5 = 150: de derde baan mag niet de kleur van de middelste hebben, maar wel die van de eerste.<br>Fout: 120 = 6 × 5 × 4 (dan mag de derde ook niet de kleur van de eerste). 216 = 6³ (alles mag). 180 = 6 × 5 × 6 (de derde mag dan ook de kleur van de middelste).',
+ 'Kijk per baan alleen naar de baan er vlak voor.'],
+['Je gooit 3 keer met een dobbelsteen. Bij hoeveel uitkomsten gooi je geen enkele keer een 6?','125','60|216|91',
+ 'Elke worp 5 mogelijkheden (1 t/m 5), met herhaling: 5³ = 125.<br>Fout: 60 = 5 × 4 × 3 (dan mag een getal niet terugkomen). 216 = 6³ zijn alle uitkomsten. 91 = 216 − 125 is het aantal mét minstens één 6.',
+ 'Hoeveel ogen mag elke worp hebben? Mag hetzelfde getal vaker?'],
+['Je maakt getallen van 3 cijfers met de cijfers 1 t/m 5, elk cijfer één keer. Hoeveel getallen?','60','125|15|10',
+ '5 × 4 × 3 = 60.<br>Fout: 125 = 5³ is met herhaling. 15 = 5 × 3. 10 = (5 boven 3), maar 123 en 321 zijn verschillende getallen, dus de volgorde telt.',
+ 'Zonder herhaling: 5 keuzes, dan 4, dan 3.'],
+['Getallen van 3 cijfers met de cijfers 1 t/m 5, elk cijfer één keer, en groter dan 300. Welke berekening?','3 × 4 × 3','5 × 4 × 3|3 × 5 × 5|3 × 4 × 4',
+ 'Eerste cijfer 3, 4 of 5 (3), dan nog 4, dan 3: 36.<br>Fout: 5 × 4 × 3 vergeet de eis. 3 × 5 × 5 is met herhaling. 3 × 4 × 4 haalt bij het derde cijfer niet nog een cijfer weg.',
+ 'Begin met de plek waar een eis op zit: het eerste cijfer.'],
+['Een kast heeft 3 breedtes en 2 kleuren. De deur is van hout (4 kleuren) of van glas. Welke berekening geeft het aantal kasten?','3 × 2 × (4 + 1)','3 × 2 × 4 × 1|3 + 2 + 4 + 1|3 × 2 + 4 + 1',
+ 'Deur: hout <b>of</b> glas = 4 + 1 = 5 keuzes. Breedte <b>en</b> kleur <b>en</b> deur: 3 × 2 × 5 = 30.<br>Fout: 3 × 2 × 4 × 1 vermenigvuldigt hout en glas, alsof de kast beide deuren heeft. De andere twee tellen keuzes op die je allemaal maakt.',
+ 'Reken eerst uit hoeveel deuren er zijn (of = plus). Daarna en = keer.'],
+['Je kijkt een film (5 keuzes) of je maakt een wandeling (3 keuzes) en speelt daarna een spel (4 keuzes). Hoeveel mogelijkheden?','17','60|12|32',
+ 'Film: 5 <b>of</b> wandeling-en-spel: 3 × 4 = 12. Samen 5 + 12 = 17.<br>Fout: 60 = 5 × 3 × 4 (je doet niet alles). 12 = 5 + 3 + 4 (de ‘en’ tussen wandeling en spel vergeten). 32 = (5 + 3) × 4 (na de film speel je geen spel).',
+ 'Twee situaties: film, of wandeling en spel. Reken binnen een situatie met keer.'],
+['Van A naar B gaan 3 wegen, van B naar C gaan 2 wegen, en er is ook 1 weg die direct van A naar C gaat. Hoeveel routes van A naar C?','7','6|12|5',
+ 'Via B: 3 × 2 = 6, <b>of</b> direct: 1. Samen 7.<br>Fout: 6 vergeet de directe weg. 12 = 3 × 2 × 2. 5 = 3 + 2 (optellen waar je moet vermenigvuldigen).',
+ 'Via B of direct: twee situaties. Via B is ‘en’.'],
+['Een toets krijgt één opgave uit elke paragraaf. Paragraaf 1 heeft 4 opgaven, paragraaf 2 heeft 3 en paragraaf 3 heeft 5. Hoeveel toetsen?','60','12|20|3',
+ 'Opgave uit 1 <b>en</b> uit 2 <b>en</b> uit 3: 4 × 3 × 5 = 60.<br>Fout: 12 = 4 + 3 + 5. 20 = 4 × 5 vergeet paragraaf 2. 3 is het aantal paragrafen.',
+ 'Uit elke paragraaf één: dat is en … en … en.'],
+['Drie vrienden kiezen elk een ijsje uit 8 smaken. Ze mogen dezelfde smaak nemen. Hoeveel mogelijkheden?','512','336|24|11',
+ 'Met herhaling: 8 × 8 × 8 = 8³ = 512.<br>Fout: 336 = 8 × 7 × 6 is zonder herhaling. 24 = 8 × 3 en 11 = 8 + 3 tellen de keuzes niet goed.',
+ 'Mag een smaak vaker? Dan blijft het aantal keuzes steeds 8.'],
+['Een code van 3 letters uit a t/m f, waarbij nooit twee dezelfde letters naast elkaar staan. Hoeveel codes?','150','120|216|180',
+ '6 × 5 × 5 = 150: de derde letter mag niet gelijk zijn aan de tweede, maar wel aan de eerste.<br>Fout: 120 = 6 × 5 × 4 (alles verschillend, te streng). 216 = 6³ (alles mag). 180 = 6 × 5 × 6.',
+ 'Let alleen op de letter er vlak voor.'],
+['Je gooit 4 keer met een dobbelsteen. Bij hoeveel uitkomsten zijn alle vier de ogenaantallen verschillend?','360','1296|15|750',
+ '6 × 5 × 4 × 3 = 360.<br>Fout: 1296 = 6<sup>4</sup> zijn alle uitkomsten. 15 = (6 boven 4) vergeet de volgorde van de worpen. 750 = 6 × 5 × 5 × 5 is ‘nooit twee keer achter elkaar hetzelfde’.',
+ 'Alle verschillend = zonder herhaling.'],
+['Roel gooit 4 keer met een dobbelsteen. Welke situatie komt het <b>vaakst</b> voor?','nooit twee keer achter elkaar hetzelfde','alle vier verschillend|geen enkele keer een 6|ze komen alle drie even vaak voor',
+ 'Nooit twee keer achter elkaar hetzelfde: 6 × 5 × 5 × 5 = 750. Geen 6: 5<sup>4</sup> = 625. Alle verschillend: 6 × 5 × 4 × 3 = 360. Dus 750 is het meest.',
+ 'Reken ze alle drie uit en vergelijk.'],
+['Je kiest een shirt (4) en een broek (3) en schoenen (2), óf een jurk (5) met schoenen (2). Hoeveel outfits?','34','240|16|29',
+ 'Shirt-broek-schoenen: 4 × 3 × 2 = 24, <b>of</b> jurk-schoenen: 5 × 2 = 10. Samen 34.<br>Fout: 240 vermenigvuldigt de twee situaties. 16 telt alles op. 29 = 24 + 5 vergeet de schoenen bij de jurk.',
+ 'Twee situaties (óf). Per situatie vermenigvuldigen, daarna optellen.'],
+['Een menu heeft 2 voorgerechten, 3 hoofdgerechten (waarvan 1 vis) en 3 nagerechten. Hoeveel driegangendiners zijn er zonder vis?','12','18|6|17',
+ 'Haal vis weg: 2 hoofdgerechten over. 2 × 2 × 3 = 12.<br>Fout: 18 is mét vis. 6 = 2 × 3 vergeet een gang. 17 = 18 − 1, maar vis zit in meer dan één diner (in 2 × 3 = 6 diners).',
+ 'Streep de vis door in het wegendiagram en vermenigvuldig opnieuw.']
+],
+'4.2':[
+['Hoeveel is 5!?','120','25|15|5',
+ '5! = 5 × 4 × 3 × 2 × 1 = 120.<br>Fout: 25 = 5². 15 = 5 + 4 + 3 + 2 + 1 (optellen in plaats van vermenigvuldigen). 5 is gewoon 5.',
+ 'Faculteit: vermenigvuldig alle getallen van 5 omlaag tot 1.'],
+['Op hoeveel manieren zet je 7 verschillende boeken naast elkaar op een plank?','5040','49|28|823&#8239;543',
+ 'Alle 7 op volgorde: 7! = 5040.<br>Fout: 49 = 7². 28 = 7 + 6 + … + 1. 823&#8239;543 = 7<sup>7</sup> zou betekenen dat een boek op meer plekken tegelijk staat.',
+ 'Alles op volgorde zetten: faculteit.'],
+['Tien lopers doen mee aan een race. Op hoeveel manieren kunnen goud, zilver en brons verdeeld worden? Welke berekening?','10 × 9 × 8','10<sup>3</sup>|10 nCr 3|10!',
+ 'Zonder herhaling en de volgorde telt: 10 nPr 3 = 720.<br>Fout: 10³ laat iemand twee medailles winnen. 10 nCr 3 vergeet dat goud iets anders is dan brons. 10! zet alle tien op volgorde.',
+ 'Kan iemand twee medailles winnen? Maakt het uit wie goud heeft?'],
+['Uit 10 leerlingen kies je een groepje van 3 voor een werkstuk. Welke berekening?','10 nCr 3','10 × 9 × 8|10<sup>3</sup>|3!',
+ 'In een groepje heeft niemand een eigen rol: combinaties, (10 boven 3) = 120.<br>Fout: 10 × 9 × 8 telt elk groepje 6 keer (alle volgordes). 10³ is met herhaling. 3! is alleen het aantal volgordes van 3 mensen.',
+ 'Maakt de volgorde uit? In een groepje niet.'],
+['Hoeveel is (6 boven 2)?','15','30|12|36',
+ '(6 × 5) ÷ 2! = 15.<br>Fout: 30 = 6 nPr 2 (met volgorde). 12 = 6 × 2. 36 = 6².',
+ 'Gebruik nCr op de GR: MATH → PROB → nCr.'],
+['Hoeveel is 8 nPr 3?','336','56|512|24',
+ '8 × 7 × 6 = 336.<br>Fout: 56 = 8 nCr 3 (zonder volgorde). 512 = 8³ (met herhaling). 24 = 8 × 3.',
+ 'nPr: begin bij 8 en vermenigvuldig 3 getallen, steeds één lager.'],
+['Een klas van 25 kiest een voorzitter en een secretaris. Op hoeveel manieren?','600','300|625|50',
+ 'Twee verschillende functies, dus de volgorde telt: 25 × 24 = 600.<br>Fout: 300 = (25 boven 2), dan zijn de functies gelijk. 625 = 25² laat één persoon beide functies doen. 50 = 25 × 2.',
+ 'Zijn de twee functies verschillend? Dan telt de volgorde.'],
+['Een klas van 25 kiest twee leerlingen die samen naar een vergadering gaan. Op hoeveel manieren?','300','600|625|50',
+ 'Twee gelijke rollen: de volgorde telt niet. (25 boven 2) = 300.<br>Fout: 600 = 25 × 24 telt Anna-Bram en Bram-Anna dubbel. 625 is met herhaling. 50 = 25 × 2.',
+ 'Hebben de twee een eigen functie? Zo niet: combinaties.'],
+['Vijf <b>gelijke</b> bioscoopbonnen worden verloot onder 30 leerlingen (niemand krijgt er twee). Welke soort telling is dit?','combinaties','permutaties|met herhaling|faculteit',
+ 'De bonnen zijn gelijk, dus het maakt niet uit wie de ‘eerste’ bon krijgt: (30 boven 5).<br>Fout: permutaties zouden bij vijf verschillende prijzen horen. Met herhaling kan niet, want niemand krijgt er twee. Faculteit zet alle 30 op volgorde.',
+ 'Zijn de bonnen verschillend of gelijk?'],
+['Je maakt een eigen top-3 uit de top-10 van een hitlijst. Hoeveel top-3’s?','10 nPr 3 = 720','10 nCr 3 = 120|10³ = 1000|3! = 6',
+ 'Een top-3 heeft een volgorde en een nummer kan er maar één keer in: permutaties.<br>Fout: nCr vergeet de volgorde. 10³ laat hetzelfde nummer op meer plekken toe. 3! zet alleen 3 nummers op volgorde.',
+ 'Is nummer 1 iets anders dan nummer 3? En mag een nummer twee keer?'],
+['Waarom deel je bij een schoonmaakploeg van 3 uit 5 de 5 × 4 × 3 door 3!?','omdat elke ploeg in 3! = 6 volgordes is meegeteld','omdat er 3 plekken zijn|omdat de GR dat zo doet|omdat er 3 leerlingen afvallen',
+ 'In 5 × 4 × 3 = 60 staat ABC, ACB, BAC, BCA, CAB en CBA apart, maar dat is dezelfde ploeg. Elke ploeg telt 3! = 6 keer, dus 60 ÷ 6 = 10.<br>Fout: je deelt niet door 3 (het aantal plekken) maar door 3! (het aantal volgordes). Er vallen hier 2 leerlingen af, niet 3.',
+ 'Schrijf alle volgordes van A, B en C op. Hoeveel zijn het?'],
+['Welke is gelijk aan (10 boven 3)?','(10 boven 7)','(10 boven 4)|(7 boven 3)|10 nPr 3',
+ '(n boven k) = (n boven n−k), en 10 − 3 = 7. Beide zijn 120.<br>Fout: (10 boven 4) = 210. (7 boven 3) = 35. 10 nPr 3 = 720 (met volgorde).',
+ '3 kiezen die mee mogen = 7 kiezen die thuisblijven.'],
+['Een klas heeft 12 jongens en 15 meisjes. Hoeveel groepjes van 2 jongens en 2 meisjes?','6930','171|17&#8239;550|27&#8239;720',
+ '(12 boven 2) × (15 boven 2) = 66 × 105 = 6930.<br>Fout: 171 = 66 + 105 (optellen, maar je kiest jongens <b>en</b> meisjes). 17&#8239;550 = (27 boven 4) let niet op jongens en meisjes. 27&#8239;720 = 12 × 11 × 15 × 14 telt de volgorde mee.',
+ 'Kies apart de jongens en de meisjes (combinaties) en vermenigvuldig.'],
+['Kees leent 3 of 4 platen uit 9 popplaten. Welke berekening?','(9 nCr 3) + (9 nCr 4)','(9 nCr 3) × (9 nCr 4)|9 nCr 7|(9 nPr 3) + (9 nPr 4)',
+ 'Drie <b>of</b> vier: optellen. Lenen: zonder volgorde. 84 + 126 = 210.<br>Fout: vermenigvuldigen hoort bij ‘en’. 9 nCr 7 is 7 platen lenen. nPr telt de volgorde mee, maar een stapel geleende platen heeft geen volgorde.',
+ 'Of = plus. Telt de volgorde bij lenen?'],
+['Een groep van 5 uit 16 meisjes en 13 jongens moet minstens 4 meisjes hebben. Hoeveel groepen?','28&#8239;028','23&#8239;660|4368|118&#8239;755',
+ '4 meisjes en 1 jongen: (16 boven 4) × 13 = 23&#8239;660, <b>of</b> 5 meisjes: (16 boven 5) = 4368. Samen 28&#8239;028.<br>Fout: 23&#8239;660 vergeet ‘5 meisjes’. 4368 vergeet ‘4 meisjes’. 118&#8239;755 = (29 boven 5) zijn alle groepen.',
+ 'Minstens 4 = 4 of 5. Reken beide situaties uit en tel op.'],
+['Je maakt een top-3 met platen uit één genre. Er zijn 4 rockplaten en 5 popplaten. Hoeveel top-3’s?','84','504|14|1440',
+ 'Rock: 4 × 3 × 2 = 24, <b>of</b> pop: 5 × 4 × 3 = 60. Samen 84.<br>Fout: 504 = 9 × 8 × 7 mengt genres. 14 = (4 boven 3) + (5 boven 3) vergeet de volgorde van een top-3. 1440 = 24 × 60 vermenigvuldigt de situaties.',
+ 'Top-3 = volgorde telt. Uit één genre: rock of pop.'],
+['Een vereniging met 9 leden, waarvan 5 vrouwen, kiest een voorzitter, secretaris en penningmeester, alleen uit de vrouwen. Op hoeveel manieren?','60','10|504|125',
+ 'Drie verschillende functies uit 5 vrouwen: 5 × 4 × 3 = 60.<br>Fout: 10 = (5 boven 3) vergeet dat de functies verschillen. 504 = 9 × 8 × 7 laat ook mannen toe. 125 = 5³ laat één vrouw meer functies doen.',
+ 'Verschillende functies: de volgorde telt.'],
+['Drie kinderen grabbelen elk één prijs uit een grabbelton met 10 verschillende prijzen. Hoeveel mogelijkheden?','720','120|1000|30',
+ 'De kinderen zijn verschillend, dus wie welke prijs krijgt maakt uit: 10 × 9 × 8 = 720.<br>Fout: 120 = (10 boven 3) telt alleen welke prijzen eruit gaan. 1000 = 10³ laat een prijs twee keer gegrabbeld worden. 30 = 10 × 3.',
+ 'Maakt het uit welk kind welke prijs heeft?'],
+['Er zijn 56 manieren om uit n leerlingen een voorzitter en een secretaris te kiezen. Hoe groot is n?','8','7|9|28',
+ 'n × (n − 1) = 56. Proberen: 8 × 7 = 56, dus n = 8.<br>Fout: 7 × 6 = 42 en 9 × 8 = 72. 28 = 56 ÷ 2 is het aantal tweetallen zonder functies.',
+ 'Zoek twee opeenvolgende getallen die vermenigvuldigd 56 geven.'],
+['Wat betekent 16 nPr 8?','het aantal rangschikkingen van 8 dingen uit 16','het aantal groepjes van 8 uit 16|16 × 8|16<sup>8</sup>',
+ '16 nPr 8 = 16 × 15 × … × 9: je kiest 8 uit 16 en de volgorde telt (bijvoorbeeld een top-8).<br>Fout: groepjes (zonder volgorde) is nCr. 16 × 8 en 16<sup>8</sup> zijn heel andere getallen.',
+ 'P staat voor permutatie: rangschikking, de volgorde telt.'],
+['Een top-5 kiezen uit 12 bordspellen. Hoeveel top-5’s?','95&#8239;040','792|248&#8239;832|60',
+ '12 nPr 5 = 12 × 11 × 10 × 9 × 8 = 95&#8239;040.<br>Fout: 792 = (12 boven 5) vergeet de volgorde. 248&#8239;832 = 12<sup>5</sup> laat een spel vaker voorkomen. 60 = 12 × 5.',
+ 'Top-5: volgorde telt, geen herhaling.']
+],
+'4.3':[
+['Hoeveel rijtjes kun je maken met 3 A’s en 2 B’s?','10','6|32|5',
+ '5 plekken, kies er 2 voor de B’s: (5 boven 2) = 10.<br>Fout: 6 = 3 × 2. 32 = 2<sup>5</sup> zijn alle rijtjes van 5 letters (ook met 4 A’s enzovoort). 5 is het aantal plekken.',
+ 'Kies de plekken voor de B’s (of de A’s): n nCr k.'],
+['Een stapel van 8 borden heeft 3 rode en 5 witte borden. Hoeveel stapels zijn er mogelijk?','56','336|256|15',
+ 'Kies 3 plekken voor rood uit 8: (8 boven 3) = 56.<br>Fout: 336 = 8 × 7 × 6 telt de volgorde van gelijke rode borden mee. 256 = 2<sup>8</sup> zijn alle stapels, ook met 4 rode. 15 = 3 × 5.',
+ 'Een rijtje van twee soorten: hoeveel plekken, hoeveel van één soort?'],
+['Een stapel van 10 borden, elk rood of wit (het aantal maakt niet uit). Welke berekening geeft het aantal stapels?','2<sup>10</sup>','10²|10!|10 × 2',
+ 'Elk bord 2 mogelijkheden, 10 borden: 2<sup>10</sup> = 1024.<br>Fout: 10² draait het om. 10! is voor 10 verschillende dingen op volgorde. 10 × 2 telt maar één bord met twee kleuren.',
+ 'Staat het aantal rode vast? Zo niet: elk bord 2 keuzes.'],
+['Je gooit 6 keer met een munt. Bij hoeveel series krijg je precies 2 keer kop?','15','64|30|12',
+ 'Kies welke 2 van de 6 worpen kop zijn: (6 boven 2) = 15.<br>Fout: 64 = 2<sup>6</sup> zijn alle series. 30 = 6 × 5 telt de twee kop-worpen op volgorde. 12 = 6 × 2.',
+ 'Rijtje van K’s en M’s met 2 K’s.'],
+['Waarom is (8 boven 3) gelijk aan (8 boven 5)?','plekken kiezen voor 3 A’s is hetzelfde als plekken kiezen voor de 5 B’s','omdat 3 + 5 = 8 altijd hetzelfde geeft|omdat de GR afrondt|dat is toeval',
+ 'Kies je de 3 plekken voor de A’s, dan liggen de 5 plekken voor de B’s vast, en andersom. Dus evenveel manieren: 56.<br>Het is geen toeval en geen afronding: (n boven k) = (n boven n−k) geldt altijd.',
+ 'Kies wie mee mag = kies wie thuisblijft.'],
+[`${figRooster(3,2)}Hoeveel routes zonder omweg zijn er van A (linksonder) naar B (rechtsboven) in dit rooster van 3 breed en 2 hoog?`,'10','6|32|5',
+ '5 stappen (3 rechts, 2 omhoog), kies welke 2 omhoog gaan: (5 boven 2) = 10.<br>Fout: 6 = 3 × 2. 32 = 2<sup>5</sup> telt ook routes die te ver gaan. 5 is alleen het aantal stappen.',
+ 'Een route is een rijtje van R’s en O’s. Hoeveel van elk?'],
+[`${figRooster(4,4)}Hoeveel routes zonder omweg zijn er van A naar B in dit rooster van 4 bij 4?`,'70','16|256|8',
+ '8 stappen, waarvan 4 omhoog: (8 boven 4) = 70.<br>Fout: 16 = 4 × 4. 256 = 2<sup>8</sup> telt elke stap als vrije keuze. 8 is het aantal stappen.',
+ 'Tel de stappen naar rechts en naar boven: (b+h boven h).'],
+['Hoeveel routes zonder omweg zijn er in een rooster van 5 blokken breed en 3 blokken hoog?','56','15|40|336',
+ '8 stappen, waarvan 3 omhoog: (8 boven 3) = 56.<br>Fout: 15 = 5 × 3. 40 = 5 × 8. 336 = 8 nPr 3 telt de volgorde van de omhoog-stappen mee, maar die zijn gelijk.',
+ 'Breedte + hoogte = aantal stappen. Kies welke omhoog gaan.'],
+['In een rooster van 4 breed en 3 hoog ligt P 2 blokken naar rechts en 1 omhoog vanaf A. Hoeveel routes zonder omweg gaan van A via P naar B?','18','9|35|36',
+ 'A → P: 3 stappen, 1 omhoog: (3 boven 1) = 3. P → B: nog 2 rechts en 2 omhoog: (4 boven 2) = 6. Samen 3 × 6 = 18.<br>Fout: 9 = 3 + 6 (via P is ‘en’). 35 = (7 boven 3) zijn alle routes, niet alleen via P. 36 = 6 × 6.',
+ 'Knip de route bij P in twee stukken en vermenigvuldig.'],
+['Een voetbalwedstrijd eindigt in 3-1. Hoeveel scoreverlopen zijn er mogelijk?','4','16|3|24',
+ 'Rijtje van 4 doelpunten met 1 voor de uitploeg: (4 boven 1) = 4.<br>Fout: 16 = 2<sup>4</sup> zijn alle verlopen met 4 doelpunten. 3 = het aantal thuisgoals. 24 = 4!.',
+ 'Elk doelpunt is T (thuis) of U (uit). Hoeveel U’s?'],
+['Bij een wedstrijd vallen in totaal 5 doelpunten. Hoeveel scoreverlopen zijn er mogelijk (de eindstand maakt niet uit)?','32','120|10|25',
+ 'Elk doelpunt thuis of uit: 2<sup>5</sup> = 32.<br>Fout: 120 = 5!. 10 = (5 boven 2) hoort bij één eindstand. 25 = 5².',
+ 'Staat de eindstand vast? Zo niet: elk doelpunt 2 keuzes.'],
+['Welke situatie kun je vertalen naar een rijtje van A’s en B’s?','een wachtwoord van 4 enen en 6 nullen','een rij tegels in drie kleuren|vier dobbelstenen met verschillende ogen|een pincode van 4 cijfers',
+ 'Bij het wachtwoord heeft elke plek twee soorten (1 of 0): (10 boven 4) = 210.<br>Fout: tegels in drie kleuren zijn drie soorten. Dobbelstenen en pincodes hebben 6 of 10 mogelijkheden per plek.',
+ 'Zijn er per plek precies twee soorten?'],
+['Een leeg fietsenrek heeft 8 plekken. Er worden 3 gelijke fietsen in gezet. Op hoeveel manieren?','56','336|256|24',
+ 'Elke plek is fiets of leeg: rijtje met 3 F’en en 5 L’en: (8 boven 3) = 56.<br>Fout: 336 = 8 × 7 × 6 behandelt de fietsen als verschillend. 256 = 2<sup>8</sup> laat het aantal fietsen vrij. 24 = 8 × 3.',
+ 'Plek = fiets of leeg. De fietsen zijn gelijk.'],
+['Een toets heeft 10 goed/fout-vragen. Op hoeveel manieren heb je er minstens 9 goed?','11','10|1024|2',
+ '9 goed: (10 boven 9) = 10, <b>of</b> 10 goed: 1. Samen 11.<br>Fout: 10 vergeet ‘alles goed’. 1024 = 2<sup>10</sup> zijn alle antwoordenrijen. 2 telt alleen de situaties.',
+ 'Minstens 9 = 9 of 10. Tel beide rijtjes op.'],
+['Je kiest 6 winnaars uit leerlingen en docenten. Er moeten meer leerlingen dan docenten zijn, maar niet alleen leerlingen. Welke situaties tel je?','5 L + 1 D en 4 L + 2 D','3 L + 3 D, 4 L + 2 D en 5 L + 1 D|4 L + 2 D, 5 L + 1 D en 6 L|alleen 4 L + 2 D',
+ 'Méér leerlingen en minstens 1 docent: 5 + 1 en 4 + 2.<br>Fout: 3 + 3 is evenveel, niet méér. 6 L is alleen leerlingen. Alleen 4 + 2 vergeet 5 + 1.',
+ 'Schrijf alle verdelingen van 6 op en streep weg wat niet mag.'],
+['Een team van 3 komt uit 2 guards, 4 centers en 3 forwards: hoogstens één center en minstens één guard. Hoeveel teams?','37','84|24|43',
+ '1G+2F: 6, 1G+1C+1F: 24, 2G+1F: 3, 2G+1C: 4. Samen 37.<br>Fout: 84 = (9 boven 3) zijn alle teams zonder eisen. 24 is maar één situatie. 43 telt een situatie dubbel of verkeerd.',
+ 'Schrijf alle situaties op (hoeveel G, C en F) en tel ze apart.'],
+['Je gooit met 5 dobbelstenen en hebt samen 29 ogen. Hoeveel worpen (per steen bekeken) zijn er?','5','1|10|6',
+ '29 = 6 + 6 + 6 + 6 + 5 is de enige mogelijkheid. De 5 kan op 5 plekken liggen: (5 boven 1) = 5.<br>Fout: 1 vergeet dat de 5 op elke steen kan liggen. 10 = (5 boven 2) hoort bij twee afwijkende stenen. 6 telt de vijf zessen mee.',
+ 'Wat moet er liggen om 29 te halen? Daarna: op welke plek ligt de afwijker?'],
+['Zes verschillende klusjes worden verdeeld over twee kinderen, elk precies 3. Op hoeveel manieren?','20','720|64|120',
+ 'Elk klusje is A (kind 1) of B (kind 2), met 3 A’s: (6 boven 3) = 20.<br>Fout: 720 = 6!. 64 = 2<sup>6</sup> laat de verdeling vrij (ook 6-0). 120 = 6 × 5 × 4.',
+ 'Rijtje van A’s en B’s: elk klusje krijgt een letter.'],
+['Je maakt getallen van 4 verschillende cijfers met de cijfers 3, 4, 5, 6, 7, 8. Hoeveel zijn er groter dan 5500?','216','180|360|240',
+ 'Begint met 6, 7 of 8: 3 × 5 × 4 × 3 = 180, <b>of</b> begint met 5 en tweede cijfer 6, 7 of 8: 1 × 3 × 4 × 3 = 36. Samen 216.<br>Fout: 180 vergeet de getallen die met 5 beginnen. 360 zijn alle getallen. 240 telt bij de 5-situatie te veel.',
+ 'Twee situaties: eerste cijfer groter dan 5, of eerste cijfer 5 en dan het tweede groter dan 5.'],
+['Drie stenen zijn gegooid met samen 16 ogen. Welke situaties zijn er (zonder volgorde)?','6-6-4 en 6-5-5','alleen 6-6-4|6-6-4, 6-5-5 en 5-5-6|6-5-5 en 4-6-6',
+ '18 − 16 = 2 ogen te weinig: één steen 2 minder (6-6-4) of twee stenen 1 minder (6-5-5).<br>Fout: alleen 6-6-4 vergeet 6-5-5. 5-5-6 is hetzelfde als 6-5-5. 4-6-6 is hetzelfde als 6-6-4, dus dan mis je een situatie.',
+ 'Hoeveel ogen mis je ten opzichte van allemaal zessen? Op hoeveel manieren kun je die missen?']
+],
+'4.4':[
+['Welke vraag staat níet in het rijtje vragen voor het kiezen van een aanpak?','Hoe groot is de kans dat het lukt?','Zijn herhalingen toegestaan?|Is het om te zetten naar rijtjes van A’s en B’s?|Moet je vermenigvuldigen of optellen?',
+ 'Het rijtje: keer of plus, herhaling, permutaties of combinaties, A’s en B’s, situaties. Kansen horen hier niet bij.',
+ 'Denk aan de vijf vragen uit Theorie A van 4.4.'],
+['Michiel mag bij een kraam met 6 verschillende spellen kopen wat hij wil (ook niets). Hoeveel mogelijkheden?','64','720|6|36',
+ 'Elk spel: wel of niet. 2<sup>6</sup> = 64.<br>Fout: 720 = 6! is een volgorde. 6 telt maar één spel. 36 = 6².',
+ 'Per spel twee keuzes: kopen of niet.'],
+['Michiel koopt minstens één van de 6 spellen. Hoeveel mogelijkheden?','63','64|6|57',
+ 'Alle mogelijkheden (2<sup>6</sup> = 64) min ‘niets kopen’: 63.<br>Fout: 64 telt ‘niets’ mee. 6 telt maar één spel. 57 = 64 − 7 trekt te veel af.',
+ 'Totaal min wat niet mag.'],
+['Vier van de 8 vlakken van een Mondriaan worden rood, geel, blauw en zwart (elk één keer). Welke berekening?','8 × 7 × 6 × 5','8 nCr 4|8<sup>4</sup>|4<sup>8</sup>',
+ 'Rood 8 vlakken, geel 7, blauw 6, zwart 5. De kleuren verschillen, dus de volgorde telt: 1680.<br>Fout: 8 nCr 4 alleen kiest de vlakken, niet welke kleur waar. 8<sup>4</sup> laat twee kleuren in één vlak. 4<sup>8</sup> geeft elk vlak een van 4 kleuren (ook geen wit).',
+ 'Schrijf één mogelijkheid op: welke kleur in welk vlak?'],
+['Een team van 3 jongens en 4 meisjes. Vier verschillende taken worden gedaan door 2 jongens en 2 meisjes. Hoeveel mogelijkheden?','432','18|24|840',
+ '(3 boven 2) × (4 boven 2) × 4! = 3 × 6 × 24 = 432.<br>Fout: 18 vergeet de taken te verdelen. 24 = 4! vergeet wie er gekozen wordt. 840 = (7 boven 4) × 4! let niet op 2 jongens en 2 meisjes.',
+ 'Eerst kiezen wie (nCr), daarna verdelen wie wat doet (4!).'],
+['Een groep van 3 uit 6 vierdeklassers en 8 vijfdeklassers moet minstens één vijfdeklasser hebben. Welke berekening klopt?','(14 nCr 3) − (6 nCr 3)','8 × (13 nCr 2)|14 nCr 3|8 nCr 3',
+ 'Complement: alle groepen (364) min groepen met alleen vierdeklassers (20) = 344.<br>Fout: 8 × (13 nCr 2) telt groepen met meer vijfdeklassers dubbel. 14 nCr 3 telt ook groepen zonder vijfdeklasser. 8 nCr 3 telt alleen groepen met drie vijfdeklassers.',
+ 'Minstens één: totaal min ‘geen enkele’.'],
+['Twaalf mensen schudden elkaar allemaal één keer de hand. Hoe vaak worden er handen geschud?','66','132|144|24',
+ 'Elke handdruk is een tweetal zonder volgorde: (12 boven 2) = 66.<br>Fout: 132 = 12 × 11 telt A-B en B-A apart. 144 = 12² laat mensen zichzelf een hand geven. 24 = 12 × 2.',
+ 'Een handdruk = een tweetal. Telt de volgorde?'],
+['Zes gewassen in 6 bakken op een rij; wortels en uien moeten naast elkaar. Hoeveel volgordes?','240','120|720|480',
+ 'Blokje wortels-uien + 4 andere = 5 dingen: 5! = 120, × 2 voor de volgorde in het blokje: 240.<br>Fout: 120 vergeet uien-wortels. 720 = 6! is zonder eis. 480 is het aantal dat afvalt.',
+ 'Plak de twee aan elkaar tot één blokje.'],
+['Vijf lampjes op een rij, elk rood, groen of uit. Hoeveel situaties?','243','125|15|32',
+ 'Elk lampje 3 mogelijkheden: 3<sup>5</sup> = 243.<br>Fout: 125 = 5³ draait het om. 15 = 3 × 5. 32 = 2<sup>5</sup> vergeet ‘uit’.',
+ 'Hoeveel mogelijkheden per lampje, en hoeveel lampjes?'],
+['Wat is volgens Pólya de tweede stap bij het oplossen van een probleem?','puzzel op een aanpak','begrijp het probleem|voer je aanpak uit|reflecteer op je oplossing',
+ 'De vier stappen: 1 begrijp het probleem, 2 puzzel op een aanpak, 3 voer je aanpak uit, 4 reflecteer.',
+ 'Eerst begrijpen, dan …'],
+['Wat hoort bij de laatste stap van Pólya?','nagaan of je antwoord klopt en of het ook anders kan','een voorbeeld opschrijven om het probleem te snappen|een aanpak bedenken|de berekening uitvoeren',
+ 'Stap 4 is reflecteren: klopt het, heb je niets dubbel geteld of vergeten?<br>Fout: een voorbeeld opschrijven hoort bij stap 1, een aanpak bedenken bij stap 2, uitrekenen bij stap 3.',
+ 'De vier stappen eindigen met terugkijken.'],
+['Hoeveel vierkanten (van alle maten) zitten er in een rooster van 3 bij 3 vakjes?','14','9|13|10',
+ '1 × 1: 9, 2 × 2: 4, 3 × 3: 1. Samen 14.<br>Fout: 9 zijn alleen de kleine vakjes. 13 vergeet het grote vierkant. 10 vergeet de 2 × 2-vierkanten.',
+ 'Tel per maat apart en tel op (situaties).'],
+['Je zet een paard en een toren op een schaakbord van 8 × 8, zo dat ze niet in dezelfde rij en niet in dezelfde kolom staan. Hoeveel manieren?','3136','4032|2016|56',
+ 'Rijen: paard 8, toren 7. Kolommen: paard 8, toren 7. 8 × 7 × 8 × 7 = 3136.<br>Fout: 4032 = 64 × 63 staat ook toe dat ze in dezelfde rij of kolom staan. 2016 = (64 boven 2) vergeet bovendien dat paard en toren verschillen. 56 telt alleen de rijen.',
+ 'Kies apart de rijen en de kolommen.'],
+['Een braille-teken heeft 6 stippen. Hoeveel tekens hebben precies 2 voelbare stippen?','15','30|12|64',
+ 'Kies 2 van de 6 stippen: (6 boven 2) = 15.<br>Fout: 30 = 6 × 5 telt de volgorde, maar twee stippen hebben geen volgorde. 12 = 6 × 2. 64 = 2<sup>6</sup> zijn alle tekens.',
+ 'Elke stip is voelbaar of niet: een rijtje van A’s en B’s.'],
+['Hoeveel braille-tekens zijn er in totaal (een teken zonder voelbare stip telt niet mee)?','63','64|36|720',
+ 'Elke stip 2 mogelijkheden: 2<sup>6</sup> = 64, min het lege teken: 63.<br>Fout: 64 telt het lege teken mee. 36 = 6². 720 = 6!.',
+ 'Alles-of-niets per stip, daarna wat niet mag eraf.'],
+['Van de letters van WISKUNDE (8 verschillende) maak je codes van 5 letters die beginnen met W en eindigen op N, elke letter één keer. Hoeveel codes?','120','6720|216|336',
+ 'W en N liggen vast; de middelste 3 plekken uit de 6 overige letters: 6 × 5 × 4 = 120.<br>Fout: 6720 = 8 nPr 5 vergeet de eis. 216 = 6³ is met herhaling. 336 = 8 × 7 × 6 haalt W en N niet weg.',
+ 'Zet de vaste letters eerst neer. Hoeveel letters zijn er nog over?'],
+['Twee piraten verdelen 2 goudstukken en 3 zilverstukken. Elk krijgt iets. Op hoeveel manieren?','10','12|6|32',
+ 'Piraat 1 krijgt 0, 1 of 2 goud (3) en 0 t/m 3 zilver (4): 12. Min ‘niets’ en ‘alles’: 10.<br>Fout: 12 telt ook de verdelingen waarin één piraat niets krijgt. 6 = 2 × 3. 32 = 2<sup>5</sup> doet alsof alle munten verschillend zijn.',
+ 'Tel hoeveel goud en hoeveel zilver de eerste piraat kan krijgen. Haal eraf wat niet mag.'],
+['Je plaatst 2 gelijke bootjes van 1 hokje in 5 lege hokjes. Hoeveel manieren?','10','20|25|5',
+ 'Gelijke bootjes, dus zonder volgorde: (5 boven 2) = 10.<br>Fout: 20 = 5 × 4 behandelt de bootjes als verschillend. 25 = 5² laat ze in hetzelfde hokje. 5 telt maar één bootje.',
+ 'Zijn de bootjes verschillend of gelijk?'],
+['Vier nieuwe medewerkers worden verdeeld over 3 afdelingen, maar niet allemaal op dezelfde afdeling. Hoeveel verdelingen?','78','81|60|64',
+ 'Elke medewerker 3 keuzes: 3<sup>4</sup> = 81, min de 3 verdelingen waarin iedereen op één afdeling zit: 78.<br>Fout: 81 vergeet de eis. 64 = 4³ draait de macht om, en 60 = 64 − 4 ook.',
+ 'Totaal min wat niet mag.'],
+['Een gezin van 5 gaat op een rij voor een foto, met de twee ouders aan de uiteinden. Hoeveel rijen?','12','120|6|24',
+ 'Ouders op de uiteinden: 2 manieren. De 3 kinderen in het midden: 3! = 6. Samen 2 × 6 = 12.<br>Fout: 120 = 5! is zonder eis. 6 vergeet dat de ouders kunnen wisselen. 24 = 4!.',
+ 'Zet eerst de mensen met een vaste plek neer.'],
+['Drie foto’s worden op volgorde gelegd, maar geen enkele foto ligt op de goede plek. Hoeveel volgordes zijn er?','2','6|3|0',
+ 'Met foto’s 1, 2, 3: alleen 2-3-1 en 3-1-2 hebben niemand op de goede plek.<br>Fout: 6 = 3! zijn alle volgordes. 3 en 0 kloppen niet: schrijf ze maar op.',
+ 'Schrijf alle 6 volgordes op en streep weg waar een foto goed ligt.']
+]
+};
+const BEGR=[
+['telprobleem','Vraag waarbij je uitrekent op hoeveel manieren iets kan, zonder alles op te schrijven','4.1'],
+['boomdiagram','Tekening waarin elke keuze een tak is en elk eindpunt één mogelijkheid','4.1'],
+['wegendiagram','Tekening waarin elke keuze een stukje weg is; elke route van begin tot eind is één mogelijkheid','4.1'],
+['vermenigvuldigingsregel','Bij keuzes na elkaar (en) vermenigvuldig je de aantallen','4.1'],
+['somregel','Bij verschillende situaties (of) tel je de aantallen op','4.1'],
+['met herhaling','Iets mag vaker gekozen worden, dus elke keer evenveel keuzes (zoals een pincode)','4.1'],
+['zonder herhaling','Iets mag maar één keer gekozen worden, dus elke keer één keuze minder','4.1'],
+['nᵏ','Het aantal mogelijkheden als je k keer kiest uit n en herhaling mag','4.1'],
+['permutatie','Rangschikking: k dingen uit n kiezen waarbij de volgorde telt, zonder herhaling','4.2'],
+['rangschikking','Ander woord voor permutatie: een keuze waarbij de volgorde telt','4.2'],
+['faculteit','n! = n × (n−1) × … × 2 × 1: het aantal volgordes van n dingen','4.2'],
+['nPr','Knop op de GR voor het aantal permutaties van r uit n (MATH → PROB)','4.2'],
+['combinatie','k dingen uit n kiezen waarbij de volgorde niet telt (een groepje)','4.2'],
+['n boven k','Het aantal combinaties van k uit n, ook binomiaalcoëfficiënt genoemd','4.2'],
+['nCr','Knop op de GR voor het aantal combinaties van r uit n (MATH → PROB)','4.2'],
+['(n boven k) = (n boven n−k)','Kiezen wie mee mag is hetzelfde als kiezen wie thuisblijft','4.3'],
+['rijtje van A’s en B’s','Rij met twee soorten; met a A’s en b B’s zijn er (a+b boven a) rijtjes','4.3'],
+['2ⁿ','Het aantal mogelijkheden als elke van n plekken twee keuzes heeft (zoals kop of munt)','4.3'],
+['route zonder omweg','Route in een rooster waarbij je alleen naar rechts of omhoog gaat: (b+h boven h)','4.3'],
+['situaties onderscheiden','Eerst alle mogelijke gevallen opschrijven, per geval tellen en daarna optellen','4.3'],
+['complementregel','Totaal min wat niet mag; handig bij ‘minstens één’','4.4'],
+['blokje','Dingen die naast elkaar moeten plak je aan elkaar; daarna × de volgordes binnen het blokje','4.4'],
+['kiezen en verdelen','Eerst kiezen wie (combinaties), daarna wie wat doet (× k!)','4.4'],
+['Pólya','Wiskundige met vier stappen: begrijp het probleem, puzzel op een aanpak, voer uit, reflecteer','4.4'],
+['reflecteren','Terugkijken: klopt je antwoord, heb je niets vergeten of dubbel geteld?','4.4']
+];
+
+const OPEN=[
+// ---------- 4.1 ----------
+['4.1','Een lunchroom heeft 4 soorten brood, 6 soorten beleg en 3 soorten drinken. Een lunch is één brood, één beleg en één drankje. Hoeveel lunches zijn er? Schrijf je berekening op.',
+ 'Brood <b>en</b> beleg <b>en</b> drinken: vermenigvuldigingsregel. Aantal = 4 × 6 × 3 = <b>72</b>.',
+ [['vermenigvuldigen (en = keer)','×|\\*|x|keer|maal|vermenigvuldig|4 ?[·.] ?6'],['uitkomst 72','\\b72\\b']]],
+['4.1','Een kenteken heeft de vorm 99-XX-99. Voor de letters (X) zijn er 18 mogelijk, voor de cijfers (9) 10. Letters en cijfers mogen vaker voorkomen. Hoeveel kentekens zijn er mogelijk?',
+ 'Met herhaling, per plek tellen: 10 × 10 × 18 × 18 × 10 × 10 = 10<sup>4</sup> × 18² = <b>3&#8239;240&#8239;000</b>.',
+ [['met herhaling: 10 en 18 per plek','10\\^?4|10⁴|18\\^?2|18²|18 ?[x×*·] ?18'],['uitkomst 3 240 000','3[ .]?240[ .]?000']]],
+['4.1','Een code bestaat uit 4 letters gekozen uit a, b, c, d, e en f. Twee letters die naast elkaar staan mogen niet hetzelfde zijn. Hoeveel codes zijn er?',
+ 'Eerste letter 6 keuzes, daarna steeds alleen niet de letter ervoor: 5 keuzes. Aantal = 6 × 5 × 5 × 5 = <b>750</b>.',
+ [['6 × 5 × 5 × 5 (alleen de buurletter valt af)','6 ?[x×*·] ?5 ?[x×*·] ?5|6 ?[x×*·] ?5\\^?3|5³'],['uitkomst 750','\\b750\\b']]],
+['4.1','Een restaurant heeft 3 voorgerechten, 4 hoofdgerechten en 2 nagerechten. Je kiest een tweegangendiner (voor- en hoofdgerecht) of een driegangendiner. Hoeveel mogelijkheden zijn er?',
+ 'Tweegangen: 3 × 4 = 12. Driegangen: 3 × 4 × 2 = 24. Het een <b>of</b> het ander, dus somregel: 12 + 24 = <b>36</b>.',
+ [['twee situaties optellen (of = plus)','\\+|optel|plus|somregel|of'],['tweegangen 12 en driegangen 24','\\b12\\b.*\\b24\\b|\\b24\\b.*\\b12\\b'],['uitkomst 36','\\b36\\b']]],
+['4.1','Getallen van 4 cijfers worden gemaakt met de cijfers 1 tot en met 7. Cijfers mogen vaker voorkomen. Hoeveel van die getallen zijn groter dan 5000?',
+ 'Eerste cijfer 5, 6 of 7: 3 keuzes. De andere drie plekken elk 7 keuzes (met herhaling). Aantal = 3 × 7 × 7 × 7 = 3 × 7³ = <b>1029</b>.',
+ [['eerste cijfer: 3 keuzes','\\b3 ?[x×*·]|5, ?6 ?(of|en) ?7'],['de rest 7 × 7 × 7','7 ?[x×*·] ?7 ?[x×*·] ?7|7\\^?3|7³|343'],['uitkomst 1029','1[ .]?029']]],
+// ---------- 4.2 ----------
+['4.2','Negen spelers van een volleybalteam gaan op een rij staan voor de teamfoto. Hoeveel verschillende rijen zijn er mogelijk? Noem ook hoe dit heet.',
+ 'Alle 9 spelers op volgorde: 9 × 8 × 7 × … × 1 = <b>9! = 362&#8239;880</b>. Dat heet een faculteit (9 faculteit).',
+ [['faculteit (9!)','9 ?!|faculteit|9 ?[x×*·] ?8 ?[x×*·] ?7'],['uitkomst 362 880','362[ .]?880']]],
+['4.2','Een vereniging heeft 20 leden. Er wordt een bestuur gekozen met een voorzitter, een secretaris en een penningmeester (drie verschillende personen). Op hoeveel manieren kan dat?',
+ 'Drie verschillende functies, dus de volgorde telt en zonder herhaling: permutaties. 20 nPr 3 = 20 × 19 × 18 = <b>6840</b>.',
+ [['permutaties / volgorde telt','npr|permutat|volgorde|20 ?[x×*·] ?19 ?[x×*·] ?18'],['uitkomst 6840','6[ .]?840']]],
+['4.2','Uit dezelfde vereniging van 20 leden worden 4 leden gekozen die samen een feest organiseren (geen functies). Op hoeveel manieren kan dat?',
+ 'Geen functies, dus de volgorde telt niet: combinaties. (20 boven 4) = 20 nCr 4 = <b>4845</b>.',
+ [['combinaties / volgorde telt niet','ncr|boven|combinat|volgorde (telt|doet) (er )?niet'],['uitkomst 4845','4[ .]?845']]],
+['4.2','Een klas heeft 16 meisjes en 13 jongens. Er wordt een klankbordgroep van 5 leerlingen gekozen met precies 3 meisjes. Hoeveel groepen zijn er mogelijk?',
+ '3 meisjes uit 16 <b>en</b> 2 jongens uit 13: (16 boven 3) × (13 boven 2) = 560 × 78 = <b>43&#8239;680</b>.',
+ [['(16 boven 3) en (13 boven 2) met nCr','16 ?ncr ?3|16 boven 3|\\b560\\b'],['jongens: (13 boven 2) = 78','13 ?ncr ?2|13 boven 2|\\b78\\b'],['vermenigvuldigen','×|\\*|x|keer|maal'],['uitkomst 43 680','43[ .]?680']]],
+['4.2','Iemand leent 3 of 4 platen uit een verzameling van 12 rockplaten. Hoeveel mogelijkheden zijn er?',
+ 'Lenen: de volgorde telt niet (combinaties). 3 <b>of</b> 4: somregel. (12 boven 3) + (12 boven 4) = 220 + 495 = <b>715</b>.',
+ [['combinaties (nCr)','ncr|boven|combinat'],['optellen (3 of 4)','\\+|optel|plus|somregel'],['uitkomst 715','\\b715\\b']]],
+['4.2','Je maakt een top-3 van platen uit één genre. Er zijn 6 popplaten en 4 rockplaten. Hoeveel top-3’s zijn er mogelijk?',
+ 'Top-3: de volgorde telt (permutaties). Pop <b>of</b> rock: somregel. 6 × 5 × 4 + 4 × 3 × 2 = 120 + 24 = <b>144</b>.',
+ [['permutaties per genre','npr|permutat|6 ?[x×*·] ?5 ?[x×*·] ?4|\\b120\\b'],['pop en rock optellen','\\+|optel|plus|somregel'],['uitkomst 144','\\b144\\b']]],
+// ---------- 4.3 ----------
+['4.3','In een stratenrooster loop je van A naar B: 5 blokken naar rechts en 4 blokken omhoog, zonder omweg. Hoeveel routes zijn er?',
+ 'Elke route is een rijtje van 9 stappen met 5 keer R en 4 keer O. Kies welke 4 stappen omhoog gaan: (9 boven 4) = <b>126</b>.',
+ [['rijtje van R’s en O’s / (9 boven 4)','9 ?ncr ?4|9 boven 4|9 ?ncr ?5|9 boven 5|rijtje'],['uitkomst 126','\\b126\\b']]],
+['4.3','In hetzelfde rooster (5 breed, 4 hoog) moet je langs punt P, dat 2 blokken naar rechts en 2 omhoog ligt vanaf A. Hoeveel routes van A via P naar B zijn er?',
+ 'A → P: (4 boven 2) = 6. P → B: nog 3 rechts en 2 omhoog: (5 boven 2) = 10. Eerste stuk <b>en</b> tweede stuk: 6 × 10 = <b>60</b>.',
+ [['A naar P: 6','4 ?ncr ?2|4 boven 2|\\b6\\b'],['P naar B: 10','5 ?ncr ?2|5 boven 2|5 ?ncr ?3|5 boven 3|\\b10\\b'],['uitkomst 60','\\b60\\b']]],
+['4.3','Je gooit 8 keer met een munt.<br>a Bij hoeveel series krijg je precies 3 keer kop?<br>b Hoeveel series zijn er in totaal?',
+ 'a Rijtje van K’s en M’s met 3 K’s: (8 boven 3) = <b>56</b>.<br>b Elke worp 2 mogelijkheden: 2<sup>8</sup> = <b>256</b>.',
+ [['a (8 boven 3)','8 ?ncr ?3|8 boven 3|8 ?ncr ?5|8 boven 5'],['a uitkomst 56','\\b56\\b'],['b 2 tot de 8e = 256','2\\^?8|2⁸|\\b256\\b']]],
+['4.3','Een toets heeft 12 goed/fout-vragen. Je haalt een voldoende met minstens 10 goed. Bij hoeveel antwoordenrijen haal je een voldoende?',
+ '10 <b>of</b> 11 <b>of</b> 12 goed: (12 boven 10) + (12 boven 11) + (12 boven 12) = 66 + 12 + 1 = <b>79</b>.',
+ [['situaties 10, 11 en 12 goed','10.*11.*12|66'],['combinaties optellen','ncr|boven|\\+'],['uitkomst 79','\\b79\\b']]],
+['4.3','Een jury kiest 6 winnaars uit 15 leerlingen en 5 docenten. Er moeten meer leerlingen dan docenten zijn, maar niet alleen leerlingen. Hoeveel groepen winnaars zijn er?',
+ 'Situaties: 5 L + 1 D <b>of</b> 4 L + 2 D.<br>5 L + 1 D: (15 boven 5) × 5 = 3003 × 5 = 15&#8239;015.<br>4 L + 2 D: (15 boven 4) × (5 boven 2) = 1365 × 10 = 13&#8239;650.<br>Samen: <b>28&#8239;665</b>.',
+ [['situaties 5+1 en 4+2','5 ?l|4 ?l|5 leerling|4 leerling|15 ?ncr ?5|15 boven 5'],['per situatie vermenigvuldigen, dan optellen','\\+|optel|somregel'],['uitkomst 28 665','28[ .]?665']]],
+// ---------- 4.4 ----------
+['4.4','Uit 10 jongens en 8 meisjes wordt een groepje van 4 gekozen met minstens één meisje. Hoeveel groepjes zijn er? Gebruik de complementregel.',
+ 'Alle groepjes: (18 boven 4) = 3060. Zonder meisje (alleen jongens): (10 boven 4) = 210. Minstens één meisje: 3060 − 210 = <b>2850</b>.',
+ [['totaal (18 boven 4) = 3060','18 ?ncr ?4|18 boven 4|3[ .]?060'],['min alleen jongens (10 boven 4) = 210','10 ?ncr ?4|10 boven 4|\\b210\\b'],['uitkomst 2850','2[ .]?850']]],
+['4.4','Vijf vrienden gaan op een rij staan. Anna en Bram willen naast elkaar staan. Hoeveel rijen zijn er mogelijk?',
+ 'Maak van Anna en Bram een blokje. Dan zet je 4 dingen op volgorde: 4! = 24. Binnen het blokje AB of BA: × 2. Aantal = 24 × 2 = <b>48</b>.',
+ [['blokje: 4!','4 ?!|\\b24\\b|blok'],['× 2 binnen het blokje','[x×*·] ?2\\b|\\b2 ?[x×*·]|ab.*ba|ba.*ab'],['uitkomst 48','\\b48\\b']]],
+['4.4','Een team van 4 jongens en 5 meisjes. Vier verschillende taken worden uitgevoerd door 2 jongens en 2 meisjes. Op hoeveel manieren kan dat?',
+ 'Kies 2 jongens: (4 boven 2) = 6. Kies 2 meisjes: (5 boven 2) = 10. Verdeel de 4 taken: 4! = 24. Aantal = 6 × 10 × 24 = <b>1440</b>.',
+ [['kiezen met nCr (6 en 10)','4 ?ncr ?2|5 ?ncr ?2|boven|6 ?[x×*·] ?10'],['taken verdelen: 4!','4 ?!|\\b24\\b'],['uitkomst 1440','1[ .]?440']]],
+['4.4','Bij een kraam liggen 6 verschillende spellen. Je koopt er minstens één (welke en hoeveel maakt niet uit). Hoeveel mogelijkheden zijn er?',
+ 'Elk spel: kopen of niet, dus 2<sup>6</sup> = 64. Minstens één: ‘niets kopen’ valt af. 64 − 1 = <b>63</b>.',
+ [['2 tot de 6e = 64','2\\^?6|2⁶|\\b64\\b'],['uitkomst 63','\\b63\\b']]],
+['4.4','Bij een toernooi zijn 10 deelnemers. Iedereen schudt iedereen één keer de hand, behalve één speler die weigert de andere 9 een hand te geven. Hoeveel handdrukken zijn er?',
+ 'Alle tweetallen: (10 boven 2) = 45. De weigeraar schudt 9 handen niet: 45 − 9 = <b>36</b>.',
+ [['(10 boven 2) = 45','10 ?ncr ?2|10 boven 2|\\b45\\b'],['uitkomst 36','\\b36\\b']]]
+];
+const EXAM=[
+// ---------- 4.1 ----------
+['4.1','Jeroen kookt pasta. Hij kiest uit 5 soorten pasta, 4 sauzen en 3 groenten (één van elk). Twee van de pastasoorten (spaghetti en linguine) wil hij niet, en als groente neemt hij courgette. Hoeveel gerechten kan hij nog maken?','12','60|20|8',
+ 'Pasta: 5 − 2 = 3, saus 4, groente 1: 3 × 4 × 1 = 12.<br>Fout: 60 = 5 × 4 × 3 negeert beide eisen. 20 = 5 × 4 × 1 vergeet dat er twee pasta’s afvallen. 8 = 3 + 4 + 1 telt op.',
+ 'Tel per keuze hoeveel er nog over zijn en vermenigvuldig.'],
+['4.1','Een bedrijf geeft artikelcodes van 5 cijfers. Hoeveel codes zijn er die <b>geen enkele nul</b> bevatten?','59&#8239;049','100&#8239;000|15&#8239;120|45',
+ 'Elke plek 1 t/m 9 (9 keuzes), herhaling mag: 9<sup>5</sup> = 59&#8239;049.<br>Fout: 100&#8239;000 = 10<sup>5</sup> laat nullen toe. 15&#8239;120 = 9 × 8 × 7 × 6 × 5 is zonder herhaling. 45 = 9 × 5.',
+ 'Hoeveel cijfers mogen per plek? Mag een cijfer vaker?'],
+['4.1','Artikelcodes van 5 cijfers (0 t/m 9, herhaling mag). Hoeveel codes beginnen én eindigen met een 3?','1000','10&#8239;000|100&#8239;000|720',
+ 'Eerste en laatste plek liggen vast (1 keuze), de middelste 3 elk 10: 1 × 10 × 10 × 10 × 1 = 1000.<br>Fout: 10&#8239;000 laat één van de vaste plekken vrij. 100&#8239;000 negeert de eis. 720 = 10 × 9 × 8 is zonder herhaling.',
+ 'Zet de vaste plekken eerst neer.'],
+['4.1','Een schaakclub heeft 9 jongens en 10 meisjes. Er worden twee leden gekozen: de eerste speelt met wit, de tweede met zwart. Bij hoeveel tweetallen zijn het twee jongens of twee meisjes?','162','90|342|181',
+ 'Twee jongens: 9 × 8 = 72, <b>of</b> twee meisjes: 10 × 9 = 90. Samen 162 (de volgorde telt: wit en zwart).<br>Fout: 90 is alleen de meisjes (of een jongen met wit en een meisje met zwart). 342 = 19 × 18 zijn alle tweetallen. 181 = 9² + 10² laat iemand tegen zichzelf spelen.',
+ 'Twee situaties (of). Wit en zwart zijn verschillend: de volgorde telt.'],
+['4.1','Kentekens van de vorm 99-XXX-9 gebruiken 18 letters. Elf lettercombinaties (zoals GVD en PVV) worden niet uitgegeven. Hoeveel kentekens zijn er in deze serie?','5&#8239;821&#8239;000','5&#8239;832&#8239;000|17&#8239;576&#8239;000|4&#8239;896&#8239;000',
+ 'Cijfers: 10 × 10 × 10. Letters: 18³ − 11 = 5821. Samen 1000 × 5821 = 5&#8239;821&#8239;000.<br>Fout: 5&#8239;832&#8239;000 vergeet de 11 verboden combinaties. 17&#8239;576&#8239;000 gebruikt 26 letters. 4&#8239;896&#8239;000 = 18 × 17 × 16 × 1000 is zonder herhaling.',
+ 'Tel eerst de lettercombinaties en haal de verboden eraf. Vermenigvuldig dan met de cijfers.'],
+// ---------- 4.2 ----------
+['4.2','Christel heeft 8 video’s gekeken en geeft er 5 een like. Op hoeveel manieren kan ze de 5 video’s kiezen?','56','6720|40&#8239;320|32',
+ 'Een like heeft geen volgorde: (8 boven 5) = 56.<br>Fout: 6720 = 8 nPr 5 telt de volgorde mee. 40&#8239;320 = 8! is alle video’s op volgorde. 32 = 2<sup>5</sup>.',
+ 'Maakt het uit in welke volgorde ze liket?'],
+['4.2','Christel deelt één video met haar zusje, een andere met haar broer en weer een andere met een vriendin. Ze kiest uit 8 video’s. Op hoeveel manieren kan dat?','336','56|512|24',
+ 'Drie verschillende personen, drie verschillende video’s: 8 × 7 × 6 = 336 (8 nPr 3).<br>Fout: 56 = (8 boven 3) vergeet wie welke video krijgt. 512 = 8³ laat dezelfde video twee keer delen. 24 = 3!.',
+ 'Maakt het uit wie welke video krijgt?'],
+['4.2','Een schoolkrant heeft 6 vierdeklassers en 8 vijfdeklassers. Er moeten een hoofdredacteur, beeldredacteur, distributeur en opmaker komen, allemaal uit hetzelfde leerjaar. Op hoeveel manieren kan dat?','2040','1680|24&#8239;024|85',
+ 'Vierde klas: 6 × 5 × 4 × 3 = 360, <b>of</b> vijfde klas: 8 × 7 × 6 × 5 = 1680. Samen 2040.<br>Fout: 1680 vergeet de vierdeklassers. 24&#8239;024 = 14 × 13 × 12 × 11 laat gemengde groepen toe. 85 = (6 boven 4) + (8 boven 4) vergeet de verschillende functies.',
+ 'Twee situaties (of). Verschillende functies: volgorde telt.'],
+['4.2','Uit dezelfde redactie (6 vierdeklassers, 8 vijfdeklassers) wordt een groep van 3 gekozen met minstens één vijfdeklasser. Hoeveel groepen zijn er?','344','364|624|56',
+ 'Totaal (14 boven 3) = 364, min alleen vierdeklassers (6 boven 3) = 20: 344.<br>Fout: 364 telt ook de groepen zonder vijfdeklasser. 624 = 8 × (13 boven 2) telt groepen dubbel. 56 = (8 boven 3) alleen vijfdeklassers.',
+ 'Minstens één: totaal min ‘geen enkele’.'],
+['4.2','Bij een toernooi met 8 teams speelt elk team één keer tegen elk ander team. Hoeveel wedstrijden worden er gespeeld?','28','56|64|16',
+ 'Een wedstrijd is een tweetal teams zonder volgorde: (8 boven 2) = 28.<br>Fout: 56 = 8 × 7 telt A-B en B-A als twee wedstrijden. 64 = 8² laat een team tegen zichzelf spelen. 16 = 8 × 2.',
+ 'Een wedstrijd = een tweetal. Telt de volgorde?'],
+['4.2','Na het toernooi met 8 teams wordt een top-3 (goud, zilver, brons) bekendgemaakt. Hoeveel uitslagen zijn er mogelijk?','336','56|512|6',
+ 'Volgorde telt, geen herhaling: 8 × 7 × 6 = 336.<br>Fout: 56 = (8 boven 3) vergeet wie goud heeft. 512 = 8³ laat één team twee medailles winnen. 6 = 3!.',
+ 'Goud is iets anders dan brons. Kan een team twee medailles winnen?'],
+['4.2','Een club met 12 leden (5 vrouwen en 7 mannen) kiest een voorzitter, secretaris en penningmeester. De voorzitter moet een vrouw zijn. Op hoeveel manieren kan het bestuur gekozen worden?','550','60|1320|220',
+ 'Voorzitter: 5 vrouwen. Dan secretaris uit de 11 overigen, penningmeester uit 10: 5 × 11 × 10 = 550.<br>Fout: 60 = 5 × 4 × 3 maakt alle drie vrouw. 1320 = 12 × 11 × 10 negeert de eis. 220 = (12 boven 3) vergeet de functies.',
+ 'Begin met de plek waar een eis op zit.'],
+// ---------- 4.3 ----------
+['4.3','Giel ziet 16 beroepen en drukt per beroep J (past bij mij) of N (past niet). Bij precies 4 beroepen drukt hij J. Hoeveel verschillende antwoordenlijsten zijn er?','1820','43&#8239;680|65&#8239;536|64',
+ 'Rijtje van 16 met 4 J’s: (16 boven 4) = 1820.<br>Fout: 43&#8239;680 = 16 nPr 4 telt de volgorde van de J’s mee. 65&#8239;536 = 2<sup>16</sup> zijn alle lijsten. 64 = 16 × 4.',
+ 'Rijtje van J’s en N’en: kies de plekken voor de J’s.'],
+['4.3','Djoeke koopt een kool (3 soorten: boerenkool, spitskool, rode kool), twee soorten paddenstoelen (uit 4, waaronder oesterzwam) en aardappelen (Eigenheimer of Bintje). Bij boerenkool neemt ze altijd Eigenheimers; bij spitskool nooit oesterzwammen. Hoeveel keuzemogelijkheden?','24','36|12|18',
+ 'Boerenkool: (4 boven 2) × 1 = 6. Spitskool: (3 boven 2) × 2 = 6. Rode kool: (4 boven 2) × 2 = 12. Samen 24.<br>Fout: 36 = 3 × 6 × 2 negeert de eisen. 12 is alleen rode kool. 18 slaat een situatie over of telt verkeerd.',
+ 'Splits in situaties per kool, want elke kool heeft een eigen eis.'],
+['4.3','Een stad heeft een rechthoekig stratenplan. Van station naar museum is het 6 blokken naar het oosten en 3 naar het noorden. Hoeveel routes zonder omweg zijn er?','84','18|504|512',
+ 'Rijtje van 9 stappen met 3 N’en: (9 boven 3) = 84.<br>Fout: 18 = 6 × 3. 504 = 9 nPr 3 telt de volgorde van de N’en mee. 512 = 2<sup>9</sup> laat elke stap vrij.',
+ 'Een route = een rijtje van O’s en N’en.'],
+['4.3','Sara en Alex spelen 5 potjes. Wie de meeste potjes wint, is de grote winnaar. Bij hoeveel verlopen (wie won welk potje) is Sara de grote winnaar?','16','10|32|15',
+ 'Sara wint 3 <b>of</b> 4 <b>of</b> 5 potjes: (5 boven 3) + (5 boven 4) + (5 boven 5) = 10 + 5 + 1 = 16.<br>Fout: 10 telt alleen 3 gewonnen potjes. 32 = 2<sup>5</sup> zijn alle verlopen. 15 vergeet ‘alles gewonnen’.',
+ 'Minstens 3 van 5: tel de situaties 3, 4 en 5 op.'],
+['4.3','Zes vrienden sluiten aan in de rij voor de kantine. Dennis wil direct achter Eke staan en bij de eerste vier zijn. Staat Eke niet voorop, dan wil Claire voorop staan. Hoeveel volgordes voldoen aan alle wensen?','36','72|24|120',
+ 'Eke 1, Dennis 2: 4! = 24. Eke 2, Dennis 3, Claire 1: 3! = 6. Eke 3, Dennis 4, Claire 1: 3! = 6. Samen 36.<br>Fout: 72 = 24 + 24 + 24 vergeet de eis van Claire. 24 is alleen de eerste situatie. 120 = 5! behandelt ED als blok zonder andere eisen.',
+ 'Maak eerst de plek van het blokje ED vast: drie situaties.'],
+// ---------- 4.4 ----------
+['4.4','Zeeslag op een veld van 3 bij 3 hokjes: één boot van 2 hokjes (niet schuin) en twee gelijke bootjes van 1 hokje. Op hoeveel manieren kun je de boten neerzetten?','252','504|12|84',
+ 'Grote boot: 6 liggend + 6 staand = 12. Twee gelijke bootjes in de 7 overige hokjes: (7 boven 2) = 21. Samen 12 × 21 = 252.<br>Fout: 504 behandelt de kleine bootjes als verschillend. 12 vergeet de kleine bootjes. 84 = (9 boven 3) let niet op de vorm van de grote boot.',
+ 'Zet eerst de grote boot neer, daarna de kleine (gelijk = zonder volgorde).'],
+['4.4','Een alarm heeft een pincode van 4 cijfers. Door slijtage zie je dat alleen de 4, 7 en 8 gebruikt worden, en alle drie komen ze in de code voor. Hoeveel pincodes zijn er mogelijk?','36','81|24|72',
+ 'Eén cijfer komt twee keer voor: kies welk (3). De 4 cijfers op volgorde met één dubbel: 4! ÷ 2 = 12. Samen 3 × 12 = 36.<br>Fout: 81 = 3<sup>4</sup> laat ook codes zonder een van de drie cijfers toe. 24 = 4! doet alsof er 4 verschillende cijfers zijn. 72 deelt niet door 2 voor de dubbele.',
+ 'Er komen vier cijfers en drie soorten: welk cijfer is dubbel?'],
+['4.4','Met de 8 letters van WISKUNDE maak je codes van 5 letters. Letters mogen vaker gebruikt worden. Hoeveel codes zijn er?','32&#8239;768','6720|390&#8239;625|40',
+ 'Elke plek 8 keuzes: 8<sup>5</sup> = 32&#8239;768.<br>Fout: 6720 = 8 nPr 5 is zonder herhaling. 390&#8239;625 = 5<sup>8</sup> draait het om. 40 = 8 × 5.',
+ 'Met herhaling: keuzes<sup>plekken</sup>.'],
+['4.4','Een serie heeft 8 afleveringen die je in elke volgorde kunt kijken. Netflix toont ze in willekeurige volgorde, maar de aflevering ‘The Heist’ altijd als laatste. Hoeveel volgordes zijn er?','5040','40&#8239;320|8|720',
+ 'De laatste plek ligt vast, de andere 7 vrij: 7! = 5040.<br>Fout: 40&#8239;320 = 8! negeert de eis. 8 telt alleen de afleveringen. 720 = 6! haalt er een te veel weg.',
+ 'Zet de vaste aflevering eerst neer en rangschik de rest.'],
+['4.4','Bij een laboratoriumdeur druk je telkens twee verschillende toetsen tegelijk in (het paneel heeft 10 toetsen: 0 t/m 9). Op hoeveel manieren kun je één tweetal tegelijk indrukken?','45','90|100|20',
+ 'Tegelijk = geen volgorde, twee verschillende toetsen: (10 boven 2) = 45.<br>Fout: 90 = 10 × 9 telt de volgorde mee, maar tegelijk heeft geen volgorde. 100 = 10² laat dezelfde toets twee keer toe. 20 = 10 × 2.',
+ 'Tegelijk indrukken: telt de volgorde?']
+];
+
+/* ---------- de berg: van ijs tot stoom (klimmen langs de opwarmcurve van water) (alle vragen van het hoofdstuk, één verdieping per paragraaf, 100% = alles één keer goed) ---------- */
+const KCAMPS=[['4.1','🔐 Wiel 1','#58D68D'],['4.2','🔐 Wiel 2','#58D68D'],['4.3','🔐 Wiel 3','#58D68D'],['4.4','🔐 Wiel 4','#58D68D']];
+const KL=()=>S.klim||(S.klim={});
+const klimIds=sec=>(MCQ[sec]||[]).map(v=>v[0]);
+const klimPct=sec=>{const ids=klimIds(sec);return ids.length?ids.filter(i=>KL()[i]).length/ids.length:0};
+const klimOpen=i=>true;
+const klimTot=()=>{let a=0,b=0;KCAMPS.forEach(([s])=>{const ids=klimIds(s);b+=ids.length;a+=ids.filter(i=>KL()[i]).length});return b?a/b:0};
+function torenSVG(){const W=320,H=190;let s=`<path d="M100 60 V36 a60 30 0 0 1 120 0 V60" fill="none" stroke="#7F8C8D" stroke-width="14"/><rect x="20" y="58" width="280" height="122" rx="22" fill="#5D6D7E"/>`;
+ KCAMPS.forEach(([sec,nm,kl],i)=>{const x=40+i*64,p=klimPct(sec);s+=`<rect x="${x}" y="78" width="50" height="70" rx="8" fill="${p>=1?kl:'#EAECEE'}" stroke="#1E2230" stroke-width="2"/><text x="${x+25}" y="126" text-anchor="middle" font-size="32" font-weight="800" fill="#1E2230">${p>=1?'✓':Math.round(p*9)}</text><text x="${x+25}" y="168" text-anchor="middle" font-size="11" fill="#fff">§ ${sec}</text>`});
+ return `<svg viewBox="0 0 ${W} ${H}" class="fig" role="img" aria-label="combinatieslot">${s}</svg>`}
+function klimHome(){stilte();show('play');const t=klimTot();
+ P.innerHTML=`<div class="top"><button class="btn licht klein" id="stop">‹ Terug</button><span class="stap">🔐 Kraak het combinatieslot</span><span class="teller">${Math.round(t*100)}%</span></div>
+ <div class="kaart"><p class="sub" style="margin:0">Een slot met 4 wielen heeft 10<sup>4</sup> = 10&#8239;000 codes. Hier kraak je het met kennis: elk wiel is een paragraaf en staat goed (✓) als je <b>alle</b> vragen ervan één keer goed hebt.</p>${torenSVG()}</div>
+ ${KCAMPS.map(([sec,nm],i)=>{const p=klimPct(sec),open=klimOpen(i);return `<button class="mode${p>=1?' gehaald':''}" data-k="${i}" style="width:100%;margin:8px 0"${open?'':' disabled'}><h3>${open?'':'🔒 '}${nm} · ${SECN[sec].t}</h3><p>${Math.round(p*100)}% · ${klimIds(sec).filter(x=>!KL()[x]).length} vragen te gaan${open?'':' · '}</p></button>`}).join('')}`;
+ $('#stop').onclick=goHome;P.querySelectorAll('[data-k]').forEach(b=>b.onclick=()=>klimPlay(KCAMPS[+b.dataset.k][0]))}
+function klimPlay(sec){stilte();const todo=shuffle(MCQ[sec].filter(v=>!KL()[v[0]]));const set=(todo.length?todo:shuffle(MCQ[sec])).slice(0,10).map(v=>mcItem(v,sec));const nm=KCAMPS.find(c=>c[0]===sec)[1];
+ quiz(set,{titel:nm,geenHer:1,opGoed:q=>{KL()[q.id]=1;save()},klaar:()=>{const p=klimPct(sec);return `<p>${p>=1?`${nm} staat goed! 🎉`:`${nm}: ${Math.round(p*100)}%`}</p><div class="acts" style="justify-content:center">${p<1?'<button class="btn" id="opn">Verder klimmen</button>':''}<button class="btn licht" id="tor">Naar het slot</button>${terugKnop()}</div>`},
+  na:()=>{const o=$('#opn');if(o)o.onclick=()=>klimPlay(sec);$('#tor').onclick=klimHome;$('#hm').onclick=goHome}})}
+
+
+/* ---------- opslag en algemeen ---------- */
+const KEY='wis-h4-v1';
+const $=s=>document.querySelector(s);
+const leeg=()=>({pod:{},lp:{},klim:{},b:{},sp:{},open:{a:{},best:0,per:{}},ex:0,toets:0,blitz:0,mis:{},samen:0,tempo:1});
+let S=leeg();
+try{const r=localStorage.getItem(KEY);if(r)S=Object.assign(S,JSON.parse(r))}catch(e){}
+const save=()=>{try{localStorage.setItem(KEY,JSON.stringify(S))}catch(e){}};
+const shuffle=a=>{a=a.slice();for(let i=a.length-1;i>0;i--){const j=Math.random()*(i+1)|0;[a[i],a[j]]=[a[j],a[i]]}return a};
+const esc=s=>String(s).replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;').replace(/"/g,'&quot;');
+const nf=(x,d=1)=>String(Math.round(x*10**d)/10**d).replace('.',',');
+const P=$('#play');let G=null;
+function show(id){$('#home').hidden=id!=='home';P.hidden=id!=='play';scrollTo(0,0)}
+const mcItem=(v,sec)=>({q:v[0],a:v[1],opts:[v[1],...v[2].split('|')],w:v[3],hint:v[4],sec,id:v[0]});
+const SPEL={tel:{t:'🔢 Hoeveel manieren?',doel:.8},welke:{t:'🎯 Welke formule?',doel:.8}};
+const SECN={};H.forEach(h=>SECN[h.id]=h);
+
+/* ---------- leerroute ---------- */
+const ROUTE=[];const SPR={"4.2": [["welke", "Volgorde? Herhaling? Kies n^k, n!, nPr of nCr. Doel: 8 van de 10.", 6]], "4.4": [["tel", "Allerlei telsommen door elkaar, met rekenmachine. Doel: 8 van de 10.", 8]]};
+H.forEach(h=>{const id=h.id;
+ ROUTE.push([`lp${id}`,id,`📖 Leerpad § ${id}: ${h.t}`,'Kaartjes met uitleg en voorbeelden, steeds een checkvraag.',6,'lp',id]);
+ (SPR[id]||[]).forEach(([k,w,g])=>ROUTE.push([k,id,SPEL[k].t,w,g,'sp',k]));
+ ROUTE.push([`pr${id}`,id,`✅ Oefenronde § ${id}`,'10 vragen, haal er 8 in één keer goed. Met 💡 tips als je vastloopt.',6,'pr',id]);
+ ROUTE.push([`kamp${id}`,id,`${KCAMPS.find(c=>c[0]===id)[1]}`,'Alle vragen van deze paragraaf één keer goed.',2,'kamp',id])});
+ROUTE.push(['blitz','eind','⚡ Begrippenblitz: 15 punten','60 seconden: welk begrip hoort bij de uitleg?',3,'blitz'],['exam','eind','🎓 Toetsvragen: 70%','Vragen zoals op de toets, met een situatie.',7,'exam'],['open','eind','✍️ Open vragen: 60% van de punten','Zelf de berekening typen, dan nakijken.',8,'open'],['toets','eind','🎯 Proeftoets: een 7','20 vragen door elkaar, ook rekenvragen.',12,'toets'],['samen','eind','📄 Alles nog eens lezen','Alle leerpaden onder elkaar.',0,'samen']);
+const HNAAM={eind:'Eindsprint'};H.forEach(h=>HNAAM[h.id]=`${h.ic} § ${h.id} ${h.t}`);
+const OS=()=>S.open||(S.open={a:{},best:0,per:{}});
+const rDone=r=>{const t=r[5];return t==='kamp'?klimPct(r[6])>=1:t==='pod'?!!S.pod[r[6].join(':')]:t==='lp'?!!S.lp[r[6]]:t==='pr'?(S.b[r[6]]||0)>=.8:t==='sp'?(S.sp[r[6]]||0)>=SPEL[r[6]].doel:t==='blitz'?S.blitz>=15:t==='exam'?S.ex>=.7:t==='open'?(OS().best||0)>=.6:t==='toets'?S.toets>=7:!!S.samen};
+const pct=()=>ROUTE.reduce((a,r)=>a+(rDone(r)?r[4]:0),0);window.leerVoortgang=pct;
+const RT={on:false,p0:0};
+function rGo(r){RT.on=true;RT.p0=pct();const t=r[5];if(t==='kamp')klimPlay(r[6]);else if(t==='pod')podStart(...r[6]);else if(t==='lp')leerpad(r[6]);else if(t==='pr')ronde(r[6]);else if(t==='sp')spel(r[6]);else if(t==='blitz')blitz();else if(t==='exam')examen();else if(t==='open')openProefwerk();else if(t==='toets')toets();else samen()}
+function routeScreen(){stilte();show('play');const p=pct(),nxt=ROUTE.find(r=>!rDone(r)),win=RT.on&&p>RT.p0?p-RT.p0:0;RT.on=false;let deel='';
+ P.innerHTML=`<div class="top"><button class="btn licht klein" id="terug">‹ Overzicht</button><span class="stap">Leerroute</span><span class="teller ok">${p}%</span></div>
+ ${win?`<div class="kaart" style="border-color:var(--good);background:var(--good-bg)"><b class="goed-t">Gehaald! +${win}%</b></div>`:''}
+ <div class="kaart"><div class="balk"><i style="width:${p}%"></i></div><p class="sub" style="margin:4px 0 0">Per paragraaf: eerst het leerpad, dan een spel en een oefenronde, en tot slot een stuk van de Kraak het combinatieslot. Een stap is pas groen als het doel gehaald is.</p>
+ ${nxt?`<div class="acts"><button class="btn" id="rtgo">Ga verder: ${nxt[2]} →</button></div>`:'<p><b>Alles gehaald. Klaar voor de toets! 🎉</b></p>'}</div>
+ ${ROUTE.map((r,i)=>{const kop=r[1]!==deel?(deel=r[1],`<h2>${HNAAM[r[1]]}</h2>`):'';return kop+`<button class="mode${rDone(r)?' gehaald':''}" data-r="${i}" style="width:100%;margin:8px 0"><h3>${r[2]}</h3><p>${r[3]}${r[4]?` · ${r[4]}%`:' · telt niet mee'}</p></button>`}).join('')}`;
+ $('#terug').onclick=()=>{RT.on=false;goHome()};P.querySelectorAll('[data-r]').forEach(b=>b.onclick=()=>rGo(ROUTE[+b.dataset.r]));const g=$('#rtgo');if(g){g.onclick=()=>rGo(nxt);g.focus()}}
+
+/* ---------- hoofdscherm ---------- */
+function renderHome(){const nx=ROUTE.find(r=>!rDone(r));
+ $('#stand').innerHTML=`<button class="mode main" id="rtbox" style="width:100%"><h3>${nx?(pct()?'Ga verder: ':'Begin: ')+nx[2]:'Leerroute klaar. Herhalen?'}</h3><p>🧭 Leerroute · ${pct()}%${S.toets?` · beste proeftoets ${nf(S.toets)}`:''}</p><div class="balk" style="background:rgba(127,127,127,.35)"><i style="width:${pct()}%"></i></div></button>`;
+ $('#rtbox').onclick=routeScreen;
+ $('#hst').innerHTML=H.map(h=>{const pd=[0,1,2].filter(i=>S.pod[h.id+':'+i]).length;const no=OPEN.filter(q=>q[0]===h.id).length;return `<div class="kaart hk"><h3>${h.ic} § ${h.id} ${h.t}</h3><p class="sub" style="margin:2px 0 0">${h.kort}</p><div class="acts" style="margin-top:8px">${POD[h.id]?`<button class="btn klein${pd===3?' ok':' licht'}" data-pod="${h.id}">🎧 Podcast ${pd}/3</button>`:''}<button class="btn klein${S.lp[h.id]?' ok':' licht'}" data-lp="${h.id}">📖 Leerpad${S.lp[h.id]?' ✓':''}</button><button class="btn klein${(S.b[h.id]||0)>=.8?' ok':' licht'}" data-pr="${h.id}">✅ Oefenen${S.b[h.id]!=null?' '+Math.round(S.b[h.id]*10)+'/10':''}</button>${no?`<button class="btn klein${(OS().per[h.id]||0)>=.6?' ok':' licht'}" data-os="${h.id}">✍️ Open (${no})</button>`:''}</div></div>`}).join('');
+ const g=(id,ok)=>{const e=$('#'+id);if(e)e.classList.toggle('gehaald',ok)};Object.keys(SPEL).forEach(k=>g('p'+k,(S.sp[k]||0)>=SPEL[k].doel));g('pblitz',S.blitz>=15);g('pexam',S.ex>=.7);g('popen',(OS().best||0)>=.6);g('ptoets',S.toets>=7);g('psamen',!!S.samen);g('pberg',klimTot()>=1);
+ const fm=Object.keys(S.mis).length;$('#fouten').hidden=!fm;$('#fouten p').textContent=`${fm} vraag${fm===1?'':'en'} die je eerder fout had.`;P.innerHTML=''}
+function goHome(){stilte();clearInterval(window.__klok);if(RT.on)return routeScreen();show('home');renderHome()}
+document.addEventListener('click',e=>{if($('#home').hidden)return;const b=e.target.closest('[data-lp],[data-pr],[data-pod],[data-os]');if(!b)return;const d=b.dataset;if(d.lp)leerpad(d.lp);else if(d.pr)ronde(d.pr);else if(d.pod)podMenu(d.pod);else openSet(OPEN.filter(q=>q[0]===d.os),'Open vragen '+d.os,d.os)});
+Object.keys(SPEL).forEach(k=>$('#p'+k).onclick=()=>spel(k));$('#pblitz').onclick=()=>blitz();$('#pexam').onclick=()=>examen();$('#popen').onclick=()=>openMenu();$('#ptoets').onclick=()=>toets();$('#psamen').onclick=()=>samen();$('#fouten').onclick=()=>foutRonde();$('#pberg').onclick=()=>klimHome();
+$('#wis').onclick=()=>{if(confirm('Al je voortgang bij dit hoofdstuk wissen?')){S=leeg();save();renderHome()}};
+
+/* ---------- podcast: luisteren of lezen ---------- */
+const SPK={E:'Eva',D:'Daan'};
+const TEMPO=[['langzaam',.8],['normaal',1],['snel',1.2],['sneller',1.45]];
+const kanPraten='speechSynthesis' in window&&typeof SpeechSynthesisUtterance!=='undefined';
+const stemKw=v=>{const t=(v.voiceURI||'')+' '+v.name;return /premium/i.test(t)?3:/enhanced|verbeterd|neural|natural|online/i.test(t)?2:/compact/i.test(t)?0:1};
+const stemLabel=v=>`${v.name.replace(/\s*\((verbeterd|enhanced|premium)\)/i,'')}${stemKw(v)>=2?' (verbeterd)':''}${/BE/i.test(v.lang)?' · Vlaams':''}`;
+function nlStemmen(){return kanPraten?speechSynthesis.getVoices().filter(v=>/^nl/i.test(v.lang)):[]}
+function eigenKeuze(){try{return JSON.parse(localStorage.getItem('leren-stem')||'{}')}catch(e){return {}}}
+function stemmen(){if(!kanPraten)return null;const nl=nlStemmen(),k0=eigenKeuze();if(!nl.length)return k0.een?{E:{v:null,p:1},D:{v:null,p:1},tekst:'één voorlezer (standaardstem)'}:{E:{v:null,p:1.15},D:{v:null,p:.82},tekst:'geen Nederlandse stem gevonden, de standaardstem leest voor'};
+ const beste=l=>[...l].sort((a,b)=>(stemKw(b)+(/nl-NL/i.test(b.lang)?.5:0))-(stemKw(a)+(/nl-NL/i.test(a.lang)?.5:0)))[0];
+ if(k0.een){const v=nl.find(x=>x.voiceURI===k0.een)||beste(nl);return {E:{v,p:1},D:{v,p:1},een:v,tekst:`één voorlezer: ${stemLabel(v)}`}}
+ const vr=/claire|ellen|fenna|colette|lotte|femke|anna|female|vrouw|google nederlands/i,mn=/xander|maarten|frank|arnaud|male|\bman\b/i;
+ const zoek=u=>nl.find(v=>v.voiceURI===u);let e=zoek(k0.E)||beste(nl.filter(v=>vr.test(v.name))),d=zoek(k0.D)||beste(nl.filter(v=>mn.test(v.name)&&!vr.test(v.name)));
+ if(e&&d&&e!==d)return {E:{v:e,p:1},D:{v:d,p:1},tekst:`Lotte = ${stemLabel(e)}, Sem = ${stemLabel(d)}`};
+ const een=e||d||beste(nl);return {E:{v:een,p:1.18},D:{v:een,p:.8},tekst:`één stem (${stemLabel(een)}) op twee toonhoogtes`}}
+function stemKiezer(){const nl=nlStemmen(),st=stemmen()||{},een=!!eigenKeuze().een;
+ const wissel=`<div class="podmode" style="margin:6px 0"><button class="btn klein ${een?'licht':''}" id="kTwee">👥 Twee stemmen</button><button class="btn klein ${een?'':'licht'}" id="kEen">👤 Eén voorlezer</button></div>`;
+ if(!nl.length)return wissel+'<p class="src">Op dit apparaat zijn geen Nederlandse stemmen gevonden.</p>';
+ const opt=w=>nl.map(v=>`<option value="${esc(v.voiceURI)}"${st[w]&&st[w].v===v?' selected':''}>${esc(stemLabel(v))}</option>`).join('');
+ if(een)return wissel+`<div class="stemkies"><label><b>Voorlezer</b><select id="kN">${nl.map(v=>`<option value="${esc(v.voiceURI)}"${st.een===v?' selected':''}>${esc(stemLabel(v))}</option>`).join('')}</select></label><button class="btn klein licht" data-test="E">▶ test</button></div>`;
+ return wissel+`<div class="stemkies"><label><b class="wie E">Lotte</b><select id="kE">${opt('E')}</select></label><button class="btn klein licht" data-test="E">▶ test</button><label><b class="wie D">Sem</b><select id="kD">${opt('D')}</select></label><button class="btn klein licht" data-test="D">▶ test</button></div><p class="src" style="margin:4px 0 0">Staat je gedownloade stem er niet bij? Sluit Safari helemaal af en open de pagina opnieuw.</p>`}
+function stemKiezerKoppel(){const k=eigenKeuze(),bew=()=>{try{localStorage.setItem('leren-stem',JSON.stringify(k))}catch(e){}podDraw()};
+ const t2=document.getElementById('kTwee');if(t2){t2.onclick=()=>{delete k.een;bew()};document.getElementById('kEen').onclick=()=>{const st=stemmen()||{};k.een=(st.E&&st.E.v&&st.E.v.voiceURI)||'auto';bew()}}
+ const sn=document.getElementById('kN');if(sn)sn.onchange=()=>{k.een=sn.value;bew()};['E','D'].forEach(w=>{const s=document.getElementById('k'+w);if(s)s.onchange=()=>{k[w]=s.value;bew()}});
+ P.querySelectorAll('[data-test]').forEach(b=>b.onclick=()=>{stilte();const w=b.dataset.test,sv=(stemmen()||{})[w]||{};const u=new SpeechSynthesisUtterance(eigenKeuze().een?'Hoi, ik lees het voor.':w==='E'?'Hoi, ik ben Lotte.':'En ik ben Sem.');u.lang='nl-NL';if(sv.v)u.voice=sv.v;u.pitch=sv.p||1;u.rate=TEMPO[S.tempo??1][1];speechSynthesis.speak(u)})}
+if(kanPraten){try{speechSynthesis.getVoices();speechSynthesis.addEventListener('voiceschanged',()=>{const n=document.getElementById('stemnaam');const s=stemmen();if(n&&s)n.textContent=s.tekst})}catch(e){}}
+function stilte(){if(G&&G.m==='pod'){G.playing=false;G.token=(G.token||0)+1}if(kanPraten)try{speechSynthesis.cancel()}catch(e){}}
+function zinnen(t){return t.match(/[^.!?]+[.!?]+["”']?\s*|[^.!?]+$/g)||[t]}
+function podMenu(sec){stilte();show('play');const h=SECN[sec];
+ P.innerHTML=`<div class="top"><button class="btn licht klein" id="stop">Terug</button><span class="stap">Podcast · ${h.t}</span><span></span></div>
+ <div class="kaart"><p style="margin:0">Lotte en Sem vertellen basisstof ${sec} in drie stukjes van een paar minuten. Luister of lees, en beantwoord daarna een paar checkvragen.</p>
+ <div class="acts"><button class="btn" id="palle">🎧 Alle drie achter elkaar</button></div></div>
+ ${POD[sec].map((p,i)=>`<button class="mode${S.pod[sec+':'+i]?' gehaald':''}" data-pi="${i}" style="width:100%;margin:8px 0"><h3>Deel ${i+1}: ${p.t}</h3><p>${p.s.length} beurten · ${p.q.length} checkvragen</p></button>`).join('')}`;
+ $('#stop').onclick=goHome;P.querySelectorAll('[data-pi]').forEach(b=>b.onclick=()=>podStart(sec,+b.dataset.pi));$('#palle').onclick=()=>podAlles([0,1,2].map(i=>[sec,i]),'Basisstof '+sec+' helemaal')}
+function podStart(sec,i){stilte();const p=POD[sec][i];const items=[];p.s.forEach(([w,t],li)=>zinnen(t).forEach(z=>items.push({w,t:z.trim(),li})));
+ G={m:'pod',sec,i,items,idx:0,playing:false,token:0,mode:kanPraten?(S.podMode||'luister'):'lees',klaar:false};show('play');podDraw()}
+function podAlles(parts,titel){stilte();const items=[];parts.forEach(([sec,i],pi)=>{const p=POD[sec][i];p.s.forEach(([w,t],li)=>zinnen(t).forEach((z,zi)=>items.push({w,t:z.trim(),li:pi*1000+li,pi,kop:li===0&&zi===0?`${sec} · deel ${i+1}: ${p.t}`:''})))});
+ G={m:'pod',alles:{parts,titel},items,idx:0,playing:false,token:0,mode:kanPraten?(S.podMode||'luister'):'lees',klaar:false};show('play');podDraw()}
+function podDraw(){const A=G.alles,p=A?null:POD[G.sec][G.i],st=stemmen(),tempo=S.tempo??1;let li=-1,html='';
+ G.items.forEach((it,k)=>{if(it.li!==li){if(li>=0)html+='</p>';li=it.li;if(it.kop)html+=`<h3 class="vkop">${it.kop}</h3>`;html+=`<p class="vl"><b class="wie ${it.w}">${SPK[it.w]}</b> `}html+=`<span class="z" data-k="${k}">${esc(it.t)} </span>`});html+='</p>';
+ P.innerHTML=`<div class="top"><button class="btn licht klein" id="stop">Stoppen</button><span class="stap">${A?A.titel:`Podcast ${G.sec} · deel ${G.i+1}`}</span><span class="teller" id="cnt"></span></div>
+ <div class="kaart">${A?'':`<h2 style="margin-top:0">${p.t}</h2>`}
+  ${kanPraten?`<div class="podmode"><button class="btn klein ${G.mode==='luister'?'':'licht'}" id="mLuis">🎧 Luisteren</button><button class="btn klein ${G.mode==='lees'?'':'licht'}" id="mLees">📖 Lezen</button></div>`:''}
+  ${G.mode==='luister'?`<div class="speler"><button class="btn" id="pPlay">${G.playing?'⏸ Pauze':(G.idx>0&&G.idx<G.items.length?'▶ Verder':'▶ Afspelen')}</button><button class="btn licht klein" id="pTerug" aria-label="Een zin terug">⏮</button>
+   <div class="tempo">${TEMPO.map(([n],k)=>`<button class="btn klein ${tempo===k?'':'licht'}" data-t="${k}">${n}</button>`).join('')}</div></div>
+   <details class="stemdet"${G.stemOpen?' open':''}><summary>🔊 Stemmen: <span id="stemnaam">${st?st.tekst:''}</span> <u>wijzigen</u></summary>${stemKiezer()}</details>
+   <p class="src" style="margin:6px 0 0">Tik op een zin om daar verder te luisteren.</p>`:''}
+  <div class="transcript${G.mode==='luister'?' luis':''}">${html}</div>
+  <div class="acts"><button class="btn ${G.klaar||G.mode==='lees'?'':'licht'}" id="pVraag">${A?'Klaar ✓':'Klaar, naar de checkvragen →'}</button></div></div>`;
+ $('#stop').onclick=()=>{stilte();goHome()};
+ const ml=$('#mLuis');if(ml){ml.onclick=()=>{S.podMode='luister';save();G.mode='luister';podDraw()};$('#mLees').onclick=()=>{stilte();S.podMode='lees';save();G.mode='lees';podDraw()}}
+ const pp=$('#pPlay');if(pp){pp.onclick=()=>{if(G.playing){stilte();podDraw()}else{if(G.idx>=G.items.length)G.idx=0;G.playing=true;podDraw();spreek()}};
+  $('#pTerug').onclick=()=>{G.idx=Math.max(0,G.idx-1);if(G.playing){stilte();G.playing=true;spreek()}else markZin()};
+  P.querySelectorAll('[data-t]').forEach(b=>b.onclick=()=>{S.tempo=+b.dataset.t;save();const sp=G.playing;stilte();G.playing=sp;podDraw();if(sp)spreek()})}
+ if(G.mode==='luister')P.querySelectorAll('.z').forEach(z=>z.onclick=()=>{G.idx=+z.dataset.k;stilte();G.playing=true;podDraw();spreek()});
+ $('#pVraag').onclick=()=>{stilte();if(A)goHome();else podVragen()};const sd=P.querySelector('.stemdet');if(sd){sd.ontoggle=()=>{G.stemOpen=sd.open};stemKiezerKoppel()}markZin()}
+function markZin(){P.querySelectorAll('.z.nu').forEach(z=>z.classList.remove('nu'));const c=$('#cnt');if(c)c.textContent=`${Math.min(G.idx+1,G.items.length)}/${G.items.length}`;if(G.mode!=='luister')return;const z=P.querySelector(`.z[data-k="${G.idx}"]`);if(z&&(G.playing||G.idx>0)){z.classList.add('nu');if(G.playing)z.scrollIntoView({block:'center',behavior:'smooth'})}}
+function spreek(){if(!G||G.m!=='pod'||!G.playing)return;if(G.idx>=G.items.length){G.playing=false;G.klaar=true;podDraw();const b=$('#pVraag');if(b)b.scrollIntoView({block:'center',behavior:'smooth'});return}
+ const it=G.items[G.idx],st=stemmen()||{},sv=st[it.w]||{},tok=++G.token;const u=new SpeechSynthesisUtterance(it.t);u.lang='nl-NL';if(sv.v)u.voice=sv.v;u.pitch=sv.p||1;u.rate=TEMPO[S.tempo??1][1];
+ const door=()=>{if(!G||G.m!=='pod'||tok!==G.token||!G.playing)return;G.idx++;spreek()};u.onend=door;u.onerror=door;markZin();try{speechSynthesis.speak(u)}catch(e){G.playing=false;podDraw()}}
+function podVragen(){const {sec,i}=G;const p=POD[sec][i];G=null;
+ quiz(p.q.map(v=>mcItem(v,null)),{titel:`Checkvragen ${sec} · deel ${i+1}`,klaar:(goed,n)=>{S.pod[sec+':'+i]=1;save();
+  return `<p>Deel ${i+1} gehaald ✓</p><div class="acts" style="justify-content:center">${i<2?`<button class="btn" id="opn">Deel ${i+2}: ${POD[sec][i+1].t} →</button>`:`<button class="btn" id="opn">📖 Leerpad ${sec}</button>`}${terugKnop()}</div>`},
+  na:()=>{$('#opn').onclick=()=>i<2?podStart(sec,i+1):leerpad(sec);$('#hm').onclick=goHome}})}
+
+/* ---------- leerpad ---------- */
+function leerpad(id){stilte();const h=SECN[id];let i=0;show('play');
+ const teken=()=>{const c=h.lp[i];const opts=c[2]?shuffle([c[2][1],...c[2][2].split('|')]):[];
+  P.innerHTML=`<div class="top"><button class="btn licht klein" id="stop">Stoppen</button><span class="stap">Leerpad ${h.id} · ${h.t}</span><span class="teller">${i+1}/${h.lp.length}</span></div>
+  <div class="balk"><i style="width:${i/h.lp.length*100}%"></i></div>
+  <div class="kaart"><h2 style="margin-top:0">${c[0]}</h2>${c[1]}${c[2]?`<div class="check"><div class="label">Even checken</div><h3 style="margin:6px 0 0;font-family:inherit">${c[2][0]}</h3><div class="opts">${opts.map((o,k)=>`<button class="opt" data-k="${k}">${esc(o)}</button>`).join('')}</div><div id="fb"></div></div>`:''}
+  <div class="acts" id="nav" ${c[2]?'hidden':''}>${i?'<button class="btn licht" id="vor">← Terug</button>':''}<button class="btn" id="vd">${i<h.lp.length-1?'Verder →':'Klaar ✓'}</button></div></div>`;
+  $('#stop').onclick=goHome;const vd=()=>{i++;if(i>=h.lp.length){S.lp[id]=1;save();klaar()}else teken()};
+  const nav=()=>{$('#nav').hidden=false;$('#vd').onclick=vd;const v=$('#vor');if(v)v.onclick=()=>{i--;teken()};$('#vd').focus()};
+  if(c[2])P.querySelectorAll('.opt').forEach(b=>b.onclick=()=>{if(P.querySelector('.opt.goed'))return;const ok=opts[+b.dataset.k]===c[2][1];
+   P.querySelectorAll('.opt').forEach((x,k)=>{if(opts[k]===c[2][1])x.classList.add('goed');else if(x===b)x.classList.add('fout')});
+   $('#fb').innerHTML=`<div class="uitleg"><b class="${ok?'goed-t':'fout-t'}">${ok?'Goed!':'Niet goed.'}</b> ${c[2][3]}</div>`;nav()});else nav()};
+ const klaar=()=>{P.innerHTML=`<div class="kaart" style="text-align:center"><div class="label">Leerpad klaar</div><h2>${h.ic} ${h.t}</h2><p>Nu oefenen: 10 vragen, haal er 8.</p><div class="acts" style="justify-content:center"><button class="btn" id="opn">✅ Oefenronde</button>${terugKnop()}</div></div>`;
+  $('#opn').onclick=()=>ronde(id);$('#hm').onclick=goHome;$('#opn').focus()};
+ teken()}
+
+
+/* ---------- 💡 Hoe pak ik dit aan? De aanpak (q.hint) en het kaartje uit het leerpad waar de vraag over gaat; niet in de proeftoets ---------- */
+const STOPW=new Set('deze die dat wat welke hoeveel waarom wordt worden niet zijn heeft hebben kunnen moet maar ook door naar voor over onder tussen bij zonder iets meer minder alle elke steeds daarna eerst juist goed fout klopt uitspraak uitspraken antwoord'.split(' '));
+const woorden=t=>(String(t).replace(/<[^>]+>/g,' ').toLowerCase().match(/[a-zà-ÿ]{4,}/g)||[]).filter(x=>!STOPW.has(x));
+function kaartVoor(q){const h=q.sec&&SECN[q.sec];if(!h)return null;const w=new Set(woorden(q.q));let best=null,bs=0;h.lp.forEach(l=>{const n=new Set(woorden(l[0]+' '+l[1]).filter(x=>w.has(x))).size;if(n>bs){bs=n;best=l}});return bs>=2?best:null}
+function hintVan(q){const k=kaartVoor(q);if(!q.hint&&!k)return '';return `<div>${q.hint||'Zoek de kernwoorden in de vraag. Weet je niet meer wat ze betekenen? Lees het kaartje hieronder nog eens, en kijk dan opnieuw naar de opties.'}</div>${k?`<details class="hkaart"><summary>📖 Kaartje uit het leerpad: ${k[0]}</summary>${k[1]}</details>`:''}`}
+/* ---------- vragen: meerkeuze of getal; fout = herkansing aan het eind ---------- */
+const terugKnop=()=>`<button class="btn licht" id="hm">${RT.on?'Terug naar de route':'Naar het overzicht'}</button>`;
+function quiz(qs,o){let i=0,goed=0,opnieuw=[];const n=qs.length;
+ const volgende=()=>{if(i>=qs.length){if(opnieuw.length&&!o.geenHer){qs=qs.concat(opnieuw);opnieuw=[]}else return einde()}
+  const q=qs[i],her=i>=n;const opts=q.num?[]:shuffle(q.opts);
+  P.innerHTML=`<div class="top"><button class="btn licht klein" id="stop">Stoppen</button><span class="stap">${o.titel}</span><span class="teller">${Math.min(i+1,n)}/${n}${her?' · herkansing':''}</span></div>
+  <div class="kaart">${her?'<div class="label" style="color:var(--gold)">Herkansing: deze ging eerder fout</div>':''}${q.sec?`<div class="label">${SECN[q.sec].ic} ${q.sec} ${SECN[q.sec].t}</div>`:''}${q.fig||''}<div class="vraag">${q.q}</div>
+  ${o.titel!=='Proeftoets'&&hintVan(q)?`<div class="hintrij"><button class="btn licht klein" type="button" id="hintb">💡 Hoe pak ik dit aan?</button><div id="hintbox" class="hintbox" hidden>${hintVan(q)}</div></div>`:''}
+  ${q.num?`<form class="typerow" id="nf" autocomplete="off"><input id="ni" inputmode="decimal" placeholder="antwoord" aria-label="Antwoord"><button class="btn" type="submit" id="nb">Controleer</button></form>`:`<div class="opts">${opts.map((x,k)=>`<button class="opt" data-k="${k}">${x}</button>`).join('')}</div>`}<div id="fb"></div></div>`;
+  $('#stop').onclick=goHome;const hb=$('#hintb');if(hb)hb.onclick=()=>{$('#hintbox').hidden=false;hb.hidden=true};
+  const af=ok=>{const hr=P.querySelector('.hintrij');if(hr)hr.hidden=true;if(ok&&o.opGoed)o.opGoed(q);if(!her&&ok)goed++;if(ok){if(q.id)delete S.mis[q.id]}else{if(q.id&&q.sec&&!o.geenMis)S.mis[q.id]=q.sec;if(!her)opnieuw.push(q)}save();
+   $('#fb').innerHTML=`<div class="uitleg"><b class="${ok?'goed-t':'fout-t'}">${ok?'Goed!':'Niet goed.'}</b> ${q.num&&!ok?`Het antwoord is <b>${String(q.a).replace(".",",")}</b>. `:''}${q.w||''}</div><div class="acts"><button class="btn" id="vd">Verder ↵</button></div>`;
+   i++;$('#vd').onclick=volgende;$('#vd').focus()};
+  if(q.num){const inp=$('#ni');inp.focus();$('#nf').onsubmit=e=>{e.preventDefault();const v=parseFloat(String(inp.value).trim().replace(",","."));if(isNaN(v)){inp.classList.remove('shake');void inp.offsetWidth;inp.classList.add('shake');return}inp.readOnly=true;$('#nb').hidden=true;af(Math.abs(v-q.a)<=(q.tol??0.001))}}
+  else P.querySelectorAll('.opt').forEach(b=>b.onclick=()=>{if(P.querySelector('.opt.goed'))return;const ok=opts[+b.dataset.k]===q.a;P.querySelectorAll('.opt').forEach((x,k)=>{if(opts[k]===q.a)x.classList.add('goed');else if(x===b)x.classList.add('fout')});af(ok)})};
+ const einde=()=>{P.innerHTML=`<div class="kaart" style="text-align:center"><div class="label">${o.titel}</div><div class="groot">${goed}<span> / ${n}</span></div>${o.klaar(goed,n)}</div>`;o.na&&o.na()};
+ show('play');volgende()}
+function ronde(id){stilte();const qs=shuffle(MCQ[id]).slice(0,10).map(v=>mcItem(v,id));
+ quiz(qs,{titel:'Oefenronde: '+SECN[id].t,klaar:(goed,n)=>{const f=goed/n;if(f>(S.b[id]||0))S.b[id]=f;save();
+  return `<p>${f>=.8?'Gehaald! 🎉':'Nog niet: 8 van de 10 in één keer goed is het doel.'}</p><div class="acts" style="justify-content:center"><button class="btn" id="opn">Nog een ronde</button><button class="btn licht" id="lp">Leerpad nalezen</button>${terugKnop()}</div>`},
+  na:()=>{$('#opn').onclick=()=>ronde(id);$('#lp').onclick=()=>leerpad(id);$('#hm').onclick=goHome}})}
+const exItem=v=>({q:v[1],a:v[2],opts:[v[2],...v[3].split('|')],w:v[4],hint:v[5],sec:v[0],id:'ex|'+v[1].slice(0,60)});
+function examen(){stilte();quiz(shuffle(EXAM).slice(0,12).map(exItem),{titel:'Toetsvragen',geenHer:1,geenMis:1,klaar:(goed,n)=>{const f=goed/n;if(f>S.ex)S.ex=f;save();
+ return `<p>${Math.round(f*100)}% goed${f>=.7?' · gehaald! 🎉':' · doel: 70%'}</p><p class="sub">Toetsvragen zijn lastig: lees de uitleg goed, daar zie je hoe je moet redeneren.</p><div class="acts" style="justify-content:center"><button class="btn" id="opn">Nog een keer</button>${terugKnop()}</div>`},na:()=>{$('#opn').onclick=examen;$('#hm').onclick=goHome}})}
+function spelKlaar(k,goed,n){const f=goed/n,d=SPEL[k].doel;if(f>(S.sp[k]||0))S.sp[k]=f;save();
+ return `<p>${f>=d?'Gehaald! 🎉':`Doel: ${Math.ceil(d*n)} van de ${n} in één keer goed.`}</p><div class="acts" style="justify-content:center"><button class="btn" id="opn">Nog een keer</button>${terugKnop()}</div>`}
+function spel(k){stilte();const f={tel:telVraag,welke:welkeVraag}[k];
+ quiz(Array.from({length:10},f),{titel:SPEL[k].t,geenHer:1,klaar:(g,n)=>spelKlaar(k,g,n),na:()=>{$('#opn').onclick=()=>spel(k);$('#hm').onclick=goHome}})}
+function volg(){const set=shuffle(VOLG).slice(0,5);let i=0,goed=0;show('play');
+ const teken=()=>{if(i>=set.length){P.innerHTML=`<div class="kaart" style="text-align:center"><div class="label">${SPEL.volg.t}</div><div class="groot">${goed}<span> / ${set.length}</span></div>${spelKlaar('volg',goed,set.length)}</div>`;$('#opn').onclick=volg;$('#hm').onclick=goHome;return}
+  const [titel,juist]=set[i];let los;do{los=shuffle(juist)}while(los.join()===juist.join());const rij=[];
+  const bouw=()=>{P.innerHTML=`<div class="top"><button class="btn licht klein" id="stop">Stoppen</button><span class="stap">${SPEL.volg.t}</span><span class="teller">${i+1}/${set.length}</span></div>
+   <div class="kaart"><div class="label">Zet op volgorde</div><div class="vraag">${titel}</div><p class="sub" style="margin:4px 0 0">Tik de stappen aan van eerste naar laatste.</p>
+   <ol class="volgrij">${rij.map(t=>`<li>${t}</li>`).join('')}</ol><div class="tegels">${los.map((t,k)=>`<button class="tegel${rij.includes(t)?' weg':''}" data-k="${k}">${t}</button>`).join('')}</div>
+   <div id="fb"></div><div class="acts" id="ra">${rij.length?'<button class="btn licht klein" id="wis2">↺ Opnieuw</button>':''}</div></div>`;
+   $('#stop').onclick=goHome;const w=$('#wis2');if(w)w.onclick=()=>{rij.length=0;bouw()};
+   P.querySelectorAll('.tegel').forEach(b=>b.onclick=()=>{if(b.classList.contains('weg'))return;rij.push(los[+b.dataset.k]);if(rij.length<juist.length)return bouw();
+    bouw();const ok=rij.join()===juist.join();if(ok)goed++;$('#ra').innerHTML='';P.querySelectorAll('.tegel').forEach(x=>x.disabled=true);
+    $('#fb').innerHTML=`<div class="uitleg"><b class="${ok?'goed-t':'fout-t'}">${ok?'Goed!':'Niet goed.'}</b>${ok?'':` De goede volgorde:<ol>${juist.map(t=>`<li>${t}</li>`).join('')}</ol>`}</div><div class="acts"><button class="btn" id="vd">Verder ↵</button></div>`;$('#vd').onclick=()=>{i++;teken()};$('#vd').focus()})};
+  bouw()};
+ teken()}
+function toets(){stilte();const mc=shuffle(H.flatMap(h=>shuffle(MCQ[h.id]).slice(0,3).map(v=>mcItem(v,h.id))));const ex=shuffle(EXAM).slice(0,6).map(exItem);
+ const qs=shuffle([...mc.slice(0,12),...ex,...(window.TOETSGEN||[])]);
+ quiz(qs,{titel:'Proeftoets',geenHer:1,geenMis:1,klaar:(goed,n)=>{const c=Math.round((1+9*goed/n)*10)/10;if(c>S.toets)S.toets=c;save();
+  return `<p>Cijfer: <b style="font-size:22px">${nf(c)}</b>${c>=7?' 🎉':''}</p><div class="acts" style="justify-content:center"><button class="btn" id="opn">Nog een proeftoets</button>${terugKnop()}</div>`},na:()=>{$('#opn').onclick=toets;$('#hm').onclick=goHome}})}
+function foutRonde(){const lijst=Object.entries(S.mis).map(([id,sec])=>{const v=(MCQ[sec]||[]).find(v=>v[0]===id);return v?mcItem(v,sec):null}).filter(Boolean);
+ if(!lijst.length){S.mis={};save();return goHome()}quiz(shuffle(lijst).slice(0,15),{titel:'Mijn fouten',klaar:()=>`<p>${Object.keys(S.mis).length?`Nog ${Object.keys(S.mis).length} in je foutenlijst.`:'Foutenlijst leeg. Top!'}</p><div class="acts" style="justify-content:center">${terugKnop()}</div>`,na:()=>{$('#hm').onclick=goHome}})}
+
+/* ---------- open vragen: invullen en nakijken ---------- */
+const oId=q=>q[0]+'|'+q[1];
+function openMenu(){stilte();show('play');const o=OS();
+ P.innerHTML=`<div class="top"><button class="btn licht klein" id="stop">Terug</button><span class="stap">Open vragen</span><span></span></div>
+ <div class="kaart"><p style="margin:0">Typ je antwoord in je eigen woorden, zoals op de toets. Tik daarna op <b>Nakijken</b>: je ziet jouw antwoord en daaronder het goede antwoord, en je vinkt aan welke punten je had.</p></div>
+ <button class="mode main" id="opw" style="width:100%;margin:8px 0"><h3>✍️ Proefwerk: 8 open vragen</h3><p>Uit alle basisstoffen. Ongeveer 25 minuten.${o.best?` Beste: ${Math.round(o.best*100)}%.`:''}</p></button>
+ ${H.map(h=>{const n=OPEN.filter(q=>q[0]===h.id).length;return n?`<button class="mode${(o.per[h.id]||0)>=.6?' gehaald':''}" data-os="${h.id}" style="width:100%;margin:8px 0"><h3>${h.ic} ${h.id} ${h.t}</h3><p>${n} open vragen.${o.per[h.id]?` Beste: ${Math.round(o.per[h.id]*100)}%.`:''}</p></button>`:''}).join('')}`;
+ $('#stop').onclick=goHome;$('#opw').onclick=openProefwerk;P.querySelectorAll('[data-os]').forEach(b=>b.onclick=()=>openSet(OPEN.filter(q=>q[0]===b.dataset.os),'Open vragen '+b.dataset.os,b.dataset.os))}
+function openProefwerk(){const qs=[];H.forEach(h=>{const l=shuffle(OPEN.filter(q=>q[0]===h.id));qs.push(...l.slice(0,2))});openSet(qs.slice(0,8),'Proefwerk open vragen',null)}
+function openSet(qs,titel,sec){stilte();show('play');G={m:'open',qs,titel,sec};const o=OS();
+ P.innerHTML=`<div class="top"><button class="btn licht klein" id="stop">Stoppen</button><span class="stap">${titel}</span><span class="teller">${qs.length} vragen</span></div>
+ <p class="src">Je antwoorden worden bewaard, ook als je even weggaat. Schrijf in hele zinnen.</p>
+ ${qs.map((q,i)=>`<div class="kaart ovraag"><div class="label">Vraag ${i+1} · ${q[0]} · ${q[3].length} punten</div><div class="vraag">${q[1]}</div><textarea data-i="${i}" rows="4" placeholder="Jouw antwoord…">${esc(o.a[oId(q)]||'')}</textarea></div>`).join('')}
+ <div class="acts"><button class="btn" id="nakijk">Nakijken →</button><button class="btn licht" id="leeg">Antwoorden wissen</button></div>`;
+ P.querySelectorAll('textarea').forEach(t=>t.oninput=()=>{o.a[oId(qs[+t.dataset.i])]=t.value;save()});
+ $('#stop').onclick=()=>RT.on?goHome():openMenu();$('#leeg').onclick=()=>{if(!confirm('Alle antwoorden van deze vragen wissen?'))return;qs.forEach(q=>delete o.a[oId(q)]);save();openSet(qs,titel,sec)};
+ $('#nakijk').onclick=()=>{const l=qs.filter(q=>!(o.a[oId(q)]||'').trim()).length;if(l&&!confirm(`${l} vraag${l>1?'en zijn':' is'} nog leeg. Toch nakijken?`))return;openNakijk()}}
+function oMarkeer(tekst,q){if(!(tekst||'').trim())return '<i class="src">(niet ingevuld)</i>';const iv=[];
+ q[3].forEach(p=>{try{const r=new RegExp(p[1],'gi');let m;while((m=r.exec(tekst))){if(!m[0].length){r.lastIndex++;continue}iv.push([m.index,m.index+m[0].length])}}catch(e){}});
+ iv.sort((a,b)=>a[0]-b[0]);const mg=[];iv.forEach(x=>{const l=mg[mg.length-1];if(l&&x[0]<=l[1])l[1]=Math.max(l[1],x[1]);else mg.push(x.slice())});
+ let h='',k=0;mg.forEach(([a,b])=>{h+=esc(tekst.slice(k,a))+'<mark>'+esc(tekst.slice(a,b))+'</mark>';k=b});h+=esc(tekst.slice(k));return h.replace(/\n/g,'<br>')}
+function openNakijk(){const {qs,titel,sec}=G,o=OS();show('play');
+ P.innerHTML=`<div class="top"><button class="btn licht klein" id="terug">← Antwoorden</button><span class="stap">Nakijken</span><span class="teller" id="osc"></span></div>
+ <p class="src">Vergelijk je antwoord met het goede antwoord. Woorden die al lijken te kloppen zijn <mark>gemarkeerd</mark> en dat punt staat al aangevinkt. Klopt het niet? Haal het vinkje weg. Had je het in andere woorden? Vink het aan.</p>
+ ${qs.map((q,i)=>{const t=o.a[oId(q)]||'';return `<div class="kaart ovraag"><div class="label">Vraag ${i+1} · ${q[0]}</div><div class="vraag">${q[1]}</div>
+  <div class="oantw"><div class="label">Jouw antwoord</div>${oMarkeer(t,q)}</div><div class="omodel"><div class="label">Goed antwoord</div>${q[2]}</div>
+  <div class="opunt"><div class="label">Had jij dit? (1 punt per vinkje)</div>${q[3].map((p,k)=>{let ok=false;try{ok=new RegExp(p[1],'i').test(t)}catch(e){}return `<label><input type="checkbox" data-p="${i}-${k}"${ok?' checked':''}> ${p[0]}</label>`}).join('')}</div></div>`}).join('')}
+ <div class="kaart" id="ouit"></div>`;
+ const tel=()=>{const c=P.querySelectorAll('[data-p]'),g=[...c].filter(x=>x.checked).length,f=c.length?g/c.length:0,cijfer=Math.round((1+9*f)*10)/10;$('#osc').textContent=`${g}/${c.length} punten`;
+  $('#ouit').innerHTML=`<h3>Score: ${g} van de ${c.length} punten · cijfer ${nf(cijfer)}</h3><p class="sub">${f>=.8?'Super! Dit kun je op de toets ook.':f>=.6?'Goed bezig. Kijk nog even naar de punten die je miste.':'Lees de goede antwoorden nog eens rustig door, en probeer het daarna opnieuw.'}</p><div class="acts"><button class="btn" id="obew">Score bewaren</button><button class="btn licht" id="oopn">Opnieuw</button></div>`;
+  $('#obew').onclick=()=>{if(sec)o.per[sec]=Math.max(o.per[sec]||0,f);else o.best=Math.max(o.best||0,f);save();$('#obew').textContent='Bewaard ✓';$('#obew').disabled=true;const n=document.createElement('button');n.className='btn licht';n.textContent=RT.on?'Terug naar de route':'Naar het menu';n.onclick=()=>RT.on?goHome():openMenu();$('#obew').after(n)};
+  $('#oopn').onclick=()=>sec?openSet(qs,titel,sec):openProefwerk()};
+ P.querySelectorAll('[data-p]').forEach(x=>x.onchange=tel);tel();$('#terug').onclick=()=>openSet(qs,titel,sec)}
+
+/* ---------- begrippenblitz ---------- */
+function blitz(){stilte();let punten=0,eind=Date.now()+60000;show('play');
+ const vraag=()=>{if(Date.now()>=eind)return stop();const b=pick(BEGR),rev=Math.random()<.5;const fout=shuffle(BEGR.filter(x=>x!==b)).slice(0,2);const goedT=rev?b[0]:b[1];const opts=shuffle([goedT,...fout.map(x=>rev?x[0]:x[1])]);
+  P.innerHTML=`<div class="top"><button class="btn licht klein" id="stop">Stoppen</button><span class="teller ok">${punten} punten</span><span class="teller" id="tijd">60 s</span></div>
+  <div class="kaart"><div class="label">${rev?'Welk begrip hoort hierbij?':'Wat betekent dit begrip?'}</div><div class="vraag">${rev?b[1]:b[0]}</div><div class="opts">${opts.map((x,k)=>`<button class="opt" data-k="${k}">${x}</button>`).join('')}</div><div id="fb"></div></div>`;
+  tik();$('#stop').onclick=goHome;
+  P.querySelectorAll('.opt').forEach(x=>x.onclick=()=>{if(P.querySelector('.opt.goed'))return;const ok=opts[+x.dataset.k]===goedT;P.querySelectorAll('.opt').forEach((y,k)=>{if(opts[k]===goedT)y.classList.add('goed');else if(y===x)y.classList.add('fout')});
+   if(ok){punten++;setTimeout(vraag,350)}else{$('#fb').innerHTML=`<div class="uitleg"><b class="fout-t">Fout.</b> <b>${b[0]}</b> = ${b[1]}.</div><div class="acts"><button class="btn" id="vd">Verder ↵</button></div>`;$('#vd').onclick=vraag;$('#vd').focus()}})};
+ const tik=()=>{const e=$('#tijd');if(e)e.textContent=Math.max(0,Math.ceil((eind-Date.now())/1000))+' s'};
+ const stop=()=>{clearInterval(window.__klok);const rec=punten>S.blitz;if(rec)S.blitz=punten;save();
+  P.innerHTML=`<div class="kaart" style="text-align:center"><div class="label">Begrippenblitz</div><div class="groot">${punten}</div><p>${rec?'Nieuw record! 🎉':`Record: ${S.blitz}`}${S.blitz>=15?'':' · doel: 15'}</p><div class="acts" style="justify-content:center"><button class="btn" id="opn">Nog een keer</button>${terugKnop()}</div></div>`;
+  $('#opn').onclick=blitz;$('#hm').onclick=goHome};
+ window.__klok=setInterval(()=>{tik();if(Date.now()>=eind&&!P.querySelector('#vd'))stop()},250);vraag()}
+
+/* ---------- alles nalezen ---------- */
+function samen(){stilte();S.samen=1;save();show('play');
+ P.innerHTML=`<div class="top"><button class="btn licht klein" id="terug">‹ Terug</button><span class="stap">Alles nog eens lezen</span><span></span></div>
+ <div class="kaart"><p style="margin:0"><b>H4 Combinatoriek.</b> Tellen zonder alles op te schrijven: de vermenigvuldigings- en somregel, met of zonder herhaling, permutaties (nPr) en combinaties (nCr), faculteit, rijtjes en routes, en hoe je bij een telprobleem de juiste aanpak kiest.</p></div>
+ ${H.map(h=>`<h2>${h.ic} ${h.id} ${h.t}</h2>${h.lp.map(c=>`<div class="kaart"><h3>${c[0]}</h3>${c[1]}</div>`).join('')}`).join('')}
+ <h2>Begrippen</h2><div class="kaart"><dl class="begr">${BEGR.map(b=>`<dt>${b[0]}</dt><dd>${b[1]}</dd>`).join('')}</dl></div>
+ <div class="acts"><button class="btn licht" id="terug2">‹ Terug</button></div>`;$('#terug').onclick=goHome;$('#terug2').onclick=goHome}
+
+renderHome();
+</script>
+</body>
+</html>

@@ -1,0 +1,1093 @@
+<!doctype html>
+<html lang="nl">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<meta name="robots" content="noindex">
+<script src="leerlog.js"></script><script src="rekenmachine.js?v=3" defer></script><script>(function(){try{if(localStorage.getItem('leren-ok')!=='53a39a231246354922d1b5f7242c1639ebdc75da84bde2e766eed704f5a89cf8'){location.replace('index.html')}}catch(e){location.replace('index.html')}})();</script>
+<title>Wiskunde · H3 Lineaire verbanden</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Archivo:wdth,wght@62..125,400..900&family=Atkinson+Hyperlegible:wght@400;700&family=JetBrains+Mono:wght@500;700&display=swap">
+<style>
+/* iPad: twee keer snel tikken mag niet inzoomen (knijpen om te zoomen blijft werken) */
+*{touch-action:manipulation}
+:root{--bg:#F5F2EC;--surface:#fff;--ink:#1E2230;--muted:#5D6375;--line:#DDD6CB;--chip:#EEE8DE;--accent:#2E7D5B;--gold:#B8860B;--good:#1E8E5A;--good-bg:#E3F4EA;--bad:#C0392B;--bad-bg:#FBE9E7;--tip:#FFF6DA}
+@media (prefers-color-scheme:dark){:root:not([data-theme="light"]){--bg:#14161D;--surface:#1D2029;--ink:#E9EAF0;--muted:#A0A5B5;--line:#30343F;--chip:#272A35;--accent:#5FC596;--gold:#E8B84A;--good:#4CD68A;--good-bg:#173226;--bad:#FF7B6B;--bad-bg:#3A1E1B;--tip:#2E2A1C;color-scheme:dark}}
+:root[data-theme="dark"]{--bg:#14161D;--surface:#1D2029;--ink:#E9EAF0;--muted:#A0A5B5;--line:#30343F;--chip:#272A35;--accent:#5FC596;--gold:#E8B84A;--good:#4CD68A;--good-bg:#173226;--bad:#FF7B6B;--bad-bg:#3A1E1B;--tip:#2E2A1C;color-scheme:dark}
+*{box-sizing:border-box}
+body{margin:0;background:var(--bg);color:var(--ink);font:17px/1.55 "Atkinson Hyperlegible",system-ui,sans-serif;overflow-wrap:break-word}
+main{max-width:720px;margin:0 auto;padding:20px 16px 60px}
+h1{font:800 clamp(30px,7vw,44px)/1.05 Archivo,system-ui,sans-serif;font-stretch:90%;margin:4px 0 6px}
+h2{font:800 22px/1.2 Archivo,system-ui,sans-serif;margin:22px 0 8px}
+h3{font:800 18px/1.25 Archivo,system-ui,sans-serif;margin:0 0 6px}
+.sub{color:var(--muted);margin:0 0 16px}
+.terug{display:inline-block;margin:0 0 10px;color:inherit;opacity:.7;text-decoration:none;font:700 14px system-ui,sans-serif}
+.vlag{display:inline-flex;height:10px;width:44px;border-radius:3px;overflow:hidden;vertical-align:middle;margin-right:8px}
+.vlag i{flex:1}.vlag i:nth-child(1){background:#111}.vlag i:nth-child(2){background:#DD0000}.vlag i:nth-child(3){background:#FFCE00}
+.kaart{background:var(--surface);border:2px solid var(--line);border-radius:16px;padding:16px;margin:12px 0}
+.opdracht{border-color:var(--ink)}
+.opdracht ol{padding-left:22px;margin:8px 0}.opdracht li{margin:4px 0}
+.label{font:700 12px/1 "JetBrains Mono",monospace;letter-spacing:.06em;text-transform:uppercase;color:var(--accent)}
+.modes{display:grid;grid-template-columns:repeat(auto-fit,minmax(200px,1fr));gap:12px;margin-top:12px}
+.mode{display:block;text-align:left;background:var(--surface);color:var(--ink);border:2px solid var(--line);border-radius:16px;padding:16px;cursor:pointer;font:inherit;position:relative}
+.mode h3{margin:0 0 4px}.mode p{margin:0;color:var(--muted);font-size:15px}
+.mode.main{background:var(--ink);color:var(--bg);border-color:var(--ink)}.mode.main p{color:var(--bg);opacity:.8}
+.mode.gehaald{background:var(--good-bg);border-color:var(--good)}
+.mode.gehaald::after{content:"✓ gehaald";position:absolute;top:8px;right:10px;font:700 11px "JetBrains Mono",monospace;color:var(--good)}
+.balk{height:10px;background:var(--chip);border-radius:6px;overflow:hidden;margin:8px 0 4px}.balk i{display:block;height:100%;background:var(--good);transition:width .3s}
+.btn{font:700 16px system-ui,sans-serif;padding:11px 16px;border-radius:12px;border:2px solid var(--ink);background:var(--ink);color:var(--bg);cursor:pointer}
+.btn.licht{background:none;color:var(--ink)}
+.btn.klein{font-size:14px;padding:7px 12px}
+.acts{display:flex;gap:10px;flex-wrap:wrap;margin-top:14px}
+.top{display:flex;justify-content:space-between;align-items:center;gap:10px;margin-bottom:10px}
+.top>*{white-space:nowrap}
+.teller{font:700 14px "JetBrains Mono",monospace;padding:6px 10px;border-radius:10px;background:var(--chip)}
+.teller.ok{background:var(--good-bg);color:var(--good)}.teller.te{background:var(--bad-bg);color:var(--bad)}
+.stap{font:700 13px "JetBrains Mono",monospace;color:var(--muted)}
+textarea{width:100%;min-height:120px;font:17px/1.5 "Atkinson Hyperlegible",system-ui,sans-serif;padding:12px;border-radius:12px;border:2px solid var(--line);background:var(--bg);color:var(--ink);resize:vertical}
+textarea:focus{outline:none;border-color:var(--accent)}
+.tip{background:var(--tip);border-radius:12px;padding:10px 14px;margin:10px 0;font-size:15.5px}
+.stenen{display:flex;flex-wrap:wrap;gap:8px;margin:8px 0}
+.steen{font:15px "Atkinson Hyperlegible",system-ui,sans-serif;padding:7px 11px;border-radius:10px;border:1.5px dashed var(--muted);background:var(--surface);color:var(--ink);cursor:pointer;text-align:left}
+.steen small{display:block;color:var(--muted);font-size:12.5px}
+.check{list-style:none;padding:0;margin:8px 0}
+.check li{padding:7px 0 7px 30px;position:relative;border-bottom:1px solid var(--line)}
+.check li::before{position:absolute;left:4px;top:7px;font-weight:800}
+.check li.ja::before{content:"✓";color:var(--good)}.check li.nee::before{content:"✗";color:var(--bad)}.check li.let::before{content:"!";color:var(--gold)}
+.check li small{display:block;color:var(--muted);font-size:14px}
+label.zelf{display:flex;gap:10px;align-items:flex-start;padding:8px 0;border-bottom:1px solid var(--line);cursor:pointer}
+label.zelf input{width:22px;height:22px;margin-top:2px;flex:none;accent-color:var(--good)}
+.brief{white-space:pre-wrap;font:17px/1.6 Georgia,"Times New Roman",serif;background:var(--surface);border:2px solid var(--line);border-radius:12px;padding:16px}
+.opts{display:grid;gap:10px;margin-top:12px}
+.opt{font:inherit;text-align:left;padding:12px 14px;border-radius:12px;border:2px solid var(--line);background:var(--surface);color:var(--ink);cursor:pointer}
+.opt.goed{border-color:var(--good);background:var(--good-bg)}.opt.fout{border-color:var(--bad);background:var(--bad-bg)}
+.uitleg{margin-top:10px;padding:10px 14px;border-radius:12px;background:var(--chip)}
+.tegels{display:flex;flex-wrap:wrap;gap:8px;min-height:52px;padding:8px;border-radius:12px;border:2px dashed var(--line);margin:10px 0}
+.tegel{font:700 17px "Atkinson Hyperlegible",system-ui,sans-serif;padding:8px 12px;border-radius:10px;border:2px solid var(--ink);background:var(--surface);color:var(--ink);cursor:pointer}
+.tegel.weg{visibility:hidden}
+.goed-t{color:var(--good);font-weight:700}.fout-t{color:var(--bad);font-weight:700}
+[hidden]{display:none!important}
+.kaart ul{padding-left:20px;margin:6px 0}.kaart li{margin:4px 0}
+.opt{font-size:17px;overflow-wrap:anywhere}
+.top .stap{white-space:normal;text-align:center;flex:1;min-width:0}
+.vraag{margin:6px 0 0;font:700 19px/1.45 "Atkinson Hyperlegible",system-ui,sans-serif}
+.groot{font:800 54px Archivo,system-ui;margin:8px 0}.groot span{font-size:.45em;color:var(--muted)}
+.ex{background:var(--chip);border-left:4px solid var(--accent);border-radius:8px;padding:10px 12px;margin:10px 0}
+.src{color:var(--muted);font-size:14px}
+.gt{display:block;overflow-x:auto;border-collapse:collapse;font-size:14.5px;margin:8px 0}.gt th,.gt td{border:1px solid var(--line);padding:6px 8px;text-align:left;vertical-align:top;overflow-wrap:normal}.gt th{background:var(--chip)}
+.fig{display:block;width:100%;max-width:240px;margin:6px auto;color:var(--ink)}
+.figrij{display:grid;grid-template-columns:repeat(auto-fit,minmax(120px,1fr));gap:8px;margin:10px 0;text-align:center}.figrij small{display:block;color:var(--muted);font-size:13px;line-height:1.3}
+.check{margin-top:14px;padding-top:12px;border-top:2px dashed var(--line)}
+.typerow{display:flex;gap:10px;margin-top:12px}.typerow input{flex:1;min-width:0;font:700 18px "Atkinson Hyperlegible",system-ui;padding:11px 12px;border-radius:12px;border:2px solid var(--line);background:var(--bg);color:var(--ink)}
+.shake{animation:sh .3s}@keyframes sh{25%{transform:translateX(-6px)}75%{transform:translateX(6px)}}
+.btn.ok{background:var(--good-bg);color:var(--good);border-color:var(--good)}
+.hk h3{display:flex;justify-content:space-between;gap:8px;align-items:baseline}
+dl.begr{margin:0}.begr dt{font-weight:700;margin-top:8px}.begr dd{margin:0 0 0 12px;color:var(--muted)}
+.fig.breed{max-width:440px}.fig.veld{max-width:360px}
+.volgrij{min-height:40px;margin:10px 0;padding-left:26px}.volgrij li{font-weight:700;margin:4px 0}
+.gt td,.gt th{overflow-wrap:normal}
+.lijnleg{padding-left:24px;font-size:15.5px}.lijnleg li{margin:4px 0}
+
+.vb{background:var(--tip);border-left:4px solid var(--gold);border-radius:10px;padding:10px 12px;margin:10px 0;font-size:15.5px}
+.vraag{margin:6px 0 0;font:700 18px/1.45 "Atkinson Hyperlegible",system-ui,sans-serif}.vraag .gt{font-weight:400}
+.podmode,.speler,.tempo{display:flex;gap:8px;flex-wrap:wrap;align-items:center;margin:8px 0}
+.speler{background:var(--chip);border-radius:12px;padding:10px}
+.transcript{display:grid;gap:4px;margin-top:10px}.vl{margin:0 0 6px;line-height:1.6}.vkop{margin:14px 0 4px;font-size:16px;color:var(--accent)}
+.wie{display:inline-block;font-size:12px;letter-spacing:.03em;padding:1px 8px;border-radius:999px;margin-right:4px;color:#fff;vertical-align:1px}.wie.E{background:#C2417A}.wie.D{background:#2F6BD8}
+.transcript.luis .z{cursor:pointer;border-radius:4px}.z.nu{background:#FFE88A;color:#1E2230}
+.stemkies{display:grid;grid-template-columns:1fr auto;gap:8px;align-items:center;margin-top:8px}.stemkies label{display:flex;gap:6px;align-items:center;min-width:0}
+.stemkies select{min-width:0;flex:1;font:inherit;padding:6px;border-radius:8px;border:1px solid var(--line);background:var(--surface);color:var(--ink)}
+.stemdet{background:var(--chip);border-radius:12px;padding:10px 12px;margin-top:8px}.stemdet summary{cursor:pointer;font-weight:700;font-size:15px;list-style:none}.stemdet summary::-webkit-details-marker{display:none}.stemdet summary u{color:var(--accent);white-space:nowrap}
+.ovraag{display:grid;gap:8px}.ovraag textarea{width:100%;min-height:110px}
+.oantw,.omodel{border-radius:10px;padding:10px 12px;line-height:1.55}.oantw{background:var(--chip)}.omodel{background:var(--good-bg);border-left:4px solid var(--good)}
+.oantw mark{background:#FFE58A;color:#1E2230;border-radius:3px;padding:0 2px}
+.opunt{display:grid;gap:6px}.opunt label{display:flex;gap:10px;align-items:flex-start;cursor:pointer}.opunt input{width:20px;height:20px;flex:none;margin-top:2px}
+.fig{max-width:460px}.fig.breed{max-width:460px}.volgrij{min-height:40px;margin:10px 0;padding-left:26px}.volgrij li{font-weight:700;margin:4px 0}
+.gt td,.gt th{overflow-wrap:normal}.typerow{display:flex;gap:10px;margin-top:12px}
+.kt{border-collapse:collapse;margin:10px auto;font-size:1.05rem}.kt th,.kt td{border:1.5px solid var(--line,#999);padding:8px 14px;text-align:center;white-space:nowrap}.kt th{background:rgba(127,127,127,.15)}.kt td.mk{background:rgba(46,204,113,.28);font-weight:800}.kt .hoek{font-size:.8rem}
+.hintrij{margin-top:12px}.hintbox{background:var(--chip);border-left:4px solid #e0b100;border-radius:8px;padding:10px 12px;margin-top:8px;font-size:15.5px;line-height:1.5}.hkaart{margin-top:8px}.hkaart summary{cursor:pointer;font-weight:700;color:var(--accent)}.hkaart[open]{background:var(--surface);border-radius:8px;padding:6px 10px}
+.gt{display:block;overflow-x:auto;max-width:100%}.tw{display:flex;flex-wrap:wrap;gap:8px}.tw .gt{flex:1 1 280px;display:table}.gt td,.gt th{padding:5px 6px;font-size:14.5px}
+.lat{font-family:Georgia,serif;font-size:1.05em;background:var(--chip);border-radius:10px;padding:8px 12px;margin:4px 0 8px;line-height:1.55}.lat b,b.rel{color:#C0392B}.lat u,u.aa{text-decoration-color:#2E86C1;text-decoration-thickness:2px}
+.qqq td,.qqq th{text-align:center;padding:5px 6px;white-space:nowrap}.qqq td.mk{background:rgba(46,204,113,.3);font-weight:800}
+</style>
+</head>
+<body>
+<main id="home">
+  <a href="index.html" class="terug">‹ Alle vakken</a>
+  <h1>Wiskunde · H3 Lineaire verbanden</h1>
+  <p class="sub">Rechte lijnen: formules, grafieken, vergelijkingen en modellen. Per paragraaf uitleg met grafieken, een spel en een oefenronde, en zo klim je de stijgende lijn op. Bij elke vraag een 💡 tip en een rekenmachine.</p>
+  <div id="stand"></div>
+  <h2>Oefenen en spellen</h2>
+  <div class="modes">
+    <button class="mode" id="plijn"><h3>📈 Welke formule?</h3><p>Grafiek gegeven: kies de formule.</p></button>
+    <button class="mode" id="pkies"><h3>🎯 Welke lijn?</h3><p>Formule gegeven: kies de lijn.</p></button>
+    <button class="mode" id="prc"><h3>🧮 Twee punten</h3><p>Reken a en b uit twee punten.</p></button>
+    <button class="mode" id="psnij"><h3>✂️ Snijpunten</h3><p>Snijpunten en ongelijkheden.</p></button>
+    <button class="mode" id="pctx"><h3>🚕 In het echt</h3><p>Taxi, kaars, ijssalon.</p></button>
+    <button class="mode" id="pberg"><h3>📈 De stijgende lijn</h3><p>Alle vragen, één stuk per paragraaf.</p></button>
+    <button class="mode" id="pexam"><h3>🎓 Toetsvragen</h3><p>Met een gegeven: tabel, grafiek of situatie.</p></button>
+    <button class="mode" id="popen"><h3>✍️ Open vragen</h3><p>Zelf typen, dan nakijken met het goede antwoord.</p></button>
+    <button class="mode" id="pblitz"><h3>⚡ Begrippenblitz</h3><p>60 seconden alle begrippen.</p></button>
+    <button class="mode" id="ptoets"><h3>🎯 Proeftoets</h3><p>20 vragen met een cijfer. Doel: een 7.</p></button>
+    <button class="mode" id="fouten" hidden><h3>🔁 Mijn fouten</h3><p></p></button>
+    <button class="mode" id="psamen"><h3>📄 Alles nog eens lezen</h3><p>Alle uitleg en begrippen onder elkaar.</p></button>
+  </div>
+  <h2>Per paragraaf</h2>
+  <div id="hst"></div>
+  <div class="acts"><button class="btn licht klein" id="wis">Voortgang wissen</button></div>
+</main>
+<main id="play" hidden></main>
+<script>
+/* ---------- plaatjes ---------- */
+const KLR=['#2E86C1','#E67E22','#27AE60','#C0392B'];
+function figLijn(lijnen,o={}){const xmin=o.xmin??-2,xmax=o.xmax??8,ymin=o.ymin??-2,ymax=o.ymax??10,W=300,H=Math.round(300*(ymax-ymin)/(xmax-xmin));const Hh=Math.min(Math.max(H,180),340);
+ const X=x=>20+(x-xmin)/(xmax-xmin)*(W-30),Y=y=>Hh-20-(y-ymin)/(ymax-ymin)*(Hh-30);let s='';
+ const st=(xmax-xmin)>20?5:1,sy=(ymax-ymin)>20?5:1;
+ for(let x=Math.ceil(xmin/st)*st;x<=xmax;x+=st)s+=`<line x1="${X(x)}" y1="${Y(ymin)}" x2="${X(x)}" y2="${Y(ymax)}" stroke="currentColor" stroke-opacity=".12"/>`+(x&&x%(st*2)===0||st===1&&x?`<text x="${X(x)}" y="${Y(0)+13}" text-anchor="middle" font-size="9" fill="currentColor" opacity=".7">${x}</text>`:'');
+ for(let y=Math.ceil(ymin/sy)*sy;y<=ymax;y+=sy)s+=`<line x1="${X(xmin)}" y1="${Y(y)}" x2="${X(xmax)}" y2="${Y(y)}" stroke="currentColor" stroke-opacity=".12"/>`+(y&&(sy===1||y%(sy*2)===0)?`<text x="${X(0)-4}" y="${Y(y)+3}" text-anchor="end" font-size="9" fill="currentColor" opacity=".7">${y}</text>`:'');
+ s+=`<line x1="${X(xmin)}" y1="${Y(0)}" x2="${X(xmax)}" y2="${Y(0)}" stroke="currentColor" stroke-width="1.5"/><line x1="${X(0)}" y1="${Y(ymin)}" x2="${X(0)}" y2="${Y(ymax)}" stroke="currentColor" stroke-width="1.5"/><text x="${X(xmax)-4}" y="${Y(0)-5}" text-anchor="end" font-size="11" fill="currentColor">${o.xl||'x'}</text><text x="${X(0)+5}" y="${Y(ymax)+11}" font-size="11" fill="currentColor">${o.yl||'y'}</text>`;
+ lijnen.forEach((l,i)=>{const k=l.kl||KLR[i%4];if(l.x!=null){s+=`<line x1="${X(l.x)}" y1="${Y(ymin)}" x2="${X(l.x)}" y2="${Y(ymax)}" stroke="${k}" stroke-width="3"/>`;return}
+  const p=[xmin,xmax].map(x=>[x,l.a*x+l.b]);s+=`<clipPath id="c${i}"><rect x="${X(xmin)}" y="${Y(ymax)}" width="${X(xmax)-X(xmin)}" height="${Y(ymin)-Y(ymax)}"/></clipPath><line clip-path="url(#c${i})" x1="${X(p[0][0])}" y1="${Y(p[0][1])}" x2="${X(p[1][0])}" y2="${Y(p[1][1])}" stroke="${k}" stroke-width="3"/>`;if(l.nm)s+=`<text x="${X(xmax)-6}" y="${Y(Math.max(ymin+0.5,Math.min(ymax-0.5,l.a*xmax+l.b)))-6}" text-anchor="end" font-size="12" font-weight="800" fill="${k}">${l.nm}</text>`});
+ (o.pt||[]).forEach(([x,y])=>{s+=`<circle cx="${X(x)}" cy="${Y(y)}" r="5" fill="#C0392B"/><text x="${X(x)+7}" y="${Y(y)-6}" font-size="10" fill="currentColor">(${String(x).replace('.',',')}; ${String(y).replace('.',',')})</text>`});
+ return `<svg viewBox="0 0 ${W} ${Hh}" class="fig" style="max-width:340px" role="img" aria-label="grafiek">${s}</svg>`}
+function figTabel(...rijen){return `<table class="gt" style="width:auto">${rijen.map(r=>`<tr>${r.map((c,j)=>j?`<td>${String(c).replace('.',',')}</td>`:`<th>${c}</th>`).join('')}</tr>`).join('')}</table>`}
+/* ---------- rekenen ---------- */
+const R=(a,b)=>a+Math.floor(Math.random()*(b-a+1));const pick=a=>a[Math.random()*a.length|0];
+const k=x=>String(Math.round(x*100)/100).replace('.',',');
+const fm=(a,b)=>`y = ${a===1?'':a===-1?'−':k(a).replace('-','−')}x${b?` ${b<0?'−':'+'} ${k(Math.abs(b))}`:''}`;
+const RC=[-3,-2,-1,-0.5,0.5,1,2,3];
+const LHINT='<b>b</b> = startgetal: waar de lijn de y-as snijdt (x = 0). <b>a</b> = richtingscoëfficiënt: hoeveel de lijn stijgt (+) of daalt (−) als je <b>1 naar rechts</b> gaat. Kies twee roosterpunten en reken a = Δy ÷ Δx.';
+function formuleBijLijn(){const a=pick(RC),b=R(-1,6);const goed=fm(a,b);const f=new Set();[[b,a],[-a,b],[a,-b],[a*2,b],[a,b+1]].forEach(([x,y])=>{if(x!==0&&fm(x,y)!==goed)f.add(fm(x,y))});
+ return {fig:figLijn([{a,b}],{xmin:-4,xmax:6,ymin:-6,ymax:10}),q:'Welke formule hoort bij deze lijn?',a:goed,opts:[goed,...[...f].slice(0,3)],w:`De lijn snijdt de y-as bij ${b}: b = ${b}. Eén stap naar rechts gaat de lijn ${a>0?k(a)+' omhoog':k(-a)+' omlaag'}: a = ${k(a)}. Dus <b>${goed}</b>.`,hint:LHINT}}
+function lijnBijFormule(){const ls=[];while(ls.length<3){const a=pick(RC),b=R(-1,6);if(!ls.some(l=>l.a===a&&l.b===b))ls.push({a,b})}
+ const t=R(0,2),nm=['blauw','oranje','groen'];return {fig:figLijn(ls,{xmin:-4,xmax:6,ymin:-6,ymax:10}),q:`Welke lijn hoort bij <b>${fm(ls[t].a,ls[t].b)}</b>?`,a:nm[t],opts:nm.slice(),w:`Begin bij b = ${ls[t].b} op de y-as en ga 1 naar rechts en ${k(ls[t].a)} omhoog: dat is de <b>${nm[t]}e</b> lijn.`,hint:LHINT}}
+function rcTweePunten(){const x1=R(-2,4),x2=x1+R(1,5),a=pick(RC),b=R(-5,10),y1=a*x1+b,y2=a*x2+b;const t=R(0,1);
+ if(t===0)return {q:`Een lijn gaat door (${k(x1)}; ${k(y1)}) en (${k(x2)}; ${k(y2)}). Bereken de richtingscoëfficiënt a.`,a,num:1,tol:.01,w:`a = Δy ÷ Δx = (${k(y2)} − ${k(y1)}) ÷ (${x2} − ${x1}) = ${k(y2-y1)} ÷ ${x2-x1} = <b>${k(a)}</b>.`,hint:'a = Δy ÷ Δx: het verschil in y gedeeld door het verschil in x (zelfde volgorde boven en onder!).'};
+ return {q:`Een lijn gaat door (${k(x1)}; ${k(y1)}) en (${k(x2)}; ${k(y2)}). Bereken het getal b in y = ax + b.`,a:b,num:1,tol:.01,w:`1) a = (${k(y2)} − ${k(y1)}) ÷ ${x2-x1} = ${k(a)}. 2) Vul (${x1}; ${k(y1)}) in: ${k(y1)} = ${k(a)} × ${x1} + b, dus b = ${k(y1)} − ${k(a*x1)} = <b>${k(b)}</b>.`,hint:'Eerst a uitrekenen (Δy ÷ Δx). Daarna één punt invullen in y = ax + b en b oplossen.'}}
+function snijVraag(){const t=R(0,2);
+ if(t===0){const a=pick([-3,-2,2,3,4,5]),b=R(-10,10)||3;const x=-b/a;return {q:`Bereken het snijpunt van ${fm(a,b)} met de x-as. Geef de x-coördinaat${Number.isInteger(x)?'':' (op 2 decimalen)'}.`,a:Math.round(x*100)/100,num:1,tol:.011,w:`Op de x-as is y = 0: ${k(a)}x ${b<0?'−':'+'} ${Math.abs(b)} = 0 → ${k(a)}x = ${k(-b)} → x = ${k(-b)} ÷ ${k(a)} = <b>${k(x)}</b>.`,hint:'Snijpunt met de x-as: vul y = 0 in en los de vergelijking op (balansmethode).'}}
+ const a1=pick([1,2,3,-1]),a2=pick([-2,-1,0.5,4]);if(a1===a2)return snijVraag();const xs=R(-2,6),b1=R(-3,6),b2=a1*xs+b1-a2*xs;
+ if(t===1)return {fig:figLijn([{a:a1,b:b1,nm:'l'},{a:a2,b:b2,nm:'m'}],{xmin:-4,xmax:8,ymin:Math.min(-4,a1*xs+b1-4),ymax:Math.max(10,a1*xs+b1+4)}),q:`l: ${fm(a1,b1)} en m: ${fm(a2,b2)}. Bereken de x-coördinaat van het snijpunt.`,a:xs,num:1,tol:.01,w:`Stel gelijk: ${k(a1)}x + ${k(b1)} = ${k(a2)}x + ${k(b2)}. → ${k(a1-a2)}x = ${k(b2-b1)} → x = <b>${xs}</b>.`,hint:'Snijpunt van twee lijnen: zet de twee formules gelijk aan elkaar en los x op.'};
+ const p=R(2,6),q2=R(10,30),c=R(40,90),x0=(c-q2)/p;const ok=`x > ${k(Math.round(x0*100)/100)}`;
+ return {q:`Los op: ${p}x + ${q2} > ${c}`,a:ok,opts:[ok,`x < ${k(Math.round(x0*100)/100)}`,`x > ${k(Math.round((c+q2)/p*100)/100)}`,`x > ${k(Math.round((c-q2)*p*100)/100)}`],w:`1) Los eerst de vergelijking op: ${p}x + ${q2} = ${c} → ${p}x = ${c-q2} → x = ${k(x0)}. 2) Het getal voor x is positief: hoe groter x, hoe groter de linkerkant. Dus de oplossing is <b>x > ${k(Math.round(x0*100)/100)}</b>.`,hint:'Werkschema ongelijkheid: los eerst de bijbehorende vergelijking op (= in plaats van >). Kijk daarna in een schets of met een getal welke kant waar is.'}}
+function contextVraag(){const t=R(0,2);
+ if(t===0){const vast=R(2,4)+0.5,km=pick([1.8,2.1,2.4,2.5]),d=R(5,25);return {q:`Een taxirit kost een vast bedrag van € ${k(vast)} plus € ${k(km)} per kilometer. Wat kost een rit van ${d} km (in euro)?`,a:Math.round((vast+km*d)*100)/100,num:1,tol:.01,w:`K = ${k(km)}a + ${k(vast)} → K = ${k(km)} × ${d} + ${k(vast)} = <b>${k(vast+km*d)}</b>.`,hint:'Startgetal = het vaste bedrag, richtingscoëfficiënt = de prijs per kilometer. Vul het aantal km in.'}}
+ if(t===1){const l0=R(20,30),v=pick([0.5,1,1.5,2]),tt=R(2,8);return {q:`Een kaars is ${l0} cm lang en brandt elk uur ${k(v)} cm korter. Hoe lang is hij na ${tt} uur (cm)?`,a:l0-v*tt,num:1,tol:.01,w:`L = ${l0} − ${k(v)}t → ${l0} − ${k(v)} × ${tt} = <b>${k(l0-v*tt)}</b>. De rc is negatief, want de kaars wordt korter.`,hint:'Begin = startgetal, korter worden per uur = een negatieve richtingscoëfficiënt.'}}
+ const x1=R(1,4)*10,x2=x1+R(2,5)*10,y1=R(20,40),y2=y1+R(10,40),x3=x1+(x2-x1)/2;const a=(y2-y1)/(x2-x1);
+ return {q:`Bij ${x1} graden verkoopt een ijssalon ${y1} bekers, bij ${x2} graden ${y2}. Neem aan dat het verband lineair is. Hoeveel bekers bij ${x3} graden? (interpoleren)`,a:Math.round((y1+a*(x3-x1))*100)/100,num:1,tol:.05,w:`a = (${y2} − ${y1}) ÷ (${x2} − ${x1}) = ${k(a)} per graad. ${x3} ligt ${x3-x1} graden boven ${x1}: ${y1} + ${k(a)} × ${x3-x1} = <b>${k(y1+a*(x3-x1))}</b>.`,hint:'Interpoleren = een waarde tússen twee bekende punten schatten. Reken eerst uit hoeveel er per graad bij komt.'}}
+Object.defineProperty(window,'TOETSGEN',{get:()=>[formuleBijLijn(),rcTweePunten(),snijVraag(),contextVraag()]});
+
+const VB=(t,h)=>`<div class="vb"><b>📎 Voorbeeld: ${t}</b><br>${h}</div>`;
+const H=[
+// ================= 3.1 =================
+{id:'3.1',t:'Lineaire formules',kort:'y = ax + b, richtingscoëfficiënt, tekenen, evenwijdig, evenredig',ic:'📈',lp:[
+ ['Wat is een lineaire formule?',`<p>Een formule van de vorm <b>y = ax + b</b> heet een <b>lineaire formule</b>. De grafiek is altijd een <b>rechte lijn</b>.</p><p>Voorbeelden: y = 0,5x + 2, y = −1,5x + 5, y = 3x − 7. Er staat geen x², geen x onder een breuk: alleen ‘een getal keer x’ plus of min een getal.</p>${figLijn([{a:0.5,b:2}],{xmin:-1,xmax:6,ymin:-1,ymax:6})}<p>Hierboven: de lijn y = 0,5x + 2.</p><p>💡 Snap je het zo? Elke keer dat x 1 groter wordt, komt er bij y steeds <b>hetzelfde</b> bij. Daarom wordt het een rechte lijn.</p>`,
+  ['Welke formule is een lineaire formule?','y = 4x − 3','y = 4x² − 3|y = 4 : x|y = x² + x','Alleen y = 4x − 3 heeft de vorm y = ax + b (a = 4, b = −3).<br>Fout: met x² of met x onder de deelstreep krijg je een kromme lijn, geen rechte.']],
+ ['Het getal b: snijpunt met de y-as',`<p>In y = ax + b vertelt <b>b</b> waar de lijn de <b>y-as</b> snijdt: in het punt <b>(0, b)</b>.</p><p>Waarom? Op de y-as is x = 0. Vul je x = 0 in, dan blijft over: y = a × 0 + b = b.</p><ul><li>y = 0,5x + 2 snijdt de y-as in (0, 2).</li><li>y = −1,5x + 5 snijdt de y-as in (0, 5).</li><li>y = 3x − 7 snijdt de y-as in (0, −7).</li></ul><p>In een verhaal is b vaak de <b>beginwaarde</b>: wat er is als je nog niets gedaan hebt (bij x = 0).</p>`,
+  ['Waar snijdt y = 2x − 6 de y-as?','(0, −6)','(0, 2)|(−6, 0)|(3, 0)','Vul x = 0 in: y = 2 × 0 − 6 = −6, dus (0, −6).<br>Fout: 2 is de rc, niet het snijpunt. (−6, 0) heeft x en y omgedraaid. (3, 0) is het snijpunt met de <b>x</b>-as.']],
+ ['Het getal a: de richtingscoëfficiënt',`<p>Het getal <b>a</b> in y = ax + b heet de <b>richtingscoëfficiënt</b> (kort: <b>rc</b>). Het zegt hoe steil de lijn is.</p><p><b>rc = a betekent: ga je 1 naar rechts, dan ga je a omhoog.</b> Dat is een trapje.</p>${figLijn([{a:0.5,b:2},{a:-1.5,b:5}],{xmin:-1,xmax:6,ymin:-1,ymax:6,pt:[[0,2],[1,2.5],[0,5],[1,3.5]]})}<ul><li>l: y = 0,5x + 2 → rc<sub>l</sub> = 0,5: 1 naar rechts, 0,5 omhoog (stijgt).</li><li>m: y = −1,5x + 5 → rc<sub>m</sub> = −1,5: 1 naar rechts, −1,5 omhoog = <b>1,5 omlaag</b> (daalt). Dat is hetzelfde als 2 naar rechts en 3 omlaag.</li></ul><p>Positieve rc: lijn stijgt. Negatieve rc: lijn daalt. Hoe groter het getal (zonder min), hoe steiler.</p><p>Let op: in y = 4 − 2,5x staat de x achteraan. De rc is het getal vóór de x: <b>−2,5</b>. De 4 is b.</p>`,
+  ['Wat is de rc van y = 4 − 2,5x?','−2,5','4|2,5|−4','De rc is het getal dat bij de x hoort, mét het teken ervoor: −2,5.<br>Fout: 4 is b (snijpunt y-as). 2,5 vergeet de min. −4 haalt a en b door elkaar.']],
+ ['Werkschema: een lijn tekenen',`<p>Voor een rechte lijn heb je maar <b>twee punten</b> nodig.</p><ol><li>Maak een tabel met <b>twee handige x-waarden</b> (zo dat y een mooi getal wordt).</li><li>Reken bij elke x de y uit.</li><li>Zet de twee punten in het assenstelsel en trek er een rechte lijn door.</li></ol>${VB('y = −0,8x + 3',`Stap 1 en 2: x = 0 geeft y = 3; x = 5 geeft y = −0,8 × 5 + 3 = −4 + 3 = −1.<br>${figTabel(['x',0,5],['y',3,-1])}Stap 3: punten (0, 3) en (5, −1) verbinden.${figLijn([{a:-0.8,b:3}],{xmin:-1,xmax:6,ymin:-2,ymax:4,pt:[[0,3],[5,-1]]})}Waarom x = 5? Omdat 0,8 × 5 = 4 een heel getal is.`)}<p>Je kunt ook het trapje gebruiken: begin in (0, b) en zet stapjes van ‘1 naar rechts, a omhoog’.</p>`,
+  ['Je tekent y = 0,25x + 1. Welke x-waarde geeft naast x = 0 een handig tweede punt?','x = 4','x = 1|x = 3|x = 0,25','x = 4 geeft y = 0,25 × 4 + 1 = 2, een heel getal.<br>Fout: x = 1 geeft 1,25 en x = 3 geeft 1,75: lastig precies te tekenen. x = 0,25 geeft ook een kommagetal.']],
+ ['Ligt een punt op de lijn?',`<p>Een punt ligt op een lijn als de coördinaten <b>kloppen</b> in de formule.</p><ol><li>Vul de x van het punt in de formule in.</li><li>Reken y uit.</li><li>Is dat de y van het punt? Dan ligt het erop. Anders niet.</li></ol>${VB('A(10, −6) en l: y = −0,8x + 3',`1. x = 10 invullen: y = −0,8 × 10 + 3<br>2. y = −8 + 3 = −5<br>3. Het punt heeft y = −6, de lijn geeft −5. Dus A ligt <b>niet</b> op l.`)}`,
+  ['Ligt B(4, 5) op y = 1,5x − 1?','ja, want 1,5 × 4 − 1 = 5','nee, want 1,5 × 4 − 1 = 7|nee, want 1,5 × 5 − 1 = 6,5|ja, want 4 + 1 = 5','1,5 × 4 = 6, min 1 is 5. Dat is precies de y van B, dus B ligt erop.<br>Fout: 1,5 × 4 − 1 is niet 7. In de derde optie is de y ingevuld in plaats van de x. ‘4 + 1’ heeft niets met de formule te maken.']],
+ ['Evenwijdige lijnen',`<p><b>Lijnen met dezelfde rc zijn evenwijdig.</b> Ze zijn even steil en snijden elkaar nooit.</p>${figLijn([{a:3,b:-5},{a:3,b:1}],{xmin:-1,xmax:4,ymin:-6,ymax:8})}<p>p: y = 3x − 5 en q: y = 3x + 1 hebben allebei rc 3, dus p en q zijn evenwijdig.</p>${VB('evenwijdige lijn door een punt op de y-as',`Lijn k is evenwijdig met l: y = −0,8x + 3 en gaat door B(0, 12).<br>1. Evenwijdig → zelfde rc: a = −0,8.<br>2. Door (0, 12) → b = 12.<br>3. k: y = −0,8x + 12.`)}<p>Een lijn door de <b>oorsprong</b> O(0, 0) heeft b = 0, bijvoorbeeld y = −2,5x.</p>`,
+  ['Lijn n is evenwijdig met y = 1,2x − 2 en gaat door (0, 4). Wat is de formule van n?','y = 1,2x + 4','y = 4x − 2|y = −1,2x + 4|y = 1,2x − 2','Evenwijdig = zelfde rc (1,2), door (0, 4) = b is 4.<br>Fout: y = 4x − 2 verwisselt rc en b. −1,2 heeft het verkeerde teken. y = 1,2x − 2 is de oude lijn zelf.']],
+ ['Horizontale en verticale lijnen',`<p><b>Horizontale lijn</b>: ga je 1 naar rechts, dan ga je 0 omhoog. Dus rc = 0. De formule y = 0x + 2 schrijf je kort als <b>y = 2</b>. Alle punten op die lijn hebben y-coördinaat 2.</p>${figLijn([{a:0,b:2}],{xmin:-1,xmax:5,ymin:-1,ymax:5,pt:[[3,2]]})}<p><b>Verticale lijn</b> (rechtop): alle punten hebben dezelfde x, bijvoorbeeld x = 3. De formule is <b>x = 3</b>. Een verticale lijn heeft <b>geen rc</b> en kun je niet schrijven als y = ax + b.</p><ul><li>y = 5: horizontaal door (0, 5).</li><li>x = 6: verticaal door (6, 0).</li></ul><p>💡 Ezelsbruggetje: ‘y = getal’ ligt plat (alle y’s gelijk), ‘x = getal’ staat rechtop.</p>`,
+  ['Welke formule hoort bij de verticale lijn door (5, 4)?','x = 5','y = 5|y = 4|x = 4','Op een verticale lijn hebben alle punten dezelfde x, hier 5. Dus x = 5.<br>Fout: y = 4 is de horizontale lijn door dat punt. y = 5 en x = 4 halen x en y door elkaar.']],
+ ['Een formule uit een verhaal',`<p>In veel verhalen zit een vast bedrag plus een bedrag per stuk. Dat geeft een lineaire formule:</p><p><b>totaal = (per stuk) × aantal + vast bedrag</b>, dus a = het bedrag per stuk, b = het vaste bedrag.</p><ul><li><b>Vaste kosten</b> (huur, machines) hangen niet af van hoeveel je maakt: dat is b.</li><li><b>Variabele kosten</b> (grondstoffen, loon) groeien mee met het aantal: dat is a.</li></ul>${VB('balpennen',`Een fabriek heeft € 200 vaste kosten per dag en € 0,25 per balpen. Kosten K bij q balpennen: <b>K = 0,25q + 200</b>.<br>Het punt (500, 325) betekent: 500 balpennen kosten € 325.<br>Hogere vaste kosten → lijn schuift omhoog. Hogere kosten per pen → lijn wordt steiler.`)}${VB('bestelauto huren',`€ 75 per dag plus € 0,10 per km: B = 0,1a + 75. Voor 50 km: 0,1 × 50 + 75 = € 80.`)}`,
+  ['Een taxi kost € 3 instaptarief en € 2,10 per km. Welke formule hoort bij de kosten K bij d km?','K = 2,10d + 3','K = 3d + 2,10|K = 5,10d|K = 2,10d − 3','Per km (a) = 2,10, vast (b) = 3.<br>Fout: K = 3d + 2,10 verwisselt a en b. 5,10d telt het instaptarief bij elke km. Met − 3 krijg je geld terug in plaats van dat je betaalt.']],
+ ['Let op de eenheden',`<p>Kijk goed in welke eenheden de formule moet en reken zo nodig eerst om.</p>${VB('vat dat leegloopt',`Een vat bevat 1,2 m water. Per kwartier zakt het peil 30 cm. Gevraagd: h in cm na t minuten.<br>1. Beginhoogte in cm: 1,2 m = <b>120 cm</b>.<br>2. Per minuut: 30 : 15 = <b>2 cm</b> omlaag.<br>3. h = 120 − 2t.<br>(Fout zou zijn: h = 1,2 − 30t, want daar staan meters en kwartieren door elkaar.)`)}${VB('druk onder water',`Aan het oppervlak is de druk 1,015 bar. Per hectometer (100 m) dieper komt er 10 bar bij. P in bar bij d meter diepte:<br>1. Per meter: 10 : 100 = 0,1 bar erbij.<br>2. <b>P = 1,015 + 0,1d</b> (of P = 0,1d + 1,015).<br>⚠ In het boek staat hier een min, maar de druk neemt <b>toe</b>, dus het is een plus.`)}<p>Handig: km/u → m/s: 18 km/u = 18 000 m per 3600 s = 5 m/s. Per uur → per minuut: delen door 60.</p>`,
+  ['Een oven warmt 720 °C per uur op en begint op 22 °C. Wat is de formule voor T na m minuten?','T = 12m + 22','T = 720m + 22|T = 22m + 12|T = 12m + 720','Per minuut: 720 : 60 = 12 °C erbij; begin 22. Dus T = 12m + 22.<br>Fout: 720m rekent per uur terwijl m in minuten is. De andere twee halen de getallen door elkaar.']],
+ ['Recht evenredig verband',`<p>Een lineair verband met <b>beginwaarde 0</b> heet een <b>(recht) evenredig verband</b>.</p><p>Herkennen, alle drie tegelijk waar:</p><ul><li>de formule is <b>y = ax</b> (geen + b);</li><li>de tabel is een <b>verhoudingstabel</b> (y : x is steeds hetzelfde);</li><li>de grafiek is een lijn door de <b>oorsprong</b> O(0, 0).</li></ul>${figTabel(['t (min)',1,2,3,4],['N (flessen)',140,280,420,560])}<p>Een machine maakt 140 flessen per minuut: N = 140t.</p>${VB('formule uit één punt',`B is evenredig met n, en bij n = 12 hoort B = 99.<br>1. B = an.<br>2. Invullen: a × 12 = 99, dus a = 99 : 12 = 8,25.<br>3. B = 8,25n. Bij n = 14,8: B = 8,25 × 14,8 = 122,1.`)}<p>💡 Niet evenredig: B = 3096d + 19 350, want bij d = 0 is B niet 0.</p>`,
+  ['y is evenredig met x en bij x = 15 hoort y = 24. Wat is de formule?','y = 1,6x','y = 0,625x|y = 1,6x + 15|y = 24x','a = 24 : 15 = 1,6, dus y = 1,6x.<br>Fout: 0,625 is 15 : 24, omgedraaid gedeeld. Een evenredig verband heeft geen + b. y = 24x zou bij x = 15 veel te groot zijn.']]
+]},
+// ================= 3.2 =================
+{id:'3.2',t:'Formules opstellen',kort:'Formule bij rc en punt, rc uit twee punten (Δy/Δx), formules in praktische situaties',ic:'✏️',lp:[
+ ['Werkschema: formule bij rc en een punt',`<p>Weet je de rc en één punt van de lijn, dan vind je b door het punt in te vullen.</p><ol><li>Schrijf y = ax + b op met de rc al ingevuld.</li><li>Vul de x en y van het punt in.</li><li>Los b op.</li><li>Schrijf de formule op.</li></ol>${VB('rc −0,75 door A(2, 6)',`1. y = −0,75x + b<br>2. x = 2 en y = 6: −0,75 × 2 + b = 6<br>3. −1,5 + b = 6, dus b = 6 + 1,5 = 7,5<br>4. y = −0,75x + 7,5`)}${figLijn([{a:-0.75,b:7.5}],{xmin:0,xmax:9,ymin:0,ymax:8,pt:[[2,6]]})}<p>Let op bij −1,5 + b = 6: je doet <b>+1,5</b> aan beide kanten, dus b = 7,5 (niet 4,5).</p>`,
+  ['Lijn l heeft rc 2 en gaat door A(5, 8). Wat is de formule?','y = 2x − 2','y = 2x + 8|y = 2x + 18|y = 8x + 2','2 × 5 + b = 8 → 10 + b = 8 → b = −2. Dus y = 2x − 2.<br>Fout: b is niet zomaar de y van het punt (8), want het punt ligt niet op de y-as. 18 komt van 8 + 10 (teken fout). y = 8x + 2 verwisselt van alles.']],
+ ['Formule bij een verhaal met één meetpunt',`<p>Vaak staat in een verhaal hoeveel er per minuut bijkomt (de rc) en één meting. Gebruik dan hetzelfde werkschema. Met een <b>accolade</b> } geef je aan welke getallen bij elkaar horen.</p>${VB('regenton',`Er komt 0,75 liter per minuut bij. Na 10 minuten zit er 25 liter in. N in liters na t minuten.<br>1. N = 0,75t + b<br>2. t = 10 en N = 25 } → 0,75 × 10 + b = 25<br>3. 7,5 + b = 25, dus b = 17,5<br>4. N = 0,75t + 17,5<br>(In het boek staat bij de tussenstap ‘= 10’, dat moet 25 zijn.)`)}${VB('kaars',`Een kaars wordt elke minuut 0,5 mm korter. Na een uur is hij 55 mm.<br>1. l = −0,5t + b (min, want korter)<br>2. Een uur = 60 minuten: −0,5 × 60 + b = 55<br>3. −30 + b = 55, dus b = 85<br>4. l = −0,5t + 85: de kaars was 8,5 cm lang.`)}`,
+  ['Een bad krijgt 12 liter per minuut erbij. Na 5 minuten zit er 90 liter in. Wat is de formule voor W na t minuten?','W = 12t + 30','W = 12t + 90|W = 12t + 150|W = 18t','12 × 5 + b = 90 → 60 + b = 90 → b = 30.<br>Fout: 90 is de hoeveelheid na 5 minuten, niet bij het begin. 150 = 90 + 60 (teken fout). 18t gaat door 0, maar er zat al water in.']],
+ ['De rc uit twee punten: het trapje',`<p>Weet je twee punten, dan reken je eerst de rc uit. Kijk hoeveel je naar rechts en hoeveel omhoog gaat van het ene punt naar het andere.</p>${VB('A(8, 17) en B(13, 23)',`1. Naar rechts: 13 − 8 = 5<br>2. Omhoog: 23 − 17 = 6<br>3. Bij 1 naar rechts hoort 6 : 5 = 1,2 omhoog. Dus rc = 1,2.<br>4. Invullen: 1,2 × 8 + b = 17 → 9,6 + b = 17 → b = 7,4. Dus y = 1,2x + 7,4.`)}${figLijn([{a:1.2,b:7.4}],{xmin:0,xmax:15,ymin:0,ymax:26,pt:[[8,17],[13,23]]})}<p>💡 Altijd: <b>omhoog gedeeld door naar rechts</b>, niet andersom.</p>`,
+  ['Wat is de rc van de lijn door (2, 3) en (6, 11)?','2','0,5|8|4','Naar rechts 6 − 2 = 4, omhoog 11 − 3 = 8, rc = 8 : 4 = 2.<br>Fout: 0,5 is 4 : 8, omgedraaid. 8 en 4 zijn alleen het omhoog- of het naar-rechts-stuk, nog niet gedeeld.']],
+ ['rc = Δy / Δx',`<p>Kort opgeschreven gebruik je de letter <b>Δ</b> (spreek uit: <b>delta</b>) voor ‘verschil’.</p><ul><li>Δx = x<sub>B</sub> − x<sub>A</sub> (verschil van de x-coördinaten)</li><li>Δy = y<sub>B</sub> − y<sub>A</sub> (verschil van de y-coördinaten)</li></ul><p><b>a = Δy / Δx = (y<sub>B</sub> − y<sub>A</sub>) / (x<sub>B</sub> − x<sub>A</sub>)</b></p><p>Welk punt je A of B noemt maakt niet uit, als je maar <b>boven en onder dezelfde volgorde</b> neemt. (5 − −1)/(6 − 2) = 6/4 = 1,5 en (−1 − 5)/(2 − 6) = −6/−4 = 1,5: hetzelfde.</p><p>⚠ Pas op met min-getallen: 5 − −1 = 5 + 1 = 6.</p>`,
+  ['Je rekent Δy = y<sub>P</sub> − y<sub>Q</sub>. Welke Δx hoort daarbij?','x<sub>P</sub> − x<sub>Q</sub>','x<sub>Q</sub> − x<sub>P</sub>|y<sub>Q</sub> − y<sub>P</sub>|x<sub>P</sub> + x<sub>Q</sub>','Boven en onder dezelfde volgorde: eerst P, dan Q.<br>Fout: x<sub>Q</sub> − x<sub>P</sub> draait de volgorde om, dan krijg je het verkeerde teken. y<sub>Q</sub> − y<sub>P</sub> is geen x-verschil. Optellen is geen verschil.']],
+ ['Werkschema: formule door twee punten',`<ol><li>Bereken a = Δy / Δx.</li><li>Vul a en één van de punten in y = ax + b in.</li><li>Los b op.</li><li>Schrijf de formule op.</li></ol>${VB('P(2, −1) en Q(6, 5)',`1. a = (5 − −1) / (6 − 2) = 6 / 4 = 1,5<br>2. y = 1,5x + b met x = 2 en y = −1 } → 1,5 × 2 + b = −1<br>3. 3 + b = −1, dus b = −4<br>4. y = 1,5x − 4`)}${figLijn([{a:1.5,b:-4}],{xmin:-1,xmax:8,ymin:-5,ymax:7,pt:[[2,-1],[6,5]]})}<p>Controle: vul het andere punt in. x = 6: 1,5 × 6 − 4 = 5 ✓.</p>`,
+  ['Wat is de formule van de lijn door (−1, 1) en (1, 4)?','y = 1,5x + 2,5','y = 1,5x − 2,5|y = 2,5x + 1,5|y = 0,67x + 1,67','a = (4 − 1)/(1 − −1) = 3/2 = 1,5. Invullen (1, 4): 1,5 + b = 4, b = 2,5.<br>Fout: − 2,5 is een tekenfout. 2,5x + 1,5 verwisselt a en b. 0,67 is Δx/Δy (omgedraaid).']],
+ ['Pas op met negatieve getallen',`${VB('C(2, 0) en D(−3, 5)',`1. a = (5 − 0) / (−3 − 2) = 5 / −5 = −1<br>2. Invullen C: −1 × 2 + b = 0<br>3. −2 + b = 0, dus b = 2<br>4. y = −x + 2`)}${VB('grote getallen: P(25, 493) en Q(75, 229)',`1. a = (229 − 493) / (75 − 25) = −264 / 50 = −5,28<br>2. Invullen P: −5,28 × 25 + b = 493<br>3. −132 + b = 493, dus b = 625<br>4. y = −5,28x + 625`)}<p>💡 Een dalende lijn (het tweede punt ligt lager terwijl je naar rechts gaat) moet een <b>negatieve</b> rc krijgen. Zo controleer je je teken.</p>`,
+  ['Wat is de rc van de lijn door (−23, −125) en (17, 155)?','7','−7|0,14|2,5','Δy = 155 − −125 = 280, Δx = 17 − −23 = 40, a = 280 : 40 = 7.<br>Fout: −7 heeft een tekenfout. 0,14 is 40 : 280 (omgedraaid). Wie 155 − 125 en 17 − 23 rekent vergeet de minnen en komt op iets anders uit.']],
+ ['Een formule aflezen uit een grafiek',`<p>Kies twee punten die <b>precies op een roosterpunt</b> liggen, dan lees je ze goed af. Ga daarna verder met het werkschema voor twee punten.</p>${figLijn([{a:0.4,b:1.6}],{xmin:0,xmax:7,ymin:0,ymax:5,pt:[[1,2],[6,4]]})}<p>De lijn hierboven snijdt de y-as niet op een mooi getal. Maar (1, 2) en (6, 4) zijn goed af te lezen.</p><ol><li>a = (4 − 2) / (6 − 1) = 2 / 5 = 0,4</li><li>0,4 × 1 + b = 2, dus b = 1,6</li><li>y = 0,4x + 1,6</li></ol>`,
+  [`Welke formule hoort bij deze lijn? ${figLijn([{a:1,b:5}],{xmin:0,xmax:12,ymin:0,ymax:20,pt:[[0,5],[10,15]]})}`,'y = x + 5','y = 5x + 1|y = x + 10|y = 2x + 5','Door (0, 5) en (10, 15): a = 10 : 10 = 1, b = 5.<br>Fout: 5x + 1 verwisselt a en b. x + 10 heeft de verkeerde b. 2x + 5 is te steil: bij x = 10 zou y = 25 zijn.']],
+ ['Lineaire verbanden in praktische situaties',`<p>In een verhaal heten de variabelen niet x en y. Vraag je af: wat is de <b>invoer</b> (staat op de horizontale as) en wat de <b>uitkomst</b>? Dan geldt: <b>a = Δuitkomst / Δinvoer</b>.</p>${VB('bonbons',`Mevrouw Hak krijgt een basisloon plus een bedrag per verkochte doos. Bij 350 dozen verdient ze € 270, bij 500 dozen € 315.<br>1. a = ΔR / Δq = (315 − 270) / (500 − 350) = 45 / 150 = 0,3 → € 0,30 per doos<br>2. 0,3 × 350 + b = 270 → 105 + b = 270 → b = 165 → basisloon € 165<br>3. R = 0,3q + 165`)}${VB('T-shirts',`Bij € 5 verkoopt een marktkoopman 90 shirts per week, bij € 8 nog 30. Gevraagd: q (aantal) uitgedrukt in p (prijs).<br>1. a = Δq / Δp = (30 − 90) / (8 − 5) = −60 / 3 = −20<br>2. −20 × 5 + b = 90 → −100 + b = 90 → b = 190<br>3. q = −20p + 190`)}`,
+  ['Bij een energiebedrijf kost 3250 kWh € 841,60 en 4426 kWh € 1112,08. Wat is de prijs per kWh?','€ 0,23','€ 4,35|€ 0,26|€ 270,48','a = (1112,08 − 841,60) / (4426 − 3250) = 270,48 / 1176 = 0,23.<br>Fout: 4,35 is 1176 : 270,48 (omgedraaid). 0,26 is 841,60 : 3250: dan tel je het vastrecht mee. 270,48 is alleen het verschil in euro’s.']],
+ ['Een grafiek uit stukken',`<p>Soms verandert de prijs per stuk na een bepaald aantal (staffelprijzen). Dan bestaat de grafiek uit <b>lijnstukken</b> met elk een eigen formule.</p>${VB('geboortekaartjes',`De eerste 50 kaartjes kosten € 1,95 per stuk, de volgende 50 € 1,45 per stuk.<br>• Van 0 tot 50: K = 1,95q. Bij q = 50: K = 97,50.<br>• Van 50 tot 100: rc 1,45 door (50; 97,50): 1,45 × 50 + b = 97,50 → 72,50 + b = 97,50 → b = 25. Dus K = 1,45q + 25.<br>• Kost 200 stuks € 265 en 100 stuks € 170, dan geldt vanaf 100: a = 95 / 100 = 0,95 en K = 0,95q + 75.`)}<p>Elk volgend stuk begint waar het vorige ophoudt: gebruik dat <b>knikpunt</b> als bekend punt.</p>`,
+  ['Twee lopers: Janne loopt A = 0,25t (km na t min). Marlijn loopt 0,2 km per minuut en wordt op t = 10 door Janne ingehaald. Wat is de formule van Marlijn?','A = 0,2t + 0,5','A = 0,2t|A = 0,2t + 2,5|A = 0,25t + 0,5','Op t = 10 zijn ze op dezelfde plek: A = 0,25 × 10 = 2,5. Dan 0,2 × 10 + b = 2,5 → b = 0,5.<br>Fout: zonder + b zou Marlijn op t = 0 bij de start staan, maar ze was eerder vertrokken. 2,5 is de plek op t = 10, niet op t = 0. 0,25 is Jannes tempo.']]
+]},
+// ================= 3.3 =================
+{id:'3.3',t:'Vergelijkingen en ongelijkheden',kort:'Balansmethode, snijpunten berekenen, ongelijkheden oplossen in praktische situaties',ic:'⚖️',lp:[
+ ['De balansmethode',`<p>Een vergelijking is als een weegschaal in evenwicht: wat je links doet, doe je ook rechts.</p>${VB('10x − 4 = 7x + 20',`1. Haal de x’en naar één kant: −7x aan beide kanten → 3x − 4 = 20<br>2. Haal de losse getallen naar de andere kant: +4 → 3x = 24<br>3. Deel door het getal voor x: : 3 → x = 8<br>Controle: 10 × 8 − 4 = 76 en 7 × 8 + 20 = 76 ✓`)}${VB('2x − 5 = 6x + 3',`1. −6x: −4x − 5 = 3<br>2. +5: −4x = 8<br>3. : −4: x = −2`)}<p>⚠ Deel je door een negatief getal, dan wordt de uitkomst ook van teken omgedraaid: 8 : −4 = −2.</p>`,
+  ['Los op: 7x + 1 = 4x − 8','x = −3','x = 3|x = −2,33|x = −9','−4x: 3x + 1 = −8. −1: 3x = −9. : 3: x = −3.<br>Fout: x = 3 is een tekenfout. −2,33 krijg je als je −8 + 1 = −7 rekent (verkeerde kant op). −9 vergeet te delen door 3.']],
+ ['Snijpunten met de assen',`<ul><li><b>Snijpunt met de x-as</b>: daar is <b>y = 0</b>. Stel de formule gelijk aan 0 en los op.</li><li><b>Snijpunt met de y-as</b>: daar is <b>x = 0</b>. Dat is gewoon (0, b).</li></ul>${VB('l: y = 2x − 4',`x-as: 2x − 4 = 0 → 2x = 4 → x = 2. Snijpunt (2, 0).<br>y-as: x = 0 → y = −4. Snijpunt (0, −4).`)}${figLijn([{a:2,b:-4}],{xmin:-1,xmax:5,ymin:-5,ymax:4,pt:[[2,0],[0,-4]]})}<p>💡 Haal ze niet door elkaar: x-as → y = 0, y-as → x = 0.</p>`,
+  ['Waar snijdt y = 5 − x de x-as?','(5, 0)','(0, 5)|(−5, 0)|(1, 0)','x-as: y = 0. 5 − x = 0 geeft x = 5, dus (5, 0).<br>Fout: (0, 5) is het snijpunt met de y-as. −5 is een tekenfout. (1, 0) is een gok op basis van de rc.']],
+ ['Werkschema: snijpunt van twee lijnen',`<p>In het snijpunt hebben beide lijnen <b>dezelfde x én dezelfde y</b>.</p><ol><li>Stel de rechterleden van de twee formules aan elkaar gelijk.</li><li>Los de vergelijking op. De oplossing is de x van het snijpunt.</li><li>Vul die x in één van de formules in: dat geeft de y.</li></ol>${VB('m: y = 5 − x en l: y = 2x − 4',`1. 5 − x = 2x − 4<br>2. +x: 5 = 3x − 4. +4: 9 = 3x. : 3: x = 3<br>3. y = 5 − 3 = 2. Snijpunt S(3, 2).`)}${figLijn([{a:-1,b:5},{a:2,b:-4}],{xmin:-1,xmax:6,ymin:-5,ymax:6,pt:[[3,2]]})}`,
+  ['Wat is de x-coördinaat van het snijpunt van y = 15x − 31 en y = 7x + 5?','4,5','3,25|−4,5|36','15x − 31 = 7x + 5 → 8x = 36 → x = 4,5.<br>Fout: 3,25 komt van 8x = 26 (−31 en 5 verkeerd samengenomen). −4,5 is een tekenfout. 36 vergeet nog te delen door 8.']],
+ ['Puntkomma en de handigste formule',`${VB('p: y = 0,8x en q: y = 3 − 1,2x',`1. 0,8x = 3 − 1,2x<br>2. +1,2x: 2x = 3, dus x = 1,5<br>3. Invullen in de <b>eenvoudigste</b> formule: y = 0,8 × 1,5 = 1,2. Snijpunt A(1,5; 1,2).`)}<p>Twee dingen om te onthouden:</p><ul><li>Vul de x in de formule in waar je het minst hoeft te rekenen. Het antwoord is hetzelfde (3 − 1,2 × 1,5 = 1,2), maar minder kans op fouten.</li><li>Staan er kommagetallen in een punt, zet dan een <b>puntkomma</b> tussen x en y: (1,5; 1,2). Anders zie je niet waar het ene getal ophoudt.</li></ul><p>Snijden met een horizontale lijn gaat net zo: y = −2,5x + 5 en y = 25 → −2,5x + 5 = 25 → −2,5x = 20 → x = −8. Snijpunt (−8, 25).</p>`,
+  ['Wat is het snijpunt van y = −0,8x + 3 en y = 1,7x − 4,25?','(2,9; 0,68)','(0,68; 2,9)|(2,9; 5,32)|(−2,9; 5,32)','−0,8x + 3 = 1,7x − 4,25 → 7,25 = 2,5x → x = 2,9. y = −0,8 × 2,9 + 3 = 0,68.<br>Fout: (0,68; 2,9) verwisselt x en y. 5,32 is 3 + 2,32: tekenfout. −2,9 is ook een tekenfout.']],
+ ['Een punt met gegeven y berekenen',`<p>Weet je de y van een punt op een lijn en zoek je de x? Stel de formule gelijk aan die y en los op.</p>${VB('n: y = −2,5x + 35',`Punt met x = −20: y = −2,5 × −20 + 35 = 50 + 35 = 85.<br>Punt met y = 45: −2,5x + 35 = 45 → −2,5x = 10 → x = −4.`)}${VB('kerosine',`Een vliegtuig heeft k = 11,75 − 0,003V ton kerosine na V km. Bij 1,5 ton gaat een alarm. Wanneer?<br>1. 11,75 − 0,003V = 1,5<br>2. −11,75: −0,003V = −10,25<br>3. : −0,003: V ≈ 3416,7 → ongeveer 3400 km.`)}`,
+  ['Bij y = 3x + 6: bij welke x hoort y = 21?','x = 5','x = 69|x = 9|x = 7','3x + 6 = 21 → 3x = 15 → x = 5.<br>Fout: 69 = 3 × 21 + 6: dan heb je 21 als x ingevuld. 9 komt van 3x = 27 (tekenfout). 7 = 21 : 3, de 6 vergeten.']],
+ ['Vergelijking of ongelijkheid?',`<p>Twee taxi’s: K<sub>A</sub> = 1,2d + 20 en K<sub>B</sub> = 1,6d.</p><ul><li>‘Wanneer zijn ze <b>even duur</b>?’ → <b>vergelijking</b> K<sub>A</sub> = K<sub>B</sub>. 1,2d + 20 = 1,6d → 20 = 0,4d → d = 50.</li><li>‘Wanneer is A <b>goedkoper</b>?’ → <b>ongelijkheid</b> K<sub>A</sub> &lt; K<sub>B</sub> (lees: K<sub>A</sub> kleiner dan K<sub>B</sub>).</li></ul>${figLijn([{a:1.2,b:20},{a:1.6,b:0}],{xmin:0,xmax:90,ymin:0,ymax:140,pt:[[50,80]]})}<p>Rechts van d = 50 ligt de lijn van A <b>onder</b> die van B. Dus A is goedkoper bij <b>d &gt; 50</b>.</p><p>&lt; = kleiner dan, &gt; = groter dan. 💡 De punt van het teken wijst naar het kleinste.</p>`,
+  ['Wat betekent K<sub>A</sub> &lt; K<sub>B</sub>?','bij A betaal je minder dan bij B','bij A betaal je meer dan bij B|A en B kosten evenveel|de lijn van A ligt boven die van B','&lt; betekent kleiner dan: K<sub>A</sub> is kleiner, dus A is goedkoper.<br>Fout: meer betalen is &gt;. Evenveel is =. Goedkoper betekent dat de lijn van A <b>onder</b> die van B ligt, niet erboven.']],
+ ['Werkschema: ongelijkheid A < B oplossen',`<ol><li>Los de vergelijking A = B op.</li><li>Kijk in de grafiek (of met een getal proberen) waar A <b>onder</b> B ligt.</li><li>Geef antwoord op de vraag.</li></ol>${VB('ijssalon',`Opbrengst R = 2,25q, kosten K = 1,15q + 352. Wanneer winst?<br>Winst als R &gt; K.<br>1. 2,25q = 1,15q + 352 → 1,10q = 352 → q = 320<br>2. R begint bij 0 en is steiler, dus rechts van 320 ligt R boven K.<br>3. Bij meer dan 320 ijsjes per week maakt ze winst. (Minder dan 320: verlies.)`)}<p>Geen grafiek? Probeer één getal aan één kant. q = 400: R = 900, K = 812 → R &gt; K, dus de kant van ‘meer dan 320’ is goed.</p>`,
+  ['Reparatie I kost 22t + 80, reparatie II 18t + 96 (t in uren). Wanneer is I voordeliger?','bij minder dan 4 uur','bij meer dan 4 uur|bij minder dan 44 uur|bij meer dan 16 uur','22t + 80 = 18t + 96 → 4t = 16 → t = 4. I begint lager (80) en is steiler, dus I is goedkoper vóór t = 4.<br>Fout: na 4 uur is II goedkoper. 44 en 16 zijn rekenfouten (16 vergeet te delen door 4).']],
+ ['Afronden in een verhaal',`<p>Bij aantallen (ijsjes, keren golfen, machines) moet het antwoord een heel getal zijn. Denk na welke kant je op moet afronden.</p>${VB('wasmachines',`R = 400q, K = 250q + 50 000. 400q = 250q + 50 000 → 150q = 50 000 → q ≈ 333,3.<br>Bij 333 is er nog net verlies, dus winst vanaf <b>334</b> machines (naar boven afronden).`)}${VB('golfen met een budget',`Club B kost 17,5n + 350 per jaar. Je hebt maximaal € 600.<br>17,5n + 350 = 600 → 17,5n = 250 → n ≈ 14,3. Je kunt <b>14</b> keer (naar beneden: 15 keer is te duur).`)}<p>💡 Altijd controleren: vul het afgeronde getal in en kijk of het klopt.</p>`,
+  ['Club A kost 12n + 435, club B 17,5n + 350 per jaar (n = aantal keer golfen). Vanaf hoeveel keer is A goedkoper?','16 keer','15 keer|25 keer|6 keer','12n + 435 = 17,5n + 350 → 85 = 5,5n → n ≈ 15,45. Daarna is A goedkoper, dus vanaf 16 keer (bij 15 keer is B nog goedkoper: 612,50 tegen 615).<br>Fout: 15 is naar beneden afgerond. 25 en 6 zijn rekenfouten.']],
+ ['Tegemoet lopen en inhalen',`<p>Twee mensen bewegen; je wilt weten <b>wanneer ze elkaar treffen</b>. Dat is weer een snijpunt: stel de afstanden aan elkaar gelijk.</p>${VB('zwemmen en rennen',`Jori zwemt: A<sub>J</sub> = 120t. Zijn broertje rent hem tegemoet vanaf 1200 m: A<sub>W</sub> = 1200 − 60t (t in minuten, A in meter vanaf de start van Jori).<br>1. 120t = 1200 − 60t<br>2. 180t = 1200 → t = 6⅔ minuut = 6 min 40 s<br>3. A<sub>J</sub> = 120 × 6⅔ = 800 m: Jori heeft 800 m gezwommen.<br>Afstand tussen ze op een moment = A<sub>W</sub> − A<sub>J</sub>. Na 2,5 min: 1050 − 300 = 750 m.`)}<p>⅔ minuut = ⅔ × 60 = 40 seconden.</p>`,
+  ['0,4 minuut is hoeveel seconden?','24 seconden','40 seconden|4 seconden|0,24 seconden','0,4 × 60 = 24 seconden.<br>Fout: 40 seconden zou je krijgen als een minuut 100 seconden had. 4 en 0,24 zijn rekenfouten.']]
+]},
+// ================= 3.4 =================
+{id:'3.4',t:'Twee variabelen',kort:'px + qy = r, y vrijmaken, tekenen, twee vergelijkingen in praktische situaties',ic:'🔀',lp:[
+ ['Een vergelijking met twee onbekenden',`<p>Een gymdocent koopt hamburgers van € 6 (x stuks) en gezonde broodjes van € 3 (y stuks) en betaalt in totaal € 42.</p><p>De hamburgers kosten 6x, de broodjes 3y. Samen: <b>6x + 3y = 42</b>.</p>${figTabel(['x',0,1,2,3,4,5,6,7],['y',14,12,10,8,6,4,2,0])}<p>Alle mogelijkheden liggen op één <b>rechte lijn</b>: elke hamburger meer betekent 2 broodjes minder.</p>${figLijn([{a:-2,b:14}],{xmin:0,xmax:8,ymin:0,ymax:15,pt:[[0,14],[2,10],[4,6],[7,0]]})}<p>Zo’n vergelijking heet een <b>lineaire vergelijking met twee variabelen</b>.</p>`,
+  ['De docent koopt 5 hamburgers (€ 6) en geeft in totaal € 42 uit aan broodjes. Hoeveel gezonde broodjes (€ 3) koopt hij?','4','2|12|6','5 × 6 = 30, er blijft 42 − 30 = 12 over, en 12 : 3 = 4.<br>Fout: 2 = 12 : 6 (verkeerde prijs). 12 is het geld, nog niet gedeeld. 6 hoort bij 4 hamburgers.']],
+ ['De vorm px + qy = r',`<p>De algemene vorm van een lineaire vergelijking met x en y is <b>px + qy = r</b>. De grafiek is een rechte lijn.</p><ul><li>2x − 3y = 6: p = 2, q = −3, r = 6.</li><li>6x + 3y = 42: p = 6, q = 3, r = 42.</li></ul><p>Een punt ligt op de lijn als het <b>invullen klopt</b>:</p>${VB('ligt (14, 3) op 2x − 5y = 8?',`2 × 14 − 5 × 3 = 28 − 15 = 13. Dat is niet 8 (je schrijft 13 ≠ 8), dus het punt ligt <b>niet</b> op de lijn.<br>(9, 4) op 2x − 3y = 6? 18 − 12 = 6 ✓, dat punt ligt er wel op.`)}<p>≠ betekent: is niet gelijk aan.</p>`,
+  ['Ligt (4, 1) op de lijn 3x + 2y = 12?','nee, want 3 × 4 + 2 × 1 = 14','ja, want 3 × 4 = 12|ja, want 3 × 1 + 2 × 4 = 11|nee, want 4 + 1 = 5','Vul allebei in: 12 + 2 = 14 ≠ 12, dus niet op de lijn.<br>Fout: je mag de y niet vergeten. In de derde optie zijn x en y verwisseld (en 11 is ook niet 12). 4 + 1 heeft niets met de vergelijking te maken.']],
+ ['Werkschema: y vrijmaken',`<p><b>y vrijmaken</b> (ook: <b>y uitdrukken in x</b>) = de vergelijking omschrijven tot y = ax + b.</p><ol><li>Breng de term met x naar de andere kant (het teken draait om).</li><li>Deel <b>alle</b> termen door het getal voor y.</li></ol>${VB('6x + 3y = 42',`1. 3y = −6x + 42<br>2. : 3 → y = −2x + 14. De lijn heeft rc −2.`)}${VB('2x − 5y = 8',`1. −5y = −2x + 8<br>2. : −5 → y = 0,4x − 1,6 (−2 : −5 = 0,4 en 8 : −5 = −1,6)`)}<p>⚠ Deel echt <b>elke</b> term, ook het losse getal. En delen door een negatief getal draait alle tekens om.</p>`,
+  ['Maak y vrij in 3x + 2y = 12.','y = −1,5x + 6','y = 1,5x + 6|y = −3x + 12|y = −1,5x + 12','2y = −3x + 12, dan alles : 2 → y = −1,5x + 6.<br>Fout: + 1,5x vergeet dat het teken omdraait bij het verplaatsen. −3x + 12 is nog niet gedeeld. −1,5x + 12 deelt alleen de x-term.']],
+ ['Werkschema: de lijn px + qy = r tekenen',`<ol><li>Neem x = 0 en reken y uit.</li><li>Neem y = 0 en reken x uit.</li><li>Teken de twee punten (op de assen) en trek de lijn.</li></ol>${VB('2x − 3y = 6',`1. x = 0: −3y = 6 → y = −2 → punt (0, −2)<br>2. y = 0: 2x = 6 → x = 3 → punt (3, 0)`)}${figLijn([{a:2/3,b:-2}],{xmin:-2,xmax:6,ymin:-3,ymax:2,pt:[[0,-2],[3,0]]})}<p>Krijg je een lastig kommagetal (bij 2x − 5y = 8 geeft x = 0 juist y = −1,6)? Kies dan een andere x, bijvoorbeeld x = −1: −2 − 5y = 8 → y = −2. Punt (−1, −2).</p>`,
+  ['Door welke twee punten op de assen gaat de lijn 3x − 4y = 12?','(0, −3) en (4, 0)','(0, 3) en (−4, 0)|(0, 4) en (−3, 0)|(0, −4) en (3, 0)','x = 0: −4y = 12 → y = −3. y = 0: 3x = 12 → x = 4.<br>Fout: de tweede optie heeft beide tekens fout. In de laatste twee zijn de 3 en 4 bij de verkeerde letter gezet.']],
+ ['Andere letters',`<p>Het werkt hetzelfde met andere letters. ‘Druk p uit in q’ betekent: schrijf het als p = … q + ….</p>${VB('3p − 1,2q = 16,5, druk p uit in q',`1. 3p = 1,2q + 16,5 (de −1,2q gaat naar rechts en wordt +)<br>2. : 3 → p = 0,4q + 5,5`)}${VB('5a − 2b = 16, maak b vrij',`1. −2b = −5a + 16<br>2. : −2 → b = 2,5a − 8`)}<p>💡 Controleer met een punt: a = 4 geeft b = 2. Klopt 5 × 4 − 2 × 2 = 16? Ja ✓.</p>`,
+  ['Maak q vrij in 4p + 8q = 2.','q = −0,5p + 0,25','q = 0,5p + 0,25|q = −2p + 0,25|q = −0,5p + 2','8q = −4p + 2, alles : 8 → q = −0,5p + 0,25.<br>Fout: + 0,5p is een tekenfout. −2p is 8 : 4 (omgedraaid). + 2 vergeet het losse getal te delen.']],
+ ['Een vergelijking opstellen uit een verhaal',`<p>Kies wat x en y zijn en schrijf op wat er bij elkaar opgeteld wordt.</p>${VB('thee en koffie',`2 muntthee en 4 koffie kosten samen € 18. x = prijs muntthee, y = prijs koffie.<br>2x + 4y = 18. (Kost muntthee € 5, dan 10 + 4y = 18, dus koffie € 2.)`)}${VB('lijn bij een rc en een punt',`Lijn met rc −2 door (1, 3): y = −2x + b, −2 + b = 3, b = 5. Dus y = −2x + 5, en met 2x naar links: <b>2x + y = 5</b>.`)}<p>💡 Twee soorten vergelijkingen kom je steeds tegen:</p><ul><li>een <b>aantallen</b>-vergelijking: x + y = totaal aantal;</li><li>een <b>geld</b>-vergelijking: (prijs₁)x + (prijs₂)y = totaal bedrag.</li></ul>`,
+  ['Een restaurant heeft 19 tafels: x tafels voor 4 en y tafels voor 2 personen, samen 52 plaatsen. Welke twee vergelijkingen horen hierbij?','x + y = 19 en 4x + 2y = 52','x + y = 52 en 4x + 2y = 19|4x + 2y = 19 en 2x + 4y = 52|x + y = 19 en 2x + 4y = 52','Aantal tafels: x + y = 19. Plaatsen: 4 per grote tafel en 2 per kleine: 4x + 2y = 52.<br>Fout: in de tweede optie zijn de totalen verwisseld. De derde past bij geen van de twee. In de laatste horen 4 en 2 bij de verkeerde letter.']],
+ ['Werkschema: situaties met twee variabelen',`<ol><li>Noem de variabelen x en y.</li><li>Stel twee vergelijkingen op.</li><li>Druk bij beide vergelijkingen y uit in x en stel ze aan elkaar gelijk.</li><li>Los die vergelijking op.</li><li>Gebruik de oplossing om de vraag te beantwoorden.</li></ol>${VB('tafels',`1. x = tafels voor 4, y = tafels voor 2<br>2. x + y = 19 en 4x + 2y = 52<br>3. y = −x + 19 en y = −2x + 26 → −x + 19 = −2x + 26<br>4. x = 7<br>5. y = −7 + 19 = 12. Dus 7 tafels voor vier en 12 tafels voor twee. Controle: 28 + 24 = 52 ✓`)}${figLijn([{a:-1,b:19},{a:-2,b:26}],{xmin:0,xmax:14,ymin:0,ymax:28,pt:[[7,12]]})}<p>De oplossing is het <b>snijpunt</b> van de twee lijnen.</p>`,
+  ['In een envelop zitten 20 briefjes van € 5 en € 10, samen € 135. Hoeveel briefjes van € 5?','13','7|27|6,75','x + y = 20 → y = −x + 20 en 5x + 10y = 135 → y = −0,5x + 13,5. −x + 20 = −0,5x + 13,5 → 6,5 = 0,5x → x = 13 (en 7 tientjes: 65 + 70 = 135).<br>Fout: 7 is het aantal tientjes. 27 = 135 : 5 (alsof alles vijfjes waren). 6,75 = 135 : 20.']],
+ ['Nog een voorbeeld: bollen',`${VB('kaasbollen en bruine bollen',`Roel koopt 13 bollen: kaasbollen van € 1,50 en bruine bollen van € 1,20. Hij betaalt € 18.<br>1. x = kaasbollen, y = bruine bollen<br>2. x + y = 13 en 1,5x + 1,2y = 18<br>3. y = −x + 13 en 1,2y = −1,5x + 18 → y = −1,25x + 15. Gelijkstellen: −x + 13 = −1,25x + 15<br>4. +1,25x: 0,25x + 13 = 15 → 0,25x = 2 → x = 8<br>5. y = −8 + 13 = 5. Dus 8 kaasbollen en 5 bruine bollen. Controle: 12 + 6 = 18 ✓`)}${VB('meubels (met grote getallen)',`52 tafels en stoelen, tafel € 750, stoel € 350, samen € 24 600.<br>x + y = 52 → y = −x + 52. 750x + 350y = 24 600 → y = −2<sup>1</sup>/<sub>7</sub>x + 70<sup>2</sup>/<sub>7</sub>. Gelijkstellen en oplossen (handig met de GR: optie oplossen of snijpunt) geeft x = 16 en y = 36.`)}`,
+  ['Bij de bollen: welke vergelijking krijg je in stap 3?','−x + 13 = −1,25x + 15','x + 13 = 1,25x + 15|−x + 13 = −1,5x + 18|−x + 18 = −1,25x + 13','y = −x + 13 en y = −1,25x + 15 (want 1,5 : 1,2 = 1,25 en 18 : 1,2 = 15).<br>Fout: de eerste vergeet de mintekens. De derde deelt niet door 1,2. De vierde haalt de getallen 13 en 18 door elkaar.']],
+ ['Controleren en de GR',`<p>Je mag vergelijkingen ook met de <b>GR</b> oplossen (optie <b>oplossen</b>, of de grafieken tekenen en het <b>snijpunt</b> laten berekenen). Met de balansmethode kan het ook.</p><p><b>Controleer altijd</b> je antwoord in <b>beide</b> oorspronkelijke vergelijkingen. Bij de meubels: 16 + 36 = 52 ✓ en 750 × 16 + 350 × 36 = 12 000 + 12 600 = 24 600 ✓.</p><p>Het maakt niet uit welke letters je kiest (t en s in plaats van x en y): je krijgt dezelfde vergelijkingen en dus hetzelfde antwoord.</p>${VB('een prijs die van een andere afhangt',`Een kaartje voor een jongere is € 5 goedkoper dan voor een volwassene. 2 jongeren en 2 volwassenen betalen € 80.<br>x = volwassene, y = jongere: y = x − 5 en 2x + 2y = 80 → y = −x + 40.<br>x − 5 = −x + 40 → 2x = 45 → x = 22,50. Volwassene € 22,50, jongere € 17,50.`)}`,
+  ['Iemand vindt x = 10 en y = 9 bij x + y = 19 en 4x + 2y = 52. Wat zegt de controle?','fout, want 4 × 10 + 2 × 9 = 58','goed, want 10 + 9 = 19|goed, want 4 × 10 + 2 × 9 = 52|fout, want 10 + 9 = 21','10 + 9 = 19 klopt, maar 40 + 18 = 58 ≠ 52. Het moet in béide kloppen.<br>Fout: alleen de eerste vergelijking controleren is niet genoeg. 40 + 18 is geen 52. 10 + 9 is wel 19.']]
+]},
+// ================= 3.5 =================
+{id:'3.5',t:'Interpoleren en modellen',kort:'Lineair interpoleren en extrapoleren, lineaire modellen, kritisch kijken naar uitkomsten',ic:'🔮',lp:[
+ ['Interpoleren en extrapoleren',`<ul><li><b>Interpoleren</b> = een waarde schatten die <b>tussen</b> de gegevens ligt.</li><li><b>Extrapoleren</b> = een waarde schatten die <b>buiten</b> de gegevens ligt (vóór de eerste of na de laatste).</li></ul><p>Ga je ervan uit dat het tussen twee gegevens met een vaste stap verandert (een rechte lijn), dan heet het <b>lineair</b> interpoleren of extrapoleren.</p>${figTabel(['jaar',2000,2009,2015,2021],['sportclubs',26620,28700,28210,25450])}<p>Het aantal in 2012 schatten = interpoleren (2012 ligt tussen 2009 en 2015). Het aantal in 2025 = extrapoleren (na 2021).</p><p>💡 <b>inter</b> = ertussen (zoals interland, tussen landen), <b>extra</b> = erbuiten.</p>`,
+  ['Je schat met de tabel hierboven het aantal sportclubs in 1995. Is dat interpoleren of extrapoleren?','extrapoleren, want 1995 ligt vóór 2000','interpoleren, want 1995 ligt vóór 2000|interpoleren, want het is een schatting|extrapoleren, want 1995 is een oneven jaar','1995 ligt buiten de gegevens (de eerste is 2000), dus extrapoleren.<br>Fout: interpoleren is tussen gegevens. Allebei zijn schattingen, dat zegt dus niets. Even of oneven doet er niet toe.']],
+ ['Werkschema: lineair interpoleren',`<ol><li>Zoek de twee gegevens <b>waar je waarde tussen ligt</b>.</li><li>Bereken de verandering per stap (per jaar): verschil ÷ aantal jaren.</li><li>Begin bij het eerste gegeven en tel er (aantal jaren × verandering per jaar) bij.</li></ol>${VB('ijssalons',`2020: 945, 2023: 1206. Schat 2022.<br>1. 2020 en 2023<br>2. In 3 jaar komen er 1206 − 945 = 261 bij, dus 261 : 3 = 87 per jaar<br>3. 2022 is 2 jaar na 2020: 945 + 2 × 87 = <b>1119</b>`)}${VB('niet halverwege',`2011: 181, 2016: 220. Schat 2014.<br>1. 2011 en 2016<br>2. 39 erbij in 5 jaar = 7,8 per jaar<br>3. 181 + 3 × 7,8 = 204,4 ≈ <b>204</b>`)}`,
+  ['2015: 28 210 sportclubs, 2021: 25 450. Schat met lineair interpoleren het aantal in 2019.','26 370','25 910|27 750|26 830','Afname 2760 in 6 jaar = 460 per jaar. 2019 is 4 jaar na 2015: 28 210 − 4 × 460 = 26 370.<br>Fout: 25 910 telt 5 jaar. 27 750 telt maar 1 jaar. 26 830 = halverwege, maar 2019 ligt niet halverwege.']],
+ ['Werkschema: lineair extrapoleren',`<ol><li>Neem de twee gegevens die het <b>dichtst bij</b> het gevraagde jaar liggen.</li><li>Bereken de verandering per jaar.</li><li>Ga vanaf het dichtstbijzijnde gegeven het juiste aantal jaren verder.</li></ol>${VB('ijssalons 2027',`Met 87 per jaar en 1206 in 2023: 2027 is 4 jaar later → 1206 + 4 × 87 = <b>1554</b>.`)}${VB('een tabel met meer jaren',`${figTabel(['jaar',2000,2007,2011,2016,2025],['aantal',570,408,181,220,194])}Schat 2032. Dichtstbij: 2016 en 2025.<br>In 9 jaar 26 minder → 26 : 9 ≈ 2,89 minder per jaar.<br>2032 is 7 jaar na 2025: 194 − 7 × 2,89 ≈ <b>174</b>.`)}<p>⚠ Neem niet de eerste en laatste uit de tabel, maar de <b>dichtstbijzijnde</b>.</p>`,
+  ['Woningen (× 1000): 1998: 6425, 2023: 8125. Schat met lineair extrapoleren 2026.','8329','8193|8227|9825','1700 erbij in 25 jaar = 68 per jaar. 2026 is 3 jaar na 2023: 8125 + 3 × 68 = 8329.<br>Fout: 8193 telt maar 1 jaar. 8227 rekent per 50 jaar (34 per jaar). 9825 telt 1700 er nog eens helemaal bij.']],
+ ['Interpoleren met een formule',`<p>Je kunt bij een stukje van de tabel ook een formule maken. Kies t = 0 bij het eerste jaar van dat stukje.</p>${VB('2011 tot 2016',`Per jaar +7,8, begin 181 in 2011: <b>N = 7,8t + 181</b> met t = jaren na 2011.<br>2014: t = 3 → 7,8 × 3 + 181 = 204,4 ≈ 204 (hetzelfde als eerst).<br>2012: t = 1 → 188,8 ≈ 189.`)}<p>⚠ Deze formule geldt alleen <b>tussen 2011 en 2016</b>. Voor 2020 hoort een ander stuk van de tabel (2016-2025) met een andere verandering per jaar.</p><p>Terugrekenen kan ook. Ballonvaart: 150 m → 20,2 °C, 225 m → 19,2 °C. Bij welke hoogte is het 20,0 °C? 1,0 °C per 75 m, dus 0,2 °C hoort bij 0,2 × 75 = 15 m. Antwoord: 150 + 15 = <b>165 m</b>.</p>`,
+  ['Ballonvaart: op 150 m 20,2 °C, op 225 m 19,2 °C. Schat de temperatuur op 180 m.','19,8 °C','19,7 °C|20,6 °C|19,6 °C','−1,0 °C per 75 m. 180 m is 30 m boven 150: 30 : 75 = 0,4 °C kouder → 20,2 − 0,4 = 19,8.<br>Fout: 19,7 is precies halverwege, maar 180 ligt niet halverwege. 20,6 telt erbij in plaats van eraf. 19,6 rekent 0,6 graad.']],
+ ['Wanneer is lineair niet verstandig?',`<p>Lineair interpoleren werkt alleen goed als de grafiek tussen de gegevens (ongeveer) <b>recht</b> is.</p>${VB('100 meter sprint',`${figTabel(['t (s)',0,3.78,6.29,9.58],['d (m)',0,30,60,100])}Na 5 s (tussen 3,78 en 6,29): 30 m in 2,51 s ≈ 11,95 m/s. 30 + 1,22 × 11,95 ≈ 44,6 m. Goede schatting: daar loopt hij op topsnelheid, de grafiek is bijna recht.<br>Na 1 s: 30 : 3,78 ≈ 7,9 m. Slechte schatting: bij de start moet hij nog <b>versnellen</b>, de grafiek is daar krom. Echt is het minder dan 7,9 m.`)}<p>💡 Vraag je altijd af: verandert het hier echt met een vaste stap?</p>`,
+  ['Waarom is lineair interpoleren bij de start van een sprint onverstandig?','de loper versnelt nog, dus de grafiek is daar niet recht','de loper loopt dan al op topsnelheid|aan het begin zijn er geen gegevens|lineair interpoleren mag alleen bij jaartallen','Bij de start neemt de snelheid toe, dus komt er niet elke seconde evenveel afstand bij.<br>Fout: topsnelheid haalt hij pas later. Er zijn wel gegevens (0 en 3,78 s). Interpoleren kan bij elke grootheid, niet alleen jaartallen.']],
+ ['Wiskundig model en modelvorming',`<p>Doe je alsof de grafiek (ongeveer) een rechte lijn is, dan gebruik je een <b>wiskundig model</b>, hier een <b>lineair model</b>.</p><p>Belangrijk: controleer of wat het model voorspelt past bij de metingen. Het opstellen en steeds aanpassen van een model heet <b>modelvorming</b>. Dat gaat in een rondje:</p><ol><li><b>Praktisch probleem</b> → meten → <b>gegevens</b></li><li>Gegevens → modelleren → <b>wiskundig model</b></li><li>Model → toepassen → <b>voorspellingen</b></li><li>Voorspellingen → controleren → terug naar de gegevens (klopt het niet? model aanpassen)</li></ol>`,
+  ['Wat is de goede volgorde bij modelvorming?','meten, modelleren, toepassen, controleren','modelleren, meten, controleren, toepassen|toepassen, meten, modelleren, controleren|meten, toepassen, modelleren, controleren','Eerst meet je (gegevens), dan maak je een model, dat pas je toe (voorspellingen) en die controleer je met de gegevens.<br>Fout: je kunt geen model maken voordat je gemeten hebt, en niet toepassen voordat er een model is.']],
+ ['Een lineair model opstellen en gebruiken',`<p>Bij een puntenwolk teken je een lijn die er zo goed mogelijk doorheen loopt. Met twee goed afleesbare punten op die lijn maak je de formule (werkschema uit 3.2).</p>${VB('bladeren en temperatuur',`Hoe warmer het klimaat, hoe meer plantensoorten gladde (gaafrandige) bladeren hebben. Op de modellijn liggen A(p = 25, T = 10) en B(p = 75, T = 25), met p = percentage gaafrandige soorten en T = gemiddelde jaartemperatuur.<br>1. a = (25 − 10) / (75 − 25) = 15 / 50 = 0,3<br>2. 0,3 × 25 + b = 10 → 7,5 + b = 10 → b = 2,5<br>3. <b>T = 0,3p + 2,5</b><br>Fossielen met 80% tot 85% gaafrandig: T = 26,5 tot 28 °C.`)}${figLijn([{a:0.3,b:2.5}],{xmin:0,xmax:90,ymin:0,ymax:30,pt:[[25,10],[75,25]]})}`,
+  ['Met T = 0,3p + 2,5: welke temperatuur hoort bij p = 60?','20,5 °C','18 °C|191,7 °C|62,8 °C','0,3 × 60 + 2,5 = 18 + 2,5 = 20,5.<br>Fout: 18 vergeet de + 2,5. 191,7 = (60 − 2,5) : 0,3: dan reken je de andere kant op. 62,8 telt alles bij elkaar op.']],
+ ['Procentuele afwijking',`<p>Hoe ver zit het model ernaast? Reken het verschil uit als percentage van de <b>echte waarde</b>:</p><p><b>afwijking = (model − werkelijk) : werkelijk × 100%</b></p>${VB('huishoudelijk afval',`Model N = 9,5t + 281 (t = jaren na 1970). In 2004 is t = 34: N = 9,5 × 34 + 281 = 604 kg. Echt was het 561 kg.<br>(604 − 561) : 561 × 100% ≈ 7,7%. Het model zit 7,7% te hoog.`)}${VB('temperatuur',`Iemand voorspelt 7,9 °C, echt wordt het 3,2 °C. (7,9 − 3,2) : 3,2 × 100% ≈ 147% te hoog.`)}<p>⚠ Deel door de <b>werkelijke</b> waarde, niet door die van het model.</p>`,
+  ['Het model geeft 64,8 en echt is het 65,8. Hoeveel procent wijkt het model af?','ongeveer 1,5% te laag','ongeveer 1,5% te hoog|ongeveer 1,0% te laag|ongeveer 6,6% te laag','(64,8 − 65,8) : 65,8 × 100% ≈ −1,5%: het model zit 1,5% te laag.<br>Fout: het model is kleiner dan echt, dus te laag, niet te hoog. 1,0 is alleen het verschil, nog niet gedeeld. 6,6 is een rekenfout.']],
+ ['Kritisch kijken naar een model',`<p>Een lineair model geldt meestal maar voor een <b>beperkt gebied</b>.</p><ul><li>Afval nam tot 2000 toe en daarna af. Een stijgend model past na 2000 dus niet meer.</li><li>Sprinttijden worden steeds korter. Met een lineair model krijg je ver in de toekomst tijden van 7,9 s (45 km/u) en uiteindelijk zelfs 0 of negatief. Dat kan niet.</li><li>Een formule voor de lengte uit de bovenarm geldt alleen voor botten tussen 10 en 40 cm.</li></ul><p>💡 Ver extrapoleren is onbetrouwbaar: niemand weet of het lineair doorgaat. Vraag je altijd af of de uitkomst <b>realistisch</b> is.</p>`,
+  ['Een model voor de winnende sprinttijd daalt elk jaar met 0,014 s. Waarom kun je het niet gebruiken voor het jaar 2500?','tijden kunnen niet eindeloos lineair dalen, je krijgt onmogelijke uitkomsten','de rc is te klein om mee te rekenen|het model is alleen voor vrouwen|in 2500 is er geen sprint meer','Ver buiten de gegevens hoeft het niet lineair door te gaan; de tijd zou absurd laag worden.<br>Fout: met een kleine rc kun je prima rekenen. Voor wie het model is, maakt voor deze vraag niet uit. Of er in 2500 nog gesprint wordt, is niet de reden.']]
+]}
+];
+
+const POD={};
+const MCQ={
+'3.1':[
+['Wat is de richtingscoëfficiënt van y = 3x − 7?','3','−7|7|−3',
+ 'De rc is het getal vóór de x: <b>3</b>.<br>Fout: −7 is b (het snijpunt met de y-as). 7 en −3 halen getal en teken door elkaar.',
+ 'In y = ax + b is a de rc: het getal dat bij de x hoort, met zijn teken.'],
+['Waar snijdt y = −2x + 5 de y-as?','(0, 5)','(5, 0)|(0, −2)|(2,5; 0)',
+ 'Op de y-as is x = 0, dan blijft y = 5 over: <b>(0, 5)</b>.<br>Fout: (5, 0) heeft x en y verwisseld. −2 is de rc. (2,5; 0) is het snijpunt met de x-as.',
+ 'Vul x = 0 in. Wat blijft er over van de formule?'],
+['Wat is de rc van y = 4 − 2,5x?','−2,5','4|2,5|−4',
+ 'De x staat achteraan, maar de rc blijft het getal bij de x, mét de min: <b>−2,5</b>.<br>Fout: 4 is b. 2,5 vergeet de min. −4 haalt a en b door elkaar.',
+ 'Zoek het getal dat direct bij de x staat, en kijk welk teken ervoor staat.'],
+['Een lijn heeft rc −1,5. Wat betekent dat?','1 naar rechts en 1,5 omlaag','1 naar rechts en 1,5 omhoog|1,5 naar rechts en 1 omlaag|1 omhoog en 1,5 naar links',
+ 'rc = a betekent: 1 naar rechts en a omhoog. a = −1,5 omhoog = <b>1,5 omlaag</b>.<br>Fout: omhoog hoort bij een positieve rc. 1,5 naar rechts en 1 omlaag geeft rc −0,67. 1 omhoog en 1,5 naar links geeft ook rc −0,67.',
+ 'Het trapje van een rc begint altijd met 1 naar rechts. Wat doet de min?'],
+[`Welke formule hoort bij deze lijn? ${figLijn([{a:2,b:-1}],{xmin:-2,xmax:4,ymin:-4,ymax:6,pt:[[0,-1],[1,1]]})}`,'y = 2x − 1','y = −x + 2|y = 2x + 1|y = −2x − 1',
+ 'De lijn snijdt de y-as in (0, −1), dus b = −1. Bij 1 naar rechts ga je 2 omhoog: rc 2. Dus <b>y = 2x − 1</b>.<br>Fout: y = −x + 2 verwisselt a en b. + 1 heeft het verkeerde snijpunt. −2x zou een dalende lijn zijn.',
+ 'Lees eerst af waar de lijn de y-as snijdt (b). Zet dan een trapje van 1 naar rechts: hoeveel ga je omhoog?'],
+['Op welke lijn ligt het punt A(14, 6)?','y = 0,5x − 1','y = −3x + 2|y = 2x|y = 2',
+ 'Vul x = 14 in: 0,5 × 14 − 1 = 7 − 1 = 6 ✓.<br>Fout: −3 × 14 + 2 = −40, 2 × 14 = 28 en y = 2 geeft altijd 2. Geen van die is 6.',
+ 'Vul bij elke formule x = 14 in en kijk of er 6 uitkomt.'],
+['Lijn k is evenwijdig met y = −0,8x + 3 en gaat door (0, 12). Wat is de formule van k?','y = −0,8x + 12','y = 12x − 0,8|y = 0,8x + 12|y = −0,8x + 3',
+ 'Evenwijdig = zelfde rc (−0,8). Door (0, 12) = b is 12. Dus <b>y = −0,8x + 12</b>.<br>Fout: 12x − 0,8 verwisselt a en b. 0,8 mist de min. y = −0,8x + 3 is de oude lijn zelf.',
+ 'Evenwijdige lijnen hebben dezelfde rc. Het punt op de y-as geeft je b.'],
+['Welke twee lijnen zijn evenwijdig?<br>p: y = 3x − 5, q: y = 3x + 7, r: y = −3x + 7','p en q','q en r|p en r|geen enkel paar',
+ 'p en q hebben allebei rc 3, dus ze zijn evenwijdig.<br>Fout: r heeft rc −3, dat is een andere richting (dalend). q en r hebben wel dezelfde b, maar dan snijden ze elkaar juist op de y-as.',
+ 'Vergelijk alleen de rc’s. Ook het teken telt mee.'],
+['Wat is de formule van de horizontale lijn door (5, 4)?','y = 4','x = 5|y = 5|x = 4',
+ 'Op een horizontale lijn hebben alle punten dezelfde y, hier 4: <b>y = 4</b>.<br>Fout: x = 5 is de verticale lijn door dat punt. y = 5 en x = 4 halen de coördinaten door elkaar.',
+ 'Horizontaal = plat. Welke coördinaat blijft dan steeds gelijk?'],
+['Welke lijn kun je <b>niet</b> schrijven als y = ax + b?','x = 3','y = 3|y = 3x|y = −x + 3',
+ 'x = 3 is een verticale lijn: die heeft geen rc, dus geen vorm y = ax + b.<br>Fout: y = 3 is y = 0x + 3, y = 3x is y = 3x + 0 en y = −x + 3 heeft a = −1. Die passen allemaal wel.',
+ 'Welke lijn staat rechtop? Die heeft geen richtingscoëfficiënt.'],
+['De kosten van een fabriek zijn K = 0,25q + 200 euro per dag (q = aantal balpennen). Hoe hoog zijn de vaste kosten?','€ 200','€ 0,25|€ 200,25|€ 50',
+ 'Vaste kosten hangen niet van q af: dat is het losse getal b = <b>€ 200</b>.<br>Fout: € 0,25 zijn de variabele kosten per pen. 200,25 telt beide bij elkaar op. 50 = 0,25 × 200, dat betekent niets.',
+ 'Welk deel van de formule blijft hetzelfde als je q verandert?'],
+['Een taxi rekent € 3 instaptarief en € 2,10 per km. Welke formule geeft de kosten K bij d km?','K = 2,10d + 3','K = 3d + 2,10|K = 5,10d|K = 2,10d − 3',
+ 'Per km = rc = 2,10, vast bedrag = b = 3: <b>K = 2,10d + 3</b>.<br>Fout: 3d + 2,10 verwisselt a en b. 5,10d rekent het instaptarief elke km opnieuw. − 3 zou betekenen dat je geld terugkrijgt.',
+ 'Het bedrag per km komt bij de d, het vaste bedrag staat los.'],
+['Een oven warmt 720 °C per uur op en staat bij het aanzetten op 22 °C. Wat is T na m minuten?','T = 12m + 22','T = 720m + 22|T = 22m + 12|T = 12m + 720',
+ 'Per minuut: 720 : 60 = 12 °C. Begin: 22. Dus <b>T = 12m + 22</b>.<br>Fout: 720m rekent per uur terwijl m minuten zijn. De andere twee zetten de getallen op de verkeerde plek.',
+ 'Let op de eenheid: m is in minuten. Reken de opwarming eerst om naar per minuut.'],
+['In een vat staat het water 1,2 m hoog. Per kwartier zakt het 30 cm. Wat is de formule voor h in cm na t minuten?','h = 120 − 2t','h = 1,2 − 30t|h = 120 − 30t|h = 120 + 2t',
+ 'Begin: 1,2 m = 120 cm. Per minuut: 30 : 15 = 2 cm omlaag. Dus <b>h = 120 − 2t</b>.<br>Fout: 1,2 − 30t gooit meters en kwartieren door elkaar. 120 − 30t rekent 30 cm per minuut. + 2t laat het water stijgen.',
+ 'Zet alles eerst in de gevraagde eenheden: cm en minuten.'],
+['Een parachutist zit op 600 m en daalt met 18 km/u. Welke formule geeft h in meter na t seconden?','h = 600 − 5t','h = 600 − 18t|h = 600 − 0,3t|h = 600 + 5t',
+ '18 km/u = 18 000 m per 3600 s = 5 m per seconde. Dalen = min: <b>h = 600 − 5t</b>.<br>Fout: 18 is in km/u, niet m/s. 0,3 is km per minuut. + 5t zou betekenen dat hij stijgt.',
+ 'Reken km/u om naar meter per seconde: km × 1000, uur = 3600 seconden.'],
+['y is evenredig met x en bij x = 15 hoort y = 24. Wat is de formule?','y = 1,6x','y = 0,625x|y = 1,6x + 15|y = 24x',
+ 'Evenredig: y = ax. a = 24 : 15 = 1,6. Dus <b>y = 1,6x</b>.<br>Fout: 0,625 = 15 : 24 (omgedraaid). Evenredig heeft geen + b. y = 24x geeft bij x = 15 veel te veel.',
+ 'Evenredig betekent y = ax. Vul het punt in en los a op.'],
+['Welke tabel hoort bij een (recht) evenredig verband?','x: 1, 2, 3 en y: 0,3; 0,6; 0,9','x: 0, 1, 2 en y: 0,7; 1,4; 2,1|x: −1, 0, 1 en y: 4, 2, 0|x: 1, 2, 3 en y: 2, 3, 4',
+ 'Bij 0,3; 0,6; 0,9 is y : x steeds 0,3: een verhoudingstabel, dus <b>evenredig</b> (y = 0,3x).<br>Fout: bij de tweede is y = 0,7 als x = 0, dus niet door de oorsprong. Bij de derde is y = 2 als x = 0. Bij de vierde is y : x steeds anders (2, 1,5, 1,33).',
+ 'Evenredig = verhoudingstabel: deel y door x. Is dat steeds hetzelfde getal? En hoort bij x = 0 de y = 0?'],
+['Otto heeft na d dagen in Thailand B = 3096d + 19 350 baht opgenomen. Is B evenredig met d?','nee, want bij d = 0 is B niet 0','ja, want de grafiek is een rechte lijn|ja, want B neemt elke dag evenveel toe|nee, want de lijn daalt',
+ 'Evenredig vraagt een lijn door de oorsprong (y = ax). Hier is er een beginwaarde 19 350, dus <b>niet evenredig</b>.<br>Fout: recht en elke dag evenveel erbij geldt voor elk lineair verband, dat is niet genoeg. De lijn stijgt juist.',
+ 'Evenredig = lineair én beginwaarde 0. Kijk naar het getal zonder d.'],
+['De vaste kosten van een bedrijf worden hoger, de kosten per product blijven gelijk. Wat gebeurt er met de grafiek van de kosten?','hij schuift omhoog en blijft even steil','hij wordt steiler|hij wordt minder steil|hij gaat door de oorsprong',
+ 'Hogere vaste kosten = grotere b: de lijn begint hoger en schuift dus <b>omhoog</b>, met dezelfde rc.<br>Fout: steiler of minder steil hoort bij een andere rc (kosten per product). Door de oorsprong zou betekenen: geen vaste kosten.',
+ 'Vaste kosten zijn de b, kosten per stuk de a. Welke van de twee verandert er?']
+],
+'3.2':[
+['Een lijn heeft rc −0,75 en gaat door (2, 6). Wat is de formule?','y = −0,75x + 7,5','y = −0,75x + 4,5|y = −0,75x + 6|y = 6x − 0,75',
+ '−0,75 × 2 + b = 6 → −1,5 + b = 6 → b = <b>7,5</b>.<br>Fout: 4,5 krijg je als je 1,5 eraf haalt in plaats van erbij. b = 6 is de y van het punt, maar het punt ligt niet op de y-as. 6x − 0,75 verwisselt alles.',
+ 'Schrijf y = −0,75x + b, vul x = 2 en y = 6 in en los b op.'],
+['Lijn l heeft rc 2 en gaat door A(5, 8). Wat is de formule?','y = 2x − 2','y = 2x + 8|y = 2x + 18|y = 8x + 2',
+ '2 × 5 + b = 8 → 10 + b = 8 → b = −2. Dus <b>y = 2x − 2</b>.<br>Fout: + 8 neemt de y van het punt als b. 18 = 8 + 10 (tekenfout). 8x + 2 verwisselt a en b.',
+ 'Vul het punt in y = 2x + b in. Wat moet b zijn zodat er 8 uitkomt?'],
+['Lijn m heeft rc −1,8 en gaat door (−10, 5). Waar snijdt m de y-as?','(0, −13)','(0, 23)|(0, 5)|(0, 13)',
+ '−1,8 × −10 + b = 5 → 18 + b = 5 → b = −13. Snijpunt <b>(0, −13)</b>.<br>Fout: 23 = 5 + 18 (−1,8 × −10 als −18 gerekend). 5 is de y van het punt. 13 mist de min.',
+ 'Min keer min is plus: −1,8 × −10 = +18. Los daarna b op.'],
+['Wat is de rc van de lijn door A(8, 17) en B(13, 23)?','1,2','ongeveer 0,83|6|−1,2',
+ 'Δy = 23 − 17 = 6, Δx = 13 − 8 = 5, rc = 6 : 5 = <b>1,2</b>.<br>Fout: 0,83 = 5 : 6 (omgedraaid). 6 is alleen Δy. −1,2: de lijn stijgt, dus de rc is positief.',
+ 'rc = Δy : Δx = verschil in y gedeeld door verschil in x.'],
+['Wat is de rc van de lijn door P(2, −1) en Q(6, 5)?','1,5','1|0,67|6',
+ 'Δy = 5 − −1 = 6, Δx = 6 − 2 = 4, rc = 6 : 4 = <b>1,5</b>.<br>Fout: 1 krijg je als je 5 − 1 = 4 rekent (min vergeten). 0,67 is Δx : Δy. 6 is alleen Δy.',
+ 'Let op: 5 − −1 = 5 + 1.'],
+['Welke formule hoort bij de lijn door (−1, 1) en (1, 4)?','y = 1,5x + 2,5','y = 1,5x − 2,5|y = 2,5x + 1,5|y = 0,67x + 1,67',
+ 'a = (4 − 1) : (1 − −1) = 3 : 2 = 1,5. Invullen (1, 4): 1,5 + b = 4 → b = 2,5.<br>Fout: − 2,5 is een tekenfout. 2,5x + 1,5 verwisselt a en b. 0,67 is Δx : Δy.',
+ 'Eerst a = Δy : Δx, dan één punt invullen voor b.'],
+['Welke formule hoort bij de lijn door C(2, 0) en D(−3, 5)?','y = −x + 2','y = x − 2|y = −x − 2|y = 5x + 2',
+ 'a = (5 − 0) : (−3 − 2) = 5 : −5 = −1. Invullen C: −2 + b = 0 → b = 2. Dus <b>y = −x + 2</b>.<br>Fout: y = x − 2 heeft de verkeerde rc (de lijn daalt). −x − 2 heeft de verkeerde b. 5x + 2 deelt niet.',
+ 'Δx = −3 − 2 is negatief. Wat betekent dat voor het teken van de rc?'],
+['Welke formule hoort bij de lijn door (25, 493) en (75, 229)?','y = −5,28x + 625','y = 5,28x + 361|y = −5,28x + 361|y = −0,19x + 498',
+ 'a = (229 − 493) : (75 − 25) = −264 : 50 = −5,28. −5,28 × 25 + b = 493 → −132 + b = 493 → b = 625.<br>Fout: 5,28 vergeet de min (de lijn daalt). 361 = 493 − 132 (tekenfout bij b). −0,19 is Δx : Δy.',
+ 'Bij −132 + b = 493 tel je 132 op aan beide kanten.'],
+[`Welke formule hoort bij deze lijn? ${figLijn([{a:-0.5,b:4}],{xmin:-1,xmax:9,ymin:-1,ymax:5,pt:[[0,4],[8,0]]})}`,'y = −0,5x + 4','y = −2x + 4|y = 0,5x + 4|y = 4x − 0,5',
+ 'Door (0, 4) en (8, 0): a = (0 − 4) : (8 − 0) = −0,5, b = 4.<br>Fout: −2 is Δx : Δy. + 0,5 zou stijgen, maar de lijn daalt. 4x − 0,5 verwisselt a en b.',
+ 'Zoek twee punten precies op het rooster, bijvoorbeeld op de assen.'],
+['Mevrouw Hak verdient bij 350 verkochte dozen bonbons € 270 per week en bij 500 dozen € 315. Hoeveel krijgt ze per doos?','€ 0,30','€ 3,33|€ 0,77|€ 45',
+ 'a = ΔR : Δq = (315 − 270) : (500 − 350) = 45 : 150 = <b>€ 0,30</b>.<br>Fout: 3,33 = 150 : 45 (omgedraaid). 0,77 = 270 : 350: dan tel je het basisloon mee. 45 is het verschil, nog niet gedeeld.',
+ 'Bedrag erbij gedeeld door dozen erbij.'],
+['Mevrouw Hak krijgt € 0,30 per doos en verdient bij 350 dozen € 270. Hoe hoog is haar basisloon?','€ 165','€ 270|€ 105|€ 375',
+ '0,3 × 350 = 105, dus 105 + b = 270 → b = <b>€ 165</b>.<br>Fout: 270 is het hele inkomen. 105 is wat ze met de dozen verdient. 375 = 270 + 105 (tekenfout).',
+ 'Vul q = 350 en R = 270 in R = 0,3q + b in.'],
+['Bij € 5 verkoopt een koopman 90 T-shirts per week, bij € 8 nog maar 30. Welke formule geeft q (aantal) uitgedrukt in p (prijs)?','q = −20p + 190','q = −20p + 90|q = 20p − 10|p = −20q + 190',
+ 'a = Δq : Δp = (30 − 90) : (8 − 5) = −20. −20 × 5 + b = 90 → b = 190.<br>Fout: + 90 neemt de y van een punt als b. + 20p laat de verkoop stijgen bij een hogere prijs. p = … zet de variabelen verkeerd om.',
+ 'q is de uitkomst, p de invoer. Dus a = Δq : Δp.'],
+['Familie A verbruikt 3250 kWh en betaalt € 841,60. Familie B verbruikt 4426 kWh en betaalt € 1112,08. Hoe hoog is het vastrecht?','€ 94,10','€ 0,23|€ 841,60|€ 270,48',
+ 'a = 270,48 : 1176 = 0,23 per kWh. b = 841,60 − 0,23 × 3250 = 841,60 − 747,50 = <b>€ 94,10</b>.<br>Fout: 0,23 is de prijs per kWh. 841,60 is de hele rekening. 270,48 is het verschil tussen de rekeningen.',
+ 'Reken eerst de prijs per kWh (a) uit, dan b met één van de twee families.'],
+['Een kaars wordt elke minuut 0,5 mm korter. Na een uur is hij 55 mm. Welke formule geeft de lengte l in mm na t minuten?','l = −0,5t + 85','l = −0,5t + 25|l = 0,5t + 55|l = −0,5t + 55',
+ '−0,5 × 60 + b = 55 → −30 + b = 55 → b = 85.<br>Fout: 25 = 55 − 30 (tekenfout). + 0,5t laat de kaars groeien. 55 is de lengte na een uur, niet bij het begin.',
+ 'Een uur = 60 minuten. Vul t = 60 en l = 55 in.'],
+['Hoe bereken je de rc van de lijn door A en B?','(y<sub>B</sub> − y<sub>A</sub>) : (x<sub>B</sub> − x<sub>A</sub>)','(x<sub>B</sub> − x<sub>A</sub>) : (y<sub>B</sub> − y<sub>A</sub>)|(y<sub>B</sub> − x<sub>B</sub>) : (y<sub>A</sub> − x<sub>A</sub>)|(y<sub>B</sub> + y<sub>A</sub>) : (x<sub>B</sub> + x<sub>A</sub>)',
+ 'rc = Δy : Δx, verschil in y boven, verschil in x onder.<br>Fout: de tweede is omgedraaid. De derde haalt x en y van hetzelfde punt door elkaar. Optellen is geen verschil.',
+ 'Omhoog gedeeld door naar rechts.'],
+['Lotte rekent bij P(2, −1) en Q(6, 5): Δy = y<sub>P</sub> − y<sub>Q</sub> = −6. Welke Δx moet ze dan nemen?','x<sub>P</sub> − x<sub>Q</sub> = −4','x<sub>Q</sub> − x<sub>P</sub> = 4|x<sub>P</sub> + x<sub>Q</sub> = 8|y<sub>Q</sub> − y<sub>P</sub> = 6',
+ 'Boven en onder dezelfde volgorde: x<sub>P</sub> − x<sub>Q</sub> = 2 − 6 = −4. Dan rc = −6 : −4 = 1,5 ✓.<br>Fout: 4 draait de volgorde om (dan krijg je −1,5). Optellen is geen verschil. y<sub>Q</sub> − y<sub>P</sub> is geen x-verschil.',
+ 'Als je bij y eerst P neemt, neem je bij x ook eerst P.'],
+['De eerste 50 geboortekaartjes kosten € 1,95 per stuk, de volgende 50 € 1,45 per stuk. Welke formule geldt van 50 tot 100 kaartjes?','K = 1,45q + 25','K = 1,45q|K = 1,45q + 97,50|K = 1,95q + 25',
+ 'Bij q = 50 betaal je 50 × 1,95 = 97,50. Daarna rc 1,45: 1,45 × 50 + b = 97,50 → 72,50 + b = 97,50 → b = 25.<br>Fout: 1,45q vergeet dat de eerste 50 duurder waren. + 97,50 telt de eerste 50 dubbel. 1,95 is de prijs van het eerste stuk.',
+ 'Het tweede stuk begint in het knikpunt (50; 97,50). Gebruik dat punt en de nieuwe rc.'],
+['Janne loopt A = 0,25t (km na t minuten). Marlijn loopt 0,2 km per minuut en is eerder vertrokken. Op t = 10 haalt Janne haar in. Wat is de formule van Marlijn?','A = 0,2t + 0,5','A = 0,2t|A = 0,2t + 2,5|A = 0,25t + 0,5',
+ 'Op t = 10 zijn ze op dezelfde plek: 0,25 × 10 = 2,5 km. Marlijn: 0,2 × 10 + b = 2,5 → b = 0,5.<br>Fout: zonder b zou Marlijn op t = 0 nog bij de start staan. 2,5 is de plek op t = 10. 0,25 is het tempo van Janne.',
+ 'Inhalen = op hetzelfde moment op dezelfde plek. Reken die plek uit met Jannes formule.']
+],
+'3.3':[
+['Los op: 5x − 3 = 3x + 5','x = 4','x = 1|x = −4|x = 0,25',
+ '−3x: 2x − 3 = 5. +3: 2x = 8. : 2: <b>x = 4</b>.<br>Fout: x = 1 krijg je bij 2x = 2 (−3 en 5 verkeerd samengenomen). −4 is een tekenfout. 0,25 = 2 : 8 (omgedraaid gedeeld).',
+ 'Breng de x’en naar links, de losse getallen naar rechts, en deel dan.'],
+['Los op: 2x − 5 = 6x + 3','x = −2','x = 2|x = −0,5|x = −1',
+ '−6x: −4x − 5 = 3. +5: −4x = 8. : −4: <b>x = −2</b>.<br>Fout: 2 vergeet dat je door een negatief getal deelt. −0,5 = −4 : 8 (omgedraaid). −1 komt van −4x = 4 (rekenfout).',
+ 'Na het verplaatsen krijg je −4x = 8. Deel door −4.'],
+['Waar snijdt y = 2x − 4 de x-as?','(2, 0)','(0, −4)|(−2, 0)|(4, 0)',
+ 'x-as: y = 0. 2x − 4 = 0 → 2x = 4 → x = 2. Dus <b>(2, 0)</b>.<br>Fout: (0, −4) is het snijpunt met de y-as. −2 is een tekenfout. (4, 0) vergeet te delen door 2.',
+ 'Op de x-as is y = 0. Stel de formule gelijk aan 0.'],
+['Waar snijdt y = 0,8x − 6 de y-as?','(0, −6)','(7,5; 0)|(0; 0,8)|(−6, 0)',
+ 'y-as: x = 0, dan blijft y = −6. Dus <b>(0, −6)</b>.<br>Fout: (7,5; 0) is het snijpunt met de x-as. 0,8 is de rc. (−6, 0) heeft x en y verwisseld.',
+ 'Op de y-as is x = 0.'],
+['Wat is het snijpunt van y = 5 − x en y = 2x − 4?','(3, 2)','(2, 3)|(3, 8)|(1, 4)',
+ '5 − x = 2x − 4 → 9 = 3x → x = 3. y = 5 − 3 = 2. Dus <b>(3, 2)</b>.<br>Fout: (2, 3) verwisselt x en y. y = 8 is 5 + 3 (tekenfout). (1, 4): bij x = 1 geven de formules 4 en −2, dat is geen snijpunt.',
+ 'Stel de twee rechterleden gelijk, los x op en vul x in één formule in.'],
+['Wat is de x-coördinaat van het snijpunt van y = 15x − 31 en y = 7x + 5?','4,5','3,25|−4,5|36',
+ '15x − 31 = 7x + 5 → 8x = 36 → x = <b>4,5</b>.<br>Fout: 3,25 komt van 8x = 26 (−31 + 5). −4,5 is een tekenfout. 36 vergeet te delen door 8.',
+ '−7x en +31 aan beide kanten. Dan delen.'],
+['Wat is stap 1 van het werkschema voor het snijpunt van twee lijnen?','de rechterleden van de formules aan elkaar gelijkstellen','in beide formules y = 0 invullen|in beide formules x = 0 invullen|de twee rc’s bij elkaar optellen',
+ 'In het snijpunt hebben beide lijnen dezelfde y, dus stel je de rechterleden gelijk.<br>Fout: y = 0 geeft het snijpunt met de x-as, x = 0 dat met de y-as. Optellen van rc’s heeft geen betekenis.',
+ 'In het snijpunt is de y van de ene lijn gelijk aan de y van de andere.'],
+['Wat is het snijpunt van y = −2,5x + 5 en de lijn y = 25?','(−8, 25)','(8, 25)|(−12, 25)|(0, 25)',
+ '−2,5x + 5 = 25 → −2,5x = 20 → x = −8.<br>Fout: 8 vergeet de min. −12 komt van −2,5x = 30 (tekenfout bij de 5). (0, 25) ligt niet op de eerste lijn (die geeft 5).',
+ 'y = 25 is een horizontale lijn. Stel −2,5x + 5 gelijk aan 25.'],
+['Op de lijn y = −2,5x + 35 ligt een punt met y = 45. Wat is de x-coördinaat?','−4','4|−32|32',
+ '−2,5x + 35 = 45 → −2,5x = 10 → x = <b>−4</b>.<br>Fout: 4 vergeet de min. 32 en −32 komen van 80 : 2,5 (35 opgeteld in plaats van afgetrokken).',
+ 'Stel de formule gelijk aan 45 en gebruik de balansmethode.'],
+['Taxi A: K = 1,2d + 20. Taxi B: K = 1,6d. Bij welke afstand zijn ze even duur?','d = 50','d = 12,5|d = 7,1|d = 20',
+ '1,2d + 20 = 1,6d → 20 = 0,4d → d = <b>50</b>.<br>Fout: 12,5 = 20 : 1,6. 7,1 = 20 : 2,8 (rc’s opgeteld). 20 is het instaptarief.',
+ 'Even duur = vergelijking K<sub>A</sub> = K<sub>B</sub>.'],
+['Taxi A: K = 1,2d + 20. Taxi B: K = 1,6d. Bij welke afstanden is A goedkoper?','d > 50','d < 50|d = 50|d > 20',
+ 'Even duur bij 50 km. A begint hoger maar stijgt langzamer, dus na 50 km ligt A onder B: <b>d &gt; 50</b>.<br>Fout: vóór 50 km is B goedkoper. Bij precies 50 zijn ze gelijk. 20 is het instaptarief.',
+ 'Los eerst de vergelijking op. Probeer dan een getal, bijvoorbeeld d = 100: welke is goedkoper?'],
+['Een ijssalon heeft opbrengst R = 2,25q en kosten K = 1,15q + 352 (q ijsjes per week). Wanneer maakt de salon winst?','bij meer dan 320 ijsjes','bij minder dan 320 ijsjes|bij meer dan 156 ijsjes|bij meer dan 352 ijsjes',
+ 'Winst als R &gt; K. 2,25q = 1,15q + 352 → 1,10q = 352 → q = 320. R is steiler, dus rechts van 320 ligt R boven K.<br>Fout: onder 320 is er verlies. 156 = 352 : 2,25. 352 zijn de vaste kosten.',
+ 'Winst betekent opbrengst groter dan kosten. Los R = K op.'],
+['Een fabriek: K = 250q + 50 000 en R = 400q. Hoeveel wasmachines moet ze minstens maken voor winst?','334','333|200|125',
+ '400q = 250q + 50 000 → 150q = 50 000 → q ≈ 333,3. Bij 333 is er nog verlies, dus minimaal <b>334</b>.<br>Fout: 333 is naar beneden afgerond (net verlies). 200 = 50 000 : 250 en 125 = 50 000 : 400.',
+ 'Bij een kommagetal: welke kant op moet je afronden zodat het echt winst is?'],
+['Golfclub A kost 12n + 435 euro per jaar, club B 17,5n + 350 euro (n = aantal keer golfen). Vanaf hoeveel keer is A goedkoper?','16 keer','15 keer|25 keer|6 keer',
+ '12n + 435 = 17,5n + 350 → 85 = 5,5n → n ≈ 15,45. Na dat punt is A goedkoper, dus vanaf <b>16</b> keer.<br>Fout: bij 15 keer is B nog goedkoper (612,50 tegen 615). 25 en 6 zijn rekenfouten.',
+ 'Los de vergelijking op en rond in de goede richting af. Controleer met n = 15 en n = 16.'],
+['Golfclub B kost 17,5n + 350 euro per jaar. Je wilt maximaal € 600 uitgeven. Hoe vaak kun je golfen?','14 keer','15 keer|13 keer|34 keer',
+ '17,5n + 350 = 600 → 17,5n = 250 → n ≈ 14,3. 15 keer kost 612,50, te veel. Dus <b>14</b> keer.<br>Fout: 15 is naar boven afgerond. 13 is één te weinig. 34 = 600 : 17,5 (vergeet de vaste 350).',
+ 'Bij een budget mag je er niet boven: rond naar beneden af.'],
+['Wat betekent K<sub>A</sub> &lt; K<sub>B</sub>?','bij A betaal je minder dan bij B','bij A betaal je meer dan bij B|A en B kosten evenveel|de grafiek van A ligt boven die van B',
+ '&lt; betekent kleiner dan: K<sub>A</sub> is kleiner, dus A is goedkoper.<br>Fout: meer is &gt;. Evenveel is =. Goedkoper betekent: de grafiek van A ligt <b>onder</b> die van B.',
+ 'De punt van het teken wijst naar de kleinste.'],
+['Reparateur I kost 22t + 80 euro, reparateur II 18t + 96 euro (t in uren). Wanneer is I voordeliger?','bij minder dan 4 uur','bij meer dan 4 uur|bij minder dan 16 uur|bij meer dan 16 uur',
+ '22t + 80 = 18t + 96 → 4t = 16 → t = 4. I begint lager, dus I is goedkoper <b>vóór</b> 4 uur.<br>Fout: na 4 uur is II goedkoper (I stijgt sneller). 16 vergeet te delen door 4.',
+ 'Los de vergelijking op en kijk wie lager begint.'],
+['Een vliegtuig heeft k = 11,75 − 0,003V ton kerosine na V km. Bij 1,5 ton gaat een alarm. Na ongeveer hoeveel km is dat?','ongeveer 3400 km','ongeveer 500 km|ongeveer 4400 km|ongeveer 3900 km',
+ '11,75 − 0,003V = 1,5 → −0,003V = −10,25 → V ≈ 3417 → ongeveer <b>3400 km</b>.<br>Fout: 500 km is hoe ver je met 1,5 ton nog kunt. 4400 komt van 13,25 : 0,003 (tekenfout). 3900 is waar de tank leeg is.',
+ 'Stel de formule gelijk aan 1,5 en los V op.'],
+['Jori zwemt A = 120t meter. Zijn broer rent hem tegemoet: A = 1200 − 60t (t in minuten). Wanneer treffen ze elkaar?','na 6 min 40 s','na 20 min|na 10 min|na 6 min 67 s',
+ '120t = 1200 − 60t → 180t = 1200 → t = 6⅔ min. ⅔ min = 40 s, dus <b>6 min 40 s</b>.<br>Fout: 20 = 1200 : 60 en 10 = 1200 : 120 (alleen één persoon). 67 s bestaat niet in een minuut: 0,67 min is 40 s.',
+ 'Treffen = zelfde plek. Stel de twee formules gelijk. Reken het deel van een minuut om met × 60.']
+],
+'3.4':[
+['Maak y vrij in 6x + 3y = 42.','y = −2x + 14','y = 2x + 14|y = −6x + 42|y = −0,5x + 7',
+ '3y = −6x + 42, alles : 3 → <b>y = −2x + 14</b>.<br>Fout: + 2x vergeet dat het teken omdraait. −6x + 42 is nog niet gedeeld. −0,5x + 7 deelt door 12 en 6 in plaats van door 3.',
+ 'Breng 6x naar rechts (teken draait om) en deel alle termen door 3.'],
+['Welke p, q en r horen bij 2x − 3y = 6?','p = 2, q = −3, r = 6','p = 2, q = 3, r = 6|p = −3, q = 2, r = 6|p = 2, q = −3, r = −6',
+ 'In px + qy = r: bij x staat 2, bij y staat −3 en rechts staat 6.<br>Fout: q = 3 vergeet de min. De derde verwisselt p en q. r = −6 heeft het verkeerde teken.',
+ 'Zoek welk getal bij x, welk bij y en welk rechts van het =-teken staat.'],
+['Maak y vrij in 2x − 5y = 8.','y = 0,4x − 1,6','y = −0,4x + 1,6|y = 0,4x + 1,6|y = 2x − 8',
+ '−5y = −2x + 8. Alles : −5 → y = 0,4x − 1,6.<br>Fout: de tweede deelt door +5. De derde deelt alleen de x-term door −5. y = 2x − 8 deelt helemaal niet.',
+ 'Je moet door −5 delen. Elk teken draait dan om.'],
+['Ligt (14, 3) op de lijn 2x − 5y = 8?','nee, want 2 × 14 − 5 × 3 = 13','ja, want 2 × 14 − 5 × 3 = 8|nee, want 2 × 3 − 5 × 14 = −64|ja, want 14 en 3 zijn allebei positief',
+ '28 − 15 = 13 ≠ 8, dus het punt ligt <b>niet</b> op de lijn.<br>Fout: 28 − 15 is geen 8. In de derde zijn x en y verwisseld. Of de getallen positief zijn, zegt niets.',
+ 'Vul x = 14 en y = 3 in en kijk of er 8 uitkomt.'],
+['Door welke punten op de assen gaat de lijn 3x + 2y = 12?','(0, 6) en (4, 0)','(0, 4) en (6, 0)|(0, 12) en (12, 0)|(0, 3) en (2, 0)',
+ 'x = 0: 2y = 12 → y = 6. y = 0: 3x = 12 → x = 4.<br>Fout: de tweede verwisselt de punten. De derde vergeet te delen. De vierde gebruikt alleen de getallen 3 en 2.',
+ 'Vul eerst x = 0 in, dan y = 0.'],
+['Wat is de rc van de lijn 3x + 2y = 12?','−1,5','1,5|3|−0,67',
+ 'y vrijmaken: 2y = −3x + 12 → y = −1,5x + 6. rc = <b>−1,5</b>.<br>Fout: 1,5 vergeet de min. 3 is p, nog niet omgeschreven. −0,67 = −2 : 3 (omgedraaid).',
+ 'Maak eerst y vrij. Het getal voor x is dan de rc.'],
+['Druk p uit in q bij 3p − 1,2q = 16,5.','p = 0,4q + 5,5','p = −0,4q + 5,5|p = 1,2q + 16,5|q = 2,5p − 13,75',
+ '3p = 1,2q + 16,5, alles : 3 → <b>p = 0,4q + 5,5</b>.<br>Fout: −0,4q vergeet dat −1,2q naar rechts als + gaat. 1,2q + 16,5 is nog niet gedeeld. q = … drukt juist q uit in p.',
+ '‘p uitdrukken in q’ = p = … q + …. Breng de q-term naar rechts en deel door 3.'],
+['Maak b vrij in 5a − 2b = 16.','b = 2,5a − 8','b = −2,5a + 8|b = 2,5a + 8|a = 0,4b + 3,2',
+ '−2b = −5a + 16, alles : −2 → b = 2,5a − 8.<br>Fout: de tweede deelt door +2. De derde draait het teken van 8 niet om. a = … maakt a vrij in plaats van b.',
+ 'Na het verplaatsen staat er −2b. Deel alles door −2.'],
+['2 muntthee en 4 koffie kosten samen € 18. Muntthee kost x euro, koffie y euro. Welke vergelijking klopt?','2x + 4y = 18','x + y = 18|4x + 2y = 18|2x + 4y = 6',
+ '2 muntthee kosten 2x, 4 koffie kosten 4y, samen 18.<br>Fout: x + y = 18 vergeet de aantallen. 4x + 2y zet de aantallen bij de verkeerde drank. 6 is het aantal drankjes, geen bedrag.',
+ 'Aantal keer prijs, voor elke drank, en dat bij elkaar opgeteld.'],
+['Welke vergelijking hoort bij de lijn met rc −2 door (1, 3)?','2x + y = 5','2x + y = 0|x + 2y = 5|2x − y = 5',
+ 'y = −2x + b met 3 = −2 + b → b = 5: y = −2x + 5, dus 2x + y = 5.<br>Fout: 2x + y = 0 gaat door de oorsprong. x + 2y = 5 heeft rc −0,5. 2x − y = 5 heeft rc 2.',
+ 'Stel eerst y = ax + b op en breng dan de x-term naar links.'],
+['Een restaurant heeft 19 tafels voor 4 (x) en voor 2 (y) personen met samen 52 plaatsen. Hoeveel tafels voor 4?','7','12|13|9,5',
+ 'y = −x + 19 en y = −2x + 26. −x + 19 = −2x + 26 → x = 7 (en y = 12). Controle: 28 + 24 = 52 ✓.<br>Fout: 12 is het aantal tafels voor twee. 13 tafels voor 4 en 6 voor 2 geeft 64 plaatsen. 9,5 kan niet: je hebt geen halve tafels.',
+ 'Stel x + y = 19 en 4x + 2y = 52 op en volg het werkschema.'],
+['Roel koopt 13 bollen: x kaasbollen van € 1,50 en y bruine bollen van € 1,20, samen € 18. Welke twee vergelijkingen horen hierbij?','x + y = 13 en 1,5x + 1,2y = 18','x + y = 18 en 1,5x + 1,2y = 13|1,2x + 1,5y = 18 en x + y = 13|x + y = 13 en 1,5x + 1,2y = 13',
+ 'Aantal: x + y = 13. Geld: 1,5x + 1,2y = 18.<br>Fout: de tweede verwisselt de totalen. De derde zet de prijzen bij de verkeerde bol. De laatste gebruikt 13 ook als bedrag.',
+ 'Eén vergelijking voor het aantal, één voor het geld.'],
+['In een envelop zitten 20 briefjes van € 5 en € 10, samen € 135. Hoeveel briefjes van € 5?','13','7|27|6,75',
+ 'x + y = 20 en 5x + 10y = 135 → y = −x + 20 en y = −0,5x + 13,5 → x = 13. Controle: 65 + 70 = 135 ✓.<br>Fout: 7 is het aantal tientjes. 27 = 135 : 5. 6,75 = 135 : 20.',
+ 'x = aantal vijfjes, y = aantal tientjes. Stel twee vergelijkingen op.'],
+['Een jongere betaalt € 5 minder dan een volwassene. 2 jongeren en 2 volwassenen betalen € 80. Wat betaalt een volwassene?','€ 22,50','€ 17,50|€ 20|€ 42,50',
+ 'x = volwassene, y = x − 5. 2x + 2(x − 5) = 80 → 4x − 10 = 80 → x = 22,50.<br>Fout: 17,50 is de prijs voor een jongere. 20 = 80 : 4 (het verschil vergeten). 42,50 is een rekenfout.',
+ 'Schrijf de prijs voor een jongere als x − 5.'],
+['Bij een barbecue komen 250 mensen. Kinderen betalen € 6, volwassenen € 8, samen € 1764. Hoeveel kinderen?','118','132|220|294',
+ 'x + y = 250 → y = −x + 250. 6x + 8y = 1764 → y = −0,75x + 220,5. −x + 250 = −0,75x + 220,5 → 0,25x = 29,5 → x = 118.<br>Fout: 132 zijn de volwassenen. 220 is afgerond 220,5, de b van de tweede lijn. 294 = 1764 : 6 (alsof iedereen een kind was).',
+ 'Werkschema: twee vergelijkingen, y vrijmaken, gelijkstellen, oplossen.'],
+['Wat is stap 3 van het werkschema voor situaties met twee variabelen?','bij beide vergelijkingen y uitdrukken in x en ze gelijkstellen','de twee vergelijkingen bij elkaar optellen|in beide vergelijkingen x = 0 invullen|de antwoorden controleren',
+ 'Werkschema: 1 x en y noemen, 2 twee vergelijkingen, <b>3 y uitdrukken in x en gelijkstellen</b>, 4 oplossen, 5 de vraag beantwoorden.<br>Fout: optellen staat niet in het werkschema. x = 0 geeft alleen een punt op de as. Controleren doe je pas aan het eind.',
+ 'Je wilt één vergelijking met alleen x overhouden.']
+],
+'3.5':[
+['Wat is interpoleren?','een waarde schatten die tussen de gegevens ligt','een waarde schatten die buiten de gegevens ligt|de rc van een lijn berekenen|een vergelijking oplossen',
+ 'Interpoleren = schatten <b>tussen</b> bekende waarden.<br>Fout: buiten de gegevens heet extrapoleren. Een rc berekenen of een vergelijking oplossen zijn andere dingen (al gebruik je ze soms).',
+ 'Inter = tussen (zoals een interland: tussen twee landen).'],
+['In 2020 waren er 945 ijssalons, in 2023 waren het er 1206. Schat met lineair interpoleren het aantal in 2022.','1119','1032|1076|1293',
+ '261 erbij in 3 jaar = 87 per jaar. 2022 is 2 jaar na 2020: 945 + 2 × 87 = <b>1119</b>.<br>Fout: 1032 telt maar 1 jaar. 1076 is precies halverwege, maar 2022 ligt niet halverwege. 1293 = 1206 + 87 (dat is extrapoleren).',
+ 'Bereken eerst hoeveel er per jaar bijkomt.'],
+['In 2020 waren er 945 ijssalons, in 2023 waren het er 1206. Schat met lineair extrapoleren het aantal in 2027.','1554','1467|1293|1641',
+ '87 per jaar. 2027 is 4 jaar na 2023: 1206 + 4 × 87 = <b>1554</b>.<br>Fout: 1467 telt 3 jaar. 1293 telt 1 jaar. 1641 telt 5 jaar.',
+ 'Begin bij het dichtstbijzijnde gegeven (2023) en tel het juiste aantal jaren.'],
+['In 2011 was het aantal 181, in 2016 was het 220. Schat met lineair interpoleren het aantal in 2014.','ongeveer 204','ongeveer 212|ongeveer 197|ongeveer 201',
+ '39 erbij in 5 jaar = 7,8 per jaar. 181 + 3 × 7,8 = 204,4 ≈ <b>204</b>.<br>Fout: 197 rekent vanaf 2016 terug met 3 jaar in plaats van 2. 201 is halverwege. 212 is een rekenfout.',
+ '2014 ligt 3 jaar na 2011. Hoeveel komt er per jaar bij?'],
+[`Je wilt met lineair extrapoleren het aantal in 2032 schatten. ${figTabel(['jaar',2000,2007,2011,2016,2025],['aantal',570,408,181,220,194])} Welke gegevens gebruik je?`,'2016 en 2025','2000 en 2025|2011 en 2016|alleen 2025',
+ 'Bij extrapoleren neem je de twee gegevens die het <b>dichtst bij</b> liggen: 2016 en 2025.<br>Fout: de eerste en de laatste samen geven een gemiddelde over de hele periode, terwijl het verloop steeds anders is. 2011 en 2016 liggen verder weg. Met één gegeven kun je geen verandering per jaar berekenen.',
+ 'Welke twee jaren liggen het dichtst bij 2032?'],
+['In 2015 waren er 28 210 sportclubs, in 2021 waren het er 25 450. Hoeveel nam het aantal gemiddeld per jaar af?','460','2760|920|552',
+ '28 210 − 25 450 = 2760 in 6 jaar → 2760 : 6 = <b>460</b> per jaar.<br>Fout: 2760 is de totale afname. 920 deelt door 3. 552 deelt door 5 (verkeerd aantal jaren).',
+ 'Totale afname gedeeld door het aantal jaren. Van 2015 tot 2021 is 6 jaar.'],
+['Bij een ballonvaart was het op 150 m 20,2 °C en op 225 m 19,2 °C. Schat de temperatuur op 180 m.','19,8 °C','19,6 °C|20,6 °C|19,7 °C',
+ '1,0 °C per 75 m. 180 m is 30 m hoger dan 150 m: 30 : 75 × 1,0 = 0,4 °C kouder. 20,2 − 0,4 = <b>19,8</b>.<br>Fout: 19,6 haalt 0,6 eraf. 20,6 telt erbij. 19,7 is halverwege, maar 180 ligt niet halverwege.',
+ 'Bereken de verandering per meter (of per 75 m) en kijk hoe ver 180 boven 150 ligt.'],
+['Op 150 m was het 20,2 °C en op 225 m 19,2 °C. Op welke hoogte was het 20,0 °C?','165 m','170 m|187,5 m|160 m',
+ 'Per 75 m 1,0 °C. 0,2 °C hoort bij 0,2 × 75 = 15 m. 150 + 15 = <b>165 m</b>.<br>Fout: 187,5 is halverwege. 170 en 160 zijn gokjes.',
+ 'Hoeveel graden moet het dalen vanaf 150 m? Hoeveel meter hoort daarbij?'],
+['Bolt liep 30 m in de eerste 3,78 s. Waarom is lineair interpoleren voor de afstand na 1 s geen goed idee?','hij versnelt dan nog, dus de grafiek is daar krom','hij loopt dan al op topsnelheid|er zijn daar geen gegevens|interpoleren mag alleen met jaartallen',
+ 'Bij de start neemt de snelheid toe, dus de grafiek is geen rechte lijn. De schatting (7,9 m) is te hoog.<br>Fout: topsnelheid haalt hij later. Er zijn wel gegevens (0 en 3,78 s). Interpoleren kan bij elke grootheid.',
+ 'Lineair interpoleren werkt alleen als de grafiek daar (ongeveer) recht is.'],
+['Wat is de goede volgorde bij modelvorming?','meten, modelleren, toepassen, controleren','modelleren, meten, controleren, toepassen|toepassen, meten, modelleren, controleren|meten, toepassen, modelleren, controleren',
+ 'Eerst meten (gegevens), dan een model maken, dat toepassen (voorspellingen) en controleren met de gegevens.<br>Fout: je kunt geen model maken zonder gegevens en niets toepassen zonder model.',
+ 'Begin bij het probleem: wat heb je eerst nodig om een model te kunnen maken?'],
+['Een lineair model is T = 0,3p + 2,5 (T in °C, p = percentage gaafrandige bladeren). Welke temperatuur hoort bij p = 80?','26,5 °C','24 °C|258,3 °C|82,8 °C',
+ '0,3 × 80 + 2,5 = 24 + 2,5 = <b>26,5</b>.<br>Fout: 24 vergeet de + 2,5. 258,3 = (80 − 2,5) : 0,3: dat is de omgekeerde berekening. 82,8 telt alles op.',
+ 'Vul p = 80 in de formule in.'],
+['Een model voorspelt 604 kg afval, echt was het 561 kg. Hoeveel procent wijkt het model af?','ongeveer 7,7% te hoog','ongeveer 7,1% te hoog|ongeveer 43% te hoog|ongeveer 7,7% te laag',
+ '(604 − 561) : 561 × 100% ≈ <b>7,7%</b>. Het model is groter, dus te hoog.<br>Fout: 7,1% deelt door 604 (de modelwaarde). 43 is het verschil in kg. Te laag klopt niet: het model zit erboven.',
+ '(model − werkelijk) : werkelijk × 100%.'],
+['Joris maakt met de afvalcijfers van 1970 (281 kg) en 2000 (566 kg) het model N = 9,5t + 281. Bij welk jaar hoort t = 0?','1970','2000|het jaar 0|1985',
+ 'b = 281 is het aantal in 1970, dus t = 0 in <b>1970</b>. De rc = (566 − 281) : 30 = 9,5.<br>Fout: in 2000 is t = 30. Het jaar 0 slaat nergens op. 1985 ligt in het midden.',
+ 'Bij t = 0 geeft de formule N = 281. Welk jaar had 281 kg?'],
+['Een lineair model voor de winnende tijd op de 100 m daalt elk jaar een beetje. Wat kun je zeggen over voorspellingen voor over 200 jaar?','die zijn onbetrouwbaar, want tijden kunnen niet eindeloos lineair dalen','die zijn betrouwbaar, want de lijn is recht|die zijn betrouwbaar, want er zijn veel meetpunten|die zijn onbetrouwbaar, want de rc is negatief',
+ 'Ver extrapoleren is riskant: niemand weet of het lineair doorgaat, en uiteindelijk krijg je onmogelijke tijden.<br>Fout: een rechte lijn of veel meetpunten van vroeger zeggen niets over over 200 jaar. Een negatieve rc is op zich geen probleem.',
+ 'Is een uitkomst als 7 seconden op de 100 m realistisch?'],
+['Woningen (× 1000): in 1971 waren er 3873, in 1998 waren het er 6425. Schat met lineair interpoleren het aantal in 1990.','ongeveer 5669 duizend','ongeveer 5149 duizend|ongeveer 4600 duizend|ongeveer 6050 duizend',
+ '2552 erbij in 27 jaar ≈ 94,52 per jaar. 1990 is 19 jaar na 1971: 3873 + 19 × 94,52 ≈ <b>5669</b>.<br>Fout: 5149 is precies halverwege, maar 1990 ligt niet halverwege. De andere zijn rekenfouten.',
+ 'Hoeveel jaar zit tussen 1971 en 1998, en hoeveel tussen 1971 en 1990?'],
+['Bolt was na 3,78 s op 30 m en na 6,29 s op 60 m. Schat met lineair interpoleren de afstand na 5 s.','ongeveer 44,6 m','ongeveer 39,7 m|ongeveer 47,7 m|ongeveer 45 m',
+ '30 m in 2,51 s ≈ 11,95 m/s. 5 − 3,78 = 1,22 s, dus 30 + 1,22 × 11,95 ≈ <b>44,6 m</b>.<br>Fout: 39,7 = 5 × 7,94 (het tempo van de start). 47,7 rekent vanaf 0 tot 6,29 s. 45 is precies halverwege, maar 5 s ligt niet halverwege.',
+ 'Gebruik de twee meetpunten waar 5 s tussen ligt.']
+]
+};
+const BEGR=[
+['lineaire formule','Formule van de vorm y = ax + b; de grafiek is een rechte lijn','3.1'],
+['richtingscoëfficiënt','Het getal a in y = ax + b: ga je 1 naar rechts, dan ga je a omhoog','3.1'],
+['snijpunt met de y-as','Het punt (0, b): daar is x = 0','3.1'],
+['beginwaarde','De waarde van de uitkomst als de invoer 0 is; het getal b','3.1'],
+['evenwijdige lijnen','Lijnen met dezelfde richtingscoëfficiënt; ze snijden elkaar nooit','3.1'],
+['horizontale lijn','Lijn met rc 0 en een formule als y = 2: alle punten hebben dezelfde y','3.1'],
+['verticale lijn','Lijn met een formule als x = 3: alle punten hebben dezelfde x, en er is geen rc','3.1'],
+['lineair verband','Verband waarbij er per stap steeds hetzelfde bijkomt of afgaat; de grafiek is een rechte lijn','3.1'],
+['recht evenredig verband','Lineair verband met beginwaarde 0: formule y = ax, lijn door de oorsprong','3.1'],
+['verhoudingstabel','Tabel waarin y gedeeld door x steeds hetzelfde getal is','3.1'],
+['vaste kosten','Kosten die niet afhangen van hoeveel je maakt, zoals huur; het getal b','3.1'],
+['variabele kosten','Kosten die meegroeien met het aantal, zoals grondstoffen; het getal a','3.1'],
+['Δ (delta)','Teken voor ‘verschil’, bijvoorbeeld Δx = x<sub>B</sub> − x<sub>A</sub>','3.2'],
+['rc uit twee punten','a = Δy : Δx = (y<sub>B</sub> − y<sub>A</sub>) : (x<sub>B</sub> − x<sub>A</sub>)','3.2'],
+['accolade','Haakje } waarmee je aangeeft welke gegevens bij elkaar horen bij het invullen','3.2'],
+['vastrecht','Vast bedrag per jaar voor een aansluiting, los van wat je verbruikt','3.2'],
+['balansmethode','Een vergelijking oplossen door links en rechts steeds hetzelfde te doen','3.3'],
+['snijpunt met de x-as','Punt waar de lijn de x-as raakt: daar is y = 0','3.3'],
+['snijpunt van twee lijnen','Punt waar beide formules dezelfde x én y geven; je vindt het door de rechterleden gelijk te stellen','3.3'],
+['vergelijking','Twee uitdrukkingen met een =-teken ertussen, zoals K<sub>A</sub> = K<sub>B</sub> (even duur)','3.3'],
+['ongelijkheid','Twee uitdrukkingen met &lt; of &gt; ertussen, zoals K<sub>A</sub> &lt; K<sub>B</sub> (A goedkoper)','3.3'],
+['winst','Als de opbrengst groter is dan de kosten: R &gt; K','3.3'],
+['lineaire vergelijking met twee variabelen','Vergelijking van de vorm px + qy = r; de grafiek is een rechte lijn','3.4'],
+['y vrijmaken','De vergelijking omschrijven tot y = ax + b; ook: y uitdrukken in x','3.4'],
+['interpoleren','Een waarde schatten die tussen de gegevens ligt','3.5'],
+['extrapoleren','Een waarde schatten die buiten de gegevens ligt','3.5'],
+['lineair interpoleren','Tussen twee gegevens schatten alsof er per stap steeds evenveel bijkomt','3.5'],
+['wiskundig model','Een formule of grafiek die een echte situatie zo goed mogelijk beschrijft','3.5'],
+['modelvorming','Het opstellen, toepassen, controleren en aanpassen van een wiskundig model','3.5'],
+['procentuele afwijking','(model − werkelijk) gedeeld door werkelijk, keer 100%','3.5']
+];
+
+const OPEN=[
+// ---------- 3.1 Lineaire formules ----------
+['3.1','Gegeven is de lijn l: y = −2x + 3.<br>a Wat is de rc van l, en waar snijdt l de y-as?<br>b Lijn k is evenwijdig met l en gaat door (0, −5). Geef de formule van k.',
+ 'a De rc is het getal bij x: <b>rc = −2</b>. Het snijpunt met de y-as is <b>(0, 3)</b>.<br>b Evenwijdig betekent dezelfde rc: −2. Door (0, −5) betekent b = −5. Dus <b>k: y = −2x − 5</b>.',
+ [['rc = −2','[-−] ?2'],
+  ['snijpunt y-as (0, 3)','\\( ?0 ?[,;] ?3 ?\\)'],
+  ['k: y = −2x − 5','y ?= ?[-−] ?2x ?[-−] ?5']]],
+['3.1','Een zonnebloem groeit 9,8 cm per week. Op 10 juli om 12 uur is hij 1,2 meter hoog.<br>a Stel een formule op voor de hoogte h in cm, met t in dagen en t = 0 op 10 juli 12 uur.<br>b Hoe hoog is de zonnebloem op 25 juli om 12 uur?<br>c Is h evenredig met t? Leg uit.',
+ 'a Per dag: 9,8 : 7 = 1,4 cm. Begin: 1,2 m = 120 cm. Dus <b>h = 1,4t + 120</b>.<br>b 25 juli is 15 dagen later: h = 1,4 × 15 + 120 = 21 + 120 = <b>141 cm</b>.<br>c <b>Nee</b>: er is een beginwaarde (120), dus de grafiek gaat niet door de oorsprong.',
+ [['per dag 1,4 cm (9,8 : 7)','1[,.]4'],
+  ['formule h = 1,4t + 120','h ?= ?1[,.]4 ?t ?\\+ ?120|h ?= ?120 ?\\+ ?1[,.]4 ?t'],
+  ['141 cm','141'],
+  ['nee, want beginwaarde / niet door de oorsprong','nee|niet evenredig|oorsprong|begin']]],
+['3.1','B is evenredig met n. Bij n = 12 hoort B = 99.<br>a Stel de formule van B op.<br>b Bereken B voor n = 14,8.',
+ 'a Evenredig: B = an. Invullen: a × 12 = 99, dus a = 99 : 12 = 8,25. <b>B = 8,25n</b>.<br>b B = 8,25 × 14,8 = <b>122,1</b>.',
+ [['a = 99 : 12 = 8,25','8[,.]25'],
+  ['B = 8,25n','b ?= ?8[,.]25 ?n'],
+  ['B = 122,1','122[,.]1']]],
+['3.1','Jelmer reed met taxi A 12 km en betaalde € 25,80. Taxi A heeft geen instaptarief. Tim reed met taxi B 5 km en betaalde € 12,40, inclusief een instaptarief van € 1,95. Neem aan dat de kosten K lineair afhangen van de afstand d in km.<br>a Stel de formules op van K<sub>A</sub> en K<sub>B</sub>.<br>b Was taxi A voor Tim goedkoper geweest? Laat zien hoe je dat berekent.',
+ 'a A: 25,80 : 12 = 2,15 per km → <b>K<sub>A</sub> = 2,15d</b>.<br>B: (12,40 − 1,95) : 5 = 10,45 : 5 = 2,09 per km → <b>K<sub>B</sub> = 2,09d + 1,95</b>.<br>b Met A had Tim 2,15 × 5 = € 10,75 betaald. Dat is minder dan € 12,40, dus <b>ja</b>, A was € 1,65 goedkoper geweest.',
+ [['K_A = 2,15d','2[,.]15 ?d'],
+  ['K_B = 2,09d + 1,95','2[,.]09 ?d ?\\+ ?1[,.]95'],
+  ['Tim bij A: € 10,75','10[,.]75'],
+  ['dus ja, A goedkoper','ja|goedkoper|voordeliger']]],
+// ---------- 3.2 Formules opstellen ----------
+['3.2','Lijn l gaat door P(2, −1) en Q(6, 5). Stel de formule van l op. Schrijf de stappen op.',
+ '1. a = Δy : Δx = (5 − −1) : (6 − 2) = 6 : 4 = <b>1,5</b>.<br>2. y = 1,5x + b, met x = 2 en y = −1: 1,5 × 2 + b = −1.<br>3. 3 + b = −1, dus <b>b = −4</b>.<br>4. <b>l: y = 1,5x − 4</b>.',
+ [['a = 1,5','1[,.]5'],
+  ['b = −4','[-−] ?4'],
+  ['y = 1,5x − 4','y ?= ?1[,.]5 ?x ?[-−] ?4']]],
+['3.2','Lijn p gaat door A(−23, −125) en B(17, 155). Stel de formule van p op.',
+ '1. a = (155 − −125) : (17 − −23) = 280 : 40 = <b>7</b>.<br>2. Invullen B: 7 × 17 + b = 155 → 119 + b = 155.<br>3. <b>b = 36</b>.<br>4. <b>p: y = 7x + 36</b>.',
+ [['a = 280 : 40 = 7','280|\\b7\\b'],
+  ['b = 36','36'],
+  ['y = 7x + 36','y ?= ?7 ?x ?\\+ ?36']]],
+['3.2','Een vliegtuig heeft na 250 km vliegen nog 11 ton kerosine aan boord. 1200 km verder is dat nog 7,4 ton. Er is een lineair verband tussen de hoeveelheid kerosine k (ton) en de afstand V (km).<br>Stel de formule van k op.',
+ 'Let op: 1200 km verder is bij V = 250 + 1200 = <b>1450</b>.<br>1. a = Δk : ΔV = (7,4 − 11) : (1450 − 250) = −3,6 : 1200 = <b>−0,003</b>.<br>2. −0,003 × 250 + b = 11 → −0,75 + b = 11.<br>3. <b>b = 11,75</b>.<br>4. <b>k = −0,003V + 11,75</b>.',
+ [['tweede punt V = 1450','1450'],
+  ['a = −0,003','[-−] ?0[,.]003'],
+  ['b = 11,75','11[,.]75'],
+  ['k = −0,003V + 11,75','k ?= ?[-−] ?0[,.]003 ?v ?\\+ ?11[,.]75|k ?= ?11[,.]75 ?[-−] ?0[,.]003 ?v']]],
+['3.2','Familie Kühler verbruikte 3250 kWh en betaalde € 841,60. Familie Kolkman verbruikte 4426 kWh en betaalde € 1112,08. De rekening B bestaat uit een prijs per kWh plus vastrecht.<br>a Stel een formule op voor B bij een verbruik van e kWh.<br>b Hoe hoog is het vastrecht?',
+ 'a 1. a = (1112,08 − 841,60) : (4426 − 3250) = 270,48 : 1176 = <b>0,23</b>.<br>2. 0,23 × 3250 + b = 841,60 → 747,50 + b = 841,60 → b = 94,10.<br>3. <b>B = 0,23e + 94,10</b>.<br>b Het vastrecht is het vaste bedrag: <b>€ 94,10</b>.',
+ [['a = 0,23 per kWh','0[,.]23'],
+  ['b = 94,10','94[,.]1'],
+  ['B = 0,23e + 94,10','b ?= ?0[,.]23 ?e ?\\+ ?94[,.]10?']]],
+['3.2','Scott verkoopt tapas. Bij een prijs van 75 cent per tapa verwacht hij er 400 te verkopen, bij 125 cent nog 200. Er is een lineair verband tussen het aantal q en de prijs p in eurocent.<br>Stel de formule van q op.',
+ 'q is de uitkomst, p de invoer.<br>1. a = Δq : Δp = (200 − 400) : (125 − 75) = −200 : 50 = <b>−4</b>.<br>2. −4 × 75 + b = 400 → −300 + b = 400.<br>3. <b>b = 700</b>.<br>4. <b>q = −4p + 700</b>.',
+ [['a = −4','[-−] ?4'],
+  ['b = 700','700'],
+  ['q = −4p + 700','q ?= ?[-−] ?4 ?p ?\\+ ?700|q ?= ?700 ?[-−] ?4 ?p']]],
+// ---------- 3.3 Vergelijkingen en ongelijkheden ----------
+['3.3','Gegeven zijn de lijnen y = 3x + 18 en y = 4,5x − 4,5.<br>a Bereken de coördinaten van het snijpunt.<br>b Beide lijnen snijden de x-as. Bereken het linker snijpunt A.',
+ 'a 1. 3x + 18 = 4,5x − 4,5<br>2. 22,5 = 1,5x → <b>x = 15</b><br>3. y = 3 × 15 + 18 = <b>63</b>. Snijpunt <b>(15, 63)</b>.<br>b 3x + 18 = 0 → x = −6. 4,5x − 4,5 = 0 → x = 1. De linker is <b>A(−6, 0)</b>.',
+ [['x = 15','15'],
+  ['y = 63','63'],
+  ['A(−6, 0)','[-−] ?6']]],
+['3.3','De lijnen l: y = −0,8x + 3 en m: y = 1,7x − 4,25 snijden elkaar in S.<br>Bereken de coördinaten van S.',
+ '1. −0,8x + 3 = 1,7x − 4,25<br>2. +0,8x: 3 = 2,5x − 4,25. +4,25: 7,25 = 2,5x. <b>x = 2,9</b>.<br>3. y = −0,8 × 2,9 + 3 = −2,32 + 3 = <b>0,68</b>.<br><b>S(2,9; 0,68)</b>.',
+ [['x = 2,9','2[,.]9'],
+  ['y = 0,68','0[,.]68']]],
+['3.3','Schilder I rekent K<sub>I</sub> = 38t euro (t = aantal uren). Schilder II heeft een starttarief van € 24 en een klus van 20 uur kost bij hem € 704. Ook bij II is er een lineair verband.<br>a Stel de formule van K<sub>II</sub> op.<br>b Bereken bij welke werktijden schilder II goedkoper is.',
+ 'a a = (704 − 24) : 20 = 680 : 20 = 34 → <b>K<sub>II</sub> = 34t + 24</b>.<br>b 1. Los op: 38t = 34t + 24 → 4t = 24 → t = 6.<br>2. II begint hoger maar stijgt langzamer, dus na 6 uur ligt K<sub>II</sub> onder K<sub>I</sub>.<br>3. II is goedkoper bij <b>meer dan 6 uur</b>.',
+ [['rc 34','34'],
+  ['K = 34t + 24','34 ?t ?\\+ ?24'],
+  ['gelijk bij t = 6','\\b6\\b'],
+  ['II goedkoper bij meer dan 6 uur','meer dan 6|t ?> ?6|langer dan 6|vanaf 6']]],
+['3.3','Nicole vraagt twee schilders om een prijs. K<sub>A</sub> = 40t + 50 en K<sub>B</sub> = 42t + 35 (K in euro, t in uren).<br>a Bij welke aantallen uren is B goedkoper?<br>b Nicole koos A en betaalde € 500. Hoeveel duurder was B geweest bij evenveel uren?',
+ 'a 40t + 50 = 42t + 35 → 15 = 2t → t = 7,5. B begint lager en stijgt sneller, dus B is goedkoper bij <b>minder dan 7,5 uur</b>.<br>b 40t + 50 = 500 → 40t = 450 → t = 11,25 uur. K<sub>B</sub> = 42 × 11,25 + 35 = 472,50 + 35 = 507,50. B was <b>€ 7,50 duurder</b> geweest.',
+ [['gelijk bij t = 7,5','7[,.]5'],
+  ['B goedkoper bij minder dan 7,5 uur','minder dan 7|t ?< ?7|korter dan 7'],
+  ['t = 11,25','11[,.]25'],
+  ['€ 7,50 duurder','7[,.]50?|507[,.]5']]],
+['3.3','Een fabrikant van wasmachines heeft € 50 000 vaste kosten per week en € 250 variabele kosten per machine. Hij verkoopt een machine voor € 400.<br>a Stel formules op voor de kosten K en de opbrengst R bij q machines per week.<br>b Hoeveel machines moet hij minstens per week maken om winst te maken?',
+ 'a <b>K = 250q + 50 000</b> en <b>R = 400q</b>.<br>b Winst als R &gt; K.<br>1. 400q = 250q + 50 000 → 150q = 50 000 → q ≈ 333,3.<br>2. R is steiler, dus rechts daarvan ligt R boven K.<br>3. Bij 333 nog net verlies, dus minimaal <b>334 machines</b>.',
+ [['K = 250q + 50 000','250 ?q ?\\+ ?50 ?\\.?000'],
+  ['R = 400q','400 ?q'],
+  ['q ≈ 333,3','333'],
+  ['minimaal 334','334']]],
+// ---------- 3.4 Twee variabelen ----------
+['3.4','a Maak y vrij in 1,5x + 2,5y = 15.<br>b Druk a uit in b bij 6a − 12b = 24.',
+ 'a 2,5y = −1,5x + 15, alles : 2,5 → <b>y = −0,6x + 6</b>.<br>b 6a = 12b + 24, alles : 6 → <b>a = 2b + 4</b>.',
+ [['y = −0,6x + 6','y ?= ?[-−] ?0[,.]6 ?x ?\\+ ?6'],
+  ['a = 2b + 4','a ?= ?2 ?b ?\\+ ?4']]],
+['3.4','Op een rondvaartboot zitten 80 passagiers. Samen betalen ze € 990. Een volwassene betaalt € 15, een kind € 12.<br>Hoeveel kinderen zitten er op de boot? Gebruik het werkschema.',
+ '1. x = aantal volwassenen, y = aantal kinderen.<br>2. x + y = 80 en 15x + 12y = 990.<br>3. y = −x + 80 en 12y = −15x + 990 → y = −1,25x + 82,5. Gelijkstellen: −x + 80 = −1,25x + 82,5.<br>4. 0,25x = 2,5 → x = 10.<br>5. y = −10 + 80 = <b>70 kinderen</b>. Controle: 150 + 840 = 990 ✓.',
+ [['x + y = 80','x ?\\+ ?y ?= ?80'],
+  ['15x + 12y = 990','15 ?x ?\\+ ?12 ?y ?= ?990'],
+  ['x = 10 volwassenen','\\b10\\b'],
+  ['70 kinderen','70']]],
+['3.4','In een actieweek verkocht een meubelzaak samen 52 tafels en stoelen. Een tafel kost € 750 en een stoel € 350. De opbrengst was € 24 600.<br>Hoeveel tafels en hoeveel stoelen zijn er verkocht?',
+ '1. x = tafels, y = stoelen.<br>2. x + y = 52 en 750x + 350y = 24 600.<br>3. y = −x + 52. Invullen of gelijkstellen: 750x + 350(52 − x) = 24 600 → 750x + 18 200 − 350x = 24 600.<br>4. 400x = 6400 → x = 16.<br>5. y = 52 − 16 = 36. Dus <b>16 tafels en 36 stoelen</b>. Controle: 12 000 + 12 600 = 24 600 ✓.',
+ [['x + y = 52','x ?\\+ ?y ?= ?52'],
+  ['750x + 350y = 24 600','750 ?x ?\\+ ?350 ?y'],
+  ['16 tafels','16'],
+  ['36 stoelen','36']]],
+['3.4','Fietsenzaak Lentink verkocht in april 38 fietsen: type A voor € 1575 en type B voor € 2025. De opbrengst was € 66 150.<br>Hoeveel fietsen van type A zijn er verkocht?',
+ '1. x = type A, y = type B.<br>2. x + y = 38 en 1575x + 2025y = 66 150.<br>3. y = 38 − x invullen: 1575x + 2025(38 − x) = 66 150 → 1575x + 76 950 − 2025x = 66 150.<br>4. −450x = −10 800 → x = 24.<br>5. <b>24 fietsen van type A</b> (en 14 van type B). Controle: 37 800 + 28 350 = 66 150 ✓.',
+ [['x + y = 38','x ?\\+ ?y ?= ?38'],
+  ['1575x + 2025y = 66 150','1575 ?x ?\\+ ?2025 ?y'],
+  ['24 type A','24'],
+  ['14 type B','14']]],
+// ---------- 3.5 Interpoleren en modellen ----------
+['3.5','Aantal woningen in Nederland (× 1000):<table class="gt"><tr><th>jaar</th><td>1930</td><td>1971</td><td>1998</td><td>2023</td></tr><tr><th>aantal</th><td>1824</td><td>3873</td><td>6425</td><td>8125</td></tr></table>a Bereken met lineair interpoleren het aantal woningen in 1990.<br>b Bereken met lineair extrapoleren het aantal woningen in 2026.',
+ 'a Tussen 1971 en 1998: 6425 − 3873 = 2552 erbij in 27 jaar → 94,52 per jaar. 1990 is 19 jaar na 1971: 3873 + 19 × 94,52 ≈ <b>5669 duizend</b>.<br>b Dichtstbij: 1998 en 2023. 8125 − 6425 = 1700 in 25 jaar → 68 per jaar. 2026 is 3 jaar na 2023: 8125 + 3 × 68 = <b>8329 duizend</b>.',
+ [['per jaar ≈ 94,5','94[,.]5'],
+  ['1990: ≈ 5669 duizend','5669|5668'],
+  ['per jaar 68','\\b68\\b'],
+  ['2026: 8329 duizend','8329']]],
+['3.5','Uitvoer van elektriciteit (miljoen kWh): 2008: 9116, 2012: 15 046, 2017: 18 944.<br>a Bereken met lineair interpoleren de uitvoer in 2011.<br>b Stel een lineair model op voor de uitvoer U met t = 0 in 2008, gebaseerd op 2008 en 2017.',
+ 'a Tussen 2008 en 2012: 15 046 − 9116 = 5930 erbij in 4 jaar → 1482,5 per jaar. 2011 is 3 jaar na 2008: 9116 + 3 × 1482,5 = 13 563,5 ≈ <b>13 564 miljoen kWh</b>.<br>b a = (18 944 − 9116) : 9 = 9828 : 9 = 1092. Beginwaarde 9116. <b>U = 1092t + 9116</b>.',
+ [['per jaar 1482,5','1482'],
+  ['2011: ≈ 13 564','13 ?\\.?56[34]'],
+  ['rc 1092','1092'],
+  ['U = 1092t + 9116','1092 ?t ?\\+ ?9 ?\\.?116']]],
+['3.5','Onderzoekers vonden voor huishoudinkomens tussen $22 000 en $110 000 een lineair verband tussen het inkomen h (× $1000) en een gelukscore G. Bij h = 22 is G = 61,8 en bij h = 110 is G = 64,0.<br>a Stel de formule van G op.<br>b Voor hogere inkomens geldt het model G = 0,002h + 64,046. Bij h = 400 werd een score van 65,8 gemeten. Hoeveel procent wijkt het model af?',
+ 'a a = (64,0 − 61,8) : (110 − 22) = 2,2 : 88 = 0,025. 0,025 × 22 + b = 61,8 → 0,55 + b = 61,8 → b = 61,25. <b>G = 0,025h + 61,25</b>.<br>b Model: 0,002 × 400 + 64,046 = 64,846. Afwijking: (64,846 − 65,8) : 65,8 × 100% ≈ −1,4%. Het model zit <b>1,4% te laag</b>.',
+ [['a = 0,025','0[,.]025'],
+  ['b = 61,25','61[,.]25'],
+  ['model bij 400: 64,846','64[,.]8'],
+  ['afwijking ≈ 1,4%','1[,.]4']]],
+['3.5','Huishoudelijk afval in kg per inwoner per jaar:<table class="gt"><tr><th>jaar</th><td>1988</td><td>1995</td><td>2000</td><td>2004</td><td>2012</td><td>2022</td></tr><tr><th>kg</th><td>395</td><td>482</td><td>566</td><td>561</td><td>518</td><td>461</td></tr></table>a Bereken met lineair interpoleren het afval in 1992 (op gehelen).<br>b Bereken met lineair extrapoleren het afval in 2025.',
+ 'a Tussen 1988 en 1995: 87 erbij in 7 jaar ≈ 12,43 per jaar. 1992 is 4 jaar na 1988: 395 + 4 × 12,43 ≈ <b>445 kg</b>.<br>b Dichtstbij: 2012 en 2022. 57 eraf in 10 jaar = 5,7 per jaar. 2025: 461 − 3 × 5,7 = 443,9 ≈ <b>444 kg</b>.',
+ [['per jaar ≈ 12,4','12[,.]4'],
+  ['1992: ≈ 445 kg','445'],
+  ['per jaar 5,7','5[,.]7'],
+  ['2025: ≈ 444 kg','44[34]']]]
+];
+const EXAM=[
+// ---------- 3.1 ----------
+['3.1','Wisselkoers. Voor 1 euro krijg je 38,7 Thaise baht. Er zijn geen wisselkosten.<br>Hoeveel baht krijg je voor 200 euro?',
+ '7740 baht','5,17 baht|238,7 baht|774 baht',
+ '200 × 38,7 = <b>7740 baht</b>.<br>Fout: 5,17 = 200 : 38,7 (gedeeld in plaats van keer). 238,7 telt op. 774 is een factor 10 te weinig.',
+ 'Elke euro levert 38,7 baht op. Hoeveel levert 200 euro dan op?'],
+['3.1','Otto ruilt vóór zijn reis 500 euro om naar baht (1 euro = 38,7 baht). In Thailand pint hij elke dag 80 euro aan baht.<br>Hoeveel baht heeft hij na 14 dagen in totaal gekregen?',
+ '62 694 baht','43 344 baht|19 350 baht|1620 baht',
+ 'Totaal in euro: 500 + 14 × 80 = 1620. In baht: 1620 × 38,7 = <b>62 694</b>. (Of: B = 3096d + 19 350 met d = 14.)<br>Fout: 43 344 zijn alleen de 14 dagen pinnen. 19 350 is alleen de 500 euro. 1620 is het bedrag in euro.',
+ 'Tel eerst alle euro’s bij elkaar op en reken dan om.'],
+['3.1','Abonnement. Een sportschool vraagt € 25 inschrijfgeld en daarna € 32,50 per maand.<br>Welke formule geeft de totale kosten K na m maanden?',
+ 'K = 32,5m + 25','K = 25m + 32,5|K = 57,5m|K = 32,5m − 25',
+ 'Per maand = rc = 32,50. Eenmalig = b = 25.<br>Fout: 25m + 32,5 verwisselt a en b. 57,5m rekent het inschrijfgeld elke maand. Met − 25 krijg je korting in plaats van inschrijfgeld.',
+ 'Welk bedrag betaal je elke maand, en welk maar één keer?'],
+['3.1','Een kaars van 24 cm brandt op. Hij wordt elk uur 1,5 cm korter.<br>Na hoeveel uur is de kaars helemaal opgebrand?',
+ 'na 16 uur','na 36 uur|na 22,5 uur|na 1,6 uur',
+ 'l = 24 − 1,5t = 0 → 1,5t = 24 → t = <b>16</b>.<br>Fout: 36 = 24 × 1,5. 22,5 = 24 − 1,5. 1,6 is een factor 10 te weinig.',
+ 'Stel l = 24 − 1,5t op en zoek wanneer l = 0.'],
+['3.1','Tijdens een parachutesprong start een stopwatch bij een temperatuur van 0 °C. Na 150 seconden is het 6 °C. De temperatuur stijgt lineair.<br>Hoe warm is het als de stopwatch 1 minuut aangeeft?',
+ '2,4 °C','0,04 °C|3 °C|4 °C',
+ '150 s = 2,5 min. 6 : 2,5 = 2,4 °C per minuut, dus na 1 minuut <b>2,4 °C</b>.<br>Fout: 0,04 is de stijging per seconde. 3 °C hoort bij 75 s. 4 °C hoort bij 100 s.',
+ 'Reken de seconden om naar minuten en bereken de stijging per minuut.'],
+['3.1','Bestelauto huren. Bij Rent-a-car betaal je B = 0,1a + 75 euro, bij Cheap B = 0,25a + 50 euro (a = aantal km op één dag).<br>Iemand rijdt 220 km. Wat is waar?',
+ 'Rent-a-car is € 8 goedkoper','Cheap is € 8 goedkoper|ze zijn even duur|Rent-a-car is € 25 goedkoper',
+ 'Rent-a-car: 22 + 75 = € 97. Cheap: 55 + 50 = € 105. Rent-a-car is <b>€ 8 goedkoper</b>.<br>Fout: Cheap is juist duurder. Even duur zijn ze bij ongeveer 167 km. € 25 is alleen het verschil in vast bedrag.',
+ 'Vul a = 220 in beide formules in en vergelijk.'],
+['3.1','Servicekosten worden evenredig verdeeld over de vloeroppervlakte. Een appartement van 84 m² betaalt € 1890 per jaar.<br>Hoeveel betaalt een appartement van 120 m²?',
+ '€ 2700','€ 1926|€ 5,33|€ 2268',
+ '1890 : 84 = 22,5 euro per m². 120 × 22,5 = <b>€ 2700</b>.<br>Fout: 1926 = 1890 + 36 m² (de extra m² als euro’s opgeteld). 5,33 is 120 : 22,5. 2268 = 1890 × 1,2 (met 20% meer in plaats van 120 : 84 ≈ 1,43 keer zo groot).',
+ 'Evenredig: bereken eerst de prijs per m².'],
+// ---------- 3.2 ----------
+['3.2','Taxi. Een rit van 4 km kost € 11,20 en een rit van 10 km kost € 24,40. Er is een lineair verband tussen de kosten K en de afstand d.<br>Welke formule hoort hierbij?',
+ 'K = 2,2d + 2,4','K = 2,8d|K = 2,2d + 11,2|K = 0,45d + 9,4',
+ 'a = (24,40 − 11,20) : (10 − 4) = 13,20 : 6 = 2,20. 2,2 × 4 + b = 11,20 → 8,80 + b = 11,20 → b = 2,40.<br>Fout: 2,8d = 11,20 : 4, zonder instaptarief. + 11,2 neemt de prijs van de rit als b. 0,45 is Δd : ΔK.',
+ 'Bereken eerst de prijs per km uit de twee ritten, daarna het instaptarief.'],
+['3.2','IJssalon. Bij een prijs van € 2 per ijsje verkoopt de salon 400 ijsjes per dag, bij € 2,50 nog 300. Er is een lineair verband tussen het aantal q en de prijs p.<br>Welke formule geeft q?',
+ 'q = −200p + 800','q = −200p + 400|q = 200p|q = −0,005p + 400',
+ 'a = Δq : Δp = (300 − 400) : (2,50 − 2) = −100 : 0,5 = −200. −200 × 2 + b = 400 → b = 800.<br>Fout: + 400 neemt een meetpunt als b. 200p laat het aantal stijgen bij een hogere prijs. −0,005 is Δp : Δq.',
+ 'q is de uitkomst. Bereken a = Δq : Δp.'],
+['3.2','Een oven wordt aangezet. Na 5 minuten is het 82 °C, na 20 minuten 262 °C. De temperatuur T stijgt lineair met de tijd t in minuten.<br>Welke temperatuur had de oven bij het aanzetten?',
+ '22 °C','82 °C|12 °C|−98 °C',
+ 'a = (262 − 82) : (20 − 5) = 180 : 15 = 12. 12 × 5 + b = 82 → b = 22. Dus T = 12t + 22, begin <b>22 °C</b>.<br>Fout: 82 °C is na 5 minuten. 12 is de stijging per minuut. −98 komt van 82 − 180 (verkeerde rekenstap).',
+ 'De begintemperatuur is b. Bereken eerst a.'],
+['3.2','Toeschouwers. Bij een entreeprijs van € 7,50 komen er 800 mensen, bij € 9,75 komen er 665. Er is een lineair verband tussen het aantal toeschouwers A en de prijs p.<br>Hoeveel toeschouwers komen er bij € 11,25?',
+ '575','530|1925|710',
+ 'a = (665 − 800) : (9,75 − 7,50) = −135 : 2,25 = −60. −60 × 7,5 + b = 800 → b = 1250. A = −60 × 11,25 + 1250 = <b>575</b>.<br>Fout: 530 = 665 − 135 (alsof de prijs weer 2,25 hoger is, maar het is 1,50). 1925 heeft een tekenfout. 710 is een rekenfout.',
+ 'Stel eerst de formule A = ap + b op en vul dan p = 11,25 in.'],
+['3.2','Productiekosten. Bij 1000 producten per dag zijn de kosten € 1200, bij 3000 producten € 1600. Tussen die aantallen is er een lineair verband.<br>Welke formule geldt voor de kosten K tussen 1000 en 3000 producten?',
+ 'K = 0,2q + 1000','K = 0,2q + 1200|K = 5q − 3800|K = 1,2q',
+ 'a = (1600 − 1200) : (3000 − 1000) = 400 : 2000 = 0,2. 0,2 × 1000 + b = 1200 → b = 1000.<br>Fout: + 1200 neemt een meetpunt als b. 5 is Δq : ΔK. 1,2q gaat door de oorsprong en klopt niet bij 3000 (3600).',
+ 'Gebruik het werkschema voor twee punten.'],
+// ---------- 3.3 ----------
+['3.3','Abonnement bellen. Bij aanbieder A betaal je € 12 per maand plus € 0,08 per belminuut, bij B € 20 per maand plus € 0,03 per minuut.<br>Bij hoeveel belminuten per maand is A goedkoper?',
+ 'bij minder dan 160 minuten','bij meer dan 160 minuten|bij minder dan 72,7 minuten|bij minder dan 100 minuten',
+ '12 + 0,08n = 20 + 0,03n → 0,05n = 8 → n = 160. A begint lager maar stijgt sneller, dus A is goedkoper <b>onder 160 minuten</b>.<br>Fout: boven 160 is B goedkoper. 72,7 = 8 : 0,11 (de minuutprijzen opgeteld). 100 = 8 : 0,08.',
+ 'Los eerst de vergelijking op. Kijk dan welke lijn lager begint.'],
+['3.3','Een ijssalon heeft per week opbrengst R = 3q euro en kosten K = 1,8q + 540 euro (q = aantal ijsjes per week).<br>Hoeveel ijsjes moet de salon per week verkopen om winst te maken?',
+ 'meer dan 450','minder dan 450|meer dan 180|meer dan 300',
+ 'Winst als R &gt; K. 3q = 1,8q + 540 → 1,2q = 540 → q = 450. R is steiler, dus <b>meer dan 450</b>.<br>Fout: onder 450 is er verlies. 180 = 540 : 3. 300 = 540 : 1,8.',
+ 'Winst = opbrengst groter dan kosten. Los eerst R = K op.'],
+['3.3','Twee kaarsen worden tegelijk aangestoken. Kaars A is 30 cm en wordt elk uur 2 cm korter. Kaars B is 20 cm en wordt elk uur 1,2 cm korter.<br>Na hoeveel uur zijn ze even lang?',
+ 'na 12,5 uur','na 3,125 uur|na 15 uur|na 8 uur',
+ '30 − 2t = 20 − 1,2t → 10 = 0,8t → t = <b>12,5</b>. Beide zijn dan 5 cm.<br>Fout: 3,125 = 10 : 3,2 (de snelheden opgeteld). 15 uur is wanneer A op is. 8 = 10 : 1,2 (alleen B).',
+ 'Stel voor elke kaars een formule op en stel ze gelijk.'],
+['3.3','Een parachute gaat open op 1,2 km hoogte. Daarna is de hoogte h = 1,2 − 0,4t (h in km, t in minuten).<br>Na hoeveel seconden is de parachutist op 700 m hoogte?',
+ 'na 75 seconden','na 1,25 seconden|na 3 seconden|na 125 seconden',
+ '700 m = 0,7 km. 1,2 − 0,4t = 0,7 → 0,4t = 0,5 → t = 1,25 min = 1,25 × 60 = <b>75 s</b>.<br>Fout: 1,25 is in minuten, niet in seconden. 3 is wanneer h = 0. 125 rekent een minuut als 100 seconden.',
+ 'Zet 700 m om naar km, los t op en reken minuten om naar seconden.'],
+// ---------- 3.4 ----------
+['3.4','Op een kassabon van een ijssalon staat: 4 ijsjes en 3 milkshakes kosten € 22,50. Op een andere bon: 2 ijsjes en 5 milkshakes kosten € 23,50.<br>Wat kost één milkshake?',
+ '€ 3,50','€ 3|€ 1|€ 4,50',
+ 'x = ijsje, y = milkshake: 4x + 3y = 22,50 en 2x + 5y = 23,50. Tweede keer 2: 4x + 10y = 47. Min de eerste: 7y = 24,50 → y = 3,50 (en x = 3).<br>Fout: € 3 is de prijs van een ijsje. € 1 en € 4,50 kloppen niet in beide bonnen.',
+ 'Noem de prijzen x en y, stel twee vergelijkingen op en volg het werkschema.'],
+['3.4','Abonnement sportschool. Een sportschool heeft 120 leden. Jongeren betalen € 20 per maand, volwassenen € 35. Samen brengen ze € 3600 per maand op.<br>Hoeveel leden zijn jongeren?',
+ '40','80|180|60',
+ 'x + y = 120 en 20x + 35y = 3600. y = 120 − x invullen: 20x + 4200 − 35x = 3600 → −15x = −600 → x = <b>40</b>.<br>Fout: 80 zijn de volwassenen. 180 = 3600 : 20. 60 is de helft van 120.',
+ 'Eén vergelijking voor het aantal leden, één voor het geld.'],
+['3.4','Temperatuur. Het verband tussen graden Fahrenheit F en graden Celsius C is F = 1,8C + 32.<br>Hoe schrijf je C uitgedrukt in F?',
+ 'C = (F − 32) : 1,8','C = 1,8F + 32|C = F : 1,8 − 32|C = (F + 32) : 1,8',
+ '1,8C = F − 32, dan alles : 1,8 → C = (F − 32) : 1,8.<br>Fout: 1,8F + 32 verwisselt alleen de letters. In de derde wordt eerst gedeeld en dan pas 32 afgetrokken. + 32 heeft het verkeerde teken.',
+ 'Haal eerst de 32 naar de andere kant en deel dan door 1,8.'],
+// ---------- 3.5 ----------
+['3.5','Temperatuurmeting op een winterdag: om 9 uur was het 2,7 °C, om 11 uur 10,5 °C.<br>Schat met lineair interpoleren de temperatuur om 10 uur.',
+ '6,6 °C','13,2 °C|3,9 °C|7,8 °C',
+ 'In 2 uur 7,8 °C erbij = 3,9 per uur. Om 10 uur: 2,7 + 3,9 = <b>6,6 °C</b>.<br>Fout: 13,2 telt de twee temperaturen op zonder te delen. 3,9 is alleen de stijging per uur. 7,8 is de stijging in 2 uur.',
+ '10 uur ligt precies halverwege 9 en 11 uur.'],
+['3.5','IJssalons in Nederland: 2020: 945 en 2023: 1206.<br>Schat met lineair extrapoleren het aantal in 2025.',
+ '1380','1293|1467|1119',
+ '87 per jaar. 2025 is 2 jaar na 2023: 1206 + 2 × 87 = <b>1380</b>.<br>Fout: 1293 telt 1 jaar. 1467 telt 3 jaar. 1119 is de schatting voor 2022.',
+ 'Bereken de toename per jaar en ga vanaf 2023 verder.'],
+['3.5','Bergwandeling. Op 1000 m hoogte is het 15 °C, op 1800 m 10,2 °C.<br>Schat met lineair extrapoleren de temperatuur op 2500 m.',
+ '6,0 °C','14,4 °C|7,2 °C|5,4 °C',
+ '4,8 °C kouder per 800 m = 0,6 °C per 100 m. Van 1800 naar 2500 m is 700 m: 7 × 0,6 = 4,2. 10,2 − 4,2 = <b>6,0 °C</b>.<br>Fout: 14,4 telt erbij in plaats van eraf. 7,2 rekent met 500 m. 5,4 rekent met 800 m.',
+ 'Bereken de daling per 100 m en ga vanaf 1800 m verder omhoog.'],
+['3.5','Een model voor het afval per inwoner is N = 9,5t + 281 (t = jaren na 1970). In 2004 was het echte afval 561 kg.<br>Hoeveel procent zit het model in 2004 te hoog?',
+ 'ongeveer 7,7%','ongeveer 7,1%|ongeveer 43%|ongeveer 50%',
+ 't = 34: N = 9,5 × 34 + 281 = 604. (604 − 561) : 561 × 100% ≈ <b>7,7%</b>.<br>Fout: 7,1% deelt door 604. 43 is het verschil in kg. 50% is een gok.',
+ 'Bereken eerst wat het model in 2004 geeft (t = 34).']
+];
+
+/* ---------- de berg: van ijs tot stoom (klimmen langs de opwarmcurve van water) (alle vragen van het hoofdstuk, één verdieping per paragraaf, 100% = alles één keer goed) ---------- */
+const KCAMPS=[['3.1','📈 Trede 1','#AED6F1'],['3.2','📈 Trede 2','#85C1E9'],['3.3','📈 Trede 3','#5DADE2'],['3.4','📈 Trede 4','#3498DB'],['3.5','🏁 De top','#2471A3']];
+const KL=()=>S.klim||(S.klim={});
+const klimIds=sec=>(MCQ[sec]||[]).map(v=>v[0]);
+const klimPct=sec=>{const ids=klimIds(sec);return ids.length?ids.filter(i=>KL()[i]).length/ids.length:0};
+const klimOpen=i=>true;
+const klimTot=()=>{let a=0,b=0;KCAMPS.forEach(([s])=>{const ids=klimIds(s);b+=ids.length;a+=ids.filter(i=>KL()[i]).length});return b?a/b:0};
+function torenSVG(){const W=320,H=240;let s='';const n=KCAMPS.length,sw=(W-40)/n,sh=(H-50)/n;
+ KCAMPS.forEach(([sec,nm,kl],i)=>{const x=20+i*sw,y=H-20-(i+1)*sh,p=klimPct(sec);s+=`<rect x="${x}" y="${y}" width="${sw}" height="${(i+1)*sh}" fill="var(--chip)" stroke="currentColor" stroke-opacity=".3"/><rect x="${x}" y="${y+(i+1)*sh*(1-p)}" width="${sw}" height="${(i+1)*sh*p}" fill="${kl}"/><text x="${x+sw/2}" y="${y-6}" text-anchor="middle" font-size="11" font-weight="800" fill="currentColor">${Math.round(p*100)}%</text><text x="${x+sw/2}" y="${H-6}" text-anchor="middle" font-size="10.5" fill="currentColor">§ ${sec}</text>`});
+ s+=`<line x1="20" y1="${H-20}" x2="${W-20}" y2="30" stroke="#C0392B" stroke-width="2" stroke-dasharray="5 4"/>`;return `<svg viewBox="0 0 ${W} ${H}" class="fig" role="img" aria-label="trap">${s}</svg>`}
+function klimHome(){stilte();show('play');const t=klimTot();
+ P.innerHTML=`<div class="top"><button class="btn licht klein" id="stop">‹ Terug</button><span class="stap">📈 De stijgende lijn</span><span class="teller">${Math.round(t*100)}%</span></div>
+ <div class="kaart"><p class="sub" style="margin:0">Een lineaire grafiek is een trap met overal even hoge treden. Elke paragraaf is een trede: hij is vol als je <b>alle</b> vragen ervan één keer goed hebt. Je mag beginnen waar je wilt.</p>${torenSVG()}</div>
+ ${KCAMPS.map(([sec,nm],i)=>{const p=klimPct(sec),open=klimOpen(i);return `<button class="mode${p>=1?' gehaald':''}" data-k="${i}" style="width:100%;margin:8px 0"${open?'':' disabled'}><h3>${open?'':'🔒 '}${nm} · ${SECN[sec].t}</h3><p>${Math.round(p*100)}% · ${klimIds(sec).filter(x=>!KL()[x]).length} vragen te gaan${open?'':' · '}</p></button>`}).join('')}`;
+ $('#stop').onclick=goHome;P.querySelectorAll('[data-k]').forEach(b=>b.onclick=()=>klimPlay(KCAMPS[+b.dataset.k][0]))}
+function klimPlay(sec){stilte();const todo=shuffle(MCQ[sec].filter(v=>!KL()[v[0]]));const set=(todo.length?todo:shuffle(MCQ[sec])).slice(0,10).map(v=>mcItem(v,sec));const nm=KCAMPS.find(c=>c[0]===sec)[1];
+ quiz(set,{titel:nm,geenHer:1,opGoed:q=>{KL()[q.id]=1;save()},klaar:()=>{const p=klimPct(sec);return `<p>${p>=1?`${nm}: vol! 🎉`:`${nm}: ${Math.round(p*100)}%`}</p><div class="acts" style="justify-content:center">${p<1?'<button class="btn" id="opn">Verder klimmen</button>':''}<button class="btn licht" id="tor">Naar de trap</button>${terugKnop()}</div>`},
+  na:()=>{const o=$('#opn');if(o)o.onclick=()=>klimPlay(sec);$('#tor').onclick=klimHome;$('#hm').onclick=goHome}})}
+
+
+/* ---------- opslag en algemeen ---------- */
+const KEY='wis-h3-v1';
+const $=s=>document.querySelector(s);
+const leeg=()=>({pod:{},lp:{},klim:{},b:{},sp:{},open:{a:{},best:0,per:{}},ex:0,toets:0,blitz:0,mis:{},samen:0,tempo:1});
+let S=leeg();
+try{const r=localStorage.getItem(KEY);if(r)S=Object.assign(S,JSON.parse(r))}catch(e){}
+const save=()=>{try{localStorage.setItem(KEY,JSON.stringify(S))}catch(e){}};
+const shuffle=a=>{a=a.slice();for(let i=a.length-1;i>0;i--){const j=Math.random()*(i+1)|0;[a[i],a[j]]=[a[j],a[i]]}return a};
+const esc=s=>String(s).replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;').replace(/"/g,'&quot;');
+const nf=(x,d=1)=>String(Math.round(x*10**d)/10**d).replace('.',',');
+const P=$('#play');let G=null;
+function show(id){$('#home').hidden=id!=='home';P.hidden=id!=='play';scrollTo(0,0)}
+const mcItem=(v,sec)=>({q:v[0],a:v[1],opts:[v[1],...v[2].split('|')],w:v[3],hint:v[4],sec,id:v[0]});
+const SPEL={lijn:{t:'📈 Welke formule?',doel:.8},kies:{t:'🎯 Welke lijn?',doel:.8},rc:{t:'🧮 Twee punten',doel:.8},snij:{t:'✂️ Snijpunten en ongelijkheden',doel:.8},ctx:{t:'🚕 Formules in het echt',doel:.8}};
+const SECN={};H.forEach(h=>SECN[h.id]=h);
+
+/* ---------- leerroute ---------- */
+const ROUTE=[];const SPR={"3.1": [["lijn", "Grafiek gegeven: welke formule hoort erbij? Doel: 8 van de 10.", 4], ["kies", "Formule gegeven: welke lijn hoort erbij? Doel: 8 van de 10.", 3]], "3.2": [["rc", "Twee punten: reken a en b uit. Doel: 8 van de 10.", 5]], "3.3": [["snij", "Snijpunt met de x-as, van twee lijnen, en ongelijkheden. Doel: 8 van de 10.", 5]], "3.5": [["ctx", "Taxi, kaars, ijssalon: formules en interpoleren. Doel: 8 van de 10.", 4]]};
+H.forEach(h=>{const id=h.id;
+ ROUTE.push([`lp${id}`,id,`📖 Leerpad § ${id}: ${h.t}`,'Kaartjes met uitleg en voorbeelden, steeds een checkvraag.',4,'lp',id]);
+ (SPR[id]||[]).forEach(([k,w,g])=>ROUTE.push([k,id,SPEL[k].t,w,g,'sp',k]));
+ ROUTE.push([`pr${id}`,id,`✅ Oefenronde § ${id}`,'10 vragen, haal er 8 in één keer goed. Met 💡 tips als je vastloopt.',5,'pr',id]);
+ ROUTE.push([`kamp${id}`,id,`${KCAMPS.find(c=>c[0]===id)[1]}`,'Alle vragen van deze paragraaf één keer goed.',2,'kamp',id])});
+ROUTE.push(['blitz','eind','⚡ Begrippenblitz: 15 punten','60 seconden: welk begrip hoort bij de uitleg?',3,'blitz'],['exam','eind','🎓 Toetsvragen: 70%','Vragen zoals op de toets, met een situatie.',6,'exam'],['open','eind','✍️ Open vragen: 60% van de punten','Zelf de berekening typen, dan nakijken.',6,'open'],['toets','eind','🎯 Proeftoets: een 7','20 vragen door elkaar, ook rekenvragen.',9,'toets'],['samen','eind','📄 Alles nog eens lezen','Alle leerpaden onder elkaar.',0,'samen']);
+const HNAAM={eind:'Eindsprint'};H.forEach(h=>HNAAM[h.id]=`${h.ic} § ${h.id} ${h.t}`);
+const OS=()=>S.open||(S.open={a:{},best:0,per:{}});
+const rDone=r=>{const t=r[5];return t==='kamp'?klimPct(r[6])>=1:t==='pod'?!!S.pod[r[6].join(':')]:t==='lp'?!!S.lp[r[6]]:t==='pr'?(S.b[r[6]]||0)>=.8:t==='sp'?(S.sp[r[6]]||0)>=SPEL[r[6]].doel:t==='blitz'?S.blitz>=15:t==='exam'?S.ex>=.7:t==='open'?(OS().best||0)>=.6:t==='toets'?S.toets>=7:!!S.samen};
+const pct=()=>ROUTE.reduce((a,r)=>a+(rDone(r)?r[4]:0),0);window.leerVoortgang=pct;
+const RT={on:false,p0:0};
+function rGo(r){RT.on=true;RT.p0=pct();const t=r[5];if(t==='kamp')klimPlay(r[6]);else if(t==='pod')podStart(...r[6]);else if(t==='lp')leerpad(r[6]);else if(t==='pr')ronde(r[6]);else if(t==='sp')spel(r[6]);else if(t==='blitz')blitz();else if(t==='exam')examen();else if(t==='open')openProefwerk();else if(t==='toets')toets();else samen()}
+function routeScreen(){stilte();show('play');const p=pct(),nxt=ROUTE.find(r=>!rDone(r)),win=RT.on&&p>RT.p0?p-RT.p0:0;RT.on=false;let deel='';
+ P.innerHTML=`<div class="top"><button class="btn licht klein" id="terug">‹ Overzicht</button><span class="stap">Leerroute</span><span class="teller ok">${p}%</span></div>
+ ${win?`<div class="kaart" style="border-color:var(--good);background:var(--good-bg)"><b class="goed-t">Gehaald! +${win}%</b></div>`:''}
+ <div class="kaart"><div class="balk"><i style="width:${p}%"></i></div><p class="sub" style="margin:4px 0 0">Per paragraaf: eerst het leerpad, dan een spel en een oefenronde, en tot slot een stuk van de De stijgende lijn. Een stap is pas groen als het doel gehaald is.</p>
+ ${nxt?`<div class="acts"><button class="btn" id="rtgo">Ga verder: ${nxt[2]} →</button></div>`:'<p><b>Alles gehaald. Klaar voor de toets! 🎉</b></p>'}</div>
+ ${ROUTE.map((r,i)=>{const kop=r[1]!==deel?(deel=r[1],`<h2>${HNAAM[r[1]]}</h2>`):'';return kop+`<button class="mode${rDone(r)?' gehaald':''}" data-r="${i}" style="width:100%;margin:8px 0"><h3>${r[2]}</h3><p>${r[3]}${r[4]?` · ${r[4]}%`:' · telt niet mee'}</p></button>`}).join('')}`;
+ $('#terug').onclick=()=>{RT.on=false;goHome()};P.querySelectorAll('[data-r]').forEach(b=>b.onclick=()=>rGo(ROUTE[+b.dataset.r]));const g=$('#rtgo');if(g){g.onclick=()=>rGo(nxt);g.focus()}}
+
+/* ---------- hoofdscherm ---------- */
+function renderHome(){const nx=ROUTE.find(r=>!rDone(r));
+ $('#stand').innerHTML=`<button class="mode main" id="rtbox" style="width:100%"><h3>${nx?(pct()?'Ga verder: ':'Begin: ')+nx[2]:'Leerroute klaar. Herhalen?'}</h3><p>🧭 Leerroute · ${pct()}%${S.toets?` · beste proeftoets ${nf(S.toets)}`:''}</p><div class="balk" style="background:rgba(127,127,127,.35)"><i style="width:${pct()}%"></i></div></button>`;
+ $('#rtbox').onclick=routeScreen;
+ $('#hst').innerHTML=H.map(h=>{const pd=[0,1,2].filter(i=>S.pod[h.id+':'+i]).length;const no=OPEN.filter(q=>q[0]===h.id).length;return `<div class="kaart hk"><h3>${h.ic} § ${h.id} ${h.t}</h3><p class="sub" style="margin:2px 0 0">${h.kort}</p><div class="acts" style="margin-top:8px">${POD[h.id]?`<button class="btn klein${pd===3?' ok':' licht'}" data-pod="${h.id}">🎧 Podcast ${pd}/3</button>`:''}<button class="btn klein${S.lp[h.id]?' ok':' licht'}" data-lp="${h.id}">📖 Leerpad${S.lp[h.id]?' ✓':''}</button><button class="btn klein${(S.b[h.id]||0)>=.8?' ok':' licht'}" data-pr="${h.id}">✅ Oefenen${S.b[h.id]!=null?' '+Math.round(S.b[h.id]*10)+'/10':''}</button>${no?`<button class="btn klein${(OS().per[h.id]||0)>=.6?' ok':' licht'}" data-os="${h.id}">✍️ Open (${no})</button>`:''}</div></div>`}).join('');
+ const g=(id,ok)=>{const e=$('#'+id);if(e)e.classList.toggle('gehaald',ok)};Object.keys(SPEL).forEach(k=>g('p'+k,(S.sp[k]||0)>=SPEL[k].doel));g('pblitz',S.blitz>=15);g('pexam',S.ex>=.7);g('popen',(OS().best||0)>=.6);g('ptoets',S.toets>=7);g('psamen',!!S.samen);g('pberg',klimTot()>=1);
+ const fm=Object.keys(S.mis).length;$('#fouten').hidden=!fm;$('#fouten p').textContent=`${fm} vraag${fm===1?'':'en'} die je eerder fout had.`;P.innerHTML=''}
+function goHome(){stilte();clearInterval(window.__klok);if(RT.on)return routeScreen();show('home');renderHome()}
+document.addEventListener('click',e=>{if($('#home').hidden)return;const b=e.target.closest('[data-lp],[data-pr],[data-pod],[data-os]');if(!b)return;const d=b.dataset;if(d.lp)leerpad(d.lp);else if(d.pr)ronde(d.pr);else if(d.pod)podMenu(d.pod);else openSet(OPEN.filter(q=>q[0]===d.os),'Open vragen '+d.os,d.os)});
+Object.keys(SPEL).forEach(k=>$('#p'+k).onclick=()=>spel(k));$('#pblitz').onclick=()=>blitz();$('#pexam').onclick=()=>examen();$('#popen').onclick=()=>openMenu();$('#ptoets').onclick=()=>toets();$('#psamen').onclick=()=>samen();$('#fouten').onclick=()=>foutRonde();$('#pberg').onclick=()=>klimHome();
+$('#wis').onclick=()=>{if(confirm('Al je voortgang bij dit hoofdstuk wissen?')){S=leeg();save();renderHome()}};
+
+/* ---------- podcast: luisteren of lezen ---------- */
+const SPK={E:'Eva',D:'Daan'};
+const TEMPO=[['langzaam',.8],['normaal',1],['snel',1.2],['sneller',1.45]];
+const kanPraten='speechSynthesis' in window&&typeof SpeechSynthesisUtterance!=='undefined';
+const stemKw=v=>{const t=(v.voiceURI||'')+' '+v.name;return /premium/i.test(t)?3:/enhanced|verbeterd|neural|natural|online/i.test(t)?2:/compact/i.test(t)?0:1};
+const stemLabel=v=>`${v.name.replace(/\s*\((verbeterd|enhanced|premium)\)/i,'')}${stemKw(v)>=2?' (verbeterd)':''}${/BE/i.test(v.lang)?' · Vlaams':''}`;
+function nlStemmen(){return kanPraten?speechSynthesis.getVoices().filter(v=>/^nl/i.test(v.lang)):[]}
+function eigenKeuze(){try{return JSON.parse(localStorage.getItem('leren-stem')||'{}')}catch(e){return {}}}
+function stemmen(){if(!kanPraten)return null;const nl=nlStemmen(),k0=eigenKeuze();if(!nl.length)return k0.een?{E:{v:null,p:1},D:{v:null,p:1},tekst:'één voorlezer (standaardstem)'}:{E:{v:null,p:1.15},D:{v:null,p:.82},tekst:'geen Nederlandse stem gevonden, de standaardstem leest voor'};
+ const beste=l=>[...l].sort((a,b)=>(stemKw(b)+(/nl-NL/i.test(b.lang)?.5:0))-(stemKw(a)+(/nl-NL/i.test(a.lang)?.5:0)))[0];
+ if(k0.een){const v=nl.find(x=>x.voiceURI===k0.een)||beste(nl);return {E:{v,p:1},D:{v,p:1},een:v,tekst:`één voorlezer: ${stemLabel(v)}`}}
+ const vr=/claire|ellen|fenna|colette|lotte|femke|anna|female|vrouw|google nederlands/i,mn=/xander|maarten|frank|arnaud|male|\bman\b/i;
+ const zoek=u=>nl.find(v=>v.voiceURI===u);let e=zoek(k0.E)||beste(nl.filter(v=>vr.test(v.name))),d=zoek(k0.D)||beste(nl.filter(v=>mn.test(v.name)&&!vr.test(v.name)));
+ if(e&&d&&e!==d)return {E:{v:e,p:1},D:{v:d,p:1},tekst:`Lotte = ${stemLabel(e)}, Sem = ${stemLabel(d)}`};
+ const een=e||d||beste(nl);return {E:{v:een,p:1.18},D:{v:een,p:.8},tekst:`één stem (${stemLabel(een)}) op twee toonhoogtes`}}
+function stemKiezer(){const nl=nlStemmen(),st=stemmen()||{},een=!!eigenKeuze().een;
+ const wissel=`<div class="podmode" style="margin:6px 0"><button class="btn klein ${een?'licht':''}" id="kTwee">👥 Twee stemmen</button><button class="btn klein ${een?'':'licht'}" id="kEen">👤 Eén voorlezer</button></div>`;
+ if(!nl.length)return wissel+'<p class="src">Op dit apparaat zijn geen Nederlandse stemmen gevonden.</p>';
+ const opt=w=>nl.map(v=>`<option value="${esc(v.voiceURI)}"${st[w]&&st[w].v===v?' selected':''}>${esc(stemLabel(v))}</option>`).join('');
+ if(een)return wissel+`<div class="stemkies"><label><b>Voorlezer</b><select id="kN">${nl.map(v=>`<option value="${esc(v.voiceURI)}"${st.een===v?' selected':''}>${esc(stemLabel(v))}</option>`).join('')}</select></label><button class="btn klein licht" data-test="E">▶ test</button></div>`;
+ return wissel+`<div class="stemkies"><label><b class="wie E">Lotte</b><select id="kE">${opt('E')}</select></label><button class="btn klein licht" data-test="E">▶ test</button><label><b class="wie D">Sem</b><select id="kD">${opt('D')}</select></label><button class="btn klein licht" data-test="D">▶ test</button></div><p class="src" style="margin:4px 0 0">Staat je gedownloade stem er niet bij? Sluit Safari helemaal af en open de pagina opnieuw.</p>`}
+function stemKiezerKoppel(){const k=eigenKeuze(),bew=()=>{try{localStorage.setItem('leren-stem',JSON.stringify(k))}catch(e){}podDraw()};
+ const t2=document.getElementById('kTwee');if(t2){t2.onclick=()=>{delete k.een;bew()};document.getElementById('kEen').onclick=()=>{const st=stemmen()||{};k.een=(st.E&&st.E.v&&st.E.v.voiceURI)||'auto';bew()}}
+ const sn=document.getElementById('kN');if(sn)sn.onchange=()=>{k.een=sn.value;bew()};['E','D'].forEach(w=>{const s=document.getElementById('k'+w);if(s)s.onchange=()=>{k[w]=s.value;bew()}});
+ P.querySelectorAll('[data-test]').forEach(b=>b.onclick=()=>{stilte();const w=b.dataset.test,sv=(stemmen()||{})[w]||{};const u=new SpeechSynthesisUtterance(eigenKeuze().een?'Hoi, ik lees het voor.':w==='E'?'Hoi, ik ben Lotte.':'En ik ben Sem.');u.lang='nl-NL';if(sv.v)u.voice=sv.v;u.pitch=sv.p||1;u.rate=TEMPO[S.tempo??1][1];speechSynthesis.speak(u)})}
+if(kanPraten){try{speechSynthesis.getVoices();speechSynthesis.addEventListener('voiceschanged',()=>{const n=document.getElementById('stemnaam');const s=stemmen();if(n&&s)n.textContent=s.tekst})}catch(e){}}
+function stilte(){if(G&&G.m==='pod'){G.playing=false;G.token=(G.token||0)+1}if(kanPraten)try{speechSynthesis.cancel()}catch(e){}}
+function zinnen(t){return t.match(/[^.!?]+[.!?]+["”']?\s*|[^.!?]+$/g)||[t]}
+function podMenu(sec){stilte();show('play');const h=SECN[sec];
+ P.innerHTML=`<div class="top"><button class="btn licht klein" id="stop">Terug</button><span class="stap">Podcast · ${h.t}</span><span></span></div>
+ <div class="kaart"><p style="margin:0">Lotte en Sem vertellen basisstof ${sec} in drie stukjes van een paar minuten. Luister of lees, en beantwoord daarna een paar checkvragen.</p>
+ <div class="acts"><button class="btn" id="palle">🎧 Alle drie achter elkaar</button></div></div>
+ ${POD[sec].map((p,i)=>`<button class="mode${S.pod[sec+':'+i]?' gehaald':''}" data-pi="${i}" style="width:100%;margin:8px 0"><h3>Deel ${i+1}: ${p.t}</h3><p>${p.s.length} beurten · ${p.q.length} checkvragen</p></button>`).join('')}`;
+ $('#stop').onclick=goHome;P.querySelectorAll('[data-pi]').forEach(b=>b.onclick=()=>podStart(sec,+b.dataset.pi));$('#palle').onclick=()=>podAlles([0,1,2].map(i=>[sec,i]),'Basisstof '+sec+' helemaal')}
+function podStart(sec,i){stilte();const p=POD[sec][i];const items=[];p.s.forEach(([w,t],li)=>zinnen(t).forEach(z=>items.push({w,t:z.trim(),li})));
+ G={m:'pod',sec,i,items,idx:0,playing:false,token:0,mode:kanPraten?(S.podMode||'luister'):'lees',klaar:false};show('play');podDraw()}
+function podAlles(parts,titel){stilte();const items=[];parts.forEach(([sec,i],pi)=>{const p=POD[sec][i];p.s.forEach(([w,t],li)=>zinnen(t).forEach((z,zi)=>items.push({w,t:z.trim(),li:pi*1000+li,pi,kop:li===0&&zi===0?`${sec} · deel ${i+1}: ${p.t}`:''})))});
+ G={m:'pod',alles:{parts,titel},items,idx:0,playing:false,token:0,mode:kanPraten?(S.podMode||'luister'):'lees',klaar:false};show('play');podDraw()}
+function podDraw(){const A=G.alles,p=A?null:POD[G.sec][G.i],st=stemmen(),tempo=S.tempo??1;let li=-1,html='';
+ G.items.forEach((it,k)=>{if(it.li!==li){if(li>=0)html+='</p>';li=it.li;if(it.kop)html+=`<h3 class="vkop">${it.kop}</h3>`;html+=`<p class="vl"><b class="wie ${it.w}">${SPK[it.w]}</b> `}html+=`<span class="z" data-k="${k}">${esc(it.t)} </span>`});html+='</p>';
+ P.innerHTML=`<div class="top"><button class="btn licht klein" id="stop">Stoppen</button><span class="stap">${A?A.titel:`Podcast ${G.sec} · deel ${G.i+1}`}</span><span class="teller" id="cnt"></span></div>
+ <div class="kaart">${A?'':`<h2 style="margin-top:0">${p.t}</h2>`}
+  ${kanPraten?`<div class="podmode"><button class="btn klein ${G.mode==='luister'?'':'licht'}" id="mLuis">🎧 Luisteren</button><button class="btn klein ${G.mode==='lees'?'':'licht'}" id="mLees">📖 Lezen</button></div>`:''}
+  ${G.mode==='luister'?`<div class="speler"><button class="btn" id="pPlay">${G.playing?'⏸ Pauze':(G.idx>0&&G.idx<G.items.length?'▶ Verder':'▶ Afspelen')}</button><button class="btn licht klein" id="pTerug" aria-label="Een zin terug">⏮</button>
+   <div class="tempo">${TEMPO.map(([n],k)=>`<button class="btn klein ${tempo===k?'':'licht'}" data-t="${k}">${n}</button>`).join('')}</div></div>
+   <details class="stemdet"${G.stemOpen?' open':''}><summary>🔊 Stemmen: <span id="stemnaam">${st?st.tekst:''}</span> <u>wijzigen</u></summary>${stemKiezer()}</details>
+   <p class="src" style="margin:6px 0 0">Tik op een zin om daar verder te luisteren.</p>`:''}
+  <div class="transcript${G.mode==='luister'?' luis':''}">${html}</div>
+  <div class="acts"><button class="btn ${G.klaar||G.mode==='lees'?'':'licht'}" id="pVraag">${A?'Klaar ✓':'Klaar, naar de checkvragen →'}</button></div></div>`;
+ $('#stop').onclick=()=>{stilte();goHome()};
+ const ml=$('#mLuis');if(ml){ml.onclick=()=>{S.podMode='luister';save();G.mode='luister';podDraw()};$('#mLees').onclick=()=>{stilte();S.podMode='lees';save();G.mode='lees';podDraw()}}
+ const pp=$('#pPlay');if(pp){pp.onclick=()=>{if(G.playing){stilte();podDraw()}else{if(G.idx>=G.items.length)G.idx=0;G.playing=true;podDraw();spreek()}};
+  $('#pTerug').onclick=()=>{G.idx=Math.max(0,G.idx-1);if(G.playing){stilte();G.playing=true;spreek()}else markZin()};
+  P.querySelectorAll('[data-t]').forEach(b=>b.onclick=()=>{S.tempo=+b.dataset.t;save();const sp=G.playing;stilte();G.playing=sp;podDraw();if(sp)spreek()})}
+ if(G.mode==='luister')P.querySelectorAll('.z').forEach(z=>z.onclick=()=>{G.idx=+z.dataset.k;stilte();G.playing=true;podDraw();spreek()});
+ $('#pVraag').onclick=()=>{stilte();if(A)goHome();else podVragen()};const sd=P.querySelector('.stemdet');if(sd){sd.ontoggle=()=>{G.stemOpen=sd.open};stemKiezerKoppel()}markZin()}
+function markZin(){P.querySelectorAll('.z.nu').forEach(z=>z.classList.remove('nu'));const c=$('#cnt');if(c)c.textContent=`${Math.min(G.idx+1,G.items.length)}/${G.items.length}`;if(G.mode!=='luister')return;const z=P.querySelector(`.z[data-k="${G.idx}"]`);if(z&&(G.playing||G.idx>0)){z.classList.add('nu');if(G.playing)z.scrollIntoView({block:'center',behavior:'smooth'})}}
+function spreek(){if(!G||G.m!=='pod'||!G.playing)return;if(G.idx>=G.items.length){G.playing=false;G.klaar=true;podDraw();const b=$('#pVraag');if(b)b.scrollIntoView({block:'center',behavior:'smooth'});return}
+ const it=G.items[G.idx],st=stemmen()||{},sv=st[it.w]||{},tok=++G.token;const u=new SpeechSynthesisUtterance(it.t);u.lang='nl-NL';if(sv.v)u.voice=sv.v;u.pitch=sv.p||1;u.rate=TEMPO[S.tempo??1][1];
+ const door=()=>{if(!G||G.m!=='pod'||tok!==G.token||!G.playing)return;G.idx++;spreek()};u.onend=door;u.onerror=door;markZin();try{speechSynthesis.speak(u)}catch(e){G.playing=false;podDraw()}}
+function podVragen(){const {sec,i}=G;const p=POD[sec][i];G=null;
+ quiz(p.q.map(v=>mcItem(v,null)),{titel:`Checkvragen ${sec} · deel ${i+1}`,klaar:(goed,n)=>{S.pod[sec+':'+i]=1;save();
+  return `<p>Deel ${i+1} gehaald ✓</p><div class="acts" style="justify-content:center">${i<2?`<button class="btn" id="opn">Deel ${i+2}: ${POD[sec][i+1].t} →</button>`:`<button class="btn" id="opn">📖 Leerpad ${sec}</button>`}${terugKnop()}</div>`},
+  na:()=>{$('#opn').onclick=()=>i<2?podStart(sec,i+1):leerpad(sec);$('#hm').onclick=goHome}})}
+
+/* ---------- leerpad ---------- */
+function leerpad(id){stilte();const h=SECN[id];let i=0;show('play');
+ const teken=()=>{const c=h.lp[i];const opts=c[2]?shuffle([c[2][1],...c[2][2].split('|')]):[];
+  P.innerHTML=`<div class="top"><button class="btn licht klein" id="stop">Stoppen</button><span class="stap">Leerpad ${h.id} · ${h.t}</span><span class="teller">${i+1}/${h.lp.length}</span></div>
+  <div class="balk"><i style="width:${i/h.lp.length*100}%"></i></div>
+  <div class="kaart"><h2 style="margin-top:0">${c[0]}</h2>${c[1]}${c[2]?`<div class="check"><div class="label">Even checken</div><h3 style="margin:6px 0 0;font-family:inherit">${c[2][0]}</h3><div class="opts">${opts.map((o,k)=>`<button class="opt" data-k="${k}">${esc(o)}</button>`).join('')}</div><div id="fb"></div></div>`:''}
+  <div class="acts" id="nav" ${c[2]?'hidden':''}>${i?'<button class="btn licht" id="vor">← Terug</button>':''}<button class="btn" id="vd">${i<h.lp.length-1?'Verder →':'Klaar ✓'}</button></div></div>`;
+  $('#stop').onclick=goHome;const vd=()=>{i++;if(i>=h.lp.length){S.lp[id]=1;save();klaar()}else teken()};
+  const nav=()=>{$('#nav').hidden=false;$('#vd').onclick=vd;const v=$('#vor');if(v)v.onclick=()=>{i--;teken()};$('#vd').focus()};
+  if(c[2])P.querySelectorAll('.opt').forEach(b=>b.onclick=()=>{if(P.querySelector('.opt.goed'))return;const ok=opts[+b.dataset.k]===c[2][1];
+   P.querySelectorAll('.opt').forEach((x,k)=>{if(opts[k]===c[2][1])x.classList.add('goed');else if(x===b)x.classList.add('fout')});
+   $('#fb').innerHTML=`<div class="uitleg"><b class="${ok?'goed-t':'fout-t'}">${ok?'Goed!':'Niet goed.'}</b> ${c[2][3]}</div>`;nav()});else nav()};
+ const klaar=()=>{P.innerHTML=`<div class="kaart" style="text-align:center"><div class="label">Leerpad klaar</div><h2>${h.ic} ${h.t}</h2><p>Nu oefenen: 10 vragen, haal er 8.</p><div class="acts" style="justify-content:center"><button class="btn" id="opn">✅ Oefenronde</button>${terugKnop()}</div></div>`;
+  $('#opn').onclick=()=>ronde(id);$('#hm').onclick=goHome;$('#opn').focus()};
+ teken()}
+
+
+/* ---------- 💡 Hoe pak ik dit aan? De aanpak (q.hint) en het kaartje uit het leerpad waar de vraag over gaat; niet in de proeftoets ---------- */
+const STOPW=new Set('deze die dat wat welke hoeveel waarom wordt worden niet zijn heeft hebben kunnen moet maar ook door naar voor over onder tussen bij zonder iets meer minder alle elke steeds daarna eerst juist goed fout klopt uitspraak uitspraken antwoord'.split(' '));
+const woorden=t=>(String(t).replace(/<[^>]+>/g,' ').toLowerCase().match(/[a-zà-ÿ]{4,}/g)||[]).filter(x=>!STOPW.has(x));
+function kaartVoor(q){const h=q.sec&&SECN[q.sec];if(!h)return null;const w=new Set(woorden(q.q));let best=null,bs=0;h.lp.forEach(l=>{const n=new Set(woorden(l[0]+' '+l[1]).filter(x=>w.has(x))).size;if(n>bs){bs=n;best=l}});return bs>=2?best:null}
+function hintVan(q){const k=kaartVoor(q);if(!q.hint&&!k)return '';return `<div>${q.hint||'Zoek de kernwoorden in de vraag. Weet je niet meer wat ze betekenen? Lees het kaartje hieronder nog eens, en kijk dan opnieuw naar de opties.'}</div>${k?`<details class="hkaart"><summary>📖 Kaartje uit het leerpad: ${k[0]}</summary>${k[1]}</details>`:''}`}
+/* ---------- vragen: meerkeuze of getal; fout = herkansing aan het eind ---------- */
+const terugKnop=()=>`<button class="btn licht" id="hm">${RT.on?'Terug naar de route':'Naar het overzicht'}</button>`;
+function quiz(qs,o){let i=0,goed=0,opnieuw=[];const n=qs.length;
+ const volgende=()=>{if(i>=qs.length){if(opnieuw.length&&!o.geenHer){qs=qs.concat(opnieuw);opnieuw=[]}else return einde()}
+  const q=qs[i],her=i>=n;const opts=q.num?[]:shuffle(q.opts);
+  P.innerHTML=`<div class="top"><button class="btn licht klein" id="stop">Stoppen</button><span class="stap">${o.titel}</span><span class="teller">${Math.min(i+1,n)}/${n}${her?' · herkansing':''}</span></div>
+  <div class="kaart">${her?'<div class="label" style="color:var(--gold)">Herkansing: deze ging eerder fout</div>':''}${q.sec?`<div class="label">${SECN[q.sec].ic} ${q.sec} ${SECN[q.sec].t}</div>`:''}${q.fig||''}<div class="vraag">${q.q}</div>
+  ${o.titel!=='Proeftoets'&&hintVan(q)?`<div class="hintrij"><button class="btn licht klein" type="button" id="hintb">💡 Hoe pak ik dit aan?</button><div id="hintbox" class="hintbox" hidden>${hintVan(q)}</div></div>`:''}
+  ${q.num?`<form class="typerow" id="nf" autocomplete="off"><input id="ni" inputmode="decimal" placeholder="antwoord" aria-label="Antwoord"><button class="btn" type="submit" id="nb">Controleer</button></form>`:`<div class="opts">${opts.map((x,k)=>`<button class="opt" data-k="${k}">${x}</button>`).join('')}</div>`}<div id="fb"></div></div>`;
+  $('#stop').onclick=goHome;const hb=$('#hintb');if(hb)hb.onclick=()=>{$('#hintbox').hidden=false;hb.hidden=true};
+  const af=ok=>{const hr=P.querySelector('.hintrij');if(hr)hr.hidden=true;if(ok&&o.opGoed)o.opGoed(q);if(!her&&ok)goed++;if(ok){if(q.id)delete S.mis[q.id]}else{if(q.id&&q.sec&&!o.geenMis)S.mis[q.id]=q.sec;if(!her)opnieuw.push(q)}save();
+   $('#fb').innerHTML=`<div class="uitleg"><b class="${ok?'goed-t':'fout-t'}">${ok?'Goed!':'Niet goed.'}</b> ${q.num&&!ok?`Het antwoord is <b>${String(q.a).replace(".",",")}</b>. `:''}${q.w||''}</div><div class="acts"><button class="btn" id="vd">Verder ↵</button></div>`;
+   i++;$('#vd').onclick=volgende;$('#vd').focus()};
+  if(q.num){const inp=$('#ni');inp.focus();$('#nf').onsubmit=e=>{e.preventDefault();const v=parseFloat(String(inp.value).trim().replace(",","."));if(isNaN(v)){inp.classList.remove('shake');void inp.offsetWidth;inp.classList.add('shake');return}inp.readOnly=true;$('#nb').hidden=true;af(Math.abs(v-q.a)<=(q.tol??0.001))}}
+  else P.querySelectorAll('.opt').forEach(b=>b.onclick=()=>{if(P.querySelector('.opt.goed'))return;const ok=opts[+b.dataset.k]===q.a;P.querySelectorAll('.opt').forEach((x,k)=>{if(opts[k]===q.a)x.classList.add('goed');else if(x===b)x.classList.add('fout')});af(ok)})};
+ const einde=()=>{P.innerHTML=`<div class="kaart" style="text-align:center"><div class="label">${o.titel}</div><div class="groot">${goed}<span> / ${n}</span></div>${o.klaar(goed,n)}</div>`;o.na&&o.na()};
+ show('play');volgende()}
+function ronde(id){stilte();const qs=shuffle(MCQ[id]).slice(0,10).map(v=>mcItem(v,id));
+ quiz(qs,{titel:'Oefenronde: '+SECN[id].t,klaar:(goed,n)=>{const f=goed/n;if(f>(S.b[id]||0))S.b[id]=f;save();
+  return `<p>${f>=.8?'Gehaald! 🎉':'Nog niet: 8 van de 10 in één keer goed is het doel.'}</p><div class="acts" style="justify-content:center"><button class="btn" id="opn">Nog een ronde</button><button class="btn licht" id="lp">Leerpad nalezen</button>${terugKnop()}</div>`},
+  na:()=>{$('#opn').onclick=()=>ronde(id);$('#lp').onclick=()=>leerpad(id);$('#hm').onclick=goHome}})}
+const exItem=v=>({q:v[1],a:v[2],opts:[v[2],...v[3].split('|')],w:v[4],hint:v[5],sec:v[0],id:'ex|'+v[1].slice(0,60)});
+function examen(){stilte();quiz(shuffle(EXAM).slice(0,12).map(exItem),{titel:'Toetsvragen',geenHer:1,geenMis:1,klaar:(goed,n)=>{const f=goed/n;if(f>S.ex)S.ex=f;save();
+ return `<p>${Math.round(f*100)}% goed${f>=.7?' · gehaald! 🎉':' · doel: 70%'}</p><p class="sub">Toetsvragen zijn lastig: lees de uitleg goed, daar zie je hoe je moet redeneren.</p><div class="acts" style="justify-content:center"><button class="btn" id="opn">Nog een keer</button>${terugKnop()}</div>`},na:()=>{$('#opn').onclick=examen;$('#hm').onclick=goHome}})}
+function spelKlaar(k,goed,n){const f=goed/n,d=SPEL[k].doel;if(f>(S.sp[k]||0))S.sp[k]=f;save();
+ return `<p>${f>=d?'Gehaald! 🎉':`Doel: ${Math.ceil(d*n)} van de ${n} in één keer goed.`}</p><div class="acts" style="justify-content:center"><button class="btn" id="opn">Nog een keer</button>${terugKnop()}</div>`}
+function spel(k){stilte();const f={lijn:formuleBijLijn,kies:lijnBijFormule,rc:rcTweePunten,snij:snijVraag,ctx:contextVraag}[k];
+ quiz(Array.from({length:10},f),{titel:SPEL[k].t,geenHer:1,klaar:(g,n)=>spelKlaar(k,g,n),na:()=>{$('#opn').onclick=()=>spel(k);$('#hm').onclick=goHome}})}
+function volg(){const set=shuffle(VOLG).slice(0,5);let i=0,goed=0;show('play');
+ const teken=()=>{if(i>=set.length){P.innerHTML=`<div class="kaart" style="text-align:center"><div class="label">${SPEL.volg.t}</div><div class="groot">${goed}<span> / ${set.length}</span></div>${spelKlaar('volg',goed,set.length)}</div>`;$('#opn').onclick=volg;$('#hm').onclick=goHome;return}
+  const [titel,juist]=set[i];let los;do{los=shuffle(juist)}while(los.join()===juist.join());const rij=[];
+  const bouw=()=>{P.innerHTML=`<div class="top"><button class="btn licht klein" id="stop">Stoppen</button><span class="stap">${SPEL.volg.t}</span><span class="teller">${i+1}/${set.length}</span></div>
+   <div class="kaart"><div class="label">Zet op volgorde</div><div class="vraag">${titel}</div><p class="sub" style="margin:4px 0 0">Tik de stappen aan van eerste naar laatste.</p>
+   <ol class="volgrij">${rij.map(t=>`<li>${t}</li>`).join('')}</ol><div class="tegels">${los.map((t,k)=>`<button class="tegel${rij.includes(t)?' weg':''}" data-k="${k}">${t}</button>`).join('')}</div>
+   <div id="fb"></div><div class="acts" id="ra">${rij.length?'<button class="btn licht klein" id="wis2">↺ Opnieuw</button>':''}</div></div>`;
+   $('#stop').onclick=goHome;const w=$('#wis2');if(w)w.onclick=()=>{rij.length=0;bouw()};
+   P.querySelectorAll('.tegel').forEach(b=>b.onclick=()=>{if(b.classList.contains('weg'))return;rij.push(los[+b.dataset.k]);if(rij.length<juist.length)return bouw();
+    bouw();const ok=rij.join()===juist.join();if(ok)goed++;$('#ra').innerHTML='';P.querySelectorAll('.tegel').forEach(x=>x.disabled=true);
+    $('#fb').innerHTML=`<div class="uitleg"><b class="${ok?'goed-t':'fout-t'}">${ok?'Goed!':'Niet goed.'}</b>${ok?'':` De goede volgorde:<ol>${juist.map(t=>`<li>${t}</li>`).join('')}</ol>`}</div><div class="acts"><button class="btn" id="vd">Verder ↵</button></div>`;$('#vd').onclick=()=>{i++;teken()};$('#vd').focus()})};
+  bouw()};
+ teken()}
+function toets(){stilte();const mc=shuffle(H.flatMap(h=>shuffle(MCQ[h.id]).slice(0,3).map(v=>mcItem(v,h.id))));const ex=shuffle(EXAM).slice(0,6).map(exItem);
+ const qs=shuffle([...mc.slice(0,12),...ex,...(window.TOETSGEN||[])]);
+ quiz(qs,{titel:'Proeftoets',geenHer:1,geenMis:1,klaar:(goed,n)=>{const c=Math.round((1+9*goed/n)*10)/10;if(c>S.toets)S.toets=c;save();
+  return `<p>Cijfer: <b style="font-size:22px">${nf(c)}</b>${c>=7?' 🎉':''}</p><div class="acts" style="justify-content:center"><button class="btn" id="opn">Nog een proeftoets</button>${terugKnop()}</div>`},na:()=>{$('#opn').onclick=toets;$('#hm').onclick=goHome}})}
+function foutRonde(){const lijst=Object.entries(S.mis).map(([id,sec])=>{const v=(MCQ[sec]||[]).find(v=>v[0]===id);return v?mcItem(v,sec):null}).filter(Boolean);
+ if(!lijst.length){S.mis={};save();return goHome()}quiz(shuffle(lijst).slice(0,15),{titel:'Mijn fouten',klaar:()=>`<p>${Object.keys(S.mis).length?`Nog ${Object.keys(S.mis).length} in je foutenlijst.`:'Foutenlijst leeg. Top!'}</p><div class="acts" style="justify-content:center">${terugKnop()}</div>`,na:()=>{$('#hm').onclick=goHome}})}
+
+/* ---------- open vragen: invullen en nakijken ---------- */
+const oId=q=>q[0]+'|'+q[1];
+function openMenu(){stilte();show('play');const o=OS();
+ P.innerHTML=`<div class="top"><button class="btn licht klein" id="stop">Terug</button><span class="stap">Open vragen</span><span></span></div>
+ <div class="kaart"><p style="margin:0">Typ je antwoord in je eigen woorden, zoals op de toets. Tik daarna op <b>Nakijken</b>: je ziet jouw antwoord en daaronder het goede antwoord, en je vinkt aan welke punten je had.</p></div>
+ <button class="mode main" id="opw" style="width:100%;margin:8px 0"><h3>✍️ Proefwerk: 8 open vragen</h3><p>Uit alle basisstoffen. Ongeveer 25 minuten.${o.best?` Beste: ${Math.round(o.best*100)}%.`:''}</p></button>
+ ${H.map(h=>{const n=OPEN.filter(q=>q[0]===h.id).length;return n?`<button class="mode${(o.per[h.id]||0)>=.6?' gehaald':''}" data-os="${h.id}" style="width:100%;margin:8px 0"><h3>${h.ic} ${h.id} ${h.t}</h3><p>${n} open vragen.${o.per[h.id]?` Beste: ${Math.round(o.per[h.id]*100)}%.`:''}</p></button>`:''}).join('')}`;
+ $('#stop').onclick=goHome;$('#opw').onclick=openProefwerk;P.querySelectorAll('[data-os]').forEach(b=>b.onclick=()=>openSet(OPEN.filter(q=>q[0]===b.dataset.os),'Open vragen '+b.dataset.os,b.dataset.os))}
+function openProefwerk(){const qs=[];H.forEach(h=>{const l=shuffle(OPEN.filter(q=>q[0]===h.id));qs.push(...l.slice(0,2))});openSet(qs.slice(0,8),'Proefwerk open vragen',null)}
+function openSet(qs,titel,sec){stilte();show('play');G={m:'open',qs,titel,sec};const o=OS();
+ P.innerHTML=`<div class="top"><button class="btn licht klein" id="stop">Stoppen</button><span class="stap">${titel}</span><span class="teller">${qs.length} vragen</span></div>
+ <p class="src">Je antwoorden worden bewaard, ook als je even weggaat. Schrijf in hele zinnen.</p>
+ ${qs.map((q,i)=>`<div class="kaart ovraag"><div class="label">Vraag ${i+1} · ${q[0]} · ${q[3].length} punten</div><div class="vraag">${q[1]}</div><textarea data-i="${i}" rows="4" placeholder="Jouw antwoord…">${esc(o.a[oId(q)]||'')}</textarea></div>`).join('')}
+ <div class="acts"><button class="btn" id="nakijk">Nakijken →</button><button class="btn licht" id="leeg">Antwoorden wissen</button></div>`;
+ P.querySelectorAll('textarea').forEach(t=>t.oninput=()=>{o.a[oId(qs[+t.dataset.i])]=t.value;save()});
+ $('#stop').onclick=()=>RT.on?goHome():openMenu();$('#leeg').onclick=()=>{if(!confirm('Alle antwoorden van deze vragen wissen?'))return;qs.forEach(q=>delete o.a[oId(q)]);save();openSet(qs,titel,sec)};
+ $('#nakijk').onclick=()=>{const l=qs.filter(q=>!(o.a[oId(q)]||'').trim()).length;if(l&&!confirm(`${l} vraag${l>1?'en zijn':' is'} nog leeg. Toch nakijken?`))return;openNakijk()}}
+function oMarkeer(tekst,q){if(!(tekst||'').trim())return '<i class="src">(niet ingevuld)</i>';const iv=[];
+ q[3].forEach(p=>{try{const r=new RegExp(p[1],'gi');let m;while((m=r.exec(tekst))){if(!m[0].length){r.lastIndex++;continue}iv.push([m.index,m.index+m[0].length])}}catch(e){}});
+ iv.sort((a,b)=>a[0]-b[0]);const mg=[];iv.forEach(x=>{const l=mg[mg.length-1];if(l&&x[0]<=l[1])l[1]=Math.max(l[1],x[1]);else mg.push(x.slice())});
+ let h='',k=0;mg.forEach(([a,b])=>{h+=esc(tekst.slice(k,a))+'<mark>'+esc(tekst.slice(a,b))+'</mark>';k=b});h+=esc(tekst.slice(k));return h.replace(/\n/g,'<br>')}
+function openNakijk(){const {qs,titel,sec}=G,o=OS();show('play');
+ P.innerHTML=`<div class="top"><button class="btn licht klein" id="terug">← Antwoorden</button><span class="stap">Nakijken</span><span class="teller" id="osc"></span></div>
+ <p class="src">Vergelijk je antwoord met het goede antwoord. Woorden die al lijken te kloppen zijn <mark>gemarkeerd</mark> en dat punt staat al aangevinkt. Klopt het niet? Haal het vinkje weg. Had je het in andere woorden? Vink het aan.</p>
+ ${qs.map((q,i)=>{const t=o.a[oId(q)]||'';return `<div class="kaart ovraag"><div class="label">Vraag ${i+1} · ${q[0]}</div><div class="vraag">${q[1]}</div>
+  <div class="oantw"><div class="label">Jouw antwoord</div>${oMarkeer(t,q)}</div><div class="omodel"><div class="label">Goed antwoord</div>${q[2]}</div>
+  <div class="opunt"><div class="label">Had jij dit? (1 punt per vinkje)</div>${q[3].map((p,k)=>{let ok=false;try{ok=new RegExp(p[1],'i').test(t)}catch(e){}return `<label><input type="checkbox" data-p="${i}-${k}"${ok?' checked':''}> ${p[0]}</label>`}).join('')}</div></div>`}).join('')}
+ <div class="kaart" id="ouit"></div>`;
+ const tel=()=>{const c=P.querySelectorAll('[data-p]'),g=[...c].filter(x=>x.checked).length,f=c.length?g/c.length:0,cijfer=Math.round((1+9*f)*10)/10;$('#osc').textContent=`${g}/${c.length} punten`;
+  $('#ouit').innerHTML=`<h3>Score: ${g} van de ${c.length} punten · cijfer ${nf(cijfer)}</h3><p class="sub">${f>=.8?'Super! Dit kun je op de toets ook.':f>=.6?'Goed bezig. Kijk nog even naar de punten die je miste.':'Lees de goede antwoorden nog eens rustig door, en probeer het daarna opnieuw.'}</p><div class="acts"><button class="btn" id="obew">Score bewaren</button><button class="btn licht" id="oopn">Opnieuw</button></div>`;
+  $('#obew').onclick=()=>{if(sec)o.per[sec]=Math.max(o.per[sec]||0,f);else o.best=Math.max(o.best||0,f);save();$('#obew').textContent='Bewaard ✓';$('#obew').disabled=true;const n=document.createElement('button');n.className='btn licht';n.textContent=RT.on?'Terug naar de route':'Naar het menu';n.onclick=()=>RT.on?goHome():openMenu();$('#obew').after(n)};
+  $('#oopn').onclick=()=>sec?openSet(qs,titel,sec):openProefwerk()};
+ P.querySelectorAll('[data-p]').forEach(x=>x.onchange=tel);tel();$('#terug').onclick=()=>openSet(qs,titel,sec)}
+
+/* ---------- begrippenblitz ---------- */
+function blitz(){stilte();let punten=0,eind=Date.now()+60000;show('play');
+ const vraag=()=>{if(Date.now()>=eind)return stop();const b=pick(BEGR),rev=Math.random()<.5;const fout=shuffle(BEGR.filter(x=>x!==b)).slice(0,2);const goedT=rev?b[0]:b[1];const opts=shuffle([goedT,...fout.map(x=>rev?x[0]:x[1])]);
+  P.innerHTML=`<div class="top"><button class="btn licht klein" id="stop">Stoppen</button><span class="teller ok">${punten} punten</span><span class="teller" id="tijd">60 s</span></div>
+  <div class="kaart"><div class="label">${rev?'Welk begrip hoort hierbij?':'Wat betekent dit begrip?'}</div><div class="vraag">${rev?b[1]:b[0]}</div><div class="opts">${opts.map((x,k)=>`<button class="opt" data-k="${k}">${x}</button>`).join('')}</div><div id="fb"></div></div>`;
+  tik();$('#stop').onclick=goHome;
+  P.querySelectorAll('.opt').forEach(x=>x.onclick=()=>{if(P.querySelector('.opt.goed'))return;const ok=opts[+x.dataset.k]===goedT;P.querySelectorAll('.opt').forEach((y,k)=>{if(opts[k]===goedT)y.classList.add('goed');else if(y===x)y.classList.add('fout')});
+   if(ok){punten++;setTimeout(vraag,350)}else{$('#fb').innerHTML=`<div class="uitleg"><b class="fout-t">Fout.</b> <b>${b[0]}</b> = ${b[1]}.</div><div class="acts"><button class="btn" id="vd">Verder ↵</button></div>`;$('#vd').onclick=vraag;$('#vd').focus()}})};
+ const tik=()=>{const e=$('#tijd');if(e)e.textContent=Math.max(0,Math.ceil((eind-Date.now())/1000))+' s'};
+ const stop=()=>{clearInterval(window.__klok);const rec=punten>S.blitz;if(rec)S.blitz=punten;save();
+  P.innerHTML=`<div class="kaart" style="text-align:center"><div class="label">Begrippenblitz</div><div class="groot">${punten}</div><p>${rec?'Nieuw record! 🎉':`Record: ${S.blitz}`}${S.blitz>=15?'':' · doel: 15'}</p><div class="acts" style="justify-content:center"><button class="btn" id="opn">Nog een keer</button>${terugKnop()}</div></div>`;
+  $('#opn').onclick=blitz;$('#hm').onclick=goHome};
+ window.__klok=setInterval(()=>{tik();if(Date.now()>=eind&&!P.querySelector('#vd'))stop()},250);vraag()}
+
+/* ---------- alles nalezen ---------- */
+function samen(){stilte();S.samen=1;save();show('play');
+ P.innerHTML=`<div class="top"><button class="btn licht klein" id="terug">‹ Terug</button><span class="stap">Alles nog eens lezen</span><span></span></div>
+ <div class="kaart"><p style="margin:0"><b>H3 Lineaire verbanden.</b> Over rechte lijnen: de formule y = ax + b (startgetal en richtingscoëfficiënt), een formule opstellen uit twee punten of een situatie, vergelijkingen en ongelijkheden oplossen, vergelijkingen met twee variabelen, en interpoleren, extrapoleren en lineaire modellen.</p></div>
+ ${H.map(h=>`<h2>${h.ic} ${h.id} ${h.t}</h2>${h.lp.map(c=>`<div class="kaart"><h3>${c[0]}</h3>${c[1]}</div>`).join('')}`).join('')}
+ <h2>Begrippen</h2><div class="kaart"><dl class="begr">${BEGR.map(b=>`<dt>${b[0]}</dt><dd>${b[1]}</dd>`).join('')}</dl></div>
+ <div class="acts"><button class="btn licht" id="terug2">‹ Terug</button></div>`;$('#terug').onclick=goHome;$('#terug2').onclick=goHome}
+
+renderHome();
+</script>
+</body>
+</html>

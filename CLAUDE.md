@@ -262,6 +262,14 @@ schermen `show('home'|'play')`, `goHome()`, `ask()`, `practice(sec)` (oefenronde
   oefenronde, stop van de berg **Op weg naar het Binnenhof**. Spel **Eens of oneens?** (`STELLING` [stelling, voor, tegen, thema], `stelSpel`, 6 per ronde, toont
   argumenten van beide kanten). Geen proeftoets/open vragen (`OPEN`=`EXAM`=[]). Route: per deel pod 2×2 + lp 6 + pr 6 + kamp 2; stel 6; blitz 4.
 
+- **Wiskunde H3 en H4** (Ben, Getal & Ruimte 4 havo wiskunde A; scans OneDrive `Leren/Wiskunde` 'Wiskunde H3/H4 deel 1-2'): twee aparte pagina's op de biologie-engine
+  (zonder podcast), gebouwd uit `scheikunde-h1v.html` als sjabloon (engine + berg-opzet). **H3 Lineaire verbanden** (`wiskunde-h3.html`, `wis-h3-v1`, § 3.1-3.5):
+  `figLijn(lijnen, {xmin,xmax,ymin,ymax,pt})` (assenstelsel met lijnen y = ax + b), `figTabel`; spellen Welke formule? (`formuleBijLijn`), Welke lijn? (`lijnBijFormule`),
+  Twee punten (`rcTweePunten`), Snijpunten en ongelijkheden (`snijVraag`), Formules in het echt (`contextVraag`); berg = **De stijgende lijn** (trap, een trede per §).
+  Boekfouten verbeterd: druk onder water P = 1,015 + 0,1d; regenton 7,5 + b = 25. **H4 Combinatoriek** (`wiskunde-h4.html`, `wis-h4-v1`, § 4.1-4.4): `figRooster(b,h,pad)`,
+  `figBoom`, `figWegen`; spellen Hoeveel manieren? (`telVraag`: n^k, nPr, nCr, n!, keer/plus, routes, munt, complement) en Welke formule? (`welkeVraag`); berg =
+  **Kraak het combinatieslot** (4 wielen). Boekfout: test 5b = 344 (niet 334). Proeftoets voegt generatorvragen toe via `window.TOETSGEN`. rekenmachine.js staat erin.
+
 ## Leerlogboek en scores (gedeeld met deweef/spelletjes)
 - `leerlog.js` staat in de `<head>` van elke vakpagina (vóór de andere scripts). Per bezoek stuurt het stil één
   regel (wie, vak, actieve minuten, wat erbij kwam, stand) met `sendBeacon` naar het Apps Script van het
